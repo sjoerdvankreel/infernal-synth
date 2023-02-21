@@ -3,9 +3,9 @@
 
 // Don't forget to update the versioned guids, too.
 #define INF_VST_SEVEN_SYNTH_INSTRUMENT_VERSION "1.1"
-#if SVN_VERSIONED
+#if INF_VERSIONED
 #define INF_VST_SEVEN_SYNTH_INSTRUMENT_NAME "SevenSynth 1.1"
-#elif !SVN_VERSIONED
+#elif !INF_VERSIONED
 #define INF_VST_SEVEN_SYNTH_INSTRUMENT_NAME "SevenSynth"
 #else
 #error

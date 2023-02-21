@@ -17,10 +17,10 @@ using namespace inf::vst::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
-#if SVN_VERSIONED
+#if INF_VERSIONED
 static FUID const inf_vst_processor_id(0x88B6D7ED, 0x1B3A4AAE, 0xA9612A67, 0x56F66197);
 static FUID const inf_vst_controller_id(0x5E5E1287, 0xDFA148FE, 0xA543CCEE, 0x286FF4DE);
-#elif !SVN_VERSIONED
+#elif !INF_VERSIONED
 static FUID const inf_vst_processor_id(0x00AE86BB, 0x62E6495B, 0xBB947F2F, 0x7D98CC1A);
 static FUID const inf_vst_controller_id(0x101EB406, 0x0A0F4361, 0xBBFF18B5, 0xF566FEBE);
 #else
@@ -73,19 +73,19 @@ static FUnknown* inf_vst_processor_factory(void* context)
 }
 
 BEGIN_FACTORY_DEF(
-  SVN_VST_SEVEN_SYNTH_FX_COMPANY_NAME, 
-  SVN_VST_SEVEN_SYNTH_FX_COMPANY_WEB, 
-  SVN_VST_SEVEN_SYNTH_FX_COMPANY_MAIL)
+  INF_VST_SEVEN_SYNTH_FX_COMPANY_NAME,
+  INF_VST_SEVEN_SYNTH_FX_COMPANY_WEB,
+  INF_VST_SEVEN_SYNTH_FX_COMPANY_MAIL)
 
   DEF_CLASS2(
     INLINE_UID_FROM_FUID(inf_vst_processor_id),
-    PClassInfo::kManyInstances, kVstAudioEffectClass, SVN_VST_SEVEN_SYNTH_FX_NAME,
+    PClassInfo::kManyInstances, kVstAudioEffectClass, INF_VST_SEVEN_SYNTH_FX_NAME,
     Steinberg::Vst::kDistributable, Steinberg::Vst::PlugType::kFx, 
-    SVN_VST_SEVEN_SYNTH_FX_VERSION, kVstVersionString, inf_vst_processor_factory)
+    INF_VST_SEVEN_SYNTH_FX_VERSION, kVstVersionString, inf_vst_processor_factory)
   
   DEF_CLASS2(
     INLINE_UID_FROM_FUID(inf_vst_controller_id),
     PClassInfo::kManyInstances, kVstComponentControllerClass, 
-    SVN_VST_SEVEN_SYNTH_FX_CONTROLLER_NAME, 0, "", 
-    SVN_VST_SEVEN_SYNTH_FX_VERSION, kVstVersionString, inf_vst_controller_factory)
+    INF_VST_SEVEN_SYNTH_FX_CONTROLLER_NAME, 0, "",
+    INF_VST_SEVEN_SYNTH_FX_VERSION, kVstVersionString, inf_vst_controller_factory)
 END_FACTORY
