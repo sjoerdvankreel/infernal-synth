@@ -1,0 +1,21 @@
+digraph Synth {  
+  rankdir="LR";
+
+  comment="Nodes"
+  "FX A", "FX B", "Voice Audio", "Master", "Audio A", "Audio B", "External Audio", "Oscillator" [shape="rect", style="rounded", color="#202e37", fontcolor="#202e37"]
+  "CV A", "CV B", "LFO A", "LFO B", "Envelope", "Velocity", "CV A Plot", "CV B Plot", "Master CV" [shape="rect", style="rounded", color="#565603", fontcolor="#565603"]
+  
+  comment="Audio edges"
+  "Audio A" -> "Voice Audio" [color="#202e37"]
+  "Audio B" -> "Master" [color="#202e37"]
+  {"Oscillator"; "FX A"} -> "FX A" [color="#202e37"]
+  {"Oscillator"; "FX A"} -> "Audio A" [color="#202e37"]
+  {"FX B"; "Voice Audio"; "External Audio"} -> "FX B" [color="#202e37"]
+  {"FX B"; "Voice Audio"; "External Audio"} -> "Audio B" [color="#202e37"]
+
+  comment="CV edges"
+  {"LFO B", "Master CV"} -> "CV B" [color="#565603"]
+  {"LFO A", "LFO B", "Velocity", "Envelope", "Master CV"} -> "CV A" [color="#565603"]
+  "CV B" -> {"FX B", "Master", "Audio B", "CV B Plot"} [color="#565603"]
+  "CV A" -> {"Oscillator", "FX A", "Audio A", "CV A Plot", "Voice Audio"} [color="#565603"]
+}
