@@ -1,6 +1,6 @@
 # About
-SevenSynth is a semi-modular software synthesizer and effect plugin.\
-For system requirements, download and installation, see the [project website](https://sjoerdvankreel.github.io/seven/).\
+InfernalSynth is a semi-modular software synthesizer and effect plugin.\
+For system requirements, download and installation, see the [project website](https://sjoerdvankreel.github.io/infernal-synth).\
 \
 ![Screenshot](static/screenshot.png)
 
@@ -23,7 +23,7 @@ registered in Europe and other countries.
 - Contains a verbatim implementation of [Andrew Simper's state variable filter equations](https://cytomic.com/files/dsp/SvfLinearTrapOptimised2.pdf).
 - Contains a verbatim implementation of [Moorer's DSF algorithm as described by Burkhard Reike](https://www.verklagekasper.de/synths/dsfsynthesis/dsfsynthesis.html).
 
-Furthermore parts of SevenSynth are implemented based on various resources found mostly on 
+Furthermore parts of InfernalSynth are implemented based on various resources found mostly on 
 [KVR Audio](https://www.kvraudio.com), [DSP Stackexchange](https://dsp.stackexchange.com),
 [Music DSP](https://www.musicdsp.org) and [DSP Related](https://www.dsprelated.com).
 Look for // http:// or // https:// in the source code for sources relevant to a specific feature.
@@ -32,6 +32,6 @@ Look for // http:// or // https:// in the source code for sources relevant to a 
 
 - Download HIIR (see CMakeLists for version): [http://ldesoras.free.fr/prod.html](http://ldesoras.free.fr/prod.html).
 - Download and compile VST3 SDK (see CMakeLists for version): [https://github.com/steinbergmedia/vst3sdk](https://github.com/steinbergmedia/vst3sdk).
-- Generate Visual Studio project using CMake (example in scripts/make_win32), then compile SevenSynth.
+- Generate Visual Studio project using CMake (example in scripts/make_win32), then compile InfernalSynth.
 - Run UI generator (example in scripts/gen_vstui), rebuild to make sure output ends up with the plugin binaries.
-- Copy /build/win32/Release/SevenSynth to VST3 folder (usually C:\Program Files\Common Files\VST3).
+- Copy /build/win32/Release/InfernalSynth to VST3 folder (usually C:\Program Files\Common Files\VST3).

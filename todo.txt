@@ -22,6 +22,8 @@
 - reduce output/cpu ui
 - better factory presets
 - handle vst silence flags
+- fix crash on max comb delay
 - new menu option: clear all unused
 - cpu usage + conversion log ?+ error log
 - generic keyboard tracking: midi in as modulation source
+- recreate project website, re-do screenshots, presets and demos

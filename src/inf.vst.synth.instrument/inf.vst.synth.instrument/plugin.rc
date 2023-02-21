@@ -1,0 +1,33 @@
+#include <windows.h>
+#include <inf.vst.synth.instrument/plugin.hpp>
+
+#define APSTUDIO_READONLY_SYMBOLS
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1, 0, 0, 0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040004e4"
+        BEGIN
+            VALUE "ProductName", INF_VST_INFERNAL_SYNTH_INSTRUMENT_NAME
+            VALUE "FileVersion", INF_VST_INFERNAL_SYNTH_INSTRUMENT_VERSION
+            VALUE "ProductVersion", INF_VST_INFERNAL_SYNTH_INSTRUMENT_VERSION
+            VALUE "CompanyName", INF_VST_INFERNAL_SYNTH_INSTRUMENT_COMPANY_NAME
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x400, 1252
+    END
+END

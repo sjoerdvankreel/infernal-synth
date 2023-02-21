@@ -1,15 +1,15 @@
-# SevenSynth
+# InfernalSynth
 
-SevenSynth is a free, open-source, semi-modular software synthesizer and audio effect plugin.\
+InfernalSynth is a free, open-source, semi-modular software synthesizer and audio effect plugin.\
 It is currently available as a VST3 plugin only, and ships as 2 different binaries: 1 for instrument mode and one for effect mode.\
-In instrument mode, SevenSynth is a polyphonic synthesizer where the combined output of all voices is routed through a global effect bank.\
+In instrument mode, InfernalSynth is a polyphonic synthesizer where the combined output of all voices is routed through a global effect bank.\
 In effect mode, the voice generators are not used, and instead an external audio source is routed through the same global effect bank.\
 \
 ![Screentshot](static/screenshot.png)
 
 ## Architecture
 
-SevenSynth is conceptually split up into 5 parts:
+InfernalSynth is conceptually split up into 5 parts:
 
 - Output: monitors CPU usage, clipping and voice count.
 - Global CV: LFO's (LFO B), CV routing (CV B), and CV plot section displaying stacked CV modulation.
@@ -26,7 +26,7 @@ earliest among all active voices) is recycled to make room for the new incoming 
 
 ## Automation and modulation
 
-Nearly all parameters in SevenSynth can be automated. On top of that, a sizeable amount
+Nearly all parameters in InfernalSynth can be automated. On top of that, a sizeable amount
 of parameters can also be modulated. Modulation always takes place *on top of* automation.
 
 - If it can be modulated, it can also be automated.
@@ -40,7 +40,7 @@ of parameters can also be modulated. Modulation always takes place *on top of* a
 
 In general, rapid modulation WILL introduce aliasing.\
 Especially oscillator FM and PM, and rapid filter modulation WILL cause aliasing artifacts.\
-SevenSynth does NOT contain any global measures (like oversampling) to counteract such artifacts.\
+InfernalSynth does NOT contain any global measures (like oversampling) to counteract such artifacts.\
 However, individual components are either bandlimited or have options to reduce aliasing:
 
 - Envelopes
@@ -345,7 +345,7 @@ Monitor section just to get an idea of what the plugin is doing.
 ![Output](static/output_cpu.png)
 
 - Clip: indicates whether the audio output exceeds [-1, +1]. Output is NOT actually clipped, since that is the task of the host.
-- Voices: active voice count. SevenSynth is internally limited to 32 voices, so if this value nears 32, voices are probably being recycled already.
+- Voices: active voice count. InfernalSynth is internally limited to 32 voices, so if this value nears 32, voices are probably being recycled already.
 - CPU: total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
 - All other: these give an indication of where most processing power is spent. "Aux" is just a catch-all for any CPU time not clearly assignable to somewhere else.
