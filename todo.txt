@@ -24,4 +24,5 @@
 - handle vst silence flags
 - new menu option: clear all unused
 - cpu usage + conversion log ?+ error log
+- recreate project website, re-do screenshots etc
 - generic keyboard tracking: midi in as modulation source
