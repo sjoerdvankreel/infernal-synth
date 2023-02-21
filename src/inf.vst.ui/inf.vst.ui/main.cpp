@@ -81,7 +81,7 @@ main(int argc, char** argv)
   std::unique_ptr<topology_info> topology;
 
   if (argc != 3)
-    return std::cout << "Usage: seven.vst.ui <full\\path\\to\\plugin.vst3> (dll) <full\\path\\to\\file.uidesc> (json)\n", 1;
+    return std::cout << "Usage: infernal.vst.ui <full\\path\\to\\plugin.vst3> (dll) <full\\path\\to\\file.uidesc> (json)\n", 1;
   if ((library = load_library(argv[1])) == nullptr)
     return std::cout << "Library " << argv[1] << " not found.\n", 1;
   if ((init_dll = get_proc_address(library, "InitDll")) == nullptr)

@@ -20,10 +20,10 @@ BEGIN
     BEGIN
         BLOCK "040004e4"
         BEGIN
-            VALUE "ProductName", INF_VST_SEVEN_SYNTH_FX_NAME
-            VALUE "FileVersion", INF_VST_SEVEN_SYNTH_FX_VERSION
-            VALUE "ProductVersion", INF_VST_SEVEN_SYNTH_FX_VERSION
-            VALUE "CompanyName", INF_VST_SEVEN_SYNTH_FX_COMPANY_NAME
+            VALUE "ProductName", INF_VST_INFERNAL_SYNTH_FX_NAME
+            VALUE "FileVersion", INF_VST_INFERNAL_SYNTH_FX_VERSION
+            VALUE "ProductVersion", INF_VST_INFERNAL_SYNTH_FX_VERSION
+            VALUE "CompanyName", INF_VST_INFERNAL_SYNTH_FX_COMPANY_NAME
         END
     END
     BLOCK "VarFileInfo"
