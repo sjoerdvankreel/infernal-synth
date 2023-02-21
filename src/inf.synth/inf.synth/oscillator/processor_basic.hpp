@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
-#define SVN_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
+#ifndef INF_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
+#define INF_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
 
 #include <inf.base/shared/support.hpp>
 #include <inf.synth/oscillator/config.hpp>
@@ -109,4 +109,4 @@ osc_blamp_triangle_processor::operator()(std::int32_t voice,
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
+#endif // INF_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP

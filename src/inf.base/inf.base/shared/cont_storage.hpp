@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_CONT_STORAGE_HPP
-#define SVN_BASE_SHARED_CONT_STORAGE_HPP
+#ifndef INF_BASE_SHARED_CONT_STORAGE_HPP
+#define INF_BASE_SHARED_CONT_STORAGE_HPP
 
 #include <vector>
 #include <cstring>
@@ -98,4 +98,4 @@ cont_storage<T>::resize(std::int32_t storage_count, std::int32_t sample_count)
 }
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_CONT_STORAGE_HPP
+#endif // INF_BASE_SHARED_CONT_STORAGE_HPP

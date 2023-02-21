@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_OUTPUT_PROCESSOR_HPP
-#define SVN_SYNTH_OUTPUT_PROCESSOR_HPP
+#ifndef INF_SYNTH_OUTPUT_PROCESSOR_HPP
+#define INF_SYNTH_OUTPUT_PROCESSOR_HPP
 
 #include <inf.synth/output/state.hpp>
 #include <inf.synth/synth/topology.hpp>
@@ -25,4 +25,4 @@ output_processor(base::topology_info const* topology, float sample_rate):
 audio_part_processor(topology, { part_type::output, 0 }, sample_rate, -1) {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_OUTPUT_PROCESSOR_HPP
+#endif // INF_SYNTH_OUTPUT_PROCESSOR_HPP

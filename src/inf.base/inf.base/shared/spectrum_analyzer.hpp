@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_SPECTRUM_ANALYZER_HPP
-#define SVN_BASE_SHARED_SPECTRUM_ANALYZER_HPP
+#ifndef INF_BASE_SHARED_SPECTRUM_ANALYZER_HPP
+#define INF_BASE_SHARED_SPECTRUM_ANALYZER_HPP
 
 #include <inf.base/shared/fft.hpp>
 
@@ -31,4 +31,4 @@ spectrum_analyzer::analyze(std::vector<float> const& audio, float sample_rate)
 { return analyze(audio.data(), audio.size(), sample_rate); }
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_SPECTRUM_ANALYZER_HPP
+#endif // INF_BASE_SHARED_SPECTRUM_ANALYZER_HPP

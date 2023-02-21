@@ -1,5 +1,5 @@
-#ifndef SVN_VST_UI_DESCRIPTION_SUPPORT_HPP
-#define SVN_VST_UI_DESCRIPTION_SUPPORT_HPP
+#ifndef INF_VST_UI_DESCRIPTION_SUPPORT_HPP
+#define INF_VST_UI_DESCRIPTION_SUPPORT_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -24,4 +24,4 @@ inline std::int32_t constexpr param_total_width = param_col1_width + margin + pa
 inline std::int32_t constexpr param_output_col_width = (param_total_width - margin) / 2;
 
 } // namespace inf::vst::ui
-#endif // SVN_VST_UI_DESCRIPTION_SUPPORT_HPP
+#endif // INF_VST_UI_DESCRIPTION_SUPPORT_HPP

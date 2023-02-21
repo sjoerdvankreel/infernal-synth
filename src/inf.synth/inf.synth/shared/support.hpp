@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SHARED_SUPPORT_HPP
-#define SVN_SYNTH_SHARED_SUPPORT_HPP
+#ifndef INF_SYNTH_SHARED_SUPPORT_HPP
+#define INF_SYNTH_SHARED_SUPPORT_HPP
 
 #include <inf.base/shared/state.hpp>
 #include <inf.synth/shared/state.hpp>
@@ -72,4 +72,4 @@ unipolar_untransform(cv_buffer& buffer, std::int32_t count)
 { unipolar_untransform(buffer.values, buffer.flags.inverted, buffer.flags.bipolar, count); }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SHARED_SUPPORT_HPP
+#endif // INF_SYNTH_SHARED_SUPPORT_HPP

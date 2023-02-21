@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_OSCILLATOR_STATE_HPP
-#define SVN_SYNTH_OSCILLATOR_STATE_HPP
+#ifndef INF_SYNTH_OSCILLATOR_STATE_HPP
+#define INF_SYNTH_OSCILLATOR_STATE_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <inf.synth/oscillator/config.hpp>
@@ -55,4 +55,4 @@ struct oscillator_state
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_OSCILLATOR_STATE_HPP
+#endif // INF_SYNTH_OSCILLATOR_STATE_HPP

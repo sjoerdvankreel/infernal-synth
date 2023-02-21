@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SYNTH_TOPOLOGY_HPP
-#define SVN_SYNTH_SYNTH_TOPOLOGY_HPP
+#ifndef INF_SYNTH_SYNTH_TOPOLOGY_HPP
+#define INF_SYNTH_SYNTH_TOPOLOGY_HPP
 
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/processor/audio_processor.hpp>
@@ -39,4 +39,4 @@ private:
 };
  
 } // namespace inf::synth
-#endif // SVN_SYNTH_SYNTH_TOPOLOGY_HPP
+#endif // INF_SYNTH_SYNTH_TOPOLOGY_HPP

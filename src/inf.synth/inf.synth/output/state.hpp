@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_OUTPUT_STATE_HPP
-#define SVN_SYNTH_OUTPUT_STATE_HPP
+#ifndef INF_SYNTH_OUTPUT_STATE_HPP
+#define INF_SYNTH_OUTPUT_STATE_HPP
 
 #include <cstdint>
 
@@ -31,4 +31,4 @@ struct output_info
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_OUTPUT_STATE_HPP
+#endif // INF_SYNTH_OUTPUT_STATE_HPP

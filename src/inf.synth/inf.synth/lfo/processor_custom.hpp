@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
-#define SVN_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
+#ifndef INF_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
+#define INF_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
 
 #include <inf.synth/lfo/config.hpp>
 #include <inf.synth/lfo/state.hpp>
@@ -69,4 +69,4 @@ lfo_custom_processor::operator()(float frequency, float phase) const
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
+#endif // INF_SYNTH_LFO_PROCESSOR_CUSTOM_HPP

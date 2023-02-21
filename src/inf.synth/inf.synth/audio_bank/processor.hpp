@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_AUDIO_BANK_PROCESSOR_HPP
-#define SVN_SYNTH_AUDIO_BANK_PROCESSOR_HPP
+#ifndef INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
+#define INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <inf.synth/audio_bank/state.hpp>
@@ -56,4 +56,4 @@ _state(state), _data(&audio_bank_data::voice), _relevant_indices_count(), _relev
 { update_block_params(input); }
 
 } // namespace inf::base
-#endif // SVN_SYNTH_AUDIO_BANK_PROCESSOR_HPP
+#endif // INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP

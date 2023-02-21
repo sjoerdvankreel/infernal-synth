@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_FFT_HPP
-#define SVN_BASE_SHARED_FFT_HPP
+#ifndef INF_BASE_SHARED_FFT_HPP
+#define INF_BASE_SHARED_FFT_HPP
 
 #include <vector>
 #include <complex>
@@ -27,4 +27,4 @@ fft::transform(std::vector<float> const& audio)
 { return transform(audio.data(), audio.size()); };
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_FFT_HPP
+#endif // INF_BASE_SHARED_FFT_HPP

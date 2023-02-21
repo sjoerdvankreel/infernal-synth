@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_EFFECT_GRAPH1_HPP
-#define SVN_SYNTH_EFFECT_GRAPH1_HPP
+#ifndef INF_SYNTH_EFFECT_GRAPH1_HPP
+#define INF_SYNTH_EFFECT_GRAPH1_HPP
 
 #include <inf.synth/effect/graph.hpp>
 #include <inf.synth/shared/support.hpp>
@@ -42,4 +42,4 @@ effect_graph1::transform_param(std::int32_t rt_index, base::param_value value) c
 { return graph_disable_modulation(topology(), rt_index, value); }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_EFFECT_GRAPH1_HPP
+#endif // INF_SYNTH_EFFECT_GRAPH1_HPP

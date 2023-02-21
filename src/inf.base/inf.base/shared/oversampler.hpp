@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_OVERSAMPLER_HPP
-#define SVN_BASE_SHARED_OVERSAMPLER_HPP
+#ifndef INF_BASE_SHARED_OVERSAMPLER_HPP
+#define INF_BASE_SHARED_OVERSAMPLER_HPP
 
 #include <inf.base/shared/cont_storage.hpp>
 #include <hiir/Upsampler2xFpu.h>
@@ -110,4 +110,4 @@ oversampler::process(float const* const* in, float* const* out, std::int32_t sam
 }
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_OVERSAMPLER_HPP
+#endif // INF_BASE_SHARED_OVERSAMPLER_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_UI_VST_EDITOR_HPP
-#define SVN_VST_BASE_UI_VST_EDITOR_HPP
+#ifndef INF_VST_BASE_UI_VST_EDITOR_HPP
+#define INF_VST_BASE_UI_VST_EDITOR_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <vstgui/plugin-bindings/vst3editor.h>
@@ -53,4 +53,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_UI_VST_EDITOR_HPP
+#endif // INF_VST_BASE_UI_VST_EDITOR_HPP

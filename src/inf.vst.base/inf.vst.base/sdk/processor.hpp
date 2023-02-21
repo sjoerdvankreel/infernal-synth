@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_SDK_PROCESSOR_HPP
-#define SVN_VST_BASE_SDK_PROCESSOR_HPP
+#ifndef INF_VST_BASE_SDK_PROCESSOR_HPP
+#define INF_VST_BASE_SDK_PROCESSOR_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -71,4 +71,4 @@ private:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_SDK_PROCESSOR_HPP
+#endif // INF_VST_BASE_SDK_PROCESSOR_HPP

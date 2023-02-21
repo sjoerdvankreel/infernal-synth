@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP
-#define SVN_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP
+#ifndef INF_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP
+#define INF_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP
 
 #include <vstgui/vstgui.h>
 #include <vstgui/vstgui_uidescription.h>
@@ -29,4 +29,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP
+#endif // INF_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP

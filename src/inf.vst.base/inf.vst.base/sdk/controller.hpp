@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_SDK_CONTROLLER_HPP
-#define SVN_VST_BASE_SDK_CONTROLLER_HPP
+#ifndef INF_VST_BASE_SDK_CONTROLLER_HPP
+#define INF_VST_BASE_SDK_CONTROLLER_HPP
 
 #include <inf.vst.base/ui/vst_editor.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -72,4 +72,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_SDK_CONTROLLER_HPP
+#endif // INF_VST_BASE_SDK_CONTROLLER_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
-#define SVN_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
+#ifndef INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
+#define INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
 
 #include <inf.synth/cv_bank/state.hpp>
 #include <inf.synth/cv_bank/topology.hpp>
@@ -59,4 +59,4 @@ cv_bank_processor::param_index(std::int32_t route, cv_bank_param_type type)
 { return cv_bank_param_offset + type * cv_bank_route_count + route; }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
+#endif // INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP

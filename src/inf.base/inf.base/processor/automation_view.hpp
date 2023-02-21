@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_AUTOMATION_VIEW_HPP
-#define SVN_BASE_SHARED_AUTOMATION_VIEW_HPP
+#ifndef INF_BASE_SHARED_AUTOMATION_VIEW_HPP
+#define INF_BASE_SHARED_AUTOMATION_VIEW_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 
@@ -202,4 +202,4 @@ automation_view::continuous_real(std::int32_t param, float* out, std::int32_t co
 }
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_AUTOMATION_VIEW_HPP
+#endif // INF_BASE_SHARED_AUTOMATION_VIEW_HPP

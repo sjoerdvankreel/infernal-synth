@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_CV_BANK_TOPOLOGY_HPP
-#define SVN_SYNTH_CV_BANK_TOPOLOGY_HPP
+#ifndef INF_SYNTH_CV_BANK_TOPOLOGY_HPP
+#define INF_SYNTH_CV_BANK_TOPOLOGY_HPP
 
 #include <inf.synth/synth/config.hpp>
 #include <inf.synth/synth/topology.hpp>
@@ -195,4 +195,4 @@ inline std::int32_t constexpr gcv_bank_gamp_output = 1
 + gaudio_bank_count * gcv_route_audio_bank_target::count;
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_CV_BANK_TOPOLOGY_HPP
+#endif // INF_SYNTH_CV_BANK_TOPOLOGY_HPP

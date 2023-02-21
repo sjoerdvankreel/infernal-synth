@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_ENVELOPE_TOPOLOGY_HPP
-#define SVN_SYNTH_ENVELOPE_TOPOLOGY_HPP
+#ifndef INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
+#define INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -36,4 +36,4 @@ std::vector<base::box_descriptor> const envelope_borders =
 { { 0, 0, 2, 1 }, { 2, 0, 3, 1 }, { 5, 0, 3, 1 }, { 3, 1, 5, 1 }, { 3, 2, 5, 1 }, { 3, 3, 5, 1 } };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_ENVELOPE_TOPOLOGY_HPP
+#endif // INF_SYNTH_ENVELOPE_TOPOLOGY_HPP

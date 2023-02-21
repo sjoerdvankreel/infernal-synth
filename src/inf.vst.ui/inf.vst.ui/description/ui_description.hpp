@@ -1,5 +1,5 @@
-#ifndef SVN_VST_UI_DESCRIPTION_UI_DESCRIPTION_HPP
-#define SVN_VST_UI_DESCRIPTION_UI_DESCRIPTION_HPP
+#ifndef INF_VST_UI_DESCRIPTION_UI_DESCRIPTION_HPP
+#define INF_VST_UI_DESCRIPTION_UI_DESCRIPTION_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -68,4 +68,4 @@ struct controller_ui_description
 };
 
 } // namespace inf::vst::ui
-#endif // SVN_VST_UI_DESCRIPTION_UI_DESCRIPTION_HPP
+#endif // INF_VST_UI_DESCRIPTION_UI_DESCRIPTION_HPP

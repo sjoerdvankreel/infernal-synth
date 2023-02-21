@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_IO_STREAM_HPP
-#define SVN_BASE_SHARED_IO_STREAM_HPP
+#ifndef INF_BASE_SHARED_IO_STREAM_HPP
+#define INF_BASE_SHARED_IO_STREAM_HPP
 
 #include <inf.base/shared/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -29,4 +29,4 @@ public:
 };
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_IO_STREAM_HPP
+#endif // INF_BASE_SHARED_IO_STREAM_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_EFFECT_TOPOLOGY_HPP
-#define SVN_SYNTH_EFFECT_TOPOLOGY_HPP
+#ifndef INF_SYNTH_EFFECT_TOPOLOGY_HPP
+#define INF_SYNTH_EFFECT_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -44,4 +44,4 @@ inline std::vector<base::graph_descriptor> const& effect_graphs = {
 inline std::vector<base::box_descriptor> const effect_borders = { { 0, 0, 1, 2 }, { 1, 0, 3, 2 } };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_EFFECT_TOPOLOGY_HPP
+#endif // INF_SYNTH_EFFECT_TOPOLOGY_HPP

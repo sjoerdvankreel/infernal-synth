@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_DSP_CV_BANK_STATE_HPP
-#define SVN_SYNTH_DSP_CV_BANK_STATE_HPP
+#ifndef INF_SYNTH_DSP_CV_BANK_STATE_HPP
+#define INF_SYNTH_DSP_CV_BANK_STATE_HPP
 
 #include <inf.synth/synth/config.hpp>
 #include <inf.synth/shared/state.hpp>
@@ -103,4 +103,4 @@ cv_bank_storage::resize(std::int32_t max_sample_count)
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_DSP_CV_BANK_STATE_HPP
+#endif // INF_SYNTH_DSP_CV_BANK_STATE_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
-#define SVN_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
+#ifndef INF_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
+#define INF_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <inf.base/shared/cont_storage.hpp>
@@ -61,4 +61,4 @@ public:
 };
 
 } // namespace inf::base
-#endif // SVN_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
+#endif // INF_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP

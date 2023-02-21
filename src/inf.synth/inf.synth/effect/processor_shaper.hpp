@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
-#define SVN_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
+#ifndef INF_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
+#define INF_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
 
 #include <inf.base/shared/support.hpp>
 #include <inf.synth/effect/topology.hpp>
@@ -31,4 +31,4 @@ void effect_processor::process_shp_basic(effect_process_input const& input, floa
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
+#endif // INF_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_VOICE_PROCESSOR_HPP
-#define SVN_SYNTH_VOICE_PROCESSOR_HPP
+#ifndef INF_SYNTH_VOICE_PROCESSOR_HPP
+#define INF_SYNTH_VOICE_PROCESSOR_HPP
 
 #include <inf.synth/lfo/processor.hpp>
 #include <inf.synth/effect/processor.hpp>
@@ -76,4 +76,4 @@ public:
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_VOICE_PROCESSOR_HPP
+#endif // INF_SYNTH_VOICE_PROCESSOR_HPP

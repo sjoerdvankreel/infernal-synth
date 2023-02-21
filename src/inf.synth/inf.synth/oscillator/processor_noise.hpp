@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
-#define SVN_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
+#ifndef INF_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
+#define INF_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
 
 #include <inf.base/shared/support.hpp>
 #include <inf.synth/shared/support.hpp>
@@ -73,4 +73,4 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
+#endif // INF_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP

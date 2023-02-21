@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_VOICE_MASTER_STATE_HPP
-#define SVN_SYNTH_VOICE_MASTER_STATE_HPP
+#ifndef INF_SYNTH_VOICE_MASTER_STATE_HPP
+#define INF_SYNTH_VOICE_MASTER_STATE_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <cstdint>
@@ -14,4 +14,4 @@ struct amp_bal_input
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_VOICE_MASTER_STATE_HPP
+#endif // INF_SYNTH_VOICE_MASTER_STATE_HPP

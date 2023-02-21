@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SYNTH_CONFIG_HPP
-#define SVN_SYNTH_SYNTH_CONFIG_HPP
+#ifndef INF_SYNTH_SYNTH_CONFIG_HPP
+#define INF_SYNTH_SYNTH_CONFIG_HPP
 
 #include <cstdint>
 
@@ -20,4 +20,4 @@ inline std::int32_t constexpr synth_polyphony = 32;
 inline std::int32_t constexpr synth_max_ui_height = 820;
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SYNTH_CONFIG_HPP
+#endif // INF_SYNTH_SYNTH_CONFIG_HPP

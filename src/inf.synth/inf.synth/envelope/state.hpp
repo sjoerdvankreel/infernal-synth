@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_ENVELOPE_STATE_HPP
-#define SVN_SYNTH_ENVELOPE_STATE_HPP
+#ifndef INF_SYNTH_ENVELOPE_STATE_HPP
+#define INF_SYNTH_ENVELOPE_STATE_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <cstdint>
@@ -59,4 +59,4 @@ envelope_stage::next()
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_ENVELOPE_STATE_HPP
+#endif // INF_SYNTH_ENVELOPE_STATE_HPP

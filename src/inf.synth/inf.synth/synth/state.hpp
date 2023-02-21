@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SYNTH_STATE_HPP
-#define SVN_SYNTH_SYNTH_STATE_HPP
+#ifndef INF_SYNTH_SYNTH_STATE_HPP
+#define INF_SYNTH_SYNTH_STATE_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <cstdint>
@@ -46,4 +46,4 @@ struct voice_state
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SYNTH_STATE_HPP
+#endif // INF_SYNTH_SYNTH_STATE_HPP

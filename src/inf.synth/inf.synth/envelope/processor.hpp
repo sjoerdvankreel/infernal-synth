@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_ENVELOPE_PROCESSOR_HPP
-#define SVN_SYNTH_ENVELOPE_PROCESSOR_HPP
+#ifndef INF_SYNTH_ENVELOPE_PROCESSOR_HPP
+#define INF_SYNTH_ENVELOPE_PROCESSOR_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <inf.synth/envelope/state.hpp>
@@ -61,4 +61,4 @@ private:
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_ENVELOPE_PROCESSOR_HPP
+#endif // INF_SYNTH_ENVELOPE_PROCESSOR_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_RING_BUFFER_HPP
-#define SVN_BASE_SHARED_RING_BUFFER_HPP
+#ifndef INF_BASE_SHARED_RING_BUFFER_HPP
+#define INF_BASE_SHARED_RING_BUFFER_HPP
 
 #include <memory>
 #include <cstring>
@@ -57,4 +57,4 @@ _size(size), _head(0), _buffer(std::unique_ptr<T[]>(new T[size]))
 { assert(size > 0); }
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_RING_BUFFER_HPP
+#endif // INF_BASE_SHARED_RING_BUFFER_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_LFO_PROCESSOR_RANDOM_HPP
-#define SVN_SYNTH_LFO_PROCESSOR_RANDOM_HPP
+#ifndef INF_SYNTH_LFO_PROCESSOR_RANDOM_HPP
+#define INF_SYNTH_LFO_PROCESSOR_RANDOM_HPP
 
 #include <inf.synth/lfo/state.hpp>
 #include <inf.synth/lfo/config.hpp>
@@ -72,4 +72,4 @@ lfo_random_processor::operator()(float frequency, float phase) const
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_LFO_PROCESSOR_RANDOM_HPP
+#endif // INF_SYNTH_LFO_PROCESSOR_RANDOM_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_ENVELOPE_GRAPH_HPP
-#define SVN_SYNTH_ENVELOPE_GRAPH_HPP
+#ifndef INF_SYNTH_ENVELOPE_GRAPH_HPP
+#define INF_SYNTH_ENVELOPE_GRAPH_HPP
 
 #include <inf.base/processor/graph_processor.hpp>
 #include <cstdint>
@@ -23,4 +23,4 @@ envelope_graph(base::topology_info const* topology, base::part_id id):
   inf::base::graph_processor(topology, id) {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_ENVELOPE_GRAPH_HPP
+#endif // INF_SYNTH_ENVELOPE_GRAPH_HPP

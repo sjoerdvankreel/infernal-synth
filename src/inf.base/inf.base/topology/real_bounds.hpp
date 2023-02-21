@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_TOPOLOGY_REAL_BOUNDS_HPP
-#define SVN_BASE_TOPOLOGY_REAL_BOUNDS_HPP
+#ifndef INF_BASE_TOPOLOGY_REAL_BOUNDS_HPP
+#define INF_BASE_TOPOLOGY_REAL_BOUNDS_HPP
 
 #include <cmath>
 #include <limits>
@@ -119,4 +119,4 @@ real_bounds::to_range(float const* in, float* out, std::int32_t count) const
 }
 
 } // namespace inf::base
-#endif // SVN_BASE_TOPOLOGY_REAL_BOUNDS_HPP
+#endif // INF_BASE_TOPOLOGY_REAL_BOUNDS_HPP

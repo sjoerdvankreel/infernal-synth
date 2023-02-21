@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_EFFECT_GRAPH2_HPP
-#define SVN_SYNTH_EFFECT_GRAPH2_HPP
+#ifndef INF_SYNTH_EFFECT_GRAPH2_HPP
+#define INF_SYNTH_EFFECT_GRAPH2_HPP
 
 #include <inf.synth/effect/graph1.hpp>
 #include <inf.base/shared/support.hpp>
@@ -48,4 +48,4 @@ effect_graph2(base::topology_info const* topology, base::part_id id) :
 effect_graph_base(topology, id), _fft(), _graph1(topology, id), _analyzer() {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_EFFECT_GRAPH2_HPP
+#endif // INF_SYNTH_EFFECT_GRAPH2_HPP

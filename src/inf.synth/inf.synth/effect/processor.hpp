@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_DSP_EFFECT_PROCESSOR_HPP
-#define SVN_SYNTH_DSP_EFFECT_PROCESSOR_HPP
+#ifndef INF_SYNTH_DSP_EFFECT_PROCESSOR_HPP
+#define INF_SYNTH_DSP_EFFECT_PROCESSOR_HPP
 
 #include <inf.synth/shared/state.hpp>
 #include <inf.synth/effect/state.hpp>
@@ -73,4 +73,4 @@ effect_processor::modulation_type(std::int32_t part_type)
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_DSP_EFFECT_PROCESSOR_HPP
+#endif // INF_SYNTH_DSP_EFFECT_PROCESSOR_HPP

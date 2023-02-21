@@ -1,5 +1,5 @@
-#ifndef SVN_VST_UI_SUPPORT_HPP
-#define SVN_VST_UI_SUPPORT_HPP
+#ifndef INF_VST_UI_SUPPORT_HPP
+#define INF_VST_UI_SUPPORT_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.vst.ui/description/support.hpp>
@@ -37,4 +37,4 @@ void add_child(
   rapidjson::Value const& value, rapidjson::Document::AllocatorType& allocator);
 
 } // namespace inf::vst::ui
-#endif // SVN_VST_UI_SUPPORT_HPP
+#endif // INF_VST_UI_SUPPORT_HPP

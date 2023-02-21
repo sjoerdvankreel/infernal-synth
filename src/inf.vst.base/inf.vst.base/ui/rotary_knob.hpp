@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_UI_ROTARY_KNOB_HPP
-#define SVN_VST_BASE_UI_ROTARY_KNOB_HPP
+#ifndef INF_VST_BASE_UI_ROTARY_KNOB_HPP
+#define INF_VST_BASE_UI_ROTARY_KNOB_HPP
 
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -35,4 +35,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_UI_ROTARY_KNOB_HPP
+#endif // INF_VST_BASE_UI_ROTARY_KNOB_HPP

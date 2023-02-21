@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_OSCILLATOR_TOPOLOGY_HPP
-#define SVN_SYNTH_OSCILLATOR_TOPOLOGY_HPP
+#ifndef INF_SYNTH_OSCILLATOR_TOPOLOGY_HPP
+#define INF_SYNTH_OSCILLATOR_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -34,4 +34,4 @@ inline std::vector<base::graph_descriptor> const osc_graphs = { { osc_graph::lef
 { osc_graph::right, "Right", { 2, 1, 2, 3 } }, { osc_graph::spectrum, "Spectrum", { 4, 3, 5, 1 } } };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_OSCILLATOR_TOPOLOGY_HPP
+#endif // INF_SYNTH_OSCILLATOR_TOPOLOGY_HPP

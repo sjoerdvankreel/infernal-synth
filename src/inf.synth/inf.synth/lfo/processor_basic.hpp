@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_LFO_PROCESSOR_BASIC_HPP
-#define SVN_SYNTH_LFO_PROCESSOR_BASIC_HPP
+#ifndef INF_SYNTH_LFO_PROCESSOR_BASIC_HPP
+#define INF_SYNTH_LFO_PROCESSOR_BASIC_HPP
 
 #include <inf.synth/lfo/config.hpp>
 #include <inf.base/shared/support.hpp>
@@ -58,4 +58,4 @@ lfo_pulse_processor::operator()(float frequency, float phase) const
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_LFO_PROCESSOR_BASIC_HPP
+#endif // INF_SYNTH_LFO_PROCESSOR_BASIC_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
-#define SVN_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
+#ifndef INF_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
+#define INF_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -43,4 +43,4 @@ struct master_param_t { enum value {
 typedef master_param_t::value master_param;
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
+#endif // INF_SYNTH_VOICE_MASTER_TOPOLOGY_HPP

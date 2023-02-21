@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_STATE_HPP
-#define SVN_BASE_SHARED_STATE_HPP
+#ifndef INF_BASE_SHARED_STATE_HPP
+#define INF_BASE_SHARED_STATE_HPP
 
 #include <string>
 #include <vector>
@@ -112,4 +112,4 @@ multi_list_items(list_item const* items, list_item_info const* infos, bool const
 char const* const* suffixes, std::int32_t const* counts, std::int32_t count, bool sub_menu);
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_STATE_HPP
+#endif // INF_BASE_SHARED_STATE_HPP

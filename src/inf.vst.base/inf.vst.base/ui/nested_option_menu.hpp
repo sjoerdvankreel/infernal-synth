@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_UI_NESTED_OPTION_MENU_HPP
-#define SVN_VST_BASE_UI_NESTED_OPTION_MENU_HPP
+#ifndef INF_VST_BASE_UI_NESTED_OPTION_MENU_HPP
+#define INF_VST_BASE_UI_NESTED_OPTION_MENU_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 
@@ -43,4 +43,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_UI_NESTED_OPTION_MENU_HPP
+#endif // INF_VST_BASE_UI_NESTED_OPTION_MENU_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
-#define SVN_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
+#ifndef INF_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
+#define INF_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
 
 #include <inf.base/shared/state.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
@@ -90,4 +90,4 @@ struct topology_info
 };
 
 } // namespace inf::base
-#endif // SVN_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
+#endif // INF_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP

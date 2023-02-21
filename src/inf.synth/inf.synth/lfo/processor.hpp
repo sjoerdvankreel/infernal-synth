@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_LFO_PROCESSOR_HPP
-#define SVN_SYNTH_LFO_PROCESSOR_HPP
+#ifndef INF_SYNTH_LFO_PROCESSOR_HPP
+#define INF_SYNTH_LFO_PROCESSOR_HPP
 
 #include <inf.synth/lfo/state.hpp>
 #include <inf.synth/shared/part_processor.hpp>
@@ -57,4 +57,4 @@ public:
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_LFO_PROCESSOR_HPP
+#endif // INF_SYNTH_LFO_PROCESSOR_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_LFO_STATE_HPP
-#define SVN_SYNTH_LFO_STATE_HPP
+#ifndef INF_SYNTH_LFO_STATE_HPP
+#define INF_SYNTH_LFO_STATE_HPP
 
 #include <inf.synth/lfo/config.hpp>
 #include <inf.synth/shared/support.hpp>
@@ -71,4 +71,4 @@ lfo_random_state::reset()
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_LFO_STATE_HPP
+#endif // INF_SYNTH_LFO_STATE_HPP

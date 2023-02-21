@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_EFFECT_STATE_HPP
-#define SVN_SYNTH_EFFECT_STATE_HPP
+#ifndef INF_SYNTH_EFFECT_STATE_HPP
+#define INF_SYNTH_EFFECT_STATE_HPP
 
 #include <inf.synth/effect/config.hpp>
 #include <inf.base/shared/support.hpp>
@@ -52,4 +52,4 @@ struct effect_state
 };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_EFFECT_STATE_HPP
+#endif // INF_SYNTH_EFFECT_STATE_HPP

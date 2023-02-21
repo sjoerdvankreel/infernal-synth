@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SHARED_SCRATCH_SPACE_HPP
-#define SVN_SYNTH_SHARED_SCRATCH_SPACE_HPP
+#ifndef INF_SYNTH_SHARED_SCRATCH_SPACE_HPP
+#define INF_SYNTH_SHARED_SCRATCH_SPACE_HPP
 
 #include <inf.base/shared/cont_storage.hpp>
 #include <cstdint>
@@ -29,4 +29,4 @@ storage_f32(count_f32, max_sample_count),
 storage_f64(count_f64, max_sample_count) {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SHARED_SCRATCH_SPACE_HPP
+#endif // INF_SYNTH_SHARED_SCRATCH_SPACE_HPP

@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
-#define SVN_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
+#ifndef INF_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
+#define INF_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
 
 #include <inf.base/shared/state.hpp>
 #include <inf.base/topology/real_bounds.hpp>
@@ -238,4 +238,4 @@ struct param_descriptor
 };
 
 } // namespace inf::base
-#endif // SVN_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
+#endif // INF_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP

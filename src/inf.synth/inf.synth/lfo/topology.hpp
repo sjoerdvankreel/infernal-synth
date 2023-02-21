@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_LFO_TOPOLOGY_HPP
-#define SVN_SYNTH_LFO_TOPOLOGY_HPP
+#ifndef INF_SYNTH_LFO_TOPOLOGY_HPP
+#define INF_SYNTH_LFO_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -31,4 +31,4 @@ inline std::vector<base::graph_descriptor> const lfo_graphs = { { -1, "LFO", { 0
 inline std::vector<base::box_descriptor> const lfo_borders = { { 0, 0, 3, 1 }, { 3, 0, 4, 1 }, { 3, 1, 4, 3 } };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_LFO_TOPOLOGY_HPP
+#endif // INF_SYNTH_LFO_TOPOLOGY_HPP

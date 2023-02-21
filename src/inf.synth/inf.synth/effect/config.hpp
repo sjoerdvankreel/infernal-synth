@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_EFFECT_CONFIG_HPP
-#define SVN_SYNTH_EFFECT_CONFIG_HPP
+#ifndef INF_SYNTH_EFFECT_CONFIG_HPP
+#define INF_SYNTH_EFFECT_CONFIG_HPP
 
 #include <cstdint>
 
@@ -33,4 +33,4 @@ inline float constexpr effect_reverb_comb_length[effect_reverb_comb_count] = {
   1422.0f / 44100.0f, 1491.0f / 44100.0f, 1557.0f / 44100.0f, 1617.0f / 44100.0f };
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_EFFECT_CONFIG_HPP
+#endif // INF_SYNTH_EFFECT_CONFIG_HPP

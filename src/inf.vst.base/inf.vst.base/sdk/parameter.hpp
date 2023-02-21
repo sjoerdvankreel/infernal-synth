@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_SDK_PARAMETER_HPP
-#define SVN_VST_BASE_SDK_PARAMETER_HPP
+#ifndef INF_VST_BASE_SDK_PARAMETER_HPP
+#define INF_VST_BASE_SDK_PARAMETER_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <public.sdk/source/vst/vstparameters.h>
@@ -33,4 +33,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_SDK_PARAMETER_HPP
+#endif // INF_VST_BASE_SDK_PARAMETER_HPP

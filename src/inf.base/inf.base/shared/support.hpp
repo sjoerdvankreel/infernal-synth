@@ -1,5 +1,5 @@
-#ifndef SVN_BASE_SHARED_SUPPORT_HPP
-#define SVN_BASE_SHARED_SUPPORT_HPP
+#ifndef INF_BASE_SHARED_SUPPORT_HPP
+#define INF_BASE_SHARED_SUPPORT_HPP
 
 #include <inf.base/processor/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -130,4 +130,4 @@ note_to_frequency_table(float midi)
 }
 
 } // namespace inf::base
-#endif // SVN_BASE_SHARED_SUPPORT_HPP
+#endif // INF_BASE_SHARED_SUPPORT_HPP

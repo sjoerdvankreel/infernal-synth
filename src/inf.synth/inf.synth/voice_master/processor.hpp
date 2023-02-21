@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_VOICE_MASTER_PROCESSOR_HPP
-#define SVN_SYNTH_VOICE_MASTER_PROCESSOR_HPP
+#ifndef INF_SYNTH_VOICE_MASTER_PROCESSOR_HPP
+#define INF_SYNTH_VOICE_MASTER_PROCESSOR_HPP
 
 #include <inf.synth/voice_master/state.hpp>
 #include <inf.synth/shared/audio_part_processor.hpp>
@@ -33,4 +33,4 @@ amp_bal_processor::amp_bal_processor(base::topology_info const* topology, std::i
 audio_part_processor(topology, { part_type, 0 }, sample_rate, modulation_type(part_type)) {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_VOICE_MASTER_PROCESSOR_HPP
+#endif // INF_SYNTH_VOICE_MASTER_PROCESSOR_HPP

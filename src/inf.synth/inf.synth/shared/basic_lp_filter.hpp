@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SHARED_BASIC_LP_FILTER_HPP
-#define SVN_SYNTH_SHARED_BASIC_LP_FILTER_HPP
+#ifndef INF_SYNTH_SHARED_BASIC_LP_FILTER_HPP
+#define INF_SYNTH_SHARED_BASIC_LP_FILTER_HPP
 
 #include <inf.base/shared/support.hpp>
 
@@ -37,4 +37,4 @@ basic_lp_filter::init(float rate, float freq)
 }
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SHARED_BASIC_LP_FILTER_HPP
+#endif // INF_SYNTH_SHARED_BASIC_LP_FILTER_HPP

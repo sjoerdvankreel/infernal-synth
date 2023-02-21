@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP
-#define SVN_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP
+#ifndef INF_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP
+#define INF_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP
 
 #include <inf.synth/shared/part_processor.hpp>
 #include <cstdint>
@@ -26,4 +26,4 @@ audio_part_processor(base::topology_info const* topology, base::part_id id, floa
 part_processor(topology, id, sample_rate), _modulation_id({ modulation_type, id.index }) {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP
+#endif // INF_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP

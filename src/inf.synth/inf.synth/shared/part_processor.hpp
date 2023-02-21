@@ -1,5 +1,5 @@
-#ifndef SVN_SYNTH_SHARED_PART_PROCESSOR_HPP
-#define SVN_SYNTH_SHARED_PART_PROCESSOR_HPP
+#ifndef INF_SYNTH_SHARED_PART_PROCESSOR_HPP
+#define INF_SYNTH_SHARED_PART_PROCESSOR_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <cstdint>
@@ -39,4 +39,4 @@ part_processor(base::topology_info const* topology, base::part_id id, float samp
 _id(id), _sample_rate(sample_rate), _topology(topology) {}
 
 } // namespace inf::synth
-#endif // SVN_SYNTH_SHARED_PART_PROCESSOR_HPP
+#endif // INF_SYNTH_SHARED_PART_PROCESSOR_HPP

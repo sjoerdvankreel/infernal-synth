@@ -1,5 +1,5 @@
-#ifndef SVN_VST_BASE_UI_GRAPH_PLOT_HPP
-#define SVN_VST_BASE_UI_GRAPH_PLOT_HPP
+#ifndef INF_VST_BASE_UI_GRAPH_PLOT_HPP
+#define INF_VST_BASE_UI_GRAPH_PLOT_HPP
 
 #include <inf.base/processor/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -46,4 +46,4 @@ public:
 };
 
 } // namespace inf::vst::base
-#endif // SVN_VST_BASE_UI_GRAPH_PLOT_HPP
+#endif // INF_VST_BASE_UI_GRAPH_PLOT_HPP
