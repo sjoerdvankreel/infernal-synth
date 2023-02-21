@@ -1,8 +1,8 @@
-* repeating
-- gcc build
-- update vst3 sdk
-- update version number
-- keep manual up to date
+* for each release
+- x gcc build
+- x update vst3 sdk
+- v update version number
+- x keep manual up to date
 
 * bugs
 - renoise automation serialization is broken
@@ -15,7 +15,6 @@
 - filter types: formant, vowel
 - scale CV amount by global CV param
 - stereo spread param for feedback delay
-- rename project b/c too many name clashes
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
