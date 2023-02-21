@@ -1,18 +1,18 @@
 #ifndef SVN_SYNTH_VOICE_PROCESSOR_HPP
 #define SVN_SYNTH_VOICE_PROCESSOR_HPP
 
-#include <svn.synth/lfo/processor.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/envelope/processor.hpp>
-#include <svn.synth/oscillator/processor.hpp>
-#include <svn.synth/audio_bank/processor.hpp>
-#include <svn.synth/voice_master/processor.hpp>
+#include <inf.synth/lfo/processor.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/envelope/processor.hpp>
+#include <inf.synth/oscillator/processor.hpp>
+#include <inf.synth/audio_bank/processor.hpp>
+#include <inf.synth/voice_master/processor.hpp>
 
 #include <array>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct cpu_usage;
 struct voice_input;
@@ -75,5 +75,5 @@ public:
     std::int32_t last_midi, bool new_voice_section, base::block_input_data const& input);
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_VOICE_PROCESSOR_HPP

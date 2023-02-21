@@ -1,9 +1,9 @@
 #ifndef SVN_SYNTH_SHARED_BASIC_LP_FILTER_HPP
 #define SVN_SYNTH_SHARED_BASIC_LP_FILTER_HPP
 
-#include <svn.base/shared/support.hpp>
+#include <inf.base/shared/support.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // https://www.musicdsp.org/en/latest/Filters/117-one-pole-one-zero-lp-hp.html
 struct basic_lp_filter
@@ -36,5 +36,5 @@ basic_lp_filter::init(float rate, float freq)
   a = angle * norm;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SHARED_BASIC_LP_FILTER_HPP

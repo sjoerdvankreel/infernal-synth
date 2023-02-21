@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_LFO_TOPOLOGY_HPP
 #define SVN_SYNTH_LFO_TOPOLOGY_HPP
 
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 extern base::param_descriptor const vlfo_params[];
 extern base::param_descriptor const glfo_params[];
@@ -30,5 +30,5 @@ typedef lfo_param_t::value lfo_param;
 inline std::vector<base::graph_descriptor> const lfo_graphs = { { -1, "LFO", { 0, 1, 3, 3 } } };
 inline std::vector<base::box_descriptor> const lfo_borders = { { 0, 0, 3, 1 }, { 3, 0, 4, 1 }, { 3, 1, 4, 3 } };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_TOPOLOGY_HPP

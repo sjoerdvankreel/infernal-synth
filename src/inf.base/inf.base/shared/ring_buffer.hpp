@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 // Note, buffer is not zero-initialized by 
 // default, call clear() if you need this.
@@ -56,5 +56,5 @@ inline ring_buffer<T>::ring_buffer(std::size_t size):
 _size(size), _head(0), _buffer(std::unique_ptr<T[]>(new T[size])) 
 { assert(size > 0); }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_RING_BUFFER_HPP

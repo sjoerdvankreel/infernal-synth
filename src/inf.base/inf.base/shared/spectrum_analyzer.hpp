@@ -1,13 +1,13 @@
 #ifndef SVN_BASE_SHARED_SPECTRUM_ANALYZER_HPP
 #define SVN_BASE_SHARED_SPECTRUM_ANALYZER_HPP
 
-#include <svn.base/shared/fft.hpp>
+#include <inf.base/shared/fft.hpp>
 
 #include <vector>
 #include <complex>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 // Returns spectral power at midi notes [0 .. bucket_count) in range [0..1].
 class spectrum_analyzer
@@ -30,5 +30,5 @@ inline float const*
 spectrum_analyzer::analyze(std::vector<float> const& audio, float sample_rate)
 { return analyze(audio.data(), audio.size(), sample_rate); }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_SPECTRUM_ANALYZER_HPP

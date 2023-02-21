@@ -1,12 +1,12 @@
-#include <svn.vst.base/ui/tab_header.hpp>
-#include <svn.vst.base/ui/graph_plot.hpp>
-#include <svn.vst.base/ui/rotary_knob.hpp>
-#include <svn.vst.base/ui/part_connector.hpp> 
-#include <svn.vst.base/ui/option_menu_fix.hpp>
-#include <svn.vst.base/ui/nested_option_menu.hpp>
-#include <svn.vst.base/ui/view_container_fix.hpp>
-#include <svn.vst.base/ui/view_switch_container_fix.hpp>
-#include <svn.vst.base/shared/bootstrap.hpp>
+#include <inf.vst.base/ui/tab_header.hpp>
+#include <inf.vst.base/ui/graph_plot.hpp>
+#include <inf.vst.base/ui/rotary_knob.hpp>
+#include <inf.vst.base/ui/part_connector.hpp> 
+#include <inf.vst.base/ui/option_menu_fix.hpp>
+#include <inf.vst.base/ui/nested_option_menu.hpp>
+#include <inf.vst.base/ui/view_container_fix.hpp>
+#include <inf.vst.base/ui/view_switch_container_fix.hpp>
+#include <inf.vst.base/shared/bootstrap.hpp>
 #include <vstgui/vstgui_uidescription.h>
 
 #if WIN32
@@ -15,13 +15,13 @@ void* moduleHandle = nullptr;
 #endif  
 
 using namespace VSTGUI;
-using namespace svn::base;
-using namespace svn::vst::base; 
+using namespace inf::base;
+using namespace inf::vst::base;
 
 extern bool InitModule();
 extern bool DeinitModule();
 
-static std::int32_t _svn_module_counter = 0;
+static std::int32_t _inf_module_counter = 0;
 static topology_info const* _topology = nullptr;
 static IViewCreator const* _tab_header_creator = nullptr;
 static IViewCreator const* _graph_plot_creator = nullptr;
@@ -35,8 +35,8 @@ static IViewCreator const* _view_switch_container_fix_creator = nullptr;
 extern "C" { 
 
 SMTG_EXPORT_SYMBOL topology_info* 
-svn_vst_create_topology()
-{ return svn_vst_create_topology_impl(); }
+inf_vst_create_topology()
+{ return inf_vst_create_topology_impl(); }
 
 #if WIN32
 BOOL WINAPI
@@ -51,9 +51,9 @@ DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 SMTG_EXPORT_SYMBOL
 bool ExitDll()
 {
-  --_svn_module_counter;
-  if (_svn_module_counter > 0) return true;
-  if (_svn_module_counter < 0) return false;
+  --_inf_module_counter;
+  if (_inf_module_counter > 0) return true;
+  if (_inf_module_counter < 0) return false;
   if (!DeinitModule()) return false;
   UIViewFactory::unregisterViewCreator(*_graph_plot_creator);
   delete _graph_plot_creator;
@@ -87,9 +87,9 @@ bool ExitDll()
 SMTG_EXPORT_SYMBOL
 bool InitDll()
 {
-  if (++_svn_module_counter != 1) return true;
+  if (++_inf_module_counter != 1) return true;
   if (!InitModule()) return false;
-  _topology = svn_vst_create_topology();
+  _topology = inf_vst_create_topology();
   _tab_header_creator = new tab_header_creator();
   UIViewFactory::registerViewCreator(*_tab_header_creator);
   _graph_plot_creator = new graph_plot_creator(_topology);

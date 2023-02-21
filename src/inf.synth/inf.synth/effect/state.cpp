@@ -1,7 +1,7 @@
-#include <svn.synth/effect/state.hpp>
-#include <svn.synth/effect/config.hpp>
+#include <inf.synth/effect/state.hpp>
+#include <inf.synth/effect/config.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 effect_state::
 effect_state(bool global, float sample_rate, std::int32_t max_sample_count):
@@ -68,4 +68,4 @@ effect_state::reset()
   }
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

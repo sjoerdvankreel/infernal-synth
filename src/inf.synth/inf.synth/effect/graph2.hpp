@@ -1,22 +1,22 @@
 #ifndef SVN_SYNTH_EFFECT_GRAPH2_HPP
 #define SVN_SYNTH_EFFECT_GRAPH2_HPP
 
-#include <svn.synth/effect/graph1.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.base/shared/spectrum_analyzer.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.synth/effect/graph1.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/shared/spectrum_analyzer.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <array>
 #include <vector>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class effect_graph2 :
 public effect_graph_base
 {
   base::fft _fft;
   effect_graph1 _graph1;
-  svn::base::spectrum_analyzer _analyzer;
+  inf::base::spectrum_analyzer _analyzer;
 
   void process_shaper_spectrum(base::block_input const& input, float* output, float sample_rate);
 
@@ -47,5 +47,5 @@ inline effect_graph2::
 effect_graph2(base::topology_info const* topology, base::part_id id) :
 effect_graph_base(topology, id), _fft(), _graph1(topology, id), _analyzer() {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_EFFECT_GRAPH2_HPP

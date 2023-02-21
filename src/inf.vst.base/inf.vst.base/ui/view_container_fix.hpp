@@ -6,7 +6,7 @@
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/viewcreator/viewcontainercreator.h>
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 // View container respecting bitmap offset.
 class view_container_fix : 
@@ -22,11 +22,11 @@ class view_container_fix_creator :
 public VSTGUI::UIViewCreator::ViewContainerCreator
 {
 public:
-  VSTGUI::IdStringPtr getViewName() const override { return "svn_view_container_fix"; }
+  VSTGUI::IdStringPtr getViewName() const override { return "inf_view_container_fix"; }
   VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCViewContainer; }
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
   bool apply(VSTGUI::CView* view, VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base
 #endif // SVN_VST_BASE_UI_VIEW_CONTAINER_FIX_HPP

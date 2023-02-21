@@ -1,15 +1,15 @@
 #ifndef SVN_SYNTH_OSCILLATOR_STATE_HPP
 #define SVN_SYNTH_OSCILLATOR_STATE_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.synth/oscillator/config.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <array>
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // New midi: switching base pitch in mono/legato mode.
 // Ram_in: osc sources for RM/AM. Note that output is part of ram_in.
@@ -54,5 +54,5 @@ struct oscillator_state
   oscillator_state(float sample_rate);
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_STATE_HPP

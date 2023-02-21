@@ -1,21 +1,21 @@
-#include <svn.synth/lfo/graph.hpp>
-#include <svn.synth/lfo/topology.hpp>
-#include <svn.synth/cv_bank/graph.hpp>
-#include <svn.synth/effect/graph1.hpp>
-#include <svn.synth/effect/graph2.hpp>
-#include <svn.synth/synth/topology.hpp>
-#include <svn.synth/envelope/graph.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/output/topology.hpp>
-#include <svn.synth/envelope/topology.hpp>
-#include <svn.synth/synth/processor.hpp>
-#include <svn.synth/voice_master/graph.hpp>
-#include <svn.synth/oscillator/graph_wave.hpp>
-#include <svn.synth/oscillator/graph_spectrum.hpp>
+#include <inf.synth/lfo/graph.hpp>
+#include <inf.synth/lfo/topology.hpp>
+#include <inf.synth/cv_bank/graph.hpp>
+#include <inf.synth/effect/graph1.hpp>
+#include <inf.synth/effect/graph2.hpp>
+#include <inf.synth/synth/topology.hpp>
+#include <inf.synth/envelope/graph.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/output/topology.hpp>
+#include <inf.synth/envelope/topology.hpp>
+#include <inf.synth/synth/processor.hpp>
+#include <inf.synth/voice_master/graph.hpp>
+#include <inf.synth/oscillator/graph_wave.hpp>
+#include <inf.synth/oscillator/graph_spectrum.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static part_ui_colors make_part_ui_colors();
 
@@ -235,4 +235,4 @@ part_ui_colors make_part_ui_colors()
   };
 }
                                     
-} // namespace svn::synth                               
+} // namespace inf::synth                               

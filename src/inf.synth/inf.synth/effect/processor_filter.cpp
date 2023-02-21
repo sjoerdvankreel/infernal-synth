@@ -1,10 +1,10 @@
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 void 
 effect_processor::update_flt_stvar_kbd_track(std::int32_t midi)
@@ -148,4 +148,4 @@ effect_processor::process_flt_stvar(effect_process_input const& input, float* co
     }
 } 
 
-} // namespace svn::synth 
+} // namespace inf::synth 

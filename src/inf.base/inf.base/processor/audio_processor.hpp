@@ -1,14 +1,14 @@
 #ifndef SVN_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
 #define SVN_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.base/shared/cont_storage.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.base/shared/cont_storage.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 class audio_processor
 {
@@ -60,5 +60,5 @@ public:
     std::int64_t prev_end_perf_count, std::int64_t new_start_perf_count);
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP

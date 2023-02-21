@@ -1,14 +1,14 @@
 #ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_KPS_HPP
 #define SVN_SYNTH_OSCILLATOR_PROCESSOR_KPS_HPP
 
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/oscillator/state.hpp>
-#include <svn.synth/oscillator/config.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/oscillator/state.hpp>
+#include <inf.synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // https://blog.demofox.org/2016/06/16/synthesizing-a-pluked-string-sound-with-the-karplus-strong-algorithm/
 // https://github.com/marcociccone/EKS-string-generator/blob/master/Extended%20Karplus%20Strong%20Algorithm.ipynb
@@ -41,5 +41,5 @@ osc_kps_processor::operator()(std::int32_t voice, float frequency,
   return base::sanity(result);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_KPS_HPP

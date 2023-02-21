@@ -1,15 +1,15 @@
 #ifndef SVN_SYNTH_SHARED_SUPPORT_HPP
 #define SVN_SYNTH_SHARED_SUPPORT_HPP
 
-#include <svn.base/shared/state.hpp>
-#include <svn.synth/shared/state.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.synth/shared/state.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <limits>
 #include <cstdint>
 #include <algorithm>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // For plotting.
 base::param_value graph_disable_modulation(
@@ -71,5 +71,5 @@ inline void
 unipolar_untransform(cv_buffer& buffer, std::int32_t count)
 { unipolar_untransform(buffer.values, buffer.flags.inverted, buffer.flags.bipolar, count); }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SHARED_SUPPORT_HPP

@@ -1,10 +1,10 @@
-#include <svn.synth/voice_master/topology.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.synth/voice_master/topology.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static std::vector<list_item> const master_port_trigs = {
   { "{506D3FCE-5A35-4209-9A0E-0931C6EDDC0B}", "Note" },
@@ -63,4 +63,4 @@ master_params[master_param::count] =
   { "{06826D77-66A2-44F0-9AE8-DFA7035C95D8}", { { "Bipolar", "CV 3 bipolar" }, param_kind::block, false, 8, nullptr } }      
 };
  
-} // namespace svn::synth 
+} // namespace inf::synth 

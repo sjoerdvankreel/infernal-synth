@@ -1,16 +1,16 @@
 #ifndef SVN_SYNTH_DSP_EFFECT_PROCESSOR_HPP
 #define SVN_SYNTH_DSP_EFFECT_PROCESSOR_HPP
 
-#include <svn.synth/shared/state.hpp>
-#include <svn.synth/effect/state.hpp>
-#include <svn.synth/cv_bank/topology.hpp>
-#include <svn.synth/shared/audio_part_processor.hpp>
+#include <inf.synth/shared/state.hpp>
+#include <inf.synth/effect/state.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.synth/shared/audio_part_processor.hpp>
 
 #include <cmath>
 #include <array>
 #include <cassert>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct scratch_space;
 class cv_bank_processor;
@@ -72,5 +72,5 @@ effect_processor::modulation_type(std::int32_t part_type)
   return gcv_route_output::geffect;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_DSP_EFFECT_PROCESSOR_HPP

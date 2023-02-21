@@ -1,14 +1,14 @@
 #ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
 #define SVN_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
 
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/oscillator/config.hpp>
-#include <svn.synth/oscillator/processor_basic.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/oscillator/config.hpp>
+#include <inf.synth/oscillator/processor_basic.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct osc_mix_processor
 {
@@ -34,5 +34,5 @@ osc_mix_processor::operator()(std::int32_t voice, float frequency,
   return result;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP

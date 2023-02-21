@@ -5,7 +5,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 // Extra info for list items.
 typedef char const* (*list_item_info)(std::int32_t index);
@@ -111,5 +111,5 @@ std::vector<list_item>
 multi_list_items(list_item const* items, list_item_info const* infos, bool const* spaces, 
 char const* const* suffixes, std::int32_t const* counts, std::int32_t count, bool sub_menu);
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_STATE_HPP

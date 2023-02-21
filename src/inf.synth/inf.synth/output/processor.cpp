@@ -1,10 +1,10 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/output/topology.hpp>
-#include <svn.synth/output/processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/output/topology.hpp>
+#include <inf.synth/output/processor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 void 
 output_processor::process(base::block_input const& input, output_info const& info, base::block_output& output)
@@ -46,4 +46,4 @@ output_processor::process(base::block_input const& input, output_info const& inf
   output.block_automation_raw[output_start + output_param::aux].discrete = static_cast<std::int32_t>((total_cpu - part_proc_time) * part_time_factor);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

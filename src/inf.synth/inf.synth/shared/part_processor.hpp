@@ -1,10 +1,10 @@
 #ifndef SVN_SYNTH_SHARED_PART_PROCESSOR_HPP
 #define SVN_SYNTH_SHARED_PART_PROCESSOR_HPP
 
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/topology/topology_info.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class part_processor
 {
@@ -38,5 +38,5 @@ inline part_processor::
 part_processor(base::topology_info const* topology, base::part_id id, float sample_rate):
 _id(id), _sample_rate(sample_rate), _topology(topology) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SHARED_PART_PROCESSOR_HPP

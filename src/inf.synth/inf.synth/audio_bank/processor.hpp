@@ -1,11 +1,11 @@
 #ifndef SVN_SYNTH_AUDIO_BANK_PROCESSOR_HPP
 #define SVN_SYNTH_AUDIO_BANK_PROCESSOR_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.synth/audio_bank/state.hpp>
-#include <svn.synth/audio_bank/topology.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.synth/audio_bank/state.hpp>
+#include <inf.synth/audio_bank/topology.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class cv_bank_processor;
 
@@ -55,5 +55,5 @@ audio_bank_processor::audio_bank_processor(base::block_input_data const& input, 
 _state(state), _data(&audio_bank_data::voice), _relevant_indices_count(), _relevant_indices()
 { update_block_params(input); }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_SYNTH_AUDIO_BANK_PROCESSOR_HPP

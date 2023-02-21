@@ -1,15 +1,15 @@
 #ifndef SVN_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
 #define SVN_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
 
-#include <svn.synth/synth/config.hpp>
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.synth/synth/config.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
 #include <numeric>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // ---- shared ----
 
@@ -69,5 +69,5 @@ inline std::int32_t constexpr gaudio_route_output_counts[gaudio_route_output::co
 inline std::int32_t constexpr gaudio_route_input_counts[gaudio_route_input::count] = { 1 /* off */, 1 /* voice */, 1 /* external */, geffect_count };
 inline std::int32_t constexpr gaudio_route_output_total_count = std::accumulate(gaudio_route_output_counts, gaudio_route_output_counts + gaudio_route_output::count, 0);
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_AUDIO_BANK_TOPOLOGY_HPP

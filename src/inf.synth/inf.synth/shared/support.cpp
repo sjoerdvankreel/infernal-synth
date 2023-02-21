@@ -1,9 +1,9 @@
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/cv_bank/topology.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 param_value graph_disable_modulation(
 topology_info const* topology, std::int32_t rt_index, param_value value)
@@ -17,4 +17,4 @@ topology_info const* topology, std::int32_t rt_index, param_value value)
   return value;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

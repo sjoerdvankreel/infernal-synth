@@ -1,16 +1,16 @@
 #ifndef SVN_SYNTH_EFFECT_GRAPH1_HPP
 #define SVN_SYNTH_EFFECT_GRAPH1_HPP
 
-#include <svn.synth/effect/graph.hpp>
-#include <svn.synth/shared/support.hpp>
+#include <inf.synth/effect/graph.hpp>
+#include <inf.synth/shared/support.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <array>
 #include <vector>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class effect_graph1 :
 public effect_graph_base
@@ -41,5 +41,5 @@ inline base::param_value
 effect_graph1::transform_param(std::int32_t rt_index, base::param_value value) const
 { return graph_disable_modulation(topology(), rt_index, value); }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_EFFECT_GRAPH1_HPP

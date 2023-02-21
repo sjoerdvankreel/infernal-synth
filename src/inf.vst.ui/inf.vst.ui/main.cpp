@@ -1,5 +1,5 @@
-#include <svn.vst.ui/generator/generator.hpp>
-#include <svn.vst.ui/description/ui_description.hpp>
+#include <inf.vst.ui/generator/generator.hpp>
+#include <inf.vst.ui/description/ui_description.hpp>
 #include <vstgui/uidescription/rapidjson/include/rapidjson/prettywriter.h>
 #include <vstgui/uidescription/rapidjson/include/rapidjson/ostreamwrapper.h>
 
@@ -15,11 +15,11 @@
 #include <iostream>
 
 using namespace rapidjson;
-using namespace svn::base;
-using namespace svn::vst::ui;
+using namespace inf::base;
+using namespace inf::vst::ui;
 
-typedef bool (*svn_init_exit_dll_t)(void);
-typedef topology_info* (*svn_create_topology_t)(void);
+typedef bool (*inf_init_exit_dll_t)(void);
+typedef topology_info* (*inf_create_topology_t)(void);
 
 static void*
 load_library(char const* file)
@@ -45,7 +45,7 @@ static std::int32_t
 failed(char const* file, void* exit_dll)
 {
   std::cout << "Failed to write " << file << ".\n";
-  reinterpret_cast<svn_init_exit_dll_t>(exit_dll)();
+  reinterpret_cast<inf_init_exit_dll_t>(exit_dll)();
   return 1;
 }
 
@@ -88,15 +88,15 @@ main(int argc, char** argv)
     return std::cout << argv[1] << " does not export InitDll.\n", 1;
   if ((exit_dll = get_proc_address(library, "ExitDll")) == nullptr)
     return std::cout << argv[1] << " does not export ExitDll.\n", 1;
-  if ((create_topology = get_proc_address(library, "svn_vst_create_topology")) == nullptr)
-    return std::cout << argv[1] << " does not export svn_vst_create_topology.\n", 1;
-  if (!reinterpret_cast<svn_init_exit_dll_t>(init_dll)())
+  if ((create_topology = get_proc_address(library, "inf_vst_create_topology")) == nullptr)
+    return std::cout << argv[1] << " does not export inf_vst_create_topology.\n", 1;
+  if (!reinterpret_cast<inf_init_exit_dll_t>(init_dll)())
     return std::cout << "InitDll returned false.\n", 1;
 
-  if (!(topology = std::unique_ptr<topology_info>(reinterpret_cast<svn_create_topology_t>(create_topology)())))
+  if (!(topology = std::unique_ptr<topology_info>(reinterpret_cast<inf_create_topology_t>(create_topology)())))
   {
-    std::cout << "svn_vst_create_topology returned NULL.\n";
-    reinterpret_cast<svn_init_exit_dll_t>(exit_dll)();
+    std::cout << "inf_vst_create_topology returned NULL.\n";
+    reinterpret_cast<inf_init_exit_dll_t>(exit_dll)();
     return 1;
   }
 
@@ -121,6 +121,6 @@ main(int argc, char** argv)
   }
 
   std::cout << "Ui description written to " << argv[2] << ".\n\n";
-  reinterpret_cast<svn_init_exit_dll_t>(exit_dll)();
+  reinterpret_cast<inf_init_exit_dll_t>(exit_dll)();
   return 0;
 }

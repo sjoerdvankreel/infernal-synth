@@ -1,13 +1,13 @@
-#include <svn.synth/voice/state.hpp>
-#include <svn.synth/synth/processor.hpp>
-#include <svn.base/shared/support.hpp>
+#include <inf.synth/voice/state.hpp>
+#include <inf.synth/synth/processor.hpp>
+#include <inf.base/shared/support.hpp>
 
 #include <cassert>
 #include <algorithm>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 synth_processor::
 synth_processor(topology_info const* topology, param_value* state, 
@@ -490,4 +490,4 @@ synth_processor::process(block_input const& input, block_output& output)
       _last_automation_previous_block[p] = input.continuous_automation_raw[p][input.data.sample_count - 1];
 }
   
-} // namespace svn::synth
+} // namespace inf::synth

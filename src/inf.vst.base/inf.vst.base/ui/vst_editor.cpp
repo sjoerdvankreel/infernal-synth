@@ -1,16 +1,16 @@
-#include <svn.vst.base/ui/vst_editor.hpp>
-#include <svn.vst.base/sdk/parameter.hpp>
-#include <svn.vst.base/sdk/controller.hpp>
-#include <svn.vst.base/shared/support.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.vst.base/ui/vst_editor.hpp>
+#include <inf.vst.base/sdk/parameter.hpp>
+#include <inf.vst.base/sdk/controller.hpp>
+#include <inf.vst.base/shared/support.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <cassert>
 #include <algorithm>
 
 using namespace VSTGUI;
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::vst::base {   
+namespace inf::vst::base {
     
 vst_editor::  
 vst_editor(EditController* controller, UTF8StringPtr template_name,
@@ -141,4 +141,4 @@ vst_editor::update_dependent_visibility(ParamID tag)
   }
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

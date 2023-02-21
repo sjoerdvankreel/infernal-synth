@@ -1,10 +1,10 @@
 #ifndef SVN_SYNTH_SYNTH_STATE_HPP
 #define SVN_SYNTH_SYNTH_STATE_HPP
 
-#include <svn.base/processor/state.hpp>
+#include <inf.base/processor/state.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Activation data.
 struct voice_setup_input
@@ -45,5 +45,5 @@ struct voice_state
   std::int32_t release_position_buffer = -1;
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SYNTH_STATE_HPP

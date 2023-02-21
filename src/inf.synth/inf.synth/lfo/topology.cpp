@@ -1,13 +1,13 @@
-#include <svn.synth/lfo/config.hpp>
-#include <svn.synth/lfo/topology.hpp>
+#include <inf.synth/lfo/config.hpp>
+#include <inf.synth/lfo/topology.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
  
 static std::vector<list_item> const lfo_types = {
   { "{BA47C8D9-458A-4FE7-B4EC-E0A5BF6F0073}", "Basic" },
@@ -150,4 +150,4 @@ glfo_params[lfo_param::count] =
   { "{75BE0782-4E29-4111-8BDD-A4E1208B12EE}", lfo_custom_rise2_slope_data }
 };
 
-} // namespace svn::synth
+} // namespace inf::synth

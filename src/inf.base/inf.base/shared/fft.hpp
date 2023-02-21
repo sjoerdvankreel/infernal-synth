@@ -5,7 +5,7 @@
 #include <complex>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 class fft
 {
@@ -26,5 +26,5 @@ inline std::vector<std::complex<float>> const&
 fft::transform(std::vector<float> const& audio)
 { return transform(audio.data(), audio.size()); };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_FFT_HPP

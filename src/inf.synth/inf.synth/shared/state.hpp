@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Cv attributes.
 struct cv_flags
@@ -33,5 +33,5 @@ struct audio_part_output
   std::int64_t own_time;
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SHARED_STATE_HPP

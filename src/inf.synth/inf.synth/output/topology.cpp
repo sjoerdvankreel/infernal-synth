@@ -1,9 +1,9 @@
-#include <svn.synth/synth/config.hpp>
-#include <svn.synth/output/topology.hpp>
+#include <inf.synth/synth/config.hpp>
+#include <inf.synth/output/topology.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth { 
+namespace inf::synth {
 
 param_descriptor const  
 output_params[output_param::count] =         
@@ -25,4 +25,4 @@ output_params[output_param::count] =
   { "{485325E3-3E15-46C4-84FA-5D743BB75C3A}", { { "CPU", "Total CPU" }, "%", param_kind::output, param_type::text, { 0, 100, 0 }, 4, nullptr } },
 }; 
   
-} // namespace svn::synth 
+} // namespace inf::synth 

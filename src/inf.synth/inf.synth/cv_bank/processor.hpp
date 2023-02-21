@@ -1,10 +1,10 @@
 #ifndef SVN_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
 #define SVN_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
 
-#include <svn.synth/cv_bank/state.hpp>
-#include <svn.synth/cv_bank/topology.hpp>
+#include <inf.synth/cv_bank/state.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Combined CV routing, either voice or global.
 // Handles both modulation and transformation from [0, 1] to dsp range (e.g. 20-20000 for filter freq).
@@ -58,5 +58,5 @@ inline std::int32_t
 cv_bank_processor::param_index(std::int32_t route, cv_bank_param_type type)
 { return cv_bank_param_offset + type * cv_bank_route_count + route; }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_DSP_CV_BANK_PROCESSOR_HPP

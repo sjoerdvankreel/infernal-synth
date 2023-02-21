@@ -1,10 +1,10 @@
-#include <svn.base/shared/state.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <cmath>
 
-namespace svn::base {
+namespace inf::base {
 
 std::vector<graph_point> const&
 graph_processor::plot(param_value const* state, float sample_rate, 
@@ -74,4 +74,4 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
   return _raw_data;
 }
 
-} // namespace svn::base
+} // namespace inf::base

@@ -1,11 +1,11 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/audio_bank/processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/audio_bank/processor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 float const* const*
 audio_bank_processor::input_buffer(std::int32_t input, std::int32_t index) const
@@ -127,4 +127,4 @@ audio_bank_processor::process(block_input_data const& input, part_id id, cv_bank
   return result;
 }
 
-} // namespace svn::synth 
+} // namespace inf::synth 

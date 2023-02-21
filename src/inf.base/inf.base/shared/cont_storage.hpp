@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 // buffer with contiguous allocated data plus pointers into it
 template <class T>
@@ -97,5 +97,5 @@ cont_storage<T>::resize(std::int32_t storage_count, std::int32_t sample_count)
     _values[i] = _storage.data() + i * sample_count;
 }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_CONT_STORAGE_HPP

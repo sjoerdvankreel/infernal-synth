@@ -1,14 +1,14 @@
 #ifndef SVN_SYNTH_SYNTH_TOPOLOGY_HPP
 #define SVN_SYNTH_SYNTH_TOPOLOGY_HPP
 
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/processor/audio_processor.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/processor/audio_processor.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <memory>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 extern base::part_descriptor const part_descriptors[];
   
@@ -38,5 +38,5 @@ private:
     create_graph_processor_oscillator(base::part_id id, std::int32_t graph_type) const;
 };
  
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SYNTH_TOPOLOGY_HPP

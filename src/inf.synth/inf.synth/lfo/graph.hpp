@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_LFO_GRAPH_HPP
 #define SVN_SYNTH_LFO_GRAPH_HPP
 
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class lfo_graph:
-public svn::base::graph_processor
+public inf::base::graph_processor
 {
 public:
   lfo_graph(base::topology_info const* topology, base::part_id id);
@@ -20,7 +20,7 @@ public:
 
 inline lfo_graph::
 lfo_graph(base::topology_info const* topology, base::part_id id):
-svn::base::graph_processor(topology, id) {}
+inf::base::graph_processor(topology, id) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_GRAPH_HPP

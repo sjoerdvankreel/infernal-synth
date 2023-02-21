@@ -1,10 +1,10 @@
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 void 
 effect_processor::process_dly(effect_process_input const& input, float* const* out)
@@ -81,4 +81,4 @@ effect_processor::process_dly_multi(effect_process_input const& input, float* co
     }
 }
 
-} // namespace svn::synth 
+} // namespace inf::synth 

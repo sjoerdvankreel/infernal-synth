@@ -1,8 +1,8 @@
 #ifndef SVN_BASE_SHARED_SUPPORT_HPP
 #define SVN_BASE_SHARED_SUPPORT_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <cmath>
 #include <chrono>
@@ -10,7 +10,7 @@
 #include <cstdint>
 #include <algorithm>
 
-namespace svn::base {
+namespace inf::base {
 
 inline std::int32_t constexpr midi_note_c4 = 60;
 inline std::int32_t constexpr stereo_channels = 2;
@@ -129,5 +129,5 @@ note_to_frequency_table(float midi)
   return (1.0f - mix) * freq_low + mix * freq_high;
 }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_SUPPORT_HPP

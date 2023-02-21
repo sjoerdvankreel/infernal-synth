@@ -1,10 +1,10 @@
 #ifndef SVN_SYNTH_ENVELOPE_STATE_HPP
 #define SVN_SYNTH_ENVELOPE_STATE_HPP
 
-#include <svn.base/processor/state.hpp>
+#include <inf.base/processor/state.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct envelope_split
 {
@@ -58,5 +58,5 @@ envelope_stage::next()
   return (value - 1.0) * inv_slope_range;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_ENVELOPE_STATE_HPP

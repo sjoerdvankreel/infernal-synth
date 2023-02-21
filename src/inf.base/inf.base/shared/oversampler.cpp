@@ -1,6 +1,6 @@
-#include <svn.base/shared/oversampler.hpp>
+#include <inf.base/shared/oversampler.hpp>
 
-namespace svn::base {
+namespace inf::base {
 
 static inline constexpr double coeff_16[2] = 
 { 0.10717745346023573, 0.53091435354504557 };
@@ -74,4 +74,4 @@ oversampler::rearrange(std::int32_t channels, std::int32_t order)
   }
 }
 
-} // namespace svn::base
+} // namespace inf::base

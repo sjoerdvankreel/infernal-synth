@@ -1,12 +1,12 @@
-#include <svn.synth/lfo/graph.hpp>
-#include <svn.synth/lfo/topology.hpp>
-#include <svn.synth/lfo/processor.hpp>
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
+#include <inf.synth/lfo/graph.hpp>
+#include <inf.synth/lfo/topology.hpp>
+#include <inf.synth/lfo/processor.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 bool
 lfo_graph::needs_repaint(std::int32_t runtime_param) const
@@ -50,4 +50,4 @@ lfo_graph::process_dsp_core(block_input const& input, float* output, float sampl
   processor.process_any(input.data, buffer, scratch);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

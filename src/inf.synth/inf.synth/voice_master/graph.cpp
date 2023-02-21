@@ -1,10 +1,10 @@
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/voice_master/graph.hpp>
-#include <svn.synth/voice_master/topology.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/voice_master/graph.hpp>
+#include <inf.synth/voice_master/topology.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 bool
 amp_bal_graph::needs_repaint(std::int32_t runtime_param) const
@@ -40,4 +40,4 @@ amp_bal_graph::process_dsp_core(block_input const& input, float* output, float s
   }
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

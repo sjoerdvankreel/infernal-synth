@@ -1,11 +1,11 @@
-#include <svn.vst.base/ui/support.hpp>
-#include <svn.vst.base/ui/tab_header.hpp>
+#include <inf.vst.base/ui/support.hpp>
+#include <inf.vst.base/ui/tab_header.hpp>
 #include <sstream>
 
 using namespace VSTGUI;
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 CView* 
 tab_header_creator::create(UIAttributes const& attrs, IUIDescription const* desc) const
@@ -36,7 +36,7 @@ tab_header::
 tab_header(
   std::string const& title,
   std::vector<std::string> const& items, 
-  svn::base::tab_header_ui_colors const& colors):
+  inf::base::tab_header_ui_colors const& colors):
 VSTGUI::CParamDisplay(VSTGUI::CRect(0, 0, 0, 0)), 
 _title(title), _items(items), 
 _colors(colors), _last_draw_boundaries() 
@@ -127,5 +127,5 @@ tab_header::draw(CDrawContext* context)
   setDirty(false);
 }
  
-} // namespace svn::vst::base
+} // namespace inf::vst::base
  

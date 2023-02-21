@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_LFO_PROCESSOR_BASIC_HPP
 #define SVN_SYNTH_LFO_PROCESSOR_BASIC_HPP
 
-#include <svn.synth/lfo/config.hpp>
-#include <svn.base/shared/support.hpp>
+#include <inf.synth/lfo/config.hpp>
+#include <inf.base/shared/support.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct lfo_basic_processor
 {
@@ -57,5 +57,5 @@ lfo_pulse_processor::operator()(float frequency, float phase) const
   return offset_phase(phase) < (min_pw + (1.0f - min_pw) * pw) * 0.5f ? 1.0f: 0.0f; 
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_PROCESSOR_BASIC_HPP

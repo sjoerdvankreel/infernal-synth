@@ -1,11 +1,11 @@
-#include <svn.vst.base/ui/nested_option_menu.hpp>
+#include <inf.vst.base/ui/nested_option_menu.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
-using namespace svn::base;
+using namespace inf::base;
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 static void 
 add_item(COptionMenu* menu, std::string const* path, std::size_t path_count)
@@ -93,4 +93,4 @@ nested_option_menu::onOptionMenuSetPopupResult(COptionMenu* menu, COptionMenu* s
   return true; // Prevent set value, need to restore flat list first.
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

@@ -14,12 +14,12 @@
 #include <public.sdk/source/common/memorystream.h>
 #include <public.sdk/source/common/memorystream.cpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.vst.base/ui/vst_editor.hpp>
-#include <svn.vst.base/sdk/parameter.hpp>
-#include <svn.vst.base/sdk/controller.hpp>
-#include <svn.vst.base/shared/support.hpp>
-#include <svn.vst.base/shared/io_stream.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.vst.base/ui/vst_editor.hpp>
+#include <inf.vst.base/sdk/parameter.hpp>
+#include <inf.vst.base/sdk/controller.hpp>
+#include <inf.vst.base/shared/support.hpp>
+#include <inf.vst.base/shared/io_stream.hpp>
 
 #include <vector>
 #include <cstring>
@@ -28,11 +28,11 @@
 #include <filesystem>
    
 using namespace VSTGUI;
-using namespace svn::base;
+using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;                  
 
-namespace svn::vst::base {   
+namespace inf::vst::base {
 
 void
 vst_controller::sync_ui_parameters()
@@ -53,7 +53,7 @@ vst_controller::endEdit(ParamID tag)
   return EditControllerEx1::endEdit(tag);
 }
 
-// Update private copy of the state in svn::base format, for easy access by graphs.
+// Update private copy of the state in inf::base format, for easy access by graphs.
 void
 vst_controller::update_state(ParamID tag)
 {
@@ -316,8 +316,8 @@ COptionMenu*
 vst_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
 {
   ParamID tag;
-  auto& svn_editor = dynamic_cast<vst_editor&>(*editor);
-  tresult found = svn_editor.find_parameter(pos, tag);
+  auto& inf_editor = dynamic_cast<vst_editor&>(*editor);
+  tresult found = inf_editor.find_parameter(pos, tag);
   if(found == kResultOk) return VST3EditorDelegate::createContextMenu(pos, editor);
 
   // Init, copy/swap items, and preset selector. 
@@ -355,4 +355,4 @@ vst_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   return result;
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

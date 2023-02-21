@@ -1,14 +1,14 @@
-#include <svn.vst.base/ui/support.hpp>
-#include <svn.vst.base/ui/part_connector.hpp>
+#include <inf.vst.base/ui/support.hpp>
+#include <inf.vst.base/ui/part_connector.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 #include <cassert>
 #include <cstdint>
 
 using namespace VSTGUI;
-using namespace svn::base;
+using namespace inf::base;
    
-namespace svn::vst::base { 
+namespace inf::vst::base {
       
 CView*  
 part_connector_creator::create(
@@ -79,4 +79,4 @@ part_connector::draw(VSTGUI::CDrawContext* context)
   path->forget();
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

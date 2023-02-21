@@ -1,22 +1,22 @@
 #ifndef SVN_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
 #define SVN_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
 
-#include <svn.synth/oscillator/graph_wave.hpp>
+#include <inf.synth/oscillator/graph_wave.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/shared/spectrum_analyzer.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/shared/spectrum_analyzer.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <array>
 #include <vector>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class oscillator_spectrum_graph:
-public svn::base::graph_processor
+public inf::base::graph_processor
 {
   oscillator_wave_graph _wave;
-  svn::base::spectrum_analyzer _analyzer;
+  inf::base::spectrum_analyzer _analyzer;
 
 public:
   oscillator_spectrum_graph(base::topology_info const* topology, base::part_id id);
@@ -49,5 +49,5 @@ inline void oscillator_spectrum_graph::
 process_dsp_core(base::block_input const& input, float* output, float sample_rate)
 { return _wave.process_dsp_core(input, output, sample_rate); }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP

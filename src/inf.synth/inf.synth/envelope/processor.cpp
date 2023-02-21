@@ -1,15 +1,15 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/envelope/topology.hpp>
-#include <svn.synth/envelope/processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/envelope/topology.hpp>
+#include <inf.synth/envelope/processor.hpp>
 
 #include <cmath>
 #include <cassert>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Given control parameter between -1 and 1, returns accumulator 
 // A (e.g. 1.0001) and max value M such that A^samples = M.
@@ -322,4 +322,4 @@ retriggered:
   return result;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

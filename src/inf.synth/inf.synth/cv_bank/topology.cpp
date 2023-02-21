@@ -1,15 +1,15 @@
-#include <svn.synth/cv_bank/topology.hpp>
-#include <svn.synth/envelope/topology.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.synth/envelope/topology.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <ranges>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // borders
 std::vector<box_descriptor> cv_bank_borders()
@@ -251,4 +251,4 @@ gcv_bank_params[cv_bank_param::count] =
   { "{2EC4D924-1912-4111-8AC1-B24D84384618}", { { "Amt", "Amount 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 27, nullptr } }
 }; 
 
-} // namespace svn::synth
+} // namespace inf::synth

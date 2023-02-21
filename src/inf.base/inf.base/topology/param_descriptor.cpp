@@ -1,11 +1,11 @@
-#include <svn.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
 
 #include <cassert>
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
 
-namespace svn::base { 
+namespace inf::base {
 
 param_io
 param_descriptor_data::io_type() const
@@ -129,4 +129,4 @@ param_descriptor_data::format(bool io, param_value val, char* buffer, std::size_
   return str.length() + 1;
 } 
  
-} // namespace svn::base
+} // namespace inf::base

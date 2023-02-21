@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
 #define SVN_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
 
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/oscillator/config.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // https://www.verklagekasper.de/synths/dsfsynthesis/dsfsynthesis.html
 struct osc_dsf_processor
@@ -46,5 +46,5 @@ osc_dsf_processor::operator()(std::int32_t voice, float frequency,
   return base::sanity_bipolar(x * scale_factor / (y * scale));
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP

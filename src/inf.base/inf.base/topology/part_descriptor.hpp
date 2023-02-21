@@ -1,11 +1,11 @@
 #ifndef SVN_BASE_TOPOLOGY_PART_DESCRIPTOR_HPP
 #define SVN_BASE_TOPOLOGY_PART_DESCRIPTOR_HPP
 
-#include <svn.base/shared/state.hpp>
-#include <svn.base/topology/param_descriptor.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 struct part_ui_descriptor;
 
@@ -36,5 +36,5 @@ struct part_descriptor
   part_ui_descriptor const* ui; // For ui generator.
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_TOPOLOGY_PART_DESCRIPTOR_HPP

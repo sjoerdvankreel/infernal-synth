@@ -1,13 +1,13 @@
-#include <svn.vst.base/ui/support.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.vst.base/ui/rotary_knob.hpp>
+#include <inf.vst.base/ui/support.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.vst.base/ui/rotary_knob.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 #include <cassert>
 
 using namespace VSTGUI;
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 CView* 
 rotary_knob_creator::create(
@@ -30,7 +30,7 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   float start = getStartAngle();
   float range = getRangeAngle();
   float angle = getValueNormalized();
-  float to_degrees = 360.0f / (2.0f * svn::base::pi32);
+  float to_degrees = 360.0f / (2.0f * inf::base::pi32);
 
   auto pos = getViewSize().getTopLeft() + CPoint(1.0, 1.0);
   CDrawContext::Transform transform(*context, CGraphicsTransform().translate(pos));
@@ -111,4 +111,4 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   }
 } 
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

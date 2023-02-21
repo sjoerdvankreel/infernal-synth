@@ -7,7 +7,7 @@
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/viewcreator/uiviewswitchcontainercreator.h>
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 // View switch container triggering repaint for conditional visibility.
 class view_switch_container_fix : 
@@ -35,11 +35,11 @@ class view_switch_container_fix_creator :
 public VSTGUI::UIViewCreator::UIViewSwitchContainerCreator
 {
 public:
-  VSTGUI::IdStringPtr getViewName() const override { return "svn_view_switch_container_fix"; }
+  VSTGUI::IdStringPtr getViewName() const override { return "inf_view_switch_container_fix"; }
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
   VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kUIViewSwitchContainer; }
   bool apply(VSTGUI::CView* view, VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base
 #endif // SVN_VST_BASE_UI_VIEW_SWITCH_CONTAINER_FIX_HPP

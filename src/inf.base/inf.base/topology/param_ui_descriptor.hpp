@@ -5,7 +5,7 @@
 #include <cstdint>
 
 // For ui generator.
-namespace svn::base {
+namespace inf::base {
 
 // Relevant if predicate holds.
 struct param_relevance
@@ -21,5 +21,5 @@ struct param_ui_descriptor
   std::vector<param_relevance> const relevance; // Relevant if all other params relevance[i].if_param satisfy relevance[i].predicate.
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_TOPOLOGY_PARAM_UI_DESCRIPTOR_HPP

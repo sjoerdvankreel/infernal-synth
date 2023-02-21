@@ -1,15 +1,15 @@
 #ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
 #define SVN_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP
 
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/oscillator/state.hpp>
-#include <svn.synth/oscillator/config.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/oscillator/state.hpp>
+#include <inf.synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Note: unison works by drawing from the same random
 // stream for each voice. The detune and offset parameters
@@ -72,5 +72,5 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
   return state->noise_prev_draw;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP

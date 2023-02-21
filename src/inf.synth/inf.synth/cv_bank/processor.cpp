@@ -1,11 +1,11 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
 
 #include <algorithm>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Global.
 cv_bank_processor::
@@ -375,4 +375,4 @@ cv_bank_processor::modulate(cv_bank_input const& input, float const* const*& res
   return performance_counter() - start_time;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

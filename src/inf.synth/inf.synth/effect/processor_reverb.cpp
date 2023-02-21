@@ -1,10 +1,10 @@
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // https://github.com/sinshu/freeverb
 void
@@ -70,4 +70,4 @@ effect_processor::process_reverb(effect_process_input const& input, float* const
   }
 }
 
-} // namespace svn::synth 
+} // namespace inf::synth 

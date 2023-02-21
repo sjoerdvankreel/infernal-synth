@@ -1,15 +1,15 @@
 #ifndef SVN_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
 #define SVN_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP
 
-#include <svn.base/shared/state.hpp>
-#include <svn.base/topology/real_bounds.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/topology/real_bounds.hpp>
 
 #include <cmath>
 #include <string>
 #include <cstring>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 struct param_ui_descriptor;
 
@@ -237,5 +237,5 @@ struct param_descriptor
   param_descriptor_data const data; // Parameter metadata.
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_TOPOLOGY_PARAM_DESCRIPTOR_HPP

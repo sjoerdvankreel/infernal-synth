@@ -6,7 +6,7 @@
 #include <cassert>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 struct real_slope_t { enum value { linear, quadratic, decibel, count }; };
 typedef real_slope_t::value real_slope;
@@ -118,5 +118,5 @@ real_bounds::to_range(float const* in, float* out, std::int32_t count) const
   }
 }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_TOPOLOGY_REAL_BOUNDS_HPP

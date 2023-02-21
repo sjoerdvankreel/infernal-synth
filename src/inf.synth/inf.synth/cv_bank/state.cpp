@@ -1,10 +1,10 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/cv_bank/state.hpp>
-#include <svn.synth/cv_bank/topology.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/cv_bank/state.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 cv_bank_data const cv_bank_data::voice =
 {
@@ -74,4 +74,4 @@ venv(), vlfo(), glfo(), glfo_hold(), gcv(), gcv_hold()
   unmodulated_bipolar_range.resize(max_param_count, max_sample_count);
 }
 
-} // namespace svn::synth 
+} // namespace inf::synth 

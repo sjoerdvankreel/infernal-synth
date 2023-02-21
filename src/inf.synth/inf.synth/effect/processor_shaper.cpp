@@ -1,10 +1,10 @@
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/effect/processor_shaper.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/effect/processor_shaper.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Chebyshev polynomials of the first kind.
 static inline void
@@ -70,4 +70,4 @@ effect_processor::process_shp_cheby_sum(effect_process_input const& input, float
     });
 }
 
-} // namespace svn::synth 
+} // namespace inf::synth 

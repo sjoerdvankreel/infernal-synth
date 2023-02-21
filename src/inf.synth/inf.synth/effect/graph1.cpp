@@ -1,15 +1,15 @@
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/effect/state.hpp>
-#include <svn.synth/effect/graph1.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/effect/state.hpp>
+#include <inf.synth/effect/graph1.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
 
 #include <memory>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static inline float constexpr reverb_length_sec = 5.0f;
 static inline float constexpr delay_fdbk_length_secs = 5.0f;
@@ -182,4 +182,4 @@ effect_graph1::process_dsp_lr(base::block_input const& input, float sample_rate,
   output_lr[1] = _audio_out[1].data();
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

@@ -1,12 +1,12 @@
-#include <svn.vst.ui/generator/support.hpp>
-#include <svn.base/topology/param_descriptor.hpp>
+#include <inf.vst.ui/generator/support.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
 
 #include <sstream>
 
 using namespace rapidjson;
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::vst::ui {
+namespace inf::vst::ui {
 
 std::string
 print_rgba_hex(ui_color const& color)
@@ -86,4 +86,4 @@ get_control_tag(part_info const& part, param_info const& param)
   return result;
 }
 
-} // namespace svn::vst::ui
+} // namespace inf::vst::ui

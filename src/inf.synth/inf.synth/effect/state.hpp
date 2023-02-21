@@ -1,12 +1,12 @@
 #ifndef SVN_SYNTH_EFFECT_STATE_HPP
 #define SVN_SYNTH_EFFECT_STATE_HPP
 
-#include <svn.synth/effect/config.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.base/shared/ring_buffer.hpp>
-#include <svn.base/shared/oversampler.hpp>
+#include <inf.synth/effect/config.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/shared/ring_buffer.hpp>
+#include <inf.base/shared/oversampler.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct effect_process_input
 {
@@ -51,5 +51,5 @@ struct effect_state
   effect_state(bool global, float sample_rate, std::int32_t max_sample_count);
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_EFFECT_STATE_HPP

@@ -1,16 +1,16 @@
-#include <svn.synth/lfo/topology.hpp>
-#include <svn.synth/lfo/processor.hpp>
-#include <svn.synth/lfo/processor_basic.hpp>
-#include <svn.synth/lfo/processor_custom.hpp>
-#include <svn.synth/lfo/processor_random.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
+#include <inf.synth/lfo/topology.hpp>
+#include <inf.synth/lfo/processor.hpp>
+#include <inf.synth/lfo/processor_basic.hpp>
+#include <inf.synth/lfo/processor_custom.hpp>
+#include <inf.synth/lfo/processor_random.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
 
 #include <cmath>
 #include <cassert>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct scratch_space;
 
@@ -255,4 +255,4 @@ lfo_processor::process_any(block_input_data const& input, cv_buffer& buffer, scr
   return performance_counter() - start_time;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

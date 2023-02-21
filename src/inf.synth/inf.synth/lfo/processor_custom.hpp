@@ -1,15 +1,15 @@
 #ifndef SVN_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
 #define SVN_SYNTH_LFO_PROCESSOR_CUSTOM_HPP
 
-#include <svn.synth/lfo/config.hpp>
-#include <svn.synth/lfo/state.hpp>
-#include <svn.base/shared/support.hpp>
+#include <inf.synth/lfo/config.hpp>
+#include <inf.synth/lfo/state.hpp>
+#include <inf.base/shared/support.hpp>
 
 #include <cmath>
 #include <cassert>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct lfo_custom_processor
 {
@@ -68,5 +68,5 @@ lfo_custom_processor::operator()(float frequency, float phase) const
   return 0.0f;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_PROCESSOR_CUSTOM_HPP

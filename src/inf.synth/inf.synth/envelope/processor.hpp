@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_ENVELOPE_PROCESSOR_HPP
 #define SVN_SYNTH_ENVELOPE_PROCESSOR_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.synth/envelope/state.hpp>
-#include <svn.synth/shared/part_processor.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.synth/envelope/state.hpp>
+#include <inf.synth/shared/part_processor.hpp>
 
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Per-voice envelope generator.
 class envelope_processor:
@@ -60,5 +60,5 @@ private:
   envelope_split_stage make_split_stage(base::automation_view const& automation, stage_param_ids ids1, std::int32_t split, stage_param_ids ids2) const;
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_ENVELOPE_PROCESSOR_HPP

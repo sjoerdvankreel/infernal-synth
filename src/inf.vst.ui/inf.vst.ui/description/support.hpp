@@ -1,15 +1,15 @@
 #ifndef SVN_VST_UI_DESCRIPTION_SUPPORT_HPP
 #define SVN_VST_UI_DESCRIPTION_SUPPORT_HPP
 
-#include <svn.base/topology/topology_info.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/topology_info.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <cstdint>
 #include <cstdlib>
 
-namespace svn::vst::ui {
+namespace inf::vst::ui {
 
-inline svn::base::ui_color constexpr transparent(0x00FFFFFF);
+inline inf::base::ui_color constexpr transparent(0x00FFFFFF);
   
 inline std::int32_t constexpr checkbox_width = 14;
 inline std::int32_t constexpr param_row_height = 21;
@@ -23,5 +23,5 @@ inline std::int32_t constexpr padding_param_group = 1;
 inline std::int32_t constexpr param_total_width = param_col1_width + margin + param_col2_width + margin + param_col3_width;
 inline std::int32_t constexpr param_output_col_width = (param_total_width - margin) / 2;
 
-} // namespace svn::vst::ui
+} // namespace inf::vst::ui
 #endif // SVN_VST_UI_DESCRIPTION_SUPPORT_HPP

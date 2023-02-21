@@ -1,13 +1,13 @@
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/effect/processor_shaper.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/effect/processor_shaper.hpp>
 
 #include <cassert>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static std::int32_t 
 delay_sample_count(automation_view const& automation, float rate, float bpm, effect_param time, effect_param tempo)
@@ -110,4 +110,4 @@ effect_processor::process_any(effect_input const& input, float* const* out, cv_b
   return result;
 } 
 
-} // namespace svn::synth 
+} // namespace inf::synth 

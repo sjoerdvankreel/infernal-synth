@@ -1,18 +1,18 @@
 #ifndef SVN_SYNTH_SYNTH_PROCESSOR_HPP
 #define SVN_SYNTH_SYNTH_PROCESSOR_HPP
 
-#include <svn.synth/synth/state.hpp>
-#include <svn.synth/lfo/processor.hpp>
-#include <svn.synth/voice/processor.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/output/processor.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/audio_bank/processor.hpp>
-#include <svn.synth/voice_master/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
-#include <svn.base/processor/audio_processor.hpp>
+#include <inf.synth/synth/state.hpp>
+#include <inf.synth/lfo/processor.hpp>
+#include <inf.synth/voice/processor.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/output/processor.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/audio_bank/processor.hpp>
+#include <inf.synth/voice_master/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.base/processor/audio_processor.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Note: release = both note off and no longer tracking automation.
 // Could be improved by differentiating note off and channel reuse using
@@ -102,5 +102,5 @@ private:
   void process_note_off(voice_setup_input const& input, base::note_event const& note);
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_SYNTH_PROCESSOR_HPP

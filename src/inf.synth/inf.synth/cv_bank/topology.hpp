@@ -1,22 +1,22 @@
 #ifndef SVN_SYNTH_CV_BANK_TOPOLOGY_HPP
 #define SVN_SYNTH_CV_BANK_TOPOLOGY_HPP
 
-#include <svn.synth/synth/config.hpp>
-#include <svn.synth/synth/topology.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/audio_bank/topology.hpp>
-#include <svn.synth/oscillator/topology.hpp>
-#include <svn.synth/voice_master/topology.hpp>
+#include <inf.synth/synth/config.hpp>
+#include <inf.synth/synth/topology.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/audio_bank/topology.hpp>
+#include <inf.synth/oscillator/topology.hpp>
+#include <inf.synth/voice_master/topology.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
 #include <numeric>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // ---- shared ----
 
@@ -194,5 +194,5 @@ inline std::int32_t constexpr gcv_bank_gamp_output = 1
 + geffect_count * vgcv_route_effect_target::count
 + gaudio_bank_count * gcv_route_audio_bank_target::count;
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_CV_BANK_TOPOLOGY_HPP

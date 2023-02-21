@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_LFO_STATE_HPP
 #define SVN_SYNTH_LFO_STATE_HPP
 
-#include <svn.synth/lfo/config.hpp>
-#include <svn.synth/shared/support.hpp>
+#include <inf.synth/lfo/config.hpp>
+#include <inf.synth/shared/support.hpp>
 
 #include <array>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct lfo_basic_state
 {
@@ -70,5 +70,5 @@ lfo_random_state::reset()
   level = fast_rand_next(state_y);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_STATE_HPP

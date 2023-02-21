@@ -1,12 +1,12 @@
 #ifndef SVN_VST_BASE_UI_VST_EDITOR_HPP
 #define SVN_VST_BASE_UI_VST_EDITOR_HPP
 
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/topology/topology_info.hpp>
 #include <vstgui/plugin-bindings/vst3editor.h>
-#include <svn.vst.base/ui/graph_plot.hpp>
+#include <inf.vst.base/ui/graph_plot.hpp>
 #include <vector>
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 // Vst3 editor with basic support for declarative parameter 
 // visibility. See param_ui_descriptor.relevant_if_param.
@@ -28,7 +28,7 @@ public VSTGUI::VST3Editor
   
   std::vector<graph_plot*> _graphs;
   std::vector<std::vector<CControl*>> _controls;
-  svn::base::topology_info const* const _topology;
+  inf::base::topology_info const* const _topology;
 
 public:
   // Let controller know we live or die.
@@ -43,14 +43,14 @@ public:
   void update_dependent_visibility(ParamID tag);
   bool PLUGIN_API open(void* parent, const PlatformType& type) override;
 
-  svn::base::topology_info const* topology() const { return _topology; }
+  inf::base::topology_info const* topology() const { return _topology; }
   vst_editor(EditController* controller, UTF8StringPtr template_name,
-    UTF8StringPtr xml_file, svn::base::topology_info const* topology);
+    UTF8StringPtr xml_file, inf::base::topology_info const* topology);
 
   // Expose IParameterFinder.
   Steinberg::tresult PLUGIN_API find_parameter(VSTGUI::CPoint const& pos, Steinberg::Vst::ParamID& id)
   { return findParameter(pos.x, pos.y, id); }
 };
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base
 #endif // SVN_VST_BASE_UI_VST_EDITOR_HPP

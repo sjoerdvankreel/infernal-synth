@@ -1,15 +1,15 @@
 #ifndef SVN_SYNTH_LFO_PROCESSOR_RANDOM_HPP
 #define SVN_SYNTH_LFO_PROCESSOR_RANDOM_HPP
 
-#include <svn.synth/lfo/state.hpp>
-#include <svn.synth/lfo/config.hpp>
-#include <svn.synth/lfo/topology.hpp>
-#include <svn.base/shared/support.hpp>
+#include <inf.synth/lfo/state.hpp>
+#include <inf.synth/lfo/config.hpp>
+#include <inf.synth/lfo/topology.hpp>
+#include <inf.base/shared/support.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct lfo_random_processor
 {
@@ -71,5 +71,5 @@ lfo_random_processor::operator()(float frequency, float phase) const
   return result;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_PROCESSOR_RANDOM_HPP

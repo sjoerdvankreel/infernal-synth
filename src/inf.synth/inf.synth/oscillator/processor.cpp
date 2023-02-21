@@ -1,17 +1,17 @@
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/oscillator/topology.hpp>
-#include <svn.synth/oscillator/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
-#include <svn.synth/shared/basic_lp_filter.hpp>
-#include <svn.synth/oscillator/processor_dsf.hpp>
-#include <svn.synth/oscillator/processor_kps.hpp>
-#include <svn.synth/oscillator/processor_mix.hpp>
-#include <svn.synth/oscillator/processor_noise.hpp>
-#include <svn.synth/oscillator/processor_basic.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/oscillator/topology.hpp>
+#include <inf.synth/oscillator/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.synth/shared/basic_lp_filter.hpp>
+#include <inf.synth/oscillator/processor_dsf.hpp>
+#include <inf.synth/oscillator/processor_kps.hpp>
+#include <inf.synth/oscillator/processor_mix.hpp>
+#include <inf.synth/oscillator/processor_noise.hpp>
+#include <inf.synth/oscillator/processor_basic.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // 0 = 100% left, 1 = 100% right, sqrt taper, -3dB at center.
 // https://www.kvraudio.com/forum/viewtopic.php?t=148865.
@@ -344,4 +344,4 @@ oscillator_processor::process(oscillator_input const& input,
   return result;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

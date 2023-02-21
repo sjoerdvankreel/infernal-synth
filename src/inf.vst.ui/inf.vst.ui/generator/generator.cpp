@@ -1,8 +1,8 @@
-#include <svn.vst.ui/generator/support.hpp>
-#include <svn.vst.ui/generator/generator.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.vst.ui/generator/support.hpp>
+#include <inf.vst.ui/generator/generator.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <vstgui/uidescription/rapidjson/include/rapidjson/rapidjson.h>
 #include <vstgui/uidescription/rapidjson/include/rapidjson/prettywriter.h>
@@ -11,10 +11,10 @@
 #include <set>
 #include <map>
 
-using namespace svn::base;
+using namespace inf::base;
 using namespace rapidjson;
 
-namespace svn::vst::ui {
+namespace inf::vst::ui {
 
 static std::string
 get_option_menu_class(param_info const& param)
@@ -23,8 +23,8 @@ get_option_menu_class(param_info const& param)
   if(items != nullptr)
     for(std::size_t i = 0; i < items->size(); i++)
       if(items->at(i).submenu_path.size() > 0)
-        return "svn_nested_option_menu";
-  return "svn_option_menu_fix";
+        return "inf_nested_option_menu";
+  return "inf_option_menu_fix";
 }
 
 static void 
@@ -223,7 +223,7 @@ build_ui_param_knob(
   part_type_ui_description const& type, part_info const& part, 
   param_info const& param, Document::AllocatorType& allocator)
 {
-  Value result(build_ui_param_control_base(part, param, "svn_rotary_knob", padding_param_group, param_col1_width, 0, allocator));
+  Value result(build_ui_param_control_base(part, param, "inf_rotary_knob", padding_param_group, param_col1_width, 0, allocator));
   add_attribute(result, "angle-start", "20", allocator);
   add_attribute(result, "angle-range", "320", allocator);
   add_attribute(result, "fill-color", get_color_name(type.colors.knob.fill), allocator);
@@ -297,7 +297,7 @@ build_ui_single_param_border(
   std::int32_t top = row * (param_row_height + margin) + 3 * padding_param_group - margin;
   if (part.info->descriptor->ui->table != nullptr) get_table_mode_coords(part, column, 1, left, width);
 
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "size", size_to_string(width, height), allocator);
   add_attribute(result, "background-color-draw-style", "stroked", allocator);
@@ -362,7 +362,7 @@ add_ui_input_param(
     break;
   case param_type::real:
   case param_type::knob:
-    add_child(container, "svn_rotary_knob", build_ui_param_knob(
+    add_child(container, "inf_rotary_knob", build_ui_param_knob(
       type, *part.info, *param.info, allocator), allocator);
     add_child(container, "CTextEdit", build_ui_param_edit(
        type, *part.info, *param.info, edit_left, edit_width, "right", allocator), allocator);
@@ -372,7 +372,7 @@ add_ui_input_param(
   case param_type::list_knob:
   case param_type::knob_list:
     assert(part_ui->table == nullptr);
-    add_child(container, "svn_rotary_knob", build_ui_param_knob(
+    add_child(container, "inf_rotary_knob", build_ui_param_knob(
       type, *part.info, *param.info, allocator), allocator);
     add_child(container, get_option_menu_class(*param.info), build_ui_param_menu(
       *part.info, *param.info, "right", menu_left, menu_width, 0, type.colors.knob_menu, allocator), allocator);
@@ -455,7 +455,7 @@ build_ui_part_single_param_container(
     width -= 2 * padding_param_group;
   }
 
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "background-color-draw-style", "filled", allocator);
   add_attribute(result, "size", size_to_string(width, param_row_height), allocator);
@@ -487,7 +487,7 @@ build_ui_part_graph(
   Value result(kObjectType);
   std::int32_t left, top, width, height;
   get_box_coords(part, graph.box, left, top, width, height);
-  add_attribute(result, "class", "svn_graph_plot", allocator);
+  add_attribute(result, "class", "inf_graph_plot", allocator);
   add_attribute(result, "tooltip", graph.description, allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "size", size_to_string(width, height), allocator);
@@ -524,9 +524,9 @@ add_cell_decoration(
   part_type_ui_description const& type, part_ui_description const& part, 
   std::int32_t row, std::int32_t column, Value& container, Document::AllocatorType& allocator)
 {
-  add_child(container, "svn_view_container_fix", build_ui_single_param_border(
+  add_child(container, "inf_view_container_fix", build_ui_single_param_border(
     type, part, row, column, allocator), allocator);
-  add_child(container, "svn_view_container_fix", build_ui_part_single_param_container(
+  add_child(container, "inf_view_container_fix", build_ui_part_single_param_container(
     type, part, nullptr, row, column, nullptr, allocator), allocator);
 }
 
@@ -537,7 +537,7 @@ build_ui_part_param_container_base(part_type_ui_description const& type,
   Value result(kObjectType);
   std::int32_t top = margin + param_row_height + padding_param_group * 3;
   std::int32_t height = part.height - 2 * margin - param_row_height - padding_param_group * 2;
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(margin - padding_param_group, top), allocator);
   add_attribute(result, "size", size_to_string(part.width - 2 * margin + 2 * padding_param_group, height), allocator);
   return result;
@@ -564,14 +564,14 @@ build_ui_part_param_container(part_type_ui_description const& type,
   part_ui_descriptor const* part_ui = part.info->descriptor->ui;
   std::int32_t top = margin + param_row_height + padding_param_group * 3;
   std::int32_t height = part.height - 2 * margin - param_row_height - padding_param_group * 2;
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(margin - padding_param_group, top), allocator);
   add_attribute(result, "size", size_to_string(part.width - 2 * margin + 2 * padding_param_group, height), allocator);
   add_attribute(result, "background-color", get_color_name(type.colors.param_container.fill), allocator);
 
   // Build graph content.
   for (std::int32_t g = 0; g < part_ui->graphs.size(); g++)
-    add_child(result, "svn_graph_plot", build_ui_part_graph(
+    add_child(result, "inf_graph_plot", build_ui_part_graph(
       type, part, part_ui->graphs[g], allocator), allocator);
 
   // Build cell decoration.
@@ -588,7 +588,7 @@ build_ui_part_param_container(part_type_ui_description const& type,
   // Build actual parameter content. 
   for (std::int32_t p = 0; p < part.params.size(); p++)
     if (part.params[p].info != nullptr)
-      add_child(result, "svn_view_container_fix", build_ui_part_single_param_container(
+      add_child(result, "inf_view_container_fix", build_ui_part_single_param_container(
         type, part, &part.params[p], part.params[p].row, part.params[p].column, nullptr, allocator), allocator);
 
   // Table mode row headers.
@@ -596,7 +596,7 @@ build_ui_part_param_container(part_type_ui_description const& type,
     for (std::int32_t i = 0; i < part.rows; i++)
     {
       add_cell_decoration(type, part, i, 0, result, allocator);
-      add_child(result, "svn_view_container_fix", build_ui_part_single_param_container(
+      add_child(result, "inf_view_container_fix", build_ui_part_single_param_container(
         type, part, nullptr, i, 0, part_ui->table->headers[i], allocator), allocator);
     }
     
@@ -605,7 +605,7 @@ build_ui_part_param_container(part_type_ui_description const& type,
     for (std::int32_t i = 0; i < part.columns; i++)
     {
       add_cell_decoration(type, part, 0, i, result, allocator);
-      add_child(result, "svn_view_container_fix", build_ui_part_single_param_container(
+      add_child(result, "inf_view_container_fix", build_ui_part_single_param_container(
         type, part, nullptr, 0, i, part_ui->table->headers[i], allocator), allocator);
     }
 
@@ -672,7 +672,7 @@ build_ui_part_header_container_base(part_type_ui_description const& type,
   std::int32_t top = margin - padding_param_group;
   std::int32_t width = part.width - 2 * margin + padding_param_group;
   std::int32_t height = param_row_height - margin + padding_param_group * 3;
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "size", size_to_string(width, height), allocator);
   return result;
@@ -715,7 +715,7 @@ build_ui_part_connector(
     break;
   }
 
-  add_attribute(result, "class", "svn_part_connector", allocator);
+  add_attribute(result, "class", "inf_part_connector", allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "connector-color", get_color_name(color), allocator);
   add_attribute(result, "connector-direction", std::to_string(direction), allocator);
@@ -769,7 +769,7 @@ build_ui_part_header_container(part_type_ui_description const& type,
 
   for(std::int32_t connector = connector_direction::first; connector <= connector_direction::last; connector *= 2)
     if((ui.connectors & connector) != 0)
-      add_child(result, "svn_part_connector", build_ui_part_connector(
+      add_child(result, "inf_part_connector", build_ui_part_connector(
         ui.columns, static_cast<connector_direction>(connector), ui.colors.connector, allocator), allocator);
   return result;
 }
@@ -794,18 +794,18 @@ build_ui_part_container(part_type_ui_description const& type,
   part_ui_description const& part, Document::AllocatorType& allocator)
 {
   Value result(kObjectType);
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(0, 0), allocator);
   add_attribute(result, "background-color-draw-style", "stroked", allocator);
   add_attribute(result, "name", std::to_string(part.runtime_index), allocator);
   add_attribute(result, "size", size_to_string(part.width, part.height), allocator);
   add_attribute(result, "background-color", get_color_name(transparent), allocator);
   add_child(result, "CTextLabel", build_ui_part_header_container_border(type, part, allocator), allocator);
-  add_child(result, "svn_view_container_fix", build_ui_part_header_container_image(type, part, allocator), allocator);
-  add_child(result, "svn_view_container_fix", build_ui_part_header_container(type, part, allocator), allocator);
+  add_child(result, "inf_view_container_fix", build_ui_part_header_container_image(type, part, allocator), allocator);
+  add_child(result, "inf_view_container_fix", build_ui_part_header_container(type, part, allocator), allocator);
   add_child(result, "CTextLabel", build_ui_part_param_container_border(type, part, allocator), allocator);
-  add_child(result, "svn_view_container_fix", build_ui_part_param_container_image(type, part, allocator), allocator);
-  add_child(result, "svn_view_container_fix", build_ui_part_param_container(type, part, allocator), allocator);
+  add_child(result, "inf_view_container_fix", build_ui_part_param_container_image(type, part, allocator), allocator);
+  add_child(result, "inf_view_container_fix", build_ui_part_param_container(type, part, allocator), allocator);
   return result;
 }
 
@@ -830,7 +830,7 @@ build_ui_part_switch_container(
   add_attribute(result, "template-switch-control", tag, allocator);
   add_attribute(result, "origin", size_to_string(0, 0), allocator);
   add_attribute(result, "template-names", template_names, allocator);
-  add_attribute(result, "class", "svn_view_switch_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_switch_container_fix", allocator);
   add_attribute(result, "size", size_to_string(type.width, type.height), allocator);
   for (std::size_t i = 0; i < type.parts.size(); i++)
     add_member(templates_part, template_names_list[i],
@@ -851,7 +851,7 @@ build_ui_part_tab_header(part_type_ui_description const& type,
   for(std::int32_t i = selector_data.discrete.min + 1; i <= selector_data.discrete.max; i++) 
     items += std::string(",") + selector_data.discrete.format_tab(i);
 
-  Value result = build_ui_param_control_base(part,  *type.selector_param.info, "svn_tab_header", left, width, top, allocator);
+  Value result = build_ui_param_control_base(part,  *type.selector_param.info, "inf_tab_header", left, width, top, allocator);
   result.RemoveMember("size");
   add_attribute(result, "tab-items", items, allocator);
   add_attribute(result, "font", "~ NormalFontSmall", allocator); 
@@ -873,19 +873,19 @@ build_ui_part_type_container(
   Value& templates_part, Document::AllocatorType& allocator)
 {
   Value result(kObjectType);
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(type.left, type.top), allocator);
   add_attribute(result, "size", size_to_string(type.width, type.height), allocator);
   if (type.selector_param.info == nullptr)
     for (std::size_t i = 0; i < type.parts.size(); i++)
-      add_child(result, "svn_view_container_fix", build_ui_part_container(
+      add_child(result, "inf_view_container_fix", build_ui_part_container(
         type, type.parts[i], allocator), allocator);
   else
   {
-    add_child(result, "svn_view_switch_container_fix", build_ui_part_switch_container(
+    add_child(result, "inf_view_switch_container_fix", build_ui_part_switch_container(
       topology, type, templates_part, allocator), allocator);
     part_info const& part = topology.parts[type.selector_param.info->part_index];
-    add_child(result, "svn_tab_header", build_ui_part_tab_header(type, part, allocator), allocator);
+    add_child(result, "inf_tab_header", build_ui_part_tab_header(type, part, allocator), allocator);
   }
   return result;
 }
@@ -900,9 +900,9 @@ build_ui_template(
   add_attribute(result, "size", size, allocator);
   add_attribute(result, "minSize", size, allocator);
   add_attribute(result, "maxSize", size, allocator);
-  add_attribute(result, "class", "svn_view_container_fix", allocator);
+  add_attribute(result, "class", "inf_view_container_fix", allocator);
   for (std::size_t type = 0; type < controller.part_types.size(); type++)
-    add_child(result, "svn_view_container_fix", build_ui_part_type_container(
+    add_child(result, "inf_view_container_fix", build_ui_part_type_container(
       topology, controller.part_types[type], templates_part, allocator), allocator);
   return result;
 }
@@ -926,4 +926,4 @@ build_vstgui_json(topology_info const& topology,
   return result;
 }
 
-} // namespace svn::vst::ui
+} // namespace inf::vst::ui

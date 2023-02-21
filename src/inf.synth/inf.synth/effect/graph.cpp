@@ -1,16 +1,16 @@
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/effect/state.hpp>
-#include <svn.synth/effect/graph.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/effect/state.hpp>
+#include <inf.synth/effect/graph.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
 
 #include <memory>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Set up and process a single effect bank.
 void
@@ -45,4 +45,4 @@ effect_graph_base::process_graph(block_input const& input, float sample_rate)
   processor->process_any(fx_input, audio_out, cv_bank, scratch);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

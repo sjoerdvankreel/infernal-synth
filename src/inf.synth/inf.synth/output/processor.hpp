@@ -1,14 +1,14 @@
 #ifndef SVN_SYNTH_OUTPUT_PROCESSOR_HPP
 #define SVN_SYNTH_OUTPUT_PROCESSOR_HPP
 
-#include <svn.synth/output/state.hpp>
-#include <svn.synth/synth/topology.hpp>
-#include <svn.synth/shared/audio_part_processor.hpp>
+#include <inf.synth/output/state.hpp>
+#include <inf.synth/synth/topology.hpp>
+#include <inf.synth/shared/audio_part_processor.hpp>
 
-#include <svn.base/processor/state.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Cpu usage, clip and voice info.
 class output_processor:
@@ -24,5 +24,5 @@ inline output_processor::
 output_processor(base::topology_info const* topology, float sample_rate):
 audio_part_processor(topology, { part_type::output, 0 }, sample_rate, -1) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OUTPUT_PROCESSOR_HPP

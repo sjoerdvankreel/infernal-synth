@@ -1,11 +1,11 @@
-#include <svn.synth/envelope/topology.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.synth/envelope/topology.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static std::vector<list_item> const env_modes = {
   { "{D4FC491C-38AB-4BC6-9076-B74CDFA76772}", "Legato" },
@@ -65,4 +65,4 @@ envelope_params[envelope_param::count] =
   { "{AD5E39BE-C438-4448-A43E-9496352BB545}", { { "Slope", "Release 2 slope" }, "%", param_kind::voice, percentage_m11_bounds(0.0f), 22, nullptr } }, 
 }; 
  
-} // namespace svn::synth
+} // namespace inf::synth

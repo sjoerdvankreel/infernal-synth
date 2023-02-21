@@ -1,10 +1,10 @@
-#include <svn.base/shared/io_stream.hpp>
+#include <inf.base/shared/io_stream.hpp>
 
 #include <vector>
 #include <cassert>
 #include <algorithm>
 
-namespace svn::base {
+namespace inf::base {
 
 static std::int32_t const version = 5;
 static std::string const magic = "{17026466-059D-4C8C-A13E-510250D72F46}";
@@ -110,4 +110,4 @@ io_stream::load(topology_info const& topology, param_value* state)
   return true;
 }
   
-} // namespace svn::base
+} // namespace inf::base

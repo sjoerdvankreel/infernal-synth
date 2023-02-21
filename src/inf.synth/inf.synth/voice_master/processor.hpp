@@ -1,11 +1,11 @@
 #ifndef SVN_SYNTH_VOICE_MASTER_PROCESSOR_HPP
 #define SVN_SYNTH_VOICE_MASTER_PROCESSOR_HPP
 
-#include <svn.synth/voice_master/state.hpp>
-#include <svn.synth/shared/audio_part_processor.hpp>
+#include <inf.synth/voice_master/state.hpp>
+#include <inf.synth/shared/audio_part_processor.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class cv_bank_processor;
 
@@ -32,5 +32,5 @@ inline amp_bal_processor::
 amp_bal_processor::amp_bal_processor(base::topology_info const* topology, std::int32_t part_type, float sample_rate):
 audio_part_processor(topology, { part_type, 0 }, sample_rate, modulation_type(part_type)) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_VOICE_MASTER_PROCESSOR_HPP

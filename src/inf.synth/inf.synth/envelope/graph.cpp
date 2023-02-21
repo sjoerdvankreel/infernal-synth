@@ -1,12 +1,12 @@
-#include <svn.synth/shared/state.hpp>
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/envelope/graph.hpp>
-#include <svn.synth/envelope/topology.hpp>
-#include <svn.synth/envelope/processor.hpp>
+#include <inf.synth/shared/state.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/envelope/graph.hpp>
+#include <inf.synth/envelope/topology.hpp>
+#include <inf.synth/envelope/processor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 bool
 envelope_graph::needs_repaint(std::int32_t runtime_param) const
@@ -53,4 +53,4 @@ envelope_graph::process_dsp_core(block_input const& input, float* output, float 
   processor.process(envelope_in, buffer);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

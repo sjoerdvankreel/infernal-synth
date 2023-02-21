@@ -1,12 +1,12 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/cv_bank/topology.hpp>
-#include <svn.synth/audio_bank/state.hpp>
-#include <svn.synth/oscillator/config.hpp>
-#include <svn.synth/audio_bank/topology.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.synth/audio_bank/state.hpp>
+#include <inf.synth/oscillator/config.hpp>
+#include <inf.synth/audio_bank/topology.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 audio_bank_data const audio_bank_data::voice =
 {
@@ -53,4 +53,4 @@ vosc(), veffect(), geffect(), vosc_reset_pos(), vosc_reset()
   }
 }
 
-} // namespace svn::synth 
+} // namespace inf::synth 

@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_ENVELOPE_GRAPH_HPP
 #define SVN_SYNTH_ENVELOPE_GRAPH_HPP
 
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class envelope_graph:
-public svn::base::graph_processor
+public inf::base::graph_processor
 {
 public:
   envelope_graph(base::topology_info const* topology, base::part_id id);
@@ -20,7 +20,7 @@ public:
 
 inline envelope_graph::
 envelope_graph(base::topology_info const* topology, base::part_id id):
-svn::base::graph_processor(topology, id) {}
+  inf::base::graph_processor(topology, id) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_ENVELOPE_GRAPH_HPP

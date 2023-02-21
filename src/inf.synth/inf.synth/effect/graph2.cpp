@@ -1,15 +1,15 @@
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/effect/state.hpp>
-#include <svn.synth/effect/graph2.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/effect/state.hpp>
+#include <inf.synth/effect/graph2.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
 
 #include <memory>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 std::int32_t
 effect_graph2::sample_count(param_value const* state, float sample_rate) const
@@ -117,4 +117,4 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
   return false;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

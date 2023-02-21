@@ -6,7 +6,7 @@
 
 // For ui generator.
 // Most stuff can't be const because of ui generator.
-namespace svn::base {
+namespace inf::base {
 
 // Box coordinates.
 struct box_descriptor
@@ -124,5 +124,5 @@ struct part_ui_descriptor
   bool const selector_space; // E.g. "Osc1" vs "LFO A1".
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_TOPOLOGY_PART_UI_DESCRIPTOR_HPP

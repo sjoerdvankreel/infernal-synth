@@ -1,14 +1,14 @@
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.vst.ui/description/support.hpp>
-#include <svn.vst.ui/description/ui_description.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.vst.ui/description/support.hpp>
+#include <inf.vst.ui/description/ui_description.hpp>
 
 #include <map>
 #include <stdexcept>
 #include <algorithm>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::vst::ui {
+namespace inf::vst::ui {
 
 static bool 
 param_inside_graph(
@@ -217,4 +217,4 @@ controller_ui_description::create(topology_info const& topology)
   return result;
 }
 
-} // namespace svn::vst::ui
+} // namespace inf::vst::ui

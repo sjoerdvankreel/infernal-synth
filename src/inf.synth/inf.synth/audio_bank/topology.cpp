@@ -1,13 +1,13 @@
-#include <svn.synth/audio_bank/topology.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.synth/audio_bank/topology.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <ranges>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 std::vector<box_descriptor> gaudio_bank_borders()
 {
@@ -124,4 +124,4 @@ gaudio_bank_params[gaudio_bank_param::count] =
   { "{48CA82BE-D452-4B35-A82A-F65F83D87D2E}", { { "Bal", "Stereo balance 8" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 31, nullptr } },
 };
 
-} // namespace svn::synth
+} // namespace inf::synth

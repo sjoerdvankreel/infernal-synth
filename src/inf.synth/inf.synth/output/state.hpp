@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct cpu_usage
 {
@@ -30,5 +30,5 @@ struct output_info
   std::int32_t voice_count;
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OUTPUT_STATE_HPP

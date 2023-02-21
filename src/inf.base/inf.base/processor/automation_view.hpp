@@ -1,13 +1,13 @@
 #ifndef SVN_BASE_SHARED_AUTOMATION_VIEW_HPP
 #define SVN_BASE_SHARED_AUTOMATION_VIEW_HPP
 
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <cassert>
 #include <cstdint>
 #include <algorithm>
 
-namespace svn::base {
+namespace inf::base {
 
 // View into automation buffer.
 class automation_view
@@ -201,5 +201,5 @@ automation_view::continuous_real(std::int32_t param, float* out, std::int32_t co
   if (fixed_count > 0) std::fill(out + automated_count, out + automated_count + fixed_count, _fixed[_part_param_offset + param]);
 }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_AUTOMATION_VIEW_HPP

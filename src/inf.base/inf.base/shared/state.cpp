@@ -1,9 +1,9 @@
-#include <svn.base/shared/state.hpp>
+#include <inf.base/shared/state.hpp>
 #include <algorithm>
 #include <numeric>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 std::vector<std::string>
 list_tab_items(list_item_info info, std::int32_t count)
@@ -273,4 +273,4 @@ synced_timesig(bool with_zero, std::pair<std::int32_t, std::int32_t> max,
   return result;
 }
  
-} // namespace svn::base
+} // namespace inf::base

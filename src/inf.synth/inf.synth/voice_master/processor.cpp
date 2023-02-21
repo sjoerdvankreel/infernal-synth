@@ -1,13 +1,13 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/voice_master/processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/voice_master/processor.hpp>
 
 #include <cassert>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 audio_part_output 
 amp_bal_processor::process(amp_bal_input const& input, float* const* audio_out, cv_bank_processor& cv)
@@ -37,4 +37,4 @@ amp_bal_processor::process(amp_bal_input const& input, float* const* audio_out, 
   return result;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

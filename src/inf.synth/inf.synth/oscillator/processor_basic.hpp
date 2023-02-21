@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
 #define SVN_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP
 
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/oscillator/config.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct osc_sine_processor
 {
@@ -108,5 +108,5 @@ osc_blamp_triangle_processor::operator()(std::int32_t voice,
   return base::sanity_bipolar(result * triangle_scale);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP

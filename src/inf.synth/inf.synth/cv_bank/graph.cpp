@@ -1,14 +1,14 @@
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/cv_bank/graph.hpp>
-#include <svn.synth/cv_bank/topology.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/lfo/processor.hpp>
-#include <svn.synth/envelope/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/cv_bank/graph.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/lfo/processor.hpp>
+#include <inf.synth/envelope/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static float constexpr vcv_plot_graph_velo = 0.5f;
 static std::vector<std::tuple<std::int32_t, std::int32_t, std::int32_t>> const vtarget_table_out
@@ -133,4 +133,4 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
       output[i] *= cv_state.venv[0].buffer.values[i];
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

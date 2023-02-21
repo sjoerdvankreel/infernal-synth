@@ -1,8 +1,8 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.base/shared/spectrum_analyzer.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/shared/spectrum_analyzer.hpp>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 // https://stackoverflow.com/questions/604453/analyze-audio-using-fast-fourier-transform
 // https://dsp.stackexchange.com/questions/46692/calculating-1-3-octave-spectrum-from-fft-dft
@@ -37,4 +37,4 @@ spectrum_analyzer::analyze(float const* audio, std::size_t count, float sample_r
   return _output.data();
 }
 
-} // namespace svn::base
+} // namespace inf::base

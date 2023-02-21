@@ -1,11 +1,11 @@
 #ifndef SVN_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
 #define SVN_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
 
-#include <svn.base/shared/support.hpp>
-#include <svn.synth/effect/topology.hpp>
-#include <svn.synth/effect/processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.synth/effect/topology.hpp>
+#include <inf.synth/effect/processor.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // Foldback shaper.
 inline float
@@ -30,5 +30,5 @@ void effect_processor::process_shp_basic(effect_process_input const& input, floa
       return (1.0f - mix[s]) * sample + mix[s] * shaper(sample * gain[s]); });
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP

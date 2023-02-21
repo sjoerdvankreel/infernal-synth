@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
 #define SVN_SYNTH_VOICE_MASTER_TOPOLOGY_HPP
 
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 // ---- shared ----
 // voice and master params must start with these
@@ -42,5 +42,5 @@ struct master_param_t { enum value {
   gcv1, gcv1_bipolar, gcv2, gcv2_bipolar, gcv3, gcv3_bipolar, count }; };
 typedef master_param_t::value master_param;
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_VOICE_MASTER_TOPOLOGY_HPP

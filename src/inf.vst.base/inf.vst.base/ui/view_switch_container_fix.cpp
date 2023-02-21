@@ -1,12 +1,12 @@
-#include <svn.vst.base/ui/vst_editor.hpp>
-#include <svn.vst.base/ui/view_switch_container_fix.hpp>
+#include <inf.vst.base/ui/vst_editor.hpp>
+#include <inf.vst.base/ui/view_switch_container_fix.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
-using namespace svn::base;
+using namespace inf::base;
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 CView* 
 view_switch_container_fix_creator::create(
@@ -59,4 +59,4 @@ view_switch_controller_fix::valueChanged(VSTGUI::CControl* control)
     }
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_OSCILLATOR_PROCESSOR_HPP
 #define SVN_SYNTH_OSCILLATOR_PROCESSOR_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.synth/oscillator/state.hpp>
-#include <svn.synth/shared/audio_part_processor.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.synth/oscillator/state.hpp>
+#include <inf.synth/shared/audio_part_processor.hpp>
 
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct scratch_space;
 class cv_bank_processor;
@@ -50,5 +50,5 @@ private:
   void process_basic(oscillator_input const& input, float const* const* params, float* const* out, scratch_space& scratch);
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_PROCESSOR_HPP

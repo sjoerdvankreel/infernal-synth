@@ -1,10 +1,10 @@
-#include <svn.base/shared/support.hpp>
-#include <svn.vst.base/sdk/processor.hpp>
-#include <svn.vst.base/sdk/parameter.hpp>
-#include <svn.vst.base/shared/support.hpp>
-#include <svn.vst.base/shared/bootstrap.hpp>
-#include <svn.vst.base/shared/io_stream.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.vst.base/sdk/processor.hpp>
+#include <inf.vst.base/sdk/parameter.hpp>
+#include <inf.vst.base/shared/support.hpp>
+#include <inf.vst.base/shared/bootstrap.hpp>
+#include <inf.vst.base/shared/io_stream.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <base/source/fstreamer.h>
 #include <pluginterfaces/base/ibstream.h>
@@ -15,18 +15,18 @@
 #include <cassert>
 #include <cstdint>
 
-using namespace svn::base;
+using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst; 
   
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 // Don't update output too often.
 std::int32_t const 
 output_param_update_msec = 200;
 
 vst_processor::
-vst_processor(std::unique_ptr<svn::base::topology_info>&& topology, FUID controller_id):
+vst_processor(std::unique_ptr<inf::base::topology_info>&& topology, FUID controller_id):
 _state(topology->params.size()), _changed(topology->params.size()),
 _accurate_parameters(static_cast<std::size_t>(topology->input_param_count)),
 _output_updated(), _topology(std::move(topology)), _processor()
@@ -296,4 +296,4 @@ vst_processor::process_output_parameters(
   }
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

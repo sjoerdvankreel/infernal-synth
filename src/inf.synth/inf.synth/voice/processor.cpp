@@ -1,14 +1,14 @@
-#include <svn.synth/voice/state.hpp>
-#include <svn.synth/output/state.hpp>
-#include <svn.synth/voice/processor.hpp>
-#include <svn.base/shared/support.hpp>
+#include <inf.synth/voice/state.hpp>
+#include <inf.synth/output/state.hpp>
+#include <inf.synth/voice/processor.hpp>
+#include <inf.base/shared/support.hpp>
 
 #include <cassert>
 #include <algorithm>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 voice_processor::
 voice_processor(topology_info const* topology, float sample_rate,
@@ -248,4 +248,4 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   return ended;
 } 
   
-} // namespace svn::synth 
+} // namespace inf::synth 

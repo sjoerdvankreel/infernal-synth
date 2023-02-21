@@ -1,12 +1,12 @@
-#include <svn.base/topology/topology_info.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.base/topology/topology_info.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <set>
 #include <memory>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 // https://stackoverflow.com/questions/2351087/what-is-the-best-32bit-hash-function-for-short-strings-tag-names 
 // std::hash is not required to be stable across program invocations.
@@ -180,4 +180,4 @@ topology_info::init(topology_info* topology,
   assert(topology->params.size() == topology->input_param_count + topology->output_param_count);
 } 
 
-} // namespace svn::base
+} // namespace inf::base

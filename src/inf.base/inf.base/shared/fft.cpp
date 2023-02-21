@@ -1,8 +1,8 @@
-#include <svn.base/shared/fft.hpp>
-#include <svn.base/shared/support.hpp>
+#include <inf.base/shared/fft.hpp>
+#include <inf.base/shared/support.hpp>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 std::vector<std::complex<float>> const& 
 fft::transform(float const* audio, std::size_t count)
@@ -40,4 +40,4 @@ fft::transform(std::complex<float>* inout, std::complex<float>* scratch, std::si
   }
 }
 
-} // namespace svn::base
+} // namespace inf::base

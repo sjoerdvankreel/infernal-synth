@@ -1,14 +1,14 @@
 #ifndef SVN_SYNTH_AUDIO_BANK_STATE_HPP
 #define SVN_SYNTH_AUDIO_BANK_STATE_HPP
 
-#include <svn.base/shared/cont_storage.hpp>
+#include <inf.base/shared/cont_storage.hpp>
 
 #include <array>
 #include <vector>
 #include <cstdint>
 #include <utility>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct audio_bank_output
 {
@@ -55,5 +55,5 @@ struct audio_bank_state
   explicit audio_bank_state(std::int32_t max_sample_count);
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_SYNTH_AUDIO_BANK_STATE_HPP

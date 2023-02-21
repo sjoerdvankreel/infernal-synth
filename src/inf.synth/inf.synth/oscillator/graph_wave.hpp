@@ -1,28 +1,28 @@
 #ifndef SVN_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
 #define SVN_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
 
-#include <svn.synth/synth/config.hpp>
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/shared/support.hpp>
+#include <inf.synth/synth/config.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/shared/cont_storage.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/shared/cont_storage.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <array>
 #include <vector>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class oscillator_wave_graph :
-public svn::base::graph_processor
+public inf::base::graph_processor
 {
   bool const _right;
   std::vector<float> _port;
   std::array<base::cont_storage<float>, vosc_count> _vosc_out;
   std::array<base::cont_storage<float>, vosc_count> _vosc_reset_pos;
   std::array<base::cont_storage<std::int32_t>, vosc_count> _vosc_reset;
-  std::array<std::vector<float>, svn::base::stereo_channels> _audio_out;
+  std::array<std::vector<float>, inf::base::stereo_channels> _audio_out;
 
 public:
   oscillator_wave_graph(base::topology_info const* topology, base::part_id id, bool right);
@@ -44,5 +44,5 @@ inline base::param_value oscillator_wave_graph::
 transform_param(std::int32_t rt_index, base::param_value value) const
 { return graph_disable_modulation(topology(), rt_index, value); }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP

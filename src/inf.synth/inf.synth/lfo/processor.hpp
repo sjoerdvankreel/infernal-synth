@@ -1,11 +1,11 @@
 #ifndef SVN_SYNTH_LFO_PROCESSOR_HPP
 #define SVN_SYNTH_LFO_PROCESSOR_HPP
 
-#include <svn.synth/lfo/state.hpp>
-#include <svn.synth/shared/part_processor.hpp>
-#include <svn.synth/shared/basic_lp_filter.hpp>
+#include <inf.synth/lfo/state.hpp>
+#include <inf.synth/shared/part_processor.hpp>
+#include <inf.synth/shared/basic_lp_filter.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct scratch_space;
 
@@ -56,5 +56,5 @@ public:
   lfo_processor(base::topology_info const* topology, base::part_id id, float sample_rate, float bpm, base::automation_view const& automation);
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_LFO_PROCESSOR_HPP

@@ -1,9 +1,9 @@
 #ifndef SVN_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
 #define SVN_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP
 
-#include <svn.base/shared/state.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_descriptor.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
 
 #include <map>
 #include <string>
@@ -12,7 +12,7 @@
 #include <cstdint>
 #include <utility>
 
-namespace svn::base {
+namespace inf::base {
 
 class audio_processor;
 class graph_processor;
@@ -89,5 +89,5 @@ struct topology_info
   std::int32_t param_start(part_id id) const { return param_bounds[id.type][id.index]; }
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_TOPOLOGY_TOPOLOGY_INFO_HPP

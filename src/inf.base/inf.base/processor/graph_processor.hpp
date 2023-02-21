@@ -1,13 +1,13 @@
 #ifndef SVN_BASE_PROCESSOR_GRAPH_PROCESSOR_HPP
 #define SVN_BASE_PROCESSOR_GRAPH_PROCESSOR_HPP
 
-#include <svn.base/processor/state.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 // Renders pretty images.
 class graph_processor
@@ -64,5 +64,5 @@ _id(id), _topology(topology), _raw_data(), _plot_data(),
 _graph_data(), _state_copy(topology->params.size()), 
 _continuous_automation(topology->input_param_count), _continuous_automation_buffer() {}
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_PROCESSOR_GRAPH_PROCESSOR_HPP

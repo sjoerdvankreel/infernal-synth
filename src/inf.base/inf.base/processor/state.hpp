@@ -1,10 +1,10 @@
 #ifndef SVN_BASE_PROCESSOR_STATE_HPP
 #define SVN_BASE_PROCESSOR_STATE_HPP
 
-#include <svn.base/processor/automation_view.hpp>
+#include <inf.base/processor/automation_view.hpp>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 // Just pick some speed for rendering.
 inline float constexpr graph_bpm = 120.0f;
@@ -85,5 +85,5 @@ struct block_input
   std::int32_t* changed_automation_raw;
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_PROCESSOR_STATE_HPP

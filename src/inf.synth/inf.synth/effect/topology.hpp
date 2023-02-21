@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_EFFECT_TOPOLOGY_HPP
 #define SVN_SYNTH_EFFECT_TOPOLOGY_HPP
 
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 extern base::param_descriptor const veffect_params[];
 extern base::param_descriptor const geffect_params[];
@@ -43,5 +43,5 @@ inline std::vector<base::graph_descriptor> const& effect_graphs = {
 { effect_graph::graph2, "Filter FR/Shaper spectrum/Delay right/Reverb right", { 0, 3, 4, 1 } } };
 inline std::vector<base::box_descriptor> const effect_borders = { { 0, 0, 1, 2 }, { 1, 0, 3, 2 } };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_EFFECT_TOPOLOGY_HPP

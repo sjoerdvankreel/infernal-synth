@@ -1,13 +1,13 @@
 #ifndef SVN_SYNTH_ENVELOPE_TOPOLOGY_HPP
 #define SVN_SYNTH_ENVELOPE_TOPOLOGY_HPP
 
-#include <svn.base/topology/param_descriptor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 extern base::param_descriptor const envelope_params[];
 extern std::vector<float> const envelope_timesig_values;
@@ -35,5 +35,5 @@ std::vector<base::graph_descriptor> const envelope_graphs =
 std::vector<base::box_descriptor> const envelope_borders =
 { { 0, 0, 2, 1 }, { 2, 0, 3, 1 }, { 5, 0, 3, 1 }, { 3, 1, 5, 1 }, { 3, 2, 5, 1 }, { 3, 3, 5, 1 } };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_ENVELOPE_TOPOLOGY_HPP

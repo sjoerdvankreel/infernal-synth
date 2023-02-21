@@ -1,8 +1,8 @@
-#include <svn.synth/oscillator/graph_spectrum.hpp>
+#include <inf.synth/oscillator/graph_spectrum.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
  
 bool 
 oscillator_spectrum_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
@@ -13,4 +13,4 @@ oscillator_spectrum_graph::dsp_to_plot(graph_plot_input const& input, std::vecto
   return false;
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

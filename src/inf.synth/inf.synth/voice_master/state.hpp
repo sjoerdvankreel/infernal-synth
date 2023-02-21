@@ -1,10 +1,10 @@
 #ifndef SVN_SYNTH_VOICE_MASTER_STATE_HPP
 #define SVN_SYNTH_VOICE_MASTER_STATE_HPP
 
-#include <svn.base/processor/state.hpp>
+#include <inf.base/processor/state.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct amp_bal_input
 {
@@ -13,5 +13,5 @@ struct amp_bal_input
   base::block_input_data const* block;
 };
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_VOICE_MASTER_STATE_HPP

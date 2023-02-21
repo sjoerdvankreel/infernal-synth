@@ -1,10 +1,10 @@
-#include <svn.vst.base/ui/support.hpp>
-#include <svn.vst.base/ui/graph_plot.hpp>
-#include <svn.vst.base/sdk/controller.hpp>
-#include <svn.vst.base/shared/bootstrap.hpp>
+#include <inf.vst.base/ui/support.hpp>
+#include <inf.vst.base/ui/graph_plot.hpp>
+#include <inf.vst.base/sdk/controller.hpp>
+#include <inf.vst.base/shared/bootstrap.hpp>
 
-#include <svn.base/processor/graph_processor.hpp>
-#include <svn.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vstgui/uidescription/uiviewcreator.h>
 
@@ -12,9 +12,9 @@
 #include <cstdint>
 
 using namespace VSTGUI;
-using namespace svn::base;
+using namespace inf::base;
    
-namespace svn::vst::base { 
+namespace inf::vst::base {
       
 CView*  
 graph_plot_creator::create(
@@ -138,4 +138,4 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   stroke_path->forget();
 }
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base

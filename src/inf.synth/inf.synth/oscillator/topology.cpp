@@ -1,14 +1,14 @@
-#include <svn.synth/synth/config.hpp>
-#include <svn.synth/oscillator/config.hpp>
-#include <svn.synth/oscillator/topology.hpp>
+#include <inf.synth/synth/config.hpp>
+#include <inf.synth/oscillator/config.hpp>
+#include <inf.synth/oscillator/topology.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 static std::vector<list_item> const osc_types = { 
   { "{EB845D72-0468-4B7D-A0FA-ED8F2047FFA2}", "Basic" },  
@@ -83,4 +83,4 @@ osc_params[osc_param::count] =
   { "{4F1F7660-BE8B-421D-9646-DD9D6D827C38}", { { "Y", "Noise Y" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, &osc_noise_ui } } 
 };    
 
-} // namespace svn::synth 
+} // namespace inf::synth 

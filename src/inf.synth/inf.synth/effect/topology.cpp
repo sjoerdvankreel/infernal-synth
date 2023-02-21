@@ -1,13 +1,13 @@
-#include <svn.synth/effect/config.hpp>
-#include <svn.synth/effect/topology.hpp>
+#include <inf.synth/effect/config.hpp>
+#include <inf.synth/effect/topology.hpp>
 
-#include <svn.base/shared/support.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
-#include <svn.base/topology/param_ui_descriptor.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
+#include <inf.base/topology/param_ui_descriptor.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth { 
+namespace inf::synth {
  
 static std::vector<list_item> const effect_delay_types = {
   { "{B130A459-A336-4AE6-93F5-AE8CF8D09F0E}", "Feedback" },
@@ -218,4 +218,4 @@ geffect_params[effect_param::gfx_count] =
   { "{46B7C3CF-3BBA-4BFF-AA7F-4DBEB87DDBE8}", effect_reverb_apf_data }
 }; 
 
-} // namespace svn::synth
+} // namespace inf::synth

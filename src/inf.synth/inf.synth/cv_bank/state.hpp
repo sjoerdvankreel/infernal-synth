@@ -1,18 +1,18 @@
 #ifndef SVN_SYNTH_DSP_CV_BANK_STATE_HPP
 #define SVN_SYNTH_DSP_CV_BANK_STATE_HPP
 
-#include <svn.synth/synth/config.hpp>
-#include <svn.synth/shared/state.hpp>
-#include <svn.synth/voice_master/topology.hpp>
-#include <svn.base/processor/state.hpp>
-#include <svn.base/shared/cont_storage.hpp>
-#include <svn.base/topology/part_descriptor.hpp>
+#include <inf.synth/synth/config.hpp>
+#include <inf.synth/shared/state.hpp>
+#include <inf.synth/voice_master/topology.hpp>
+#include <inf.base/processor/state.hpp>
+#include <inf.base/shared/cont_storage.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
 
 #include <array>
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 struct cv_bank_input
 {
@@ -102,5 +102,5 @@ cv_bank_storage::resize(std::int32_t max_sample_count)
   buffer.values = storage.data();
 }
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_DSP_CV_BANK_STATE_HPP

@@ -1,16 +1,16 @@
 #ifndef SVN_SYNTH_CV_BANK_GRAPH_HPP
 #define SVN_SYNTH_CV_BANK_GRAPH_HPP
 
-#include <svn.base/shared/state.hpp>
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 
 #include <vector>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class cv_bank_graph:
-public svn::base::graph_processor
+public inf::base::graph_processor
 {
 public:
   cv_bank_graph(base::topology_info const* topology, base::part_id id);
@@ -27,7 +27,7 @@ cv_bank_graph::needs_repaint(std::int32_t runtime_param) const
 
 inline cv_bank_graph::
 cv_bank_graph(base::topology_info const* topology, base::part_id id) :
-svn::base::graph_processor(topology, id) {}
+inf::base::graph_processor(topology, id) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_CV_BANK_GRAPH_HPP

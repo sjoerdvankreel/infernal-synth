@@ -1,10 +1,10 @@
 #ifndef SVN_SYNTH_VOICE_MASTER_GRAPH_HPP
 #define SVN_SYNTH_VOICE_MASTER_GRAPH_HPP
 
-#include <svn.base/processor/graph_processor.hpp>
+#include <inf.base/processor/graph_processor.hpp>
 #include <cstdint>
 
-namespace svn::synth {
+namespace inf::synth {
 
 class amp_bal_graph:
 public base::graph_processor
@@ -23,5 +23,5 @@ inline amp_bal_graph::
 amp_bal_graph(base::topology_info const* topology, base::part_id id):
 base::graph_processor(topology, id) {}
 
-} // namespace svn::synth
+} // namespace inf::synth
 #endif // SVN_SYNTH_VOICE_MASTER_GRAPH_HPP

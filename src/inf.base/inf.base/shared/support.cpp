@@ -1,7 +1,7 @@
-#include <svn.base/shared/support.hpp>
+#include <inf.base/shared/support.hpp>
 #include <immintrin.h>
 
-namespace svn::base {
+namespace inf::base {
 
 note_to_frequency_table_init const
 note_to_frequency_table_init::init;
@@ -35,4 +35,4 @@ table()
         table[o * (note_count * cent_count) + n * cent_count + c] = note_to_frequency(o * note_count + n + c / 100.0f);
 }
 
-} // namespace svn::base
+} // namespace inf::base

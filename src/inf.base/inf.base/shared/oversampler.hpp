@@ -1,11 +1,11 @@
 #ifndef SVN_BASE_SHARED_OVERSAMPLER_HPP
 #define SVN_BASE_SHARED_OVERSAMPLER_HPP
 
-#include <svn.base/shared/cont_storage.hpp>
+#include <inf.base/shared/cont_storage.hpp>
 #include <hiir/Upsampler2xFpu.h>
 #include <hiir/Downsampler2xFpu.h>
 
-namespace svn::base
+namespace inf::base
 {
 
 // Oversampling using HIIR http://ldesoras.free.fr/.
@@ -109,5 +109,5 @@ oversampler::process(float const* const* in, float* const* out, std::int32_t sam
   }
 }
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_OVERSAMPLER_HPP

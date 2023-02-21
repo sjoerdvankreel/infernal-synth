@@ -2,16 +2,16 @@
 #define SVN_VST_BASE_SHARED_IO_STREAM_HPP
 
 #include <base/source/fstreamer.h>
-#include <svn.base/shared/io_stream.hpp>
+#include <inf.base/shared/io_stream.hpp>
 
 #include <string>
 #include <cstdint>
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 // Forwarding to vst3 I/O.
 class vst_io_stream:
-public svn::base::io_stream
+public inf::base::io_stream
 {
 private:
   Steinberg::IBStreamer* const _streamer;
@@ -30,5 +30,5 @@ public:
   bool write_int32(std::int32_t val) override { return _streamer->writeInt32(val); }
 };
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base
 #endif // SVN_VST_BASE_SHARED_IO_STREAM_HPP

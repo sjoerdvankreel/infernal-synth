@@ -1,9 +1,9 @@
-#include <svn.base/shared/state.hpp>
-#include <svn.base/shared/support.hpp>
-#include <svn.base/processor/audio_processor.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/shared/support.hpp>
+#include <inf.base/processor/audio_processor.hpp>
 #include <cassert>
 
-namespace svn::base {
+namespace inf::base {
 
 audio_processor::
 audio_processor(
@@ -101,4 +101,4 @@ audio_processor::process(
   return _output;
 }
 
-} // namespace svn::base
+} // namespace inf::base

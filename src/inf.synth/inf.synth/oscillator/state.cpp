@@ -1,6 +1,6 @@
-#include <svn.synth/oscillator/state.hpp>
+#include <inf.synth/oscillator/state.hpp>
 
-namespace svn::synth {
+namespace inf::synth {
 
 oscillator_state::
 oscillator_state(float sample_rate):
@@ -15,4 +15,4 @@ noise_rand_state_y(), noise_color_value(), noise_color_hold()
     kps_lines[i] = std::vector<float>(max_kps_length);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

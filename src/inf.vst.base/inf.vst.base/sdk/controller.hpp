@@ -1,8 +1,8 @@
 #ifndef SVN_VST_BASE_SDK_CONTROLLER_HPP
 #define SVN_VST_BASE_SDK_CONTROLLER_HPP
 
-#include <svn.vst.base/ui/vst_editor.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.vst.base/ui/vst_editor.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <pluginterfaces/vst/vsttypes.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
@@ -10,7 +10,7 @@
 
 #include <vector>
 
-namespace svn::vst::base {
+namespace inf::vst::base {
 
 // For factory presets (just every .vstpreset in the resources folder).
 struct preset_item
@@ -34,8 +34,8 @@ public VSTGUI::VST3EditorDelegate
   bool _preset_items_initialized;
   std::vector<preset_item> _preset_items;
   // Separate copy of the parameter state used for graphs.
-  std::vector<svn::base::param_value> _state;
-  std::unique_ptr<svn::base::topology_info> _topology;
+  std::vector<inf::base::param_value> _state;
+  std::unique_ptr<inf::base::topology_info> _topology;
 
   // Context menu.
   // Apply = source begin, target begin, param count.
@@ -50,7 +50,7 @@ private:
   void load_preset(std::size_t index);
   void clear_module(std::int32_t type, std::int32_t index);
   tresult set_component_state(IBStream* state, bool perform_edit);
-  void load_component_state(svn::base::param_value* state, bool perform_edit);
+  void load_component_state(inf::base::param_value* state, bool perform_edit);
 
 public:
   // Update the editor ui if dependent params change.
@@ -58,7 +58,7 @@ public:
   void view_removed(vst_editor* editor);
   void view_attached(vst_editor* editor);
 
-  explicit vst_controller(std::unique_ptr<svn::base::topology_info>&& topology) :
+  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
   _editor(nullptr), _preset_items_initialized(false), _preset_items(),
   _state(topology->params.size()), _topology(std::move(topology)) {}
 
@@ -67,9 +67,9 @@ public:
   IPlugView* PLUGIN_API createView(char const* name) override;
   VSTGUI::COptionMenu* createContextMenu(VSTGUI::CPoint const& pos, VSTGUI::VST3Editor* editor) override;
 
-  svn::base::param_value const* state() const { return _state.data(); }
+  inf::base::param_value const* state() const { return _state.data(); }
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
 };
 
-} // namespace svn::vst::base
+} // namespace inf::vst::base
 #endif // SVN_VST_BASE_SDK_CONTROLLER_HPP

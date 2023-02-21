@@ -1,13 +1,13 @@
-#include <svn.synth/shared/config.hpp>
-#include <svn.synth/shared/support.hpp>
-#include <svn.synth/cv_bank/processor.hpp>
-#include <svn.synth/oscillator/processor.hpp>
-#include <svn.synth/shared/scratch_space.hpp>
-#include <svn.synth/oscillator/graph_wave.hpp>
+#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
+#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.synth/oscillator/processor.hpp>
+#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.synth/oscillator/graph_wave.hpp>
 
-using namespace svn::base;
+using namespace inf::base;
 
-namespace svn::synth {
+namespace inf::synth {
 
 bool 
 oscillator_wave_graph::needs_repaint(
@@ -89,4 +89,4 @@ oscillator_wave_graph::process_dsp_core(block_input const& input, float* output,
   else std::copy(_audio_out[0].data(), _audio_out[0].data() + input.data.sample_count, output);
 }
 
-} // namespace svn::synth
+} // namespace inf::synth

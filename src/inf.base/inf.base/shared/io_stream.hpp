@@ -1,13 +1,13 @@
 #ifndef SVN_BASE_SHARED_IO_STREAM_HPP
 #define SVN_BASE_SHARED_IO_STREAM_HPP
 
-#include <svn.base/shared/state.hpp>
-#include <svn.base/topology/topology_info.hpp>
+#include <inf.base/shared/state.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <string>
 #include <cstdint>
 
-namespace svn::base {
+namespace inf::base {
 
 class io_stream
 {
@@ -28,5 +28,5 @@ public:
   bool save(topology_info const& topology, param_value const* state);
 };
 
-} // namespace svn::base
+} // namespace inf::base
 #endif // SVN_BASE_SHARED_IO_STREAM_HPP
