@@ -39,13 +39,25 @@ void
 synth_fx_topology::init_defaults(param_value* state) const
 {
   topology_info::init_defaults(state);
-  state[param_bounds[part_type::geffect][0] + effect_param::on].discrete = 1; /* enabled */
-  state[param_bounds[part_type::geffect][0] + effect_param::type].discrete = 2; /* delay */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::on].discrete = 1; /* enabled */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1].discrete = 2; /* external */ 
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out1].discrete = 1; /* gfx 1 */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in2].discrete = 3; /* gfx 1 */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out2].discrete = 1 + geffect_count; /* master */
+
+  // enable
+  state[param_bounds[part_type::geffect][0] + effect_param::on].discrete = 1;
+  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::on].discrete = 1;
+
+  // param indices
+  std::int32_t geffect_1_type = param_bounds[part_type::geffect][0] + effect_param::type;
+  std::int32_t gaudio_in_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1;
+  std::int32_t gaudio_out_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out1;
+  std::int32_t gaudio_in_2 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in2;
+  std::int32_t gaudio_out_2 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out2;
+
+  // set defaults
+  state[gaudio_in_1] = params[gaudio_in_1].descriptor->data.parse_ui("Ext");
+  state[gaudio_out_1] = params[gaudio_out_1].descriptor->data.parse_ui("FX B1");
+  state[gaudio_in_2] = params[gaudio_in_2].descriptor->data.parse_ui("FX B1");
+  state[gaudio_out_2] = params[gaudio_out_2].descriptor->data.parse_ui("Master");
+  state[geffect_1_type] = params[geffect_1_type].descriptor->data.parse_ui("Delay");
+
   return;
 }
 
