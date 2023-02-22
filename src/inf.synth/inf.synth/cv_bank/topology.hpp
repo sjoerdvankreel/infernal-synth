@@ -143,12 +143,6 @@ inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_outpu
   nullptr, vcv_route_vosc_mapping, vgcv_route_effect_mapping, 
   vcv_route_audio_bank_mapping, cv_route_amp_mapping };
 
-// default selectors
-inline std::int32_t constexpr vcv_bank_voice_output = 1
-  + vosc_count * vcv_route_vosc_target::count 
-  + veffect_count * vgcv_route_effect_target::vfx_count 
-  + vaudio_bank_count * vcv_route_audio_bank_target::count;
-
 // ---- global ----
 
 // input routing and mapping, off must be 0
@@ -183,12 +177,6 @@ inline std::int32_t const* const gcv_route_output_target_mapping[gcv_route_outpu
   nullptr, vgcv_route_effect_mapping, gcv_route_audio_bank_mapping, cv_route_amp_mapping };
 inline std::int32_t constexpr gcv_route_output_target_counts[gcv_route_output::count] = {
   0 /* off */, vgcv_route_effect_target::gfx_count, gcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
-
-// default selectors
-inline std::int32_t constexpr gcv_bank_gcv1_input = gcv_route_input::gcv;
-inline std::int32_t constexpr gcv_bank_gamp_output = 1
-+ geffect_count * vgcv_route_effect_target::count
-+ gaudio_bank_count * gcv_route_audio_bank_target::count;
 
 } // namespace inf::synth
 #endif // INF_SYNTH_CV_BANK_TOPOLOGY_HPP

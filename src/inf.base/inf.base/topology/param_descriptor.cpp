@@ -46,6 +46,16 @@ real_descriptor::parse(char const* buffer, float& val) const
   return true;
 } 
 
+float 
+real_descriptor::parse_to_normalized(char const* buffer) const
+{
+  float val;
+  bool ok = parse(buffer, val);
+  (void)ok;
+  assert(ok);
+  return display.from_range(val);
+}
+
 bool
 discrete_descriptor::parse(param_type type, bool io, char const* buffer, std::int32_t& val) const
 {
@@ -81,6 +91,16 @@ discrete_descriptor::parse(param_type type, bool io, char const* buffer, std::in
   }
 }
 
+std::int32_t
+discrete_descriptor::parse_ui(param_type type, char const* buffer) const
+{
+  std::int32_t val;
+  bool ok = parse(type, false, buffer, val);
+  (void)ok;
+  assert(ok);
+  return val;
+}
+
 bool 
 param_descriptor_data::parse(bool io, char const* buffer, param_value& val) const
 {
@@ -88,6 +108,16 @@ param_descriptor_data::parse(bool io, char const* buffer, param_value& val) cons
   {
   case param_type::real: return real.parse(buffer, val.real);
   default: return discrete.parse(type, io, buffer, val.discrete);
+  }
+}
+
+param_value
+param_descriptor_data::parse_ui(char const* buffer) const
+{
+  switch (type)
+  {
+  case param_type::real: return param_value(real.parse_to_normalized(buffer));
+  default: return param_value(discrete.parse_ui(type, buffer));
   }
 }
 

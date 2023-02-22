@@ -39,14 +39,40 @@ void
 synth_instrument_topology::init_defaults(param_value* state) const
 {
   topology_info::init_defaults(state);
-  state[param_bounds[part_type::vosc][0] + osc_param::on].discrete = 1; /* enabled */
-  state[param_bounds[part_type::master][0] + master_param::gain].real = 0.25; /* -6dB */
-  state[param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::on].discrete = 1; /* enabled */
-  state[param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::in1].discrete = 1; /* osc 1 */
-  state[param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::out1].discrete = 1 + veffect_count; /* voice */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::on].discrete = 1; /* enabled */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1].discrete = 1; /* voice */
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out1].discrete = 1 + geffect_count; /* master */
+
+  // enable
+  state[param_bounds[part_type::vosc][0] + osc_param::on].discrete = 1;
+  state[param_bounds[part_type::vcv_bank][0] + vaudio_bank_param::on].discrete = 1;
+  state[param_bounds[part_type::gcv_bank][0] + gaudio_bank_param::on].discrete = 1;
+  state[param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::on].discrete = 1;
+  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::on].discrete = 1;
+
+  // param indices
+  std::int32_t master_gain = param_bounds[part_type::master][0] + master_param::gain;
+  std::int32_t vcv_in_1 = param_bounds[part_type::vcv_bank][0] + cv_bank_param::in1;
+  std::int32_t vcv_out_1 = param_bounds[part_type::vcv_bank][0] + cv_bank_param::out1;
+  std::int32_t vcv_op_1 = param_bounds[part_type::vcv_bank][0] + cv_bank_param::op1;
+  std::int32_t gcv_in_1 = param_bounds[part_type::gcv_bank][0] + cv_bank_param::in1;
+  std::int32_t gcv_out_1 = param_bounds[part_type::gcv_bank][0] + cv_bank_param::out1;
+  std::int32_t gcv_op_1 = param_bounds[part_type::gcv_bank][0] + cv_bank_param::op1;
+  std::int32_t vaudio_in_1 = param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::in1;
+  std::int32_t vaudio_out_1 = param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::out1;
+  std::int32_t gaudio_in_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1;
+  std::int32_t gaudio_out_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out1;
+
+  // set defaults
+  state[master_gain] = params[master_gain].descriptor->data.parse_ui("-6.0");
+  state[vaudio_in_1] = params[vaudio_in_1].descriptor->data.parse_ui("Osc 1");
+  state[vaudio_out_1] = params[vaudio_out_1].descriptor->data.parse_ui("Voice");
+  state[gaudio_in_1] = params[gaudio_in_1].descriptor->data.parse_ui("Voice");
+  state[gaudio_out_1] = params[gaudio_out_1].descriptor->data.parse_ui("Master");
+  state[vcv_in_1] = params[vcv_in_1].descriptor->data.parse_ui("Velocity");
+  state[vcv_out_1] = params[vcv_out_1].descriptor->data.parse_ui("Voice Gain");
+  state[vcv_op_1] = params[vcv_op_1].descriptor->data.parse_ui("Mul");
+  state[gcv_in_1] = params[gcv_in_1].descriptor->data.parse_ui("CV 1");
+  state[gcv_out_1] = params[gcv_out_1].descriptor->data.parse_ui("Master Gain");
+  state[gcv_op_1] = params[gcv_op_1].descriptor->data.parse_ui("Mul");
+
   return;
 }
 
