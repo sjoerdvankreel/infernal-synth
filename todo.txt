@@ -17,13 +17,12 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- double click reset knob to default
 - reduce output/cpu ui
-- better factory presets
-- handle vst silence flags
 - new menu option: clear all unused
+- double click reset knob to default
 - generic keyboard tracking: midi in as modulation source
 
+- better factory presets
 - document double click and extra menu options
 - document time-based stuff cannot be modulated
 - document breaking changes: delay params, env params
