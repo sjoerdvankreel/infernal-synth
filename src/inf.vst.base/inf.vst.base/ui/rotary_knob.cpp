@@ -108,14 +108,18 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   }
   else 
   {
+    float border_lo_start_1 = 90.0f + start * to_degrees;
     float border_hi_start = 270.0f - (0.5f - angle) * range * to_degrees;
     float border_hi_end = 270.0f;
-    //context->setFrameColor(to_vst_color(_colors.drag));
-    context->setFrameColor(CColor(255, 0, 0));
+    float border_lo_end_2 = 90.0f - start * to_degrees;
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_start_1, border_hi_start, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.drag));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
-    //context->setFrameColor(to_vst_color(_colors.inner));
-    context->setFrameColor(CColor(0, 255, 0));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_lo_end_2, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_end_2, border_lo_start_1, kDrawStroked);
   }
 
   // light settings

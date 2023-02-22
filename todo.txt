@@ -17,9 +17,11 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
+- double click reset knob to default
 - no knob dot for unpolar controls
 - knob dot at bottom for unipolar controls
 - reduce output/cpu ui
+- document double click and extra menu options
 - document breaking changes: delay params, env params
 - document time-based stuff cannot be modulated
 - better factory presets
