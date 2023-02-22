@@ -84,10 +84,13 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   {
     float border_hi_start = 90.0f + start * to_degrees;
     float border_hi_end = 90.0f + start * to_degrees + angle * range * to_degrees;
-    context->setFrameColor(to_vst_color(_colors.drag));
+    float border_lo_end = 90.0f - start * to_degrees;
+    context->setFrameColor(to_vst_color(_colors.marker));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.drag));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_lo_end, kDrawStroked);
     context->setFrameColor(to_vst_color(_colors.inner));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_end, border_hi_start, kDrawStroked);
   } else if(angle >= 0.5f)
   {
     float border_hi_start = 270.0f;
@@ -145,7 +148,10 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   double center = (inner_size.x - 1.0) / 2.0;
   double radius = center - 3.0;
   double theta = -(start + angle * range);
-  context->setFrameColor(to_vst_color(_colors.marker));
+  if(!_discrete && !_bipolar && angle < 0.01f)
+    context->setFrameColor(to_vst_color(_colors.drag));
+  else
+    context->setFrameColor(to_vst_color(_colors.marker));
   context->drawLine(CPoint(center, center), point_on_circle(center, radius, theta));
 
   // spot markers
@@ -156,8 +162,9 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   }
   else if(!_discrete)
   {
-    context->setFillColor(to_vst_color(_colors.drag));
+    context->setFillColor(to_vst_color(angle >= 0.99f? _colors.marker: _colors.drag));
     context->drawEllipse(CRect(point_on_circle(center, radius, start), CPoint(2.0, 2.0)), kDrawFilled);
+    context->setFillColor(to_vst_color(angle >= 0.01f? _colors.marker: _colors.drag));
     context->drawEllipse(CRect(point_on_circle(center, radius, -start), CPoint(2.0, 2.0)), kDrawFilled);
   }
 } 
