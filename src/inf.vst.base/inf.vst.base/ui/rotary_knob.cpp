@@ -73,11 +73,11 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   // inner border  
   if(_discrete)
   {
-    float border_hi_start = 270.0f + start * to_degrees + angle * range * to_degrees + 60.0f;
-    float border_hi_end = border_hi_start + 240.0f;
+    float border_hi_start = 90.0f + start * to_degrees + angle * range * to_degrees + 45.0f;
+    float border_hi_end = border_hi_start + 270.0f;
     context->setFrameColor(to_vst_color(_colors.drag));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
-    context->setFrameColor(to_vst_color(_colors.marker));
+    context->setFrameColor(to_vst_color(_colors.inner));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
   } else if (angle < 0.01f)
   {
