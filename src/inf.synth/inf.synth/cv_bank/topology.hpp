@@ -92,11 +92,11 @@ inline base::part_table_descriptor const cv_bank_table = { true, cv_bank_table_c
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
-  off, velo, key, venv, gcv, gcv_hold, 
-  vlfo, glfo, glfo_hold, count }; };
+  off, velo, key, key_inv, venv, 
+  gcv, gcv_hold, vlfo, glfo, glfo_hold, count }; };
 typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
-  1 /* off */, 1 /* velocity */, 1 /* key */, venv_count, master_gcv_count,
+  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, venv_count, master_gcv_count,
   master_gcv_count /* hold */, vlfo_count, glfo_count, glfo_count /* hold */ };
 
 // output routing and mapping, off must be 0

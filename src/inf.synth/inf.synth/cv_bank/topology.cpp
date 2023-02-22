@@ -51,6 +51,7 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{76EDD4AA-E81B-4777-B46E-A0DE12B60541}", "Off" },
   { "{81C92941-AD92-47BD-B1DC-7A46AB6E088D}", "Velocity" },
   { "{6211FF30-9D1F-4011-B8AA-A3DF08D84B71}", "Key" },
+  { "{9C81D502-DF00-4759-A2D0-B4FBCED9D9B0}", "Key Inv" },
   { "{F935E7CE-CC76-4548-B22F-4476A304BCEA}", "Env" },
   { "{33038A70-7256-46A8-AF33-6676157709C4}", "CV" },
   { "{1209DAFC-6F0B-452E-B613-01097DB6249A}", "CV" }, // Hold
@@ -140,7 +141,7 @@ static list_item const vgcv_route_effect_targets[vgcv_route_effect_target::count
 static bool const gcv_route_input_spaces[gcv_route_input::count] = { true, true, false };
 static bool const gcv_route_output_spaces[gcv_route_output::count] = { true, false, false, true };
 static bool const vcv_route_output_spaces[vcv_route_output::count] = { true, true, false, false, true };
-static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, true, false, false, false };
+static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, true, true, false, false, false };
 
 // output targets  
 static list_item const* const gcv_route_output_targets[gcv_route_output::count] = {
@@ -156,9 +157,9 @@ static std::vector<list_item> const gcv_route_output_target_list = zip_list_item
 
 // input sources
 static char const* const vcv_route_input_suffixes[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, nullptr, "Hold" };
+  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, nullptr, "Hold" };
 static list_item_info const vcv_route_input_infos[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, envelope_item_info, nullptr, nullptr, nullptr, nullptr, nullptr };
+  nullptr, nullptr, nullptr, nullptr, envelope_item_info, nullptr, nullptr, nullptr, nullptr, nullptr };
 static std::vector<list_item> const vcv_route_input_sources_list = multi_list_items(
   vcv_route_inputs, vcv_route_input_infos, vcv_route_input_spaces, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
 static std::vector<list_item> const gcv_route_input_sources_list = multi_list_items(

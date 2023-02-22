@@ -21,7 +21,6 @@
 - cv 1 default to master amp
 - velocity default to voice amp
 - new menu option: clear all unused
-- generic keyboard tracking: midi in as modulation source
 
 - better factory presets
 - document generic kdb track

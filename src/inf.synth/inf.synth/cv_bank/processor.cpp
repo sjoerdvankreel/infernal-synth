@@ -75,6 +75,7 @@ cv_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index) co
   case vcv_route_input::off: assert(false); return nullptr;
   case vcv_route_input::key: return _state->key.data();
   case vcv_route_input::velo: return _state->velo.data();
+  case vcv_route_input::key_inv: return _state->key_inv.data();
   case vcv_route_input::gcv: return _state->gcv[index].buffer.values;
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.values;
   case vcv_route_input::venv: return _state->venv[index].buffer.values;
@@ -105,6 +106,7 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
   case vcv_route_input::off: return false;
   case vcv_route_input::key: return false;
   case vcv_route_input::velo: return false;
+  case vcv_route_input::key_inv: return false;
   case vcv_route_input::gcv: return _state->gcv[index].buffer.flags.bipolar;
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.flags.bipolar;
   case vcv_route_input::venv: return _state->venv[index].buffer.flags.bipolar;
@@ -122,6 +124,7 @@ cv_bank_processor::apply_voice_state(cv_hold_sample const* gcv_hold,
   midi = std::clamp(midi, 0, 127);
   std::fill(_state->velo.data(), _state->velo.data() + sample_count, velo);
   std::fill(_state->key.data(), _state->key.data() + sample_count, static_cast<float>(midi) / 127.0f);
+  std::fill(_state->key_inv.data(), _state->key_inv.data() + sample_count, 1.0f - static_cast<float>(midi) / 127.0f);
   for (std::int32_t i = 0; i < master_gcv_count; i++)
   {
     _state->gcv_hold[i].buffer.flags = gcv_hold[i].flags;
@@ -227,7 +230,7 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
   // For keyboard tracking, we scale outward rather than inward, to give user 100% range e.g. between c3 and c5.
   std::int32_t ss = sample_count;
   float* in_modified = _state->in_modified.data();
-  if(source_type == vcv_route_input::key)
+  if(source_type == vcv_route_input::key || source_type == vcv_route_input::key_inv)
     for (std::int32_t s = 0; s < ss; s++)
     {
       float min_mod = offset[s];
