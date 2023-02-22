@@ -65,8 +65,7 @@ inline std::int32_t constexpr cv_route_amp_mapping[vgcv_route_amp_target::count]
 struct vgcv_route_effect_target_t { enum value { 
   flt_stvar_freq, flt_stvar_res, flt_stvar_kbd, flt_stvar_shlf_gain,
   flt_comb_dly_plus, flt_comb_gain_plus, flt_comb_dly_min, flt_comb_gain_min,
-  shp_mix, shp_gain, shp_cheby_sum_decay, vfx_count, 
-  dly_mix = vfx_count, dly_fdbk_amt_l, dly_fdbk_amt_r, dly_multi_sprd, dly_multi_amt, 
+  shp_mix, shp_gain, shp_cheby_sum_decay, vfx_count, dly_mix = vfx_count, dly_amt, dly_fdbk_sprd, dly_multi_sprd,
   reverb_mix, reverb_size, reverb_spread, reverb_damp, reverb_apf, count, gfx_count = count }; };
 typedef vgcv_route_effect_target_t::value vgcv_route_effect_target;
 
@@ -77,10 +76,8 @@ inline std::int32_t constexpr vgcv_route_effect_mapping[vgcv_route_effect_target
   effect_param::flt_comb_dly_plus, effect_param::flt_comb_gain_plus, 
   effect_param::flt_comb_dly_min, effect_param::flt_comb_gain_min,
   effect_param::shp_mix, effect_param::shp_gain, effect_param::shp_cheby_sum_decay, 
-  effect_param::dly_mix, effect_param::dly_fdbk_amt_l, 
-  effect_param::dly_fdbk_amt_r, effect_param::dly_multi_sprd, 
-  effect_param::dly_multi_amt, effect_param::reverb_mix, 
-  effect_param::reverb_size, effect_param::reverb_spread, 
+  effect_param::dly_mix, effect_param::dly_amt, effect_param::dly_fdbk_sprd, effect_param::dly_multi_sprd,
+  effect_param::reverb_mix, effect_param::reverb_size, effect_param::reverb_spread, 
   effect_param::reverb_damp, effect_param::reverb_apf };
 
 // ui
