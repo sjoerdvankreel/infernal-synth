@@ -10,7 +10,8 @@ using namespace inf::base;
 namespace inf::vst::base {
 
 static CPoint
-point_on_circle(double center, double radius, double theta)
+point_on_circle(
+  double center, double radius, double theta)
 {
   double x = radius * std::sin(theta) + center;
   double y = radius * std::cos(theta) + center;
@@ -69,15 +70,15 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   context->setFrameColor(to_vst_color(_colors.outer));
   context->drawEllipse(CRect(CPoint(1, 1), inner_size - CPoint(2, 2)), kDrawStroked);
 
-  // inner border
-  float border_hi_start = 90.0f + start * to_degrees; 
-  float border_hi_end = 90.0f + start * to_degrees + angle * range * to_degrees;
+  // inner border  
   if(_discrete)
   {
-    float off_start = 90.0f + start * to_degrees;
+    float border_hi_start = 270.0f + start * to_degrees + angle * range * to_degrees + 60.0f;
+    float border_hi_end = border_hi_start + 240.0f;
     context->setFrameColor(to_vst_color(_colors.drag));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start, off_start + 180.0f, kDrawStroked);
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start + 180.0f, off_start + 360.0f, kDrawStroked);
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.marker));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
   } else if (angle < 0.01f)
   {
     float off_start = 90.0f + start * to_degrees;
@@ -86,6 +87,8 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start + 180.0f, off_start + 360.0f, kDrawStroked);
   } else
   {
+    float border_hi_start = 90.0f + start * to_degrees;
+    float border_hi_end = 90.0f + start * to_degrees + angle * range * to_degrees;
     context->setFrameColor(to_vst_color(_colors.drag));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
     context->setFrameColor(to_vst_color(_colors.inner));
