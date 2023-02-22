@@ -38,7 +38,7 @@ _flt_stvar_type(), _shp_over_order(), _shp_cheby_terms(), _dly_multi_taps(), _dl
 void
 effect_processor::update_block_params(automation_view const& automation, std::int32_t midi, float bpm)
 {
-  update_flt_stvar_kbd_track(midi);
+  update_flt_stvar_kbd_track(midi); 
   automation_view eff_automation(automation.rearrange_params(id()));
   _on = eff_automation.block_discrete(effect_param::on);
   _type = eff_automation.block_discrete(effect_param::type);

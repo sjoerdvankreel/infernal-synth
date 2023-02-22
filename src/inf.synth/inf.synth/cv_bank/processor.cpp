@@ -20,7 +20,8 @@ _output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
 // Voice.
 cv_bank_processor::
 cv_bank_processor(topology_info const* topology, cv_bank_state* state, 
-  cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, float velo, base::block_input_data const& input):
+  cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, 
+  float velo, std::int32_t midi, base::block_input_data const& input):
 _state(state), _data(&cv_bank_data::voice), _topology(topology),
 _output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
 { 
@@ -29,7 +30,7 @@ _output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
   assert(gcv_hold_ != nullptr);
   assert(glfo_hold_ != nullptr);
   update_block_params(input);
-  apply_voice_state(gcv_hold_, glfo_hold_, velo, input.sample_count);
+  apply_voice_state(gcv_hold_, glfo_hold_, velo, midi, input.sample_count);
 }
 
 float const*
@@ -72,7 +73,9 @@ cv_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index) co
   switch (input)
   {
   case vcv_route_input::off: assert(false); return nullptr;
+  case vcv_route_input::key: return _state->key.data();
   case vcv_route_input::velo: return _state->velo.data();
+  case vcv_route_input::key_inv: return _state->key_inv.data();
   case vcv_route_input::gcv: return _state->gcv[index].buffer.values;
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.values;
   case vcv_route_input::venv: return _state->venv[index].buffer.values;
@@ -101,7 +104,9 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
   switch (input)
   {
   case vcv_route_input::off: return false;
+  case vcv_route_input::key: return false;
   case vcv_route_input::velo: return false;
+  case vcv_route_input::key_inv: return false;
   case vcv_route_input::gcv: return _state->gcv[index].buffer.flags.bipolar;
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.flags.bipolar;
   case vcv_route_input::venv: return _state->venv[index].buffer.flags.bipolar;
@@ -114,9 +119,12 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
 
 inline void
 cv_bank_processor::apply_voice_state(cv_hold_sample const* gcv_hold,
-  cv_hold_sample const* glfo_hold, float velo, std::int32_t sample_count)
+  cv_hold_sample const* glfo_hold, float velo, std::int32_t midi, std::int32_t sample_count)
 {
+  midi = std::clamp(midi, 0, 127);
   std::fill(_state->velo.data(), _state->velo.data() + sample_count, velo);
+  std::fill(_state->key.data(), _state->key.data() + sample_count, static_cast<float>(midi) / 127.0f);
+  std::fill(_state->key_inv.data(), _state->key_inv.data() + sample_count, 1.0f - static_cast<float>(midi) / 127.0f);
   for (std::int32_t i = 0; i < master_gcv_count; i++)
   {
     _state->gcv_hold[i].buffer.flags = gcv_hold[i].flags;
@@ -207,8 +215,10 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
   bank_automation.continuous_real_transform(offset_param, offset, sample_count);
 
   // Get input signal.
-  bool bipolar = input_bipolar(std::get<0>(indices.input_ids), std::get<1>(indices.input_ids));
-  float const* in = input_buffer(std::get<0>(indices.input_ids), std::get<1>(indices.input_ids));
+  std::int32_t source_type = std::get<0>(indices.input_ids);
+  std::int32_t source_index = std::get<1>(indices.input_ids);
+  bool bipolar = input_bipolar(source_type, source_index);
+  float const* in = input_buffer(source_type, source_index);
 
   // Unmodulated holds original output parameter value.
   float* out = _state->out.buffer(mapped_target);
@@ -217,14 +227,25 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
 
   // Apply modifiers.
   // Bipolar input is transformed to unipolar first, then modified, then set back to bipolar.
+  // For keyboard tracking, we scale outward rather than inward, to give user 100% range e.g. between c3 and c5.
   std::int32_t ss = sample_count;
   float* in_modified = _state->in_modified.data();
-  if (!bipolar)
+  if(source_type == vcv_route_input::key || source_type == vcv_route_input::key_inv)
+    for (std::int32_t s = 0; s < ss; s++)
+    {
+      float min_mod = offset[s];
+      float max_mod = offset[s] + (1.0f - offset[s]) * scale[s];
+      in_modified[s] = amt[s] * (in[s] < min_mod ? 0.0f: in[s] > max_mod ? 1.0f: (in[s] - min_mod) / (max_mod - min_mod));
+    }
+  else if (!bipolar)
     for (std::int32_t s = 0; s < ss; s++)
       in_modified[s] = amt[s] * (offset[s] + (1.0f - offset[s]) * scale[s] * in[s]);
   else
     for (std::int32_t s = 0; s < ss; s++)
       in_modified[s] = amt[s] * ((offset[s] + (1.0f - offset[s]) * scale[s] * (in[s] + 1.0f) * 0.5f) * 2.0f - 1.0f);
+
+  for (std::int32_t s = 0; s < ss; s++)
+    assert(0.0f <= in_modified[s] && in_modified[s] <= 1.0f);
 
   // Modulate.
   switch (indices.input_op_index)

@@ -42,7 +42,8 @@ cv_bank_state::
 cv_bank_state(topology_info const* topology, std::int32_t max_sample_count):
 amt(max_sample_count), scale(max_sample_count), offset(max_sample_count), 
 in_modified(max_sample_count), clamped(), out(), unmodulated(),
-unmodulated_bipolar_range(), velo(max_sample_count), 
+unmodulated_bipolar_range(), key(max_sample_count), 
+key_inv(max_sample_count), velo(max_sample_count),
 venv(), vlfo(), glfo(), glfo_hold(), gcv(), gcv_hold()
 {
   for (std::int32_t i = 0; i < venv_count; i++)

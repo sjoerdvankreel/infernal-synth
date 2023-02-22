@@ -18,11 +18,13 @@
 
 * wishlist small
 - reduce output/cpu ui
+- cv 1 default to master amp
+- velocity default to voice amp
 - new menu option: clear all unused
-- generic keyboard tracking: midi in as modulation source
 
 - better factory presets
-- document double click and extra menu options
+- document generic kdb track
+- document extra menu options
 - document time-based stuff cannot be modulated
 - document breaking changes: delay params, env params
 - recreate project website, re-do screenshots, presets and demos

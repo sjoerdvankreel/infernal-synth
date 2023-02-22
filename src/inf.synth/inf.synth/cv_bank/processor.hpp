@@ -20,13 +20,13 @@ public:
   cv_bank_processor(base::topology_info const* topology, cv_bank_state* state); // Global
   cv_bank_processor(base::topology_info const* topology, cv_bank_state* state, 
     cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, 
-    float velo, base::block_input_data const& input); // Voice
+    float velo, std::int32_t midi, base::block_input_data const& input); // Voice
 
   // Once for voice, per-block for global.
   void update_block_params(base::block_input_data const& input);
   void apply_voice_state(
     cv_hold_sample const* gcv_hold, cv_hold_sample const* glfo_hold, 
-    float velo, std::int32_t sample_count);
+    float velo, std::int32_t midi, std::int32_t sample_count);
 
   // Mixdown specified targets (e.g. "continuous filter 1 params").
   std::int64_t modulate(cv_bank_input const& input, float const* const*& result);
