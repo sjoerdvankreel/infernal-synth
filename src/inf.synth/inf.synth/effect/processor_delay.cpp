@@ -38,19 +38,24 @@ effect_processor::process_dly_feedback(effect_process_input const& input, float*
   // Don't go on forever.
   float const max_feedback = 0.99f;
   float const* mix = input.params[effect_param::dly_mix];
-  float const* amt_l = input.params[effect_param::dly_fdbk_amt_l];
-  float const* amt_r = input.params[effect_param::dly_fdbk_amt_r];
-  float const* const amt[stereo_channels] = { amt_l, amt_r };
+  float const* amt = input.params[effect_param::dly_amt];
+  float const* sprd = input.params[effect_param::dly_fdbk_sprd];
 
-  for (std::int32_t c = 0; c < stereo_channels; c++)  
-    for (std::int32_t s = 0; s < input.sample_count; s++) 
-    { 
-      std::int32_t fdbk_length = _state->dly_fdbk_length[c];
-      float buffer_sample = _state->delay_buffer[c].get(fdbk_length);
-      float wet = amt[c][s] * max_feedback * buffer_sample;
-      _state->delay_buffer[c].push(input.audio_in[c][s] + wet);
-      out[c][s] = (1.0f - mix[s]) * input.audio_in[c][s] + mix[s] * wet;
-    }
+  for (std::int32_t s = 0; s < input.sample_count; s++)
+  { 
+    std::int32_t fdbk_length_l = _state->dly_fdbk_length[0];
+    std::int32_t fdbk_length_r = _state->dly_fdbk_length[1];
+    float buffer_sample_l = _state->delay_buffer[0].get(fdbk_length_l);
+    float buffer_sample_r = _state->delay_buffer[1].get(fdbk_length_r);
+    float wet_l_base = amt[s] * max_feedback * buffer_sample_l;
+    float wet_r_base = amt[s] * max_feedback * buffer_sample_r;
+    float wet_l = wet_l_base + (1.0f - sprd[s]) * wet_r_base;
+    float wet_r = wet_r_base + (1.0f - sprd[s]) * wet_l_base; 
+    _state->delay_buffer[0].push(input.audio_in[0][s] + wet_l_base);
+    _state->delay_buffer[1].push(input.audio_in[1][s] + wet_r_base);
+    out[0][s] = (1.0f - mix[s]) * input.audio_in[0][s] + mix[s] * wet_l;
+    out[1][s] = (1.0f - mix[s]) * input.audio_in[1][s] + mix[s] * wet_r;
+  }
 }
 
 // https://www.musicdsp.org/en/latest/Effects/153-most-simple-static-delay.html
@@ -59,7 +64,7 @@ effect_processor::process_dly_multi(effect_process_input const& input, float* co
 {
   assert(_state->global);
   float const* mix = input.params[effect_param::dly_mix];
-  float const* amt = input.params[effect_param::dly_multi_amt];
+  float const* amt = input.params[effect_param::dly_amt];
   float const* sprd = input.params[effect_param::dly_multi_sprd];
 
   for (std::int32_t c = 0; c < stereo_channels; c++)

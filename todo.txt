@@ -14,12 +14,13 @@
 - osc types: feedback lead
 - filter types: formant, vowel
 - scale CV amount by global CV param
-- stereo spread param for feedback delay
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
+- no knob dot for unpolar controls
+- knob dot at bottom for unipolar controls
 - reduce output/cpu ui
-- document breaking changes
+- document breaking changes: delay params, env params
 - document time-based stuff cannot be modulated
 - better factory presets
 - handle vst silence flags
