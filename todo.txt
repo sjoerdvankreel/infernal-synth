@@ -5,7 +5,7 @@
 - x keep manual up to date
 
 * bugs
-- renoise automation serialization is broken
+- renoise/flstudio automation serialization is broken
 
 * wishlist big
 - CLAP support
