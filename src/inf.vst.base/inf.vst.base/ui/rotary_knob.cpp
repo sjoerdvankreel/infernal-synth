@@ -77,7 +77,7 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
     float border_hi_end = border_hi_start + 270.0f;
     context->setFrameColor(to_vst_color(_colors.drag));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
-    context->setFrameColor(to_vst_color(_colors.inner));
+    context->setFrameColor(to_vst_color(_colors.inner.darken(0.5f)));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
   } else if (angle < 0.01f)
   {
