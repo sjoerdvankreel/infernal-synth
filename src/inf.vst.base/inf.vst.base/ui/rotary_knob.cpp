@@ -91,27 +91,26 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_lo_end, kDrawStroked);
     context->setFrameColor(to_vst_color(_colors.inner));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_end, border_hi_start, kDrawStroked);
-  } else if(angle >= 0.5f)
+  } else
   {
-    float border_lo_start_1 = 90.0f + start * to_degrees;
-    float border_hi_start = 270.0f;
-    float border_hi_end = 270.0f + (angle - 0.5f) * range * to_degrees;
-    float border_lo_end_2 = 90.0f - start * to_degrees;
-    context->setFrameColor(to_vst_color(_colors.inner));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_start_1, border_hi_start, kDrawStroked);
-    context->setFrameColor(to_vst_color(_colors.drag));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
-    context->setFrameColor(to_vst_color(_colors.inner));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_lo_end_2, kDrawStroked);
-    context->setFrameColor(to_vst_color(_colors.inner));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_end_2, border_lo_start_1, kDrawStroked);
-  }
-  else 
-  {
-    float border_lo_start_1 = 90.0f + start * to_degrees;
-    float border_hi_start = 270.0f - (0.5f - angle) * range * to_degrees;
-    float border_hi_end = 270.0f;
-    float border_lo_end_2 = 90.0f - start * to_degrees;
+    float border_lo_start_1;
+    float border_hi_start;
+    float border_hi_end;
+    float border_lo_end_2;
+    if (angle >= 0.5f)
+    {
+      border_lo_start_1 = 90.0f + start * to_degrees;
+      border_hi_start = 270.0f;
+      border_hi_end = 270.0f + (angle - 0.5f) * range * to_degrees;
+      border_lo_end_2 = 90.0f - start * to_degrees;
+    }
+    else
+    {
+      border_lo_start_1 = 90.0f + start * to_degrees;
+      border_hi_start = 270.0f - (0.5f - angle) * range * to_degrees;
+      border_hi_end = 270.0f;
+      border_lo_end_2 = 90.0f - start * to_degrees;
+    }
     context->setFrameColor(to_vst_color(_colors.inner));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_start_1, border_hi_start, kDrawStroked);
     context->setFrameColor(to_vst_color(_colors.drag));
