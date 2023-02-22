@@ -19,7 +19,6 @@
 * wishlist small
 - reduce output/cpu ui
 - new menu option: clear all unused
-- double click reset knob to default
 - generic keyboard tracking: midi in as modulation source
 
 - better factory presets
