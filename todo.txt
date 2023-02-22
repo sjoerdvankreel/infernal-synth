@@ -19,6 +19,8 @@
 
 * wishlist small
 - reduce output/cpu ui
+- document breaking changes
+- document time-based stuff cannot be modulated
 - better factory presets
 - handle vst silence flags
 - new menu option: clear all unused
