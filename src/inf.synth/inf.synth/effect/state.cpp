@@ -11,7 +11,7 @@ dly_fdbk_length(), comb_input(), comb_output(), delay_buffer(), reverb_comb_filt
 reverb_comb_pos(), reverb_comb(), reverb_allpass_pos(), reverb_allpass()
 {
   float fmax_comb_length = std::ceil(sample_rate * effect_flt_comb_max_ms / 1000.0f);
-  std::int32_t max_comb_length = static_cast<std::int32_t>(fmax_comb_length);
+  std::int32_t max_comb_length = static_cast<std::int32_t>(fmax_comb_length + 1.0f);
   for (std::int32_t c = 0; c < base::stereo_channels; c++)
   {
     comb_input[c] = base::ring_buffer<float>(max_comb_length);
