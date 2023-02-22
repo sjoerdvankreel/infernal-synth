@@ -18,8 +18,6 @@
 
 * wishlist small
 - reduce output/cpu ui
-- cv 1 default to master amp
-- velocity default to voice amp
 - new menu option: clear all unused
 
 - better factory presets

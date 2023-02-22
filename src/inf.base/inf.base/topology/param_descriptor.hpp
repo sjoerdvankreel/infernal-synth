@@ -52,16 +52,7 @@ struct real_descriptor
   real_bounds const dsp; // Dsp range.
   real_bounds const display; // Display range.
   bool parse(char const* buffer, float& val) const;
-
-  // For default.
-  float parse_to_normalized(char const* buffer) const
-  {
-    float val;
-    bool ok = parse(buffer, val);
-    (void)ok;
-    assert(ok);
-    return display.from_range(val);
-  }
+  float parse_to_normalized(char const* buffer) const;
 };
 
 // Discrete valued specific data.
@@ -75,6 +66,7 @@ struct discrete_descriptor
   std::vector<std::string> const* const tab_items; // Short names for tab headers.
   
   // IO: false parses for UI (display name), true parses for persistance (guids).
+  std::int32_t parse_ui(param_type type, char const* buffer) const;
   bool parse(param_type type, bool io, char const* buffer, std::int32_t& val) const;
 
   std::string format_tab(std::int32_t index) const
@@ -195,8 +187,8 @@ struct param_descriptor_data
     discrete_descriptor const discrete; // Discrete valued specific data.
   };
 
-
   // IO: false parses/formats for UI (display name), true parses/formats for persistance (guids).
+  param_value parse_ui(char const* buffer) const;
   std::string format(bool io, param_value val) const;
   bool parse(bool io, char const* buffer, param_value& val) const;
   std::size_t format(bool io, param_value val, char* buffer, std::size_t size) const;
