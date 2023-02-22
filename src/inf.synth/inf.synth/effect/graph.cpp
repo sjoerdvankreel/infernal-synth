@@ -31,7 +31,7 @@ effect_graph_base::process_graph(block_input const& input, float sample_rate)
     cv_bank = cv_bank_processor(topology(), &cv_state_);
     cv_bank.update_block_params(input.data);
   } else
-    cv_bank = cv_bank_processor(topology(), &cv_state_, gcv_hold, glfo_hold, 0.0f, input.data);
+    cv_bank = cv_bank_processor(topology(), &cv_state_, gcv_hold, glfo_hold, 0.0f, midi_note_c4, input.data);
 
   effect_input fx_input;
   fx_input.block = &input.data;

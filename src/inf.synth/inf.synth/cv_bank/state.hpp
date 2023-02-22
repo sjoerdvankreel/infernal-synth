@@ -79,6 +79,7 @@ struct cv_bank_state
   base::cont_storage<float> unmodulated;
   base::cont_storage<float> unmodulated_bipolar_range;
   
+  std::vector<float> key;
   std::vector<float> velo;
   std::array<cv_bank_storage, venv_count> venv;
   std::array<cv_bank_storage, vlfo_count> vlfo;

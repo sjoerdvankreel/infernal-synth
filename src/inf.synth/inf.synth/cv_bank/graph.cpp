@@ -108,7 +108,7 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
   // Set up cv bank.
   cv_bank_processor cv_bank;
   if(id().type == part_type::vcv_plot)
-    cv_bank = cv_bank_processor(topology(), &cv_state, gcv_hold, glfo_hold, vcv_plot_graph_velo, input.data);
+    cv_bank = cv_bank_processor(topology(), &cv_state, gcv_hold, glfo_hold, vcv_plot_graph_velo, midi_note_c4, input.data);
   else
   {
     cv_bank = cv_bank_processor(topology(), &cv_state);

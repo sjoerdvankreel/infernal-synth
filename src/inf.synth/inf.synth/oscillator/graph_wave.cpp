@@ -44,7 +44,7 @@ oscillator_wave_graph::process_dsp_core(block_input const& input, float* output,
   cv_hold_sample gcv_hold[master_gcv_count] = { };
   scratch_space scratch(input.data.sample_count);
   cv_bank_state cv_state_(topology(), input.data.sample_count);
-  cv_bank_processor cv_bank(topology(), &cv_state_, gcv_hold, glfo_hold, 0.0f, input.data);
+  cv_bank_processor cv_bank(topology(), &cv_state_, gcv_hold, glfo_hold, 0.0f, midi_note_c4, input.data);
 
   _port.clear();
   _port.resize(input.data.sample_count, 1.0f);

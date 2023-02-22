@@ -20,7 +20,7 @@ voice_processor(topology_info const* topology, float sample_rate,
 _sample_rate(sample_rate), _midi(midi), _last_midi(last_midi), _new_voice_section(new_voice_section),
 _voice_start(true), _port_acc(0.0f), _port_current(0.0f), _port_target(0.0), _port_pos(0), _port_samples(-1),
 _scratch(scratch), _cv_state(cv_state), _audio_state(audio_state), _port_state(port_state), _topology(topology),
-_vamp_bal(topology, part_type::voice, sample_rate), _vcv_bank(topology, cv_state, gcv_hold_, glfo_hold_, velo, input), 
+_vamp_bal(topology, part_type::voice, sample_rate), _vcv_bank(topology, cv_state, gcv_hold_, glfo_hold_, velo, midi, input), 
 _vaudio_bank(input, audio_state), _vlfos(), _venvs(), _voscs(), _veffects(), _velo(velo), _glfo_hold(), _gcv_hold()
 {  
   assert(topology != nullptr);
@@ -154,7 +154,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   prepare_port(input);
 
   // Apply voice-static cv (velocity, hold master cv, hold lfos).
-  _vcv_bank.apply_voice_state(_gcv_hold.data(), _glfo_hold.data(), _velo, sample_count);
+  _vcv_bank.apply_voice_state(_gcv_hold.data(), _glfo_hold.data(), _velo, _midi, sample_count);
 
   // Run lfo's.
   for (std::int32_t i = 0; i < vlfo_count; i++)

@@ -92,11 +92,11 @@ inline base::part_table_descriptor const cv_bank_table = { true, cv_bank_table_c
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
-  off, velo, venv, gcv, gcv_hold, 
+  off, velo, key, venv, gcv, gcv_hold, 
   vlfo, glfo, glfo_hold, count }; };
 typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
-  1 /* off */, 1 /* velocity */, venv_count, master_gcv_count, 
+  1 /* off */, 1 /* velocity */, 1 /* key */, venv_count, master_gcv_count,
   master_gcv_count /* hold */, vlfo_count, glfo_count, glfo_count /* hold */ };
 
 // output routing and mapping, off must be 0
@@ -144,7 +144,6 @@ inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_outpu
   vcv_route_audio_bank_mapping, cv_route_amp_mapping };
 
 // default selectors
-inline std::int32_t constexpr vcv_bank_velocity_input = vcv_route_input_t::velo;
 inline std::int32_t constexpr vcv_bank_voice_output = 1
   + vosc_count * vcv_route_vosc_target::count 
   + veffect_count * vgcv_route_effect_target::vfx_count 
