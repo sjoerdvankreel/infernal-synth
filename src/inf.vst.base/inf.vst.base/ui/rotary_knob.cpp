@@ -158,7 +158,7 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   // spot markers
   if (_bipolar)
   {
-    context->setFillColor(to_vst_color(_colors.inner));
+    context->setFillColor(to_vst_color(angle >= 0.51f || angle <= 0.49f? _colors.marker: _colors.inner));
     context->drawEllipse(CRect(CPoint(outer_size.x / 2.0 - 3.0, 1.0), CPoint(3.0, 3.0)), kDrawFilled);
   }
   else if(!_discrete)
