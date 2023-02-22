@@ -13,7 +13,18 @@ CView*
 rotary_knob_creator::create(
   UIAttributes const& attrs, IUIDescription const* desc) const
 {  
-  knob_ui_colors colors;
+  bool ok;
+  bool bipolar;
+  bool discrete;
+  knob_ui_colors colors;  
+
+  ok = attrs.getBooleanAttribute("bipolar", bipolar);
+  assert(ok);
+  (void)ok;
+  ok = attrs.getBooleanAttribute("discrete", discrete);
+  assert(ok);
+  (void)ok;
+
   colors.fill = from_vst_color_name(attrs.getAttributeValue("fill-color"), desc);
   colors.drag = from_vst_color_name(attrs.getAttributeValue("drag-color"), desc);
   colors.marker = from_vst_color_name(attrs.getAttributeValue("marker-color"), desc);
@@ -21,7 +32,7 @@ rotary_knob_creator::create(
   colors.outer = from_vst_color_name(attrs.getAttributeValue("outer-color"), desc);
   colors.light = from_vst_color_name(attrs.getAttributeValue("light-color"), desc);
   colors.shadow = from_vst_color_name(attrs.getAttributeValue("shadow-color"), desc);
-  return new rotary_knob(colors);
+  return new rotary_knob(colors, bipolar, discrete);
 } 
 
 void
@@ -53,7 +64,13 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   // inner border
   float border_hi_start = 90.0f + start * to_degrees; 
   float border_hi_end = 90.0f + start * to_degrees + angle * range * to_degrees;
-  if (angle < 0.01f)
+  if(_discrete)
+  {
+    float off_start = 90.0f + start * to_degrees;
+    context->setFrameColor(to_vst_color(_colors.drag));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start, off_start + 180.0f, kDrawStroked);
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start + 180.0f, off_start + 360.0f, kDrawStroked);
+  } else if (angle < 0.01f)
   {
     float off_start = 90.0f + start * to_degrees;
     context->setFrameColor(to_vst_color(_colors.inner));
@@ -66,19 +83,6 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
     context->setFrameColor(to_vst_color(_colors.inner));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
   }
-
-  // marker
-  double center = (inner_size.x - 1.0) / 2.0;
-  double radius = center - 3.0;
-  double theta = -(start + angle * range);
-  double x = radius * std::sin(theta) + center;
-  double y = radius * std::cos(theta) + center;
-  context->setFrameColor(to_vst_color(_colors.marker));
-  context->drawLine(CPoint(center, center), CPoint(x, y));
-
-  // top marker
-  context->setFillColor(to_vst_color(_colors.marker));
-  context->drawEllipse(CRect(CPoint(outer_size.x / 2 - 3, 1), CPoint(3, 3)), kDrawFilled);
 
   // light settings
   std::int32_t light_parts = 15;
@@ -108,6 +112,41 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
     std::uint8_t alpha = static_cast<std::uint8_t>((alpha_index + 1) * shadow_part_alpha_contrib);
     context->setFrameColor(CColor(_colors.shadow.r, _colors.shadow.g, _colors.shadow.b, alpha));
     context->drawArc(CRect(CPoint(1, 1), inner_size - CPoint(2, 2)), angle1, angle2, kDrawStroked);
+  }
+
+  // marker
+  double center = (inner_size.x - 1.0) / 2.0;
+  double radius = center - 3.0;
+  double theta = -(start + angle * range);
+  double x = radius * std::sin(theta) + center;
+  double y = radius * std::cos(theta) + center;
+  context->setFrameColor(to_vst_color(_colors.marker));
+  context->drawLine(CPoint(center, center), CPoint(x, y));
+
+  // point markers
+  if (_discrete)
+  {
+    x = (radius + 1) * std::sin(theta) + center;
+    y = (radius + 1) * std::cos(theta) + center;
+    context->setFillColor(to_vst_color(_colors.marker));
+    context->drawEllipse(CRect(CPoint(x, y), CPoint(2.0, 2.0)), kDrawFilled);
+  }
+  else if (_bipolar)
+  {
+    context->setFillColor(to_vst_color(_colors.marker));
+    context->drawEllipse(CRect(CPoint(outer_size.x / 2.0 - 3.0, 1.0), CPoint(3.0, 3.0)), kDrawFilled);
+  }
+  else
+  {
+    context->setFillColor(to_vst_color(_colors.drag));
+    theta = -start;
+    x = radius * std::sin(theta) + center;
+    y = radius * std::cos(theta) + center;
+    context->drawEllipse(CRect(CPoint(x, y), CPoint(2.0, 2.0)), kDrawFilled);
+    theta = start;
+    x = radius * std::sin(theta) + center;
+    y = radius * std::cos(theta) + center;
+    context->drawEllipse(CRect(CPoint(x, y), CPoint(2.0, 2.0)), kDrawFilled);
   }
 } 
 

@@ -15,13 +15,16 @@ namespace inf::vst::base {
 class rotary_knob : 
 public VSTGUI::CKnobBase
 {
+  bool const _bipolar;
+  bool const _discrete;
   inf::base::knob_ui_colors const _colors;
 public:
   CLASS_METHODS(rotary_knob, CKnobBase)
   void draw(VSTGUI::CDrawContext* context) override;
 public:
-  explicit rotary_knob(inf::base::knob_ui_colors const& colors):
-  CKnobBase(VSTGUI::CRect(0, 0, 0, 0), nullptr, -1, nullptr), _colors(colors) {}
+  rotary_knob(inf::base::knob_ui_colors const& colors, bool bipolar, bool discrete):
+  CKnobBase(VSTGUI::CRect(0, 0, 0, 0), nullptr, -1, nullptr), 
+  _bipolar(bipolar), _discrete(discrete), _colors(colors) {}
 };
 
 // VSTGUI knob factory.
