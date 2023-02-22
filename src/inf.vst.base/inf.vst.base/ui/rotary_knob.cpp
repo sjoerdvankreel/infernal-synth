@@ -9,6 +9,14 @@ using namespace inf::base;
 
 namespace inf::vst::base {
 
+static CPoint
+point_on_circle(double center, double radius, double theta)
+{
+  double x = radius * std::sin(theta) + center;
+  double y = radius * std::cos(theta) + center;
+  return CPoint(x, y);
+}
+
 CView* 
 rotary_knob_creator::create(
   UIAttributes const& attrs, IUIDescription const* desc) const
@@ -118,35 +126,20 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   double center = (inner_size.x - 1.0) / 2.0;
   double radius = center - 3.0;
   double theta = -(start + angle * range);
-  double x = radius * std::sin(theta) + center;
-  double y = radius * std::cos(theta) + center;
   context->setFrameColor(to_vst_color(_colors.marker));
-  context->drawLine(CPoint(center, center), CPoint(x, y));
+  context->drawLine(CPoint(center, center), point_on_circle(center, radius, theta));
 
-  // point markers
-  if (_discrete)
-  {
-    x = (radius + 1) * std::sin(theta) + center;
-    y = (radius + 1) * std::cos(theta) + center;
-    context->setFillColor(to_vst_color(_colors.marker));
-    context->drawEllipse(CRect(CPoint(x, y), CPoint(2.0, 2.0)), kDrawFilled);
-  }
-  else if (_bipolar)
+  // spot markers
+  if (_bipolar)
   {
     context->setFillColor(to_vst_color(_colors.marker));
     context->drawEllipse(CRect(CPoint(outer_size.x / 2.0 - 3.0, 1.0), CPoint(3.0, 3.0)), kDrawFilled);
   }
-  else
+  else if(!_discrete)
   {
     context->setFillColor(to_vst_color(_colors.drag));
-    theta = -start;
-    x = radius * std::sin(theta) + center;
-    y = radius * std::cos(theta) + center;
-    context->drawEllipse(CRect(CPoint(x, y), CPoint(2.0, 2.0)), kDrawFilled);
-    theta = start;
-    x = radius * std::sin(theta) + center;
-    y = radius * std::cos(theta) + center;
-    context->drawEllipse(CRect(CPoint(x, y), CPoint(2.0, 2.0)), kDrawFilled);
+    context->drawEllipse(CRect(point_on_circle(center, radius, start), CPoint(2.0, 2.0)), kDrawFilled);
+    context->drawEllipse(CRect(point_on_circle(center, radius, -start), CPoint(2.0, 2.0)), kDrawFilled);
   }
 } 
 
