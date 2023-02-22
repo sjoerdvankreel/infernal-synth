@@ -223,9 +223,11 @@ build_ui_param_knob(
   part_type_ui_description const& type, part_info const& part, 
   param_info const& param, Document::AllocatorType& allocator)
 {
+  bool discrete = param.descriptor->data.type != param_type::real; 
   Value result(build_ui_param_control_base(part, param, "inf_rotary_knob", padding_param_group, param_col1_width, 0, allocator));
-  add_attribute(result, "angle-start", "20", allocator);
-  add_attribute(result, "angle-range", "320", allocator);
+  add_attribute(result, "angle-start", "30", allocator);
+  add_attribute(result, "angle-range", "300", allocator); 
+  add_attribute(result, "discrete", discrete? "true": "false", allocator);
   add_attribute(result, "fill-color", get_color_name(type.colors.knob.fill), allocator);
   add_attribute(result, "marker-color", get_color_name(type.colors.knob.marker), allocator);
   add_attribute(result, "drag-color", get_color_name(type.colors.knob.drag), allocator);
@@ -233,6 +235,7 @@ build_ui_param_knob(
   add_attribute(result, "outer-color", get_color_name(type.colors.knob.outer), allocator);
   add_attribute(result, "light-color", get_color_name(type.colors.knob.light), allocator);
   add_attribute(result, "shadow-color", get_color_name(type.colors.knob.shadow), allocator);
+  add_attribute(result, "bipolar", !discrete && param.descriptor->data.real.display.min < 0.0f? "true": "false", allocator);
   return result;
 }
 

@@ -17,14 +17,14 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- no knob dot for unpolar controls
-- knob dot at bottom for unipolar controls
+- double click reset knob to default
 - reduce output/cpu ui
-- document breaking changes: delay params, env params
-- document time-based stuff cannot be modulated
 - better factory presets
 - handle vst silence flags
 - new menu option: clear all unused
-- cpu usage + conversion log ?+ error log
 - generic keyboard tracking: midi in as modulation source
+
+- document double click and extra menu options
+- document time-based stuff cannot be modulated
+- document breaking changes: delay params, env params
 - recreate project website, re-do screenshots, presets and demos
