@@ -25,8 +25,8 @@
 --> 2 rows out of audio b + increase bank count to 4
 --> 1 row out of audio a: rotate audio a + make it 2 rows -> total = 3 + increase bank count
 --> mid col = -3
---> 3 rows out of cv a: rotate + make it 3 rows + increase bank count
---> right col = -3
+v --> 3 rows out of cv a: rotate + make it 3 rows + increase bank count
+v --> right col = -3
 
 - new menu option: clear all unused
 

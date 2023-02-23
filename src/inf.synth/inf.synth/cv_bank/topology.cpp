@@ -12,19 +12,34 @@ using namespace inf::base;
 namespace inf::synth {
 
 // borders
-std::vector<box_descriptor> vcv_bank_borders()
-{
-  auto box = [](std::int32_t n) { return box_descriptor(0, n, cv_bank_param_type::count, 1); };
-  auto view = std::ranges::views::transform(std::views::iota(0, gcv_bank_table_col_count), box);
-  return std::vector<box_descriptor>(view.begin(), view.end());
-} 
-
 std::vector<box_descriptor> gcv_bank_borders()
 {
-  auto box = [](std::int32_t n) { return box_descriptor(0, n, cv_bank_param_type::count, 1); };
-  auto view = std::ranges::views::transform(std::views::iota(0, gcv_bank_table_col_count), box);
-  return std::vector<box_descriptor>(view.begin(), view.end());
+  std::vector<box_descriptor> result;
+  std::int32_t col_count = gcv_bank_table_col_count - 1;
+  result.push_back(box_descriptor({ 0, 0, 2, 1 }));
+  result.push_back(box_descriptor({ 2, 0, 2, 1 }));
+  result.push_back(box_descriptor({ 4, 0, 3, 1 }));
+  for(std::int32_t i = 1; i <= col_count; i++)
+  {
+    result.push_back(box_descriptor({ 0, i, 2, 1 }));
+    result.push_back(box_descriptor({ 2, i, 2, 1 }));
+    result.push_back(box_descriptor({ 4, i, 3, 1 }));
+  }
+  return result; 
 }
+
+std::vector<box_descriptor> vcv_bank_borders() 
+{ 
+  std::vector<box_descriptor> result;
+  std::int32_t row_span = (vcv_bank_param::count - cv_bank_param_offset) / vcv_bank_table_col_count;
+  result.push_back(box_descriptor({ 0, 0, 1, 2 }));
+  result.push_back(box_descriptor({ 0, 2, 1, 2 })); 
+  result.push_back(box_descriptor({ 0, 4, 1, 3 }));
+  result.push_back(box_descriptor({ 1, 0, row_span, 2 }));
+  result.push_back(box_descriptor({ 1, 2, row_span, 2 }));
+  result.push_back(box_descriptor({ 1, 4, row_span, 3 }));
+  return result;
+} 
 
 // operation
 static std::vector<list_item> const cv_route_input_ops = {   
