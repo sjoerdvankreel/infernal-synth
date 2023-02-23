@@ -12,15 +12,22 @@ using namespace inf::base;
 namespace inf::synth {
 
 // borders
-std::vector<box_descriptor> cv_bank_borders()
+std::vector<box_descriptor> vcv_bank_borders()
 {
   auto box = [](std::int32_t n) { return box_descriptor(0, n, cv_bank_param_type::count, 1); };
-  auto view = std::ranges::views::transform(std::views::iota(0, cv_bank_table_col_count), box);
+  auto view = std::ranges::views::transform(std::views::iota(0, gcv_bank_table_col_count), box);
+  return std::vector<box_descriptor>(view.begin(), view.end());
+} 
+
+std::vector<box_descriptor> gcv_bank_borders()
+{
+  auto box = [](std::int32_t n) { return box_descriptor(0, n, cv_bank_param_type::count, 1); };
+  auto view = std::ranges::views::transform(std::views::iota(0, gcv_bank_table_col_count), box);
   return std::vector<box_descriptor>(view.begin(), view.end());
 }
 
 // operation
-static std::vector<list_item> const cv_route_input_ops = {  
+static std::vector<list_item> const cv_route_input_ops = {   
   { "{EFF13B0A-B9C3-4232-9EE3-38AB70434E0D}", "Add" },   
   { "{4FA2A827-DCE6-46FE-B78F-6D161982B538}", "Sub" },
   { "{C774C268-EF66-4482-9068-79AFCC60A090}", "Mul" } };
@@ -184,42 +191,35 @@ gcv_plot_params[cv_plot_param::count] =
 
 // voice params
 param_descriptor const   
-vcv_bank_params[cv_bank_param::count] =            
+vcv_bank_params[vcv_bank_param::count] =            
 {        
   { "{1F6DEE15-DEE7-443B-B9F8-E65BFF9C9C4A}", { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr } },
   { "{3B025C6A-0230-491A-A51F-7CF1C81B69C9}", { { "In", "Input 1" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 0, nullptr} },
-  { "{2833E378-210B-404F-A4CB-0D6204A72CF0}", { { "In", "Input 2" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 1, nullptr } },
-  { "{25041AB5-2A06-4305-8009-C26D56311D26}", { { "In", "Input 3" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 2, nullptr } },
-  { "{B4C3E2E0-106D-4377-93F6-711561D5F1DA}", { { "In", "Input 4" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 3, nullptr } },
-  { "{5FDD8C86-8F2D-4613-BB98-BB673F502412}", { { "Out", "Output 1" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 4, nullptr } },
-  { "{D0B28D9E-8888-42EB-8D3C-177FB4585E42}", { { "Out", "Output 2" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 5, nullptr } },
-  { "{37420523-6A9D-4125-BAAB-24A28B9E0992}", { { "Out", "Output 3" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 6, nullptr } },
-  { "{32C5980E-F41A-441C-85A8-3AC90A4AAD0A}", { { "Out", "Output 4" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 7, nullptr } },
-  { "{8B64719E-7B90-4F8C-A3A5-1DB198723B91}", { { "Base", "Base 1" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod }, 8, nullptr } },
+  { "{2833E378-210B-404F-A4CB-0D6204A72CF0}", { { "In", "Input 2" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 7, nullptr } },
+  { "{25041AB5-2A06-4305-8009-C26D56311D26}", { { "In", "Input 3" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 14, nullptr } },
+  { "{5FDD8C86-8F2D-4613-BB98-BB673F502412}", { { "Out", "Output 1" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 1, nullptr } },
+  { "{D0B28D9E-8888-42EB-8D3C-177FB4585E42}", { { "Out", "Output 2" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 8, nullptr } },
+  { "{37420523-6A9D-4125-BAAB-24A28B9E0992}", { { "Out", "Output 3" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 15, nullptr } },
+  { "{8B64719E-7B90-4F8C-A3A5-1DB198723B91}", { { "Base", "Base 1" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod }, 2, nullptr } },
   { "{FC8F74F9-4BC9-4B6E-9F95-4B02973F4487}", { { "Base", "Base 2" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 9, nullptr } },
-  { "{2FB8E7B3-D095-44AD-B044-38B3492750FD}", { { "Base", "Base 3" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 10, nullptr } },
-  { "{4BC708B3-8B5D-44C5-8B7E-5B3A387434FB}", { { "Base", "Base 4" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 11, nullptr } },
-  { "{18EBC834-CF60-4A68-BAF2-C57BC0BAE55E}", { { "Op", "Op 1" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 12, nullptr} },
-  { "{CD10C60A-C25E-46A5-879E-C692E50AE36B}", { { "Op", "Op 2" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 13, nullptr } },
-  { "{C6D7FDD5-102A-4972-B0B2-77F3977C9046}", { { "Op", "Op 3" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 14, nullptr } },
-  { "{927B6CF5-D576-42F9-80BA-4C83437F9041}", { { "Op", "Op 4" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 15, nullptr } },
-  { "{0C1E5C81-01EE-4AE6-A05C-199210B904CC}", { { "Off", "Offset 1" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 16, nullptr } },
-  { "{20F28A5F-2956-412E-BD97-9220836C22A3}", { { "Off", "Offset 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 17, nullptr } },
+  { "{2FB8E7B3-D095-44AD-B044-38B3492750FD}", { { "Base", "Base 3" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 16, nullptr } },
+  { "{18EBC834-CF60-4A68-BAF2-C57BC0BAE55E}", { { "Op", "Op 1" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 3, nullptr} },
+  { "{CD10C60A-C25E-46A5-879E-C692E50AE36B}", { { "Op", "Op 2" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 10, nullptr } },
+  { "{C6D7FDD5-102A-4972-B0B2-77F3977C9046}", { { "Op", "Op 3" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 17, nullptr } },
+  { "{0C1E5C81-01EE-4AE6-A05C-199210B904CC}", { { "Off", "Offset 1" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 4, nullptr } },
+  { "{20F28A5F-2956-412E-BD97-9220836C22A3}", { { "Off", "Offset 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 11, nullptr } },
   { "{BFFA2360-5A5F-4575-A0E4-32B8B74977BD}", { { "Off", "Offset 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 18, nullptr } },
-  { "{B46AC7BD-982C-4A9D-B74B-AE27C25BE811}", { { "Off", "Offset 4" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 19, nullptr } },
-  { "{20ACF437-2158-4900-8DC4-D36767442BF1}", { { "Scl", "Scale 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 20, nullptr } },
-  { "{23EFCBDF-7744-4527-B82D-A69E56C7338B}", { { "Scl", "Scale 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 21, nullptr } },
-  { "{87087F9C-62A2-4804-9292-CD9089F025B7}", { { "Scl", "Scale 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 22, nullptr } },
-  { "{D58E30EB-8F46-4EB7-84F2-37AA48F81721}", { { "Scl", "Scale 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 23, nullptr } },
-  { "{469D130F-2E4A-4960-871D-032B6F588313}", { { "Amt", "Amount 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 24, nullptr } },
-  { "{58AFE21F-7945-4919-BB67-60CE8892A8AF}", { { "Amt", "Amount 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 25, nullptr } },
-  { "{9C1F6472-6D48-42E6-B79E-3A00F33F70F5}", { { "Amt", "Amount 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 26, nullptr } },
-  { "{D04F0B81-2E96-42D7-895C-DFC47BA36B4C}", { { "Amt", "Amount 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 27, nullptr } }
+  { "{20ACF437-2158-4900-8DC4-D36767442BF1}", { { "Scl", "Scale 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 5, nullptr } },
+  { "{23EFCBDF-7744-4527-B82D-A69E56C7338B}", { { "Scl", "Scale 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 12, nullptr } },
+  { "{87087F9C-62A2-4804-9292-CD9089F025B7}", { { "Scl", "Scale 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 19, nullptr } },
+  { "{469D130F-2E4A-4960-871D-032B6F588313}", { { "Amt", "Amount 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 6, nullptr } },
+  { "{58AFE21F-7945-4919-BB67-60CE8892A8AF}", { { "Amt", "Amount 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 13, nullptr } },
+  { "{9C1F6472-6D48-42E6-B79E-3A00F33F70F5}", { { "Amt", "Amount 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 20, nullptr } }
 };
 
 // global params
 param_descriptor const 
-gcv_bank_params[cv_bank_param::count] = 
+gcv_bank_params[gcv_bank_param::count] = 
 { 
   { "{C64A2AE2-E96D-487E-8373-3DA9DBB7B028}", { { "On", "Enabled" }, param_kind::block, false, -1, nullptr } },
   { "{84736ED7-FF72-4E69-AFFF-A8607B0F3041}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 0, nullptr } },

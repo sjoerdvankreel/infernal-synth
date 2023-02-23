@@ -117,8 +117,8 @@ static special_params_descriptor const vlfo_special = { lfo_param::on, 0, active
 static special_params_descriptor const glfo_special = { lfo_param::on, 0, active_param::glfo };
 static special_params_descriptor const vosc_special = { osc_param::on, 0, active_param::vosc };
 static special_params_descriptor const venv_special = { envelope_param::on, 1, active_param::venv };
-static special_params_descriptor const vcv_special = { cv_bank_param::on, 0, active_param::vcv_bank }; 
-static special_params_descriptor const gcv_special = { cv_bank_param::on, 0, active_param::gcv_bank };
+static special_params_descriptor const vcv_special = { vcv_bank_param::on, 0, active_param::vcv_bank }; 
+static special_params_descriptor const gcv_special = { gcv_bank_param::on, 0, active_param::gcv_bank };
 static special_params_descriptor const veffect_special = { effect_param::on, 0, active_param::veffect };
 static special_params_descriptor const geffect_special = { effect_param::on, 0, active_param::geffect };
 static special_params_descriptor const vaudio_bank_special = { vaudio_bank_param::on, 0, active_param::vaudio_bank };     
@@ -134,13 +134,13 @@ static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs,
 static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "sloth.png", 200, "", true };
 static part_ui_descriptor const vlfo_ui = { 4, vlfo_special, lfo_graphs, part_colors, lfo_borders, nullptr,  connector_direction::right, "wrath.png", 150, "", false };
 static part_ui_descriptor const glfo_ui = { 4, glfo_special, lfo_graphs, part_colors, lfo_borders, nullptr, connector_direction::none, "pride.png", 150, "Global", false };
-static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, cv_bank_borders(), &cv_bank_table, connector_direction::up, "gluttony.png", 100, "", false};
-static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, cv_bank_borders(), &cv_bank_table, connector_direction::up | connector_direction::left, "envy.png", 50, "Global", false};
+static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, vcv_bank_borders(), &vcv_bank_table, connector_direction::up, "gluttony.png", 100, "", false};
+static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, gcv_bank_borders(), &gcv_bank_table, connector_direction::up | connector_direction::left, "envy.png", 50, "Global", false};
 static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "pride.png", 175, "", true };
 static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "gluttony.png", 200, "Global", true};
 static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, output_borders, &output_table, connector_direction::down, "greed.png", 250, "Global", true};
          
-part_descriptor const                               
+part_descriptor const                                
 part_descriptors[part_type::count] =                                             
 {                       
   { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, 0, &vosc_ui },
@@ -153,8 +153,8 @@ part_descriptors[part_type::count] =
   { "{FC4885FE-431C-477A-B5B7-84863DB8C07D}", { "Env", "Envelope" }, part_kind::input, part_type::venv, venv_count, envelope_params, envelope_param::count, 14, &venv_ui },
   { "{56DE75BB-BE73-4B27-B37F-77F6E408F986}", { "LFO A", "LFO A" }, part_kind::input, part_type::vlfo, vlfo_count, vlfo_params, lfo_param::count, 8, &vlfo_ui },
   { "{5BE4D402-BD27-478B-9C14-A570A4306FFA}", { "LFO B", "LFO B" }, part_kind::input, part_type::glfo, glfo_count, glfo_params, lfo_param::count, 9, &glfo_ui },
-  { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "CV A", "CV Bank A" }, part_kind::input, part_type::vcv_bank, vcv_bank_count, vcv_bank_params, cv_bank_param::count, 13, &vcv_bank_ui },
-  { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "CV B", "CV Bank B" }, part_kind::input, part_type::gcv_bank, gcv_bank_count, gcv_bank_params, cv_bank_param::count, 4, &gcv_bank_ui },
+  { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "CV A", "CV Bank A" }, part_kind::input, part_type::vcv_bank, vcv_bank_count, vcv_bank_params, vcv_bank_param::count, 13, &vcv_bank_ui },
+  { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "CV B", "CV Bank B" }, part_kind::input, part_type::gcv_bank, gcv_bank_count, gcv_bank_params, gcv_bank_param::count, 4, &gcv_bank_ui },
   { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "CV A Plot", "CV Bank A Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, 12, &vcv_plot_ui },
   { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "CV B Plot", "CV Bank B Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, 3, &gcv_plot_ui },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, -1, nullptr },

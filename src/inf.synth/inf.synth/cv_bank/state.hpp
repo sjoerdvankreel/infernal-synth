@@ -56,6 +56,7 @@ struct cv_bank_data
 
   std::int32_t const part_type;
   std::int32_t const bank_count;
+  std::int32_t const route_count;
   std::int32_t const route_output_total_count;
   std::int32_t const* const route_output_mapping;
   std::int32_t const* const route_output_target_counts;

@@ -20,7 +20,8 @@ namespace inf::synth {
 
 // ---- shared ----
 
-std::vector<base::box_descriptor> cv_bank_borders();
+std::vector<base::box_descriptor> vcv_bank_borders();
+std::vector<base::box_descriptor> gcv_bank_borders();
 extern base::param_descriptor const vcv_bank_params[];
 extern base::param_descriptor const vcv_plot_params[];
 extern base::param_descriptor const gcv_bank_params[];
@@ -35,13 +36,6 @@ inline std::int32_t constexpr cv_bank_vgcv_inout_off = 0;
 struct cv_plot_param_t { enum value { target, length, count }; };
 typedef cv_plot_param_t::value cv_plot_param;
 
-// on/off must be 0
-struct cv_bank_param_t { enum value { on, 
-  in1, in2, in3, in4, out1, out2, out3, out4, base1, base2, base3, base4,
-  op1, op2, op3, op4, off1, off2, off3, off4, scale1, scale2, scale3, scale4,
-  amt1, amt2, amt3, amt4, count }; };
-typedef cv_bank_param_t::value cv_bank_param;
-
 // input, output, modifiers
 struct cv_route_input_op_t { enum value { add, sub, mul, count }; };
 struct cv_route_output_base_t { enum value { raw, mod, param, count }; };
@@ -49,10 +43,6 @@ struct cv_bank_param_type_t { enum value { in, out, base, op, off, scale, amt, c
 typedef cv_route_input_op_t::value cv_route_input_op;
 typedef cv_bank_param_type_t::value cv_bank_param_type;
 typedef cv_route_output_base_t::value cv_route_output_base;
-
-// route count per bank
-inline std::int32_t constexpr cv_bank_route_count =
-(cv_bank_param::count - cv_bank_param_offset) / cv_bank_param_type::count;
 
 // voice/master output routing and mapping
 struct vgcv_route_amp_target_t { enum value { gain, bal, count }; };
@@ -83,12 +73,25 @@ inline std::int32_t constexpr vgcv_route_effect_mapping[vgcv_route_effect_target
 // ui
 inline std::vector<base::box_descriptor> const cv_plot_borders = { { 0, 0, 2, 1 } };
 inline std::vector<base::graph_descriptor> const cv_plot_graph_descs = { { -1, "CV", { 0, 1, 2, 3 } } };
-inline std::int32_t const cv_bank_table_col_count = cv_bank_route_count + 1;
-inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.1f, 0.225f, 0.225f, 0.225f, 0.225f };
-inline char const* const cv_bank_table_row_headers[cv_bank_param_type::count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" };
-inline base::part_table_descriptor const cv_bank_table = { true, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_row_headers };
 
 // ---- voice ----
+
+// on/off must be 0
+struct vcv_bank_param_t { enum value { on, 
+  in1, in2, in3, out1, out2, out3, base1, base2, base3,
+  op1, op2, op3, off1, off2, off3, scale1, scale2, scale3,
+  amt1, amt2, amt3, count }; };
+typedef vcv_bank_param_t::value vcv_bank_param;
+
+// route count per bank
+inline std::int32_t constexpr vcv_bank_route_count =
+(vcv_bank_param::count - cv_bank_param_offset) / cv_bank_param_type::count;
+
+// ui
+inline std::int32_t const vcv_bank_table_col_count = cv_bank_param_type::count;
+inline float const vcv_bank_table_col_widths[vcv_bank_table_col_count] = { 0.14f, 0.19f, 0.11f, 0.08f, 0.16f, 0.16f, 0.16f };
+inline char const* const vcv_bank_table_col_headers[vcv_bank_table_col_count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" };
+inline base::part_table_descriptor const vcv_bank_table = { false, vcv_bank_table_col_count, vcv_bank_table_col_widths, vcv_bank_table_col_headers };
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
@@ -144,6 +147,23 @@ inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_outpu
   vcv_route_audio_bank_mapping, cv_route_amp_mapping };
 
 // ---- global ----
+
+// on/off must be 0
+struct gcv_bank_param_t { enum value { on, 
+  in1, in2, in3, in4, out1, out2, out3, out4, base1, base2, base3, base4,
+  op1, op2, op3, op4, off1, off2, off3, off4, scale1, scale2, scale3, scale4,
+  amt1, amt2, amt3, amt4, count }; };
+typedef gcv_bank_param_t::value gcv_bank_param;
+
+// route count per bank
+inline std::int32_t constexpr gcv_bank_route_count =
+(gcv_bank_param::count - cv_bank_param_offset) / cv_bank_param_type::count;
+
+// ui
+inline std::int32_t const gcv_bank_table_col_count = gcv_bank_route_count + 1;
+inline float const gcv_bank_table_col_widths[gcv_bank_table_col_count] = { 0.1f, 0.225f, 0.225f, 0.225f, 0.225f };
+inline char const* const gcv_bank_table_row_headers[cv_bank_param_type::count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" };
+inline base::part_table_descriptor const gcv_bank_table = { true, gcv_bank_table_col_count, gcv_bank_table_col_widths, gcv_bank_table_row_headers };
 
 // input routing and mapping, off must be 0
 struct gcv_route_input_t { enum value { off, gcv, glfo, count }; };

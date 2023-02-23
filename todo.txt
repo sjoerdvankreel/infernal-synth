@@ -34,5 +34,5 @@
 - document generic kdb track
 - document extra menu options
 - document time-based stuff cannot be modulated
-- document breaking changes: delay params, env params
+- document breaking changes: delay params, env params, cv bank params
 - recreate project website, re-do screenshots, presets and demos
