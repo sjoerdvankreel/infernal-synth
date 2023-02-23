@@ -18,6 +18,7 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
+- bipolar master cv controls
 - better defaults - use fx in instrument mode
 
 - reduce output/cpu ui
