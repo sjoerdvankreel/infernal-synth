@@ -23,7 +23,7 @@
 - better defaults - use fx in instrument mode
 
 - reduce output/cpu ui
---> 1 row out of oscillator (1 column less for osc graph, 4 rows for spec graph, 1 extra control)
+v --> 1 row out of oscillator (1 column less for osc graph, 4 rows for spec graph, 1 extra control)
 --> 2 rows out of output (reduce to total cpu, voice count, clip indicator, drain indicator, worst offender, worst offender cpu %)
 --> left col = -3
 v --> 2 rows out of audio b + increase bank count to 4
