@@ -83,10 +83,10 @@ inline std::int32_t constexpr vgcv_route_effect_mapping[vgcv_route_effect_target
 // ui
 inline std::vector<base::box_descriptor> const cv_plot_borders = { { 0, 0, 2, 1 } };
 inline std::vector<base::graph_descriptor> const cv_plot_graph_descs = { { -1, "CV", { 0, 1, 2, 3 } } };
-inline std::int32_t const cv_bank_table_col_count = cv_bank_param_type::count;
-inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.16f, 0.19f, 0.1f, 0.07f, 0.16f, 0.16f, 0.16f };
-inline char const* const cv_bank_table_col_headers[cv_bank_table_col_count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" }; 
-inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_col_headers };
+inline std::int32_t const cv_bank_table_col_count = cv_bank_route_count + 1;
+inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.1f, 0.225f, 0.225f, 0.225f, 0.225f };
+inline char const* const cv_bank_table_row_headers[cv_bank_param_type::count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" };
+inline base::part_table_descriptor const cv_bank_table = { true, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_row_headers };
 
 // ---- voice ----
 
