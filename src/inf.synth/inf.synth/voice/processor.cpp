@@ -75,7 +75,7 @@ void voice_processor::prepare_port(voice_input const& input)
       master_mode != master_mode::poly && (
         port_trig == master_port_trig::note ||
         (port_trig == master_port_trig::voice && !_voice_start)))
-    {
+    { 
       std::int32_t prev_midi = _last_midi;
       if (!_voice_start)
       {
