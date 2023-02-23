@@ -56,10 +56,8 @@ inline base::part_table_descriptor const gaudio_bank_table = { false, gaudio_ban
 struct gaudio_route_output_t { enum value { off, geffect, master, count }; }; // Off must be 0.
 struct gaudio_route_input_t { enum value { off, voice, external, geffect, count }; }; // Off must be 0.
 struct gaudio_bank_param_t { enum value { on, 
-  in1, in2, in3, in4, in5, in6, in7, in8, 
-  out1, out2, out3, out4, out5, out6, out7, out8, 
-  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, 
-  bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, count }; };
+  in1, in2, in3, in4, out1, out2, out3, out4, 
+  amt1, amt2, amt3, amt4, bal1, bal2, bal3, bal4, count }; };
 typedef gaudio_bank_param_t::value gaudio_bank_param;
 typedef gaudio_route_input_t::value gaudio_route_input;
 typedef gaudio_route_output_t::value gaudio_route_output;

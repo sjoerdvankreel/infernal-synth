@@ -183,14 +183,12 @@ inline std::int32_t constexpr gcv_route_output_total_count = std::accumulate(
 
 // audio bank output routing and mapping
 struct gcv_route_audio_bank_target_t { enum value { 
-  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8,
-  bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, count }; };
+  amt1, amt2, amt3, amt4,
+  bal1, bal2, bal3, bal4, count }; };
 typedef gcv_route_audio_bank_target_t::value gcv_route_audio_bank_target;
 inline std::int32_t constexpr gcv_route_audio_bank_mapping[gcv_route_audio_bank_target::count] = {
   gaudio_bank_param::amt1, gaudio_bank_param::amt2, gaudio_bank_param::amt3, gaudio_bank_param::amt4, 
-  gaudio_bank_param::amt5, gaudio_bank_param::amt6, gaudio_bank_param::amt7, gaudio_bank_param::amt8,
-  gaudio_bank_param::bal1, gaudio_bank_param::bal2, gaudio_bank_param::bal3, gaudio_bank_param::bal4,
-  gaudio_bank_param::bal5, gaudio_bank_param::bal6, gaudio_bank_param::bal7, gaudio_bank_param::bal8 };
+  gaudio_bank_param::bal1, gaudio_bank_param::bal2, gaudio_bank_param::bal3, gaudio_bank_param::bal4 };
 
 // output target mapping
 inline std::int32_t const* const gcv_route_output_target_mapping[gcv_route_output::count] = {
