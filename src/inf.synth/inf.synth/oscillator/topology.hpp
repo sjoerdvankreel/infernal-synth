@@ -30,8 +30,8 @@ typedef osc_param_t::value osc_param;
 
 inline std::vector<base::box_descriptor> const osc_borders =
 { { 0, 0, 6, 1 }, { 6, 0, 3, 1 }, { 5, 1, 4, 1 }, { 5, 2, 4, 1 }, { 4, 1, 1, 2 } };
-inline std::vector<base::graph_descriptor> const osc_graphs = { { osc_graph::left, "Left", { 0, 1, 2, 3 } },
-{ osc_graph::right, "Right", { 2, 1, 2, 3 } }, { osc_graph::spectrum, "Spectrum", { 4, 3, 5, 1 } } };
+inline std::vector<base::graph_descriptor> const osc_graphs = { { osc_graph::left, "Left", { 0, 1, 4, 1 } },
+{ osc_graph::spectrum, "Spectrum", { 0, 2, 4, 1 } }, { osc_graph::right, "Right", { 0, 3, 4, 1 } } };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_OSCILLATOR_TOPOLOGY_HPP

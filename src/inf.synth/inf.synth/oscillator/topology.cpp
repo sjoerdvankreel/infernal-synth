@@ -27,7 +27,7 @@ generate_names(vosc_count, [](std::int32_t n)
 { return std::string("Osc ") + std::to_string(n + 1); });
 static std::vector<std::string> const osc_sync_sources =
 generate_names(vosc_count + 1, [](std::int32_t n) 
-{ return n == 0 ? std::string("Off") : std::string("Osc ") + std::to_string(n); });
+{ return n == 0 ? std::string("Off") : std::string("Osc ") + std::to_string(n); }); 
 
 static param_ui_descriptor const osc_dsf_ui = 
 { false, { { osc_param::type, [](std::int32_t v) { return v == osc_type::dsf; } } } };
