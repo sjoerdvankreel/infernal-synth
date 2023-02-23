@@ -123,14 +123,14 @@ vaudio_bank_param::bal1, vaudio_bank_param::bal2, vaudio_bank_param::bal3, vaudi
 
 // oscillator output routing
 struct vcv_route_vosc_target_t { enum value {
-  pm, fm, cent, uni_detune, uni_spread, ram_bal, ram_mix,
+  pm, fm, gain, cent, uni_detune, uni_spread, ram_bal, ram_mix,
   basic_pw, mix_sine, mix_saw, mix_triangle, mix_pulse, mix_pw, dsf_dist, dsf_decay, 
   kps_filter, kps_feedback, kps_stretch, noise_color, noise_x, noise_y, count }; };
 typedef vcv_route_vosc_target_t::value vcv_route_vosc_target;
 
 // oscillator output mapping
 inline std::int32_t constexpr vcv_route_vosc_mapping[vcv_route_vosc_target::count] = {
-  osc_param::pm, osc_param::fm, osc_param::cent, osc_param::uni_dtn, osc_param::uni_sprd, 
+  osc_param::pm, osc_param::fm, osc_param::gain, osc_param::cent, osc_param::uni_dtn, osc_param::uni_sprd,
   osc_param::ram_bal, osc_param::ram_mix, osc_param::basic_pw, osc_param::mix_sine, 
   osc_param::mix_saw, osc_param::mix_triangle, osc_param::mix_pulse, osc_param::mix_pw, 
   osc_param::dsf_dist, osc_param::dsf_decay, osc_param::kps_filter, osc_param::kps_feedback, 

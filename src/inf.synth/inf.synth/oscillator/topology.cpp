@@ -47,7 +47,7 @@ static param_ui_descriptor const osc_basic_pulse_ui = { false, {
    
 param_descriptor const     
 osc_params[osc_param::count] =              
-{    
+{     
   { "{CA9274AE-9F57-4373-8C59-3786ACC1C1CD}", { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr } },    
   { "{84A7AEC8-25E9-4242-B32E-2E9E780F0E31}", { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &osc_types, osc_type::basic }, 0, nullptr } },
   { "{10935D87-24A7-4994-BB9A-D46636933F6F}", { { "Sync", "Sync source" }, "", param_kind::voice, param_type::knob_list, { &osc_sync_sources, osc_sync_off }, 6, &osc_sync_ui } },
@@ -57,6 +57,7 @@ osc_params[osc_param::count] =
   { "{FD0A2D20-FCCD-4939-B1CC-BD2EBD998A25}", { { "Cent", "Cent" }, "", param_kind::continuous, linear_bounds(-0.5f, 0.5f, 0.0f, -50.0f, 50.0f, 2), 14, nullptr}},
   { "{10D13CC1-EE5C-488A-8F48-F8BA70855B5A}", { { "PM", "Phase modulation" }, "", param_kind::fixed, linear_bounds(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2), 0, nullptr } },
   { "{3D379D24-CE2D-4AE2-92EF-3951C7CA608C}", { { "FM", "Frequency modulation" }, "", param_kind::continuous, percentage_m11_bounds(0.0f), 5, nullptr } },
+  { "{09E50DA8-2467-462F-9822-7E9074A51B53}", { { "Gain", "Gain" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 19, nullptr } },
   { "{AFA9850B-ACB0-4666-95C0-42D32D197EB2}", { { "RAM", "Ring/amplitude modulation source" }, "", param_kind::voice, param_type::knob_list, { &osc_ram_sources, 0 }, 10, nullptr } },
   { "{4ED08060-260A-42EC-99E8-A2BEA628B652}", { { "Bal", "Ring/amplitude modulation balance" }, "%", param_kind::continuous, percentage_m11_bounds(1.0f), 13, nullptr } },
   { "{63C3C4F7-526A-4A1C-BD12-99548A765110}", { { "Mix", "Ring/amplitude modulation mix" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 16, nullptr } },
