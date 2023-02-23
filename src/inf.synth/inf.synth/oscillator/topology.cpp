@@ -46,7 +46,7 @@ static param_ui_descriptor const osc_basic_pulse_ui = { false, {
   { osc_param::basic_type, [](std::int32_t v) { return v == osc_basic_type::pulse; } } } };
    
 param_descriptor const     
-osc_params[osc_param::count] =              
+osc_params[osc_param::count] =               
 {     
   { "{CA9274AE-9F57-4373-8C59-3786ACC1C1CD}", { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr } },    
   { "{84A7AEC8-25E9-4242-B32E-2E9E780F0E31}", { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &osc_types, osc_type::basic }, 5, nullptr } },
