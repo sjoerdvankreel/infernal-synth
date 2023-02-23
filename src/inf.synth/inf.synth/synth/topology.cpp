@@ -128,7 +128,7 @@ static part_ui_descriptor const vosc_ui = { 4, vosc_special, osc_graphs, part_co
 static part_ui_descriptor const veffect_ui = { 4, veffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "sloth.png", 200, "", false};
 static part_ui_descriptor const geffect_ui = { 4, geffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "lust.png", 100, "Global", false };
 static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, vaudio_bank_borders(), &audio_bank_table, connector_direction::left_right, "greed.png", 250, "", false};
-static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, gaudio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 100, "Global", false};
+static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, gaudio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 150, "Global", false};
 static part_ui_descriptor const voice_ui = { 4, part_no_special, voice_graphs, part_colors, voice_borders, nullptr, connector_direction::down, "wrath.png", 150, "", true};
 static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs, part_colors, master_borders, nullptr, connector_direction::left, "pride.png", 200, "Global", true};
 static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "sloth.png", 200, "", true };
@@ -138,7 +138,7 @@ static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors
 static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, gcv_bank_borders(), &gcv_bank_table, connector_direction::up | connector_direction::left, "envy.png", 50, "Global", false};
 static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "pride.png", 175, "", true };
 static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "gluttony.png", 200, "Global", true};
-static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, {}, &output_table, connector_direction::down, "greed.png", 275, "Global", true}; 
+static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, {}, &output_table, connector_direction::down, "greed.png", 275, "Global", true};   
                  
 part_descriptor const                                 
 part_descriptors[part_type::count] =                                             
