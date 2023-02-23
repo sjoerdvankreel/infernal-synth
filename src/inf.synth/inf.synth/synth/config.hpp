@@ -17,7 +17,7 @@ inline std::int32_t constexpr vaudio_bank_count = 6;
 inline std::int32_t constexpr gaudio_bank_count = 4;
 
 inline std::int32_t constexpr synth_polyphony = 32;
-inline std::int32_t constexpr synth_max_ui_height = 800;
+inline std::int32_t constexpr synth_max_ui_height = 770;
 
 } // namespace inf::synth
 #endif // INF_SYNTH_SYNTH_CONFIG_HPP

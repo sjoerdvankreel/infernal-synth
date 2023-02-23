@@ -138,9 +138,9 @@ static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors
 static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, gcv_bank_borders(), &gcv_bank_table, connector_direction::up | connector_direction::left, "envy.png", 50, "Global", false};
 static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "pride.png", 175, "", true };
 static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "gluttony.png", 200, "Global", true};
-static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, output_borders, &output_table, connector_direction::down, "greed.png", 250, "Global", true};
-         
-part_descriptor const                                
+static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, {}, &output_table, connector_direction::down, "greed.png", 250, "Global", true};
+          
+part_descriptor const                                 
 part_descriptors[part_type::count] =                                             
 {                       
   { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, 0, &vosc_ui },
