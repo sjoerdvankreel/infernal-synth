@@ -114,14 +114,12 @@ inline std::int32_t constexpr vcv_route_output_total_count = std::accumulate(
 
 // audio bank output routing and mapping
 struct vcv_route_audio_bank_target_t { enum value { 
-  amt1, amt2, amt3, amt4, amt5, amt6, 
-  bal1, bal2, bal3, bal4, bal5, bal6, count }; };
+  amt1, amt2, amt3, amt4, 
+  bal1, bal2, bal3, bal4, count }; };
 typedef vcv_route_audio_bank_target_t::value vcv_route_audio_bank_target;
 inline std::int32_t constexpr vcv_route_audio_bank_mapping[vcv_route_audio_bank_target::count] = {
-vaudio_bank_param::amt1, vaudio_bank_param::amt2, vaudio_bank_param::amt3, 
-vaudio_bank_param::amt4, vaudio_bank_param::amt5, vaudio_bank_param::amt6,
-vaudio_bank_param::bal1, vaudio_bank_param::bal2, vaudio_bank_param::bal3, 
-vaudio_bank_param::bal4, vaudio_bank_param::bal5, vaudio_bank_param::bal6 };
+vaudio_bank_param::amt1, vaudio_bank_param::amt2, vaudio_bank_param::amt3, vaudio_bank_param::amt4,
+vaudio_bank_param::bal1, vaudio_bank_param::bal2, vaudio_bank_param::bal3, vaudio_bank_param::bal4 };
 
 // oscillator output routing
 struct vcv_route_vosc_target_t { enum value {

@@ -90,14 +90,10 @@ static list_item const vcv_route_audio_bank_targets[vcv_route_audio_bank_target:
   { "{0925FBB7-3F1B-428C-8A00-F22D359CDFE3}", "Amt2" },
   { "{0A9F9198-192B-466F-911E-E3A83925670E}", "Amt3" },
   { "{A14EFB11-3FEF-4F0A-9398-E128E4C7F28D}", "Amt4" },
-  { "{BEF4E7A6-F689-4B42-AE39-949FB4CF7ACF}", "Amt5" },
-  { "{BA00FCB5-3F1F-4588-9009-A0C1365CED72}", "Amt6" },
   { "{327E458F-4686-44BA-9F32-68C58C53EBFB}", "Bal1" },
   { "{0925FBB7-3F1B-428C-8A00-F22D359CDFE3}", "Bal2" },
   { "{0A9F9198-192B-466F-911E-E3A83925670E}", "Bal3" },
-  { "{A14EFB11-3FEF-4F0A-9398-E128E4C7F28D}", "Bal4" },
-  { "{C128A318-9084-4F63-9587-67589AA6C45C}", "Bal5" },
-  { "{7A3D6908-C59A-40F6-B2AF-D30100A5E06B}", "Bal6" } };
+  { "{A14EFB11-3FEF-4F0A-9398-E128E4C7F28D}", "Bal4" } };
 static list_item const gcv_route_audio_bank_targets[gcv_route_audio_bank_target::count] = {
   { "{AF20EA99-6827-4216-8CBA-5562F267F649}", "Amt1" },
   { "{44183897-5277-4A02-BED5-8D727E6C9C33}", "Amt2" },
