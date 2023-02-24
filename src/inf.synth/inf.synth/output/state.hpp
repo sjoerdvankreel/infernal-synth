@@ -10,11 +10,12 @@ struct cpu_usage
   std::int64_t aux;
   std::int64_t env;
   std::int64_t osc;
-  std::int64_t amp;
   std::int64_t vcv;
   std::int64_t gcv;
   std::int64_t vlfo;
   std::int64_t glfo;
+  std::int64_t voice;
+  std::int64_t master;
   std::int64_t vaudio;
   std::int64_t gaudio;
   std::int64_t veffect;

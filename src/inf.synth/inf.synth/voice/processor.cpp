@@ -244,7 +244,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   amp_bal_in.amp_env = _cv_state->venv[0].buffer.values;
   audio_part_output amp_bal_out = _vamp_bal.process(amp_bal_in, _audio_state->voice.buffers(), _vcv_bank);
   usage.vcv += amp_bal_out.cv_time;
-  usage.amp += amp_bal_out.own_time;
+  usage.voice += amp_bal_out.own_time;
   return ended;
 } 
   
