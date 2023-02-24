@@ -187,7 +187,7 @@ synth_processor::setup_voice(voice_setup_input const& input, base::note_event co
   }
 
   std::int32_t last_midi = _last_midi_note == -1 ? note.midi : _last_midi_note;
-  new (&_voices[slot]) voice_processor(topology(), sample_rate(), 
+  _voices[slot] = voice_processor(topology(), sample_rate(), 
     &_voice_oscillator_states[slot][0], &_voice_effect_states[slot][0],
     &_audio_state, &_cv_state, gcv_hold, glfo_hold, note.velocity, &_port_state,
     &_scratch, note.midi, last_midi, new_voice_section, input.block->data);
