@@ -2,24 +2,26 @@
 #define INF_SYNTH_OUTPUT_STATE_HPP
 
 #include <cstdint>
+#include <inf.synth/synth/config.hpp>
 
 namespace inf::synth {
 
 struct cpu_usage
 {
   std::int64_t aux;
-  std::int64_t env;
-  std::int64_t osc;
-  std::int64_t amp;
   std::int64_t vcv;
   std::int64_t gcv;
-  std::int64_t vlfo;
-  std::int64_t glfo;
+  std::int64_t voice;
   std::int64_t vaudio;
   std::int64_t gaudio;
-  std::int64_t veffect;
-  std::int64_t geffect;
+  std::int64_t master;
   std::int64_t previous;
+  std::int64_t env[venv_count];
+  std::int64_t osc[vosc_count];
+  std::int64_t vlfo[vlfo_count];
+  std::int64_t glfo[glfo_count];
+  std::int64_t veffect[veffect_count];
+  std::int64_t geffect[geffect_count];
 };
 
 struct output_info
