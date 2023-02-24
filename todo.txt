@@ -38,6 +38,8 @@ v --> right col = -3
 - better factory presets
 - document generic kdb track
 - document extra menu options
+- document changed output params
+- document shift/ctrl click reset
 - document time-based stuff cannot be modulated
 - document breaking changes: delay params, env params, cv bank params, audio bank params
 - recreate project website, re-do screenshots, presets and demos

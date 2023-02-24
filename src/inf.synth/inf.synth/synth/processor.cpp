@@ -479,6 +479,7 @@ synth_processor::process(block_input const& input, block_output& output)
   info.usage = usage;
   info.start_time = start_time;
   info.voice_count = voice_count;
+  info.drained = _voices_drained;
   info.clipped = audio_may_clip(output.audio, input.channel_count, input.data.sample_count);
   _output.process(input, info, output);
 

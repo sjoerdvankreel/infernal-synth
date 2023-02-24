@@ -10,15 +10,13 @@
 namespace inf::synth {
 
 extern base::param_descriptor const output_params[];
-inline std::int32_t constexpr output_table_col_count = 3;
-
-struct output_param_t { enum value { clip, voices, prev_cpu, count }; };
+struct output_param_t { enum value { clip, voices, drain, prev_cpu, count }; };
 typedef output_param_t::value output_param;
 
-inline float constexpr output_table_col_widths[output_table_col_count] =
-{ 1.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f };
+inline float constexpr output_table_col_widths[output_param::count] = 
+{ 0.25f, 0.25f, 0.25f, 0.25f };
 inline base::part_table_descriptor const output_table = 
-{ false, output_table_col_count, output_table_col_widths, nullptr };
+{ false, output_param::count, output_table_col_widths, nullptr };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_OUTPUT_TOPOLOGY_HPP  

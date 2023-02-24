@@ -25,6 +25,7 @@ struct cpu_usage
 struct output_info
 {
   bool clipped;
+  bool drained;
   cpu_usage usage;
   std::int64_t start_time;
   std::int32_t voice_count;

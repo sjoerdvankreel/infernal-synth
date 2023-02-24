@@ -158,7 +158,7 @@ part_descriptors[part_type::count] =
   { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "CV A Plot", "CV Bank A Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, 12, &vcv_plot_ui },
   { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "CV B Plot", "CV Bank B Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, 3, &gcv_plot_ui },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, -1, nullptr },
-  { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output / CPU", "Output / CPU usage" }, part_kind::output, part_type::output, 1, output_params, output_param::count, 2, &output_ui }
+  { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, 2, &output_ui }
 };                 
  
 part_ui_colors make_part_ui_colors()
