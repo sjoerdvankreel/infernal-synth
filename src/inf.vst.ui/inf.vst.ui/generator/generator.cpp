@@ -433,7 +433,14 @@ add_ui_output_param(
     add_child(container, "CCheckBox", build_ui_param_checkbox(
       *part.info, *param.info, type.colors.check, check_left, check_width, 0, allocator), allocator);
     break;
-  default: assert(false);
+  case param_type::list:
+    add_child(container, get_option_menu_class(*param.info), build_ui_param_menu(
+      *part.info, *param.info, "right", edit_left, edit_width, 0,
+      part_ui->table == nullptr ? type.colors.menu : type.colors.table_menu, allocator), allocator);
+    break;
+  default: 
+    assert(false);
+    break;
   }
 }
 

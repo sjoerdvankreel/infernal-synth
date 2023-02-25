@@ -113,7 +113,7 @@ static param_ui_descriptor const effect_shp_cheby_sum_ui = { false, {
 static param_ui_descriptor const effect_shp_cheby_ui = { false, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } },
 { effect_param::shaper_type, [](std::int32_t v) { return v == effect_shaper_type::cheby_one || v == effect_shaper_type::cheby_sum; } } } };
-
+ 
 static param_descriptor_data const effect_on_data = { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr }; 
 static param_descriptor_data const effect_voice_type_data = { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &effect_voice_types, effect_type::filter }, 0, nullptr };
 static param_descriptor_data const effect_global_type_data = { { "Type", "Type" }, "", param_kind::block, param_type::list, { &effect_global_types, effect_type::filter }, 0, nullptr };

@@ -158,7 +158,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
 
   // Run lfo's.
   for (std::int32_t i = 0; i < vlfo_count; i++)
-    usage.vlfo += _vlfos[i].process_any(*input.block, _cv_state->vlfo[i].buffer, *_scratch);
+    usage.vlfo[i] = _vlfos[i].process_any(*input.block, _cv_state->vlfo[i].buffer, *_scratch);
 
   // Run envelopes.
   bool ended = false;
@@ -172,7 +172,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
     env_in.retrig_pos = retrig_pos;
     env_in.release_sample = release_sample;
     envelope_output envelenv_out = _venvs[i].process(env_in, _cv_state->venv[i].buffer);
-    usage.env += envelenv_out.own_time;
+    usage.env[i] = envelenv_out.own_time;
     if(i == 0) ended = envelenv_out.ended;
   }
 
@@ -207,7 +207,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
     osc_in.new_midi_start_pos = new_midi_start_pos;
     audio_part_output osc_out = _voscs[i].process(osc_in, _audio_state->vosc[i].buffers(), _vcv_bank, *_scratch);
     usage.vcv += osc_out.cv_time;
-    usage.osc += osc_out.own_time;
+    usage.osc[i] = osc_out.own_time;
   }
 
   // Clear fx output in case user selected weird routing (i.e. fx 3 to fx 2).
@@ -228,7 +228,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
     fx_input.new_midi_start_pos = new_midi_start_pos;
     audio_part_output fx_output = _veffects[i].process_any(fx_input, _audio_state->veffect[i].buffers(), _vcv_bank, *_scratch);
     usage.vcv += fx_output.cv_time;
-    usage.veffect += fx_output.own_time;
+    usage.veffect[i] = fx_output.own_time;
   }
    
   // Run amp section.
@@ -244,7 +244,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   amp_bal_in.amp_env = _cv_state->venv[0].buffer.values;
   audio_part_output amp_bal_out = _vamp_bal.process(amp_bal_in, _audio_state->voice.buffers(), _vcv_bank);
   usage.vcv += amp_bal_out.cv_time;
-  usage.voice += amp_bal_out.own_time;
+  usage.voice = amp_bal_out.own_time;
   return ended;
 } 
   

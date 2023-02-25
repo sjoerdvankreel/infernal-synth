@@ -19,7 +19,7 @@ output_processor::process(base::block_input const& input, output_info const& inf
   output.block_automation_raw[output_start + output_param::clip].discrete = info.clipped ? 1 : 0;
   output.block_automation_raw[output_start + output_param::drain].discrete = info.drained ? 1 : 0;
   output.block_automation_raw[output_start + output_param::prev_cpu].discrete = static_cast<std::int32_t>(input.prev_perf_count * total_time_factor);
-  output.block_automation_raw[output_start + output_param::high].discrete = usage_source::aux;
+  output.block_automation_raw[output_start + output_param::high].discrete = 3;
   output.block_automation_raw[output_start + output_param::high_cpu].discrete = 42;
 }
 

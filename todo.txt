@@ -18,6 +18,7 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
+- make it lighter
 - github preview image
 - lfo a connector to right-down
 - bipolar master cv controls

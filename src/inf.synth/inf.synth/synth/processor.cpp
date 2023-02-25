@@ -392,7 +392,7 @@ synth_processor::process(block_input const& input, block_output& output)
 
   // Run global lfos. 
   for (std::int32_t i = 0; i < glfo_count; i++)
-    usage.glfo += _glfos[i].process_global(input.data, _cv_state.glfo[i].buffer, _scratch);
+    usage.glfo[i] = _glfos[i].process_global(input.data, _cv_state.glfo[i].buffer, _scratch);
 
   // Copy external input (zeros in instrument mode).
   for (std::int32_t c = 0; c < stereo_channels; c++)
@@ -458,7 +458,7 @@ synth_processor::process(block_input const& input, block_output& output)
     fx_input.audio_in = audio_mixdown.mixdown;
     audio_part_output fx_output = _geffects[i].process_global(fx_input, _audio_state.geffect[i].buffers(), _gcv_bank, _scratch);
     usage.gcv += fx_output.cv_time;
-    usage.geffect += fx_output.own_time;
+    usage.geffect[i] = fx_output.own_time;
   }
    
   // Run master section.
@@ -472,7 +472,7 @@ synth_processor::process(block_input const& input, block_output& output)
   amp_bal_in.audio_in = audio_mixdown.mixdown;
   audio_part_output amp_bal_out = _gamp_bal.process(amp_bal_in, output.audio, _gcv_bank);
   usage.gcv += amp_bal_out.cv_time;
-  usage.master += amp_bal_out.own_time;
+  usage.master = amp_bal_out.own_time;
   
   // Output round info.
   output_info info;
