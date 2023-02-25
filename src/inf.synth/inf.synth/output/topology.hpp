@@ -20,11 +20,11 @@ inline base::part_table_descriptor const output_table =
 { false, output_param::count, output_table_col_widths, nullptr }; 
 
 struct usage_source_t { enum value { 
-  aux, voice, master, vaudio, gaudio, vcv, gcv, 
+  voice, master, vaudio, gaudio, vcv, gcv, 
   env, osc, vlfo, glfo, veffect, geffect, count }; };
 typedef usage_source_t::value usage_source;
 inline std::int32_t const usage_source_counts[usage_source::count] =
-{ 1, 1, 1, 1, 1, 1, 1, venv_count, vosc_count, vlfo_count, glfo_count, veffect_count, geffect_count };
+{ 1, 1, 1, 1, 1, 1, venv_count, vosc_count, vlfo_count, glfo_count, veffect_count, geffect_count };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_OUTPUT_TOPOLOGY_HPP  
