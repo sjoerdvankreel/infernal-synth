@@ -18,13 +18,13 @@ static std::vector<list_item> const master_modes = {
   { "{5EFD4121-52DC-43F2-A853-CC4DB9F8342F}", "Mono" }, 
   { "{49996567-D045-488B-85D0-97EC55FE8CDB}", "Rlease" } };
 
-static param_ui_descriptor const master_port_sync_ui = { false, {
+static param_ui_descriptor const master_port_sync_ui = { false, 0.0f, {
   { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } }, 
   { master_param::port_sync, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const master_port_time_ui = { false, {
+static param_ui_descriptor const master_port_time_ui = { false, 0.0f, {
   { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } },
   { master_param::port_sync, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const master_port_on_ui = { false, {
+static param_ui_descriptor const master_port_on_ui = { false, 0.0f, {
   { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } } } }; 
 
 static std::vector<time_signature> const master_port_timesig = synced_timesig(false, { 4, 1 }, {

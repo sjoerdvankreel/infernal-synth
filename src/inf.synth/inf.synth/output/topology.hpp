@@ -19,7 +19,7 @@ struct output_param_t { enum value { clip, voices, drain, prev_cpu, high, high_c
 typedef output_param_t::value output_param;
 
 inline float constexpr output_table_col_widths[output_param::count] = 
-{ 0.1f, 0.2f, 0.1f, 0.15f, 0.2f, 0.25f }; 
+{ 0.12f, 0.19f, 0.12f, 0.15f, 0.21f, 0.21f };
 inline base::part_table_descriptor const output_table = 
 { false, output_param::count, output_table_col_widths, nullptr }; 
 

@@ -26,7 +26,7 @@ static std::int32_t const usage_source_counts[usage_source::count] =
 { 1, 1, 1, 1, 1, 1, 1, venv_count, vosc_count, vlfo_count, glfo_count, veffect_count, geffect_count };
 static std::vector<list_item> const usage_sources_items =
 multi_list_items(usage_sources, nullptr, usage_source_spaces, nullptr, usage_source_counts, usage_source::count, false);
-  
+        
 param_descriptor const  
 output_params[output_param::count] =         
 { 

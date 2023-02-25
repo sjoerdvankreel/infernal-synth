@@ -18,6 +18,7 @@ struct param_relevance
 struct param_ui_descriptor
 {
   bool menu_wide; // Put label in knob space, menu takes up both label and control width.
+  float label_width; // For table output mode, label size factor in [0, 1], 0 = default.
   std::vector<param_relevance> const relevance; // Relevant if all other params relevance[i].if_param satisfy relevance[i].predicate.
 };
 

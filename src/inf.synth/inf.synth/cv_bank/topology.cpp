@@ -177,7 +177,7 @@ static std::vector<list_item> const gcv_route_input_sources_list = multi_list_it
   gcv_route_inputs, nullptr, gcv_route_input_spaces, nullptr, gcv_route_input_counts, gcv_route_input::count, false);
 
 // plot params
-static param_ui_descriptor const cv_plot_tgt_ui = { true, {} };
+static param_ui_descriptor const cv_plot_tgt_ui = { true, 0.0f, {} };
 
 param_descriptor const
 vcv_plot_params[cv_plot_param::count] =

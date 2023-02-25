@@ -30,18 +30,18 @@ generate_names(vosc_count + 1, [](std::int32_t n)
 { return n == 0 ? std::string("Off") : std::string("Osc ") + std::to_string(n); }); 
 
 static param_ui_descriptor const osc_dsf_ui = 
-{ false, { { osc_param::type, [](std::int32_t v) { return v == osc_type::dsf; } } } };
+{ false, 0.0f, { { osc_param::type, [](std::int32_t v) { return v == osc_type::dsf; } } } };
 static param_ui_descriptor const osc_kps_ui = 
-{ false, { { osc_param::type, [](std::int32_t v) { return v == osc_type::kps; } } } };
+{ false, 0.0f, { { osc_param::type, [](std::int32_t v) { return v == osc_type::kps; } } } };
 static param_ui_descriptor const osc_mix_ui = 
-{ false, { { osc_param::type, [](std::int32_t v) { return v == osc_type::mix; } } } };
+{ false, 0.0f, { { osc_param::type, [](std::int32_t v) { return v == osc_type::mix; } } } };
 static param_ui_descriptor const osc_basic_ui = 
-{ false, { { osc_param::type, [](std::int32_t v) { return v == osc_type::basic; } } } };
+{ false, 0.0f, { { osc_param::type, [](std::int32_t v) { return v == osc_type::basic; } } } };
 static param_ui_descriptor const osc_noise_ui = 
-{ false, { { osc_param::type, [](std::int32_t v) { return v == osc_type::noise; } } } };
+{ false, 0.0f, { { osc_param::type, [](std::int32_t v) { return v == osc_type::noise; } } } };
 static param_ui_descriptor const osc_sync_ui = 
-{ false, { { osc_param::type, [](std::int32_t v) { return v != osc_type::kps && v != osc_type::noise; } } } };
-static param_ui_descriptor const osc_basic_pulse_ui = { false, {
+{ false, 0.0f, { { osc_param::type, [](std::int32_t v) { return v != osc_type::kps && v != osc_type::noise; } } } };
+static param_ui_descriptor const osc_basic_pulse_ui = { false, 0.0f, {
   { osc_param::type, [](std::int32_t v) { return v == osc_type::basic; } }, 
   { osc_param::basic_type, [](std::int32_t v) { return v == osc_basic_type::pulse; } } } };
    
