@@ -8,7 +8,6 @@ namespace inf::synth {
 
 struct cpu_usage
 {
-  std::int64_t aux;
   std::int64_t vcv;
   std::int64_t gcv;
   std::int64_t voice;

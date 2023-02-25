@@ -1,4 +1,3 @@
-#include <inf.synth/synth/config.hpp>
 #include <inf.synth/output/topology.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
 
@@ -26,8 +25,6 @@ param_ui_descriptor const high_usage_ui = { false, 0.6f, {} };
 
 static bool const usage_source_spaces[usage_source::count] =
 { true, true, true, false, false, false, false, true, true, false, false, false, false };
-static std::int32_t const usage_source_counts[usage_source::count] =
-{ 1, 1, 1, 1, 1, 1, 1, venv_count, vosc_count, vlfo_count, glfo_count, veffect_count, geffect_count };
 static std::vector<list_item> const usage_sources_items =
 multi_list_items(usage_sources, nullptr, usage_source_spaces, nullptr, usage_source_counts, usage_source::count, false);
           

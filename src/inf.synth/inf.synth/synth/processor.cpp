@@ -476,7 +476,7 @@ synth_processor::process(block_input const& input, block_output& output)
   
   // Output round info.
   output_info info;
-  info.usage = usage;
+  info.usage = usage; 
   info.start_time = start_time;
   info.voice_count = voice_count;
   info.drained = _voices_drained;

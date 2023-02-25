@@ -12,7 +12,7 @@
 #include <inf.synth/voice_master/graph.hpp>
 #include <inf.synth/oscillator/graph_wave.hpp>
 #include <inf.synth/oscillator/graph_spectrum.hpp>
-
+ 
 using namespace inf::base;
 
 namespace inf::synth {
