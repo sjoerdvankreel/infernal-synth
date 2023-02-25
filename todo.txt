@@ -26,6 +26,7 @@
 - better defaults - use fx in instrument mode
 
 - better factory presets
+- document versioned builds
 - document generic kdb track
 - document extra menu options
 - document changed output params
