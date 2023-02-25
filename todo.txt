@@ -20,21 +20,10 @@
 * wishlist small
 - make it lighter
 - github preview image
-- lfo a connector to right-down
 - bipolar master cv controls
-- better defaults - use fx in instrument mode
-
-- reduce output/cpu ui
-v --> 1 row out of oscillator (1 column less for osc graph, 4 rows for spec graph, 1 extra control)
---> 2 rows out of output (reduce to total cpu, voice count, clip indicator, drain indicator, worst offender, worst offender cpu %)
---> left col = -3
-v --> 2 rows out of audio b + increase bank count to 4
-v --> 1 row out of audio a: rotate audio a + make it 2 rows -> total = 3 + increase bank count
-v --> mid col = -3
-v --> 3 rows out of cv a: rotate + make it 3 rows + increase bank count
-v --> right col = -3
-
+- lfo a connector to right-down
 - new menu option: clear all unused
+- better defaults - use fx in instrument mode
 
 - better factory presets
 - document generic kdb track
