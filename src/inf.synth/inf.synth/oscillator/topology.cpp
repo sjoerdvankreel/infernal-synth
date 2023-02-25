@@ -44,7 +44,7 @@ static param_ui_descriptor const osc_sync_ui =
 static param_ui_descriptor const osc_basic_pulse_ui = { false, 0.0f, {
   { osc_param::type, [](std::int32_t v) { return v == osc_type::basic; } }, 
   { osc_param::basic_type, [](std::int32_t v) { return v == osc_basic_type::pulse; } } } };
-    
+     
 param_descriptor const     
 osc_params[osc_param::count] =               
 {     

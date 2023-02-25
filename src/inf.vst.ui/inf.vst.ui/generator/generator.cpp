@@ -423,7 +423,7 @@ add_ui_output_param(
     {
       label_width = static_cast<std::int32_t>(cell_width * param_desc.ui->label_width);
       edit_left = label_left + label_width + margin;
-      edit_width = static_cast<std::int32_t>(cell_width * (1.0f - param_desc.ui->label_width)) - 2 * margin;
+      edit_width = static_cast<std::int32_t>(cell_width * (1.0f - param_desc.ui->label_width)) - 2 * margin - padding_param_group;
     }
   } 
 
