@@ -32,20 +32,20 @@ std::vector<float> const lfo_timesig_values = synced_timesig_values(lfo_timesig)
 static std::vector<std::string> const lfo_timesig_names = synced_timesig_names(lfo_timesig);
 
 static param_ui_descriptor const lfo_time_ui = 
-{ false, { { lfo_param::synced, [](std::int32_t v) { return v == 0; } } } };
+{ false, 0.0f, { { lfo_param::synced, [](std::int32_t v) { return v == 0; } } } };
 static param_ui_descriptor const lfo_sync_ui = 
-{ false, { { lfo_param::synced, [](std::int32_t v) { return v != 0; } } } };
+{ false, 0.0f, { { lfo_param::synced, [](std::int32_t v) { return v != 0; } } } };
 static param_ui_descriptor const lfo_basic_ui =
-{ false, { { lfo_param::type, [](std::int32_t v) { return v == lfo_type::basic; } } } };
+{ false, 0.0f, { { lfo_param::type, [](std::int32_t v) { return v == lfo_type::basic; } } } };
 static param_ui_descriptor const lfo_rand_ui =
-{ false, { { lfo_param::type, [](std::int32_t v) { return v == lfo_type::random; } } } };
+{ false, 0.0f, { { lfo_param::type, [](std::int32_t v) { return v == lfo_type::random; } } } };
 static param_ui_descriptor const lfo_custom_ui = 
-{ false, { { lfo_param::type, [](std::int32_t v) { return v == lfo_type::custom; } } } };
+{ false, 0.0f, { { lfo_param::type, [](std::int32_t v) { return v == lfo_type::custom; } } } };
 
-static param_ui_descriptor const lfo_rand_step_ui = { false, { 
+static param_ui_descriptor const lfo_rand_step_ui = { false, 0.0f, {
   { lfo_param::type, [](std::int32_t v) { return v == lfo_type::random; } },
   { lfo_param::rand_rand_steps, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const lfo_basic_pulse_ui = { false, {
+static param_ui_descriptor const lfo_basic_pulse_ui = { false, 0.0f, {
   { lfo_param::type, [](std::int32_t v) { return v == lfo_type::basic; } },
   { lfo_param::basic_type, [](std::int32_t v) { return v == lfo_basic_type::pulse; } } } };
 

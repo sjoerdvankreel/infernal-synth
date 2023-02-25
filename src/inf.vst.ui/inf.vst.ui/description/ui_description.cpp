@@ -37,7 +37,7 @@ part_ui_description::create(
   topology_info const& topology, part_info const* info, 
   std::int32_t static_part_index, std::int32_t runtime_index)
 {
-  part_ui_description result;
+  part_ui_description result = {};
   part_descriptor const* desc = info->descriptor;
   part_ui_descriptor const* ui = desc->ui;
 

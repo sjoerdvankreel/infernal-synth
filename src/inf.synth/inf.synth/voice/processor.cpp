@@ -75,7 +75,7 @@ void voice_processor::prepare_port(voice_input const& input)
       master_mode != master_mode::poly && (
         port_trig == master_port_trig::note ||
         (port_trig == master_port_trig::voice && !_voice_start)))
-    {
+    { 
       std::int32_t prev_midi = _last_midi;
       if (!_voice_start)
       {
@@ -244,8 +244,8 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   amp_bal_in.amp_env = _cv_state->venv[0].buffer.values;
   audio_part_output amp_bal_out = _vamp_bal.process(amp_bal_in, _audio_state->voice.buffers(), _vcv_bank);
   usage.vcv += amp_bal_out.cv_time;
-  usage.amp += amp_bal_out.own_time;
+  usage.voice = amp_bal_out.own_time;
   return ended;
-} 
+}  
   
 } // namespace inf::synth 

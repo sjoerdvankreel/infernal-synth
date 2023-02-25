@@ -61,59 +61,59 @@ static std::vector<list_item> const effect_voice_types =
 std::vector<list_item>(effect_types.begin(), effect_types.begin() + effect_type::delay);
     
 static param_ui_descriptor const effect_filter_type_ui = 
-{ true, { { effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } } } };
+{ true, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } } } };
 static param_ui_descriptor const effect_shaper_ui = 
-{ false, { { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } } } };
+{ false, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } } } };
 static param_ui_descriptor const effect_shaper_type_ui =
-{ true, { { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } } } };
+{ true, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } } } };
 static param_ui_descriptor const effect_delay_ui =
-{ false, { { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } } } };
+{ false, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } } } };
 static param_ui_descriptor const effect_delay_type_ui =
-{ true, { { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } } } };
+{ true, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } } } };
 static param_ui_descriptor const effect_reverb_ui =
-{ false, { { effect_param::type, [](std::int32_t v) { return v == effect_type::reverb; } } } };
+{ false, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::reverb; } } } };
 
-static param_ui_descriptor const effect_dly_multi_time_ui = { false, {
+static param_ui_descriptor const effect_dly_multi_time_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
 { effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::multi; } },
 { effect_param::dly_synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const effect_dly_multi_tempo_ui = { false, {
+static param_ui_descriptor const effect_dly_multi_tempo_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
 { effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::multi; } },
 { effect_param::dly_synced, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const effect_dly_fdbk_time_ui = { false, {
+static param_ui_descriptor const effect_dly_fdbk_time_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
 { effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::feedback; } },
 { effect_param::dly_synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const effect_dly_fdbk_tempo_ui = { false, {
+static param_ui_descriptor const effect_dly_fdbk_tempo_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
 { effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::feedback; } },
 { effect_param::dly_synced, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const effect_dly_multi_ui = { false, {
+static param_ui_descriptor const effect_dly_multi_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
 { effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::multi; } } } };
-static param_ui_descriptor const effect_dly_fdbk_ui = { false, {
+static param_ui_descriptor const effect_dly_fdbk_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
 { effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::feedback; } } } };
 
-static param_ui_descriptor const effect_flt_comb_ui = { false, {
+static param_ui_descriptor const effect_flt_comb_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } },
 { effect_param::filter_type, [](std::int32_t v) { return v == effect_filter_type::comb; } } } };
-static param_ui_descriptor const effect_flt_stvar_ui = { false, {
+static param_ui_descriptor const effect_flt_stvar_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } },
 { effect_param::filter_type, [](std::int32_t v) { return v == effect_filter_type::state_var; } } } };
-static param_ui_descriptor const effect_flt_stvar_shlf_ui = { false, {
+static param_ui_descriptor const effect_flt_stvar_shlf_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } },
 { effect_param::filter_type, [](std::int32_t v) { return v == effect_filter_type::state_var; } },
 { effect_param::flt_stvar_type, [](std::int32_t v) { return v >= effect_flt_stvar_type::bll; } } } };
 
-static param_ui_descriptor const effect_shp_cheby_sum_ui = { false, {
+static param_ui_descriptor const effect_shp_cheby_sum_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } },
 { effect_param::shaper_type, [](std::int32_t v) { return v == effect_shaper_type::cheby_sum; } } } };
-static param_ui_descriptor const effect_shp_cheby_ui = { false, {
+static param_ui_descriptor const effect_shp_cheby_ui = { false, 0.0f, {
 { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } },
 { effect_param::shaper_type, [](std::int32_t v) { return v == effect_shaper_type::cheby_one || v == effect_shaper_type::cheby_sum; } } } };
-
+ 
 static param_descriptor_data const effect_on_data = { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr }; 
 static param_descriptor_data const effect_voice_type_data = { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &effect_voice_types, effect_type::filter }, 0, nullptr };
 static param_descriptor_data const effect_global_type_data = { { "Type", "Type" }, "", param_kind::block, param_type::list, { &effect_global_types, effect_type::filter }, 0, nullptr };

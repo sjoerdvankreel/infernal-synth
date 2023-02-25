@@ -49,12 +49,12 @@ synth_instrument_topology::init_defaults(param_value* state) const
 
   // param indices
   std::int32_t master_gain = param_bounds[part_type::master][0] + master_param::gain;
-  std::int32_t vcv_in_1 = param_bounds[part_type::vcv_bank][0] + cv_bank_param::in1;
-  std::int32_t vcv_out_1 = param_bounds[part_type::vcv_bank][0] + cv_bank_param::out1;
-  std::int32_t vcv_op_1 = param_bounds[part_type::vcv_bank][0] + cv_bank_param::op1;
-  std::int32_t gcv_in_1 = param_bounds[part_type::gcv_bank][0] + cv_bank_param::in1;
-  std::int32_t gcv_out_1 = param_bounds[part_type::gcv_bank][0] + cv_bank_param::out1;
-  std::int32_t gcv_op_1 = param_bounds[part_type::gcv_bank][0] + cv_bank_param::op1;
+  std::int32_t vcv_in_1 = param_bounds[part_type::vcv_bank][0] + vcv_bank_param::in1;
+  std::int32_t vcv_out_1 = param_bounds[part_type::vcv_bank][0] + vcv_bank_param::out1;
+  std::int32_t vcv_op_1 = param_bounds[part_type::vcv_bank][0] + vcv_bank_param::op1;
+  std::int32_t gcv_in_1 = param_bounds[part_type::gcv_bank][0] + gcv_bank_param::in1;
+  std::int32_t gcv_out_1 = param_bounds[part_type::gcv_bank][0] + gcv_bank_param::out1;
+  std::int32_t gcv_op_1 = param_bounds[part_type::gcv_bank][0] + gcv_bank_param::op1;
   std::int32_t vaudio_in_1 = param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::in1;
   std::int32_t vaudio_out_1 = param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::out1;
   std::int32_t gaudio_in_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1;

@@ -152,7 +152,7 @@ cv_bank_processor::update_block_params(block_input_data const& input)
     if (bank_automation.block_discrete(cv_bank_vgcv_param_on) == 0) continue;
 
     // For each route.
-    for (std::int32_t r = 0; r < cv_bank_route_count; r++)
+    for (std::int32_t r = 0; r < _data->route_count; r++)
     {
       std::int32_t in_index = param_index(r, cv_bank_param_type::in);
       std::int32_t source_id = bank_automation.block_discrete(in_index);
@@ -245,7 +245,10 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
       in_modified[s] = amt[s] * ((offset[s] + (1.0f - offset[s]) * scale[s] * (in[s] + 1.0f) * 0.5f) * 2.0f - 1.0f);
 
   for (std::int32_t s = 0; s < ss; s++)
-    assert(0.0f <= in_modified[s] && in_modified[s] <= 1.0f);
+  {
+    assert(bipolar || 0.0f <= in_modified[s] && in_modified[s] <= 1.0f);
+    assert(!bipolar || -1.0f <= in_modified[s] && in_modified[s] <= 1.0f);
+  }
 
   // Modulate.
   switch (indices.input_op_index)

@@ -18,12 +18,18 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- reduce output/cpu ui
+- make it lighter
+- github preview image
+- bipolar master cv controls
+- lfo a connector to right-down
 - new menu option: clear all unused
+- better defaults - use fx in instrument mode
 
 - better factory presets
 - document generic kdb track
 - document extra menu options
+- document changed output params
+- document shift/ctrl click reset
 - document time-based stuff cannot be modulated
-- document breaking changes: delay params, env params
+- document breaking changes: delay params, env params, cv bank params, audio bank params
 - recreate project website, re-do screenshots, presets and demos

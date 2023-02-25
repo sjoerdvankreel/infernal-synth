@@ -419,6 +419,12 @@ add_ui_output_param(
     edit_left = cell_width / 2 + padding_param_group;
     check_left = cell_width - check_width - 2 * padding_param_group;
     edit_width = label_width = cell_width / 2 - 3 * padding_param_group;
+    if (param_desc.ui != nullptr && param_desc.ui->label_width > 0.0f)
+    {
+      label_width = static_cast<std::int32_t>(cell_width * param_desc.ui->label_width);
+      edit_left = label_left + label_width + margin;
+      edit_width = static_cast<std::int32_t>(cell_width * (1.0f - param_desc.ui->label_width)) - 2 * margin - padding_param_group;
+    }
   } 
 
   add_child(container, "CTextLabel", build_ui_param_label(
@@ -433,7 +439,14 @@ add_ui_output_param(
     add_child(container, "CCheckBox", build_ui_param_checkbox(
       *part.info, *param.info, type.colors.check, check_left, check_width, 0, allocator), allocator);
     break;
-  default: assert(false);
+  case param_type::list:
+    add_child(container, get_option_menu_class(*param.info), build_ui_param_menu(
+      *part.info, *param.info, "right", edit_left, edit_width, 0,
+      part_ui->table == nullptr ? type.colors.menu : type.colors.table_menu, allocator), allocator);
+    break;
+  default: 
+    assert(false);
+    break;
   }
 }
 

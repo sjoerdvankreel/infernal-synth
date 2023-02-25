@@ -472,13 +472,14 @@ synth_processor::process(block_input const& input, block_output& output)
   amp_bal_in.audio_in = audio_mixdown.mixdown;
   audio_part_output amp_bal_out = _gamp_bal.process(amp_bal_in, output.audio, _gcv_bank);
   usage.gcv += amp_bal_out.cv_time;
-  usage.amp += amp_bal_out.own_time;
+  usage.master += amp_bal_out.own_time;
   
   // Output round info.
   output_info info;
-  info.usage = usage;
+  info.usage = usage; 
   info.start_time = start_time;
   info.voice_count = voice_count;
+  info.drained = _voices_drained;
   info.clipped = audio_may_clip(output.audio, input.channel_count, input.data.sample_count);
   _output.process(input, info, output);
 

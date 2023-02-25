@@ -25,8 +25,8 @@ static std::vector<time_signature> const envelope_timesig = synced_timesig(true,
 std::vector<float> const envelope_timesig_values = synced_timesig_values(envelope_timesig);
 static std::vector<std::string> const envelope_timesig_names = synced_timesig_names(envelope_timesig); 
 
-static param_ui_descriptor const envelope_time_ui = { false, { { envelope_param::synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const envelope_sync_ui = { false, { { envelope_param::synced, [](std::int32_t v) { return v != 0; } } } };
+static param_ui_descriptor const envelope_time_ui = { false, 0.0f, { { envelope_param::synced, [](std::int32_t v) { return v == 0; } } } };
+static param_ui_descriptor const envelope_sync_ui = { false, 0.0f, { { envelope_param::synced, [](std::int32_t v) { return v != 0; } } } };
 
 param_descriptor const
 envelope_params[envelope_param::count] =
