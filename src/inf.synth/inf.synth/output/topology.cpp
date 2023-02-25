@@ -5,7 +5,7 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-static list_item const usage_sources[usage_source::count] = {
+static std::vector<list_item> const usage_sources = {
   { "{EF08E89F-BA8D-4351-B884-28CED7C666DA}", "Voice" },
   { "{6DA9D3AA-0AF1-46F3-A99C-46617B3283D9}", "Master" },
   { "{A9F10C03-1757-4759-B127-82CD86B61ED7}", "Audio A" },
@@ -21,11 +21,6 @@ static list_item const usage_sources[usage_source::count] = {
 
 param_ui_descriptor const high_mod_ui = { false, 0.3f, {} };
 param_ui_descriptor const high_usage_ui = { false, 0.6f, {} };
-
-static bool const usage_source_spaces[usage_source::count] =
-{ true, true, false, false, false, false, true, true, false, false, false, false };
-static std::vector<list_item> const usage_sources_items =
-multi_list_items(usage_sources, nullptr, usage_source_spaces, nullptr, usage_source_counts, usage_source::count, false);
           
 param_descriptor const  
 output_params[output_param::count] =         
@@ -34,7 +29,7 @@ output_params[output_param::count] =
   { "{6190497F-E08C-49DC-8C74-BAEF6D889BCB}", { { "Voices", "Voice count" }, "", param_kind::output, param_type::text, { 0, synth_polyphony, 0 }, 1, nullptr } },
   { "{76601D0B-6DF3-4EB7-81CD-2FF821C20BCB}", { { "Drain", "Drain" }, param_kind::output, false, 2, nullptr } },
   { "{485325E3-3E15-46C4-84FA-5D743BB75C3A}", { { "CPU", "Total CPU" }, "%", param_kind::output, param_type::text, { 0, 100, 0 }, 3, nullptr } },
-  { "{C0AB0784-45BB-4C2E-AF4F-F236EFCF4C6D}", { { "High", "Highest usage module" }, "", param_kind::output, param_type::list, { &usage_sources_items, usage_source::voice }, 4, &high_mod_ui } },
+  { "{C0AB0784-45BB-4C2E-AF4F-F236EFCF4C6D}", { { "High", "Highest usage module" }, "", param_kind::output, param_type::list, { &usage_sources, usage_source::voice }, 4, &high_mod_ui } },
   { "{5E2D8A99-F779-4C12-97D3-66D8ADC02507}", { { "High CPU", "Highest usage CPU" }, "%", param_kind::output, param_type::text, { 0, 100, 0 }, 5, &high_usage_ui } }
 }; 
   

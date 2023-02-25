@@ -6,9 +6,6 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-static std::vector<std::vector<std::int32_t>> const usage_table_in =
-multi_list_table_init_in(usage_source_counts, usage_source::count);
-
 void 
 output_processor::process(base::block_input const& input, output_info const& info, base::block_output& output)
 { 
@@ -27,72 +24,18 @@ output_processor::process(base::block_input const& input, output_info const& inf
   // Highest cpu usage module.
   std::int64_t highest_usage = 0;
   std::int32_t highest_use_mod = 0;
-  if (info.usage.vcv > highest_usage) 
-  {
-    highest_usage = info.usage.vcv;
-    highest_use_mod = usage_table_in[usage_source::vcv][0];
-  }
-  if (info.usage.gcv > highest_usage)
-  {
-    highest_usage = info.usage.gcv;
-    highest_use_mod = usage_table_in[usage_source::gcv][0];
-  }
-  if (info.usage.voice > highest_usage) 
-  {
-    highest_usage = info.usage.voice;
-    highest_use_mod = usage_table_in[usage_source::voice][0];
-  }
-  if (info.usage.master > highest_usage) 
-  {
-    highest_usage = info.usage.master;
-    highest_use_mod = usage_table_in[usage_source::master][0];
-  }
-  if (info.usage.vaudio > highest_usage)
-  {
-    highest_usage = info.usage.vaudio;
-    highest_use_mod = usage_table_in[usage_source::vaudio][0];
-  }
-  if (info.usage.gaudio > highest_usage) 
-  {
-    highest_usage = info.usage.gaudio;
-    highest_use_mod = usage_table_in[usage_source::gaudio][0];
-  }
-  for(std::int32_t i = 0; i < vosc_count; i++)
-    if (info.usage.osc[i] > highest_usage) 
-    {
-      highest_usage = info.usage.osc[i]; 
-      highest_use_mod = usage_table_in[usage_source::osc][i];
-    }
-  for (std::int32_t i = 0; i < venv_count; i++)
-    if (info.usage.env[i] > highest_usage) 
-    {
-      highest_usage = info.usage.env[i];
-      highest_use_mod = usage_table_in[usage_source::env][i];
-    }
-  for (std::int32_t i = 0; i < vlfo_count; i++)
-    if (info.usage.vlfo[i] > highest_usage) 
-    {
-      highest_usage = info.usage.vlfo[i];
-      highest_use_mod = usage_table_in[usage_source::vlfo][i];
-    }
-  for (std::int32_t i = 0; i < glfo_count; i++)
-    if (info.usage.glfo[i] > highest_usage) 
-    {
-      highest_usage = info.usage.glfo[i];
-      highest_use_mod = usage_table_in[usage_source::glfo][i];
-    }
-  for (std::int32_t i = 0; i < veffect_count; i++)
-    if (info.usage.veffect[i] > highest_usage) 
-    {
-      highest_usage = info.usage.veffect[i];
-      highest_use_mod = usage_table_in[usage_source::veffect][i];
-    }
-  for (std::int32_t i = 0; i < geffect_count; i++)
-    if (info.usage.geffect[i] > highest_usage) 
-    {
-      highest_usage = info.usage.geffect[i];
-      highest_use_mod = usage_table_in[usage_source::geffect][i];
-    }
+  if (info.usage.osc > highest_usage) highest_usage = info.usage.osc, highest_use_mod = usage_source::osc;
+  if (info.usage.env > highest_usage) highest_usage = info.usage.env, highest_use_mod = usage_source::env;
+  if (info.usage.vcv > highest_usage) highest_usage = info.usage.vcv, highest_use_mod = usage_source::vcv;
+  if (info.usage.gcv > highest_usage) highest_usage = info.usage.gcv, highest_use_mod = usage_source::gcv;
+  if (info.usage.vlfo > highest_usage) highest_usage = info.usage.vlfo, highest_use_mod = usage_source::vlfo;
+  if (info.usage.glfo > highest_usage) highest_usage = info.usage.glfo, highest_use_mod = usage_source::glfo;
+  if (info.usage.voice > highest_usage) highest_usage = info.usage.voice, highest_use_mod = usage_source::voice;
+  if (info.usage.master > highest_usage) highest_usage = info.usage.master, highest_use_mod = usage_source::master;
+  if (info.usage.vaudio > highest_usage) highest_usage = info.usage.vaudio, highest_use_mod = usage_source::vaudio;
+  if (info.usage.gaudio > highest_usage) highest_usage = info.usage.gaudio, highest_use_mod = usage_source::gaudio;
+  if (info.usage.veffect > highest_usage) highest_usage = info.usage.veffect, highest_use_mod = usage_source::veffect;
+  if (info.usage.geffect > highest_usage) highest_usage = info.usage.geffect, highest_use_mod = usage_source::geffect;
   std::int32_t high_use_cpu = static_cast<std::int32_t>(static_cast<double>(highest_usage) * 100 / total_cpu);
   output.block_automation_raw[output_start + output_param::high].discrete = highest_use_mod;
   output.block_automation_raw[output_start + output_param::high_cpu].discrete = high_use_cpu;
