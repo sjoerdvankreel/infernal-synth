@@ -240,7 +240,7 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
   // For keyboard tracking, we scale outward rather than inward, to give user 100% range e.g. between c3 and c5.
   std::int32_t ss = sample_count;
   float* in_modified = _state->in_modified.data();
-  if(source_type == vcv_route_input::key || source_type == vcv_route_input::key_inv)
+  if(_data->part_type == part_type::vcv_bank && (source_type == vcv_route_input::key || source_type == vcv_route_input::key_inv))
     for (std::int32_t s = 0; s < ss; s++)
     {
       float min_mod = offset[s];
