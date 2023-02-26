@@ -1,6 +1,8 @@
 #include <inf.synth/synth/topology.hpp>
+#include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/cv_bank/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
+#include <inf.synth/oscillator/topology.hpp>
 
 #include <inf.vst.base/sdk/processor.hpp>
 #include <inf.vst.base/sdk/controller.hpp>
@@ -86,6 +88,20 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in2, "FX B1");
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out2, "Master");
 
+  // lfo a1 on & bipolar
+  set_ui_value(state, part_type::vlfo, 0, lfo_param::on, "On");
+  set_ui_value(state, part_type::vlfo, 0, lfo_param::rate, "15");
+  set_ui_value(state, part_type::vlfo, 0, lfo_param::bipolar, "On");
+
+  // cv a velo to voice amp and lfo a1 to osc 1 cent
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::on, "On");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op1, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in1, "Velocity");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out1, "Osc 1 Gain");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op2, "Add");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in2, "LFO A1");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out2, "Osc 1 Cent");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::amt2, "33");
 
 /*
 
