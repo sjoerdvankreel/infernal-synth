@@ -67,7 +67,8 @@ static list_item const gcv_route_outputs[gcv_route_output::count] = {
 // input routing
 static list_item const gcv_route_inputs[gcv_route_input::count] = {
   { "{E26F7364-965D-4CF3-AE95-178C1EEA8BCB}", "Off" },
-  { "{294CEAF7-C69B-4ECA-BB44-A727E7872DCA}", "CV" },
+  { "{E7FFCA1E-6777-4E10-85AA-F19B913AB87F}", "CVU" },
+  { "{C8CF0423-29D7-4FB3-8B17-2B1B5AE735DC}", "CVB" },
   { "{862452FE-1786-48A8-9F60-33030BB8B3C9}", "LFO B" } };
 static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{76EDD4AA-E81B-4777-B46E-A0DE12B60541}", "Off" },
@@ -75,8 +76,10 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{6211FF30-9D1F-4011-B8AA-A3DF08D84B71}", "Key" },
   { "{9C81D502-DF00-4759-A2D0-B4FBCED9D9B0}", "Key Inv" },
   { "{F935E7CE-CC76-4548-B22F-4476A304BCEA}", "Env" },
-  { "{33038A70-7256-46A8-AF33-6676157709C4}", "CV" },
-  { "{1209DAFC-6F0B-452E-B613-01097DB6249A}", "CV" }, // Hold
+  { "{E70042FB-3D4E-4822-98A5-B6CE5A58951B}", "CVU" },
+  { "{9A13AB02-000C-4E3C-897C-0C1C9B7A603B}", "CVU" }, // Hold
+  { "{C6F469EE-9A9A-4319-9825-ACDD75A14D6D}", "CVB" },
+  { "{85D4AE4A-D83D-41AC-BB2B-81F7839126F5}", "CVB" }, // Hold
   { "{3498B234-D9A4-4A71-822B-C4304C3D2A63}", "LFO A" },
   { "{4D157622-02FA-4D9C-9B47-B999A7566D05}", "LFO B" },
   { "{7262E745-9116-4071-ACA7-0D11464E1892}", "LFO B" } }; // Hold
@@ -149,10 +152,10 @@ static list_item const vgcv_route_effect_targets[vgcv_route_effect_target::count
   { "{FD8D3763-B1C0-4F86-8985-8483D523815B}", "Rev APF" } };
    
 // text spacing
-static bool const gcv_route_input_spaces[gcv_route_input::count] = { true, true, false };
+static bool const gcv_route_input_spaces[gcv_route_input::count] = { true, true, true, false };
 static bool const gcv_route_output_spaces[gcv_route_output::count] = { true, false, false, true };
 static bool const vcv_route_output_spaces[vcv_route_output::count] = { true, true, false, false, true };
-static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, true, true, false, false, false };
+static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, true, true, true, true, false, false };
 
 // output targets  
 static list_item const* const gcv_route_output_targets[gcv_route_output::count] = {
@@ -168,9 +171,9 @@ static std::vector<list_item> const gcv_route_output_target_list = zip_list_item
 
 // input sources
 static char const* const vcv_route_input_suffixes[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, nullptr, "Hold" };
+  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
 static list_item_info const vcv_route_input_infos[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, envelope_item_info, nullptr, nullptr, nullptr, nullptr, nullptr };
+  nullptr, nullptr, nullptr, nullptr, envelope_item_info, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 static std::vector<list_item> const vcv_route_input_sources_list = multi_list_items(
   vcv_route_inputs, vcv_route_input_infos, vcv_route_input_spaces, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
 static std::vector<list_item> const gcv_route_input_sources_list = multi_list_items(
