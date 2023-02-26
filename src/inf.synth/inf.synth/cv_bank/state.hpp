@@ -87,10 +87,8 @@ struct cv_bank_state
   std::array<cv_bank_storage, vlfo_count> vlfo;
   std::array<cv_bank_storage, glfo_count> glfo;
   std::array<cv_bank_storage, glfo_count> glfo_hold;
-  std::array<cv_bank_storage, master_gcv_count> gcv_bi;
-  std::array<cv_bank_storage, master_gcv_count> gcv_uni;
-  std::array<cv_bank_storage, master_gcv_count> gcv_bi_hold;
-  std::array<cv_bank_storage, master_gcv_count> gcv_uni_hold;
+  std::array<cv_bank_storage, master_gcv_count> gcv;
+  std::array<cv_bank_storage, master_gcv_count> gcv_hold;
 
   cv_bank_state(base::topology_info const* topology, std::int32_t max_sample_count);
 };
