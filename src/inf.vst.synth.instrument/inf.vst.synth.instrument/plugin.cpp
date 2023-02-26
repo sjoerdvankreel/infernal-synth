@@ -69,7 +69,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   state[vcv_in_1] = params[vcv_in_1].descriptor->data.parse_ui("Velocity");
   state[vcv_out_1] = params[vcv_out_1].descriptor->data.parse_ui("Voice Gain");
   state[vcv_op_1] = params[vcv_op_1].descriptor->data.parse_ui("Mul");
-  state[gcv_in_1] = params[gcv_in_1].descriptor->data.parse_ui("CVU 1");
+  state[gcv_in_1] = params[gcv_in_1].descriptor->data.parse_ui("CV U1");
   state[gcv_out_1] = params[gcv_out_1].descriptor->data.parse_ui("Master Gain");
   state[gcv_op_1] = params[gcv_op_1].descriptor->data.parse_ui("Mul");
 
