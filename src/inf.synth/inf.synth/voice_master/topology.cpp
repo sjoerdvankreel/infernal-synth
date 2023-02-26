@@ -18,18 +18,6 @@ static std::vector<list_item> const master_modes = {
   { "{5EFD4121-52DC-43F2-A853-CC4DB9F8342F}", "Mono" }, 
   { "{49996567-D045-488B-85D0-97EC55FE8CDB}", "Rlease" } };
 
-static param_ui_descriptor master_cv1_bi_ui = { false, 0.0f, {
-  { master_param::gcv1_switch_bi, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor master_cv2_bi_ui = { false, 0.0f, {
-  { master_param::gcv2_switch_bi, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor master_cv3_bi_ui = { false, 0.0f, {
-  { master_param::gcv3_switch_bi, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor master_cv1_uni_ui = { false, 0.0f, {
-  { master_param::gcv1_switch_bi, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor master_cv2_uni_ui = { false, 0.0f, {
-  { master_param::gcv2_switch_bi, [](std::int32_t v) { return v == 0; } } } }; 
-static param_ui_descriptor master_cv3_uni_ui = { false, 0.0f, {
-  { master_param::gcv3_switch_bi, [](std::int32_t v) { return v == 0; } } } }; 
 static param_ui_descriptor const master_port_sync_ui = { false, 0.0f, {
   { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } }, 
   { master_param::port_sync, [](std::int32_t v) { return v == 1; } } } };
@@ -67,15 +55,12 @@ master_params[master_param::count] =
   { "{09243EDB-2DBE-450F-800F-C37BF8A3C44B}", { { "Sync", "Portamento tempo sync" }, param_kind::block, false, 6, &master_port_on_ui } },
   { "{E27DEC2E-BA49-454C-8C28-F7532F6985DC}", { { "Time", "Portamento time" }, "Sec", param_kind::block, linear_bounds(0.01f, 10.0f, 1.0f, 2), 9, &master_port_time_ui } },
   { "{1DD53257-2104-4C66-BA00-2B73E9F6BA63}", { { "Tempo", "Portamento tempo" }, "", param_kind::block, param_type::knob_list, { &master_port_timesig_names, "1/16" }, 9, &master_port_sync_ui } },
-  { "{F2E3B9B7-A0D5-44A3-8EA3-98B536B4E4C2}", { { "CV 1", "CV 1 unipolar" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 1, &master_cv1_uni_ui } },
-  { "{B46FA59A-7F67-4F53-B02D-30942B14E082}", { { "CV 1", "CV 1 bipolar" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 1, &master_cv1_bi_ui } },
-  { "{1DAF5F89-EBB7-49BA-A80C-7F1F00F98F4E}", { { "Bipolar", "CV 1 bipolar on/off" }, param_kind::block, false, 2, nullptr } },
-  { "{EAA17C14-3811-4152-BB68-D083FCE82398}", { { "CV 2", "CV 2 unipolar" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, &master_cv2_uni_ui } },
-  { "{84A18512-60E4-4047-9806-1DCD9D80E76A}", { { "CV 2", "CV 2 bipolar" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 4, &master_cv2_bi_ui } },
-  { "{45B6CF48-E5FB-4492-BE68-F0802EA2A958}", { { "Bipolar", "CV 2 bipolar on/off" }, param_kind::block, false, 5, nullptr } },
-  { "{A59EB157-224A-4617-8DCA-FAA52246FD0E}", { { "CV 3", "CV 3 unipolar" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 7, &master_cv3_uni_ui } },
-  { "{0847DCB8-2956-4EAA-A864-63ADDFC3CA26}", { { "CV 3", "CV 3 bipolar" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 7, &master_cv3_bi_ui } },
-  { "{4ABC661F-2C3E-427A-90FE-A417C904B16F}", { { "Bipolar", "CV 3 bipolar on/off" }, param_kind::block, false, 8, nullptr } }
+  { "{50F02184-1EAC-4A80-8832-0728B9EBF455}", { { "CV 1", "CV 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 1, nullptr } },
+  { "{78C0C624-B34B-41AE-8294-5D99895753CB}", { { "Bipolar", "CV 1 bipolar" }, param_kind::block, false, 2, nullptr } },
+  { "{060B5E5E-2E49-4DF1-90B8-8D8F87E98707}", { { "CV 2", "CV 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 4, nullptr } },
+  { "{07E509BE-891C-48A8-9076-81D9DE8B6845}", { { "Bipolar", "CV 2 bipolar" }, param_kind::block, false, 5, nullptr } },
+  { "{DD9A20AD-563A-4855-BAEF-2C53E6B94815}", { { "CV 3", "CV 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 7, nullptr } },
+  { "{06826D77-66A2-44F0-9AE8-DFA7035C95D8}", { { "Bipolar", "CV 3 bipolar" }, param_kind::block, false, 8, nullptr } }      
 };
  
 } // namespace inf::synth 
