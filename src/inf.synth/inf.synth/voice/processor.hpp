@@ -52,7 +52,8 @@ class voice_processor
   // This CV is fixed at voice start.
   float _velo;
   std::array<cv_hold_sample, glfo_count> _glfo_hold;
-  std::array<cv_hold_sample, master_gcv_count> _gcv_hold;
+  std::array<cv_hold_sample, master_gcv_count> _gcv_bi_hold;
+  std::array<cv_hold_sample, master_gcv_count> _gcv_uni_hold;
 
   // Portamento control.
   void prepare_port(voice_input const& input);
@@ -70,9 +71,9 @@ public:
   voice_processor(base::topology_info const* topology, float sample_rate,
     oscillator_state* oscillator_state, effect_state* fx_state, 
     audio_bank_state* audio_state, cv_bank_state* cv_state,
-    cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, float velo,
-    std::vector<float>* port_state, scratch_space* scratch, std::int32_t midi, 
-    std::int32_t last_midi, bool new_voice_section, base::block_input_data const& input);
+    cv_hold_sample const* gcv_uni_hold_, cv_hold_sample const* gcv_bi_hold_, 
+    cv_hold_sample const* glfo_hold_, float velo, std::vector<float>* port_state, scratch_space* scratch, 
+    std::int32_t midi, std::int32_t last_midi, bool new_voice_section, base::block_input_data const& input);
 };
 
 } // namespace inf::synth

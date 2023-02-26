@@ -14,20 +14,22 @@ voice_processor::
 voice_processor(topology_info const* topology, float sample_rate,
   oscillator_state* oscillator_state, effect_state* fx_state,
   audio_bank_state* audio_state, cv_bank_state* cv_state,
-  cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, float velo,
-  std::vector<float>* port_state, scratch_space* scratch, std::int32_t midi,
-  std::int32_t last_midi, bool new_voice_section, block_input_data const& input):
+  cv_hold_sample const* gcv_uni_hold_, cv_hold_sample const* gcv_bi_hold_, 
+  cv_hold_sample const* glfo_hold_, float velo, std::vector<float>* port_state, 
+  scratch_space* scratch, std::int32_t midi, std::int32_t last_midi, 
+  bool new_voice_section, block_input_data const& input):
 _sample_rate(sample_rate), _midi(midi), _last_midi(last_midi), _new_voice_section(new_voice_section),
 _voice_start(true), _port_acc(0.0f), _port_current(0.0f), _port_target(0.0), _port_pos(0), _port_samples(-1),
 _scratch(scratch), _cv_state(cv_state), _audio_state(audio_state), _port_state(port_state), _topology(topology),
-_vamp_bal(topology, part_type::voice, sample_rate), _vcv_bank(topology, cv_state, gcv_hold_, glfo_hold_, velo, midi, input), 
-_vaudio_bank(input, audio_state), _vlfos(), _venvs(), _voscs(), _veffects(), _velo(velo), _glfo_hold(), _gcv_hold()
+_vamp_bal(topology, part_type::voice, sample_rate), _vcv_bank(topology, cv_state, gcv_uni_hold_, gcv_bi_hold_, glfo_hold_, velo, midi, input), 
+_vaudio_bank(input, audio_state), _vlfos(), _venvs(), _voscs(), _veffects(), _velo(velo), _glfo_hold(), _gcv_bi_hold(), _gcv_uni_hold()
 {  
   assert(topology != nullptr);
   assert(0 <= midi && midi < 128);
   assert(0.0f <= velo && velo <= 1.0f);
   std::copy(glfo_hold_, glfo_hold_ + glfo_count, _glfo_hold.begin());
-  std::copy(gcv_hold_, gcv_hold_ + master_gcv_count, _gcv_hold.begin());
+  std::copy(gcv_bi_hold_, gcv_bi_hold_ + master_gcv_count, _gcv_bi_hold.begin());
+  std::copy(gcv_uni_hold_, gcv_uni_hold_ + master_gcv_count, _gcv_uni_hold.begin());
 
   part_id voice_id = { part_type::voice, 0 };
   automation_view automation = input.automation.rearrange_params(voice_id);
@@ -154,7 +156,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   prepare_port(input);
 
   // Apply voice-static cv (velocity, hold master cv, hold lfos).
-  _vcv_bank.apply_voice_state(_gcv_hold.data(), _glfo_hold.data(), _velo, _midi, sample_count);
+  _vcv_bank.apply_voice_state(_gcv_uni_hold.data(), _gcv_bi_hold.data(), _glfo_hold.data(), _velo, _midi, sample_count);
 
   // Run lfo's.
   for (std::int32_t i = 0; i < vlfo_count; i++)

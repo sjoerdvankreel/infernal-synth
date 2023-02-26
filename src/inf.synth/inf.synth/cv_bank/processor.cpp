@@ -62,8 +62,9 @@ cv_bank_processor::input_buffer_global(std::int32_t input, std::int32_t index) c
   switch (input)
   {
   case gcv_route_input::off: assert(false); return nullptr;
-  case gcv_route_input::gcv: return _state->gcv[index].buffer.values;
   case gcv_route_input::glfo: return _state->glfo[index].buffer.values;
+  case gcv_route_input::gcv_bi: return _state->gcv_bi[index].buffer.values;
+  case gcv_route_input::gcv_uni: return _state->gcv_uni[index].buffer.values;
   default: assert(false); return nullptr;
   }
 }
@@ -77,12 +78,14 @@ cv_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index) co
   case vcv_route_input::key: return _state->key.data();
   case vcv_route_input::velo: return _state->velo.data();
   case vcv_route_input::key_inv: return _state->key_inv.data();
-  case vcv_route_input::gcv: return _state->gcv[index].buffer.values;
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.values;
   case vcv_route_input::venv: return _state->venv[index].buffer.values;
   case vcv_route_input::glfo: return _state->glfo[index].buffer.values;
-  case vcv_route_input::gcv_hold: return _state->gcv_hold[index].buffer.values;
+  case vcv_route_input::gcv_bi: return _state->gcv_bi[index].buffer.values;
+  case vcv_route_input::gcv_uni: return _state->gcv_uni[index].buffer.values;
   case vcv_route_input::glfo_hold: return _state->glfo_hold[index].buffer.values;
+  case vcv_route_input::gcv_bi_hold: return _state->gcv_bi_hold[index].buffer.values;
+  case vcv_route_input::gcv_uni_hold: return _state->gcv_uni_hold[index].buffer.values;
   default: assert(false); return nullptr;
   }
 }
@@ -93,7 +96,8 @@ cv_bank_processor::input_bipolar_global(std::int32_t input, std::int32_t index) 
   switch (input)
   {
   case gcv_route_input::off: return false;
-  case gcv_route_input::gcv: return _state->gcv[index].buffer.flags.bipolar;
+  case gcv_route_input::gcv_bi: return true;
+  case gcv_route_input::gcv_uni: return false;
   case gcv_route_input::glfo: return _state->glfo[index].buffer.flags.bipolar;
   default: assert(false); return false;
   }
@@ -108,33 +112,38 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
   case vcv_route_input::key: return false;
   case vcv_route_input::velo: return false;
   case vcv_route_input::key_inv: return false;
-  case vcv_route_input::gcv: return _state->gcv[index].buffer.flags.bipolar;
+  case vcv_route_input::gcv_bi: return true;
+  case vcv_route_input::gcv_uni: return false;
+  case vcv_route_input::gcv_bi_hold: return true;
+  case vcv_route_input::gcv_uni_hold: return false;
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.flags.bipolar;
   case vcv_route_input::venv: return _state->venv[index].buffer.flags.bipolar;
   case vcv_route_input::glfo: return _state->glfo[index].buffer.flags.bipolar;
-  case vcv_route_input::gcv_hold: return _state->gcv_hold[index].buffer.flags.bipolar;
   case vcv_route_input::glfo_hold: return _state->glfo_hold[index].buffer.flags.bipolar;
   default: assert(false); return 0.0f;
   }
 }
 
 inline void
-cv_bank_processor::apply_voice_state(cv_hold_sample const* gcv_hold,
+cv_bank_processor::apply_voice_state(
+  cv_hold_sample const* gcv_uni_hold, cv_hold_sample const* gcv_bi_hold,
   cv_hold_sample const* glfo_hold, float velo, std::int32_t midi, std::int32_t sample_count)
 {
   midi = std::clamp(midi, 0, 127);
   std::fill(_state->velo.data(), _state->velo.data() + sample_count, velo);
   std::fill(_state->key.data(), _state->key.data() + sample_count, static_cast<float>(midi) / 127.0f);
   std::fill(_state->key_inv.data(), _state->key_inv.data() + sample_count, 1.0f - static_cast<float>(midi) / 127.0f);
-  for (std::int32_t i = 0; i < master_gcv_count; i++)
-  {
-    _state->gcv_hold[i].buffer.flags = gcv_hold[i].flags;
-    std::fill(_state->gcv_hold[i].buffer.values, _state->gcv_hold[i].buffer.values + sample_count, gcv_hold[i].value);
-  }
   for (std::int32_t i = 0; i < glfo_count; i++)
   {
     _state->glfo_hold[i].buffer.flags = glfo_hold[i].flags;
     std::fill(_state->glfo_hold[i].buffer.values, _state->glfo_hold[i].buffer.values + sample_count, glfo_hold[i].value);
+  }
+  for (std::int32_t i = 0; i < master_gcv_count; i++)
+  {
+    _state->gcv_bi_hold[i].buffer.flags = gcv_bi_hold[i].flags;
+    _state->gcv_uni_hold[i].buffer.flags = gcv_uni_hold[i].flags;
+    std::fill(_state->gcv_bi_hold[i].buffer.values, _state->gcv_bi_hold[i].buffer.values + sample_count, gcv_bi_hold[i].value);
+    std::fill(_state->gcv_uni_hold[i].buffer.values, _state->gcv_uni_hold[i].buffer.values + sample_count, gcv_uni_hold[i].value);
   }
 }
 

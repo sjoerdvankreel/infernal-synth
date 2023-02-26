@@ -17,7 +17,8 @@ void
 effect_graph_base::process_graph(block_input const& input, float sample_rate)
 {
   cv_hold_sample glfo_hold[glfo_count] = { };
-  cv_hold_sample gcv_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_bi_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_uni_hold[master_gcv_count] = { };
   scratch_space scratch(input.data.sample_count);
   cv_bank_state cv_state_(topology(), input.data.sample_count);
   float* audio_out[2] = { _audio_out[0].data(), _audio_out[1].data() };
@@ -31,7 +32,7 @@ effect_graph_base::process_graph(block_input const& input, float sample_rate)
     cv_bank = cv_bank_processor(topology(), &cv_state_);
     cv_bank.update_block_params(input.data);
   } else
-    cv_bank = cv_bank_processor(topology(), &cv_state_, gcv_hold, glfo_hold, 0.0f, midi_note_c4, input.data);
+    cv_bank = cv_bank_processor(topology(), &cv_state_, gcv_uni_hold, gcv_bi_hold, glfo_hold, 0.0f, midi_note_c4, input.data);
 
   effect_input fx_input;
   fx_input.block = &input.data;
