@@ -40,7 +40,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
 {
   topology_info::init_defaults(state);
 
-  // osc 1
+  // osc 1 to detuned saw
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
   set_ui_value(state, part_type::vosc, 0, osc_param::type, "Basic");
   set_ui_value(state, part_type::vosc, 0, osc_param::basic_type, "Saw");
@@ -49,14 +49,20 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_sprd, "50");
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_offset, "50");
 
-  // fx a1
+  // fx a1 to tanh shaper
   set_ui_value(state, part_type::veffect, 0, osc_param::on, "On");
-  set_ui_value(state, part_type::veffect, 0, effect_param::type, "Filter");
-  set_ui_value(state, part_type::veffect, 0, effect_param::filter_type, "State Variable");
-  set_ui_value(state, part_type::veffect, 0, effect_param::flt_stvar_kbd, "50");
-  set_ui_value(state, part_type::veffect, 0, effect_param::flt_stvar_res, "33");
+  set_ui_value(state, part_type::veffect, 0, effect_param::type, "Shape");
+  set_ui_value(state, part_type::veffect, 0, effect_param::shaper_type, "Tanh");
+  set_ui_value(state, part_type::veffect, 0, effect_param::shp_gain, "4");
 
-  // fx b1
+  // fx a2 to state variable filter
+  set_ui_value(state, part_type::veffect, 1, osc_param::on, "On");
+  set_ui_value(state, part_type::veffect, 1, effect_param::type, "Filter");
+  set_ui_value(state, part_type::veffect, 1, effect_param::filter_type, "State Variable");
+  set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_kbd, "50");
+  set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_res, "50");
+
+  // fx b1 to multitap delay
   set_ui_value(state, part_type::geffect, 0, osc_param::on, "On");
   set_ui_value(state, part_type::geffect, 0, effect_param::type, "Delay");
   set_ui_value(state, part_type::geffect, 0, effect_param::delay_type, "Multitap");
@@ -64,14 +70,16 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_sprd, "75");
   set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_tempo, "3/16");
 
-  // audio a1
+  // audio a1 osc->fx1->fx2->voice
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::on, "On");
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in1, "Osc 1");
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out1, "FX A1");
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in2, "FX A1");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out2, "Voice");
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out2, "FX A2");
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in3, "FX A2");
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out3, "Voice");
 
-  // audio b1
+  // audio b1 voice->fx1->master
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::on, "On");
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in1, "Voice");
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out1, "FX B1");
