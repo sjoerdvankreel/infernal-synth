@@ -43,7 +43,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
 {
   topology_info::init_defaults(state);
 
-  // osc 1 to detuned saw
+  // osc 1 detuned saw
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
   set_ui_value(state, part_type::vosc, 0, osc_param::type, "Basic");
   set_ui_value(state, part_type::vosc, 0, osc_param::basic_type, "Saw");
@@ -52,13 +52,13 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_sprd, "50");
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_offset, "50");
 
-  // fx a1 to tanh shaper
+  // fx a1 tanh shaper
   set_ui_value(state, part_type::veffect, 0, osc_param::on, "On");
   set_ui_value(state, part_type::veffect, 0, effect_param::type, "Shape");
   set_ui_value(state, part_type::veffect, 0, effect_param::shaper_type, "Tanh");
   set_ui_value(state, part_type::veffect, 0, effect_param::shp_gain, "4");
 
-  // fx a2 to state variable filter
+  // fx a2 state variable filter
   set_ui_value(state, part_type::veffect, 1, osc_param::on, "On");
   set_ui_value(state, part_type::veffect, 1, effect_param::type, "Filter");
   set_ui_value(state, part_type::veffect, 1, effect_param::filter_type, "State Variable");
@@ -66,20 +66,24 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_res, "50");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_freq, "5000");
 
-  // fx b1 to state variable filter
+  // fx b1 state variable filter
   set_ui_value(state, part_type::geffect, 0, osc_param::on, "On");
   set_ui_value(state, part_type::geffect, 0, effect_param::type, "Filter");
   set_ui_value(state, part_type::geffect, 0, effect_param::filter_type, "State Variable");
   set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_freq, "5000");
   set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_res, "50");
 
-  // fx b2 to multitap delay
+  // fx b2 multitap delay
   set_ui_value(state, part_type::geffect, 1, osc_param::on, "On");
   set_ui_value(state, part_type::geffect, 1, effect_param::type, "Delay");
   set_ui_value(state, part_type::geffect, 1, effect_param::delay_type, "Multitap");
   set_ui_value(state, part_type::geffect, 1, effect_param::dly_synced, "On");
   set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_sprd, "75");
   set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_tempo, "3/16");
+
+  // master gain and cvs
+  set_ui_value(state, part_type::master, 0, master_param::gain, "6.0");
+  set_ui_value(state, part_type::master, 0, master_param::gcv1_uni, "50");
 
   // audio a1 osc->fx1->fx2->voice
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::on, "On");
@@ -143,17 +147,23 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op2, "Add");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in2, "LFO A1");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out2, "Osc 1 Cent");
-  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::amt2, "25");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::amt2, "10");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in3, "Env 2");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out3, "FX A2 SV Frq");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op3, "Mul");
 
-  // lfo b1 to filter freq
+  // lfo b1 to filter freq & master cvs
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::on, "On");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in1, "LFO B1");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out1, "FX B1 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op1, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::amt1, "33");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in2, "CV U1");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out2, "Master Gain");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op2, "Mul");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in3, "CV B1");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out3, "Master Bal");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op3, "Add");
 
   // cv plots
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "5");
