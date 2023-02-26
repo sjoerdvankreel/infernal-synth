@@ -68,11 +68,10 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
   {
     part_id master_id = { part_type::master, 0 };
     automation_view master_automation = input.data.automation.rearrange_params(master_id);
-    float value_uni = master_automation.block_real_transform(master_param::gcv1_uni + 3 * i);
-    float value_bi = master_automation.block_real_transform(master_param::gcv1_uni + 3 * i + 1);
-    std::int32_t bipolar = master_automation.block_discrete(master_param::gcv1_switch_bi + 3 * i + 2);
+    float value = master_automation.block_real_transform(master_param::gcv1 + 2 * i);
+    std::int32_t bipolar = master_automation.block_discrete(master_param::gcv1 + 2 * i + 1);
     cv_state.gcv[i].buffer.flags.bipolar = bipolar != 0;
-    std::fill(cv_state.gcv[i].buffer.values, cv_state.gcv[i].buffer.values + input.data.sample_count, bipolar? value_bi: value_uni);
+    std::fill(cv_state.gcv[i].buffer.values, cv_state.gcv[i].buffer.values + input.data.sample_count, value);
     gcv_hold[i].flags = cv_state.gcv[i].buffer.flags;
     gcv_hold[i].value = cv_state.gcv[i].buffer.values[0];
   }  
