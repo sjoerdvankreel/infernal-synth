@@ -155,7 +155,7 @@ static list_item const vgcv_route_effect_targets[vgcv_route_effect_target::count
 static bool const gcv_route_input_spaces[gcv_route_input::count] = { true, true, true, false };
 static bool const gcv_route_output_spaces[gcv_route_output::count] = { true, false, false, true };
 static bool const vcv_route_output_spaces[vcv_route_output::count] = { true, true, false, false, true };
-static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, true, true, true, true, false, false };
+static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, true, true, true, true, false, false, false };
 
 // output targets  
 static list_item const* const gcv_route_output_targets[gcv_route_output::count] = {
