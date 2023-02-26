@@ -107,12 +107,14 @@ synth_instrument_topology::init_defaults(param_value* state) const
   // lfo b1 on & bipolar & synced
   set_ui_value(state, part_type::glfo, 0, lfo_param::on, "On");
   set_ui_value(state, part_type::glfo, 0, lfo_param::synced, "On");
-  set_ui_value(state, part_type::glfo, 0, lfo_param::tempo, "5/4");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::tempo, "7/4");
   set_ui_value(state, part_type::glfo, 0, lfo_param::bipolar, "On");
   set_ui_value(state, part_type::glfo, 0, lfo_param::invert, "On");
-  set_ui_value(state, part_type::glfo, 0, lfo_param::type, "Basic");
-  set_ui_value(state, part_type::glfo, 0, lfo_param::basic_type, "Tri");
-  set_ui_value(state, part_type::glfo, 0, lfo_param::basic_offset, "25");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::type, "Rnd");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::rand_type, "Both");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::filter, "50");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::rand_seedy, "7");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::rand_steps, "11");
 
   // env 2 on and env 1 shows slopes
   set_ui_value(state, part_type::venv, 1, envelope_param::on, "On");
@@ -144,6 +146,13 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in3, "Env 2");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out3, "FX A2 SV Frq");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op3, "Mul");
+
+  // lfo b1 to filter freq
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::on, "On");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in1, "LFO B1");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out1, "FX B1 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op1, "Add");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::amt1, "33");
 
 /*
 
