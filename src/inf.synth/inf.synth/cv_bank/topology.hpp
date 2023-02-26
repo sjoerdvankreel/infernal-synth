@@ -95,12 +95,14 @@ inline base::part_table_descriptor const vcv_bank_table = { false, vcv_bank_tabl
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
-  off, velo, key, key_inv, venv, 
-  gcv, gcv_hold, vlfo, glfo, glfo_hold, count }; };
+  off, velo, key, key_inv, venv, gcv_uni, gcv_uni_hold, 
+  gcv_bi, gcv_bi_hold, vlfo, glfo, glfo_hold, count }; };
 typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
-  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, venv_count, master_gcv_count,
-  master_gcv_count /* hold */, vlfo_count, glfo_count, glfo_count /* hold */ };
+  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, venv_count, 
+  master_gcv_count /* uni */, master_gcv_count /* uni hold */, 
+  master_gcv_count /* bi */, master_gcv_count /* bi hold */,
+  vlfo_count, glfo_count, glfo_count /* hold */};
 
 // output routing and mapping, off must be 0
 struct vcv_route_output_t { enum value { off, vosc, veffect, vaudio_bank, voice, count }; };  
@@ -164,10 +166,10 @@ inline char const* const gcv_bank_table_row_headers[cv_bank_param_type::count] =
 inline base::part_table_descriptor const gcv_bank_table = { true, gcv_bank_table_col_count, gcv_bank_table_col_widths, gcv_bank_table_row_headers };
 
 // input routing and mapping, off must be 0
-struct gcv_route_input_t { enum value { off, gcv, glfo, count }; };
+struct gcv_route_input_t { enum value { off, gcv_uni, gcv_bi, glfo, count }; };
 typedef gcv_route_input_t::value gcv_route_input;
 inline std::int32_t constexpr gcv_route_input_counts[gcv_route_input::count] = {
-  1 /* off */, master_gcv_count, glfo_count };
+  1 /* off */, master_gcv_count /* cvu */, master_gcv_count /* cvb */, glfo_count};
 
 // output routing, off must be 0
 struct gcv_route_output_t { enum value { off, geffect, gaudio_bank, master, count }; };

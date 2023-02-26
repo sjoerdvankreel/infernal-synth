@@ -35,17 +35,18 @@ oscillator_wave_graph::sample_count(param_value const* state, float sample_rate)
   std::int32_t note = automation.block_discrete(osc_param::note);
   float frequency = note_to_frequency(12 * (oct + 1) + note + cent);
   return static_cast<std::int32_t>(std::ceil(sample_rate / frequency * cv_plot_cycles));
-}  
+}   
  
 void 
 oscillator_wave_graph::process_dsp_core(block_input const& input, float* output, float sample_rate)
 {
   cv_hold_sample glfo_hold[glfo_count] = { };
-  cv_hold_sample gcv_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_bi_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_uni_hold[master_gcv_count] = { };
   scratch_space scratch(input.data.sample_count);
   cv_bank_state cv_state_(topology(), input.data.sample_count);
-  cv_bank_processor cv_bank(topology(), &cv_state_, gcv_hold, glfo_hold, 0.0f, midi_note_c4, input.data);
-
+  cv_bank_processor cv_bank(topology(), &cv_state_, gcv_uni_hold, gcv_bi_hold, glfo_hold, 0.0f, midi_note_c4, input.data);
+   
   _port.clear();
   _port.resize(input.data.sample_count, 1.0f);
   _audio_out[0].resize(input.data.sample_count);

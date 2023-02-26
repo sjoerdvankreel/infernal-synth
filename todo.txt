@@ -10,7 +10,6 @@
 
 * wishlist big
 - CLAP support
-- more master CVs 
 - fx types: compressor
 - osc types: feedback lead
 - filter types: formant, vowel
@@ -19,16 +18,15 @@
 
 * wishlist small
 - github preview image
-- bipolar master cv controls
 - new menu option: clear all unused
 - better defaults - use fx in instrument mode
 
 - better factory presets
 - document versioned builds
-- document generic kdb track
 - document extra menu options
 - document changed output params
 - document shift/ctrl click reset
 - document time-based stuff cannot be modulated
-- document breaking changes: delay params, env params, cv bank params, audio bank params
+- document generic kdb track, changed master cv, more?
+- document breaking changes: delay params, env params, cv bank params, audio bank params, master cv params
 - recreate project website, re-do screenshots, presets and demos
