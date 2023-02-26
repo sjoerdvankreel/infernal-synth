@@ -63,6 +63,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::veffect, 1, effect_param::filter_type, "State Variable");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_kbd, "50");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_res, "50");
+  set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_freq, "5000");
 
   // fx b1 to multitap delay
   set_ui_value(state, part_type::geffect, 0, osc_param::on, "On");
@@ -93,7 +94,10 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vlfo, 0, lfo_param::rate, "15");
   set_ui_value(state, part_type::vlfo, 0, lfo_param::bipolar, "On");
 
-  // cv a velo to voice amp and lfo a1 to osc 1 cent
+  // env 2 on
+  set_ui_value(state, part_type::venv, 1, lfo_param::on, "On");
+
+  // cv a velo to voice amp, lfo a1 to osc 1 cent, env 2 to filter freq
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::on, "On");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op1, "Mul");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in1, "Velocity");
@@ -102,6 +106,9 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in2, "LFO A1");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out2, "Osc 1 Cent");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::amt2, "33");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in3, "Env 2");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out3, "FX A2 SV Frq");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op3, "Mul");
 
 /*
 
