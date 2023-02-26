@@ -20,17 +20,18 @@ _output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
 // Voice.
 cv_bank_processor::
 cv_bank_processor(topology_info const* topology, cv_bank_state* state, 
-  cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, 
-  float velo, std::int32_t midi, base::block_input_data const& input):
+  cv_hold_sample const* gcv_uni_hold_, cv_hold_sample const* gcv_bi_hold_, 
+  cv_hold_sample const* glfo_hold_, float velo, std::int32_t midi, base::block_input_data const& input):
 _state(state), _data(&cv_bank_data::voice), _topology(topology),
 _output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
 { 
   assert(state != nullptr);
   assert(topology != nullptr);
-  assert(gcv_hold_ != nullptr);
+  assert(gcv_uni_hold_ != nullptr);
+  assert(gcv_bi_hold_ != nullptr);
   assert(glfo_hold_ != nullptr);
   update_block_params(input);
-  apply_voice_state(gcv_hold_, glfo_hold_, velo, midi, input.sample_count);
+  apply_voice_state(gcv_uni_hold_, gcv_bi_hold_, glfo_hold_, velo, midi, input.sample_count);
 }
 
 float const*
