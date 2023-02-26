@@ -67,6 +67,7 @@ struct topology_info
   // Virtual so we can apply some sensible defaults for instrument/fx.
   void init_defaults(param_value* state, std::int32_t from, std::int32_t to) const;
   virtual void init_defaults(param_value* state) const { init_defaults(state, 0, input_param_count); }
+  void set_ui_value(param_value* state, std::int32_t part_type, std::int32_t part_index, std::int32_t param, char const* value) const;
 
   // Sanity check.
   void state_check(param_value const* state) const;
