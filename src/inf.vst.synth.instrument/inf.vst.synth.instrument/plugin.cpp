@@ -118,7 +118,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
 
   // env 2 on and env 1 shows slopes
   set_ui_value(state, part_type::venv, 1, envelope_param::on, "On");
-  set_ui_value(state, part_type::venv, 0, envelope_param::sustain_level, "0.66");
+  set_ui_value(state, part_type::venv, 0, envelope_param::sustain_level, "66");
   set_ui_value(state, part_type::venv, 0, envelope_param::attack1_time, "0.025");
   set_ui_value(state, part_type::venv, 0, envelope_param::attack1_slope, "33");
   set_ui_value(state, part_type::venv, 0, envelope_param::attack_split_level, "50");
