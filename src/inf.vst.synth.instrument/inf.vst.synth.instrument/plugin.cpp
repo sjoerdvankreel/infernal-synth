@@ -64,13 +64,13 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::veffect, 1, effect_param::filter_type, "State Variable");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_kbd, "50");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_res, "50");
-  set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_freq, "5000");
+  set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_freq, "7500");
 
   // fx b1 state variable filter
   set_ui_value(state, part_type::geffect, 0, osc_param::on, "On");
   set_ui_value(state, part_type::geffect, 0, effect_param::type, "Filter");
   set_ui_value(state, part_type::geffect, 0, effect_param::filter_type, "State Variable");
-  set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_freq, "5000");
+  set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_freq, "7500");
   set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_res, "50");
 
   // fx b2 multitap delay
@@ -84,6 +84,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   // master gain and cvs
   set_ui_value(state, part_type::master, 0, master_param::gain, "6.0");
   set_ui_value(state, part_type::master, 0, master_param::gcv1_uni, "50");
+  set_ui_value(state, part_type::master, 0, master_param::gcv2_uni, "66");
 
   // audio a1 osc->fx1->fx2->voice
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::on, "On");
@@ -139,7 +140,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::venv, 0, envelope_param::release2_time, "0.2");
   set_ui_value(state, part_type::venv, 0, envelope_param::release2_slope, "-33");
 
-  // cv a velo to voice amp, lfo a1 to osc 1 cent, env 2 to filter freq
+  // cv a velo to voice amp, lfo a1 to osc 1 cent, env 2 to filter freq, cvu 2 to filter freq
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::on, "On");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op1, "Mul");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in1, "Velocity");
@@ -151,63 +152,33 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in3, "Env 2");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out3, "FX A2 SV Frq");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op3, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::on, "On");
+  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::op1, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::in1, "CV U2");
+  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::out1, "FX A2 SV Frq");
+  set_ui_value(state, part_type::vcv_bank, 1, gcv_bank_param::off1, "20");
 
   // lfo b1 to filter freq & master cvs
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::on, "On");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in1, "LFO B1");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out1, "FX B1 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op1, "Add");
-  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::amt1, "33");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::amt1, "66");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in2, "CV U1");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out2, "Master Gain");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op2, "Mul");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in3, "CV B1");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out3, "Master Bal");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op3, "Add");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in3, "CV U2");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out3, "FX B1 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op3, "Mul");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::off3, "20");
 
   // cv plots
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "5");
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX B1 SV Frq");
   set_ui_value(state, part_type::vcv_plot, 0, cv_plot_param::target, "FX A2 SV Frq");
-
-/*
-
-  // enable
-  state[param_bounds[part_type::vosc][0] + osc_param::on].discrete = 1;
-  state[param_bounds[part_type::vcv_bank][0] + vaudio_bank_param::on].discrete = 1;
-  state[param_bounds[part_type::gcv_bank][0] + gaudio_bank_param::on].discrete = 1;
-  state[param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::on].discrete = 1;
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::on].discrete = 1;
-
-  // param indices
-  std::int32_t master_gain = param_bounds[part_type::master][0] + master_param::gain;
-  std::int32_t vcv_in_1 = param_bounds[part_type::vcv_bank][0] + vcv_bank_param::in1;
-  std::int32_t vcv_out_1 = param_bounds[part_type::vcv_bank][0] + vcv_bank_param::out1;
-  std::int32_t vcv_op_1 = param_bounds[part_type::vcv_bank][0] + vcv_bank_param::op1;
-  std::int32_t gcv_in_1 = param_bounds[part_type::gcv_bank][0] + gcv_bank_param::in1;
-  std::int32_t gcv_out_1 = param_bounds[part_type::gcv_bank][0] + gcv_bank_param::out1;
-  std::int32_t gcv_op_1 = param_bounds[part_type::gcv_bank][0] + gcv_bank_param::op1;
-  std::int32_t vaudio_in_1 = param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::in1;
-  std::int32_t vaudio_out_1 = param_bounds[part_type::vaudio_bank][0] + vaudio_bank_param::out1;
-  std::int32_t gaudio_in_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1;
-  std::int32_t gaudio_out_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out1;
-
-  // set defaults
-  state[master_gain] = params[master_gain].descriptor->data.parse_ui("-6.0");
-  state[vaudio_in_1] = params[vaudio_in_1].descriptor->data.parse_ui("Osc 1");
-  state[vaudio_out_1] = params[vaudio_out_1].descriptor->data.parse_ui("Voice");
-  state[gaudio_in_1] = params[gaudio_in_1].descriptor->data.parse_ui("Voice");
-  state[gaudio_out_1] = params[gaudio_out_1].descriptor->data.parse_ui("Master");
-  state[vcv_in_1] = params[vcv_in_1].descriptor->data.parse_ui("Velocity");
-  state[vcv_out_1] = params[vcv_out_1].descriptor->data.parse_ui("Voice Gain");
-  state[vcv_op_1] = params[vcv_op_1].descriptor->data.parse_ui("Mul");
-  state[gcv_in_1] = params[gcv_in_1].descriptor->data.parse_ui("CV U1");
-  state[gcv_out_1] = params[gcv_out_1].descriptor->data.parse_ui("Master Gain");
-  state[gcv_op_1] = params[gcv_op_1].descriptor->data.parse_ui("Mul");
-
-  return;
-
-*/
 }
 
 // Binding to vst base project.
