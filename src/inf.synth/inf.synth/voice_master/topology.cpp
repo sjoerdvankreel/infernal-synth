@@ -55,12 +55,12 @@ master_params[master_param::count] =
   { "{09243EDB-2DBE-450F-800F-C37BF8A3C44B}", { { "Sync", "Portamento tempo sync" }, param_kind::block, false, 6, &master_port_on_ui } },
   { "{E27DEC2E-BA49-454C-8C28-F7532F6985DC}", { { "Time", "Portamento time" }, "Sec", param_kind::block, linear_bounds(0.01f, 10.0f, 1.0f, 2), 9, &master_port_time_ui } },
   { "{1DD53257-2104-4C66-BA00-2B73E9F6BA63}", { { "Tempo", "Portamento tempo" }, "", param_kind::block, param_type::knob_list, { &master_port_timesig_names, "1/16" }, 9, &master_port_sync_ui } },
-  { "{50F02184-1EAC-4A80-8832-0728B9EBF455}", { { "CV 1", "CV 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 1, nullptr } },
-  { "{78C0C624-B34B-41AE-8294-5D99895753CB}", { { "Bipolar", "CV 1 bipolar" }, param_kind::block, false, 2, nullptr } },
-  { "{060B5E5E-2E49-4DF1-90B8-8D8F87E98707}", { { "CV 2", "CV 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 4, nullptr } },
-  { "{07E509BE-891C-48A8-9076-81D9DE8B6845}", { { "Bipolar", "CV 2 bipolar" }, param_kind::block, false, 5, nullptr } },
-  { "{DD9A20AD-563A-4855-BAEF-2C53E6B94815}", { { "CV 3", "CV 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 7, nullptr } },
-  { "{06826D77-66A2-44F0-9AE8-DFA7035C95D8}", { { "Bipolar", "CV 3 bipolar" }, param_kind::block, false, 8, nullptr } }      
+  { "{71EC915C-D772-4238-ABD3-B25E2E963C9A}", { { "CVU 1", "CVU 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 1, nullptr } },
+  { "{D8332EF2-E4CE-4605-983A-6EC409194773}", { { "CVB 1", "CVB 1" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 2, nullptr } },
+  { "{A92B97E3-0A3C-42F0-8939-E3EFE0007FBE}", { { "CVU 2", "CVU 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, nullptr } },
+  { "{580FF8F1-4C06-4562-B4A0-702355B6E152}", { { "CVB 2", "CVB 2" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 5, nullptr } },
+  { "{E9144556-B13A-4D71-A33A-AB8AAD203A52}", { { "CVU 3", "CVU 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 7, nullptr } },
+  { "{B3B033A3-B615-4AD2-81AB-5CB769891BB0}", { { "CVB 3", "CVB 3" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 8, nullptr } }
 };
  
 } // namespace inf::synth 

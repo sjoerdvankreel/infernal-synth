@@ -39,7 +39,7 @@ typedef master_port_trig_t::value master_port_trig;
 
 struct master_param_t { enum value {
   gain, bal, mode, port_mode, port_trig, port_sync, port_time, port_tempo, 
-  gcv1, gcv1_bipolar, gcv2, gcv2_bipolar, gcv3, gcv3_bipolar, count }; };
+  gcv1_uni, gcv1_bi, gcv2_uni, gcv2_bi, gcv3_uni, gcv3_bi, count }; };
 typedef master_param_t::value master_param;
 
 } // namespace inf::synth
