@@ -1,6 +1,7 @@
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/cv_bank/topology.hpp>
+#include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 
@@ -94,8 +95,23 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vlfo, 0, lfo_param::rate, "15");
   set_ui_value(state, part_type::vlfo, 0, lfo_param::bipolar, "On");
 
-  // env 2 on
-  set_ui_value(state, part_type::venv, 1, lfo_param::on, "On");
+  // env 2 on and env 1 shows slopes
+  set_ui_value(state, part_type::venv, 1, envelope_param::on, "On");
+  set_ui_value(state, part_type::venv, 0, envelope_param::attack1_time, "0.025");
+  set_ui_value(state, part_type::venv, 0, envelope_param::attack1_slope, "33");
+  set_ui_value(state, part_type::venv, 0, envelope_param::attack_split_level, "50");
+  set_ui_value(state, part_type::venv, 0, envelope_param::attack2_time, "0.025");
+  set_ui_value(state, part_type::venv, 0, envelope_param::attack2_slope, "-33");
+  set_ui_value(state, part_type::venv, 0, envelope_param::decay1_time, "0.1");
+  set_ui_value(state, part_type::venv, 0, envelope_param::decay1_slope, "33");
+  set_ui_value(state, part_type::venv, 0, envelope_param::decay_split_level, "50");
+  set_ui_value(state, part_type::venv, 0, envelope_param::decay2_time, "0.1");
+  set_ui_value(state, part_type::venv, 0, envelope_param::decay2_slope, "-33");
+  set_ui_value(state, part_type::venv, 0, envelope_param::release1_time, "0.2");
+  set_ui_value(state, part_type::venv, 0, envelope_param::release1_slope, "33");
+  set_ui_value(state, part_type::venv, 0, envelope_param::release_split_level, "50");
+  set_ui_value(state, part_type::venv, 0, envelope_param::release2_time, "0.2");
+  set_ui_value(state, part_type::venv, 0, envelope_param::release2_slope, "-33");
 
   // cv a velo to voice amp, lfo a1 to osc 1 cent, env 2 to filter freq
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::on, "On");
