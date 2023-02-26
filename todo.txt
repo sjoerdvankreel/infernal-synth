@@ -21,7 +21,6 @@
 - make it lighter
 - github preview image
 - bipolar master cv controls
-- lfo a connector to right-down
 - new menu option: clear all unused
 - better defaults - use fx in instrument mode
 
