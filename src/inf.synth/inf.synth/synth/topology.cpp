@@ -169,16 +169,16 @@ part_ui_colors make_part_ui_colors()
   ui_color const white = 0xFFFFFFFF;  
   ui_color const transparent = 0x00000000;
   ui_color const background = 0xFF6D787E;
-  ui_color const foreground1 = ui_color(0xFFFD8F3A);
+  ui_color const foreground1 = ui_color(0xFFFD9A4D); 
   ui_color const foreground2 = ui_color(0xFFD1DDE4).darken(0.85f);
-  ui_color const foreground3 = ui_color(0xFF248FA2); 
+  ui_color const foreground3 = ui_color(0xFF29A5BB); 
     
   ui_color const label_color = foreground2;
   ui_color const border_color = background.darken(0.6f);
   ui_color const info_label_color = foreground1;
   ui_color const header_label_color = foreground1;  
   ui_color const connector_color = foreground1;  
-  ui_color const edit_font_color = foreground2.darken(0.85f);
+  ui_color const edit_font_color = foreground2.darken(0.85f); 
   ui_color const edit_back_color = black.alpha(0x50);
   ui_color const menu_font_color = foreground1.darken(0.9f);
   ui_color const menu_back_color = foreground3.darken(0.4).alpha(0x80); 

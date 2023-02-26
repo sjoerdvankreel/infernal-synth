@@ -18,7 +18,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- make it lighter
 - github preview image
 - bipolar master cv controls
 - new menu option: clear all unused
