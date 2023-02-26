@@ -101,7 +101,7 @@ typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
   1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, venv_count, 
   master_gcv_count /* uni */, master_gcv_count /* uni hold */, 
-  master_cv_count /* bi */, master_gcv_count /* bi hold */, 
+  master_gcv_count /* bi */, master_gcv_count /* bi hold */,
   vlfo_count, glfo_count, glfo_count /* hold */};
 
 // output routing and mapping, off must be 0
