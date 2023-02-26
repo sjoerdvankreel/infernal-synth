@@ -10,7 +10,6 @@
 
 * wishlist big
 - CLAP support
-- more master CVs 
 - fx types: compressor
 - osc types: feedback lead
 - filter types: formant, vowel
@@ -19,7 +18,6 @@
 
 * wishlist small
 - github preview image
-- bipolar master cv controls
 - new menu option: clear all unused
 - better defaults - use fx in instrument mode
 
