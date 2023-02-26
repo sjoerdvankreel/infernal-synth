@@ -118,6 +118,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
 
   // env 2 on and env 1 shows slopes
   set_ui_value(state, part_type::venv, 1, envelope_param::on, "On");
+  set_ui_value(state, part_type::venv, 0, envelope_param::sustain_level, "0.66");
   set_ui_value(state, part_type::venv, 0, envelope_param::attack1_time, "0.025");
   set_ui_value(state, part_type::venv, 0, envelope_param::attack1_slope, "33");
   set_ui_value(state, part_type::venv, 0, envelope_param::attack_split_level, "50");
@@ -153,6 +154,11 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out1, "FX B1 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op1, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::amt1, "33");
+
+  // cv plots
+  set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "5");
+  set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX B1 SV Frq");
+  set_ui_value(state, part_type::vcv_plot, 0, cv_plot_param::target, "FX A2 SV Frq");
 
 /*
 
