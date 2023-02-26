@@ -61,10 +61,9 @@ part_connector::draw(VSTGUI::CDrawContext* context)
     path->closeSubpath();
     break;  
   case connector_direction::halfway_right_down: 
-    // 0.5 / sqrt(2) = 0.36
-    path->beginSubpath(size * (11.0 / 12.0 - 0.36), 0.68 * size + 1.0);
-    path->addLine(size * 11.0 / 12.0, 0.32 * size + 1.0);
-    path->addLine(size * 11.0 / 12.0, 0.68 * size + 1.0);
+    path->beginSubpath(size * (11.0 / 12.0 - 0.4), 0.7 * size);
+    path->addLine(size * 11.0 / 12.0, 0.3 * size);
+    path->addLine(size * 11.0 / 12.0, 0.7 * size);
     path->closeSubpath();
     break;
   case connector_direction::left_right: 
@@ -75,7 +74,7 @@ part_connector::draw(VSTGUI::CDrawContext* context)
     path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 2.0 + 1.0);
     path->addLine(size * 11.0 / 12.0, size / 5.0 + 1.0);
     path->addLine(size * 11.0 / 12.0, size * 4.0 / 5.0 + 1.0);
-    path->closeSubpath();
+    path->closeSubpath(); 
     break;  
   default:
     assert(false);    
