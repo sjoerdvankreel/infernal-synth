@@ -66,13 +66,20 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_res, "50");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_freq, "5000");
 
-  // fx b1 to multitap delay
+  // fx b1 to state variable filter
   set_ui_value(state, part_type::geffect, 0, osc_param::on, "On");
-  set_ui_value(state, part_type::geffect, 0, effect_param::type, "Delay");
-  set_ui_value(state, part_type::geffect, 0, effect_param::delay_type, "Multitap");
-  set_ui_value(state, part_type::geffect, 0, effect_param::dly_synced, "On");
-  set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_sprd, "75");
-  set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_tempo, "3/16");
+  set_ui_value(state, part_type::geffect, 0, effect_param::type, "Filter");
+  set_ui_value(state, part_type::geffect, 0, effect_param::filter_type, "State Variable");
+  set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_freq, "5000");
+  set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_res, "50");
+
+  // fx b2 to multitap delay
+  set_ui_value(state, part_type::geffect, 1, osc_param::on, "On");
+  set_ui_value(state, part_type::geffect, 1, effect_param::type, "Delay");
+  set_ui_value(state, part_type::geffect, 1, effect_param::delay_type, "Multitap");
+  set_ui_value(state, part_type::geffect, 1, effect_param::dly_synced, "On");
+  set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_sprd, "75");
+  set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_tempo, "3/16");
 
   // audio a1 osc->fx1->fx2->voice
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::on, "On");
@@ -83,17 +90,29 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in3, "FX A2");
   set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out3, "Voice");
 
-  // audio b1 voice->fx1->master
+  // audio b1 voice->fx1->fx2->master
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::on, "On");
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in1, "Voice");
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out1, "FX B1");
   set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in2, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out2, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out2, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in3, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out3, "Master");
 
   // lfo a1 on & bipolar
   set_ui_value(state, part_type::vlfo, 0, lfo_param::on, "On");
   set_ui_value(state, part_type::vlfo, 0, lfo_param::rate, "15");
   set_ui_value(state, part_type::vlfo, 0, lfo_param::bipolar, "On");
+
+  // lfo b1 on & bipolar & synced
+  set_ui_value(state, part_type::glfo, 0, lfo_param::on, "On");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::synced, "On");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::tempo, "5/4");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::bipolar, "On");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::invert, "On");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::type, "Basic");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::basic_type, "Tri");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::basic_offset, "25");
 
   // env 2 on and env 1 shows slopes
   set_ui_value(state, part_type::venv, 1, envelope_param::on, "On");
@@ -121,7 +140,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op2, "Add");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in2, "LFO A1");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out2, "Osc 1 Cent");
-  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::amt2, "33");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::amt2, "25");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in3, "Env 2");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out3, "FX A2 SV Frq");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op3, "Mul");
