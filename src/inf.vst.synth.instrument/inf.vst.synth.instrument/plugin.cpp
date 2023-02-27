@@ -82,7 +82,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_tempo, "3/16");
 
   // master gain and cvs
-  set_ui_value(state, part_type::master, 0, master_param::gain, "6.0");
+  set_ui_value(state, part_type::master, 0, master_param::gain, "3.0");
   set_ui_value(state, part_type::master, 0, master_param::gcv1_uni, "50");
   set_ui_value(state, part_type::master, 0, master_param::gcv2_uni, "66");
 
