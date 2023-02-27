@@ -3,7 +3,7 @@
 - v update hiir
 - v update vst3 sdk
 - v update version number
-- x keep manual up to date
+- v keep manual up to date
 
 * bugs
 - renoise/flstudio automation serialization is broken
@@ -21,4 +21,4 @@
 
 - better factory presets
 - document breaking changes: delay params, env params, cv bank params, audio bank params, master cv params
-- recreate project website, re-do screenshots, presets and demos
+- recreate project website, re-do presets and demos
