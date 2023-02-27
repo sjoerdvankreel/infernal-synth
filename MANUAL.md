@@ -150,17 +150,16 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
     - Decay: amplitude falloff of consecutive terms for stacked chebyshev mode.
 - Delay
     - Graphs: Audio Left, Right.
+    - Amt: decay amount.
+    - Sprd: stereo-spread amount.
     - Mix: crossfades between dry/wet.
     - Delay: delay mode, feedback or multi-tap.
     - Sync: specify delay time absolute (seconds) or relative to BPM (bars).
     - Feedback delay
-        - L/R: left/right delay time.
-        - Amt: left/right feedback amount.
+        - L/R: left/right delay time / tempo.
     - Multi-tap delay:
         - Taps: tap count.
-        - Amt: tap decay amount.
         - Time/tempo: per-tap delay time.
-        - Sprd: stereo-spread amount, bounces taps between left/right.
 - Filter
     - Filter: filter mode, comb or state variable.
     - Graphs
