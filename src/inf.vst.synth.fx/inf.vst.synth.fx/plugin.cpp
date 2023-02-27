@@ -1,3 +1,4 @@
+#include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/cv_bank/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
@@ -92,9 +93,15 @@ synth_fx_topology::init_defaults(param_value* state) const
 
   // master
   set_ui_value(state, part_type::master, 0, master_param::gain, "-18");
-  set_ui_value(state, part_type::master, 0, master_param::gcv1_uni, "15");
+  set_ui_value(state, part_type::master, 0, master_param::gcv1_uni, "10");
   set_ui_value(state, part_type::master, 0, master_param::gcv1_bi, "-10");
   set_ui_value(state, part_type::master, 0, master_param::gcv2_bi, "33");
+
+  // lfo b1
+  set_ui_value(state, part_type::glfo, 0, lfo_param::on, "On");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::synced, "On");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::tempo, "3/2");
+  set_ui_value(state, part_type::glfo, 0, lfo_param::bipolar, "On");
 
   // cv routing
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::on, "On");
@@ -110,8 +117,13 @@ synth_fx_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in4, "CV B2");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out4, "FX B4 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op4, "Add");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::on, "On");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::in1, "LFO B1");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::out1, "FX B2 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::amt1, "50");
 
   // cv plot
+  set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "10");
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX B2 SV Frq");
 }
 
