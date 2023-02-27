@@ -7,6 +7,15 @@ In effect mode, the voice generators are not used, and instead an external audio
 \
 ![Screentshot](static/screenshot.png)
 
+## Versioned builds
+
+InfernalSynth ships as different binaries for Generic and Versioned releases. All Generic builds have the same
+VST3 plugin ID. Versioned builds all have different VST3 plugin ID's (so they are essentially different plugins
+from the host's point of view).
+
+- Use the Generic build if you want to be able to load old projects using a new plugin version, get bugfixes automatically, and don't mind breaking changes.
+- Use the Versioned build (preferred) if you want stuff to just keep working and be shielded from breaking changes. Newer versions of the plugin can work side-by-side with older versions.
+
 ## Architecture
 
 InfernalSynth is conceptually split up into 5 parts:
@@ -64,7 +73,7 @@ However, individual components are either bandlimited or have options to reduce 
     - Custom and Random forms are NOT bandlimited at all.
     - Use the filter control to smooth out rough edges as needed.
     - Use the Custom form slope parameters to smooth out rough edges as needed.
-
+    
 ## Context menu options
 
 Right-click somewhere in the plugin (not on a parameter, that pops up the host menu) to pop-up the context menu.\
