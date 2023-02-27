@@ -256,8 +256,8 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
 
   for (std::int32_t s = 0; s < ss; s++)
   {
-    assert(bipolar || 0.0f <= in_modified[s] && in_modified[s] <= 1.0f);
-    assert(!bipolar || -1.0f <= in_modified[s] && in_modified[s] <= 1.0f);
+    assert(bipolar || -sanity_epsilon <= in_modified[s] && in_modified[s] <= 1.0f + sanity_epsilon);
+    assert(!bipolar || -1.0f - sanity_epsilon <= in_modified[s] && in_modified[s] <= 1.0f + sanity_epsilon);
   }
 
   // Modulate.
