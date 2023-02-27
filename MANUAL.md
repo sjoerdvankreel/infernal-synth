@@ -33,7 +33,7 @@ of parameters can also be modulated. Modulation always takes place *on top of* a
 - If it can be modulated, both modulation *and* automation are sample-accurate.
 - If it can't be modulated, automation is either applied per-voice or per-block (for global parameters).
 - If it's discrete-valued (i.e. on/off, bar tempo, dropdowns, integer-valued knobs) it can NOT be modulated.
-- If it's continuous-valued (i.e. dB, Hz, %, duration), and not itself a CV parameter (like LFO rate) or a time parameter (like delay time) it can be modulated.
+- If it's continuous-valued (i.e. dB, Hz, %), and not itself a CV parameter (like LFO rate) or a time parameter (like delay time) it can be modulated.
 - Oscillator PM is the odd-one out, this is a hidden parameter and can only be used as a modulation target, but it can't be automated.
 
 ## Aliasing
