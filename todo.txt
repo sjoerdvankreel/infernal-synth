@@ -22,7 +22,6 @@
 
 - better factory presets
 - document versioned builds
-- document extra menu options
 - document changed output params
 - document shift/ctrl click reset
 - document generic kdb track, changed master cv, more?

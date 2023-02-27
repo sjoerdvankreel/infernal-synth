@@ -68,8 +68,10 @@ However, individual components are either bandlimited or have options to reduce 
 ## Context menu options
 
 Right-click somewhere in the plugin (not on a parameter, that pops up the host menu) to pop-up the context menu.\
+Select "Clear patch" to clear all settings.\
+Select "Init patch" to reset settings to factory default.\
 Select Load preset &gt; [preset name] to reset settings to a factory preset.\
-Select "Copy to" or "Swap with" to copy or swap the current component definition.\
+Select "Clear", "Copy", or "Swap" to edit the current module definition.\
 Please note that the associated routing (Audio bank/CV bank) is NOT updated.
 
 ![Context menu](static/context_menu.png)
