@@ -209,14 +209,14 @@ Please note: envelope 1 (Amp Env) is hard-wired to the voice section amplitude.
 Controls the final mixdown of global audio routing, allows switching between polyphonic and monophonic modes,
 contains portamento settings and contains a couple of freely-assignable CV sources. These CV sources don't do
 anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
-For example, route CV1 to both voice gain and FX A1 state variable frequency, and control both at the same
+For example, route CV U1 to both voice gain and FX A1 state variable frequency, and control both at the same
 time, using a single parameter, from the host.
 
 ![Master](static/master.png)
 
 - Graphs: stereo balance image.
-- CV: virtual CV param level.
-- Bipolar: virtual CV param bipolar on/off.
+- CV B: bipolar virtual CV param level.
+- CV U: unipolar virtual CV param level.
 - Gain: amplitude of master mixdown.
 - Bal: stereo balancing of master mixdown.
 - Mode: select polyphonic/monophonic mode.
