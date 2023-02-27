@@ -173,9 +173,9 @@ vst_controller::clear_module(std::int32_t type, std::int32_t index)
   load_component_state(new_values.data(), true);
 }
 
-// Right-click context menu, init patch/module.
+// Right-click context menu, init/clear patch.
 void
-vst_controller::add_init_items(COptionMenu* menu)
+vst_controller::add_patch_items(COptionMenu* menu)
 {
   // Init patch to defaults.
   auto init_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Init patch"));
@@ -186,21 +186,35 @@ vst_controller::add_init_items(COptionMenu* menu)
   });
   menu->addEntry(init_patch);
 
-  // Clear modules.
+  // Clear patch.
+  auto clear_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Clear patch"));
+  clear_patch->setActions([this](CCommandMenuItem*) {
+    std::vector<param_value> new_values(_topology->input_param_count, param_value());
+    _topology->init_defaults(new_values.data(), 0, _topology->input_param_count);
+    load_component_state(new_values.data(), true);
+  });
+  menu->addEntry(clear_patch);
+}
+
+// Right-click context menu, clear module.
+void
+vst_controller::add_clear_items(COptionMenu* menu)
+{
   std::vector<CCommandMenuItem*> clear_single;
   std::vector<CCommandMenuItem*> clear_multiple;
   auto clear_items = new COptionMenu();
   auto clear_item = new CCommandMenuItem(CCommandMenuItem::Desc("Clear"));
   for (std::int32_t i = 0; i < _topology->static_part_count; i++)
-    if(_topology->static_parts[i].kind == part_kind::input)
+    if (_topology->static_parts[i].kind == part_kind::input)
     {
       auto part_name = _topology->static_parts[i].static_name.short_;
       auto clear_part_item = new CCommandMenuItem(CCommandMenuItem::Desc(part_name));
-      if(_topology->static_parts[i].part_count == 1)
+      if (_topology->static_parts[i].part_count == 1)
       {
         clear_part_item->setActions([=, this](CCommandMenuItem*) { clear_module(i, 0); });
         clear_single.push_back(clear_part_item);
-      } else 
+      }
+      else
       {
         auto clear_part_items = new COptionMenu();
         for (std::int32_t j = 0; j < _topology->static_parts[i].part_count; j++)
@@ -215,7 +229,7 @@ vst_controller::add_init_items(COptionMenu* menu)
         clear_multiple.push_back(clear_part_item);
       }
     }
-  for(std::size_t i = 0; i < clear_single.size(); i++)
+  for (std::size_t i = 0; i < clear_single.size(); i++)
     clear_items->addEntry(clear_single[i]);
   for (std::size_t i = 0; i < clear_multiple.size(); i++)
     clear_items->addEntry(clear_multiple[i]);
@@ -320,10 +334,11 @@ vst_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   tresult found = inf_editor.find_parameter(pos, tag);
   if(found == kResultOk) return VST3EditorDelegate::createContextMenu(pos, editor);
 
-  // Init, copy/swap items, and preset selector. 
+  // Init, clear, copy/swap items, and preset selector. 
   // Just do it manually, kIsProgramChange don't work well.
   auto result = new COptionMenu();
-  add_init_items(result);
+  add_patch_items(result);
+  add_clear_items(result);
   add_copy_swap_menu_items(result, "Copy", "To",
     [this](std::int32_t source_begin, std::int32_t target_begin, std::int32_t param_count) {
       for (std::int32_t i = 0; i < param_count; i++)

@@ -39,7 +39,8 @@ public VSTGUI::VST3EditorDelegate
 
   // Context menu.
   // Apply = source begin, target begin, param count.
-  void add_init_items(VSTGUI::COptionMenu* menu);
+  void add_patch_items(VSTGUI::COptionMenu* menu);
+  void add_clear_items(VSTGUI::COptionMenu* menu);
   void add_preset_select_items(VSTGUI::COptionMenu* menu);
   void add_copy_swap_menu_items(VSTGUI::COptionMenu* menu, 
     std::string const& action, std::string const& target_prefix,
