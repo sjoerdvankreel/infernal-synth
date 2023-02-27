@@ -303,7 +303,7 @@ bipolar and inverted modes, one-shot option and smoothing filter.
 ## CV section
 
 Both per-voice (CV A) and global (CV B) CV routing modules.
-Per-voice CV can use any modulation source (LFO/Envelope/Master CV), both Voice and Global.
+Per-voice CV can use any modulation source (Velocity/Key/LFO/Envelope/Master CV), both Voice and Global.
 Global CV can only use global modulation sources (LFO/Master CV).
 A CV source may be assigned to multiple targets or vice-versa.
 When multiple sources are assigned to a single target, modulation is stacked.
