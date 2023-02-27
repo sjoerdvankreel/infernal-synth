@@ -105,7 +105,7 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
     - RAM: ring/amplitude modulation source. Has to be less than or equal to the current oscillator, otherwise has no effect.
 - Generators
     - Basic: Classic waveform generator
-        - Sine/saw/triangle/pulse generator
+        - Sine/saw/triangle/pulse generator.
         - PW: pulse width for pulse generator.
     - Mix: Combination of Basic generators
         - PW: pulse width for basic pulse generator.
