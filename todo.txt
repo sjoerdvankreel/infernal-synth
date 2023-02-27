@@ -18,7 +18,6 @@
 
 * wishlist small
 - github preview image
-- darken voice stuff in fx mode
 - new menu option: clear all unused
 
 - better factory presets
