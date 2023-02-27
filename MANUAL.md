@@ -1,11 +1,20 @@
 # InfernalSynth
 
 InfernalSynth is a free, open-source, semi-modular software synthesizer and audio effect plugin.\
-It is currently available as a VST3 plugin only, and ships as 2 different binaries: 1 for instrument mode and one for effect mode.\
+It is currently available as a VST3 plugin only, and ships as different binaries for instrument mode and effect mode.\
 In instrument mode, InfernalSynth is a polyphonic synthesizer where the combined output of all voices is routed through a global effect bank.\
 In effect mode, the voice generators are not used, and instead an external audio source is routed through the same global effect bank.\
 \
 ![Screentshot](static/screenshot.png)
+
+## Versioned builds
+
+InfernalSynth ships as different binaries for Generic and Versioned releases. All Generic builds have the same
+VST3 plugin ID. Versioned builds all have different VST3 plugin ID's (so they are essentially different plugins
+from the host's point of view).
+
+- Use the Generic build if you want to be able to load old projects using a new plugin version, get bugfixes automatically, and don't mind breaking changes.
+- Use the Versioned build (preferred) if you want stuff to just keep working and be shielded from breaking changes. Newer versions of the plugin can work side-by-side with older versions.
 
 ## Architecture
 
@@ -33,7 +42,7 @@ of parameters can also be modulated. Modulation always takes place *on top of* a
 - If it can be modulated, both modulation *and* automation are sample-accurate.
 - If it can't be modulated, automation is either applied per-voice or per-block (for global parameters).
 - If it's discrete-valued (i.e. on/off, bar tempo, dropdowns, integer-valued knobs) it can NOT be modulated.
-- If it's continuous-valued (i.e. dB, Hz, %, duration), and not itself a CV parameter (like LFO rate) it can be modulated.
+- If it's continuous-valued (i.e. dB, Hz, %), and not a CV parameter (like LFO rate) or a time parameter (like delay time) it can be modulated.
 - Oscillator PM is the odd-one out, this is a hidden parameter and can only be used as a modulation target, but it can't be automated.
 
 ## Aliasing
@@ -64,12 +73,14 @@ However, individual components are either bandlimited or have options to reduce 
     - Custom and Random forms are NOT bandlimited at all.
     - Use the filter control to smooth out rough edges as needed.
     - Use the Custom form slope parameters to smooth out rough edges as needed.
-
+    
 ## Context menu options
 
 Right-click somewhere in the plugin (not on a parameter, that pops up the host menu) to pop-up the context menu.\
+Select "Clear patch" to clear all settings.\
+Select "Init patch" to reset settings to factory default.\
 Select Load preset &gt; [preset name] to reset settings to a factory preset.\
-Select "Copy to" or "Swap with" to copy or swap the current component definition.\
+Select "Clear", "Copy", or "Swap" to edit the current module definition.\
 Please note that the associated routing (Audio bank/CV bank) is NOT updated.
 
 ![Context menu](static/context_menu.png)
@@ -80,6 +91,7 @@ Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic 
 
 ![Oscillator](static/oscillator.png)
 
+- Gain: oscillator amplitude.
 - Type: generator type, see below.
 - PM (hidden, modulation target only): phase modulation.
 - FM: generic frequency modulation target, works nice in combination with hard sync.
@@ -102,7 +114,7 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
     - RAM: ring/amplitude modulation source. Has to be less than or equal to the current oscillator, otherwise has no effect.
 - Generators
     - Basic: Classic waveform generator
-        - Sine/saw/triangle/pulse generator
+        - Sine/saw/triangle/pulse generator.
         - PW: pulse width for pulse generator.
     - Mix: Combination of Basic generators
         - PW: pulse width for basic pulse generator.
@@ -147,17 +159,16 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
     - Decay: amplitude falloff of consecutive terms for stacked chebyshev mode.
 - Delay
     - Graphs: Audio Left, Right.
+    - Amt: decay amount.
+    - Sprd: stereo-spread amount.
     - Mix: crossfades between dry/wet.
     - Delay: delay mode, feedback or multi-tap.
     - Sync: specify delay time absolute (seconds) or relative to BPM (bars).
     - Feedback delay
-        - L/R: left/right delay time.
-        - Amt: left/right feedback amount.
+        - L/R: left/right delay time/tempo.
     - Multi-tap delay:
         - Taps: tap count.
-        - Amt: tap decay amount.
         - Time/tempo: per-tap delay time.
-        - Sprd: stereo-spread amount, bounces taps between left/right.
 - Filter
     - Filter: filter mode, comb or state variable.
     - Graphs
@@ -178,7 +189,7 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
 ## Audio section
 
 Both per-voice (Audio A) and global (Audio B) audio routing modules.
-Audio A routes oscillators to effects, effects to other effects, and mixdown to the Voice output section. "Osc" input is all oscillators combined.
+Audio A routes oscillators to effects, effects to other effects, and mixdown to the Voice output section.
 Audio B routes external audio input (in effect mode) or Voice output section (in instrument mode) to effects, effects to other effects, and mixdown to the Master section.
 An audio source may be assigned to multiple targets or vice-versa, but note that effects can only be routed to higher-numbered effects
 (e.g. FX A2 to FX A3, but not FX A2 to FX A1), otherwise the input will be silence.
@@ -207,14 +218,14 @@ Please note: envelope 1 (Amp Env) is hard-wired to the voice section amplitude.
 Controls the final mixdown of global audio routing, allows switching between polyphonic and monophonic modes,
 contains portamento settings and contains a couple of freely-assignable CV sources. These CV sources don't do
 anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
-For example, route CV1 to both voice gain and FX A1 state variable frequency, and control both at the same
+For example, route CV U1 to both voice gain and FX A1 state variable frequency, and control both at the same
 time, using a single parameter, from the host.
 
 ![Master](static/master.png)
 
 - Graphs: stereo balance image.
-- CV: virtual CV param level.
-- Bipolar: virtual CV param bipolar on/off.
+- CV B: bipolar virtual CV param level.
+- CV U: unipolar virtual CV param level.
 - Gain: amplitude of master mixdown.
 - Bal: stereo balancing of master mixdown.
 - Mode: select polyphonic/monophonic mode.
@@ -301,7 +312,7 @@ bipolar and inverted modes, one-shot option and smoothing filter.
 ## CV section
 
 Both per-voice (CV A) and global (CV B) CV routing modules.
-Per-voice CV can use any modulation source (LFO/Envelope/Master CV), both Voice and Global.
+Per-voice CV can use any modulation source (Velocity/Key/LFO/Envelope/Master CV), both Voice and Global.
 Global CV can only use global modulation sources (LFO/Master CV).
 A CV source may be assigned to multiple targets or vice-versa.
 When multiple sources are assigned to a single target, modulation is stacked.
@@ -309,12 +320,17 @@ In this case the order of assignment matters, for example, envelope1->target1 fo
 is different from lfo1->target1 followed by envelope1->target1.
 See the CV plot section to view exactly how stacked modulation plays out.\
 \
-For per-voice CV, global modulation sources can be used in "Hold" mode.
+For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
+This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
+to be assigned to any modulation output.\
+\
+Also for per-voice CV, global modulation sources can be used in "Hold" mode.
 In this case, the modulation signal is fixed to it's current value at the start
 of the voice. This is useful for example in combination with a global random-type
 LFO, to have each new voice receive a single new random value at voice start
 (say, assigned to filter frequency), then keep at that same filter frequency
 for the lifetime of the voice.
+
 
 ![CV bank](static/cv_bank.png)
 
@@ -326,6 +342,10 @@ for the lifetime of the voice.
    - Raw: input signal is directly applied to output signal without respecting it's range (so, may clip).
    - Mod: input signal is scaled taking into account all previous modulation operations (so, does not clip).
    - Param: input signal is scaled such that it matches the target parameter's current automation (but NOT modulation!) value (so, may still clip when stacking multiple CV sources).
+   
+For Key/Key Inv sources, Base and Offset scale "out" rather than "in". For all other CV sources, these parameters are used to narrow
+the effect of modulation. For Key/Key Inv sources, they are used to widen the effect of modulation, for example to have full range (0%-100%)
+between C3 and C5, rather than C0 and C9.
 
 ## CV plot section
 
@@ -342,10 +362,12 @@ Select a target parameter to view the combined (stacked) modulation signal that'
 
 Monitor section just to get an idea of what the plugin is doing.
 
-![Output](static/output_cpu.png)
+![Output](static/output.png)
 
+- Voices: active voice count. InfernalSynth is internally limited to 32 voices.
+- Drain: indicates whether maximum voice count is exceeded and voices are being recycled.
 - Clip: indicates whether the audio output exceeds [-1, +1]. Output is NOT actually clipped, since that is the task of the host.
-- Voices: active voice count. InfernalSynth is internally limited to 32 voices, so if this value nears 32, voices are probably being recycled already.
-- CPU: total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
+- High, High CPU: indicate which module is currently using the most CPU relative to total usage.
+For example, "FX B", "80%" indicates that 80% of total processing time was spent in the global fx modules.
+- CPU: absolute total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
-- All other: these give an indication of where most processing power is spent. "Aux" is just a catch-all for any CPU time not clearly assignable to somewhere else.

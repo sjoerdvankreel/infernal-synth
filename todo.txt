@@ -3,7 +3,7 @@
 - v update hiir
 - v update vst3 sdk
 - v update version number
-- x keep manual up to date
+- v keep manual up to date
 
 * bugs
 - renoise/flstudio automation serialization is broken
@@ -17,15 +17,7 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- github preview image
 - new menu option: clear all unused
 
 - better factory presets
-- document versioned builds
-- document extra menu options
-- document changed output params
-- document shift/ctrl click reset
-- document time-based stuff cannot be modulated
-- document generic kdb track, changed master cv, more?
-- document breaking changes: delay params, env params, cv bank params, audio bank params, master cv params
-- recreate project website, re-do screenshots, presets and demos
+- recreate project website, re-do presets and demos

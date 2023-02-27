@@ -1,21 +1,21 @@
-digraph Synth {  
+digraph Synth {
   rankdir="LR";
 
   comment="Nodes"
-  "FX A", "FX B", "Voice Audio", "Master", "Audio A", "Audio B", "External Audio", "Oscillator" [shape="rect", style="rounded", color="#202e37", fontcolor="#202e37"]
-  "CV A", "CV B", "LFO A", "LFO B", "Envelope", "Velocity", "CV A Plot", "CV B Plot", "Master CV" [shape="rect", style="rounded", color="#565603", fontcolor="#565603"]
+  "FX A", "FX B", "Voice Audio", "Master", "Audio A", "Audio B", "External Audio", "Oscillator" [shape="rect", style="rounded", color="#FD9A4D", fontcolor="#FD9A4D"]
+  "CV A", "CV B", "LFO A", "LFO B", "Envelope", "Velocity", "Key", "CV A Plot", "CV B Plot", "Master CV" [shape="rect", style="rounded", color="#29A5BB", fontcolor="#29A5BB"]
   
   comment="Audio edges"
-  "Audio A" -> "Voice Audio" [color="#202e37"]
-  "Audio B" -> "Master" [color="#202e37"]
-  {"Oscillator"; "FX A"} -> "FX A" [color="#202e37"]
-  {"Oscillator"; "FX A"} -> "Audio A" [color="#202e37"]
-  {"FX B"; "Voice Audio"; "External Audio"} -> "FX B" [color="#202e37"]
-  {"FX B"; "Voice Audio"; "External Audio"} -> "Audio B" [color="#202e37"]
+  "Audio A" -> "Voice Audio" [color="#FD9A4D"]
+  "Audio B" -> "Master" [color="#FD9A4D"]
+  {"Oscillator"; "FX A"} -> "FX A" [color="#FD9A4D"]
+  {"Oscillator"; "FX A"} -> "Audio A" [color="#FD9A4D"]
+  {"FX B"; "Voice Audio"; "External Audio"} -> "FX B" [color="#FD9A4D"]
+  {"FX B"; "Voice Audio"; "External Audio"} -> "Audio B" [color="#FD9A4D"]
 
   comment="CV edges"
-  {"LFO B", "Master CV"} -> "CV B" [color="#565603"]
-  {"LFO A", "LFO B", "Velocity", "Envelope", "Master CV"} -> "CV A" [color="#565603"]
-  "CV B" -> {"FX B", "Master", "Audio B", "CV B Plot"} [color="#565603"]
-  "CV A" -> {"Oscillator", "FX A", "Audio A", "CV A Plot", "Voice Audio"} [color="#565603"]
+  {"LFO B", "Master CV"} -> "CV B" [color="#29A5BB"]
+  {"LFO A", "LFO B", "Velocity", "Key", "Envelope", "Master CV"} -> "CV A" [color="#29A5BB"]
+  "CV B" -> {"FX B", "Master", "Audio B", "CV B Plot"} [color="#29A5BB"]
+  "CV A" -> {"Oscillator", "FX A", "Audio A", "CV A Plot", "Voice Audio"} [color="#29A5BB"]
 }
