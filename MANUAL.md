@@ -311,12 +311,17 @@ In this case the order of assignment matters, for example, envelope1->target1 fo
 is different from lfo1->target1 followed by envelope1->target1.
 See the CV plot section to view exactly how stacked modulation plays out.\
 \
-For per-voice CV, global modulation sources can be used in "Hold" mode.
+For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
+This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
+to be assigned to any modulation output.
+\
+Also for per-voice CV, global modulation sources can be used in "Hold" mode.
 In this case, the modulation signal is fixed to it's current value at the start
 of the voice. This is useful for example in combination with a global random-type
 LFO, to have each new voice receive a single new random value at voice start
 (say, assigned to filter frequency), then keep at that same filter frequency
 for the lifetime of the voice.
+
 
 ![CV bank](static/cv_bank.png)
 
