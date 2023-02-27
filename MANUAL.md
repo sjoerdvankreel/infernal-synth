@@ -313,7 +313,7 @@ See the CV plot section to view exactly how stacked modulation plays out.\
 \
 For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
 This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
-to be assigned to any modulation output.
+to be assigned to any modulation output.\
 \
 Also for per-voice CV, global modulation sources can be used in "Hold" mode.
 In this case, the modulation signal is fixed to it's current value at the start
