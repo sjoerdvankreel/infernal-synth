@@ -40,25 +40,89 @@ synth_fx_topology::init_defaults(param_value* state) const
 {
   topology_info::init_defaults(state);
 
-  // enable
-  state[param_bounds[part_type::geffect][0] + effect_param::on].discrete = 1;
-  state[param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::on].discrete = 1;
+  // fx b1 reverb
+  set_ui_value(state, part_type::geffect, 0, effect_param::on, "On");
+  set_ui_value(state, part_type::geffect, 0, effect_param::type, "Reverb");
+  set_ui_value(state, part_type::geffect, 0, effect_param::reverb_mix, "100");
+  set_ui_value(state, part_type::geffect, 0, effect_param::reverb_damp, "75");
+  set_ui_value(state, part_type::geffect, 0, effect_param::reverb_size, "75");
 
-  // param indices
-  std::int32_t geffect_1_type = param_bounds[part_type::geffect][0] + effect_param::type;
-  std::int32_t gaudio_in_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in1;
-  std::int32_t gaudio_out_1 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out1;
-  std::int32_t gaudio_in_2 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::in2;
-  std::int32_t gaudio_out_2 = param_bounds[part_type::gaudio_bank][0] + gaudio_bank_param::out2;
+  // fx b3 delay
+  set_ui_value(state, part_type::geffect, 2, effect_param::on, "On");
+  set_ui_value(state, part_type::geffect, 2, effect_param::type, "Delay");
+  set_ui_value(state, part_type::geffect, 2, effect_param::delay_type, "Feedback");
+  set_ui_value(state, part_type::geffect, 2, effect_param::dly_mix, "100");
+  set_ui_value(state, part_type::geffect, 2, effect_param::dly_synced, "On");
+  set_ui_value(state, part_type::geffect, 2, effect_param::dly_fdbk_tempo_l, "3/16");
+  set_ui_value(state, part_type::geffect, 2, effect_param::dly_fdbk_tempo_r, "5/16");
 
-  // set defaults
-  state[gaudio_in_1] = params[gaudio_in_1].descriptor->data.parse_ui("Ext");
-  state[gaudio_out_1] = params[gaudio_out_1].descriptor->data.parse_ui("FX B1");
-  state[gaudio_in_2] = params[gaudio_in_2].descriptor->data.parse_ui("FX B1");
-  state[gaudio_out_2] = params[gaudio_out_2].descriptor->data.parse_ui("Master");
-  state[geffect_1_type] = params[geffect_1_type].descriptor->data.parse_ui("Delay");
+  // fx b6 comb
+  set_ui_value(state, part_type::geffect, 4, effect_param::on, "On");
+  set_ui_value(state, part_type::geffect, 4, effect_param::type, "Filter");
+  set_ui_value(state, part_type::geffect, 4, effect_param::filter_type, "Comb");
 
-  return;
+  // fx b bell filters
+  for (std::int32_t i = 1; i <= 5; i += 2)
+  {
+    set_ui_value(state, part_type::geffect, i, effect_param::on, "On");
+    set_ui_value(state, part_type::geffect, i, effect_param::type, "Filter");
+    set_ui_value(state, part_type::geffect, i, effect_param::filter_type, "State Variable");
+    set_ui_value(state, part_type::geffect, i, effect_param::flt_stvar_type, "BLL");
+    set_ui_value(state, part_type::geffect, i, effect_param::flt_stvar_shlf_gain, "6");
+    set_ui_value(state, part_type::geffect, i, effect_param::flt_stvar_freq, "2500");
+  }
+
+  // audio routing
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out1, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in2, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out2, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in3, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out3, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out1, "FX B3");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in2, "FX B3");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out2, "FX B4");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in3, "FX B4");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out3, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::out1, "FX B5");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::in2, "FX B5");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::out2, "FX B6");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::in3, "FX B6");
+  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::out3, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 3, gaudio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 3, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 3, gaudio_bank_param::out1, "Master");
+
+  // cv routing
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::on, "On");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in1, "CV U1");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out1, "Audio B1 Amt3");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op1, "Mul");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in2, "CV B1");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out2, "FX B2 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op2, "Add");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::on, "On");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::in1, "CV U2");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::out1, "Audio B2 Amt3");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::op1, "Mul");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::in2, "CV B2");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::out2, "FX B4 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::op2, "Add");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::on, "On");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::in1, "CV U3");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::out1, "Audio B3 Amt3");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::op1, "Mul");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::in2, "CV B3");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::out2, "FX B6 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 2, gcv_bank_param::op2, "Add");
+
+  // cv plot
+  set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX B2 SV Frq");
 }
 
 // Binding to vst base project.

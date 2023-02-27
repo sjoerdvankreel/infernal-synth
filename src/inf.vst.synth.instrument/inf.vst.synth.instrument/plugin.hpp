@@ -6,7 +6,7 @@
 #if INF_VERSIONED
 #define INF_VST_INFERNAL_SYNTH_INSTRUMENT_NAME "InfernalSynth 1.1"
 #elif !INF_VERSIONED
-#define INF_VST_INFERNAL_SYNTH_INSTRUMENT_NAME "InfernalSynth"
+#define INF_VST_INFERNAL_SYNTH_INSTRUMENT_NAME "InfernalSynth Generic"
 #else
 #error
 #endif

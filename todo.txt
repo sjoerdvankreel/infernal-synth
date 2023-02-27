@@ -18,6 +18,7 @@
 
 * wishlist small
 - github preview image
+- darken voice stuff in fx mode
 - comb filter limit feedback gain
 - new menu option: clear all unused
 - better defaults - use fx in instrument mode + clear patch option
