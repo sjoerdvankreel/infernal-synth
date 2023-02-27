@@ -333,6 +333,10 @@ for the lifetime of the voice.
    - Raw: input signal is directly applied to output signal without respecting it's range (so, may clip).
    - Mod: input signal is scaled taking into account all previous modulation operations (so, does not clip).
    - Param: input signal is scaled such that it matches the target parameter's current automation (but NOT modulation!) value (so, may still clip when stacking multiple CV sources).
+   
+For Key/Key Inv sources, Base and Offset scale "out" rather than "in". For all other CV sources, these parameters are used to narrow
+the effect of modulation. For Key/Key Inv sources, they are used to widen the effect of modulation, for example to have full range (0%-100%)
+between C3 and C5, rather than C0 and C9.
 
 ## CV plot section
 
