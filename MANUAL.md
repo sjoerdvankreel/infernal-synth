@@ -342,7 +342,7 @@ Select a target parameter to view the combined (stacked) modulation signal that'
 
 Monitor section just to get an idea of what the plugin is doing.
 
-![Output](static/output_cpu.png)
+![Output](static/output.png)
 
 - Clip: indicates whether the audio output exceeds [-1, +1]. Output is NOT actually clipped, since that is the task of the host.
 - Voices: active voice count. InfernalSynth is internally limited to 32 voices, so if this value nears 32, voices are probably being recycled already.
