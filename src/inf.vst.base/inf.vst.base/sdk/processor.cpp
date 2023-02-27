@@ -280,7 +280,7 @@ vst_processor::process_output_parameters(
   if (data.processContext == nullptr) return;
 
   // Don't update too often.
-  auto now = std::chrono::high_resolution_clock::now();
+  auto now = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - _output_updated);
   if(duration.count() < output_param_update_msec) return;
   _output_updated = now;

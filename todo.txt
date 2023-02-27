@@ -1,5 +1,5 @@
 * for each release
-- x gcc build
+- v gcc build
 - v update hiir
 - v update vst3 sdk
 - v update version number

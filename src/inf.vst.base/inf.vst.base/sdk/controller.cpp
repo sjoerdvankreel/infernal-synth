@@ -149,7 +149,7 @@ vst_controller::initialize(FUnknown* context)
 void 
 vst_controller::load_preset(std::size_t index)
 {
-  if(index < 0 || index >= _preset_items.size()) return;
+  if(index >= _preset_items.size()) return;
   std::string path = _preset_items[index].path;
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   std::streamsize size = file.tellg();
