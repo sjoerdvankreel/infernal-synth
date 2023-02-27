@@ -83,6 +83,7 @@ Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic 
 ![Oscillator](static/oscillator.png)
 
 - Type: generator type, see below.
+- Gain: oscillator amplitude.
 - PM (hidden, modulation target only): phase modulation.
 - FM: generic frequency modulation target, works nice in combination with hard sync.
 - Sync: hard sync source. Either Off, or has to be less than than the current oscillator, otherwise has no effect.\
