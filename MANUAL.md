@@ -355,8 +355,10 @@ Monitor section just to get an idea of what the plugin is doing.
 
 ![Output](static/output.png)
 
+- Voices: active voice count. InfernalSynth is internally limited to 32 voices.
+- Drain: indicates whether maximum voice count is exceeded and voices are being recycled.
 - Clip: indicates whether the audio output exceeds [-1, +1]. Output is NOT actually clipped, since that is the task of the host.
-- Voices: active voice count. InfernalSynth is internally limited to 32 voices, so if this value nears 32, voices are probably being recycled already.
-- CPU: total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
+- High, High CPU: indicate which module is currently using the most CPU relative to total usage.
+For example, "FX B", "80%%" indicate that 80% of total processing time was spend in the global fx modules.
+- CPU: absolute total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
-- All other: these give an indication of where most processing power is spent. "Aux" is just a catch-all for any CPU time not clearly assignable to somewhere else.
