@@ -180,7 +180,7 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
 ## Audio section
 
 Both per-voice (Audio A) and global (Audio B) audio routing modules.
-Audio A routes oscillators to effects, effects to other effects, and mixdown to the Voice output section. "Osc" input is all oscillators combined.
+Audio A routes oscillators to effects, effects to other effects, and mixdown to the Voice output section.
 Audio B routes external audio input (in effect mode) or Voice output section (in instrument mode) to effects, effects to other effects, and mixdown to the Master section.
 An audio source may be assigned to multiple targets or vice-versa, but note that effects can only be routed to higher-numbered effects
 (e.g. FX A2 to FX A3, but not FX A2 to FX A1), otherwise the input will be silence.
