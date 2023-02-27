@@ -324,7 +324,6 @@ vst_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   // Just do it manually, kIsProgramChange don't work well.
   auto result = new COptionMenu();
   add_init_items(result);
-  add_preset_select_items(result);
   add_copy_swap_menu_items(result, "Copy", "To",
     [this](std::int32_t source_begin, std::int32_t target_begin, std::int32_t param_count) {
       for (std::int32_t i = 0; i < param_count; i++)
@@ -352,6 +351,7 @@ vst_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
         performEdit(source_tag, target);
         endEdit(source_tag);
       }});
+  add_preset_select_items(result);
   return result;
 }
 
