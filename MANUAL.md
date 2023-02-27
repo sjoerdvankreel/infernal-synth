@@ -359,6 +359,6 @@ Monitor section just to get an idea of what the plugin is doing.
 - Drain: indicates whether maximum voice count is exceeded and voices are being recycled.
 - Clip: indicates whether the audio output exceeds [-1, +1]. Output is NOT actually clipped, since that is the task of the host.
 - High, High CPU: indicate which module is currently using the most CPU relative to total usage.
-For example, "FX B", "80%" indicate that 80% of total processing time was spent in the global fx modules.
+For example, "FX B", "80%" indicates that 80% of total processing time was spent in the global fx modules.
 - CPU: absolute total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
