@@ -30,6 +30,7 @@ effect_processor::process_flt(effect_process_input const& input, float* const* o
 void
 effect_processor::process_flt_comb(effect_process_input const& input, float* const* out)
 {
+  float const gain_min_range = 0.98f;
   float const* gain_min = input.params[effect_param::flt_comb_gain_min];
   float const* gain_plus = input.params[effect_param::flt_comb_gain_plus];
   float const* dly_min_sec = input.params[effect_param::flt_comb_dly_min];
@@ -43,7 +44,7 @@ effect_processor::process_flt_comb(effect_process_input const& input, float* con
       float min = _state->comb_output[c].get(dly_min_samples) * gain_min[s];
       float plus = _state->comb_input[c].get(dly_plus_samples) * gain_plus[s];
       _state->comb_input[c].push(input.audio_in[c][s]);
-      _state->comb_output[c].push(input.audio_in[c][s] + plus + min);
+      _state->comb_output[c].push(input.audio_in[c][s] + plus + min * gain_min_range);
       out[c][s] = sanity(_state->comb_output[c].get(0));
     }
 }

@@ -19,7 +19,6 @@
 * wishlist small
 - github preview image
 - darken voice stuff in fx mode
-- comb filter limit feedback gain
 - new menu option: clear all unused
 
 - better factory presets
