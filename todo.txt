@@ -20,5 +20,4 @@
 - new menu option: clear all unused
 
 - better factory presets
-- document breaking changes: delay params, env params, cv bank params, audio bank params, master cv params
 - recreate project website, re-do presets and demos
