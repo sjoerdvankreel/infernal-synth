@@ -22,6 +22,15 @@ stable_hash(char const* str)
 }
 
 void 
+topology_info::set_ui_value(
+  param_value* state, std::int32_t part_type, 
+  std::int32_t part_index, std::int32_t param, char const* value) const
+{
+  std::int32_t index = param_bounds[part_type][part_index] + param;
+  state[index] = params[index].descriptor->data.parse_ui(value);
+}
+
+void 
 topology_info::init_defaults(param_value* state, std::int32_t from, std::int32_t to) const
 {
   assert(from >= 0);
