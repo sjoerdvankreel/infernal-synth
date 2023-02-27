@@ -156,7 +156,7 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
     - Delay: delay mode, feedback or multi-tap.
     - Sync: specify delay time absolute (seconds) or relative to BPM (bars).
     - Feedback delay
-        - L/R: left/right delay time / tempo.
+        - L/R: left/right delay time/tempo.
     - Multi-tap delay:
         - Taps: tap count.
         - Time/tempo: per-tap delay time.
