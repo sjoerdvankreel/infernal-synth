@@ -17,7 +17,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- github preview image
 - new menu option: clear all unused
 
 - better factory presets
