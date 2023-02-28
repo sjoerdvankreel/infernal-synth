@@ -18,7 +18,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- re-think audio/cv bank layout + borders + fix the connectors + the bgs
 - new menu option: clear all unused
 
 - better factory presets
