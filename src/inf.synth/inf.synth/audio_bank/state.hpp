@@ -31,7 +31,6 @@ struct audio_bank_data
 
   std::int32_t const part_type;
   std::int32_t const bank_count;
-  std::int32_t const route_count;
   std::int32_t const modulation_type;
   std::int32_t const total_route_count;
   std::int32_t const enabled_relevant_if_rt_index_gt;

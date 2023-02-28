@@ -10,13 +10,7 @@ namespace inf::synth {
 
 audio_bank_data const audio_bank_data::voice =
 {
-  part_type::vaudio_bank,
-  vaudio_bank_count,
-  vaudio_bank_route_count,
-  vcv_route_output::vaudio_bank,
-  vaudio_route_output_total_count,
-  0,
-
+  part_type::vaudio_bank, vaudio_bank_count, vcv_route_output::vaudio_bank, vaudio_route_output_total_count, 0,
   multi_list_table_init_in(vaudio_route_input_counts, vaudio_route_input::count),
   multi_list_table_init_in(vaudio_route_output_counts, vaudio_route_output::count),
   multi_list_table_init_out(vaudio_route_input_counts, vaudio_route_input::count)
@@ -24,13 +18,7 @@ audio_bank_data const audio_bank_data::voice =
 
 audio_bank_data const audio_bank_data::global =
 {
-  part_type::gaudio_bank,
-  gaudio_bank_count,
-  gaudio_bank_route_count,
-  gcv_route_output::gaudio_bank,
-  gaudio_route_output_total_count,
-  1,
-
+  part_type::gaudio_bank, gaudio_bank_count, gcv_route_output::gaudio_bank, gaudio_route_output_total_count, 1,
   multi_list_table_init_in(gaudio_route_input_counts, gaudio_route_input::count),
   multi_list_table_init_in(gaudio_route_output_counts, gaudio_route_output::count),
   multi_list_table_init_out(gaudio_route_input_counts, gaudio_route_input::count)

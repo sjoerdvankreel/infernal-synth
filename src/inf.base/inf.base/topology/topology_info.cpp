@@ -144,7 +144,7 @@ topology_info::init(topology_info* topology,
     std::string unique_param_id = part.descriptor->guid;
     unique_param_id += std::to_string(part.type_index);
     unique_param_id += this_descriptor.guid;    
-    std::int32_t hash = stable_hash(unique_param_id.c_str());
+    std::int32_t hash = stable_hash(unique_param_id.c_str()); 
     topology->param_index_to_id.push_back(hash);
     assert(topology->param_id_to_index.find(hash) == topology->param_id_to_index.end());
     topology->param_id_to_index[hash] = static_cast<std::int32_t>(p);

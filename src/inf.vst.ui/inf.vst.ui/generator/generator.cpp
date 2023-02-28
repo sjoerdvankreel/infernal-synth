@@ -724,6 +724,7 @@ build_ui_part_connector(
   case connector_direction::left: 
   case connector_direction::right:
   case connector_direction::left_right:
+  case connector_direction::halfway_left_up:
   case connector_direction::halfway_right_down:
     left = param_total_width * columns - header_connector_size - padding_param_group;
     break;
@@ -753,6 +754,7 @@ build_ui_part_header_container(part_type_ui_description const& type,
   auto connectors = part.info->descriptor->ui->connectors;
   if ((connectors & connector_direction::right) != 0 
     || (connectors & connector_direction::left) != 0
+    || (connectors & connector_direction::halfway_left_up) != 0
     || (connectors & connector_direction::halfway_right_down) != 0)
       connectors_width = header_connector_size / 4 + margin + 2 * padding_param_group;
   if ((connectors & connector_direction::left_right) != 0) 

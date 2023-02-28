@@ -20,12 +20,11 @@ namespace inf::synth {
 
 // ---- shared ----
 
-std::vector<base::box_descriptor> vcv_bank_borders();
-std::vector<base::box_descriptor> gcv_bank_borders();
 extern base::param_descriptor const vcv_bank_params[];
 extern base::param_descriptor const vcv_plot_params[];
 extern base::param_descriptor const gcv_bank_params[];
 extern base::param_descriptor const gcv_plot_params[];
+std::vector<base::box_descriptor> cv_bank_borders(std::int32_t param_count);
 
 // for enabled
 inline std::int32_t constexpr cv_bank_param_offset = 1;
@@ -38,11 +37,9 @@ typedef cv_plot_param_t::value cv_plot_param;
 
 // input, output, modifiers
 struct cv_route_input_op_t { enum value { add, sub, mul, count }; };
-struct cv_route_output_base_t { enum value { raw, mod, param, count }; };
-struct cv_bank_param_type_t { enum value { in, out, base, op, off, scale, amt, count }; };
+struct cv_bank_param_type_t { enum value { in, out, op, amt, off, scale, count }; };
 typedef cv_route_input_op_t::value cv_route_input_op;
 typedef cv_bank_param_type_t::value cv_bank_param_type;
-typedef cv_route_output_base_t::value cv_route_output_base;
 
 // voice/master output routing and mapping
 struct vgcv_route_amp_target_t { enum value { gain, bal, count }; };
@@ -70,28 +67,37 @@ inline std::int32_t constexpr vgcv_route_effect_mapping[vgcv_route_effect_target
   effect_param::reverb_mix, effect_param::reverb_size, effect_param::reverb_spread, 
   effect_param::reverb_damp, effect_param::reverb_apf };
 
+// audio bank output routing and mapping
+struct vgcv_route_audio_bank_target_t { enum value { 
+  amt1, amt2, amt3, amt4, amt5, amt6,
+  bal1, bal2, bal3, bal4, bal5, bal6, count }; };
+typedef vgcv_route_audio_bank_target_t::value vgcv_route_audio_bank_target;
+inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_bank_target::count] = {
+  audio_bank_param::amt1, audio_bank_param::amt2, audio_bank_param::amt3,
+  audio_bank_param::amt4, audio_bank_param::amt5, audio_bank_param::amt6,
+  audio_bank_param::bal1, audio_bank_param::bal2, audio_bank_param::bal3, 
+  audio_bank_param::bal4, audio_bank_param::bal5, audio_bank_param::bal6 };
+
 // ui
 inline std::vector<base::box_descriptor> const cv_plot_borders = { { 0, 0, 2, 1 } };
 inline std::vector<base::graph_descriptor> const cv_plot_graph_descs = { { -1, "CV", { 0, 1, 2, 3 } } };
+inline std::int32_t const cv_bank_table_col_count = cv_bank_param_type::count;
+inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.21f, 0.21f, 0.1f, 0.16f, 0.16f, 0.16f };
+inline char const* const cv_bank_table_col_headers[cv_bank_table_col_count] = { "In", "Out", "Op", "Amt", "Off", "Scale" };
+inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_col_headers };
 
 // ---- voice ----
 
 // on/off must be 0
 struct vcv_bank_param_t { enum value { on, 
-  in1, in2, in3, out1, out2, out3, base1, base2, base3,
-  op1, op2, op3, off1, off2, off3, scale1, scale2, scale3,
-  amt1, amt2, amt3, count }; };
+  in1, in2, in3, in4, in5, out1, out2, out3, out4, out5,
+  op1, op2, op3, op4, op5, amt1, amt2, amt3, amt4, amt5, 
+  off1, off2, off3, off4, off5, scale1, scale2, scale3, scale4, scale5, count }; };
 typedef vcv_bank_param_t::value vcv_bank_param;
 
 // route count per bank
 inline std::int32_t constexpr vcv_bank_route_count =
 (vcv_bank_param::count - cv_bank_param_offset) / cv_bank_param_type::count;
-
-// ui
-inline std::int32_t const vcv_bank_table_col_count = cv_bank_param_type::count;
-inline float const vcv_bank_table_col_widths[vcv_bank_table_col_count] = { 0.14f, 0.19f, 0.11f, 0.08f, 0.16f, 0.16f, 0.16f };
-inline char const* const vcv_bank_table_col_headers[vcv_bank_table_col_count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" };
-inline base::part_table_descriptor const vcv_bank_table = { false, vcv_bank_table_col_count, vcv_bank_table_col_widths, vcv_bank_table_col_headers };
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
@@ -114,15 +120,6 @@ inline std::int32_t constexpr vcv_route_output_counts[vcv_route_output::count] =
 inline std::int32_t constexpr vcv_route_output_total_count = std::accumulate(
   vcv_route_output_counts, vcv_route_output_counts + vcv_route_output::count, 0);
 
-// audio bank output routing and mapping
-struct vcv_route_audio_bank_target_t { enum value { 
-  amt1, amt2, amt3, amt4, 
-  bal1, bal2, bal3, bal4, count }; };
-typedef vcv_route_audio_bank_target_t::value vcv_route_audio_bank_target;
-inline std::int32_t constexpr vcv_route_audio_bank_mapping[vcv_route_audio_bank_target::count] = {
-vaudio_bank_param::amt1, vaudio_bank_param::amt2, vaudio_bank_param::amt3, vaudio_bank_param::amt4,
-vaudio_bank_param::bal1, vaudio_bank_param::bal2, vaudio_bank_param::bal3, vaudio_bank_param::bal4 };
-
 // oscillator output routing
 struct vcv_route_vosc_target_t { enum value {
   pm, fm, gain, cent, uni_detune, uni_spread, ram_bal, ram_mix,
@@ -141,29 +138,26 @@ inline std::int32_t constexpr vcv_route_vosc_mapping[vcv_route_vosc_target::coun
 // output target mapping
 inline std::int32_t constexpr vcv_route_output_target_counts[vcv_route_output::count] = {
   0 /* off */, vcv_route_vosc_target::count, vgcv_route_effect_target::vfx_count,
-  vcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
+  vgcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
 inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_output::count] = {
   nullptr, vcv_route_vosc_mapping, vgcv_route_effect_mapping, 
-  vcv_route_audio_bank_mapping, cv_route_amp_mapping };
+  vgcv_route_audio_bank_mapping, cv_route_amp_mapping };
 
 // ---- global ----
 
 // on/off must be 0
 struct gcv_bank_param_t { enum value { on, 
-  in1, in2, in3, in4, out1, out2, out3, out4, base1, base2, base3, base4,
-  op1, op2, op3, op4, off1, off2, off3, off4, scale1, scale2, scale3, scale4,
-  amt1, amt2, amt3, amt4, count }; };
+  in1, in2, in3, in4, in5, in6, in7, in8, 
+  out1, out2, out3, out4, out5, out6, out7, out8,
+  op1, op2, op3, op4, op5, op6, op7, op8,
+  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, 
+  off1, off2, off3, off4, off5, off6, off7, off8,
+  scale1, scale2, scale3, scale4, scale5, scale6, scale7, scale8, count }; };
 typedef gcv_bank_param_t::value gcv_bank_param;
 
 // route count per bank
 inline std::int32_t constexpr gcv_bank_route_count =
 (gcv_bank_param::count - cv_bank_param_offset) / cv_bank_param_type::count;
-
-// ui
-inline std::int32_t const gcv_bank_table_col_count = gcv_bank_route_count + 1;
-inline float const gcv_bank_table_col_widths[gcv_bank_table_col_count] = { 0.1f, 0.225f, 0.225f, 0.225f, 0.225f };
-inline char const* const gcv_bank_table_row_headers[cv_bank_param_type::count] = { "In", "Out", "Base", "Op", "Off", "Scl", "Amt" };
-inline base::part_table_descriptor const gcv_bank_table = { true, gcv_bank_table_col_count, gcv_bank_table_col_widths, gcv_bank_table_row_headers };
 
 // input routing and mapping, off must be 0
 struct gcv_route_input_t { enum value { off, gcv_uni, gcv_bi, glfo, count }; };
@@ -181,20 +175,11 @@ inline std::int32_t constexpr gcv_route_output_counts[gcv_route_output::count] =
 inline std::int32_t constexpr gcv_route_output_total_count = std::accumulate(
   gcv_route_output_counts, gcv_route_output_counts + gcv_route_output::count, 0);
 
-// audio bank output routing and mapping
-struct gcv_route_audio_bank_target_t { enum value { 
-  amt1, amt2, amt3, amt4,
-  bal1, bal2, bal3, bal4, count }; };
-typedef gcv_route_audio_bank_target_t::value gcv_route_audio_bank_target;
-inline std::int32_t constexpr gcv_route_audio_bank_mapping[gcv_route_audio_bank_target::count] = {
-  gaudio_bank_param::amt1, gaudio_bank_param::amt2, gaudio_bank_param::amt3, gaudio_bank_param::amt4, 
-  gaudio_bank_param::bal1, gaudio_bank_param::bal2, gaudio_bank_param::bal3, gaudio_bank_param::bal4 };
-
 // output target mapping
 inline std::int32_t const* const gcv_route_output_target_mapping[gcv_route_output::count] = {
-  nullptr, vgcv_route_effect_mapping, gcv_route_audio_bank_mapping, cv_route_amp_mapping };
+  nullptr, vgcv_route_effect_mapping, vgcv_route_audio_bank_mapping, cv_route_amp_mapping };
 inline std::int32_t constexpr gcv_route_output_target_counts[gcv_route_output::count] = {
-  0 /* off */, vgcv_route_effect_target::gfx_count, gcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
+  0 /* off */, vgcv_route_effect_target::gfx_count, vgcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_CV_BANK_TOPOLOGY_HPP

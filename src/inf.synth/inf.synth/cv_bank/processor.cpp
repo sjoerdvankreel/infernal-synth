@@ -11,7 +11,7 @@ namespace inf::synth {
 cv_bank_processor::
 cv_bank_processor(topology_info const* topology, cv_bank_state* state):
 _state(state), _data(&cv_bank_data::global), _topology(topology),
-_output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
+_relevant_indices_count(), _relevant_indices()
 {
   assert(state != nullptr);
   assert(topology != nullptr);
@@ -23,7 +23,7 @@ cv_bank_processor(topology_info const* topology, cv_bank_state* state,
   cv_hold_sample const* gcv_uni_hold_, cv_hold_sample const* gcv_bi_hold_, 
   cv_hold_sample const* glfo_hold_, float velo, std::int32_t midi, base::block_input_data const& input):
 _state(state), _data(&cv_bank_data::voice), _topology(topology),
-_output_needs_unmodulated_cv(), _relevant_indices_count(), _relevant_indices()
+_relevant_indices_count(), _relevant_indices()
 { 
   assert(state != nullptr);
   assert(topology != nullptr);
@@ -168,9 +168,6 @@ cv_bank_processor::update_block_params(block_input_data const& input)
       std::int32_t source_id = bank_automation.block_discrete(in_index);
       if (source_id == cv_bank_vgcv_inout_off) continue;
 
-      std::int32_t base_index = param_index(r, cv_bank_param_type::base);
-      std::int32_t modulation_base = bank_automation.block_discrete(base_index);
-
       // For each target.
       for (std::int32_t output_id = 0; output_id < _data->route_output_total_count; output_id++)
       {
@@ -191,11 +188,9 @@ cv_bank_processor::update_block_params(block_input_data const& input)
           indices.bank_index = b; 
           indices.route_index = r;
           indices.target_index = p;
-          indices.base_index = modulation_base;
           indices.input_ids = _data->source_table_out[source_id];
           indices.input_op_index = bank_automation.block_discrete(param_index(r, cv_bank_param_type::op));
           _relevant_indices[output_id][_relevant_indices_count[output_id]++] = indices;
-          _output_needs_unmodulated_cv[output_id] |= modulation_base == cv_route_output_base::param && indices.input_op_index != cv_route_input_op::mul;
         }
       }
     }
@@ -206,12 +201,7 @@ void
 cv_bank_processor::apply_modulation(cv_bank_input const& input, 
   automation_view const& bank_automation, cv_route_indices const& indices, std::int32_t mapped_target)
 {
-  std::int32_t mod_type = input.modulation_id.type;
-  std::int32_t mod_index = input.modulation_id.index;
   std::int32_t sample_count = input.block->sample_count;
-  std::int32_t output_id = _data->output_table_in[mod_type][mod_index];
-  bool need_unmodulated = _output_needs_unmodulated_cv[output_id];
-  (void)need_unmodulated;
 
   // Get modifiers.
   float* amt = _state->amt.data();
@@ -229,11 +219,7 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
   std::int32_t source_index = std::get<1>(indices.input_ids);
   bool bipolar = input_bipolar(source_type, source_index);
   float const* in = input_buffer(source_type, source_index);
-
-  // Unmodulated holds original output parameter value.
   float* out = _state->out.buffer(mapped_target);
-  float const* unmodulated = _state->unmodulated.buffer(mapped_target);
-  float const* unmodulated_bipolar_range = _state->unmodulated_bipolar_range.buffer(mapped_target);
 
   // Apply modifiers.
   // Bipolar input is transformed to unipolar first, then modified, then set back to bipolar.
@@ -264,60 +250,16 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
   switch (indices.input_op_index)
   {
   case cv_route_input_op::add:
-    switch (indices.base_index)
-    {
-    case cv_route_output_base::raw:
-      for (std::int32_t s = 0; s < ss; s++) out[s] += in_modified[s];
-      break;
-    case cv_route_output_base::mod:
-      if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] += (1.0f - out[s]) * in_modified[s];
-      else for (std::int32_t s = 0; s < ss; s++) out[s] += std::min(out[s], 1.0f - out[s]) * in_modified[s];
-      break;
-    case cv_route_output_base::param:
-      assert(need_unmodulated);
-      if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] += (1.0f - unmodulated[s]) * in_modified[s];
-      else for (std::int32_t s = 0; s < ss; s++) out[s] += unmodulated_bipolar_range[s] * in_modified[s];
-      break;
-    default:
-      assert(false);
-      break;
-    }
+    if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] += (1.0f - out[s]) * in_modified[s];
+    else for (std::int32_t s = 0; s < ss; s++) out[s] += std::min(out[s], 1.0f - out[s]) * in_modified[s];
     break;
   case cv_route_input_op::sub:
-    switch (indices.base_index)
-    {
-    case cv_route_output_base::raw:
-      for (std::int32_t s = 0; s < ss; s++) out[s] -= in_modified[s];
-      break;
-    case cv_route_output_base::mod:
-      if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] -= out[s] * in_modified[s];
-      else for (std::int32_t s = 0; s < ss; s++) out[s] -= std::min(out[s], 1.0f - out[s]) * in_modified[s];
-      break;
-    case cv_route_output_base::param:
-      assert(need_unmodulated);
-      if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] -= unmodulated[s] * in_modified[s];
-      else for (std::int32_t s = 0; s < ss; s++) out[s] -= unmodulated_bipolar_range[s] * in_modified[s];
-      break;
-    default:
-      assert(false);
-      break;
-    }
+    if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] -= out[s] * in_modified[s];
+    else for (std::int32_t s = 0; s < ss; s++) out[s] -= std::min(out[s], 1.0f - out[s]) * in_modified[s];
     break;
   case cv_route_input_op::mul:
-    switch (indices.base_index)
-    {
-    case cv_route_output_base::raw:
-      for (std::int32_t s = 0; s < ss; s++) out[s] *= in_modified[s];
-      break;
-    case cv_route_output_base::mod:
-    case cv_route_output_base::param:
-      if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] = (1.0f - amt[s] + in_modified[s]) * out[s];
-      else for (std::int32_t s = 0; s < ss; s++) out[s] = (1.0f - amt[s]) * out[s] + out[s] * std::abs(in_modified[s]);
-      break;
-    default:
-      assert(false);
-      break;
-    }
+    if (!bipolar) for (std::int32_t s = 0; s < ss; s++) out[s] = (1.0f - amt[s] + in_modified[s]) * out[s];
+    else for (std::int32_t s = 0; s < ss; s++) out[s] = (1.0f - amt[s]) * out[s] + out[s] * std::abs(in_modified[s]);
     break;
   default:
     assert(false);
@@ -350,21 +292,6 @@ cv_bank_processor::modulate(cv_bank_input const& input, float const* const*& res
   for (std::int32_t p = 0; p < _data->route_output_target_counts[mod_type]; p++)
     input.automated->continuous_real(target_mapping[p], _state->out.buffer(target_mapping[p]), sample_count);
 
-  // If we have modulation for this part type + index, set up some intermediate buffers.
-  bool need_unmodulated = _output_needs_unmodulated_cv[output_id];
-  if(need_unmodulated)
-    for (std::int32_t p = 0; p < _data->route_output_target_counts[mod_type]; p++)
-    {
-      float* out = _state->out.buffer(target_mapping[p]);
-      float* unmodulated = _state->unmodulated.buffer(target_mapping[p]);
-      std::copy(out, out + sample_count, unmodulated);
-
-      // Precompute so we can re-use.
-      float* unmodulated_bipolar_range = _state->unmodulated_bipolar_range.buffer(target_mapping[p]);
-      for(std::int32_t s = 0; s < sample_count; s++)
-        unmodulated_bipolar_range[s] = std::min(unmodulated_bipolar_range[s], 1.0f - unmodulated_bipolar_range[s]);
-    }
-
   // Apply modulation (can scale beyond [0, 1], we apply clipping just before transform to dsp domain).
   automation_view bank_automation;
   std::int32_t previous_bank_index = -1;
@@ -379,7 +306,6 @@ cv_bank_processor::modulate(cv_bank_input const& input, float const* const*& res
       previous_bank_index = indices.bank_index;
     }
 
-    // Unmodulated holds original output parameter value.
     std::int32_t mapped_target = target_mapping[indices.target_index];
     apply_modulation(input, bank_automation, indices, mapped_target);
   }

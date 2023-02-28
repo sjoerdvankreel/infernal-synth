@@ -15,9 +15,10 @@
 - Both feedback and multitap delay now have stereo spread controls.
 
 * Breaking changes:
+- Removed CV bank base parameter.
 - Time-based envelope parameter ranges changed.
 - Most delay (both feedback and multitap) parameters changed.
-- CV and Audio banks got re-arranged to use less routes and more banks.
+- CV and Audio banks got re-arranged, so all parameters changed.
 - Master CV parameters changed (uni/bipolar switch replaced by actual bipolar controls).
 
 January 25, 2023 - V1.0.

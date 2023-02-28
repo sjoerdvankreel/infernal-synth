@@ -2,9 +2,9 @@
 - v update hiir
 - v update vst3 sdk
 - v update version number
-- x gcc build
-- x update history
-- x keep manual up to date
+- v gcc build
+- v update history
+- v keep manual up to date
 
 * bugs
 - renoise/flstudio automation serialization is broken
@@ -18,9 +18,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- cv/audio bank/output borders
-- re-think audio/cv bank layout
-- new menu option: clear all unused
-
 - better factory presets
+- new menu option: clear all unused
 - recreate project website, re-do presets and demos

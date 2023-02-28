@@ -121,33 +121,33 @@ static special_params_descriptor const vcv_special = { vcv_bank_param::on, 0, ac
 static special_params_descriptor const gcv_special = { gcv_bank_param::on, 0, active_param::gcv_bank };
 static special_params_descriptor const veffect_special = { effect_param::on, 0, active_param::veffect };
 static special_params_descriptor const geffect_special = { effect_param::on, 0, active_param::geffect };
-static special_params_descriptor const vaudio_bank_special = { vaudio_bank_param::on, 0, active_param::vaudio_bank };     
-static special_params_descriptor const gaudio_bank_special = { gaudio_bank_param::on, 1, active_param::gaudio_bank };                   
+static special_params_descriptor const vaudio_bank_special = { audio_bank_param::on, 0, active_param::vaudio_bank };      
+static special_params_descriptor const gaudio_bank_special = { audio_bank_param::on, 1, active_param::gaudio_bank };                   
            
 static part_ui_descriptor const vosc_ui = { 4, vosc_special, osc_graphs, part_colors, osc_borders, nullptr, connector_direction::right, "lust.png", 50, "", true};
 static part_ui_descriptor const veffect_ui = { 4, veffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "sloth.png", 200, "", false};
 static part_ui_descriptor const geffect_ui = { 4, geffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "lust.png", 100, "Global", false };
-static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, vaudio_bank_borders(), &audio_bank_table, connector_direction::left_right, "greed.png", 250, "", false};
-static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, gaudio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 150, "Global", false};
+static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right, "greed.png", 250, "", false};
+static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 150, "Global", false};
 static part_ui_descriptor const voice_ui = { 4, part_no_special, voice_graphs, part_colors, voice_borders, nullptr, connector_direction::down, "wrath.png", 150, "", true};
 static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs, part_colors, master_borders, nullptr, connector_direction::left, "pride.png", 200, "Global", true};
 static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "sloth.png", 200, "", true };
-static part_ui_descriptor const vlfo_ui = { 4, vlfo_special, lfo_graphs, part_colors, lfo_borders, nullptr,  connector_direction::halfway_right_down, "wrath.png", 150, "", false };
+static part_ui_descriptor const vlfo_ui = { 4, vlfo_special, lfo_graphs, part_colors, lfo_borders, nullptr,  connector_direction::right, "wrath.png", 150, "", false };
 static part_ui_descriptor const glfo_ui = { 4, glfo_special, lfo_graphs, part_colors, lfo_borders, nullptr, connector_direction::none, "pride.png", 150, "Global", false };
-static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, vcv_bank_borders(), &vcv_bank_table, connector_direction::up, "gluttony.png", 150, "", false};
-static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, gcv_bank_borders(), &gcv_bank_table, connector_direction::up | connector_direction::left, "envy.png", 50, "Global", false};
+static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, cv_bank_borders(vcv_bank_param::count), &cv_bank_table, connector_direction::up, "gluttony.png", 150, "", false};
+static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, cv_bank_borders(gcv_bank_param::count), &cv_bank_table, connector_direction::up | connector_direction::halfway_left_up, "envy.png", 100, "Global", false};
 static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "pride.png", 175, "", true };
 static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "gluttony.png", 200, "Global", true};
-static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, {}, &output_table, connector_direction::down, "greed.png", 275, "Global", true};   
-                  
-part_descriptor const                                 
+static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, output_borders, &output_table, connector_direction::down, "greed.png", 275, "Global", true};
+                   
+part_descriptor const                                  
 part_descriptors[part_type::count] =                                             
 {                       
   { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, 0, &vosc_ui },
-  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "FX A", "FX A" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, 10, &veffect_ui},
+  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "FX A", "FX A" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, 10, &veffect_ui}, 
   { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "FX B", "FX B" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, 11, &geffect_ui},
-  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, vaudio_bank_param::count, 5, &vaudio_bank_ui },
-  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, gaudio_bank_param::count, 7, &gaudio_bank_ui },
+  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, audio_bank_param::count, 5, &vaudio_bank_ui },
+  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, audio_bank_param::count, 7, &gaudio_bank_ui },
   { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "Voice", "Voice" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count, 6, &voice_ui },
   { "{6DE3AAB2-6D43-41ED-9BBE-E281DB8F7B44}", { "Master", "Master" }, part_kind::input, part_type::master, 1, master_params, master_param::count, 1, &master_ui },
   { "{FC4885FE-431C-477A-B5B7-84863DB8C07D}", { "Env", "Envelope" }, part_kind::input, part_type::venv, venv_count, envelope_params, envelope_param::count, 14, &venv_ui },

@@ -51,7 +51,6 @@ private:
   static inline std::int32_t constexpr max_route_count = std::max(vcv_bank_route_count, gcv_bank_route_count);
   static inline std::int32_t constexpr max_total_route_output_count = std::max(vcv_route_output_total_count, gcv_route_output_total_count);
 
-  std::array<bool, max_total_route_output_count> _output_needs_unmodulated_cv;
   std::array<std::int32_t, max_total_route_output_count> _relevant_indices_count;
   std::array<std::array<cv_route_indices, max_bank_count * max_route_count>, max_total_route_output_count> _relevant_indices;
 };
