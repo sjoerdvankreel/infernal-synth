@@ -50,7 +50,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_voices, "3");
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_dtn, "33");
   set_ui_value(state, part_type::vosc, 0, osc_param::uni_sprd, "50");
-  set_ui_value(state, part_type::vosc, 0, osc_param::uni_offset, "50");
+  set_ui_value(state, part_type::vosc, 0, osc_param::uni_offset, "50"); 
 
   // fx a1 tanh shaper
   set_ui_value(state, part_type::veffect, 0, osc_param::on, "On");
@@ -87,22 +87,22 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::master, 0, master_param::gcv2_uni, "66");
 
   // audio a1 osc->fx1->fx2->voice
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::on, "On");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in1, "Osc 1");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out1, "FX A1");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in2, "FX A1");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out2, "FX A2");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in3, "FX A2");
-  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out3, "Voice");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::on, "On");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc 1");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "FX A1");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in2, "FX A1");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out2, "FX A2");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in3, "FX A2");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out3, "Voice");
 
   // audio b1 voice->fx1->fx2->master
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in1, "Voice");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out1, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in2, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out2, "FX B2");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::in3, "FX B2");
-  set_ui_value(state, part_type::gaudio_bank, 0, vaudio_bank_param::out3, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out3, "Master");
 
   // lfo a1 on & bipolar
   set_ui_value(state, part_type::vlfo, 0, lfo_param::on, "On");

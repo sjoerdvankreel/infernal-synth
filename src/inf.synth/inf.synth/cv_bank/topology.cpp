@@ -88,16 +88,20 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
 static list_item const vgcv_route_amp_targets[vgcv_route_amp_target::count] = { 
   { "{4FD8B71A-3ACF-4D82-9070-4C1B5843C8A7}", "Gain" },
   { "{A3956376-EE40-45F1-BDA5-FE7A41F9BD60}", "Bal" } };
-static list_item const vcv_route_audio_bank_targets[vcv_route_audio_bank_target::count] = {
+static list_item const vcv_route_audio_bank_targets[vgcv_route_audio_bank_target::count] = {
   { "{327E458F-4686-44BA-9F32-68C58C53EBFB}", "Amt1" },
   { "{0925FBB7-3F1B-428C-8A00-F22D359CDFE3}", "Amt2" },
   { "{0A9F9198-192B-466F-911E-E3A83925670E}", "Amt3" },
   { "{A14EFB11-3FEF-4F0A-9398-E128E4C7F28D}", "Amt4" },
+  { "{EE4F0932-4046-4910-95DF-E452B143E94E}", "Amt5" },
+  { "{D11DB66D-F4E6-4821-809E-A532A2A3AD79}", "Amt6" },
   { "{327E458F-4686-44BA-9F32-68C58C53EBFB}", "Bal1" },
   { "{0925FBB7-3F1B-428C-8A00-F22D359CDFE3}", "Bal2" },
   { "{0A9F9198-192B-466F-911E-E3A83925670E}", "Bal3" }, 
-  { "{A14EFB11-3FEF-4F0A-9398-E128E4C7F28D}", "Bal4" } };
-static list_item const gcv_route_audio_bank_targets[gcv_route_audio_bank_target::count] = {
+  { "{A14EFB11-3FEF-4F0A-9398-E128E4C7F28D}", "Bal4" },
+  { "{A89056B2-4C8A-4027-96E8-4E0D90D7540F}", "Bal5" },
+  { "{39FE9B13-131B-4347-86AC-D65CA377F4B5}", "Bal6" } };
+static list_item const gcv_route_audio_bank_targets[vgcv_route_audio_bank_target::count] = {
   { "{AF20EA99-6827-4216-8CBA-5562F267F649}", "Amt1" },
   { "{44183897-5277-4A02-BED5-8D727E6C9C33}", "Amt2" },
   { "{2FA260E6-6384-4FE6-9D90-46AC3A4FCF28}", "Amt3" },

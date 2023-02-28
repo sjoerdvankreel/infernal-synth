@@ -73,23 +73,22 @@ synth_fx_topology::init_defaults(param_value* state) const
   }
 
   // audio routing
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out1, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in2, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out2, "FX B2");
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in3, "FX B2");
-  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out3, "Master");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out1, "FX B3");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in2, "FX B3");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out2, "FX B4");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in3, "FX B4");
-  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out3, "Master");
-  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 2, gaudio_bank_param::out1, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "FX B2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out3, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in4, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out4, "FX B3");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in5, "FX B3");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out5, "FX B4");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in6, "FX B4");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out6, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 1, audio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 1, audio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 1, audio_bank_param::out1, "Master");
 
   // master
   set_ui_value(state, part_type::master, 0, master_param::gain, "-18");
