@@ -52,8 +52,8 @@ extern base::param_descriptor const gaudio_bank_params[];
 struct gaudio_route_output_t { enum value { off, geffect, master, count }; }; // Off must be 0.
 struct gaudio_route_input_t { enum value { off, voice, external, geffect, count }; }; // Off must be 0.
 struct gaudio_bank_param_t { enum value { on, 
-  in1, in2, in3, in4, out1, out2, out3, out4, 
-  amt1, amt2, amt3, amt4, bal1, bal2, bal3, bal4, count }; };
+  in1, in2, in3, in4, in5, in6, out1, out2, out3, out4, out5, out6, 
+  amt1, amt2, amt3, amt4, amt5, amt6, bal1, bal2, bal3, bal4, bal5, bal6, count }; };
 typedef gaudio_bank_param_t::value gaudio_bank_param;
 typedef gaudio_route_input_t::value gaudio_route_input;
 typedef gaudio_route_output_t::value gaudio_route_output;
@@ -62,6 +62,11 @@ inline std::int32_t constexpr gaudio_bank_route_count = (gaudio_bank_param::coun
 inline std::int32_t constexpr gaudio_route_output_counts[gaudio_route_output::count] = { 1 /* off */, geffect_count, 1 /* master */ };
 inline std::int32_t constexpr gaudio_route_input_counts[gaudio_route_input::count] = { 1 /* off */, 1 /* voice */, 1 /* external */, geffect_count };
 inline std::int32_t constexpr gaudio_route_output_total_count = std::accumulate(gaudio_route_output_counts, gaudio_route_output_counts + gaudio_route_output::count, 0);
+
+inline std::int32_t const gaudio_bank_table_col_count = gaudio_bank_route_count + 1;
+inline float const gaudio_bank_table_col_widths[gaudio_bank_table_col_count] = { 0.1f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f };
+inline char const* const gaudio_bank_table_row_headers[audio_bank_param_type::count] = { "In", "Out", "Amt", "Bal" };
+inline base::part_table_descriptor const gaudio_bank_table = { true, gaudio_bank_table_col_count, gaudio_bank_table_col_widths, gaudio_bank_table_row_headers };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_AUDIO_BANK_TOPOLOGY_HPP

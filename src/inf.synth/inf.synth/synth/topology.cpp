@@ -121,14 +121,14 @@ static special_params_descriptor const vcv_special = { vcv_bank_param::on, 0, ac
 static special_params_descriptor const gcv_special = { gcv_bank_param::on, 0, active_param::gcv_bank };
 static special_params_descriptor const veffect_special = { effect_param::on, 0, active_param::veffect };
 static special_params_descriptor const geffect_special = { effect_param::on, 0, active_param::geffect };
-static special_params_descriptor const vaudio_bank_special = { vaudio_bank_param::on, 0, active_param::vaudio_bank };     
+static special_params_descriptor const vaudio_bank_special = { vaudio_bank_param::on, 0, active_param::vaudio_bank };      
 static special_params_descriptor const gaudio_bank_special = { gaudio_bank_param::on, 1, active_param::gaudio_bank };                   
            
 static part_ui_descriptor const vosc_ui = { 4, vosc_special, osc_graphs, part_colors, osc_borders, nullptr, connector_direction::right, "lust.png", 50, "", true};
 static part_ui_descriptor const veffect_ui = { 4, veffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "sloth.png", 200, "", false};
 static part_ui_descriptor const geffect_ui = { 4, geffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "lust.png", 100, "Global", false };
 static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, vaudio_bank_borders(), &audio_bank_table, connector_direction::left_right, "greed.png", 250, "", false};
-static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, gaudio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 150, "Global", false};
+static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, gaudio_bank_borders(), &gaudio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 150, "Global", false};
 static part_ui_descriptor const voice_ui = { 4, part_no_special, voice_graphs, part_colors, voice_borders, nullptr, connector_direction::down, "wrath.png", 150, "", true};
 static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs, part_colors, master_borders, nullptr, connector_direction::left, "pride.png", 200, "Global", true};
 static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "sloth.png", 200, "", true };
