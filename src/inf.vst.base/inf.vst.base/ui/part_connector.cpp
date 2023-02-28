@@ -61,9 +61,9 @@ part_connector::draw(VSTGUI::CDrawContext* context)
     path->closeSubpath();
     break;  
   case connector_direction::halfway_left_up:
-    path->beginSubpath(size * (11.0 / 12.0 - 0.4), 0.7 * size);
-    path->addLine(size * 11.0 / 12.0, 0.3 * size);
-    path->addLine(size * 11.0 / 12.0, 0.7 * size);
+    path->beginSubpath(size * (11.0 / 12.0 - 0.4), 0.7 * size + 1.0);
+    path->addLine(size * 11.0 / 12.0, 0.3 * size + 1.0);
+    path->addLine(size * (11.0 / 12.0 - 0.4), 0.3 * size + 1.0);
     path->closeSubpath();
     break;
   case connector_direction::halfway_right_down:
