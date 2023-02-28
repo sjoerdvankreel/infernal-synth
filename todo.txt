@@ -18,8 +18,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- more cv borders
 - new menu option: clear all unused
-
 - better factory presets
 - recreate project website, re-do presets and demos
