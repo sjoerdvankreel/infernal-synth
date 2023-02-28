@@ -111,7 +111,7 @@ synth_fx_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out2, "FX B2 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op2, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in3, "CV U2");
-  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out3, "Audio B2 Amt3");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out3, "Audio B1 Amt6");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op3, "Mul");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in4, "CV B2");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out4, "FX B4 SV Frq");
