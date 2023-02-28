@@ -336,6 +336,7 @@ for the lifetime of the voice.
 
 - In: CV input signal.
 - Out: CV signal target parameter.
+- Op: modulation operation.
 - Amount: how much of the (adjusted) CV signal to apply to the target parameter.
 - Offset, Scale: adjust the base and range of the incoming signal. For example with offset = 0.4, scale = 0.5, the adjusted signal will be between offset = 0.4 and (1 - offset) * scale = 0.7.
    
