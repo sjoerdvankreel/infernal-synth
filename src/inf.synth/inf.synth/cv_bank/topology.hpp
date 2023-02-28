@@ -82,7 +82,7 @@ inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_ban
 inline std::vector<base::box_descriptor> const cv_plot_borders = { { 0, 0, 2, 1 } };
 inline std::vector<base::graph_descriptor> const cv_plot_graph_descs = { { -1, "CV", { 0, 1, 2, 3 } } };
 inline std::int32_t const cv_bank_table_col_count = cv_bank_param_type::count;
-inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.225f, 0.225f, 0.1f, 0.15f, 0.15f, 0.15f };
+inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.21f, 0.21f, 0.1f, 0.16f, 0.16f, 0.16f };
 inline char const* const cv_bank_table_col_headers[cv_bank_table_col_count] = { "In", "Out", "Op", "Off", "Scale", "Amt" };
 inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_col_headers };
 

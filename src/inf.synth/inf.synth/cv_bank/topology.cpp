@@ -13,15 +13,12 @@ namespace inf::synth {
 
 std::vector<box_descriptor> cv_bank_borders(std::int32_t param_count) 
 { 
-  std::vector<box_descriptor> result;/*
+  std::vector<box_descriptor> result;
   std::int32_t row_span = (param_count - cv_bank_param_offset) / cv_bank_table_col_count;
-  result.push_back(box_descriptor({ 0, 0, 1, 2 }));
-  result.push_back(box_descriptor({ 0, 2, 1, 2 })); 
-  result.push_back(box_descriptor({ 0, 4, 1, 3 }));
-  result.push_back(box_descriptor({ 1, 0, row_span, 2 }));
-  result.push_back(box_descriptor({ 1, 2, row_span, 2 }));
-  result.push_back(box_descriptor({ 1, 4, row_span, 3 }));
-  */
+  result.push_back(box_descriptor({ 0, 0, 1, 3 }));
+  result.push_back(box_descriptor({ 0, 3, 1, 3 })); 
+  result.push_back(box_descriptor({ 1, 0, row_span, 3 }));
+  result.push_back(box_descriptor({ 1, 3, row_span, 3 })); 
   return result;
 }  
 
