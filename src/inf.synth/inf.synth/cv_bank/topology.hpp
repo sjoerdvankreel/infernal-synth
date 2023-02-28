@@ -146,8 +146,12 @@ inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_outpu
 
 // on/off must be 0
 struct gcv_bank_param_t { enum value { on, 
-  in1, in2, in3, in4, out1, out2, out3, out4, op1, op2, op3, op4, 
-  off1, off2, off3, off4, scale1, scale2, scale3, scale4, amt1, amt2, amt3, amt4, count }; };
+  in1, in2, in3, in4, in5, in6, in7, in8, 
+  out1, out2, out3, out4, out5, out6, out7, out8,
+  op1, op2, op3, op4, op5, op6, op7, op8,
+  off1, off2, off3, off4, off5, off6, off7, off8,
+  scale1, scale2, scale3, scale4, scale5, scale6, scale7, scale8,
+  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, count }; };
 typedef gcv_bank_param_t::value gcv_bank_param;
 
 // route count per bank
