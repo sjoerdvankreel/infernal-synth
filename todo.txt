@@ -18,8 +18,7 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- cv/audio bank/output borders
-- re-think audio/cv bank layout
+- re-think audio/cv bank layout + borders
 - new menu option: clear all unused
 
 - better factory presets
