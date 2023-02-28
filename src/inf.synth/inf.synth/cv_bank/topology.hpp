@@ -37,7 +37,7 @@ typedef cv_plot_param_t::value cv_plot_param;
 
 // input, output, modifiers
 struct cv_route_input_op_t { enum value { add, sub, mul, count }; };
-struct cv_bank_param_type_t { enum value { in, out, op, off, scale, amt, count }; };
+struct cv_bank_param_type_t { enum value { in, out, op, amt, off, scale, count }; };
 typedef cv_route_input_op_t::value cv_route_input_op;
 typedef cv_bank_param_type_t::value cv_bank_param_type;
 
@@ -83,7 +83,7 @@ inline std::vector<base::box_descriptor> const cv_plot_borders = { { 0, 0, 2, 1 
 inline std::vector<base::graph_descriptor> const cv_plot_graph_descs = { { -1, "CV", { 0, 1, 2, 3 } } };
 inline std::int32_t const cv_bank_table_col_count = cv_bank_param_type::count;
 inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.21f, 0.21f, 0.1f, 0.16f, 0.16f, 0.16f };
-inline char const* const cv_bank_table_col_headers[cv_bank_table_col_count] = { "In", "Out", "Op", "Off", "Scale", "Amt" };
+inline char const* const cv_bank_table_col_headers[cv_bank_table_col_count] = { "In", "Out", "Op", "Amt", "Off", "Scale" };
 inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_col_headers };
 
 // ---- voice ----
@@ -91,8 +91,8 @@ inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_
 // on/off must be 0
 struct vcv_bank_param_t { enum value { on, 
   in1, in2, in3, in4, in5, out1, out2, out3, out4, out5,
-  op1, op2, op3, op4, op5, off1, off2, off3, off4, off5,
-  scale1, scale2, scale3, scale4, scale5, amt1, amt2, amt3, amt4, amt5, count }; };
+  op1, op2, op3, op4, op5, amt1, amt2, amt3, amt4, amt5, 
+  off1, off2, off3, off4, off5, scale1, scale2, scale3, scale4, scale5, count }; };
 typedef vcv_bank_param_t::value vcv_bank_param;
 
 // route count per bank
@@ -150,9 +150,9 @@ struct gcv_bank_param_t { enum value { on,
   in1, in2, in3, in4, in5, in6, in7, in8, 
   out1, out2, out3, out4, out5, out6, out7, out8,
   op1, op2, op3, op4, op5, op6, op7, op8,
+  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, 
   off1, off2, off3, off4, off5, off6, off7, off8,
-  scale1, scale2, scale3, scale4, scale5, scale6, scale7, scale8,
-  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, count }; };
+  scale1, scale2, scale3, scale4, scale5, scale6, scale7, scale8, count }; };
 typedef gcv_bank_param_t::value gcv_bank_param;
 
 // route count per bank
