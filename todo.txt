@@ -2,8 +2,8 @@
 - v update hiir
 - v update vst3 sdk
 - v update version number
-- x gcc build
-- x update history
+- v gcc build
+- v update history
 - x keep manual up to date
 
 * bugs
