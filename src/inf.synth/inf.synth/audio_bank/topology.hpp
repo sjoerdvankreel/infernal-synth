@@ -21,7 +21,7 @@ inline std::int32_t constexpr audio_bank_vgaudio_param_on = 0; // On/off must be
 inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; // On/off must be 0.
 
 inline std::int32_t constexpr audio_bank_table_col_count = audio_bank_param_type::count * 2;
-inline float const audio_bank_table_col_widths[audio_bank_table_col_count] = { 0.09f, 0.11f, 0.15f, 0.15f, 0.09f, 0.11f, 0.15f, 0.15f };
+inline float const audio_bank_table_col_widths[audio_bank_table_col_count] = { 0.105f, 0.105f, 0.14f, 0.15f, 0.105f, 0.105f, 0.14f, 0.15f }; 
 inline char const* const audio_bank_table_col_headers[audio_bank_table_col_count] = { "In", "Out", "Amt", "Bal", "In", "Out", "Amt", "Bal" };
 inline base::part_table_descriptor const audio_bank_table = { false, audio_bank_table_col_count, audio_bank_table_col_widths, audio_bank_table_col_headers }; 
 

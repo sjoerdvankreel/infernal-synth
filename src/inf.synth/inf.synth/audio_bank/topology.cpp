@@ -12,7 +12,7 @@ namespace inf::synth {
 std::vector<box_descriptor> gaudio_bank_borders()
 {
   return {};
-} 
+}   
 
 std::vector<box_descriptor> vaudio_bank_borders()
 {
