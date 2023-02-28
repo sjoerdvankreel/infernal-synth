@@ -24,7 +24,6 @@ struct cv_bank_input
 struct cv_route_indices
 {
   std::int32_t bank_index;
-  std::int32_t base_index;
   std::int32_t route_index;
   std::int32_t target_index;
   std::int32_t input_op_index;
@@ -77,8 +76,6 @@ struct cv_bank_state
   std::vector<float> in_modified;
   std::vector<std::int32_t> clamped;
   base::cont_storage<float> out;
-  base::cont_storage<float> unmodulated;
-  base::cont_storage<float> unmodulated_bipolar_range;
   
   std::vector<float> key;
   std::vector<float> key_inv;

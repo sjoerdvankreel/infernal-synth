@@ -11,45 +11,25 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-// borders
-std::vector<box_descriptor> gcv_bank_borders()
-{
-  std::vector<box_descriptor> result;
-  std::int32_t col_count = gcv_bank_table_col_count - 1;
-  result.push_back(box_descriptor({ 0, 0, 2, 1 }));
-  result.push_back(box_descriptor({ 2, 0, 2, 1 }));
-  result.push_back(box_descriptor({ 4, 0, 3, 1 }));
-  for(std::int32_t i = 1; i <= col_count; i++)
-  {
-    result.push_back(box_descriptor({ 0, i, 2, 1 }));
-    result.push_back(box_descriptor({ 2, i, 2, 1 }));
-    result.push_back(box_descriptor({ 4, i, 3, 1 }));
-  }
-  return result; 
-}
-
-std::vector<box_descriptor> vcv_bank_borders() 
+std::vector<box_descriptor> cv_bank_borders(std::int32_t param_count) 
 { 
-  std::vector<box_descriptor> result;
-  std::int32_t row_span = (vcv_bank_param::count - cv_bank_param_offset) / vcv_bank_table_col_count;
+  std::vector<box_descriptor> result;/*
+  std::int32_t row_span = (param_count - cv_bank_param_offset) / cv_bank_table_col_count;
   result.push_back(box_descriptor({ 0, 0, 1, 2 }));
   result.push_back(box_descriptor({ 0, 2, 1, 2 })); 
   result.push_back(box_descriptor({ 0, 4, 1, 3 }));
   result.push_back(box_descriptor({ 1, 0, row_span, 2 }));
   result.push_back(box_descriptor({ 1, 2, row_span, 2 }));
   result.push_back(box_descriptor({ 1, 4, row_span, 3 }));
+  */
   return result;
-} 
+}  
 
 // operation
 static std::vector<list_item> const cv_route_input_ops = {   
   { "{EFF13B0A-B9C3-4232-9EE3-38AB70434E0D}", "Add" },   
   { "{4FA2A827-DCE6-46FE-B78F-6D161982B538}", "Sub" },
   { "{C774C268-EF66-4482-9068-79AFCC60A090}", "Mul" } };
-static std::vector<list_item> const cv_route_output_bases = {
-  { "{49803D88-3801-444B-81B8-345BDA2C471D}", "Raw" },
-  { "{93CB9C1C-8026-47D3-8548-D22DFFCA0204}", "Mod" },
-  { "{70D6B78F-5D67-4A63-9131-59698685400B}", "Param" } }; 
 
 // output routing
 static list_item const vcv_route_outputs[vcv_route_output::count] = {
@@ -210,26 +190,23 @@ vcv_bank_params[vcv_bank_param::count] =
 {        
   { "{1F6DEE15-DEE7-443B-B9F8-E65BFF9C9C4A}", { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr } },
   { "{3B025C6A-0230-491A-A51F-7CF1C81B69C9}", { { "In", "Input 1" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 0, nullptr} },
-  { "{2833E378-210B-404F-A4CB-0D6204A72CF0}", { { "In", "Input 2" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 7, nullptr } },
-  { "{25041AB5-2A06-4305-8009-C26D56311D26}", { { "In", "Input 3" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 14, nullptr } },
+  { "{2833E378-210B-404F-A4CB-0D6204A72CF0}", { { "In", "Input 2" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 6, nullptr } },
+  { "{25041AB5-2A06-4305-8009-C26D56311D26}", { { "In", "Input 3" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 }, 12, nullptr } },
   { "{5FDD8C86-8F2D-4613-BB98-BB673F502412}", { { "Out", "Output 1" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 1, nullptr } },
-  { "{D0B28D9E-8888-42EB-8D3C-177FB4585E42}", { { "Out", "Output 2" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 8, nullptr } },
-  { "{37420523-6A9D-4125-BAAB-24A28B9E0992}", { { "Out", "Output 3" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 15, nullptr } },
-  { "{8B64719E-7B90-4F8C-A3A5-1DB198723B91}", { { "Base", "Base 1" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod }, 2, nullptr } },
-  { "{FC8F74F9-4BC9-4B6E-9F95-4B02973F4487}", { { "Base", "Base 2" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 9, nullptr } },
-  { "{2FB8E7B3-D095-44AD-B044-38B3492750FD}", { { "Base", "Base 3" }, "", param_kind::voice, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 16, nullptr } },
-  { "{18EBC834-CF60-4A68-BAF2-C57BC0BAE55E}", { { "Op", "Op 1" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 3, nullptr} },
-  { "{CD10C60A-C25E-46A5-879E-C692E50AE36B}", { { "Op", "Op 2" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 10, nullptr } },
-  { "{C6D7FDD5-102A-4972-B0B2-77F3977C9046}", { { "Op", "Op 3" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 17, nullptr } },
-  { "{0C1E5C81-01EE-4AE6-A05C-199210B904CC}", { { "Off", "Offset 1" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 4, nullptr } },
-  { "{20F28A5F-2956-412E-BD97-9220836C22A3}", { { "Off", "Offset 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 11, nullptr } },
-  { "{BFFA2360-5A5F-4575-A0E4-32B8B74977BD}", { { "Off", "Offset 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 18, nullptr } },
-  { "{20ACF437-2158-4900-8DC4-D36767442BF1}", { { "Scl", "Scale 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 5, nullptr } },
-  { "{23EFCBDF-7744-4527-B82D-A69E56C7338B}", { { "Scl", "Scale 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 12, nullptr } },
-  { "{87087F9C-62A2-4804-9292-CD9089F025B7}", { { "Scl", "Scale 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 19, nullptr } },
-  { "{469D130F-2E4A-4960-871D-032B6F588313}", { { "Amt", "Amount 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 6, nullptr } },
-  { "{58AFE21F-7945-4919-BB67-60CE8892A8AF}", { { "Amt", "Amount 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 13, nullptr } },
-  { "{9C1F6472-6D48-42E6-B79E-3A00F33F70F5}", { { "Amt", "Amount 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 20, nullptr } }
+  { "{D0B28D9E-8888-42EB-8D3C-177FB4585E42}", { { "Out", "Output 2" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 7, nullptr } },
+  { "{37420523-6A9D-4125-BAAB-24A28B9E0992}", { { "Out", "Output 3" }, "", param_kind::voice, param_type::list, { &vcv_route_output_target_list, 0 }, 13, nullptr } },
+  { "{18EBC834-CF60-4A68-BAF2-C57BC0BAE55E}", { { "Op", "Op 1" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 2, nullptr} },
+  { "{CD10C60A-C25E-46A5-879E-C692E50AE36B}", { { "Op", "Op 2" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 8, nullptr } },
+  { "{C6D7FDD5-102A-4972-B0B2-77F3977C9046}", { { "Op", "Op 3" }, "", param_kind::voice, param_type::list, { &cv_route_input_ops, 0 }, 14, nullptr } },
+  { "{0C1E5C81-01EE-4AE6-A05C-199210B904CC}", { { "Off", "Offset 1" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 3, nullptr } },
+  { "{20F28A5F-2956-412E-BD97-9220836C22A3}", { { "Off", "Offset 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 9, nullptr } },
+  { "{BFFA2360-5A5F-4575-A0E4-32B8B74977BD}", { { "Off", "Offset 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 15, nullptr } },
+  { "{20ACF437-2158-4900-8DC4-D36767442BF1}", { { "Scale", "Scale 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, nullptr } },
+  { "{23EFCBDF-7744-4527-B82D-A69E56C7338B}", { { "Scale", "Scale 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 10, nullptr } },
+  { "{87087F9C-62A2-4804-9292-CD9089F025B7}", { { "Scale", "Scale 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 16, nullptr } },
+  { "{469D130F-2E4A-4960-871D-032B6F588313}", { { "Amt", "Amount 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 5, nullptr } },
+  { "{58AFE21F-7945-4919-BB67-60CE8892A8AF}", { { "Amt", "Amount 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 11, nullptr } },
+  { "{9C1F6472-6D48-42E6-B79E-3A00F33F70F5}", { { "Amt", "Amount 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 17, nullptr } }
 };
 
 // global params
@@ -238,33 +215,29 @@ gcv_bank_params[gcv_bank_param::count] =
 { 
   { "{C64A2AE2-E96D-487E-8373-3DA9DBB7B028}", { { "On", "Enabled" }, param_kind::block, false, -1, nullptr } },
   { "{84736ED7-FF72-4E69-AFFF-A8607B0F3041}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 0, nullptr } },
-  { "{36981D81-6FC1-42C1-A380-D0813C624D93}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 1, nullptr } },
-  { "{9517E1DC-8069-4F00-915C-A0686DD3FB26}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 2, nullptr } },
-  { "{EB0A819C-174B-41B8-B8E8-E91377441D66}", { { "In", "Input 4" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 3, nullptr } },
-  { "{4548DE68-1D70-4307-BBD2-09838CAC4701}", { { "Out", "Output 1" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 4, nullptr } },
-  { "{A5857037-CB45-4F83-AF2F-2C4083628E63}", { { "Out", "Output 2" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 5, nullptr } },
-  { "{DC95DEF0-DD36-493A-B97A-E580DEB8BEBD}", { { "Out", "Output 3" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 6, nullptr } },
-  { "{86D57462-7C08-4DD6-8FAC-EEC7BD0ABE34}", { { "Out", "Output 4" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 7, nullptr } },
-  { "{906B9EBE-3E68-4F9C-97E9-2B78EE563C38}", { { "Base", "Base 1" }, "", param_kind::block, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod }, 8, nullptr } },
-  { "{760FEBEF-14E3-4C14-95A6-3106438B66F4}", { { "Base", "Base 2" }, "", param_kind::block, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 9, nullptr } },
-  { "{9F32E255-F36D-4D97-84BF-49DF558862C0}", { { "Base", "Base 3" }, "", param_kind::block, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 10, nullptr } },
-  { "{71EE0E3E-3F93-4175-978B-EC80E6C97D4A}", { { "Base", "Base 4" }, "", param_kind::block, param_type::list, { &cv_route_output_bases, cv_route_output_base::mod  }, 11, nullptr } },
-  { "{A526F21F-4C41-4925-90FD-D6BA442225E7}", { { "Op", "Op 1" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 12, nullptr} },
-  { "{FDFF29BB-E361-4350-9958-8266013A3124}", { { "Op", "Op 2" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 13, nullptr } },
+  { "{36981D81-6FC1-42C1-A380-D0813C624D93}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 6, nullptr } },
+  { "{9517E1DC-8069-4F00-915C-A0686DD3FB26}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 12, nullptr } },
+  { "{EB0A819C-174B-41B8-B8E8-E91377441D66}", { { "In", "Input 4" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 }, 18, nullptr } },
+  { "{4548DE68-1D70-4307-BBD2-09838CAC4701}", { { "Out", "Output 1" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 1, nullptr } },
+  { "{A5857037-CB45-4F83-AF2F-2C4083628E63}", { { "Out", "Output 2" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 7, nullptr } },
+  { "{DC95DEF0-DD36-493A-B97A-E580DEB8BEBD}", { { "Out", "Output 3" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 13, nullptr } },
+  { "{86D57462-7C08-4DD6-8FAC-EEC7BD0ABE34}", { { "Out", "Output 4" }, "", param_kind::block, param_type::list, { &gcv_route_output_target_list, 0 }, 19, nullptr } },
+  { "{A526F21F-4C41-4925-90FD-D6BA442225E7}", { { "Op", "Op 1" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 2, nullptr} },
+  { "{FDFF29BB-E361-4350-9958-8266013A3124}", { { "Op", "Op 2" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 8, nullptr } },
   { "{53EE242B-B967-499B-821B-4BF5419E08E5}", { { "Op", "Op 3" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 14, nullptr } },
-  { "{CD0E58CA-C183-4B59-9F45-2F0805379A1D}", { { "Op", "Op 4" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 15, nullptr } },
-  { "{41F96374-D208-4A29-911E-18CF7C27A6A0}", { { "Off", "Offset 1" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 16, nullptr } },
-  { "{4CBAC51D-9597-48BF-9210-D9CA33E8DCD1}", { { "Off", "Offset 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 17, nullptr } },
-  { "{D2EF64CE-1737-4776-AD8D-F28D5E359960}", { { "Off", "Offset 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 18, nullptr } },
-  { "{44061640-FDE6-4E81-BDE0-6145A6EBD494}", { { "Off", "Offset 4" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 19, nullptr } },
-  { "{5ACBDB05-BFCF-4A85-809B-D81DB8E835DE}", { { "Scl", "Scale 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 20, nullptr } },
-  { "{2E03B188-2616-457B-ACC2-F1B735370420}", { { "Scl", "Scale 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 21, nullptr } },
-  { "{45AE23A8-8EC6-4901-BECE-CB631FDFAA4D}", { { "Scl", "Scale 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 22, nullptr } },
-  { "{D2937D43-3DEE-4657-A9E0-BD2B1323FA3A}", { { "Scl", "Scale 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 23, nullptr } },
-  { "{A927E108-FB33-4AFC-A46A-726705004F78}", { { "Amt", "Amount 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 24, nullptr } },
-  { "{98AF1BBD-D01A-41EF-82DC-FD852FD7154B}", { { "Amt", "Amount 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 25, nullptr } },
-  { "{48F63E35-4D42-4EC1-AC9A-8E0CF2278095}", { { "Amt", "Amount 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 26, nullptr } },
-  { "{2EC4D924-1912-4111-8AC1-B24D84384618}", { { "Amt", "Amount 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 27, nullptr } }
+  { "{CD0E58CA-C183-4B59-9F45-2F0805379A1D}", { { "Op", "Op 4" }, "", param_kind::block, param_type::list, { &cv_route_input_ops, 0 }, 20, nullptr } },
+  { "{41F96374-D208-4A29-911E-18CF7C27A6A0}", { { "Off", "Offset 1" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 3, nullptr } },
+  { "{4CBAC51D-9597-48BF-9210-D9CA33E8DCD1}", { { "Off", "Offset 2" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 9, nullptr } },
+  { "{D2EF64CE-1737-4776-AD8D-F28D5E359960}", { { "Off", "Offset 3" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 15, nullptr } },
+  { "{44061640-FDE6-4E81-BDE0-6145A6EBD494}", { { "Off", "Offset 4" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 21, nullptr } },
+  { "{5ACBDB05-BFCF-4A85-809B-D81DB8E835DE}", { { "Scale", "Scale 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, nullptr } },
+  { "{2E03B188-2616-457B-ACC2-F1B735370420}", { { "Scale", "Scale 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 10, nullptr } },
+  { "{45AE23A8-8EC6-4901-BECE-CB631FDFAA4D}", { { "Scale", "Scale 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 16, nullptr } },
+  { "{D2937D43-3DEE-4657-A9E0-BD2B1323FA3A}", { { "Scale", "Scale 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 22, nullptr } },
+  { "{A927E108-FB33-4AFC-A46A-726705004F78}", { { "Amt", "Amount 1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 5, nullptr } },
+  { "{98AF1BBD-D01A-41EF-82DC-FD852FD7154B}", { { "Amt", "Amount 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 11, nullptr } },
+  { "{48F63E35-4D42-4EC1-AC9A-8E0CF2278095}", { { "Amt", "Amount 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 17, nullptr } },
+  { "{2EC4D924-1912-4111-8AC1-B24D84384618}", { { "Amt", "Amount 4" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 23, nullptr } }
 }; 
 
 } // namespace inf::synth
