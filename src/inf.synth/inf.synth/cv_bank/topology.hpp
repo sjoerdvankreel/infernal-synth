@@ -90,8 +90,9 @@ inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_
 
 // on/off must be 0
 struct vcv_bank_param_t { enum value { on, 
-  in1, in2, in3, out1, out2, out3, op1, op2, op3, 
-  off1, off2, off3, scale1, scale2, scale3, amt1, amt2, amt3, count }; };
+  in1, in2, in3, in4, in5, out1, out2, out3, out4, out5,
+  op1, op2, op3, op4, op5, off1, off2, off3, off4, off5,
+  scale1, scale2, scale3, scale4, scale5, amt1, amt2, amt3, amt4, amt5, count }; };
 typedef vcv_bank_param_t::value vcv_bank_param;
 
 // route count per bank

@@ -152,11 +152,10 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in3, "Env 2");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out3, "FX A2 SV Frq");
   set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op3, "Mul");
-  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::on, "On");
-  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::op1, "Mul");
-  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::in1, "CV U2");
-  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::out1, "FX A2 SV Frq");
-  set_ui_value(state, part_type::vcv_bank, 1, vcv_bank_param::off1, "20");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::in4, "CV U2");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::out4, "FX A2 SV Frq");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::off4, "20");
+  set_ui_value(state, part_type::vcv_bank, 0, vcv_bank_param::op4, "Mul");
 
   // lfo b1 to filter freq & master cvs
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::on, "On");
@@ -179,7 +178,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "5");
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX B1 SV Frq");
   set_ui_value(state, part_type::vcv_plot, 0, cv_plot_param::target, "FX A2 SV Frq");
-}
+} 
 
 // Binding to vst base project.
 extern "C" topology_info*

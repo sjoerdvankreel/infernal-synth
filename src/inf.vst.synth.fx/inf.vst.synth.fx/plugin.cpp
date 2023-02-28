@@ -116,10 +116,9 @@ synth_fx_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in4, "CV B2");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out4, "FX B4 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op4, "Add");
-  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::on, "On");
-  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::in1, "LFO B1");
-  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::out1, "FX B2 SV Frq");
-  set_ui_value(state, part_type::gcv_bank, 1, gcv_bank_param::amt1, "50");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in5, "LFO B1");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out5, "FX B2 SV Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::amt5, "50");
 
   // cv plot
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "10");
