@@ -977,13 +977,13 @@ write_vstgui_json(char const* library_path, char const* output_path)
 {
   assert(output_path);
   assert(library_path);
-  std::unique_ptr<topology_info> topology;
+  std::unique_ptr<loaded_topology> topology;
   if (!(topology = load_topology(library_path))) return 1;
 
   try
   {
-    controller_ui_description description = controller_ui_description::create(*topology);
-    Document json(build_vstgui_json(*topology, description));
+    controller_ui_description description = controller_ui_description::create(*topology->topology());
+    Document json(build_vstgui_json(*topology->topology(), description));
     std::ofstream os(output_path);
     OStreamWrapper wrapper(os);
     PrettyWriter<OStreamWrapper> writer(wrapper);
@@ -991,7 +991,7 @@ write_vstgui_json(char const* library_path, char const* output_path)
     if (os.bad()) return 1;
     os.flush();
     os.close();
-    print_uidesc(*topology, description);
+    print_uidesc(*topology->topology(), description);
   }
   catch (std::exception const& e)
   {
