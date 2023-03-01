@@ -85,15 +85,15 @@ static list_item const gcv_route_audio_bank_targets[vgcv_route_audio_bank_target
   { "{44183897-5277-4A02-BED5-8D727E6C9C33}", "Amt2" },
   { "{2FA260E6-6384-4FE6-9D90-46AC3A4FCF28}", "Amt3" },
   { "{01B5D903-C453-4CB4-AEC2-39F88CC1A46B}", "Amt4" },
-  { "{27F98374-E8E4-4954-9D9F-529A5EE3FDEC}", "Amt5" },
-  { "{EC143428-C74F-43BE-96DD-288E37C15AB0}", "Amt6" },
+  { "{04A4A4AF-B47A-4D35-B8DA-9500DE85506D}", "Amt5" },
+  { "{E77ADEBB-87A4-4329-9D9F-869E5AD0489F}", "Amt6" },
   { "{5B761DB0-688C-4396-96C5-2EE97A5513D0}", "Bal1" },
   { "{95126B9B-953F-4C21-870A-44C2D9396832}", "Bal2" },
   { "{CDB20D33-4427-4C70-BAFC-6B4A0A472757}", "Bal3" },
   { "{8308F1EE-2CB1-4F70-9644-118DC9798161}", "Bal4" },
-  { "{008C5F96-D8A5-4420-8C31-5987105B88ED}", "Bal5" },
-  { "{45354B68-2389-4DB7-8472-4F44CF2B8A4F}", "Bal6" } };
-  static list_item const vcv_route_vosc_targets[vcv_route_vosc_target::count] = {
+  { "{9B7D5409-979C-40B3-8437-B012146C8C8D}", "Bal5" },
+  { "{DFB56B42-17E3-4855-A6B4-7C3CC1F224D7}", "Bal6" } };
+static list_item const vcv_route_vosc_targets[vcv_route_vosc_target::count] = {
   { "{8F07B23B-8F7E-4388-BBA7-968A30957F40}", "PM" },
   { "{987BE249-E672-4055-BFEA-BCDA828DB269}", "FM" }, 
   { "{132246C1-5D8D-45BD-ABA8-407BEC927FFD}", "Gain" },
