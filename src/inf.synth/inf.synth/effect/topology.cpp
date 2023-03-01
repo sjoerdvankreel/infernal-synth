@@ -201,7 +201,7 @@ geffect_params[effect_param::gfx_count] =
   { "{4B7E75E7-152D-4646-806C-8DA3587458EF}", effect_dly_mix_data },
   { "{81A129EA-51FC-4F04-805E-E3034E058035}", effect_dly_amt_data },
   { "{A4CBA645-C23D-4372-90CA-8E9419601485}", effect_dly_fdbk_sprd_data },
-  { "{09FED066-7A4B-4030-9DD4-0DFD8C651A71}", effect_dly_multi_sprd_data },
+  { "{983FB1AE-E7F3-4FD5-B904-C383E68402E3}", effect_dly_multi_sprd_data },
   { "{979FCE21-44D4-4CE3-88F6-04A27D14D19A}", effect_dly_fdbk_time_l_data },
   { "{30FFAD26-D7E5-406A-92E3-93AE10A23979}", effect_dly_fdbk_time_r_data },
   { "{E9BF0869-F1BD-4EF3-A509-690CD7C28361}", effect_dly_fdbk_tempo_l_data },
