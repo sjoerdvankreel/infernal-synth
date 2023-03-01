@@ -33,7 +33,7 @@ find_param(
   return -1;
 }
 
-static std::int32_t
+std::int32_t
 find_list_item(
   topology_info const* seek, std::int32_t seek_part, std::int32_t seek_param,
   topology_info const* find, std::int32_t find_part, std::int32_t find_param,
@@ -66,26 +66,41 @@ check(char const* library1_path, char const* library2_path)
   
   for (std::int32_t i = 0; i < topo2->static_part_count; i++)
   {
+    bool printed_part_diff = false;
+    auto print_part_diff = [&](std::int32_t part_index)
+    {
+      if (printed_part_diff) return;
+      printed_part_diff = true;
+      std::cout << topo2->static_parts[part_index].static_name.detail << " diff:\n";
+    };
+
     std::int32_t old_part_index = find_part(topo2, topo1, i);
     if (old_part_index < 0) continue;
     
-    std::cout << topo2->static_parts[i].static_name.detail << " diff:\n";
     part_descriptor const* part2 = &topo2->static_parts[i];
     part_descriptor const* part1 = &topo1->static_parts[old_part_index];
-    if(part1->kind != part2->kind) std::cout << "\tChanged kind.\n";
-    if(part1->type != part2->type) std::cout << "\tChanged type.\n";
-    if(part1->param_count != part2->param_count) "\tChanged param count.\n";
-    if(std::string(part1->static_name.detail) != part2->static_name.detail) std::cout << "\tChanged long name.\n";
-    if(std::string(part1->static_name.short_) != part2->static_name.short_) std::cout << "\tChanged short name.\n";
-    if(part1->part_count != part2->part_count) std::cout << "\tChanged part count from " << part1->part_count << " to " << part2->part_count << ".\n";
+    if(part1->kind != part2->kind) print_part_diff(i), std::cout << "\tChanged kind.\n";
+    if(part1->type != part2->type) print_part_diff(i), std::cout << "\tChanged type.\n";
+    if(part1->param_count != part2->param_count) print_part_diff(i), "\tChanged param count.\n";
+    if(std::string(part1->static_name.detail) != part2->static_name.detail) print_part_diff(i), std::cout << "\tChanged long name.\n";
+    if(std::string(part1->static_name.short_) != part2->static_name.short_) print_part_diff(i), std::cout << "\tChanged short name.\n";
+    if(part1->part_count != part2->part_count) print_part_diff(i), std::cout << "\tChanged part count from " << part1->part_count << " to " << part2->part_count << ".\n";
 
-    std::cout << "\tParam diff:\n";
     for(std::int32_t j = 0; j < topo1->static_parts[old_part_index].param_count; j++)
       if(find_param(topo1, old_part_index, topo2, i, j) == -1)
-        std::cout << "\t\t" << topo1->static_parts[old_part_index].params[j].data.static_name.detail << " removed.\n";
+        print_part_diff(i), std::cout << "\t" << topo1->static_parts[old_part_index].params[j].data.static_name.detail << " removed.\n";
     for (std::int32_t j = 0; j < topo2->static_parts[i].param_count; j++)
       if (find_param(topo2, i, topo1, old_part_index, j) == -1)
-        std::cout << "\t\t" << topo2->static_parts[i].params[j].data.static_name.detail << " added.\n";
+        print_part_diff(i), std::cout << "\t" << topo2->static_parts[i].params[j].data.static_name.detail << " added.\n";
+
+    bool printed_param_diff = false;
+    auto print_param_diff = [&](std::int32_t part_index, std::int32_t param_index)
+    {
+      print_part_diff(part_index);
+      if (printed_param_diff) return;
+      printed_param_diff = true;
+      std::cout << "\tParam diff:\n";
+    };
 
     for (std::int32_t j = 0; j < topo2->static_parts[i].param_count; j++)
     {
@@ -93,26 +108,27 @@ check(char const* library1_path, char const* library2_path)
       if(old_param_index < 0) continue;
       param_descriptor_data const* param2 = &topo2->static_parts[i].params[j].data;
       param_descriptor_data const* param1 = &topo1->static_parts[old_part_index].params[old_param_index].data;
-      if(param1->type != param2->type) std::cout << "\t\t" << param2->static_name.detail << " changed type.\n";
-      if(param1->kind != param2->kind) std::cout << "\t\t" << param2->static_name.detail << " changed kind.\n";
-      if(std::string(param1->unit) != param2->unit) std::cout << "\t\t" << param2->static_name.detail << " changed unit.\n";
-      if(std::string(param1->static_name.detail) != param2->static_name.detail) std::cout << "\t\t" << param2->static_name.detail << " changed long name.\n";
-      if(std::string(param1->static_name.short_) != param2->static_name.short_) std::cout << "\t\t" << param2->static_name.detail << " changed short name.\n";
+      if(param1->type != param2->type) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed type.\n";
+      if(param1->kind != param2->kind) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed kind.\n";
+      if(std::string(param1->unit) != param2->unit) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed unit.\n";
+      if(std::string(param1->static_name.detail) != param2->static_name.detail) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed long name.\n";
+      if(std::string(param1->static_name.short_) != param2->static_name.short_) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed short name.\n";
 
       if (param1->type == param_type::real && param2->type == param_type::real)
       {
-        if(param1->real.default_ != param2->real.default_) std::cout << "\t\t" << param2->static_name.detail << " changed real default.\n";
-        if(param1->real.precision != param2->real.precision) std::cout << "\t\t" << param2->static_name.detail << " changed real precision.\n";
-        if(param1->real.dsp.min != param2->real.dsp.min) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp min.\n";
-        if(param1->real.dsp.max != param2->real.dsp.max) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp max.\n";
-        if(param1->real.dsp.slope != param2->real.dsp.slope) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp slope.\n";
-        if(param1->real.dsp.linear_max != param2->real.dsp.linear_max) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp linear max.\n";
+        if(param1->real.default_ != param2->real.default_) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed real default.\n";
+        if(param1->real.precision != param2->real.precision) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed real precision.\n";
+        if(param1->real.dsp.min != param2->real.dsp.min) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed real dsp min.\n";
+        if(param1->real.dsp.max != param2->real.dsp.max) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed real dsp max.\n";
+        if(param1->real.dsp.slope != param2->real.dsp.slope) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed real dsp slope.\n";
+        if(param1->real.dsp.linear_max != param2->real.dsp.linear_max) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed real dsp linear max.\n";
       }
       else if(param1->type != param_type::real && param2->type != param_type::real)
       {
-        if(param1->discrete.min != param2->discrete.min) std::cout << "\t\t" << param2->static_name.detail << " changed discrete min.\n";
-        if(param1->discrete.max != param2->discrete.max) std::cout << "\t\t" << param2->static_name.detail << " changed discrete max.\n";
-        if(param1->discrete.default_ != param2->discrete.default_) std::cout << "\t\t" << param2->static_name.detail << " changed discrete default.\n";
+        if(param1->discrete.min != param2->discrete.min) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed discrete min.\n";
+        if(param1->discrete.max != param2->discrete.max) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed discrete max.\n";
+        if(param1->discrete.default_ != param2->discrete.default_) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed discrete default.\n";
+        /*
         if (param1->type == param_type::list && param2->type == param_type::list)
         {
           std::cout << "\t\tList diff:\n";
@@ -123,6 +139,7 @@ check(char const* library1_path, char const* library2_path)
             if (find_list_item(topo2, i, j, topo1, old_part_index, old_param_index, k) == -1)
               std::cout << "\t\t\t" << (*topo2->static_parts[i].params[j].data.discrete.items)[k].name << " added.\n";
         }
+        */
       }
     }
   }
