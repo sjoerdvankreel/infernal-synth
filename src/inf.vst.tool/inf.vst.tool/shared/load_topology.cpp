@@ -70,12 +70,13 @@ load_topology(char const* library_path)
   if ((exit_dll = get_proc_address(library, "ExitDll")) == nullptr)
     return std::cout << library_path << " does not export ExitDll.\n", std::move(result);
   if ((create_topology = get_proc_address(library, "inf_vst_create_topology")) == nullptr)
-    return std::cout << library_path << " does not export inf_vst_create_topology.\n", std::move(result);
+    if ((create_topology = get_proc_address(library, "svn_vst_create_topology")) == nullptr)
+      return std::cout << library_path << " does not export (svn/inf)_vst_create_topology.\n", std::move(result);
   if (!reinterpret_cast<inf_init_exit_dll_t>(init_dll)())
     return std::cout << "InitDll returned false.\n", std::move(result);
   topology = reinterpret_cast<inf_create_topology_t>(create_topology)();
   if (topology == nullptr)
-    return std::cout << "inf_vst_create_topology returned NULL.\n", std::move(result);
+    return std::cout << "(svn/inf)_vst_create_topology returned NULL.\n", std::move(result);
   return std::make_unique<loaded_topology>(
     std::unique_ptr<topology_info>(topology), 
     reinterpret_cast<inf_init_exit_dll_t>(exit_dll));
