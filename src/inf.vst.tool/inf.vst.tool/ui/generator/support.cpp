@@ -1,4 +1,4 @@
-#include <inf.vst.ui/generator/support.hpp>
+#include <inf.vst.tool/ui/generator/support.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
 
 #include <sstream>
@@ -6,7 +6,7 @@
 using namespace rapidjson;
 using namespace inf::base;
 
-namespace inf::vst::ui {
+namespace inf::vst::tool::ui {
 
 std::string
 print_rgba_hex(ui_color const& color)
@@ -86,4 +86,4 @@ get_control_tag(part_info const& part, param_info const& param)
   return result;
 }
 
-} // namespace inf::vst::ui
+} // namespace inf::vst::tool::ui

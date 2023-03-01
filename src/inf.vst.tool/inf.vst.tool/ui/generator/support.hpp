@@ -1,15 +1,15 @@
-#ifndef INF_VST_UI_SUPPORT_HPP
-#define INF_VST_UI_SUPPORT_HPP
+#ifndef INF_VST_TOOL_UI_GENERATOR_SUPPORT_HPP
+#define INF_VST_TOOL_UI_GENERATOR_SUPPORT_HPP
 
 #include <inf.base/topology/topology_info.hpp>
-#include <inf.vst.ui/description/support.hpp>
-#include <inf.vst.ui/description/ui_description.hpp>
+#include <inf.vst.tool/ui/description/support.hpp>
+#include <inf.vst.tool/ui/description/description.hpp>
 
 #include <vstgui/uidescription/rapidjson/include/rapidjson/document.h>
 #include <vstgui/uidescription/rapidjson/include/rapidjson/rapidjson.h>
 #include <string>
 
-namespace inf::vst::ui {
+namespace inf::vst::tool::ui {
 
 std::string size_to_string(std::int32_t w, std::int32_t h);
 std::string print_rgba_hex(inf::base::ui_color const& color);
@@ -36,5 +36,5 @@ void add_child(
   rapidjson::Value& container, std::string const& key,
   rapidjson::Value const& value, rapidjson::Document::AllocatorType& allocator);
 
-} // namespace inf::vst::ui
-#endif // INF_VST_UI_SUPPORT_HPP
+} // namespace inf::vst::tool::ui
+#endif // INF_VST_TOOL_UI_GENERATOR_SUPPORT_HPP

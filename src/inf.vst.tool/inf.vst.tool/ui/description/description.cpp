@@ -1,6 +1,6 @@
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.vst.ui/description/support.hpp>
-#include <inf.vst.ui/description/ui_description.hpp>
+#include <inf.vst.tool/ui/description/support.hpp>
+#include <inf.vst.tool/ui/description/description.hpp>
 
 #include <map>
 #include <stdexcept>
@@ -8,7 +8,7 @@
 
 using namespace inf::base;
 
-namespace inf::vst::ui {
+namespace inf::vst::tool::ui {
 
 static bool 
 param_inside_graph(
@@ -217,4 +217,4 @@ controller_ui_description::create(topology_info const& topology)
   return result;
 }
 
-} // namespace inf::vst::ui
+} // namespace inf::vst::tool::ui

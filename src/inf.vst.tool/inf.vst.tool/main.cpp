@@ -1,5 +1,5 @@
-#include <inf.vst.ui/generator/generator.hpp>
-#include <inf.vst.ui/description/ui_description.hpp>
+#include <inf.vst.tool/ui/generator/generator.hpp>
+#include <inf.vst.tool/ui/description/description.hpp>
 #include <vstgui/uidescription/rapidjson/include/rapidjson/prettywriter.h>
 #include <vstgui/uidescription/rapidjson/include/rapidjson/ostreamwrapper.h>
 
@@ -16,7 +16,7 @@
 
 using namespace rapidjson;
 using namespace inf::base;
-using namespace inf::vst::ui;
+using namespace inf::vst::tool::ui;
 
 typedef bool (*inf_init_exit_dll_t)(void);
 typedef topology_info* (*inf_create_topology_t)(void);

@@ -1,5 +1,5 @@
-#include <inf.vst.ui/generator/support.hpp>
-#include <inf.vst.ui/generator/generator.hpp>
+#include <inf.vst.tool/ui/generator/support.hpp>
+#include <inf.vst.tool/ui/generator/generator.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
@@ -14,7 +14,7 @@
 using namespace inf::base;
 using namespace rapidjson;
 
-namespace inf::vst::ui {
+namespace inf::vst::tool::ui {
 
 static std::string
 get_option_menu_class(param_info const& param)
@@ -946,4 +946,4 @@ build_vstgui_json(topology_info const& topology,
   return result;
 }
 
-} // namespace inf::vst::ui
+} // namespace inf::vst::tool::ui
