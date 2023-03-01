@@ -22,3 +22,5 @@
 - better factory presets
 - new menu option: clear all unused
 - recreate project website, re-do presets and demos
+- include major/minor in serialization format instead of file version
+

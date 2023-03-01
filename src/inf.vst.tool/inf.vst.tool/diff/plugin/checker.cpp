@@ -53,12 +53,12 @@ check(char const* library1_path, char const* library2_path)
   
   for (std::int32_t i = 0; i < topo2->static_part_count; i++)
   {
-    std::int32_t old_index = find_part(topo2, topo1, i);
-    if (old_index < 0) continue;
+    std::int32_t old_part_index = find_part(topo2, topo1, i);
+    if (old_part_index < 0) continue;
     
     std::cout << topo2->static_parts[i].static_name.detail << " diff:\n";
     part_descriptor const* part2 = &topo2->static_parts[i];
-    part_descriptor const* part1 = &topo1->static_parts[old_index];
+    part_descriptor const* part1 = &topo1->static_parts[old_part_index];
     if(part1->kind != part2->kind) std::cout << "\tChanged kind.\n";
     if(part1->type != part2->type) std::cout << "\tChanged type.\n";
     if(part1->param_count != part2->param_count) "\tChanged param count.\n";
@@ -67,12 +67,25 @@ check(char const* library1_path, char const* library2_path)
     if(part1->part_count != part2->part_count) std::cout << "\tChanged part count from " << part1->part_count << " to " << part2->part_count << ".\n";
 
     std::cout << "\tParam diff:\n";
-    for(std::int32_t j = 0; j < topo1->static_parts[old_index].param_count; j++)
-      if(find_param(topo1, old_index, topo2, i, j) == -1)
-        std::cout << "\t\t" << topo1->static_parts[old_index].params[j].data.static_name.detail << " removed.\n";
+    for(std::int32_t j = 0; j < topo1->static_parts[old_part_index].param_count; j++)
+      if(find_param(topo1, old_part_index, topo2, i, j) == -1)
+        std::cout << "\t\t" << topo1->static_parts[old_part_index].params[j].data.static_name.detail << " removed.\n";
     for (std::int32_t j = 0; j < topo2->static_parts[i].param_count; j++)
-      if (find_param(topo2, i, topo1, old_index, j) == -1)
+      if (find_param(topo2, i, topo1, old_part_index, j) == -1)
         std::cout << "\t\t" << topo2->static_parts[i].params[j].data.static_name.detail << " added.\n";
+
+    for (std::int32_t j = 0; j < topo2->static_parts[i].param_count; j++)
+    {
+      std::int32_t old_param_index = find_param(topo2, i, topo1, old_part_index, j);
+      if(old_param_index < 0) continue;
+      param_descriptor_data const* param2 = &topo2->static_parts[i].params[j].data;
+      param_descriptor_data const* param1 = &topo1->static_parts[old_part_index].params[old_param_index].data;
+      if(param1->type != param2->type) std::cout << "\t\t" << param2->static_name.detail << " changed type.\n";
+      if(param1->kind != param2->kind) std::cout << "\t\t" << param2->static_name.detail << " changed kind.\n";
+      if(std::string(param1->unit) != param2->unit) std::cout << "\t\t" << param2->static_name.detail << " changed unit.\n";
+      if(std::string(param1->static_name.detail) != param2->static_name.detail) std::cout << "\t\t" << param2->static_name.detail << " changed long name.\n";
+      if(std::string(param1->static_name.short_) != param2->static_name.short_) std::cout << "\t\t" << param2->static_name.detail << " changed short name.\n";
+    }
   }
 
   return 0;
