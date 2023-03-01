@@ -231,7 +231,7 @@ check_preset(
       std::string old_ui_state_val = topo1->params[i].descriptor->data.format(false, state1[i]);
       std::string old_ui_default_val = topo1->params[i].descriptor->data.format(false, topo1->params[i].descriptor->data.default_value());
       if(old_ui_state_val != old_ui_default_val)
-        std::cout << "Removed with non-default " << topo1->params[i].runtime_name << ".\n";
+        std::cout << "Removed non-default " << topo1->params[i].runtime_name << ".\n";
     }
   }
 
