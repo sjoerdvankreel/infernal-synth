@@ -55,11 +55,11 @@ master_params[master_param::count] =
   { "{09243EDB-2DBE-450F-800F-C37BF8A3C44B}", { { "Sync", "Portamento tempo sync" }, param_kind::block, false, 6, &master_port_on_ui } },
   { "{E27DEC2E-BA49-454C-8C28-F7532F6985DC}", { { "Time", "Portamento time" }, "Sec", param_kind::block, linear_bounds(0.01f, 10.0f, 1.0f, 2), 9, &master_port_time_ui } },
   { "{1DD53257-2104-4C66-BA00-2B73E9F6BA63}", { { "Tempo", "Portamento tempo" }, "", param_kind::block, param_type::knob_list, { &master_port_timesig_names, "1/16" }, 9, &master_port_sync_ui } },
-  { "{71EC915C-D772-4238-ABD3-B25E2E963C9A}", { { "CV U1", "CV U1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 1, nullptr } },
+  { "{50F02184-1EAC-4A80-8832-0728B9EBF455}", { { "CV U1", "CV U1" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 1, nullptr } },
   { "{D8332EF2-E4CE-4605-983A-6EC409194773}", { { "CV B1", "CV B1" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 2, nullptr } },
-  { "{A92B97E3-0A3C-42F0-8939-E3EFE0007FBE}", { { "CV U2", "CV U2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, nullptr } },
+  { "{060B5E5E-2E49-4DF1-90B8-8D8F87E98707}", { { "CV U2", "CV U2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 4, nullptr } },
   { "{580FF8F1-4C06-4562-B4A0-702355B6E152}", { { "CV B2", "CV B2" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 5, nullptr } },
-  { "{E9144556-B13A-4D71-A33A-AB8AAD203A52}", { { "CV U3", "CV U3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 7, nullptr } },
+  { "{DD9A20AD-563A-4855-BAEF-2C53E6B94815}", { { "CV U3", "CV U3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 7, nullptr } },
   { "{B3B033A3-B615-4AD2-81AB-5CB769891BB0}", { { "CV B3", "CV B3" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 8, nullptr } }
 };
  
