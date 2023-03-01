@@ -1,5 +1,6 @@
 #include <inf.vst.tool/ui/generator/support.hpp>
 #include <inf.vst.tool/ui/generator/generator.hpp>
+#include <inf.vst.tool/shared/load_topology.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
@@ -10,9 +11,12 @@
 
 #include <set>
 #include <map>
+#include <fstream>
+#include <iostream>
 
-using namespace inf::base;
 using namespace rapidjson;
+using namespace inf::base;
+using namespace inf::vst::tool::shared;
 
 namespace inf::vst::tool::ui {
 
@@ -927,7 +931,7 @@ build_ui_template(
   return result;
 }
 
-Document
+static Document
 build_vstgui_json(topology_info const& topology,
   controller_ui_description const& controller)
 {
@@ -944,6 +948,59 @@ build_vstgui_json(topology_info const& topology,
   root.AddMember("templates", templates, allocator);
   result.AddMember("vstgui-ui-description", root, allocator);
   return result;
+}
+
+static void
+print_uidesc(topology_info const& topology, controller_ui_description const& desc)
+{
+  for (std::int32_t i = 0; i < desc.part_types.size(); i++)
+  {
+    auto const& type = desc.part_types[i];
+    auto const& part = *type.parts[0].info->descriptor;
+    std::cout << part.static_name.short_ << ": ";
+    std::cout << part.part_count << " parts";
+    std::cout << ", " << part.param_count << " params";
+    std::cout << ", " << part.ui->graphs.size() << " graphs";
+    if (type.selector_param.info != nullptr) std::cout << ", selector";
+    if (type.parts[0].enabled_param.info != nullptr) std::cout << ", enabled";
+    std::cout << "\n";
+  }
+  std::cout << "Topology: ";
+  std::cout << topology.static_part_count << " static parts (including selector)";
+  std::cout << ", " << topology.parts.size() << " runtime parts";
+  std::cout << ", " << topology.params.size() << " runtime params";
+  std::cout << "\n";
+}
+
+std::int32_t
+write_vstgui_json(char const* library_path, char const* output_path)
+{
+  assert(output_path);
+  assert(library_path);
+  std::unique_ptr<topology_info> topology;
+  if (!(topology = load_topology(library_path))) return 1;
+
+  try
+  {
+    controller_ui_description description = controller_ui_description::create(*topology);
+    Document json(build_vstgui_json(*topology, description));
+    std::ofstream os(output_path);
+    OStreamWrapper wrapper(os);
+    PrettyWriter<OStreamWrapper> writer(wrapper);
+    json.Accept(writer);
+    if (os.bad()) return 1;
+    os.flush();
+    os.close();
+    print_uidesc(*topology, description);
+  }
+  catch (std::exception const& e)
+  {
+    std::cout << e.what() << "\n";
+    return 1;
+  }
+
+  std::cout << "Ui description written to " << output_path << ".\n\n";
+  return 0;
 }
 
 } // namespace inf::vst::tool::ui
