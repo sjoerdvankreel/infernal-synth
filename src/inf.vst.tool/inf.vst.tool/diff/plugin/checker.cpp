@@ -104,6 +104,16 @@ check(char const* library1_path, char const* library2_path)
 
     for (std::int32_t j = 0; j < topo2->static_parts[i].param_count; j++)
     {
+      bool printed_list_diff = false;
+      auto print_list_diff = [&](std::int32_t part_index, std::int32_t param_index, std::int32_t list_index)
+      {
+        print_part_diff(part_index);
+        print_param_diff(part_index, param_index);
+        if (printed_list_diff) return;
+        printed_list_diff = true;
+        std::cout << "\t\tList diff:\n";
+      };
+
       std::int32_t old_param_index = find_param(topo2, i, topo1, old_part_index, j);
       if(old_param_index < 0) continue;
       param_descriptor_data const* param2 = &topo2->static_parts[i].params[j].data;
@@ -128,18 +138,15 @@ check(char const* library1_path, char const* library2_path)
         if(param1->discrete.min != param2->discrete.min) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed discrete min.\n";
         if(param1->discrete.max != param2->discrete.max) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed discrete max.\n";
         if(param1->discrete.default_ != param2->discrete.default_) print_param_diff(i, j), std::cout << "\t\t" << param2->static_name.detail << " changed discrete default.\n";
-        /*
         if (param1->type == param_type::list && param2->type == param_type::list)
         {
-          std::cout << "\t\tList diff:\n";
           for (std::int32_t k = 0; k < topo1->static_parts[old_part_index].params[old_param_index].data.discrete.items->size(); k++)
             if (find_list_item(topo1, old_part_index, old_param_index, topo2, i, j, k) == -1)
-              std::cout << "\t\t\t" << (*topo1->static_parts[old_part_index].params[old_param_index].data.discrete.items)[k].name << " removed.\n";
+              print_list_diff(i, j, k), std::cout << "\t\t\t" << (*topo1->static_parts[old_part_index].params[old_param_index].data.discrete.items)[k].name << " removed.\n";
           for (std::int32_t k = 0; k < topo2->static_parts[i].params[j].data.discrete.items->size(); k++)
             if (find_list_item(topo2, i, j, topo1, old_part_index, old_param_index, k) == -1)
-              std::cout << "\t\t\t" << (*topo2->static_parts[i].params[j].data.discrete.items)[k].name << " added.\n";
+              print_list_diff(i, j, k), std::cout << "\t\t\t" << (*topo2->static_parts[i].params[j].data.discrete.items)[k].name << " added.\n";
         }
-        */
       }
     }
   }
