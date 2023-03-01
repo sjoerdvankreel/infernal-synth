@@ -85,6 +85,20 @@ check(char const* library1_path, char const* library2_path)
       if(std::string(param1->unit) != param2->unit) std::cout << "\t\t" << param2->static_name.detail << " changed unit.\n";
       if(std::string(param1->static_name.detail) != param2->static_name.detail) std::cout << "\t\t" << param2->static_name.detail << " changed long name.\n";
       if(std::string(param1->static_name.short_) != param2->static_name.short_) std::cout << "\t\t" << param2->static_name.detail << " changed short name.\n";
+
+      if (param1->type == param_type::real && param2->type == param_type::real)
+      {
+        if(param1->real.default_ != param2->real.default_) std::cout << "\t\t" << param2->static_name.detail << " changed real default.\n";
+        if(param1->real.precision != param2->real.precision) std::cout << "\t\t" << param2->static_name.detail << " changed real precision.\n";
+        if(param1->real.dsp.min != param2->real.dsp.min) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp min.\n";
+        if(param1->real.dsp.max != param2->real.dsp.max) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp max.\n";
+        if(param1->real.dsp.slope != param2->real.dsp.slope) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp slope.\n";
+        if(param1->real.dsp.linear_max != param2->real.dsp.linear_max) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp linear max.\n";
+      }
+      else
+      {
+
+      }
     }
   }
 
