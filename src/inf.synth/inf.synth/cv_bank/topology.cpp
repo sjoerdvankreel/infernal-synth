@@ -46,7 +46,7 @@ static list_item const gcv_route_outputs[gcv_route_output::count] = {
 // input routing
 static list_item const gcv_route_inputs[gcv_route_input::count] = {
   { "{E26F7364-965D-4CF3-AE95-178C1EEA8BCB}", "Off" },
-  { "{E7FFCA1E-6777-4E10-85AA-F19B913AB87F}", "CV U" },
+  { "{294CEAF7-C69B-4ECA-BB44-A727E7872DCA}", "CV U" },
   { "{C8CF0423-29D7-4FB3-8B17-2B1B5AE735DC}", "CV B" },
   { "{862452FE-1786-48A8-9F60-33030BB8B3C9}", "LFO B" } };
 static list_item const vcv_route_inputs[vcv_route_input::count] = {
