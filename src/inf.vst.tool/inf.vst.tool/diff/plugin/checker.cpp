@@ -33,6 +33,19 @@ find_param(
   return -1;
 }
 
+static std::int32_t
+find_list_item(
+  topology_info const* seek, std::int32_t seek_part, std::int32_t seek_param,
+  topology_info const* find, std::int32_t find_part, std::int32_t find_param,
+  std::int32_t seek_item)
+{
+  for(std::int32_t i = 0; i < find->static_parts[find_part].params[find_param].data.discrete.items->size(); i++)
+    if((*seek->static_parts[seek_part].params[seek_param].data.discrete.items)[seek_item].id == 
+       (*find->static_parts[find_part].params[find_param].data.discrete.items)[i].id)
+      return i;
+  return -1;
+}
+
 namespace inf::vst::tool::diff::plugin {
 
 std::int32_t
@@ -95,9 +108,21 @@ check(char const* library1_path, char const* library2_path)
         if(param1->real.dsp.slope != param2->real.dsp.slope) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp slope.\n";
         if(param1->real.dsp.linear_max != param2->real.dsp.linear_max) std::cout << "\t\t" << param2->static_name.detail << " changed real dsp linear max.\n";
       }
-      else
+      else if(param1->type != param_type::real && param2->type != param_type::real)
       {
-
+        if(param1->discrete.min != param2->discrete.min) std::cout << "\t\t" << param2->static_name.detail << " changed discrete min.\n";
+        if(param1->discrete.max != param2->discrete.max) std::cout << "\t\t" << param2->static_name.detail << " changed discrete max.\n";
+        if(param1->discrete.default_ != param2->discrete.default_) std::cout << "\t\t" << param2->static_name.detail << " changed discrete default.\n";
+        if (param1->type == param_type::list && param2->type == param_type::list)
+        {
+          std::cout << "\t\tList diff:\n";
+          for (std::int32_t k = 0; k < topo1->static_parts[old_part_index].params[old_param_index].data.discrete.items->size(); k++)
+            if (find_list_item(topo1, old_part_index, old_param_index, topo2, i, j, k) == -1)
+              std::cout << "\t\t\t" << (*topo1->static_parts[old_part_index].params[old_param_index].data.discrete.items)[k].name << " removed.\n";
+          for (std::int32_t k = 0; k < topo2->static_parts[i].params[j].data.discrete.items->size(); k++)
+            if (find_list_item(topo2, i, j, topo1, old_part_index, old_param_index, k) == -1)
+              std::cout << "\t\t\t" << (*topo2->static_parts[i].params[j].data.discrete.items)[k].name << " added.\n";
+        }
       }
     }
   }
