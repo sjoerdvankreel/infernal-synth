@@ -1,4 +1,4 @@
-#include <inf.vst.tool/diff/plugin/checker.hpp>
+#include <inf.vst.tool/diff/checker.hpp>
 #include <inf.vst.tool/ui/generator/generator.hpp>
 
 #include <cstring>
@@ -30,7 +30,7 @@ main(int argc, char** argv)
       return std::cout << 
         "Usage: infernal.vst.tool --diff-plugin " 
         "<full\\path\\to\\plugin1.vst3> (dll) <full\\path\\to\\plugin2.vst3> (dll)\n", 1;
-    return plugin::check(argv[2], argv[3]);
+    return check_plugin(argv[2], argv[3]);
   }
 
   return std::cout << "Unknown option " << argv[1] << ".\n", 1;

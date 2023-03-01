@@ -1,4 +1,4 @@
-#include <inf.vst.tool/diff/plugin/checker.hpp>
+#include <inf.vst.tool/diff/checker.hpp>
 #include <inf.vst.tool/shared/load_topology.hpp>
 
 #include <set>
@@ -46,10 +46,10 @@ find_list_item(
   return -1;
 }
 
-namespace inf::vst::tool::diff::plugin {
+namespace inf::vst::tool::diff {
 
 std::int32_t
-check(char const* library1_path, char const* library2_path)
+check_plugin(char const* library1_path, char const* library2_path)
 {
   std::unique_ptr<loaded_topology> loaded_topo1 = load_topology(library1_path);
   std::unique_ptr<loaded_topology> loaded_topo2 = load_topology(library2_path);
@@ -154,4 +154,4 @@ check(char const* library1_path, char const* library2_path)
   return 0;
 }
 
-} // namespace inf::vst::tool::diff::plugin
+} // namespace inf::vst::tool::diff
