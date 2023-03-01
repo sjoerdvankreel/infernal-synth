@@ -1,12 +1,22 @@
+#include <inf.vst.base/shared/io_stream.hpp>
 #include <inf.vst.tool/diff/checker.hpp>
 #include <inf.vst.tool/shared/load_topology.hpp>
+
+#include <base/source/fstreamer.h>
+#include <public.sdk/source/vst/vstpresetfile.h>
+#include <public.sdk/source/common/memorystream.h>
+#include <public.sdk/source/common/memorystream.cpp>
 
 #include <set>
 #include <string>
 #include <fstream>
 #include <iostream>
 
+using namespace Steinberg;
+using namespace Steinberg::Vst;
+
 using namespace inf::base;
+using namespace inf::vst::base;
 using namespace inf::vst::tool::shared;
 
 static std::int32_t
@@ -44,6 +54,24 @@ find_list_item(
        (*find->static_parts[find_part].params[find_param].data.discrete.items)[i].id)
       return i;
   return -1;
+}
+
+static bool
+load_preset(topology_info const* topo, param_value* state, char const* path)
+{
+  std::ifstream file(path, std::ios::binary | std::ios::ate);
+  if(file.bad()) return false;
+  std::streamsize size = file.tellg();
+  file.seekg(0, std::ios::beg);
+  std::vector<char> buffer(size);
+  if (!file.read(buffer.data(), size)) return false;
+  MemoryStream memory(buffer.data(), buffer.size());
+  PresetFile preset(&memory);
+  if (!preset.readChunkList()) return false;
+  if (!preset.seekToComponentState()) return false;
+  IBStreamer streamer(&memory, kLittleEndian);
+  vst_io_stream stream(&streamer);
+  return stream.load(*topo, state);
 }
 
 namespace inf::vst::tool::diff {
@@ -161,6 +189,22 @@ check_preset(
   char const* library1_path, char const* preset1_path, 
   char const* library2_path, char const* preset2_path)
 {
+  assert(preset1_path);
+  assert(preset2_path);
+  assert(library1_path);
+  assert(library2_path);
+
+  std::unique_ptr<loaded_topology> loaded_topo1 = load_topology(library1_path);
+  std::unique_ptr<loaded_topology> loaded_topo2 = load_topology(library2_path);
+  if (!loaded_topo1 || !loaded_topo2) return 1;
+  topology_info const* topo1 = loaded_topo1->topology();
+  topology_info const* topo2 = loaded_topo2->topology();
+
+  std::vector<param_value> state1(topo1->input_param_count, param_value());
+  std::vector<param_value> state2(topo2->input_param_count, param_value());
+  if(!load_preset(topo1, state1.data(), preset1_path)) return std::cout << "Failed to load " << preset1_path << ".\n", 1;
+  if(!load_preset(topo2, state2.data(), preset2_path)) return std::cout << "Failed to load " << preset2_path << ".\n", 1;
+
   return 0;
 }
 
