@@ -226,13 +226,21 @@ check_preset(
   for (std::int32_t i = 0; i < topo1->input_param_count; i++)
   {
     std::int32_t new_index = find_param(topo1, topo2, i);
-    if (new_index == -1)
-    {
-      std::string old_ui_state_val = topo1->params[i].descriptor->data.format(false, state1[i]);
-      std::string old_ui_default_val = topo1->params[i].descriptor->data.format(false, topo1->params[i].descriptor->data.default_value());
-      if(old_ui_state_val != old_ui_default_val)
-        std::cout << "Removed non-default " << topo1->params[i].runtime_name << ".\n";
-    }
+    if (new_index >= 0) continue;
+    std::string old_ui_state_val = topo1->params[i].descriptor->data.format(false, state1[i]);
+    std::string old_ui_default_val = topo1->params[i].descriptor->data.format(false, topo1->params[i].descriptor->data.default_value());
+    if(old_ui_state_val != old_ui_default_val)
+      std::cout << "Removed non-default: " << topo1->params[i].runtime_name << ": " << old_ui_state_val << ".\n";
+  }
+
+  for (std::int32_t i = 0; i < topo2->input_param_count; i++)
+  {
+    std::int32_t old_index = find_param(topo2, topo1, i);
+    if (old_index < 0) continue;
+    std::string new_ui_state_val = topo2->params[i].descriptor->data.format(false, state2[i]);
+    std::string old_ui_state_val = topo1->params[old_index].descriptor->data.format(false, state1[old_index]);
+    if (old_ui_state_val != new_ui_state_val)
+      std::cout << "Changed UI value: " << topo2->params[i].runtime_name << ": " << old_ui_state_val << " to " << new_ui_state_val << ".\n";
   }
 
   return 0;
