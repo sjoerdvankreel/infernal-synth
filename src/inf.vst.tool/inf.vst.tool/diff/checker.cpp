@@ -28,9 +28,7 @@ find_param(topology_info const* seek, topology_info const* find, std::int32_t se
 }
 
 std::int32_t
-check_preset_diff(
-  char const* library1_path, char const* preset1_path,
-  char const* library2_path, char const* preset2_path)
+diff_plugin(char const* library1_path, char const* library2_path)
 {
   std::vector<std::string> added_names;
   std::vector<std::string> removed_names;

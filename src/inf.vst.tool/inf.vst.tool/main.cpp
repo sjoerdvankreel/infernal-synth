@@ -23,15 +23,14 @@ main(int argc, char** argv)
     return write_vstgui_json(argv[2], argv[3]);
   }
 
-  // Diffs presets loaded in different plugin versions.
-  if (!strcmp(argv[1], "--diff-preset"))
+  // Diffs different plugin versions.
+  if (!strcmp(argv[1], "--diff-plugin"))
   {
-    if (argc != 6)
+    if (argc != 4)
       return std::cout << 
-        "Usage: infernal.vst.tool --diff-preset " 
-        "<full\\path\\to\\plugin1.vst3> (dll) <full\\path\\to\\preset1.vstpreset> (preset) " 
-        "<full\\path\\to\\plugin2.vst3> (dll) <full\\path\\to\\preset2.vstpreset> (preset) \n", 1;
-    return check_preset_diff(argv[2], argv[3], argv[4], argv[5]);
+        "Usage: infernal.vst.tool --diff-plugin " 
+        "<full\\path\\to\\plugin1.vst3> (dll) <full\\path\\to\\plugin2.vst3> (dll)\n", 1;
+    return diff_plugin(argv[2], argv[3]);
   }
 
   return std::cout << "Unknown option " << argv[1] << ".\n", 1;
