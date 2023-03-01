@@ -49,7 +49,9 @@ find_list_item(
 namespace inf::vst::tool::diff {
 
 std::int32_t
-check_plugin(char const* library1_path, char const* library2_path)
+check_plugin(
+  char const* library1_path, 
+  char const* library2_path)
 {
   std::unique_ptr<loaded_topology> loaded_topo1 = load_topology(library1_path);
   std::unique_ptr<loaded_topology> loaded_topo2 = load_topology(library2_path);
@@ -151,6 +153,14 @@ check_plugin(char const* library1_path, char const* library2_path)
     }
   }
 
+  return 0;
+}
+
+std::int32_t
+check_preset(
+  char const* library1_path, char const* preset1_path, 
+  char const* library2_path, char const* preset2_path)
+{
   return 0;
 }
 
