@@ -56,6 +56,24 @@ find_list_item(
   return -1;
 }
 
+static std::int32_t
+find_param(
+  topology_info const* seek, topology_info const* find, std::int32_t seek_index)
+{
+  auto const& seek_param = *seek->params[seek_index].descriptor;
+  auto const& seek_part = seek->parts[seek->params[seek_index].part_index];
+  for (std::int32_t i = 0; i < find->params.size(); i++)
+  {
+    auto const& find_param = *find->params[i].descriptor;
+    auto const& find_part = find->parts[find->params[i].part_index];
+    if(seek_part.descriptor->guid == find_part.descriptor->guid &&
+      seek_part.type_index == find_part.type_index &&
+      seek_param.guid == find_param.guid)
+      return i;
+  }
+  return -1;
+}
+
 static bool
 load_preset(topology_info const* topo, param_value* state, char const* path)
 {
@@ -204,6 +222,18 @@ check_preset(
   std::vector<param_value> state2(topo2->input_param_count, param_value());
   if(!load_preset(topo1, state1.data(), preset1_path)) return std::cout << "Failed to load " << preset1_path << ".\n", 1;
   if(!load_preset(topo2, state2.data(), preset2_path)) return std::cout << "Failed to load " << preset2_path << ".\n", 1;
+
+  for (std::int32_t i = 0; i < topo1->input_param_count; i++)
+  {
+    std::int32_t new_index = find_param(topo1, topo2, i);
+    if (new_index == -1)
+    {
+      std::string old_ui_state_val = topo1->params[i].descriptor->data.format(false, state1[i]);
+      std::string old_ui_default_val = topo1->params[i].descriptor->data.format(false, topo1->params[i].descriptor->data.default_value());
+      if(old_ui_state_val != old_ui_default_val)
+        std::cout << "Removed with non-default " << topo1->params[i].runtime_name << ".\n";
+    }
+  }
 
   return 0;
 }
