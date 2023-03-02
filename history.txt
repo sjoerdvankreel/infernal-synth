@@ -16,7 +16,6 @@
 
 * Breaking changes:
 - Removed CV bank base parameter.
-- Time-based envelope parameter ranges changed.
 - Most delay (both feedback and multitap) parameters changed.
 - CV and Audio banks got re-arranged, so all parameters changed.
 - Master CV parameters changed (uni/bipolar switch replaced by actual bipolar controls).
