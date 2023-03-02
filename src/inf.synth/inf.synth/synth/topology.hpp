@@ -30,6 +30,9 @@ public:
     float sample_rate, std::int32_t max_sample_count) const override;
   std::unique_ptr<base::graph_processor>
   create_graph_processor(base::part_id id, std::int32_t graph_type) const override;
+  base::param_value convert_param(
+    std::int32_t index, base::param_value old_value,
+    std::string const& old_text, std::uint16_t old_major, std::uint16_t old_minor) const override;
 
 private:
   std::unique_ptr<base::graph_processor>
