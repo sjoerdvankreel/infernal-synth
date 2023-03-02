@@ -15,6 +15,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
@@ -76,6 +77,19 @@ find_param(
       return i;
   }
   return -1;
+}
+
+static bool 
+find_preset(char const* seek, char const* find, std::string full_path)
+{
+  std::string suffix = full_path.substr(std::strlen(seek));
+  for (auto const& preset : std::filesystem::recursive_directory_iterator(find))
+    if (!preset.is_directory())
+    {
+      auto seek_this = std::string(find) + suffix;
+      if(std::filesystem::exists(seek_this)) return true;
+    }
+  return false;
 }
 
 static bool
@@ -266,6 +280,34 @@ check_preset_file(
     if (old_ui_state_val != new_ui_state_val)
       std::cout << "Changed UI value: " << topo2->params[i].runtime_name << ": " << old_ui_state_val << " to " << new_ui_state_val << ".\n";
   }
+
+  return 0;
+}
+
+std::int32_t
+check_preset_folder(
+  char const* library1_path, char const* folder1_path,
+  char const* library2_path, char const* folder2_path)
+{
+  assert(folder1_path);
+  assert(folder2_path);
+  assert(library1_path);
+  assert(library2_path);
+
+  std::unique_ptr<loaded_topology> loaded_topo1 = load_topology(library1_path);
+  std::unique_ptr<loaded_topology> loaded_topo2 = load_topology(library2_path);
+  if (!loaded_topo1 || !loaded_topo2) return 1;
+  topology_info const* topo1 = loaded_topo1->topology();
+  topology_info const* topo2 = loaded_topo2->topology();
+
+  (void)topo1;
+  (void)topo2;
+  for (auto const& preset1 : std::filesystem::recursive_directory_iterator(folder1_path))
+    if(!preset1.is_directory() && !find_preset(folder1_path, folder2_path, preset1.path().string()))
+      std::cout << "Removed " << preset1 << ".\n";
+  for (auto const& preset2 : std::filesystem::recursive_directory_iterator(folder2_path))
+    if (!preset2.is_directory() && !find_preset(folder2_path, folder1_path, preset2.path().string()))
+      std::cout << "Added " << preset2 << ".\n";
 
   return 0;
 }
