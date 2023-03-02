@@ -207,7 +207,7 @@ check_plugin(
 }
 
 std::int32_t
-check_preset(
+check_preset_file(
   char const* library1_path, char const* preset1_path, 
   char const* library2_path, char const* preset2_path)
 {

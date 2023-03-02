@@ -33,15 +33,15 @@ main(int argc, char** argv)
     return check_plugin(argv[2], argv[3]);
   }
 
-  // Diffs vst preset files loaded in different plugin versions.
-  if (!strcmp(argv[1], "--diff-preset"))
+  // Diffs 2 vst preset files loaded in 2 different plugin versions.
+  if (!strcmp(argv[1], "--diff-preset-file"))
   {
     if (argc != 6)
       return std::cout <<
-      "Usage: infernal.vst.tool --diff-preset "
+      "Usage: infernal.vst.tool --diff-preset-file "
       "<full\\path\\to\\plugin1.vst3> (dll) <full\\path_to\\preset1.vstpreset> (preset) "
       "<full\\path\\to\\plugin2.vst3> (dll) <full\\path_to\\preset2.vstpreset> (preset)\n", 1;
-    return check_preset(argv[2], argv[3], argv[4], argv[5]);
+    return check_preset_file(argv[2], argv[3], argv[4], argv[5]);
   }
 
   return std::cout << "Unknown option " << argv[1] << ".\n", 1;
