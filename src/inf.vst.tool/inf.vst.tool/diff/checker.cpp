@@ -80,14 +80,18 @@ find_param(
 }
 
 static bool 
-find_preset(char const* seek, char const* find, std::string full_path)
+find_preset(char const* seek, char const* find, std::string seek_path, std::string& find_path)
 {
-  std::string suffix = full_path.substr(std::strlen(seek));
+  std::string suffix = seek_path.substr(std::strlen(seek));
   for (auto const& preset : std::filesystem::recursive_directory_iterator(find))
     if (!preset.is_directory())
     {
       auto seek_this = std::string(find) + suffix;
-      if(std::filesystem::exists(seek_this)) return true;
+      if(std::filesystem::exists(seek_this))
+      {
+        find_path = seek_this;
+        return true;
+      }
     }
   return false;
 }
@@ -239,8 +243,8 @@ check_preset_file(
   topology_info const* topo1 = loaded_topo1->topology();
   topology_info const* topo2 = loaded_topo2->topology();
 
-  std::cout << "Comparing " << topo2->plugin_name() << " (" << topo2->version_major() << "." << topo2->version_minor() << ") "
-    << "against " << topo1->plugin_name() << " (" << topo1->version_major() << "." << topo1->version_minor() << ").\n";
+  std::cout << "Comparing " << preset1_path << " (" << topo2->plugin_name() << " (" << topo2->version_major() << "." << topo2->version_minor() << ")) "
+    << "against " << preset2_path << " (" << topo1->plugin_name() << " (" << topo1->version_major() << "." << topo1->version_minor() << ")).\n";
 
   std::vector<param_value> state1(topo1->input_param_count, param_value());
   std::vector<param_value> state2(topo2->input_param_count, param_value());
@@ -291,23 +295,17 @@ check_preset_folder(
 {
   assert(folder1_path);
   assert(folder2_path);
-  assert(library1_path);
-  assert(library2_path);
 
-  std::unique_ptr<loaded_topology> loaded_topo1 = load_topology(library1_path);
-  std::unique_ptr<loaded_topology> loaded_topo2 = load_topology(library2_path);
-  if (!loaded_topo1 || !loaded_topo2) return 1;
-  topology_info const* topo1 = loaded_topo1->topology();
-  topology_info const* topo2 = loaded_topo2->topology();
-
-  (void)topo1;
-  (void)topo2;
+  std::string find_path;
   for (auto const& preset1 : std::filesystem::recursive_directory_iterator(folder1_path))
-    if(!preset1.is_directory() && !find_preset(folder1_path, folder2_path, preset1.path().string()))
+    if(!preset1.is_directory() && !find_preset(folder1_path, folder2_path, preset1.path().string(), find_path))
       std::cout << "Removed " << preset1 << ".\n";
   for (auto const& preset2 : std::filesystem::recursive_directory_iterator(folder2_path))
-    if (!preset2.is_directory() && !find_preset(folder2_path, folder1_path, preset2.path().string()))
+    if (!preset2.is_directory() && !find_preset(folder2_path, folder1_path, preset2.path().string(), find_path))
       std::cout << "Added " << preset2 << ".\n";
+  for (auto const& preset2 : std::filesystem::recursive_directory_iterator(folder2_path))
+    if (!preset2.is_directory() && find_preset(folder2_path, folder1_path, preset2.path().string(), find_path))
+      check_preset_file(library1_path, find_path.c_str(), library2_path, preset2.path().string().c_str());
 
   return 0;
 }
