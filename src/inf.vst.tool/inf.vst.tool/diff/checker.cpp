@@ -1,3 +1,5 @@
+#include <inf.vst.base/sdk/parameter.hpp>
+#include <inf.vst.base/shared/support.hpp>
 #include <inf.vst.base/shared/io_stream.hpp>
 #include <inf.vst.tool/diff/checker.hpp>
 #include <inf.vst.tool/shared/load_topology.hpp>
@@ -8,6 +10,8 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <set>
+#include <locale>
+#include <codecvt>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -237,8 +241,22 @@ check_preset(
   {
     std::int32_t old_index = find_param(topo2, topo1, i);
     if (old_index < 0) continue;
-    std::string new_ui_state_val = topo2->params[i].descriptor->data.format(false, state2[i]);
-    std::string old_ui_state_val = topo1->params[old_index].descriptor->data.format(false, state1[old_index]);
+
+    String128 ui_val1;
+    String128 ui_val2;
+    ParamID tag2 = topo2->param_index_to_id[i];
+    ParamID tag1 = topo1->param_index_to_id[old_index];
+    part_info const* part2 = &topo2->parts[topo2->params[i].part_index];
+    part_info const* part1 = &topo1->parts[topo1->params[old_index].part_index];
+    vst_parameter vst_param2(tag2, part2, &topo2->params[i]);
+    vst_parameter vst_param1(tag1, part1, &topo1->params[old_index]);
+    vst_param2.toString(base_to_vst_normalized(topo2, i, state2[i]), ui_val2);
+    vst_param1.toString(base_to_vst_normalized(topo1, old_index, state1[old_index]), ui_val1);
+    std::u16string new_ui_state_val_16(ui_val2);
+    std::u16string old_ui_state_val_16(ui_val1);
+    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convertor;
+    std::string new_ui_state_val = convertor.to_bytes(new_ui_state_val_16);
+    std::string old_ui_state_val = convertor.to_bytes(old_ui_state_val_16);
     if (old_ui_state_val != new_ui_state_val)
       std::cout << "Changed UI value: " << topo2->params[i].runtime_name << ": " << old_ui_state_val << " to " << new_ui_state_val << ".\n";
   }
