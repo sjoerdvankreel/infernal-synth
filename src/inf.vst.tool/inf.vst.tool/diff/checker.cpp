@@ -109,6 +109,9 @@ check_plugin(
   topology_info const* topo1 = loaded_topo1->topology();
   topology_info const* topo2 = loaded_topo2->topology();
 
+  std::cout << "Comparing " << topo2->plugin_name() << " (" << topo2->version_major() << "." << topo2->version_minor() << ") "
+    << "against " << topo1->plugin_name() << " (" << topo1->version_major() << "." << topo1->version_minor() << ").\n";
+
   for(std::int32_t i = 0; i < topo1->static_part_count; i++)
     if(find_part(topo1, topo2, i) == -1)
       std::cout << topo1->static_parts[i].static_name.detail << " removed.\n";
@@ -221,6 +224,9 @@ check_preset_file(
   if (!loaded_topo1 || !loaded_topo2) return 1;
   topology_info const* topo1 = loaded_topo1->topology();
   topology_info const* topo2 = loaded_topo2->topology();
+
+  std::cout << "Comparing " << topo2->plugin_name() << " (" << topo2->version_major() << "." << topo2->version_minor() << ") "
+    << "against " << topo1->plugin_name() << " (" << topo1->version_major() << "." << topo1->version_minor() << ").\n";
 
   std::vector<param_value> state1(topo1->input_param_count, param_value());
   std::vector<param_value> state2(topo2->input_param_count, param_value());
