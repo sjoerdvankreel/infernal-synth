@@ -45,7 +45,7 @@ loaded_topology::
 
 loaded_topology::
 loaded_topology(std::unique_ptr<inf::base::topology_info>&& topology, inf_init_exit_dll_t unloader):
-_topology(std::move(topology)), _unloader(unloader)
+_unloader(unloader), _topology(std::move(topology))
 {
   assert(unloader != nullptr);
   assert(_topology.get() != nullptr);

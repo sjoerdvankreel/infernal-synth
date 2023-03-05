@@ -73,7 +73,7 @@ synth_topology::convert_param(
   std::uint16_t old_major, std::uint16_t old_minor) const
 {
   // 1.1 changed envelope time bounds from 10 to 20
-  if (old_major < 1 || old_major == 1 && old_minor < 1)
+  if (old_major < 1 || (old_major == 1 && old_minor < 1))
     for(std::int32_t i = 0; i < venv_count; i++)
     {
       std::int32_t env_start = param_bounds[part_type::venv][i];
