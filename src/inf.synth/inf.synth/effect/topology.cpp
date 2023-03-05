@@ -151,7 +151,7 @@ static param_descriptor_data const effect_reverb_size_data = { { "Size", "Reverb
 static param_descriptor_data const effect_reverb_spread_data = { { "Sprd", "Reverb stereo spread" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 3, &effect_reverb_ui };
 static param_descriptor_data const effect_reverb_damp_data = { { "Damp", "Reverb damping" }, "%", param_kind::continuous, percentage_01_bounds(0.5f), 4, &effect_reverb_ui };
 static param_descriptor_data const effect_reverb_apf_data = { { "APF", "Reverb APF" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 5, &effect_reverb_ui };
- 
+   
 param_descriptor const  
 veffect_params[effect_param::vfx_count] =     
 {  
