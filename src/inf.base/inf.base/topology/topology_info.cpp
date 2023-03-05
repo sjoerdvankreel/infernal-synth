@@ -13,7 +13,7 @@ namespace inf::base {
 // Note: required to be nonnegative by vst3.
 static std::int32_t 
 stable_hash(char const* str)
-{
+{ 
   std::uint32_t h = 0;
   std::int32_t const multiplier = 33;
   auto ustr = reinterpret_cast<std::uint8_t const*>(str);
