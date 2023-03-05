@@ -81,7 +81,8 @@ synth_instrument_topology::init_defaults(param_value* state) const
   set_ui_value(state, part_type::geffect, 1, effect_param::type, "Delay");
   set_ui_value(state, part_type::geffect, 1, effect_param::delay_type, "Multitap");
   set_ui_value(state, part_type::geffect, 1, effect_param::dly_synced, "On");
-  set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_sprd, "75");
+  set_ui_value(state, part_type::geffect, 1, effect_param::dly_amt, "33");
+  set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_sprd, "50");
   set_ui_value(state, part_type::geffect, 1, effect_param::dly_multi_tempo, "3/16");
 
   // master gain and cvs
