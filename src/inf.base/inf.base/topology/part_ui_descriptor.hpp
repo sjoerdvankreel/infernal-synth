@@ -27,8 +27,8 @@ struct graph_descriptor
 
 // For arrows between parts.
 struct connector_direction_t { enum value { 
-  none = 0x0, first = 0x1, up = 0x1, down = 0x2, 
-  left = 0x4, right = 0x8, left_right = 0x10, last = 0x10 }; };
+  none = 0x0, first = 0x1, up = 0x1, down = 0x2, left = 0x4, right = 0x8, 
+  left_right = 0x10, halfway_right_down = 0x20, halfway_left_up = 0x40, last = 0x40 }; };
 typedef connector_direction_t::value connector_direction;
 
 // ARGB color.

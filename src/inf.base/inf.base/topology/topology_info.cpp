@@ -13,12 +13,21 @@ namespace inf::base {
 // Note: required to be nonnegative by vst3.
 static std::int32_t 
 stable_hash(char const* str)
-{
+{ 
   std::uint32_t h = 0;
   std::int32_t const multiplier = 33;
   auto ustr = reinterpret_cast<std::uint8_t const*>(str);
   for (std::uint8_t const* p = ustr; *p != '\0'; p++) h = multiplier * h + *p;
   return std::abs(static_cast<std::int32_t>(h + (h >> 5)));
+}
+
+void 
+topology_info::set_ui_value(
+  param_value* state, std::int32_t part_type, 
+  std::int32_t part_index, std::int32_t param, char const* value) const
+{
+  std::int32_t index = param_bounds[part_type][part_index] + param;
+  state[index] = params[index].descriptor->data.parse_ui(value);
 }
 
 void 
@@ -135,7 +144,7 @@ topology_info::init(topology_info* topology,
     std::string unique_param_id = part.descriptor->guid;
     unique_param_id += std::to_string(part.type_index);
     unique_param_id += this_descriptor.guid;    
-    std::int32_t hash = stable_hash(unique_param_id.c_str());
+    std::int32_t hash = stable_hash(unique_param_id.c_str()); 
     topology->param_index_to_id.push_back(hash);
     assert(topology->param_id_to_index.find(hash) == topology->param_id_to_index.end());
     topology->param_id_to_index[hash] = static_cast<std::int32_t>(p);

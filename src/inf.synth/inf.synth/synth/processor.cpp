@@ -174,7 +174,8 @@ synth_processor::setup_voice(voice_setup_input const& input, base::note_event co
 
   // Remember voice start global lfo/gcv values for hold-type modulation.
   cv_hold_sample glfo_hold[glfo_count] = { };
-  cv_hold_sample gcv_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_bi_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_uni_hold[master_gcv_count] = { };
   for(std::int32_t i = 0; i < glfo_count; i++)
   {
     glfo_hold[i].flags = _cv_state.glfo[i].buffer.flags;
@@ -182,15 +183,17 @@ synth_processor::setup_voice(voice_setup_input const& input, base::note_event co
   } 
   for (std::int32_t i = 0; i < master_gcv_count; i++)
   {
-    gcv_hold[i].flags = _cv_state.gcv[i].buffer.flags;
-    gcv_hold[i].value = _cv_state.gcv[i].buffer.values[note.sample_index];
+    gcv_bi_hold[i].flags = _cv_state.gcv_bi[i].buffer.flags;
+    gcv_uni_hold[i].flags = _cv_state.gcv_uni[i].buffer.flags;
+    gcv_bi_hold[i].value = _cv_state.gcv_bi[i].buffer.values[note.sample_index];
+    gcv_uni_hold[i].value = _cv_state.gcv_uni[i].buffer.values[note.sample_index];
   }
 
   std::int32_t last_midi = _last_midi_note == -1 ? note.midi : _last_midi_note;
   _voices[slot] = voice_processor(topology(), sample_rate(), 
     &_voice_oscillator_states[slot][0], &_voice_effect_states[slot][0],
-    &_audio_state, &_cv_state, gcv_hold, glfo_hold, note.velocity, &_port_state,
-    &_scratch, note.midi, last_midi, new_voice_section, input.block->data);
+    &_audio_state, &_cv_state, gcv_uni_hold, gcv_bi_hold, glfo_hold, note.velocity, 
+    &_port_state, &_scratch, note.midi, last_midi, new_voice_section, input.block->data);
 } 
 
 void 
@@ -403,11 +406,12 @@ synth_processor::process(block_input const& input, block_output& output)
   auto master_automation = input.data.automation.rearrange_params(master_id);
   for(std::int32_t i = 0; i < master_gcv_count; i++)
   { 
-    _cv_state.gcv[i].buffer.flags.inverted = false;
-    _cv_state.gcv[i].buffer.flags.bipolar = master_automation.block_discrete(master_param::gcv1 + i * 2 + 1) != 0;
-    master_automation.continuous_real_transform(master_param::gcv1 + i * 2, _cv_state.gcv[i].buffer.values, input.data.sample_count);
-    if(_cv_state.gcv[i].buffer.flags.bipolar)
-      unipolar_transform(_cv_state.gcv[i].buffer, input.data.sample_count);
+    _cv_state.gcv_bi[i].buffer.flags.bipolar = true;
+    _cv_state.gcv_uni[i].buffer.flags.bipolar = false;
+    _cv_state.gcv_bi[i].buffer.flags.inverted = false;
+    _cv_state.gcv_uni[i].buffer.flags.inverted = false;
+    master_automation.continuous_real_transform(master_param::gcv1_uni + i * 2, _cv_state.gcv_uni[i].buffer.values, input.data.sample_count);
+    master_automation.continuous_real_transform(master_param::gcv1_uni + i * 2 + 1, _cv_state.gcv_bi[i].buffer.values, input.data.sample_count);
   }
 
   // Get per-block poly/mono and portamento settings.
@@ -472,13 +476,14 @@ synth_processor::process(block_input const& input, block_output& output)
   amp_bal_in.audio_in = audio_mixdown.mixdown;
   audio_part_output amp_bal_out = _gamp_bal.process(amp_bal_in, output.audio, _gcv_bank);
   usage.gcv += amp_bal_out.cv_time;
-  usage.amp += amp_bal_out.own_time;
+  usage.master += amp_bal_out.own_time;
   
   // Output round info.
   output_info info;
-  info.usage = usage;
+  info.usage = usage; 
   info.start_time = start_time;
   info.voice_count = voice_count;
+  info.drained = _voices_drained;
   info.clipped = audio_may_clip(output.audio, input.channel_count, input.data.sample_count);
   _output.process(input, info, output);
 

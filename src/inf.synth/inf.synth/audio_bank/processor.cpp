@@ -24,7 +24,8 @@ audio_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index)
   switch (input)
   {
   case vaudio_route_input::off: assert(false); return nullptr;
-  case vaudio_route_input::vosc: return _state->vosc[index].buffers();
+  case vaudio_route_input::vosc_all: return _state->vosc_all.buffers();
+  case vaudio_route_input::vosc_any: return _state->vosc[index].buffers();
   case vaudio_route_input::veffect: return _state->veffect[index].buffers();
   default: assert(false); return nullptr;
   }
@@ -57,7 +58,7 @@ audio_bank_processor::update_block_params(block_input_data const& input)
     if (b >= _data->enabled_relevant_if_rt_index_gt && bank_automation.block_discrete(audio_bank_vgaudio_param_on) == 0) continue;
 
     // For each route.
-    for (std::int32_t r = 0; r < _data->route_count; r++)
+    for (std::int32_t r = 0; r < audio_bank_route_count; r++)
     {
       std::int32_t in_index = param_index(r, audio_bank_param_type::in);
       std::int32_t input_id = bank_automation.block_discrete(in_index);

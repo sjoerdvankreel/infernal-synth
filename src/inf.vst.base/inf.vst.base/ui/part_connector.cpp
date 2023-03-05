@@ -49,26 +49,38 @@ part_connector::draw(VSTGUI::CDrawContext* context)
     path->closeSubpath();
     break;  
   case connector_direction::left:
-    path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 2.0);
-    path->addLine(size * 11.0 / 12.0, size / 5.0);
-    path->addLine(size * 11.0 / 12.0, size * 4.0 / 5.0);
+    path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 2.0 + 1.0);
+    path->addLine(size * 11.0 / 12.0, size / 5.0 + 1.0);
+    path->addLine(size * 11.0 / 12.0, size * 4.0 / 5.0 + 1.0);
     path->closeSubpath();
     break;
   case connector_direction::right:
-    path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 4.0);
-    path->addLine(size * 11.0 / 12.0, size / 2.0);
-    path->addLine(size * 7.0 / 12.0 + 1.0, size * 3.0 / 4.0);
+    path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 4.0 + 1.0);
+    path->addLine(size * 11.0 / 12.0, size / 2.0 + 1.0);
+    path->addLine(size * 7.0 / 12.0 + 1.0, size * 3.0 / 4.0 + 1.0);
     path->closeSubpath();
-    break; 
-  case connector_direction::left_right:
-    path->beginSubpath(size * 2.0 / 12.0 + 1.0, size / 4.0);
-    path->addLine(size * 6.0 / 12.0, size / 2.0);
-    path->addLine(size * 2.0 / 12.0 + 1.0, size * 3.0 / 4.0);
+    break;  
+  case connector_direction::halfway_left_up:
+    path->beginSubpath(size * (11.0 / 12.0 - 0.4), 0.7 * size + 1.0);
+    path->addLine(size * 11.0 / 12.0, 0.3 * size + 1.0);
+    path->addLine(size * (11.0 / 12.0 - 0.4), 0.3 * size + 1.0);
+    path->closeSubpath();
+    break;
+  case connector_direction::halfway_right_down:
+    path->beginSubpath(size * (11.0 / 12.0 - 0.4), 0.7 * size);
+    path->addLine(size * 11.0 / 12.0, 0.3 * size);
+    path->addLine(size * 11.0 / 12.0, 0.7 * size);
+    path->closeSubpath();
+    break;
+  case connector_direction::left_right: 
+    path->beginSubpath(size * 2.0 / 12.0 + 1.0, size / 4.0 + 1.0);
+    path->addLine(size * 6.0 / 12.0, size / 2.0 + 1.0);
+    path->addLine(size * 2.0 / 12.0 + 1.0, size * 3.0 / 4.0 + 1.0);
+    path->closeSubpath();  
+    path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 2.0 + 1.0);
+    path->addLine(size * 11.0 / 12.0, size / 5.0 + 1.0);
+    path->addLine(size * 11.0 / 12.0, size * 4.0 / 5.0 + 1.0);
     path->closeSubpath(); 
-    path->beginSubpath(size * 7.0 / 12.0 + 1.0, size / 2.0);
-    path->addLine(size * 11.0 / 12.0, size / 5.0);
-    path->addLine(size * 11.0 / 12.0, size * 4.0 / 5.0);
-    path->closeSubpath();
     break;  
   default:
     assert(false);    

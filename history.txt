@@ -1,2 +1,25 @@
-* January 25, 2023
-- Initial release
+?, ? - V1.1.
+
+* Updated UI.
+* Trimmed down output tab.
+* Improved default/initial patches.
+* Global audio bank 1 can no longer be disabled.
+* Increased envelope section length to 20 seconds.
+* Provide versioned builds to insulate from breaking changes.
+* Renamed project from SevenSynth to InfernalSynth because of name clashes.
+
+* New features:
+- Added oscillator gain parameter.
+- Provide 3 unipolar and 3 bipolar master CV controls.
+- MIDI in as modulation source (aka "generic keyboard tracking").
+- Both feedback and multitap delay now have stereo spread controls.
+
+* Breaking changes:
+- Removed CV bank base parameter.
+- Removed triplets from tempo-synced parameters.
+- Decreased number of routes in CV A and Audio B.
+- Most delay (both feedback and multitap) parameters changed.
+- Master CV parameters changed (uni/bipolar switch replaced by actual bipolar controls).
+
+January 25, 2023 - V1.0.
+* Initial release.

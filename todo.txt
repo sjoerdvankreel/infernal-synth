@@ -1,29 +1,25 @@
-* repeating
-- gcc build
-- update vst3 sdk
-- update version number
-- keep manual up to date
+* for each release
+- v update hiir
+- v update vst3 sdk
+- v update version number
+- v gcc build
+- v diff presets
+- v update history
+- v debug run demos
+- v keep manual up to date
 
 * bugs
-- renoise automation serialization is broken
+- renoise/flstudio automation serialization is broken
 
 * wishlist big
 - CLAP support
-- more master CVs 
 - fx types: compressor
 - osc types: feedback lead
 - filter types: formant, vowel
 - scale CV amount by global CV param
-- stereo spread param for feedback delay
-- rename project b/c too many name clashes
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- reduce output/cpu ui
-- better factory presets
-- handle vst silence flags
-- fix crash on max comb delay
+- fix demo song
+- recreate project website
 - new menu option: clear all unused
-- cpu usage + conversion log ?+ error log
-- generic keyboard tracking: midi in as modulation source
-- recreate project website, re-do screenshots, presets and demos

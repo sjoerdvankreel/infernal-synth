@@ -40,7 +40,8 @@ void
 cv_bank_graph::process_dsp_core(block_input const& input, float* output, float sample_rate)
 {
   cv_hold_sample glfo_hold[glfo_count] = { };
-  cv_hold_sample gcv_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_bi_hold[master_gcv_count] = { };
+  cv_hold_sample gcv_uni_hold[master_gcv_count] = { };
   scratch_space scratch(input.data.sample_count);
   cv_bank_state cv_state(topology(), input.data.sample_count);
   automation_view plot_automation = input.data.automation.rearrange_params(id());
@@ -68,13 +69,17 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
   {
     part_id master_id = { part_type::master, 0 };
     automation_view master_automation = input.data.automation.rearrange_params(master_id);
-    float value = master_automation.block_real_transform(master_param::gcv1 + 2 * i);
-    std::int32_t bipolar = master_automation.block_discrete(master_param::gcv1 + 2 * i + 1);
-    cv_state.gcv[i].buffer.flags.bipolar = bipolar != 0;
-    std::fill(cv_state.gcv[i].buffer.values, cv_state.gcv[i].buffer.values + input.data.sample_count, value);
-    gcv_hold[i].flags = cv_state.gcv[i].buffer.flags;
-    gcv_hold[i].value = cv_state.gcv[i].buffer.values[0];
-  }  
+    float value_uni = master_automation.block_real_transform(master_param::gcv1_uni + 2 * i);
+    float value_bi = master_automation.block_real_transform(master_param::gcv1_uni + 2 * i + 1);
+    std::fill(cv_state.gcv_uni[i].buffer.values, cv_state.gcv_uni[i].buffer.values + input.data.sample_count, value_uni);
+    std::fill(cv_state.gcv_bi[i].buffer.values, cv_state.gcv_bi[i].buffer.values + input.data.sample_count, value_bi);
+    cv_state.gcv_uni[i].buffer.flags.bipolar = false;
+    cv_state.gcv_bi[i].buffer.flags.bipolar = true;
+    gcv_uni_hold[i].flags = cv_state.gcv_uni[i].buffer.flags;
+    gcv_uni_hold[i].value = cv_state.gcv_uni[i].buffer.values[0];
+    gcv_bi_hold[i].flags = cv_state.gcv_bi[i].buffer.flags;
+    gcv_bi_hold[i].value = cv_state.gcv_bi[i].buffer.values[0];
+  }
   
   // Setup envelopes.
   float length = plot_automation.block_real_transform(cv_plot_param::length);
@@ -108,7 +113,7 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
   // Set up cv bank.
   cv_bank_processor cv_bank;
   if(id().type == part_type::vcv_plot)
-    cv_bank = cv_bank_processor(topology(), &cv_state, gcv_hold, glfo_hold, vcv_plot_graph_velo, input.data);
+    cv_bank = cv_bank_processor(topology(), &cv_state, gcv_uni_hold, gcv_bi_hold, glfo_hold, vcv_plot_graph_velo, midi_note_c4, input.data);
   else
   {
     cv_bank = cv_bank_processor(topology(), &cv_state);

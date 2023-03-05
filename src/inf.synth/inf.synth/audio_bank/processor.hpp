@@ -32,11 +32,9 @@ private:
   // Precomputing all relevant routes for each target output.
   static inline std::int32_t constexpr max_bank_count = 
   std::max(vaudio_bank_count, gaudio_bank_count);
-  static inline std::int32_t constexpr max_route_count = 
-  std::max(vaudio_bank_route_count, gaudio_bank_route_count);
   static inline std::int32_t constexpr max_total_output_count = 
   std::max(vaudio_route_output_total_count, gaudio_route_output_total_count);
-  static inline std::int32_t constexpr max_total_route_count = max_bank_count * max_route_count;
+  static inline std::int32_t constexpr max_total_route_count = max_bank_count * audio_bank_route_count;
 
   std::array<std::int32_t, max_total_output_count> _relevant_indices_count;
   std::array<std::array<audio_route_indices, max_total_route_count>, max_total_output_count> _relevant_indices;
@@ -44,7 +42,7 @@ private:
 
 inline std::int32_t
 audio_bank_processor::param_index(std::int32_t route, audio_bank_param_type type)
-{ return audio_bank_param_offset + type * _data->route_count + route; }
+{ return audio_bank_param_offset + type * audio_bank_route_count + route; }
 
 inline audio_bank_processor::
 audio_bank_processor::audio_bank_processor(audio_bank_state* state):

@@ -9,11 +9,31 @@ using namespace inf::base;
 
 namespace inf::vst::base {
 
+static CPoint
+point_on_circle(
+  double center, double radius, double theta)
+{
+  double x = radius * std::sin(theta) + center;
+  double y = radius * std::cos(theta) + center;
+  return CPoint(x, y);
+}
+
 CView* 
 rotary_knob_creator::create(
   UIAttributes const& attrs, IUIDescription const* desc) const
 {  
-  knob_ui_colors colors;
+  bool ok;
+  bool bipolar;
+  bool discrete;
+  knob_ui_colors colors;  
+
+  ok = attrs.getBooleanAttribute("bipolar", bipolar);
+  assert(ok);
+  (void)ok;
+  ok = attrs.getBooleanAttribute("discrete", discrete);
+  assert(ok);
+  (void)ok;
+
   colors.fill = from_vst_color_name(attrs.getAttributeValue("fill-color"), desc);
   colors.drag = from_vst_color_name(attrs.getAttributeValue("drag-color"), desc);
   colors.marker = from_vst_color_name(attrs.getAttributeValue("marker-color"), desc);
@@ -21,7 +41,7 @@ rotary_knob_creator::create(
   colors.outer = from_vst_color_name(attrs.getAttributeValue("outer-color"), desc);
   colors.light = from_vst_color_name(attrs.getAttributeValue("light-color"), desc);
   colors.shadow = from_vst_color_name(attrs.getAttributeValue("shadow-color"), desc);
-  return new rotary_knob(colors);
+  return new rotary_knob(colors, bipolar, discrete);
 } 
 
 void
@@ -50,35 +70,56 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   context->setFrameColor(to_vst_color(_colors.outer));
   context->drawEllipse(CRect(CPoint(1, 1), inner_size - CPoint(2, 2)), kDrawStroked);
 
-  // inner border
-  float border_hi_start = 90.0f + start * to_degrees; 
-  float border_hi_end = 90.0f + start * to_degrees + angle * range * to_degrees;
-  if (angle < 0.01f)
+  // inner border  
+  if(_discrete)
   {
-    float off_start = 90.0f + start * to_degrees;
-    context->setFrameColor(to_vst_color(_colors.inner));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start, off_start + 180.0f, kDrawStroked);
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), off_start + 180.0f, off_start + 360.0f, kDrawStroked);
-  } else
+    float border_hi_start = 90.0f + start * to_degrees + angle * range * to_degrees + 45.0f;
+    float border_hi_end = border_hi_start + 270.0f;
+    context->setFrameColor(to_vst_color(_colors.drag));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.inner.darken(0.5f)));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
+  }
+  else if (!_bipolar)
   {
+    float border_hi_start = 90.0f + start * to_degrees;
+    float border_hi_end = 90.0f + start * to_degrees + angle * range * to_degrees;
+    float border_lo_end = 90.0f - start * to_degrees;
     context->setFrameColor(to_vst_color(_colors.drag));
     context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
     context->setFrameColor(to_vst_color(_colors.inner));
-    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_hi_start, kDrawStroked);
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_lo_end, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_end, border_hi_start, kDrawStroked);
+  } else
+  {
+    float border_lo_start_1;
+    float border_hi_start;
+    float border_hi_end;
+    float border_lo_end_2;
+    if (angle >= 0.5f)
+    {
+      border_lo_start_1 = 90.0f + start * to_degrees;
+      border_hi_start = 270.0f;
+      border_hi_end = 270.0f + (angle - 0.5f) * range * to_degrees;
+      border_lo_end_2 = 90.0f - start * to_degrees;
+    }
+    else
+    {
+      border_lo_start_1 = 90.0f + start * to_degrees;
+      border_hi_start = 270.0f - (0.5f - angle) * range * to_degrees;
+      border_hi_end = 270.0f;
+      border_lo_end_2 = 90.0f - start * to_degrees;
+    }
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_start_1, border_hi_start, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.drag));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_start, border_hi_end, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_hi_end, border_lo_end_2, kDrawStroked);
+    context->setFrameColor(to_vst_color(_colors.inner));
+    context->drawArc(CRect(CPoint(3, 3), inner_size - CPoint(6, 6)), border_lo_end_2, border_lo_start_1, kDrawStroked);
   }
-
-  // marker
-  double center = (inner_size.x - 1.0) / 2.0;
-  double radius = center - 3.0;
-  double theta = -(start + angle * range);
-  double x = radius * std::sin(theta) + center;
-  double y = radius * std::cos(theta) + center;
-  context->setFrameColor(to_vst_color(_colors.marker));
-  context->drawLine(CPoint(center, center), CPoint(x, y));
-
-  // top marker
-  context->setFillColor(to_vst_color(_colors.marker));
-  context->drawEllipse(CRect(CPoint(outer_size.x / 2 - 3, 1), CPoint(3, 3)), kDrawFilled);
 
   // light settings
   std::int32_t light_parts = 15;
@@ -108,6 +149,27 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
     std::uint8_t alpha = static_cast<std::uint8_t>((alpha_index + 1) * shadow_part_alpha_contrib);
     context->setFrameColor(CColor(_colors.shadow.r, _colors.shadow.g, _colors.shadow.b, alpha));
     context->drawArc(CRect(CPoint(1, 1), inner_size - CPoint(2, 2)), angle1, angle2, kDrawStroked);
+  }
+
+  // marker
+  double center = (inner_size.x - 1.0) / 2.0;
+  double radius = center - 3.0;
+  double theta = -(start + angle * range);
+  context->setFrameColor(to_vst_color(_colors.marker));
+  context->drawLine(CPoint(center, center), point_on_circle(center, radius, theta));
+
+  // spot markers
+  if (_bipolar)
+  {
+    context->setFillColor(to_vst_color(angle >= 0.51f || angle <= 0.49f? _colors.marker: _colors.inner));
+    context->drawEllipse(CRect(CPoint(outer_size.x / 2.0 - 3.0, 1.0), CPoint(3.0, 3.0)), kDrawFilled);
+  }
+  else if(!_discrete)
+  {
+    context->setFillColor(to_vst_color(angle >= 0.99f ? _colors.marker : _colors.inner));
+    context->drawEllipse(CRect(point_on_circle(center, radius, start), CPoint(2.0, 2.0)), kDrawFilled);
+    context->setFillColor(to_vst_color(angle >= 0.01f ? _colors.inner : _colors.marker));
+    context->drawEllipse(CRect(point_on_circle(center, radius, -start), CPoint(2.0, 2.0)), kDrawFilled);
   }
 } 
 

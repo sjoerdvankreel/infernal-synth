@@ -17,10 +17,9 @@ struct effect_param_t { enum value {
   on, type, filter_type, flt_stvar_type, flt_stvar_freq, flt_stvar_res, flt_stvar_kbd, 
   flt_stvar_shlf_gain, flt_comb_dly_plus, flt_comb_gain_plus, flt_comb_dly_min, flt_comb_gain_min,
   shaper_type, shp_over_order, shp_mix, shp_gain, shp_cheby_terms, shp_cheby_sum_decay, vfx_count,
-  delay_type = vfx_count, dly_synced, dly_mix, dly_fdbk_time_l, dly_fdbk_time_r, dly_fdbk_tempo_l, 
-  dly_fdbk_tempo_r, dly_fdbk_amt_l, dly_fdbk_amt_r, dly_multi_time, dly_multi_tempo, dly_multi_taps, 
-  dly_multi_sprd, dly_multi_amt, reverb_mix, reverb_size, reverb_spread, reverb_damp, reverb_apf, 
-  gfx_count, count = gfx_count }; };
+  delay_type = vfx_count, dly_synced, dly_mix, dly_amt, dly_fdbk_sprd, dly_multi_sprd, dly_fdbk_time_l, 
+  dly_fdbk_time_r, dly_fdbk_tempo_l, dly_fdbk_tempo_r, dly_multi_time, dly_multi_tempo, dly_multi_taps, 
+  reverb_mix, reverb_size, reverb_spread, reverb_damp, reverb_apf, gfx_count, count = gfx_count }; };
 typedef effect_param_t::value effect_param;
 
 struct effect_graph_t { enum value { graph1, graph2, count }; };

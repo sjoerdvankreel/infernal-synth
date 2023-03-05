@@ -9,23 +9,17 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-std::vector<box_descriptor> gaudio_bank_borders()
+std::vector<box_descriptor> audio_bank_borders()
 {
-  return {
-    { 0, 0, 1, 4 }, { 0, 4, 1, 4 },
-    { 1, 0, 4, 4 }, { 1, 4, 4, 4 }
-  };
-} 
-
-std::vector<box_descriptor> vaudio_bank_borders()
-{
-  auto box = [](std::int32_t n) { return box_descriptor(0, n, audio_bank_param_type::count, 1); };
-  auto view = std::ranges::views::transform(std::views::iota(0, vaudio_bank_table_col_count), box);
-  return std::vector<box_descriptor>(view.begin(), view.end());
-}
+  std::vector<box_descriptor> result;
+  for(std::int32_t i = 0; i <= audio_bank_route_count; i++)
+    result.push_back({ 0, i, audio_bank_param_type::count, 1 });
+  return result;
+}   
 
 static list_item const vaudio_route_inputs[vaudio_route_input::count] = {
   { "{49276AD4-960F-49D4-9B74-A8E4D5A86B6B}", "Off" },
+  { "{BA7D11D6-27D3-460C-849E-4FFA756290DF}", "Osc All" }, // all
   { "{A3D43958-5219-4D44-A51A-54853EF6F457}", "Osc" }, // any 
   { "{1E01C31B-3160-49B6-A88F-7A532AE5B407}", "FX A" } };
 static list_item const vaudio_route_outputs[vaudio_route_output::count] = {
@@ -43,10 +37,10 @@ static list_item const gaudio_route_outputs[gaudio_route_output::count] = {
   { "{A781CA9A-B8AA-448A-924B-D16C31108CB5}", "Master" } };
    
 static bool const vaudio_route_output_spaces[vaudio_route_output::count] = { true, false, true };
-static bool const gaudio_route_output_spaces[gaudio_route_output::count] = { true, false, true };
-static bool const vaudio_route_input_spaces[vaudio_route_input::count] = { true, true, false };
+static bool const gaudio_route_output_spaces[gaudio_route_output::count] = { true, false, true }; 
+static bool const vaudio_route_input_spaces[vaudio_route_input::count] = { true, true, true, false };
 static bool const gaudio_route_input_spaces[gaudio_route_input::count] = { true, true, true, false };
-
+ 
 static std::vector<list_item> const vaudio_route_input_items =  
 multi_list_items(vaudio_route_inputs, nullptr, vaudio_route_input_spaces, nullptr, vaudio_route_input_counts, vaudio_route_input::count, false);
 static std::vector<list_item> const gaudio_route_input_items =
@@ -57,7 +51,7 @@ static std::vector<list_item> const gaudio_route_output_items =
 multi_list_items(gaudio_route_outputs, nullptr, gaudio_route_output_spaces, nullptr, gaudio_route_output_counts, gaudio_route_output::count, false);
 
 param_descriptor const 
-vaudio_bank_params[vaudio_bank_param::count] = 
+vaudio_bank_params[audio_bank_param::count] = 
 {  
   { "{14096099-485D-4EB9-B055-E393DE2E993C}", { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr } },
   { "{2E9F0478-B911-43DF-BB51-0C5836E4853F}", { { "In", "Input 1" }, "", param_kind::voice, param_type::list, { &vaudio_route_input_items, 0 }, 0, nullptr}},
@@ -87,41 +81,33 @@ vaudio_bank_params[vaudio_bank_param::count] =
 };
 
 param_descriptor const  
-gaudio_bank_params[gaudio_bank_param::count] = 
+gaudio_bank_params[audio_bank_param::count] = 
 {
   { "{85A0A7FB-8319-436E-9979-0A7267F1F636}", { { "On", "Enabled" }, param_kind::block, false, -1, nullptr } },
   { "{CD5CD403-259F-4B25-9C33-E246931E973B}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 0, nullptr}},
-  { "{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 4, nullptr } },
-  { "{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 8, nullptr } },
-  { "{3F1E4A05-2C73-418D-B490-841106011784}", { { "In", "Input 4" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 12, nullptr } },
-  { "{2D03FFCF-FD1D-42F7-B95B-BE3262A2900F}", { { "In", "Input 5" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 16, nullptr}},
-  { "{47517379-6D53-48C7-BFD0-A2D582C7971F}", { { "In", "Input 6" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 20, nullptr } },
-  { "{45AF3FB6-AEDE-4752-BFD2-9C319B04B20B}", { { "In", "Input 7" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 24, nullptr } },
-  { "{BAB817EF-320A-4344-8A6D-572D200BEEED}", { { "In", "Input 8" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 28, nullptr } },
-  { "{6AD76233-62A6-4F5A-ADCB-797786E00C54}", { { "Out", "Output 1" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 1, nullptr } },
-  { "{8BEAB138-D485-480C-B2BE-146354C5A2F9}", { { "Out", "Output 2" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 5, nullptr } },
-  { "{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}", { { "Out", "Output 3" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 9, nullptr } },
-  { "{9F28A209-5A25-4665-BB73-557BE1F3CC05}", { { "Out", "Output 4" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 13, nullptr } },
-  { "{5452CCEE-C962-4239-9F5C-015445598B72}", { { "Out", "Output 5" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 17, nullptr } },
-  { "{E6B0B447-2412-43D1-9BED-66BC67620272}", { { "Out", "Output 6" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 21, nullptr } },
-  { "{F5F38C26-0E23-4BB9-9AD6-C0A5BC915DBA}", { { "Out", "Output 7" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 25, nullptr } },
-  { "{D48C3857-69FF-414E-8A7D-3C1068CE1143}", { { "Out", "Output 8" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 29, nullptr } },
-  { "{E444E539-65EF-449F-8407-EB128C6082B8}", { { "Amt", "Amount 1" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 2, nullptr} },
-  { "{FBCCD63D-1D9A-444C-A622-D9D3E8A771C7}", { { "Amt", "Amount 2" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 6, nullptr } },
-  { "{C147FB0B-25A9-44F9-88E2-77CA415F83BB}", { { "Amt", "Amount 3" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 10, nullptr } },
-  { "{E394ACC9-DA07-43DF-9BF7-02A57BF3F758}", { { "Amt", "Amount 4" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 14, nullptr } },
-  { "{8A1B591B-62AD-4E53-9256-7C4BFB15525F}", { { "Amt", "Amount 5" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 18, nullptr} },
-  { "{2D1B1704-9B20-44EE-AC48-E8B09FBA9488}", { { "Amt", "Amount 6" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 22, nullptr } },
-  { "{95E7D822-2739-4F5A-8B29-6C225CFF8C02}", { { "Amt", "Amount 7" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 26, nullptr } },
-  { "{92D44B14-B0D9-48AC-91C1-2028ED5A0C2E}", { { "Amt", "Amount 8" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 30, nullptr } },
-  { "{3E7BA2FC-2984-4B2F-9936-754BEE44CFCE}", { { "Bal", "Stereo balance 1" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 3, nullptr} },
-  { "{D2672F61-8811-420C-A4CA-1ED78D49AC55}", { { "Bal", "Stereo balance 2" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 7, nullptr } },
-  { "{10073537-70C6-40FB-8F53-0ABB2C594944}", { { "Bal", "Stereo balance 3" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 11, nullptr } },
-  { "{EBBBAC9E-3D8F-482A-A41B-32CB47324647}", { { "Bal", "Stereo balance 4" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 15, nullptr } },
-  { "{80D09377-31F5-4162-A785-D0B841FCDBA6}", { { "Bal", "Stereo balance 5" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 19, nullptr} },
-  { "{7E72F00C-2C26-4BAD-98E5-ADC7168852F7}", { { "Bal", "Stereo balance 6" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 23, nullptr } },
-  { "{63594A36-061F-467B-9E96-42C68F44D80C}", { { "Bal", "Stereo balance 7" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 27, nullptr } },
-  { "{48CA82BE-D452-4B35-A82A-F65F83D87D2E}", { { "Bal", "Stereo balance 8" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 31, nullptr } },
+  { "{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 1, nullptr } },
+  { "{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 2, nullptr } },
+  { "{3F1E4A05-2C73-418D-B490-841106011784}", { { "In", "Input 4" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 3, nullptr } },
+  { "{2D03FFCF-FD1D-42F7-B95B-BE3262A2900F}", { { "In", "Input 5" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 4, nullptr}},
+  { "{47517379-6D53-48C7-BFD0-A2D582C7971F}", { { "In", "Input 6" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 }, 5, nullptr } },
+  { "{6AD76233-62A6-4F5A-ADCB-797786E00C54}", { { "Out", "Output 1" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 6, nullptr } },
+  { "{8BEAB138-D485-480C-B2BE-146354C5A2F9}", { { "Out", "Output 2" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 7, nullptr } },
+  { "{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}", { { "Out", "Output 3" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 8, nullptr } },
+  { "{9F28A209-5A25-4665-BB73-557BE1F3CC05}", { { "Out", "Output 4" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 9, nullptr } },
+  { "{5452CCEE-C962-4239-9F5C-015445598B72}", { { "Out", "Output 5" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 10, nullptr } },
+  { "{E6B0B447-2412-43D1-9BED-66BC67620272}", { { "Out", "Output 6" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 }, 11, nullptr } },
+  { "{E444E539-65EF-449F-8407-EB128C6082B8}", { { "Amt", "Amount 1" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 12, nullptr} },
+  { "{FBCCD63D-1D9A-444C-A622-D9D3E8A771C7}", { { "Amt", "Amount 2" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 13, nullptr } },
+  { "{C147FB0B-25A9-44F9-88E2-77CA415F83BB}", { { "Amt", "Amount 3" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 14, nullptr } },
+  { "{E394ACC9-DA07-43DF-9BF7-02A57BF3F758}", { { "Amt", "Amount 4" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 15, nullptr } },
+  { "{8A1B591B-62AD-4E53-9256-7C4BFB15525F}", { { "Amt", "Amount 5" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 16, nullptr} },
+  { "{2D1B1704-9B20-44EE-AC48-E8B09FBA9488}", { { "Amt", "Amount 6" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 17, nullptr } },
+  { "{3E7BA2FC-2984-4B2F-9936-754BEE44CFCE}", { { "Bal", "Stereo balance 1" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 18, nullptr} },
+  { "{D2672F61-8811-420C-A4CA-1ED78D49AC55}", { { "Bal", "Stereo balance 2" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 19, nullptr } },
+  { "{10073537-70C6-40FB-8F53-0ABB2C594944}", { { "Bal", "Stereo balance 3" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 20, nullptr } },
+  { "{EBBBAC9E-3D8F-482A-A41B-32CB47324647}", { { "Bal", "Stereo balance 4" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 21, nullptr } },
+  { "{80D09377-31F5-4162-A785-D0B841FCDBA6}", { { "Bal", "Stereo balance 5" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 22, nullptr} },
+  { "{7E72F00C-2C26-4BAD-98E5-ADC7168852F7}", { { "Bal", "Stereo balance 6" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 23, nullptr } }
 };
 
 } // namespace inf::synth

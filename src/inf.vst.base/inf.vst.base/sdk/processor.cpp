@@ -24,7 +24,7 @@ namespace inf::vst::base {
 // Don't update output too often.
 std::int32_t const 
 output_param_update_msec = 200;
-
+ 
 vst_processor::
 vst_processor(std::unique_ptr<inf::base::topology_info>&& topology, FUID controller_id):
 _state(topology->params.size()), _changed(topology->params.size()),
@@ -280,7 +280,7 @@ vst_processor::process_output_parameters(
   if (data.processContext == nullptr) return;
 
   // Don't update too often.
-  auto now = std::chrono::high_resolution_clock::now();
+  auto now = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - _output_updated);
   if(duration.count() < output_param_update_msec) return;
   _output_updated = now;

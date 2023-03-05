@@ -14,7 +14,7 @@ static std::vector<list_item> const env_modes = {
 static std::vector<list_item> const env_types = {
   { "{F5743634-859A-40A1-8F2E-1B5ED874840D}", "Sustn" },
   { "{95846D91-B563-4AFE-ABFA-634C0A0FE27C}", "Rlease" },
-  { "{51B32BBA-C18B-4811-8280-73E0F339F4BC}", "Follow" } };
+  { "{51B32BBA-C18B-4811-8280-73E0F339F4BC}", "Follow" } }; 
 
 // 8/1 = 16 seconds at 120 bpm, 1/256 = 7 ms at 120 bpm.
 static std::vector<time_signature> const envelope_timesig = synced_timesig(true, { 8, 1 }, {
@@ -25,8 +25,8 @@ static std::vector<time_signature> const envelope_timesig = synced_timesig(true,
 std::vector<float> const envelope_timesig_values = synced_timesig_values(envelope_timesig);
 static std::vector<std::string> const envelope_timesig_names = synced_timesig_names(envelope_timesig); 
 
-static param_ui_descriptor const envelope_time_ui = { false, { { envelope_param::synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const envelope_sync_ui = { false, { { envelope_param::synced, [](std::int32_t v) { return v != 0; } } } };
+static param_ui_descriptor const envelope_time_ui = { false, 0.0f, { { envelope_param::synced, [](std::int32_t v) { return v == 0; } } } };
+static param_ui_descriptor const envelope_sync_ui = { false, 0.0f, { { envelope_param::synced, [](std::int32_t v) { return v != 0; } } } };
 
 param_descriptor const
 envelope_params[envelope_param::count] =

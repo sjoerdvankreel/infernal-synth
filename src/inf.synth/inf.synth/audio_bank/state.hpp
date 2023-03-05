@@ -31,7 +31,6 @@ struct audio_bank_data
 
   std::int32_t const part_type;
   std::int32_t const bank_count;
-  std::int32_t const route_count;
   std::int32_t const modulation_type;
   std::int32_t const total_route_count;
   std::int32_t const enabled_relevant_if_rt_index_gt;
@@ -47,6 +46,7 @@ struct audio_bank_state
   base::cont_storage<float> voice; // Voice amp in 1 voice.
   base::cont_storage<float> voices; // Mixdown of all (max: polyphony) voice amps.
   base::cont_storage<float> external; // External input in effect mode.
+  base::cont_storage<float> vosc_all; // Mixdown of all oscs in 1 voice.
   std::array<base::cont_storage<float>, vosc_count> vosc; // Individual oscs in 1 voice. 
   std::array<base::cont_storage<float>, veffect_count> veffect; // Individual fx in 1 voice.
   std::array<base::cont_storage<float>, geffect_count> geffect; // Individual global fx.

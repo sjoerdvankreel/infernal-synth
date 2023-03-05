@@ -14,20 +14,22 @@ voice_processor::
 voice_processor(topology_info const* topology, float sample_rate,
   oscillator_state* oscillator_state, effect_state* fx_state,
   audio_bank_state* audio_state, cv_bank_state* cv_state,
-  cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, float velo,
-  std::vector<float>* port_state, scratch_space* scratch, std::int32_t midi,
-  std::int32_t last_midi, bool new_voice_section, block_input_data const& input):
+  cv_hold_sample const* gcv_uni_hold_, cv_hold_sample const* gcv_bi_hold_, 
+  cv_hold_sample const* glfo_hold_, float velo, std::vector<float>* port_state, 
+  scratch_space* scratch, std::int32_t midi, std::int32_t last_midi, 
+  bool new_voice_section, block_input_data const& input):
 _sample_rate(sample_rate), _midi(midi), _last_midi(last_midi), _new_voice_section(new_voice_section),
 _voice_start(true), _port_acc(0.0f), _port_current(0.0f), _port_target(0.0), _port_pos(0), _port_samples(-1),
 _scratch(scratch), _cv_state(cv_state), _audio_state(audio_state), _port_state(port_state), _topology(topology),
-_vamp_bal(topology, part_type::voice, sample_rate), _vcv_bank(topology, cv_state, gcv_hold_, glfo_hold_, velo, input), 
-_vaudio_bank(input, audio_state), _vlfos(), _venvs(), _voscs(), _veffects(), _velo(velo), _glfo_hold(), _gcv_hold()
+_vamp_bal(topology, part_type::voice, sample_rate), _vcv_bank(topology, cv_state, gcv_uni_hold_, gcv_bi_hold_, glfo_hold_, velo, midi, input), 
+_vaudio_bank(input, audio_state), _vlfos(), _venvs(), _voscs(), _veffects(), _velo(velo), _glfo_hold(), _gcv_bi_hold(), _gcv_uni_hold()
 {  
   assert(topology != nullptr);
   assert(0 <= midi && midi < 128);
   assert(0.0f <= velo && velo <= 1.0f);
   std::copy(glfo_hold_, glfo_hold_ + glfo_count, _glfo_hold.begin());
-  std::copy(gcv_hold_, gcv_hold_ + master_gcv_count, _gcv_hold.begin());
+  std::copy(gcv_bi_hold_, gcv_bi_hold_ + master_gcv_count, _gcv_bi_hold.begin());
+  std::copy(gcv_uni_hold_, gcv_uni_hold_ + master_gcv_count, _gcv_uni_hold.begin());
 
   part_id voice_id = { part_type::voice, 0 };
   automation_view automation = input.automation.rearrange_params(voice_id);
@@ -75,7 +77,7 @@ void voice_processor::prepare_port(voice_input const& input)
       master_mode != master_mode::poly && (
         port_trig == master_port_trig::note ||
         (port_trig == master_port_trig::voice && !_voice_start)))
-    {
+    { 
       std::int32_t prev_midi = _last_midi;
       if (!_voice_start)
       {
@@ -154,7 +156,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   prepare_port(input);
 
   // Apply voice-static cv (velocity, hold master cv, hold lfos).
-  _vcv_bank.apply_voice_state(_gcv_hold.data(), _glfo_hold.data(), _velo, sample_count);
+  _vcv_bank.apply_voice_state(_gcv_uni_hold.data(), _gcv_bi_hold.data(), _glfo_hold.data(), _velo, _midi, sample_count);
 
   // Run lfo's.
   for (std::int32_t i = 0; i < vlfo_count; i++)
@@ -195,6 +197,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   }
 
   // Run generators.
+  _audio_state->vosc_all.clear(sample_count);
   for (std::int32_t i = 0; i < vosc_count; i++)
   {
     oscillator_input osc_in;
@@ -208,7 +211,8 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
     audio_part_output osc_out = _voscs[i].process(osc_in, _audio_state->vosc[i].buffers(), _vcv_bank, *_scratch);
     usage.vcv += osc_out.cv_time;
     usage.osc += osc_out.own_time;
-  }
+    add_audio(_audio_state->vosc_all.buffers(), _audio_state->vosc[i].buffers(), stereo_channels, sample_count, 0);
+  } 
 
   // Clear fx output in case user selected weird routing (i.e. fx 3 to fx 2).
   for (std::int32_t i = 0; i < veffect_count; i++)
@@ -244,8 +248,8 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   amp_bal_in.amp_env = _cv_state->venv[0].buffer.values;
   audio_part_output amp_bal_out = _vamp_bal.process(amp_bal_in, _audio_state->voice.buffers(), _vcv_bank);
   usage.vcv += amp_bal_out.cv_time;
-  usage.amp += amp_bal_out.own_time;
+  usage.voice = amp_bal_out.own_time;
   return ended;
-} 
+}  
   
 } // namespace inf::synth 

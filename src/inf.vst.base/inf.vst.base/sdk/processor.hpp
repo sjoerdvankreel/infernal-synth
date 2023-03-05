@@ -43,7 +43,7 @@ private:
   // For sample accurate.
   std::vector<Parameter> _accurate_parameters;
   // Don't update output too often.
-  std::chrono::steady_clock::time_point _output_updated;
+  std::chrono::system_clock::time_point _output_updated;
   // Need topology for parameter dsp bounds etc.
   std::unique_ptr<inf::base::topology_info> _topology;
   // Where it happens. We just translate automation and audio values from/to vst3 format.

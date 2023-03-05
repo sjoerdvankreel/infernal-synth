@@ -19,14 +19,15 @@ public:
   cv_bank_processor() = default;
   cv_bank_processor(base::topology_info const* topology, cv_bank_state* state); // Global
   cv_bank_processor(base::topology_info const* topology, cv_bank_state* state, 
-    cv_hold_sample const* gcv_hold_, cv_hold_sample const* glfo_hold_, 
-    float velo, base::block_input_data const& input); // Voice
+    cv_hold_sample const* gcv_uni_hold_, cv_hold_sample const* gcv_bi_hold_, 
+    cv_hold_sample const* glfo_hold_, float velo, 
+    std::int32_t midi, base::block_input_data const& input); // Voice
 
   // Once for voice, per-block for global.
   void update_block_params(base::block_input_data const& input);
   void apply_voice_state(
-    cv_hold_sample const* gcv_hold, cv_hold_sample const* glfo_hold, 
-    float velo, std::int32_t sample_count);
+    cv_hold_sample const* gcv_uni_hold, cv_hold_sample const* gcv_bi_hold, 
+    cv_hold_sample const* glfo_hold, float velo, std::int32_t midi, std::int32_t sample_count);
 
   // Mixdown specified targets (e.g. "continuous filter 1 params").
   std::int64_t modulate(cv_bank_input const& input, float const* const*& result);
@@ -47,16 +48,16 @@ private:
   
   // Precomputing all relevant routes for each target output.
   static inline std::int32_t constexpr max_bank_count = std::max(vcv_bank_count, gcv_bank_count);
-  static inline std::int32_t constexpr max_total_route_count = std::max(vcv_route_output_total_count, gcv_route_output_total_count);
+  static inline std::int32_t constexpr max_route_count = std::max(vcv_bank_route_count, gcv_bank_route_count);
+  static inline std::int32_t constexpr max_total_route_output_count = std::max(vcv_route_output_total_count, gcv_route_output_total_count);
 
-  std::array<bool, max_total_route_count> _output_needs_unmodulated_cv;
-  std::array<std::int32_t, max_total_route_count> _relevant_indices_count;
-  std::array<std::array<cv_route_indices, max_bank_count * cv_bank_route_count>, max_total_route_count> _relevant_indices;
+  std::array<std::int32_t, max_total_route_output_count> _relevant_indices_count;
+  std::array<std::array<cv_route_indices, max_bank_count * max_route_count>, max_total_route_output_count> _relevant_indices;
 };
 
 inline std::int32_t
 cv_bank_processor::param_index(std::int32_t route, cv_bank_param_type type)
-{ return cv_bank_param_offset + type * cv_bank_route_count + route; }
+{ return cv_bank_param_offset + type * _data->route_count + route; }
 
 } // namespace inf::synth
 #endif // INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
