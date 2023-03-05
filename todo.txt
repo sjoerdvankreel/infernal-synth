@@ -19,7 +19,7 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- better factory presets + fx presets
+- better factory presets + fx presets + fix demo song
 - new menu option: clear all unused
 - recreate project website, re-do presets and demos
 
