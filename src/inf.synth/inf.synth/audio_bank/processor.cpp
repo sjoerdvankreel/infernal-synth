@@ -24,7 +24,8 @@ audio_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index)
   switch (input)
   {
   case vaudio_route_input::off: assert(false); return nullptr;
-  case vaudio_route_input::vosc: return _state->vosc[index].buffers();
+  case vaudio_route_input::vosc_all: return _state->vosc_all.buffers();
+  case vaudio_route_input::vosc_any: return _state->vosc[index].buffers();
   case vaudio_route_input::veffect: return _state->veffect[index].buffers();
   default: assert(false); return nullptr;
   }

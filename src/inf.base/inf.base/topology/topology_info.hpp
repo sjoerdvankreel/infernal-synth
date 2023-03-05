@@ -69,6 +69,14 @@ struct topology_info
   virtual void init_defaults(param_value* state) const { init_defaults(state, 0, input_param_count); }
   void set_ui_value(param_value* state, std::int32_t part_type, std::int32_t part_index, std::int32_t param, char const* value) const;
 
+  // Metadata and conversions (backwards compat).
+  virtual char const* plugin_name() const = 0;
+  virtual std::uint16_t version_major() const = 0;
+  virtual std::uint16_t version_minor() const = 0;
+  virtual param_value convert_param(
+    std::int32_t index, param_value old_value, std::string const& old_text,
+    std::uint16_t old_major, std::uint16_t old_minor) const { return old_value; }
+
   // Sanity check.
   void state_check(param_value const* state) const;
 

@@ -36,12 +36,12 @@ inline base::part_table_descriptor const audio_bank_table = { true, audio_bank_t
 // ---- voice ----
 
 extern base::param_descriptor const vaudio_bank_params[];
-struct vaudio_route_input_t { enum value { off, vosc, veffect, count }; }; // Off must be 0.
 struct vaudio_route_output_t { enum value { off, veffect, voice, count }; }; // Off must be 0.
+struct vaudio_route_input_t { enum value { off, vosc_all, vosc_any, veffect, count }; }; // Off must be 0.
 typedef vaudio_route_input_t::value vaudio_route_input;
 typedef vaudio_route_output_t::value vaudio_route_output;
 
-inline std::int32_t constexpr vaudio_route_input_counts[vaudio_route_input::count] = { 1 /* off */, vosc_count, veffect_count };
+inline std::int32_t constexpr vaudio_route_input_counts[vaudio_route_input::count] = { 1 /* off */, 1 /* vosc all */, vosc_count, veffect_count };
 inline std::int32_t constexpr vaudio_route_output_counts[vaudio_route_output::count] = { 1 /* off */, veffect_count, 1 /* voice */ };
 inline std::int32_t constexpr vaudio_route_output_total_count = std::accumulate(vaudio_route_output_counts, vaudio_route_output_counts + vaudio_route_output::count, 0);
 

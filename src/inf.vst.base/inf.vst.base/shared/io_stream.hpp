@@ -22,12 +22,14 @@ public:
 
   // Base needs these.
   bool read_int32(std::int32_t& val) override;
+  bool read_uint32(std::uint32_t& val) override;
   bool read_string(std::string& val) override;
   bool write_string(std::string const& val) override;
 
   bool read_float(float& val) override { return _streamer->readFloat(val); }
   bool write_float(float val) override { return _streamer->writeFloat(val); }
   bool write_int32(std::int32_t val) override { return _streamer->writeInt32(val); }
+  bool write_uint32(std::uint32_t val) override { return _streamer->writeInt32u(val); }
 };
 
 } // namespace inf::vst::base

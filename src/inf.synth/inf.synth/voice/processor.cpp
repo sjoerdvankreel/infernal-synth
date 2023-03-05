@@ -197,6 +197,7 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   }
 
   // Run generators.
+  _audio_state->vosc_all.clear(sample_count);
   for (std::int32_t i = 0; i < vosc_count; i++)
   {
     oscillator_input osc_in;
@@ -210,7 +211,8 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
     audio_part_output osc_out = _voscs[i].process(osc_in, _audio_state->vosc[i].buffers(), _vcv_bank, *_scratch);
     usage.vcv += osc_out.cv_time;
     usage.osc += osc_out.own_time;
-  }
+    add_audio(_audio_state->vosc_all.buffers(), _audio_state->vosc[i].buffers(), stereo_channels, sample_count, 0);
+  } 
 
   // Clear fx output in case user selected weird routing (i.e. fx 3 to fx 2).
   for (std::int32_t i = 0; i < veffect_count; i++)

@@ -36,6 +36,9 @@ public synth_topology
 public:
   bool is_instrument() const override { return true; }
   void init_defaults(param_value* state) const override;
+  char const* plugin_name() const { return INF_VST_INFERNAL_SYNTH_INSTRUMENT_NAME; }
+  std::uint16_t version_major() const { return INF_VST_INFERNAL_SYNTH_INSTRUMENT_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return INF_VST_INFERNAL_SYNTH_INSTRUMENT_VERSION_MINOR; }
 };
 
 void
@@ -88,7 +91,7 @@ synth_instrument_topology::init_defaults(param_value* state) const
 
   // audio a1 osc->fx1->fx2->voice
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc 1");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc All");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "FX A1");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in2, "FX A1");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out2, "FX A2");

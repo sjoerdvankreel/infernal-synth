@@ -16,9 +16,9 @@
 
 * Breaking changes:
 - Removed CV bank base parameter.
-- Time-based envelope parameter ranges changed.
+- Removed triplets from tempo-synced parameters.
+- Decreased number of routes in CV A and Audio B.
 - Most delay (both feedback and multitap) parameters changed.
-- CV and Audio banks got re-arranged, so all parameters changed.
 - Master CV parameters changed (uni/bipolar switch replaced by actual bipolar controls).
 
 January 25, 2023 - V1.0.

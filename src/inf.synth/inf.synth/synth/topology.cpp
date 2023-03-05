@@ -5,6 +5,7 @@
 #include <inf.synth/effect/graph2.hpp>
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/envelope/graph.hpp>
+#include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/effect/topology.hpp>
 #include <inf.synth/output/topology.hpp>
 #include <inf.synth/envelope/topology.hpp>
@@ -63,6 +64,34 @@ synth_topology::create_graph_processor(part_id id, std::int32_t graph_type) cons
   case part_type::veffect: case part_type::geffect: return create_graph_processor_effect(id, graph_type);
   default: assert(false); return nullptr;
   }
+}
+
+base::param_value 
+synth_topology::convert_param(
+  std::int32_t index, 
+  param_value old_value, std::string const& old_text,
+  std::uint16_t old_major, std::uint16_t old_minor) const
+{
+  // 1.1 changed envelope time bounds from 10 to 20
+  if (old_major < 1 || old_major == 1 && old_minor < 1)
+    for(std::int32_t i = 0; i < venv_count; i++)
+    {
+      std::int32_t env_start = param_bounds[part_type::venv][i];
+      if (index == env_start + envelope_param::delay_time ||
+        index == env_start + envelope_param::hold_time ||
+        index == env_start + envelope_param::attack1_time ||
+        index == env_start + envelope_param::attack2_time ||
+        index == env_start + envelope_param::decay1_time ||
+        index == env_start + envelope_param::decay2_time ||
+        index == env_start + envelope_param::release1_time ||
+        index == env_start + envelope_param::release2_time)
+      {
+        float old_in_range = real_bounds::quadratic(0.0f, 10.0f).to_range(old_value.real);
+        return param_value(params[index].descriptor->data.real.dsp.from_range(old_in_range));
+      }
+    }
+
+  return old_value;
 }
 
 // ---- part selector ----

@@ -34,6 +34,9 @@ public synth_topology
 public:
   bool is_instrument() const override { return false; }
   void init_defaults(param_value* state) const override;
+  char const* plugin_name() const { return INF_VST_INFERNAL_SYNTH_FX_NAME; }
+  std::uint16_t version_major() const { return INF_VST_INFERNAL_SYNTH_FX_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return INF_VST_INFERNAL_SYNTH_FX_VERSION_MINOR; }
 };
 
 void
