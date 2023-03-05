@@ -3,7 +3,7 @@
 - v update vst3 sdk
 - v update version number
 - x gcc build
-- x diff presets
+- v diff presets
 - v update history
 - v keep manual up to date
 
@@ -22,5 +22,4 @@
 - better factory presets
 - new menu option: clear all unused
 - recreate project website, re-do presets and demos
-- include major/minor in serialization format instead of file version
 
