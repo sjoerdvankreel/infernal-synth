@@ -21,5 +21,6 @@
 
 * wishlist small
 - recreate project website
+- fix demo song + make synths demo
 - new menu option: clear all unused
-- fx presets + fix demo song + make synths demo
+
