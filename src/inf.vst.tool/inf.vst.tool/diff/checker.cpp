@@ -154,7 +154,7 @@ check_plugin(
     part_descriptor const* part1 = &topo1->static_parts[old_part_index];
     if(part1->kind != part2->kind) print_part_diff(i), std::cout << "\tChanged kind.\n";
     if(part1->type != part2->type) print_part_diff(i), std::cout << "\tChanged type.\n";
-    if(part1->param_count != part2->param_count) print_part_diff(i), "\tChanged param count.\n";
+    if(part1->param_count != part2->param_count) print_part_diff(i), std::cout << "\tChanged param count.\n";
     if(std::string(part1->static_name.detail) != part2->static_name.detail) print_part_diff(i), std::cout << "\tChanged long name.\n";
     if(std::string(part1->static_name.short_) != part2->static_name.short_) print_part_diff(i), std::cout << "\tChanged short name.\n";
     if(part1->part_count != part2->part_count) print_part_diff(i), std::cout << "\tChanged part count from " << part1->part_count << " to " << part2->part_count << ".\n";

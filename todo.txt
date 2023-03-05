@@ -2,9 +2,10 @@
 - v update hiir
 - v update vst3 sdk
 - v update version number
-- x gcc build
-- x diff presets
+- v gcc build
+- v diff presets
 - v update history
+- v debug run demos
 - v keep manual up to date
 
 * bugs
@@ -19,8 +20,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- better factory presets
+- fix demo song
+- recreate project website
 - new menu option: clear all unused
-- recreate project website, re-do presets and demos
-- include major/minor in serialization format instead of file version
-
