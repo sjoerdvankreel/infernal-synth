@@ -27,7 +27,7 @@ audio_bank_data const audio_bank_data::global =
 audio_bank_state::audio_bank_state(std::int32_t max_sample_count):
 out(stereo_channels, max_sample_count), voice(stereo_channels, max_sample_count),
 voices(stereo_channels, max_sample_count), external(stereo_channels, max_sample_count),
-vosc(), veffect(), geffect(), vosc_reset_pos(), vosc_reset()
+vosc_all(stereo_channels, max_sample_count), vosc(), veffect(), geffect(), vosc_reset_pos(), vosc_reset()
 {
   for (std::int32_t i = 0; i < veffect_count; i++)
     veffect[i] = cont_storage<float>(stereo_channels, max_sample_count);

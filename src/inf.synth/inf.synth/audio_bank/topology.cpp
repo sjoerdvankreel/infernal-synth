@@ -19,6 +19,7 @@ std::vector<box_descriptor> audio_bank_borders()
 
 static list_item const vaudio_route_inputs[vaudio_route_input::count] = {
   { "{49276AD4-960F-49D4-9B74-A8E4D5A86B6B}", "Off" },
+  { "{BA7D11D6-27D3-460C-849E-4FFA756290DF}", "Osc All" }, // all
   { "{A3D43958-5219-4D44-A51A-54853EF6F457}", "Osc" }, // any 
   { "{1E01C31B-3160-49B6-A88F-7A532AE5B407}", "FX A" } };
 static list_item const vaudio_route_outputs[vaudio_route_output::count] = {
@@ -37,7 +38,7 @@ static list_item const gaudio_route_outputs[gaudio_route_output::count] = {
    
 static bool const vaudio_route_output_spaces[vaudio_route_output::count] = { true, false, true };
 static bool const gaudio_route_output_spaces[gaudio_route_output::count] = { true, false, true }; 
-static bool const vaudio_route_input_spaces[vaudio_route_input::count] = { true, true, false };
+static bool const vaudio_route_input_spaces[vaudio_route_input::count] = { true, true, true, false };
 static bool const gaudio_route_input_spaces[gaudio_route_input::count] = { true, true, true, false };
  
 static std::vector<list_item> const vaudio_route_input_items =  
