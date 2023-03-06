@@ -17,7 +17,6 @@ registered in Europe and other countries.
 # Credits
 
 - Artwork by DanteCyberman: [Seven deadly sins](https://www.deviantart.com/dantecyberman/art/Seven-deadly-sins-442680725).
-- Reverb demo adapted from RMB's classic "Spring".
 - Contains a slightly adapted implementation of [Jezar's Freeverb](https://github.com/sinshu/freeverb).
 - Contains a slightly adapted implementation of the [Karplus-Strong algorithm](https://blog.demofox.org/2016/06/16/synthesizing-a-pluked-string-sound-with-the-karplus-strong-algorithm).
 - Contains a verbatim implementation of [Andrew Simper's state variable filter equations](https://cytomic.com/files/dsp/SvfLinearTrapOptimised2.pdf).
