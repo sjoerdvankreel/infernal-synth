@@ -182,7 +182,7 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
     - State variable filter
         - Freq: cutof-off / center frequency.
         - Res: resonance. Increase for a steeper response. High values will produce self-oscillation.
-        - SV: filter mode. Regular low/high/band pass, bandstop, allpass, equalizer and shelving filters.
+        - Flt: filter mode. Regular low/high/band pass, bandstop, allpass, equalizer and shelving filters.
         - Gain: gain amount for shelving filters (LSH, HSH, BLL). Defines attenuation at center frequency.
         - Kbd: keyboard tracking amount. When non-zero, alters the filter frequency based on the voice midi note (or last midi note for global) relative to C4.
 
