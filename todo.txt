@@ -17,6 +17,7 @@
 - osc types: feedback lead
 - filter types: formant, vowel
 - scale CV amount by global CV param
+- tabbed ui + larger knobs + less bg images?
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
