@@ -23,5 +23,5 @@
 
 * wishlist small
 - fix demo song
-- recreate project website
 - new menu option: clear all unused
+- make more presets + group by folder
