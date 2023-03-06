@@ -22,7 +22,6 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
-- fix demo song
 - new menu option: clear all unused
 - make more presets + group by folder
 - clear and redirect seven repo and website
