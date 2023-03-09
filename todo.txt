@@ -3,10 +3,11 @@
 - v update hiir
 - v update vst3 sdk
 - v update version number
-- v gcc build
+- x gcc build
 - v diff presets
-- v update history
-- v debug run demos
+- x update history
+- x debug run demos
+- x run the vst validator
 - v keep manual up to date
 
 * bugs
