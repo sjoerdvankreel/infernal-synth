@@ -132,7 +132,8 @@ vst_processor::process(ProcessData& data)
   }
 
   // Not running, just update state.
-  if (data.numSamples == 0 || data.numOutputs == 0) 
+  // Assume no tempo means a test run.
+  if (data.numSamples == 0 || data.numOutputs == 0 || input.data.bpm <= 0.0f)
   {
     process_input_parameters(data);
     return kResultOk;
