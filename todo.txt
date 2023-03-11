@@ -7,6 +7,7 @@
 - v diff presets
 - x update history
 - x debug run demos
+- x run pluginval
 - x run the vst validator
 - v keep manual up to date
 
@@ -25,4 +26,5 @@
 * wishlist small
 - new menu option: clear all unused
 - make more presets + group by folder
+- document avx2 requirement or scale down
 - clear and redirect seven repo and website
