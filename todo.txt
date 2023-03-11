@@ -24,6 +24,7 @@
 - noise types: fractal, perlin, better colored noise
 
 * wishlist small
+- buy reaper
 - new menu option: clear all unused
 - make more presets + group by folder
 - make it just work: static linking (SMTG_USE_STATIC_CRT) + find a way to test win7 + document avx requirement
