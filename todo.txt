@@ -26,4 +26,4 @@
 * wishlist small
 - new menu option: clear all unused
 - make more presets + group by folder
-- make it just work: static linking (SMTG_USE_STATIC_CRT) & drop avx2 + find a way to test win7
+- make it just work: static linking (SMTG_USE_STATIC_CRT) + find a way to test win7
