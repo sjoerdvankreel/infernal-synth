@@ -2,7 +2,8 @@
 - x create version branch
 - x update hiir
 - x update vst3 sdk
-- x update version number
+- x update version number in code
+- x update version number in cmake unless only bugfix release
 - x gcc build
 - x diff presets
 - x update history
