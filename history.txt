@@ -1,4 +1,10 @@
-?, ? - V1.1.
+March 12, 2023 - V1.1.1.
+
+* Switched AVX2 to AVX1.
+* Force linear knob mode.
+* Bugfix: 0 BPM would crash the plugin.
+
+March 6, 2023 - V1.1.
 
 * Updated UI.
 * Trimmed down output tab.
