@@ -1,18 +1,23 @@
 * for each release
-- v create version branch
-- v update hiir
-- v update vst3 sdk
-- v update version number
+- x create version branch
+- x update hiir
+- x update vst3 sdk
+- x update version number
 - x gcc build
-- v diff presets
+- x diff presets
 - x update history
 - x debug run demos
 - x run pluginval
 - x run the vst validator
-- v keep manual up to date
+- x keep manual up to date
 
-* bugs
+* host bugs
 - renoise/flstudio automation serialization is broken
+
+* wishlist small
+- buy reaper
+- new menu option: clear all unused
+- make more presets + group by folder
 
 * wishlist big
 - CLAP support
@@ -20,13 +25,14 @@
 - osc types: feedback lead
 - filter types: formant, vowel
 - scale CV amount by global CV param
-- tabbed ui + larger knobs + less bg images?
 - noise types: fractal, perlin, better colored noise
 
-* wishlist small
-- buy reaper
-- fix circular mouse movement
-- put active knob value in 1 single place
-- new menu option: clear all unused
-- make more presets + group by folder
-- make it just work: static linking (SMTG_USE_STATIC_CRT) + find a way to test win7 + document avx requirement
+* wishlist ui
+- tabbed ui
+- larger knobs
+- remove voice/master graphs
+- programmatic ui, no uidesc
+- reduce the use of background images
+- provide an alternate way to pop up the context menu
+- drop text edit fields & put active knob value in 1 single place
+- filter out incompatible menu options (osc sync, ram, audio routing)
