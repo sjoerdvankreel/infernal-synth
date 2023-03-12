@@ -34,9 +34,9 @@ public synth_topology
 public:
   bool is_instrument() const override { return false; }
   void init_defaults(param_value* state) const override;
-  char const* plugin_name() const { return INF_VST_INFERNAL_SYNTH_FX_NAME; }
-  std::uint16_t version_major() const { return INF_VST_INFERNAL_SYNTH_FX_VERSION_MAJOR; }
-  std::uint16_t version_minor() const { return INF_VST_INFERNAL_SYNTH_FX_VERSION_MINOR; }
+  char const* plugin_name() const { return INF_VST_INFERNAL_SYNTH_NAME; }
+  std::uint16_t version_major() const { return INF_VST_INFERNAL_SYNTH_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return INF_VST_INFERNAL_SYNTH_VERSION_MINOR; }
 };
 
 void
@@ -152,19 +152,19 @@ static FUnknown* inf_vst_processor_factory(void* context)
 }
 
 BEGIN_FACTORY_DEF(
-  INF_VST_INFERNAL_SYNTH_FX_COMPANY_NAME,
-  INF_VST_INFERNAL_SYNTH_FX_COMPANY_WEB,
-  INF_VST_INFERNAL_SYNTH_FX_COMPANY_MAIL)
+  INF_VST_INFERNAL_SYNTH_COMPANY_NAME,
+  INF_VST_INFERNAL_SYNTH_COMPANY_WEB,
+  INF_VST_INFERNAL_SYNTH_COMPANY_MAIL)
 
   DEF_CLASS2(
     INLINE_UID_FROM_FUID(inf_vst_processor_id),
-    PClassInfo::kManyInstances, kVstAudioEffectClass, INF_VST_INFERNAL_SYNTH_FX_NAME,
+    PClassInfo::kManyInstances, kVstAudioEffectClass, INF_VST_INFERNAL_SYNTH_NAME,
     Steinberg::Vst::kDistributable, Steinberg::Vst::PlugType::kFx, 
-    INF_VST_INFERNAL_SYNTH_FX_VERSION, kVstVersionString, inf_vst_processor_factory)
+    INF_VST_INFERNAL_SYNTH_VERSION, kVstVersionString, inf_vst_processor_factory)
   
   DEF_CLASS2(
     INLINE_UID_FROM_FUID(inf_vst_controller_id),
     PClassInfo::kManyInstances, kVstComponentControllerClass, 
-    INF_VST_INFERNAL_SYNTH_FX_CONTROLLER_NAME, 0, "",
-    INF_VST_INFERNAL_SYNTH_FX_VERSION, kVstVersionString, inf_vst_controller_factory)
+    INF_VST_INFERNAL_SYNTH_CONTROLLER_NAME, 0, "",
+    INF_VST_INFERNAL_SYNTH_VERSION, kVstVersionString, inf_vst_controller_factory)
 END_FACTORY
