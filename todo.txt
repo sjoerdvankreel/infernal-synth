@@ -18,6 +18,7 @@
 * wishlist small
 - buy reaper
 - static linked version
+- load/save patch option
 - new menu option: clear all unused
 - make more presets + group by folder
 
