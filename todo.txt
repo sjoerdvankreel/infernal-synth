@@ -22,6 +22,7 @@
 - load/save patch option
 - new menu option: clear all unused
 - make more presets + group by folder
+- allow for 3th party skins and presets
 
 * wishlist big
 - CLAP support
