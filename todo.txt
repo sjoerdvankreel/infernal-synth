@@ -23,6 +23,7 @@
 - new menu option: clear all unused
 - make more presets + group by folder
 - allow for 3th party skins and presets
+- sensible clear preset for both instrument and fx
 
 * wishlist big
 - CLAP support
