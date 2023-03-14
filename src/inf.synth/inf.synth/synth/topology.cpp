@@ -248,19 +248,74 @@ part_ui_colors make_part_ui_colors()
   ui_color const header_check_frame_color = foreground3; 
 
   return { 
-    label_color, border_color, info_label_color, header_label_color, connector_color,
-    { knob_fill_color, knob_marker_color, knob_drag_color, knob_inner_color, knob_outer_color, knob_light_color, knob_shadow_color }, // knob
-    { graph_line_color, graph_area_color, graph_grid_color, graph_fill_color, graph_frame_color }, // graph
-    { edit_font_color, edit_back_color }, // edit 
-    { menu_font_color, menu_back_color }, // menu  
-    { knob_menu_font_color, knob_menu_back_color }, // knob menu  
-    { table_menu_font_color, table_menu_back_color }, // table menu  
-    { tab_header_font_color, tab_font_color, tab_back_color, tab_inner_frame_color, tab_active_font_color, tab_active_back_color, tab_outer_frame_color }, // tab header
-    { check_mark_color, check_fill_color, check_frame_color }, // check
-    { header_check_mark_color, header_check_fill_color, header_check_frame_color }, // header check 
-    { param_back_color, param_frame_color }, // param  
-    { container_back_color, container_frame_color }, // param container  
-    { header_back_color, header_frame_color }, // header container           
+    { "label", label_color },
+    { "border", border_color },
+    { "info_label", info_label_color },
+    { "header_label", header_label_color },
+    { "connector", connector_color },
+    { 
+      { "knob_fill", knob_fill_color },
+      { "knob_marker", knob_marker_color },
+      { "knob_drag", knob_drag_color },
+      { "knob_inner", knob_inner_color },
+      { "knob_outer", knob_outer_color },
+      { "knob_light", knob_light_color },
+      { "knob_shadow", knob_shadow_color }
+    },
+    { 
+      { "graph_line", graph_line_color },
+      { "graph_area", graph_area_color },
+      { "graph_grid", graph_grid_color },
+      { "graph_fill", graph_fill_color },
+      { "graph_frame", graph_frame_color }
+    },
+    { 
+      { "edit_font", edit_font_color },
+      { "edit_back", edit_back_color }
+    },
+    { 
+      { "menu_font", menu_font_color },
+      { "menu_back", menu_back_color }
+    },
+    { 
+      { "knob_menu_font", knob_menu_font_color },
+      { "knob_menu_back", knob_menu_back_color }
+    },
+    { 
+      { "table_menu_font", table_menu_font_color },
+      { "table_menu_back", table_menu_back_color }
+    },
+    { 
+      { "tab_header_font", tab_header_font_color },
+      { "tab_font", tab_font_color },
+      { "tab_back", tab_back_color },
+      { "tab_inner_frame", tab_inner_frame_color },
+      { "tab_active_font", tab_active_font_color },
+      { "tab_active_back", tab_active_back_color },
+      { "tab_outer_frame", tab_outer_frame_color }
+    },
+    { 
+      { "check_mark", check_mark_color },
+      { "check_fill", check_fill_color },
+      { "check_frame", check_frame_color }
+    }, 
+    { 
+      { "header_check_mark", header_check_mark_color },
+      { "header_check_fill", header_check_fill_color },
+      { "header_check_frame", header_check_frame_color }
+    },
+    { 
+      { "param_back", param_back_color },
+      { "param_frame", param_frame_color }
+    },
+    { 
+      { "container_back", container_back_color },
+      { "container_frame", container_frame_color }
+    },
+    { 
+      { "header_back", header_back_color },
+      { "header_frame", header_frame_color }
+    }
   };
 }
                                     

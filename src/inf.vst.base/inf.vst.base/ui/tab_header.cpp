@@ -22,13 +22,13 @@ tab_header_creator::create(UIAttributes const& attrs, IUIDescription const* desc
   while(std::getline(list_stream, item, ',')) items.push_back(item);
 
   tab_header_ui_colors colors;
-  colors.back = from_vst_color_name(attrs.getAttributeValue("back-color"), desc);
-  colors.font = from_vst_color_name(attrs.getAttributeValue("font-color"), desc);
-  colors.header_font = from_vst_color_name(attrs.getAttributeValue("header-font-color"), desc);
-  colors.inner_frame = from_vst_color_name(attrs.getAttributeValue("inner-frame-color"), desc);
-  colors.outer_frame = from_vst_color_name(attrs.getAttributeValue("outer-frame-color"), desc);
-  colors.active_back = from_vst_color_name(attrs.getAttributeValue("active-back-color"), desc);
-  colors.active_font = from_vst_color_name(attrs.getAttributeValue("active-font-color"), desc);
+  colors.back.color = from_vst_color_name(attrs.getAttributeValue("back-color"), desc);
+  colors.font.color = from_vst_color_name(attrs.getAttributeValue("font-color"), desc);
+  colors.header_font.color = from_vst_color_name(attrs.getAttributeValue("header-font-color"), desc);
+  colors.inner_frame.color = from_vst_color_name(attrs.getAttributeValue("inner-frame-color"), desc);
+  colors.outer_frame.color = from_vst_color_name(attrs.getAttributeValue("outer-frame-color"), desc);
+  colors.active_back.color = from_vst_color_name(attrs.getAttributeValue("active-back-color"), desc);
+  colors.active_font.color = from_vst_color_name(attrs.getAttributeValue("active-font-color"), desc);
   return new tab_header(*title, items, colors);
 } 
   
@@ -90,13 +90,13 @@ tab_header::draw(CDrawContext* context)
   context->setLineWidth(1.0);        
   context->setFont(getFont(), 11);
   context->setDrawMode(kAntialias);    
-  context->setFrameColor(to_vst_color(_colors.inner_frame));
+  context->setFrameColor(to_vst_color(_colors.inner_frame.color));
   _last_draw_boundaries.clear();
   _last_draw_boundaries.push_back(current_left);
 
   // Title 
-  context->setFontColor(to_vst_color(_colors.header_font));
-  context->setFillColor(to_vst_color(_colors.active_back));
+  context->setFontColor(to_vst_color(_colors.header_font.color));
+  context->setFillColor(to_vst_color(_colors.active_back.color));
   double title_width = context->getStringWidth(_title.c_str());
   current_left += title_width + title_padding_left + padding;
   _last_draw_boundaries.push_back(current_left);
@@ -107,8 +107,8 @@ tab_header::draw(CDrawContext* context)
   // Separators and items 
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(_items.size()); i++)
   { 
-    context->setFontColor(to_vst_color(i == get_index() ? _colors.active_font : _colors.font));
-    context->setFillColor(to_vst_color(i == get_index() ? _colors.active_back: _colors.back));
+    context->setFontColor(to_vst_color(i == get_index() ? _colors.active_font.color : _colors.font.color));
+    context->setFillColor(to_vst_color(i == get_index() ? _colors.active_back.color : _colors.back.color));
     double text_width = context->getStringWidth(_items[i].c_str());
     double cell_width = text_width + 2.0 * padding; 
     auto line_start = CPoint(current_left, pos.y);
@@ -122,7 +122,7 @@ tab_header::draw(CDrawContext* context)
   } 
 
   // Outer frame
-  context->setFrameColor(to_vst_color(_colors.outer_frame));
+  context->setFrameColor(to_vst_color(_colors.outer_frame.color));
   context->drawLine(CPoint(current_left, pos.y), CPoint(current_left, pos.y + getViewSize().getHeight()));
   setDirty(false);
 }

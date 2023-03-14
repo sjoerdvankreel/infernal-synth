@@ -41,11 +41,11 @@ graph_plot_creator::create(
   assert(ok);
   (void)ok;
 
-  colors.line = from_vst_color_name(attrs.getAttributeValue("line-color"), desc);
-  colors.grid = from_vst_color_name(attrs.getAttributeValue("grid-color"), desc);
-  colors.area = from_vst_color_name(attrs.getAttributeValue("area-color"), desc);
-  colors.fill = from_vst_color_name(attrs.getAttributeValue("fill-color"), desc);
-  colors.frame = from_vst_color_name(attrs.getAttributeValue("frame-color"), desc);
+  colors.line.color = from_vst_color_name(attrs.getAttributeValue("line-color"), desc);
+  colors.grid.color = from_vst_color_name(attrs.getAttributeValue("grid-color"), desc);
+  colors.area.color = from_vst_color_name(attrs.getAttributeValue("area-color"), desc);
+  colors.fill.color = from_vst_color_name(attrs.getAttributeValue("fill-color"), desc);
+  colors.frame.color = from_vst_color_name(attrs.getAttributeValue("frame-color"), desc);
 
   part_id id = { part_type, part_index };
   tooltip = attrs.getAttributeValue("tooltip");
@@ -66,19 +66,19 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   CDrawContext::Transform transform(*context, CGraphicsTransform().translate(pos));
   
   // Fill.
-  context->setFillColor(to_vst_color(_colors.fill));
+  context->setFillColor(to_vst_color(_colors.fill.color));
   context->drawRect(CRect(CPoint(0, 0), size), CDrawStyle::kDrawFilled);
         
   // Frame.
   context->setLineWidth(1.0);
   context->setDrawMode(kAntiAliasing);
-  context->setFrameColor(to_vst_color(_colors.frame));
+  context->setFrameColor(to_vst_color(_colors.frame.color));
   context->drawRect(CRect(CPoint(0, 0), size), CDrawStyle::kDrawStroked);
 
   // Grid. 
   context->setLineWidth(1.0);
   context->setDrawMode(kAntiAliasing); 
-  context->setFrameColor(to_vst_color(_colors.grid));
+  context->setFrameColor(to_vst_color(_colors.grid.color));
   std::int32_t const h_segment_count = 8 * _column_span;
   float segment_width = size.x / h_segment_count;
   for (std::int32_t i = 1; i < h_segment_count; i++)
@@ -109,12 +109,12 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   }
   fill_path->addLine(render_size.x + padx / 2, render_size.y * base_y + pady / 2 + 2.0);
   GradientColorStopMap unipolar_map({
-    { 0.0, to_vst_color(_colors.area.opacity(opacity)) },
-    { 1.0, to_vst_color(_colors.area.opacity(opacity * 0.1)) } });
+    { 0.0, to_vst_color(_colors.area.color.opacity(opacity)) },
+    { 1.0, to_vst_color(_colors.area.color.opacity(opacity * 0.1)) } });
   GradientColorStopMap bipolar_map({
-    { 0.0, to_vst_color(_colors.area.opacity(opacity)) },
-    { 0.5, to_vst_color(_colors.area.opacity(opacity * 0.1)) },
-    { 1.0, to_vst_color(_colors.area.opacity(opacity)) } });
+    { 0.0, to_vst_color(_colors.area.color.opacity(opacity)) },
+    { 0.5, to_vst_color(_colors.area.color.opacity(opacity * 0.1)) },
+    { 1.0, to_vst_color(_colors.area.color.opacity(opacity)) } });
   CGradient* gradient = CGradient::create(bipolar? bipolar_map: unipolar_map);
   if(bipolar)
   {
@@ -129,7 +129,7 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   // Line.
   context->setLineWidth(0.75);
   context->setDrawMode(kAntiAliasing);
-  context->setFrameColor(to_vst_color(_colors.line.opacity(opacity)));
+  context->setFrameColor(to_vst_color(_colors.line.color.opacity(opacity)));
   CGraphicsPath* stroke_path = context->createGraphicsPath();
   stroke_path->beginSubpath(CPoint(graph_data[0].x + padx, render_size.y - graph_data[0].y + pady));
   for (std::size_t i = 1; i < graph_data.size(); i++)
