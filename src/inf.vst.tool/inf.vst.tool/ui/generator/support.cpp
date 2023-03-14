@@ -16,6 +16,9 @@ to_machine_friendly(std::string const& val)
   for (std::size_t c = 0; c < val.length(); c++)
   {
     if (val[c] == '_') result += '_';
+    else if (val[c] == '+') result += "_plus_";
+    else if (val[c] == '-') result += "_minus_";
+    else if (val[c] == '/') result += "_slash_";
     else if (std::isspace(val[c])) result += '_';
     else if('a' <= val[c] && val[c] <= 'z') result += val[c];
     else if ('0' <= val[c] && val[c] <= '9') result += val[c];
