@@ -99,7 +99,7 @@ build_ui_control_tags(
   return result;
 }
 
-static Value
+static Value 
 build_ui_bitmaps(
   topology_info const& topology, Document::AllocatorType& allocator)
 {
@@ -112,7 +112,7 @@ build_ui_bitmaps(
       if(file == nullptr || seen.find(file) != seen.end()) continue;
       seen.insert(file);
       Value background_value(kObjectType);
-      add_member(background_value, "path", file, allocator);
+      add_member(background_value, "path", std::string("UI/") + file, allocator);
       add_member(result, file, background_value, allocator);
     }
   return result;
