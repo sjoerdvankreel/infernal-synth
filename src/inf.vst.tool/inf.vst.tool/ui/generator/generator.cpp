@@ -510,7 +510,7 @@ build_ui_part_single_param_container(
     return result;
   }
 
-  add_attribute(result, "background-color", get_color_name(type, color_transparent), allocator);
+  add_attribute(result, "background-color", get_color_name(part_plugin_name, color_transparent), allocator);
   std::string alignment = part_ui->table != nullptr && part_ui->table->ltr ? "left" : "right";
   if (header != nullptr)
     add_child(result, "CTextLabel", build_ui_param_label(
@@ -844,7 +844,7 @@ build_ui_part_container(part_type_ui_description const& type,
   add_attribute(result, "background-color-draw-style", "stroked", allocator);
   add_attribute(result, "name", std::to_string(part.runtime_index), allocator);
   add_attribute(result, "size", size_to_string(part.width, part.height), allocator);
-  add_attribute(result, "background-color", get_color_name(type, color_transparent), allocator);
+  add_attribute(result, "background-color", get_color_name(part_plugin_name, color_transparent), allocator);
   add_child(result, "CTextLabel", build_ui_part_header_container_border(type, part, allocator), allocator);
   add_child(result, "inf_view_container_fix", build_ui_part_header_container_image(type, part, allocator), allocator);
   add_child(result, "inf_view_container_fix", build_ui_part_header_container(type, part, allocator), allocator);

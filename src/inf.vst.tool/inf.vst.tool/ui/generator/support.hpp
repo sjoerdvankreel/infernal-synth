@@ -11,13 +11,14 @@
 
 namespace inf::vst::tool::ui {
 
+std::string to_machine_friendly(std::string const& val);
 std::string size_to_string(std::int32_t w, std::int32_t h);
 std::string print_rgba_hex(inf::base::ui_color const& color);
 std::string get_control_tag(inf::base::part_info const& part, inf::base::param_info const& param);
 
 inline std::string
 get_color_name(std::string const& part_name, inf::base::named_ui_color const& color)
-{ return "color_" + part_name + "_" + color.name; }
+{ return to_machine_friendly("color_" + part_name + "_" + color.name); }
 inline std::string
 get_color_name(inf::base::part_info const& info, inf::base::named_ui_color const& color)
 { return get_color_name(info.descriptor->static_name.short_, color); }
