@@ -127,6 +127,7 @@ part_type_ui_description::create(
   result.selector_param.column = -1;
   result.selector_param.info = nullptr;
   result.colors = part.ui->colors;
+  result.part_name = part.static_name.short_;
   for(std::int32_t i = 0; i < part.part_count; i++)
     result.parts.push_back(part_ui_description::create(topology,
       &topology.parts[runtime_part_indices[i]], i, runtime_part_indices[i]));
