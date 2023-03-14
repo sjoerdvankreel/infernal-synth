@@ -120,45 +120,62 @@ build_ui_colors(
   Value result(kObjectType);
   std::map<std::string, std::string> color_map;
 
-  auto add_color = [&](ui_color const& col) {
-    std::string name = get_color_name(col);
+  auto add_color = [&](std::string const& name, ui_color const& col) {
     auto iter = color_map.find(name);
-    if (iter != color_map.end()) return;
+    assert(iter == color_map.end());
     std::string value = get_color_value(col);
     color_map[name] = value;
     add_member(result, name, value, allocator); };
-
-  auto add_box = [&](box_ui_colors const& cols) { add_color(cols.fill); add_color(cols.frame); };
-  auto add_basic = [&](basic_ui_colors const& cols) { add_color(cols.back); add_color(cols.font); };
-  auto add_check = [&](check_ui_colors const& cols) { add_color(cols.fill); add_color(cols.frame); add_color(cols.mark); };
-  auto add_tab = [&](tab_header_ui_colors const& cols) { add_color(cols.back); add_color(cols.font); add_color(cols.header_font);
-    add_color(cols.inner_frame); add_color(cols.outer_frame); add_color(cols.active_font); add_color(cols.active_back); };
-  auto add_graph = [&](graph_ui_colors const& cols) { add_color(cols.fill); 
-    add_color(cols.area); add_color(cols.frame); add_color(cols.line); add_color(cols.grid); };
-  auto add_knob = [&](knob_ui_colors const& cols) { add_color(cols.fill); add_color(cols.inner); 
-    add_color(cols.outer); add_color(cols.light); add_color(cols.shadow); add_color(cols.marker); add_color(cols.drag); };
-
-  add_color(transparent);
+  
+  add_color("transparent", 0x00FFFFFF);
   for (std::int32_t i = 0; i < topology.static_part_count; i++)
   {
+    auto const& colors = topology.static_parts[i].ui->colors;
     if (topology.static_parts[i].kind == part_kind::selector) continue;
-    add_knob(topology.static_parts[i].ui->colors.knob);
-    add_graph(topology.static_parts[i].ui->colors.graph);
-    add_basic(topology.static_parts[i].ui->colors.menu);
-    add_basic(topology.static_parts[i].ui->colors.edit);
-    add_basic(topology.static_parts[i].ui->colors.knob_menu);
-    add_basic(topology.static_parts[i].ui->colors.table_menu);
-    add_tab(topology.static_parts[i].ui->colors.tab_header);
-    add_box(topology.static_parts[i].ui->colors.param);
-    add_box(topology.static_parts[i].ui->colors.param_container);
-    add_box(topology.static_parts[i].ui->colors.header_container);
-    add_check(topology.static_parts[i].ui->colors.check);
-    add_check(topology.static_parts[i].ui->colors.header_check);
-    add_color(topology.static_parts[i].ui->colors.label);
-    add_color(topology.static_parts[i].ui->colors.border);
-    add_color(topology.static_parts[i].ui->colors.connector);
-    add_color(topology.static_parts[i].ui->colors.info_label);
-    add_color(topology.static_parts[i].ui->colors.header_label);
+    add_color("label", colors.label);
+    add_color("border", colors.border);
+    add_color("connector", colors.connector);
+    add_color("info_label", colors.info_label);
+    add_color("header_label", colors.header_label);
+    add_color("menu_back", colors.menu.back);
+    add_color("menu_font", colors.menu.font);
+    add_color("edit_back", colors.edit.back);
+    add_color("edit_font", colors.edit.font);
+    add_color("graph_area", colors.graph.area);
+    add_color("graph_fill", colors.graph.fill);
+    add_color("graph_grid", colors.graph.grid);
+    add_color("graph_line", colors.graph.line);
+    add_color("graph_frame", colors.graph.frame);
+    add_color("knob_drag", colors.knob.drag);
+    add_color("knob_fill", colors.knob.fill);
+    add_color("knob_inner", colors.knob.inner);
+    add_color("knob_outer", colors.knob.outer);
+    add_color("knob_light", colors.knob.light);
+    add_color("knob_marker", colors.knob.marker);
+    add_color("knob_shadow", colors.knob.shadow);
+    add_color("param_fill", colors.param.fill);
+    add_color("param_frame", colors.param.frame);
+    add_color("check_fill", colors.check.fill);
+    add_color("check_mark", colors.check.mark);
+    add_color("check_frame", colors.check.frame);
+    add_color("knob_menu_back", colors.knob_menu.back);
+    add_color("knob_menu_font", colors.knob_menu.font);
+    add_color("table_menu_back", colors.table_menu.back);
+    add_color("table_menu_font", colors.table_menu.font);
+    add_color("header_check_fill", colors.header_check.fill);
+    add_color("header_check_mark", colors.header_check.mark);
+    add_color("header_check_frame", colors.header_check.frame);
+    add_color("param_container_fill", colors.param_container.fill);
+    add_color("param_container_frame", colors.param_container.frame);
+    add_color("header_container_fill", colors.header_container.fill);
+    add_color("header_container_frame", colors.header_container.frame);
+    add_color("tab_header_back", colors.tab_header.back);
+    add_color("tab_header_font", colors.tab_header.font);
+    add_color("tab_header_active_back", colors.tab_header.active_back);
+    add_color("tab_header_active_font", colors.tab_header.active_font);
+    add_color("tab_header_header_font", colors.tab_header.header_font);
+    add_color("tab_header_inner_frame", colors.tab_header.inner_frame);
+    add_color("tab_header_outer_frame", colors.tab_header.outer_frame);
   }
   return result;
 }
