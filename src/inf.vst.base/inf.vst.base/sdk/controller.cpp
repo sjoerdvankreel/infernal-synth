@@ -84,7 +84,7 @@ IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_editor* result = new vst_editor(this, "view", "controller.uidesc", _topology.get());
+  vst_editor* result = new vst_editor(this, "view", "UI/controller.uidesc", _topology.get());
   setKnobMode(KnobModes::kLinearMode);
   return result;
 }   
@@ -255,7 +255,7 @@ vst_controller::add_preset_select_items(COptionMenu* menu)
     base_path = factory->getResourceBasePath();
 #endif
     if(!base_path) return;
-    for (auto const& entry : std::filesystem::directory_iterator(base_path.value().data()))
+    for (auto const& entry : std::filesystem::directory_iterator((base_path.value() + "/Presets").data()))
     {
       if(entry.path().extension().string() != ".vstpreset") continue;
       preset_item item;
