@@ -130,6 +130,7 @@ build_ui_colors(
     color_map[name] = value;
     add_member(result, name, value, allocator); };
   
+  add_color(color_transparent);
   for (std::int32_t i = 0; i < topology.static_part_count; i++)
   {
     auto const& colors = topology.static_parts[i].ui->colors;
