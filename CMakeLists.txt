@@ -121,8 +121,6 @@ add_custom_target(copy-resources-synth-fx-generic-debug ALL DEPENDS infernal.vst
 add_custom_target(copy-resources-synth-fx-generic-release ALL DEPENDS infernal.vst.synth.fx.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Generic/InfernalSynthFX.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-fx-generic-debug ALL DEPENDS infernal.vst.synth.fx.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/fx ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Generic/InfernalSynthFX.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-fx-generic-release ALL DEPENDS infernal.vst.synth.fx.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/fx ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Generic/InfernalSynthFX.vst3/Contents/Resources)
-add_custom_target(copy-uidesc-synth-fx-generic-debug ALL DEPENDS infernal.vst.synth.fx.generic COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Generic/InfernalSynthFX.vst3/Contents/Resources/controller.uidesc)
-add_custom_target(copy-uidesc-synth-fx-generic-release ALL DEPENDS infernal.vst.synth.fx.generic COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Generic/InfernalSynthFX.vst3/Contents/Resources/controller.uidesc)
 
 if (MSVC)
 source_group(TREE "../../${INF_VST_SYNTH_FX_GENERIC_SRC_DIR}" FILES ${INF_VST_SYNTH_FX_GENERIC_SRC})
@@ -151,8 +149,6 @@ add_custom_target(copy-resources-synth-fx-versioned-debug ALL DEPENDS infernal.v
 add_custom_target(copy-resources-synth-fx-versioned-release ALL DEPENDS infernal.vst.synth.fx.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Versioned/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-fx-versioned-debug ALL DEPENDS infernal.vst.synth.fx.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/fx ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Versioned/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-fx-versioned-release ALL DEPENDS infernal.vst.synth.fx.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/fx ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Versioned/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources)
-add_custom_target(copy-uidesc-synth-fx-versioned-debug ALL DEPENDS infernal.vst.synth.fx.versioned COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Versioned/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources/controller.uidesc)
-add_custom_target(copy-uidesc-synth-fx-versioned-release ALL DEPENDS infernal.vst.synth.fx.versioned COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Versioned/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources/controller.uidesc)
 
 if (MSVC)
 source_group(TREE "../../${INF_VST_SYNTH_FX_VERSIONED_SRC_DIR}" FILES ${INF_VST_SYNTH_FX_VERSIONED_SRC})
@@ -181,8 +177,6 @@ add_custom_target(copy-resources-synth-instrument-generic-debug ALL DEPENDS infe
 add_custom_target(copy-resources-synth-instrument-generic-release ALL DEPENDS infernal.vst.synth.instrument.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Generic/InfernalSynth.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-instrument-generic-debug ALL DEPENDS infernal.vst.synth.instrument.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/instrument ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Generic/InfernalSynth.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-instrument-generic-release ALL DEPENDS infernal.vst.synth.instrument.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/instrument ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Generic/InfernalSynth.vst3/Contents/Resources)
-add_custom_target(copy-uidesc-synth-instrument-generic-debug ALL DEPENDS infernal.vst.synth.instrument.generic COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Generic/InfernalSynth.vst3/Contents/Resources/controller.uidesc)
-add_custom_target(copy-uidesc-synth-instrument-generic-release ALL DEPENDS infernal.vst.synth.instrument.generic COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Generic/InfernalSynth.vst3/Contents/Resources/controller.uidesc)
 
 if (MSVC)
 source_group(TREE "../../${INF_VST_SYNTH_INSTRUMENT_GENERIC_SRC_DIR}" FILES ${INF_VST_SYNTH_INSTRUMENT_GENERIC_SRC})
@@ -211,8 +205,6 @@ add_custom_target(copy-resources-synth-instrument-versioned-debug ALL DEPENDS in
 add_custom_target(copy-resources-synth-instrument-versioned-release ALL DEPENDS infernal.vst.synth.instrument.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Versioned/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-instrument-versioned-debug ALL DEPENDS infernal.vst.synth.instrument.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/instrument ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Versioned/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources)
 add_custom_target(copy-presets-synth-instrument-versioned-release ALL DEPENDS infernal.vst.synth.instrument.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/instrument ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Versioned/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources)
-add_custom_target(copy-uidesc-synth-instrument-versioned-debug ALL DEPENDS infernal.vst.synth.instrument.versioned COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Debug/InfernalSynth/Versioned/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources/controller.uidesc)
-add_custom_target(copy-uidesc-synth-instrument-versioned-release ALL DEPENDS infernal.vst.synth.instrument.versioned COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/resources/controller.uidesc ${CMAKE_BINARY_DIR}/Release/InfernalSynth/Versioned/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources/controller.uidesc)
 
 if (MSVC)
 source_group(TREE "../../${INF_VST_SYNTH_INSTRUMENT_VERSIONED_SRC_DIR}" FILES ${INF_VST_SYNTH_INSTRUMENT_VERSIONED_SRC})
