@@ -16,12 +16,12 @@ std::string print_rgba_hex(inf::base::ui_color const& color);
 std::string get_control_tag(inf::base::part_info const& part, inf::base::param_info const& param);
 
 inline std::string
-get_color_name(inf::base::ui_color const& color)
-{ return "color_" + print_rgba_hex(color); }
+get_color_name(inf::base::named_ui_color const& color)
+{ return "color_" + color.name; }
 
 inline std::string
-get_color_value(inf::base::ui_color const& color)
-{ return "#" + print_rgba_hex(color); }
+get_color_value(inf::base::named_ui_color const& color)
+{ return "#" + print_rgba_hex(color.color); }
 
 rapidjson::Value& add_member(
   rapidjson::Value& container, std::string const& key,
