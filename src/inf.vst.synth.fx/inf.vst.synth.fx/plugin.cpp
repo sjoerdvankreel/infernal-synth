@@ -51,8 +51,8 @@ synth_fx_topology::init_clear_patch(param_value* state) const
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "FX B1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "Master");
 }
 
 void

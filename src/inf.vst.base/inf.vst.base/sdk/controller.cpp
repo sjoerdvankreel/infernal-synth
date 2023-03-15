@@ -34,6 +34,12 @@ using namespace Steinberg::Vst;
 
 namespace inf::vst::base {
 
+vst_controller::
+vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
+_editor(nullptr), _preset_items_initialized(false), _preset_items(),
+_state(topology->params.size()), _topology(std::move(topology))
+{ _topology->init_factory_preset(_state.data()); }
+
 void
 vst_controller::sync_ui_parameters()
 {
