@@ -37,7 +37,7 @@ _global_effect_states(), _voice_effect_states(), _voice_oscillator_states()
 
   // Don't need defaults for discrete valued automation, only contiguous.
   // So we end up with crap in discrete-valued parameters, but they're not used.
-  topology->init_defaults(reinterpret_cast<param_value*>(_last_automation_previous_block.data()));
+  topology->init_all_param_defaults(reinterpret_cast<param_value*>(_last_automation_previous_block.data()));
 
   // Init global fx state.
   for (std::int32_t i = 0; i < geffect_count; i++)

@@ -171,7 +171,7 @@ vst_controller::clear_module(std::int32_t type, std::int32_t index)
   std::vector<param_value> new_values(_state.begin(), _state.end());
   std::int32_t param_start = _topology->param_bounds[type][index];
   std::int32_t param_count = _topology->static_parts[type].param_count;
-  _topology->init_defaults(new_values.data(), param_start, param_start + param_count);
+  _topology->init_param_defaults(new_values.data(), param_start, param_start + param_count);
   load_component_state(new_values.data(), true);
 }
 
@@ -183,7 +183,7 @@ vst_controller::add_patch_items(COptionMenu* menu)
   auto init_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Init patch"));
   init_patch->setActions([this](CCommandMenuItem*) { 
     std::vector<param_value> new_values(_topology->input_param_count, param_value());
-    _topology->init_defaults(new_values.data());
+    _topology->init_factory_preset(new_values.data());
     load_component_state(new_values.data(), true);
   });
   menu->addEntry(init_patch);
@@ -192,7 +192,7 @@ vst_controller::add_patch_items(COptionMenu* menu)
   auto clear_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Clear patch"));
   clear_patch->setActions([this](CCommandMenuItem*) {
     std::vector<param_value> new_values(_topology->input_param_count, param_value());
-    _topology->init_defaults(new_values.data(), 0, _topology->input_param_count);
+    _topology->init_clear_patch(new_values.data());
     load_component_state(new_values.data(), true);
   });
   menu->addEntry(clear_patch);

@@ -64,10 +64,13 @@ struct topology_info
   std::map<std::int32_t, std::int32_t> param_id_to_index;
 
   // Set parameters to their default value as defined in param descriptor.
-  // Virtual so we can apply some sensible defaults for instrument/fx.
-  void init_defaults(param_value* state, std::int32_t from, std::int32_t to) const;
-  virtual void init_defaults(param_value* state) const { init_defaults(state, 0, input_param_count); }
+  void init_param_defaults(param_value* state, std::int32_t from, std::int32_t to) const;
+  void init_all_param_defaults(param_value* state) const { init_param_defaults(state, 0, input_param_count); }
   void set_ui_value(param_value* state, std::int32_t part_type, std::int32_t part_index, std::int32_t param, char const* value) const;
+
+  // Virtual so we can apply some sensible defaults for instrument/fx.
+  virtual void init_clear_patch(param_value* state) const { init_all_param_defaults(state); }
+  virtual void init_factory_preset(param_value* state) const { init_all_param_defaults(state); }
 
   // Metadata and conversions (backwards compat).
   virtual char const* plugin_name() const = 0;

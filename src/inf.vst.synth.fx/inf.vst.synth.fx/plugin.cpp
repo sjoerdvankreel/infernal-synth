@@ -33,16 +33,32 @@ public synth_topology
 {
 public:
   bool is_instrument() const override { return false; }
-  void init_defaults(param_value* state) const override;
+  void init_clear_patch(param_value* state) const override;
+  void init_factory_preset(param_value* state) const override;
   char const* plugin_name() const { return INF_VST_INFERNAL_SYNTH_NAME; }
   std::uint16_t version_major() const { return INF_VST_INFERNAL_SYNTH_VERSION_MAJOR; }
   std::uint16_t version_minor() const { return INF_VST_INFERNAL_SYNTH_VERSION_MINOR; }
 };
 
 void
-synth_fx_topology::init_defaults(param_value* state) const
+synth_fx_topology::init_clear_patch(param_value* state) const
 {
-  topology_info::init_defaults(state);
+  topology_info::init_clear_patch(state);
+
+  // Bare minimum to have a basic delay line.
+  set_ui_value(state, part_type::geffect, 0, effect_param::on, "On");
+  set_ui_value(state, part_type::geffect, 0, effect_param::type, "Delay");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "FX B1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");
+}
+
+void
+synth_fx_topology::init_factory_preset(param_value* state) const
+{
+  topology_info::init_factory_preset(state);
 
   // fx b1 reverb
   set_ui_value(state, part_type::geffect, 0, effect_param::on, "On");

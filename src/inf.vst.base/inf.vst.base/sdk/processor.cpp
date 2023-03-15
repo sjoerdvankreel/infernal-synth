@@ -32,7 +32,7 @@ _accurate_parameters(static_cast<std::size_t>(topology->input_param_count)),
 _output_updated(), _topology(std::move(topology)), _processor()
 {
 	setControllerClass(controller_id);
-  _topology->init_defaults(_state.data());
+  _topology->init_all_param_defaults(_state.data());
   for(std::int32_t i = 0; i < _topology->input_param_count; i++)
     _accurate_parameters[i].setParamID(_topology->param_index_to_id[i]);
 

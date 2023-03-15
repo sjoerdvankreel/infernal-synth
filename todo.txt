@@ -4,12 +4,12 @@
 - v update vst3 sdk
 - v update version number in code
 - v update version number in cmake unless only bugfix release
-- v gcc build
+- x gcc build
 - v diff presets
 - x update history
-- v debug run demos
-- v run pluginval
-- v run the vst validator
+- x debug run demos
+- x run pluginval
+- x run the vst validator
 - x keep manual up to date
 - x don't forget to tag
 
@@ -22,8 +22,6 @@
 - load/save patch option
 - new menu option: clear all unused
 - make more presets + group by folder
-- allow for 3th party skins and presets
-- sensible clear preset for both instrument and fx
 
 * wishlist big
 - CLAP support

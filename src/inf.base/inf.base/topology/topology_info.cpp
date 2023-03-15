@@ -31,7 +31,7 @@ topology_info::set_ui_value(
 }
 
 void 
-topology_info::init_defaults(param_value* state, std::int32_t from, std::int32_t to) const
+topology_info::init_param_defaults(param_value* state, std::int32_t from, std::int32_t to) const
 {
   assert(from >= 0);
   assert(to >= from);
