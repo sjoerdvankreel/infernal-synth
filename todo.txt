@@ -11,7 +11,7 @@
 - v run pluginval
 - v run the vst validator
 - x keep manual up to date
-- x don't forget to tag
+- v don't forget to tag
 
 * host bugs
 - renoise/flstudio automation serialization is broken
