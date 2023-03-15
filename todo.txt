@@ -10,7 +10,7 @@
 - v debug run demos
 - v run pluginval
 - v run the vst validator
-- x keep manual up to date
+- v keep manual up to date
 - v don't forget to tag
 
 * host bugs

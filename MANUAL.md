@@ -16,6 +16,12 @@ from the host's point of view).
 - Use the Generic build if you want to be able to load old projects using a new plugin version, get bugfixes automatically, and don't mind breaking changes.
 - Use the Versioned build (preferred) if you want stuff to just keep working and be shielded from breaking changes. Newer versions of the plugin can work side-by-side with older versions.
 
+## Theming
+
+Due to VST3's bundle format, InfernalSynth can easily be themed if you're comfortable editing json files.\
+Look for the controller.uidesc file in Contents/Resources/UI. The background images live in the same folder,
+they can be swapped for anything else as long as the other image has the same dimensions.
+
 ## Architecture
 
 InfernalSynth is conceptually split up into 5 parts:
