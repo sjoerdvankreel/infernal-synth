@@ -4,12 +4,12 @@
 - v update vst3 sdk
 - v update version number in code
 - v update version number in cmake unless only bugfix release
-- x gcc build
+- v gcc build
 - v diff presets
 - x update history
 - x debug run demos
-- x run pluginval
-- x run the vst validator
+- v run pluginval
+- v run the vst validator
 - x keep manual up to date
 - x don't forget to tag
 
@@ -29,7 +29,10 @@
 - osc types: feedback lead
 - filter types: formant, vowel
 - scale CV amount by global CV param
-- noise types: fractal, perlin, better colored noise
+- noise types: fractal, perlin
+- improve current noise generator (1/fs)
+- improve k+s generator (allow more stretching)
+- improve dsf generator: high partials roll off too fast
 
 * wishlist ui
 - tabbed ui
