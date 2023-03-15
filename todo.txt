@@ -6,8 +6,8 @@
 - v update version number in cmake unless only bugfix release
 - v gcc build
 - v diff presets
-- x update history
-- x debug run demos
+- v update history
+- v debug run demos
 - v run pluginval
 - v run the vst validator
 - x keep manual up to date
@@ -40,6 +40,6 @@
 - remove voice/master graphs
 - programmatic ui, no uidesc
 - reduce the use of background images
-- provide an alternate way to pop up the context menu
 - drop text edit fields & put active knob value in 1 single place
 - filter out incompatible menu options (osc sync, ram, audio routing)
+- provide an alternate way to pop up the context menu or integrate it in the plugin ui
