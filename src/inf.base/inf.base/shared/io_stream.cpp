@@ -83,7 +83,7 @@ io_stream::load(topology_info const& topology, param_value* state)
   if(!read_int32(param_count) || param_count <= 0) return false;
 
   // Set defaults in case some params are missing or invalid.
-  topology.init_defaults(state);
+  topology.init_all_param_defaults(state);
   from_file_version(raw_file_version, old_major, old_minor);
 
   for (std::int32_t sp = 0; sp < param_count; sp++)

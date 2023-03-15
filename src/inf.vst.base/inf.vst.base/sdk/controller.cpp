@@ -34,6 +34,12 @@ using namespace Steinberg::Vst;
 
 namespace inf::vst::base {
 
+vst_controller::
+vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
+_editor(nullptr), _preset_items_initialized(false), _preset_items(),
+_state(topology->params.size()), _topology(std::move(topology))
+{ _topology->init_factory_preset(_state.data()); }
+
 void
 vst_controller::sync_ui_parameters()
 {
@@ -84,7 +90,7 @@ IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_editor* result = new vst_editor(this, "view", "controller.uidesc", _topology.get());
+  vst_editor* result = new vst_editor(this, "view", "UI/controller.uidesc", _topology.get());
   setKnobMode(KnobModes::kLinearMode);
   return result;
 }   
@@ -171,7 +177,7 @@ vst_controller::clear_module(std::int32_t type, std::int32_t index)
   std::vector<param_value> new_values(_state.begin(), _state.end());
   std::int32_t param_start = _topology->param_bounds[type][index];
   std::int32_t param_count = _topology->static_parts[type].param_count;
-  _topology->init_defaults(new_values.data(), param_start, param_start + param_count);
+  _topology->init_param_defaults(new_values.data(), param_start, param_start + param_count);
   load_component_state(new_values.data(), true);
 }
 
@@ -183,7 +189,7 @@ vst_controller::add_patch_items(COptionMenu* menu)
   auto init_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Init patch"));
   init_patch->setActions([this](CCommandMenuItem*) { 
     std::vector<param_value> new_values(_topology->input_param_count, param_value());
-    _topology->init_defaults(new_values.data());
+    _topology->init_factory_preset(new_values.data());
     load_component_state(new_values.data(), true);
   });
   menu->addEntry(init_patch);
@@ -192,7 +198,7 @@ vst_controller::add_patch_items(COptionMenu* menu)
   auto clear_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Clear patch"));
   clear_patch->setActions([this](CCommandMenuItem*) {
     std::vector<param_value> new_values(_topology->input_param_count, param_value());
-    _topology->init_defaults(new_values.data(), 0, _topology->input_param_count);
+    _topology->init_clear_patch(new_values.data());
     load_component_state(new_values.data(), true);
   });
   menu->addEntry(clear_patch);
@@ -255,7 +261,7 @@ vst_controller::add_preset_select_items(COptionMenu* menu)
     base_path = factory->getResourceBasePath();
 #endif
     if(!base_path) return;
-    for (auto const& entry : std::filesystem::directory_iterator(base_path.value().data()))
+    for (auto const& entry : std::filesystem::directory_iterator((base_path.value() + "/Presets").data()))
     {
       if(entry.path().extension().string() != ".vstpreset") continue;
       preset_item item;

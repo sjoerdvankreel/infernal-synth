@@ -1,8 +1,9 @@
 #ifndef INF_BASE_TOPOLOGY_PART_UI_DESCRIPTOR_HPP
 #define INF_BASE_TOPOLOGY_PART_UI_DESCRIPTOR_HPP
 
-#include <cstdint>
 #include <vector>
+#include <string>
+#include <cstdint>
 
 // For ui generator.
 // Most stuff can't be const because of ui generator.
@@ -69,18 +70,29 @@ struct ui_color
   }
 };
 
+// Tagged ARGB color.
+struct named_ui_color
+{
+  ui_color color;
+  std::string name;
+
+  named_ui_color() = default;
+  named_ui_color(std::string const& name, ui_color const& color):
+  color(color), name(name) {}
+};
+
 // Shared color combinations.
-struct box_ui_colors { ui_color fill, frame; };
-struct basic_ui_colors { ui_color font, back; };
-struct check_ui_colors { ui_color mark, fill, frame; };
-struct graph_ui_colors { ui_color line, area, grid, fill, frame; };
-struct knob_ui_colors { ui_color fill, marker, drag, inner, outer, light, shadow; };
-struct tab_header_ui_colors { ui_color header_font, font, back, inner_frame, active_font, active_back, outer_frame; };
+struct box_ui_colors { named_ui_color fill, frame; };
+struct basic_ui_colors { named_ui_color font, back; };
+struct check_ui_colors { named_ui_color mark, fill, frame; };
+struct graph_ui_colors { named_ui_color line, area, grid, fill, frame; };
+struct knob_ui_colors { named_ui_color fill, marker, drag, inner, outer, light, shadow; };
+struct tab_header_ui_colors { named_ui_color header_font, font, back, inner_frame, active_font, active_back, outer_frame; };
 
 // Represents all customizable colors.
 struct part_ui_colors
 {
-  ui_color label, border, info_label, header_label, connector;
+  named_ui_color label, border, info_label, header_label, connector;
   knob_ui_colors knob;
   graph_ui_colors graph;
   basic_ui_colors edit, menu, knob_menu, table_menu;

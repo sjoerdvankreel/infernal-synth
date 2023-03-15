@@ -153,21 +153,21 @@ static special_params_descriptor const geffect_special = { effect_param::on, 0, 
 static special_params_descriptor const vaudio_bank_special = { audio_bank_param::on, 0, active_param::vaudio_bank };      
 static special_params_descriptor const gaudio_bank_special = { audio_bank_param::on, 1, active_param::gaudio_bank };                   
            
-static part_ui_descriptor const vosc_ui = { 4, vosc_special, osc_graphs, part_colors, osc_borders, nullptr, connector_direction::right, "lust.png", 50, "", true};
-static part_ui_descriptor const veffect_ui = { 4, veffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "sloth.png", 200, "", false};
-static part_ui_descriptor const geffect_ui = { 4, geffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "lust.png", 100, "Global", false };
-static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right, "greed.png", 250, "", false};
-static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "envy.png", 150, "Global", false};
-static part_ui_descriptor const voice_ui = { 4, part_no_special, voice_graphs, part_colors, voice_borders, nullptr, connector_direction::down, "wrath.png", 150, "", true};
-static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs, part_colors, master_borders, nullptr, connector_direction::left, "pride.png", 200, "Global", true};
-static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "sloth.png", 200, "", true };
-static part_ui_descriptor const vlfo_ui = { 4, vlfo_special, lfo_graphs, part_colors, lfo_borders, nullptr,  connector_direction::right, "wrath.png", 150, "", false };
-static part_ui_descriptor const glfo_ui = { 4, glfo_special, lfo_graphs, part_colors, lfo_borders, nullptr, connector_direction::none, "pride.png", 150, "Global", false };
-static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, cv_bank_borders(vcv_bank_param::count), &cv_bank_table, connector_direction::up, "gluttony.png", 150, "", false};
-static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, cv_bank_borders(gcv_bank_param::count), &cv_bank_table, connector_direction::up | connector_direction::halfway_left_up, "envy.png", 100, "Global", false};
-static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "pride.png", 175, "", true };
-static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "gluttony.png", 200, "Global", true};
-static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, output_borders, &output_table, connector_direction::down, "greed.png", 275, "Global", true};
+static part_ui_descriptor const vosc_ui = { 4, vosc_special, osc_graphs, part_colors, osc_borders, nullptr, connector_direction::right, "background_oscillator.png", 50, "", true};
+static part_ui_descriptor const veffect_ui = { 4, veffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "background_fx_a.png", 200, "", false};
+static part_ui_descriptor const geffect_ui = { 4, geffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "background_fx_b.png", 100, "Global", false };
+static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right, "background_audio_a.png", 250, "", false};
+static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "background_audio_b.png", 150, "Global", false};
+static part_ui_descriptor const voice_ui = { 4, part_no_special, voice_graphs, part_colors, voice_borders, nullptr, connector_direction::down, "background_voice.png", 150, "", true};
+static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs, part_colors, master_borders, nullptr, connector_direction::left, "background_master.png", 200, "Global", true};
+static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "background_envelope.png", 200, "", true };
+static part_ui_descriptor const vlfo_ui = { 4, vlfo_special, lfo_graphs, part_colors, lfo_borders, nullptr,  connector_direction::right, "background_lfo_a.png", 150, "", false };
+static part_ui_descriptor const glfo_ui = { 4, glfo_special, lfo_graphs, part_colors, lfo_borders, nullptr, connector_direction::none, "background_lfo_b.png", 150, "Global", false };
+static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, cv_bank_borders(vcv_bank_param::count), &cv_bank_table, connector_direction::up, "background_cv_a.png", 150, "", false};
+static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, cv_bank_borders(gcv_bank_param::count), &cv_bank_table, connector_direction::up | connector_direction::halfway_left_up, "background_cv_b.png", 100, "Global", false};
+static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "background_cv_a_plot.png", 175, "", true };
+static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "background_cv_b_plot.png", 200, "Global", true};
+static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, output_borders, &output_table, connector_direction::down, "background_output.png", 275, "Global", true};
                    
 part_descriptor const                                  
 part_descriptors[part_type::count] =                                             
@@ -248,19 +248,74 @@ part_ui_colors make_part_ui_colors()
   ui_color const header_check_frame_color = foreground3; 
 
   return { 
-    label_color, border_color, info_label_color, header_label_color, connector_color,
-    { knob_fill_color, knob_marker_color, knob_drag_color, knob_inner_color, knob_outer_color, knob_light_color, knob_shadow_color }, // knob
-    { graph_line_color, graph_area_color, graph_grid_color, graph_fill_color, graph_frame_color }, // graph
-    { edit_font_color, edit_back_color }, // edit 
-    { menu_font_color, menu_back_color }, // menu  
-    { knob_menu_font_color, knob_menu_back_color }, // knob menu  
-    { table_menu_font_color, table_menu_back_color }, // table menu  
-    { tab_header_font_color, tab_font_color, tab_back_color, tab_inner_frame_color, tab_active_font_color, tab_active_back_color, tab_outer_frame_color }, // tab header
-    { check_mark_color, check_fill_color, check_frame_color }, // check
-    { header_check_mark_color, header_check_fill_color, header_check_frame_color }, // header check 
-    { param_back_color, param_frame_color }, // param  
-    { container_back_color, container_frame_color }, // param container  
-    { header_back_color, header_frame_color }, // header container           
+    { "label", label_color },
+    { "border", border_color },
+    { "info_label", info_label_color },
+    { "header_label", header_label_color },
+    { "connector", connector_color },
+    { 
+      { "knob_fill", knob_fill_color },
+      { "knob_marker", knob_marker_color },
+      { "knob_drag", knob_drag_color },
+      { "knob_inner", knob_inner_color },
+      { "knob_outer", knob_outer_color },
+      { "knob_light", knob_light_color },
+      { "knob_shadow", knob_shadow_color }
+    },
+    { 
+      { "graph_line", graph_line_color },
+      { "graph_area", graph_area_color },
+      { "graph_grid", graph_grid_color },
+      { "graph_fill", graph_fill_color },
+      { "graph_frame", graph_frame_color }
+    },
+    { 
+      { "edit_font", edit_font_color },
+      { "edit_back", edit_back_color }
+    },
+    { 
+      { "menu_font", menu_font_color },
+      { "menu_back", menu_back_color }
+    },
+    { 
+      { "knob_menu_font", knob_menu_font_color },
+      { "knob_menu_back", knob_menu_back_color }
+    },
+    { 
+      { "table_menu_font", table_menu_font_color },
+      { "table_menu_back", table_menu_back_color }
+    },
+    { 
+      { "tab_header_font", tab_header_font_color },
+      { "tab_font", tab_font_color },
+      { "tab_back", tab_back_color },
+      { "tab_inner_frame", tab_inner_frame_color },
+      { "tab_active_font", tab_active_font_color },
+      { "tab_active_back", tab_active_back_color },
+      { "tab_outer_frame", tab_outer_frame_color }
+    },
+    { 
+      { "check_mark", check_mark_color },
+      { "check_fill", check_fill_color },
+      { "check_frame", check_frame_color }
+    }, 
+    { 
+      { "header_check_mark", header_check_mark_color },
+      { "header_check_fill", header_check_fill_color },
+      { "header_check_frame", header_check_frame_color }
+    },
+    { 
+      { "param_back", param_back_color },
+      { "param_frame", param_frame_color }
+    },
+    { 
+      { "container_back", container_back_color },
+      { "container_frame", container_frame_color }
+    },
+    { 
+      { "header_back", header_back_color },
+      { "header_frame", header_frame_color }
+    }
   };
 }
                                     

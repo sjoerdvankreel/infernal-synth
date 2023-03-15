@@ -1,3 +1,8 @@
+March 15, 2023 - V1.1.2.
+
+* Rewrite uidesc and rename background images to allow a bit of theming.
+* Clear-patch now sets the plugin to the very minimum configuration that actually produces sound.
+
 March 12, 2023 - V1.1.1.
 
 * Switched AVX2 to AVX1.

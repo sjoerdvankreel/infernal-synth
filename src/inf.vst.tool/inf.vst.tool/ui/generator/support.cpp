@@ -2,11 +2,35 @@
 #include <inf.base/topology/param_descriptor.hpp>
 
 #include <sstream>
+#include <iostream>
 
 using namespace rapidjson;
 using namespace inf::base;
 
 namespace inf::vst::tool::ui {
+
+std::string
+to_machine_friendly(std::string const& val)
+{
+  std::string result;
+  for (std::size_t c = 0; c < val.length(); c++)
+  {
+    if (val[c] == '_') result += '_';
+    else if (val[c] == '+') result += "_plus_";
+    else if (val[c] == '-') result += "_minus_";
+    else if (val[c] == '/') result += "_slash_";
+    else if (std::isspace(val[c])) result += '_';
+    else if('a' <= val[c] && val[c] <= 'z') result += val[c];
+    else if ('0' <= val[c] && val[c] <= '9') result += val[c];
+    else if ('A' <= val[c] && val[c] <= 'Z') result += static_cast<char>(std::tolower(val[c]));
+    else
+    {
+      std::cout << "Unexpected name: " << val << std::endl;
+      assert(false);
+    }
+  }
+  return result;
+}
 
 std::string
 print_rgba_hex(ui_color const& color)
@@ -78,12 +102,7 @@ get_control_tag(part_info const& part, param_info const& param)
   std::string result = part.descriptor->static_name.detail;
   result += "_" + std::to_string(part.type_index);
   result += "_" + std::string(param.descriptor->data.static_name.detail);
-  for (std::size_t c = 0; c < result.length(); c++)
-  {
-    if (std::isspace(result[c])) result[c] = '_';
-    else result[c] = static_cast<char>(std::tolower(result[c]));
-  }
-  return result;
+  return to_machine_friendly(result);
 }
 
 } // namespace inf::vst::tool::ui

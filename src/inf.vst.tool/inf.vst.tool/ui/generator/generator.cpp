@@ -20,6 +20,11 @@ using namespace inf::vst::tool::shared;
 
 namespace inf::vst::tool::ui {
 
+static std::string const
+part_plugin_name = "plugin";
+static named_ui_color const
+color_transparent = { "transparent", 0x00FFFFFF };
+
 static std::string
 get_option_menu_class(param_info const& param)
 {
@@ -94,7 +99,7 @@ build_ui_control_tags(
   return result;
 }
 
-static Value
+static Value 
 build_ui_bitmaps(
   topology_info const& topology, Document::AllocatorType& allocator)
 {
@@ -107,7 +112,7 @@ build_ui_bitmaps(
       if(file == nullptr || seen.find(file) != seen.end()) continue;
       seen.insert(file);
       Value background_value(kObjectType);
-      add_member(background_value, "path", file, allocator);
+      add_member(background_value, "path", std::string("UI/") + file, allocator);
       add_member(result, file, background_value, allocator);
     }
   return result;
@@ -120,45 +125,63 @@ build_ui_colors(
   Value result(kObjectType);
   std::map<std::string, std::string> color_map;
 
-  auto add_color = [&](ui_color const& col) {
-    std::string name = get_color_name(col);
-    auto iter = color_map.find(name);
-    if (iter != color_map.end()) return;
+  auto add_color = [&](std::string const& part_name, named_ui_color const& col) {
+    std::string name = get_color_name(part_name, col);
+    assert(color_map.find(name) == color_map.end());
     std::string value = get_color_value(col);
     color_map[name] = value;
     add_member(result, name, value, allocator); };
-
-  auto add_box = [&](box_ui_colors const& cols) { add_color(cols.fill); add_color(cols.frame); };
-  auto add_basic = [&](basic_ui_colors const& cols) { add_color(cols.back); add_color(cols.font); };
-  auto add_check = [&](check_ui_colors const& cols) { add_color(cols.fill); add_color(cols.frame); add_color(cols.mark); };
-  auto add_tab = [&](tab_header_ui_colors const& cols) { add_color(cols.back); add_color(cols.font); add_color(cols.header_font);
-    add_color(cols.inner_frame); add_color(cols.outer_frame); add_color(cols.active_font); add_color(cols.active_back); };
-  auto add_graph = [&](graph_ui_colors const& cols) { add_color(cols.fill); 
-    add_color(cols.area); add_color(cols.frame); add_color(cols.line); add_color(cols.grid); };
-  auto add_knob = [&](knob_ui_colors const& cols) { add_color(cols.fill); add_color(cols.inner); 
-    add_color(cols.outer); add_color(cols.light); add_color(cols.shadow); add_color(cols.marker); add_color(cols.drag); };
-
-  add_color(transparent);
+  
+  add_color(part_plugin_name, color_transparent);
   for (std::int32_t i = 0; i < topology.static_part_count; i++)
   {
+    auto const& colors = topology.static_parts[i].ui->colors;
+    auto const& part_name = topology.static_parts[i].static_name.short_;
     if (topology.static_parts[i].kind == part_kind::selector) continue;
-    add_knob(topology.static_parts[i].ui->colors.knob);
-    add_graph(topology.static_parts[i].ui->colors.graph);
-    add_basic(topology.static_parts[i].ui->colors.menu);
-    add_basic(topology.static_parts[i].ui->colors.edit);
-    add_basic(topology.static_parts[i].ui->colors.knob_menu);
-    add_basic(topology.static_parts[i].ui->colors.table_menu);
-    add_tab(topology.static_parts[i].ui->colors.tab_header);
-    add_box(topology.static_parts[i].ui->colors.param);
-    add_box(topology.static_parts[i].ui->colors.param_container);
-    add_box(topology.static_parts[i].ui->colors.header_container);
-    add_check(topology.static_parts[i].ui->colors.check);
-    add_check(topology.static_parts[i].ui->colors.header_check);
-    add_color(topology.static_parts[i].ui->colors.label);
-    add_color(topology.static_parts[i].ui->colors.border);
-    add_color(topology.static_parts[i].ui->colors.connector);
-    add_color(topology.static_parts[i].ui->colors.info_label);
-    add_color(topology.static_parts[i].ui->colors.header_label);
+    add_color(part_name, colors.label);
+    add_color(part_name, colors.border);
+    add_color(part_name, colors.connector);
+    add_color(part_name, colors.info_label);
+    add_color(part_name, colors.header_label);
+    add_color(part_name, colors.menu.back);
+    add_color(part_name, colors.menu.font);
+    add_color(part_name, colors.edit.back);
+    add_color(part_name, colors.edit.font);
+    add_color(part_name, colors.graph.area);
+    add_color(part_name, colors.graph.fill);
+    add_color(part_name, colors.graph.grid);
+    add_color(part_name, colors.graph.line);
+    add_color(part_name, colors.graph.frame);
+    add_color(part_name, colors.knob.drag);
+    add_color(part_name, colors.knob.fill);
+    add_color(part_name, colors.knob.inner);
+    add_color(part_name, colors.knob.outer);
+    add_color(part_name, colors.knob.light);
+    add_color(part_name, colors.knob.marker);
+    add_color(part_name, colors.knob.shadow);
+    add_color(part_name, colors.param.fill);
+    add_color(part_name, colors.param.frame);
+    add_color(part_name, colors.check.fill);
+    add_color(part_name, colors.check.mark);
+    add_color(part_name, colors.check.frame);
+    add_color(part_name, colors.knob_menu.back);
+    add_color(part_name, colors.knob_menu.font);
+    add_color(part_name, colors.tab_header.back);
+    add_color(part_name, colors.tab_header.font);
+    add_color(part_name, colors.table_menu.back);
+    add_color(part_name, colors.table_menu.font);
+    add_color(part_name, colors.header_check.fill);
+    add_color(part_name, colors.header_check.mark);
+    add_color(part_name, colors.header_check.frame);
+    add_color(part_name, colors.param_container.fill);
+    add_color(part_name, colors.param_container.frame);
+    add_color(part_name, colors.header_container.fill);
+    add_color(part_name, colors.header_container.frame);
+    add_color(part_name, colors.tab_header.active_back);
+    add_color(part_name, colors.tab_header.active_font);
+    add_color(part_name, colors.tab_header.header_font);
+    add_color(part_name, colors.tab_header.inner_frame);
+    add_color(part_name, colors.tab_header.outer_frame);
   }
   return result;
 }
@@ -184,7 +207,7 @@ build_ui_param_label(
   add_attribute(result, "transparent", "true", allocator);
   add_attribute(result, "font", "~ NormalFontSmall", allocator);
   add_attribute(result, "text-alignment", alignment, allocator);
-  add_attribute(result, "font-color", get_color_name(type.colors.label), allocator);
+  add_attribute(result, "font-color", get_color_name(type.part_name, type.colors.label), allocator);
   add_attribute(result, "title", title, allocator);
   return result;
 }
@@ -216,9 +239,9 @@ build_ui_param_checkbox(
   add_attribute(result, "frame-width", "1", allocator);
   add_attribute(result, "draw-crossbox", "true", allocator);
   add_attribute(result, "round-rect-radius", std::to_string(margin), allocator);
-  add_attribute(result, "boxfill-color", get_color_name(colors.fill), allocator);
-  add_attribute(result, "boxframe-color", get_color_name(colors.frame), allocator);
-  add_attribute(result, "checkmark-color", get_color_name(colors.mark), allocator);
+  add_attribute(result, "boxfill-color", get_color_name(part, colors.fill), allocator);
+  add_attribute(result, "boxframe-color", get_color_name(part, colors.frame), allocator);
+  add_attribute(result, "checkmark-color", get_color_name(part, colors.mark), allocator);
   return result;
 }
 
@@ -232,13 +255,13 @@ build_ui_param_knob(
   add_attribute(result, "angle-start", "30", allocator);
   add_attribute(result, "angle-range", "300", allocator); 
   add_attribute(result, "discrete", discrete? "true": "false", allocator);
-  add_attribute(result, "fill-color", get_color_name(type.colors.knob.fill), allocator);
-  add_attribute(result, "marker-color", get_color_name(type.colors.knob.marker), allocator);
-  add_attribute(result, "drag-color", get_color_name(type.colors.knob.drag), allocator);
-  add_attribute(result, "inner-color", get_color_name(type.colors.knob.inner), allocator);
-  add_attribute(result, "outer-color", get_color_name(type.colors.knob.outer), allocator);
-  add_attribute(result, "light-color", get_color_name(type.colors.knob.light), allocator);
-  add_attribute(result, "shadow-color", get_color_name(type.colors.knob.shadow), allocator);
+  add_attribute(result, "fill-color", get_color_name(type, type.colors.knob.fill), allocator);
+  add_attribute(result, "marker-color", get_color_name(type, type.colors.knob.marker), allocator);
+  add_attribute(result, "drag-color", get_color_name(type, type.colors.knob.drag), allocator);
+  add_attribute(result, "inner-color", get_color_name(type, type.colors.knob.inner), allocator);
+  add_attribute(result, "outer-color", get_color_name(type, type.colors.knob.outer), allocator);
+  add_attribute(result, "light-color", get_color_name(type, type.colors.knob.light), allocator);
+  add_attribute(result, "shadow-color", get_color_name(type, type.colors.knob.shadow), allocator);
   add_attribute(result, "bipolar", !discrete && param.descriptor->data.real.display.min < 0.0f? "true": "false", allocator);
   return result;
 }
@@ -264,8 +287,8 @@ build_ui_param_menu(
   add_attribute(result, "menu-check-style", "false", allocator); 
   add_attribute(result, "font", "~ NormalFontSmall", allocator);
   add_attribute(result, "text-alignment", alignment, allocator);
-  add_attribute(result, "font-color", get_color_name(colors.font), allocator);
-  add_attribute(result, "back-color", get_color_name(colors.back), allocator);
+  add_attribute(result, "font-color", get_color_name(part, colors.font), allocator);
+  add_attribute(result, "back-color", get_color_name(part, colors.back), allocator);
   add_attribute(result, "text-inset", size_to_string(margin, 0), allocator);
   add_attribute(result, "round-rect-radius", std::to_string(margin), allocator);
   add_attribute(result, "items-per-column", std::to_string(items_per_column), allocator);
@@ -286,8 +309,8 @@ build_ui_param_edit(
   add_attribute(result, "font", "~ NormalFontSmall", allocator);
   add_attribute(result, "text-inset", size_to_string(margin, 0), allocator);
   add_attribute(result, "round-rect-radius", std::to_string(margin), allocator);
-  add_attribute(result, "back-color", get_color_name(type.colors.edit.back), allocator);
-  add_attribute(result, "font-color", get_color_name(type.colors.edit.font), allocator);
+  add_attribute(result, "back-color", get_color_name(type, type.colors.edit.back), allocator);
+  add_attribute(result, "font-color", get_color_name(type, type.colors.edit.font), allocator);
   add_attribute(result, "value-precision", std::to_string(param.descriptor->data.real.precision), allocator);
   return result;
 }
@@ -308,7 +331,7 @@ build_ui_single_param_border(
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "size", size_to_string(width, height), allocator);
   add_attribute(result, "background-color-draw-style", "stroked", allocator);
-  add_attribute(result, "background-color", get_color_name(type.colors.param.frame), allocator);
+  add_attribute(result, "background-color", get_color_name(type, type.colors.param.frame), allocator);
   return result;
 }
 
@@ -483,11 +506,11 @@ build_ui_part_single_param_container(
   // Decorator cell.
   if(param == nullptr && header == nullptr)
   {
-    add_attribute(result, "background-color", get_color_name(type.colors.param.fill), allocator);
+    add_attribute(result, "background-color", get_color_name(type, type.colors.param.fill), allocator);
     return result;
   }
 
-  add_attribute(result, "background-color", get_color_name(transparent), allocator);
+  add_attribute(result, "background-color", get_color_name(part_plugin_name, color_transparent), allocator);
   std::string alignment = part_ui->table != nullptr && part_ui->table->ltr ? "left" : "right";
   if (header != nullptr)
     add_child(result, "CTextLabel", build_ui_param_label(
@@ -515,11 +538,11 @@ build_ui_part_graph(
   add_attribute(result, "row-span", std::to_string(graph.box.row_span), allocator);
   add_attribute(result, "part-index", std::to_string(part.info->type_index), allocator);
   add_attribute(result, "column-span", std::to_string(graph.box.column_span), allocator);
-  add_attribute(result, "line-color", get_color_name(type.colors.graph.line), allocator);
-  add_attribute(result, "fill-color", get_color_name(type.colors.graph.fill), allocator);
-  add_attribute(result, "grid-color", get_color_name(type.colors.graph.grid), allocator);
-  add_attribute(result, "area-color", get_color_name(type.colors.graph.area), allocator);
-  add_attribute(result, "frame-color", get_color_name(type.colors.graph.frame), allocator);
+  add_attribute(result, "line-color", get_color_name(type, type.colors.graph.line), allocator);
+  add_attribute(result, "fill-color", get_color_name(type, type.colors.graph.fill), allocator);
+  add_attribute(result, "grid-color", get_color_name(type, type.colors.graph.grid), allocator);
+  add_attribute(result, "area-color", get_color_name(type, type.colors.graph.area), allocator);
+  add_attribute(result, "frame-color", get_color_name(type, type.colors.graph.frame), allocator);
   add_attribute(result, "part-type", std::to_string(part.info->descriptor->type), allocator);
   return result;
 } 
@@ -534,8 +557,8 @@ build_ui_part_param_container_inner_border(
   add_attribute(result, "class", "CTextLabel", allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
   add_attribute(result, "size", size_to_string(width, height), allocator);
-  add_attribute(result, "back-color", get_color_name(transparent), allocator);
-  add_attribute(result, "frame-color", get_color_name(type.colors.border), allocator);
+  add_attribute(result, "frame-color", get_color_name(type, type.colors.border), allocator);
+  add_attribute(result, "back-color", get_color_name(part_plugin_name, color_transparent), allocator);
   return result;
 }
 
@@ -587,7 +610,7 @@ build_ui_part_param_container(part_type_ui_description const& type,
   add_attribute(result, "class", "inf_view_container_fix", allocator);
   add_attribute(result, "origin", size_to_string(margin - padding_param_group, top), allocator);
   add_attribute(result, "size", size_to_string(part.width - 2 * margin + 2 * padding_param_group, height), allocator);
-  add_attribute(result, "background-color", get_color_name(type.colors.param_container.fill), allocator);
+  add_attribute(result, "background-color", get_color_name(type, type.colors.param_container.fill), allocator);
 
   // Build graph content.
   for (std::int32_t g = 0; g < part_ui->graphs.size(); g++)
@@ -659,17 +682,16 @@ build_ui_part_param_container_border(
   add_attribute(result, "class", "CTextLabel", allocator);
   add_attribute(result, "style-round-rect", "true", allocator);
   add_attribute(result, "round-rect-radius", std::to_string(margin), allocator);
-  add_attribute(result, "back-color", get_color_name(type.colors.param_container.fill), allocator);
-  add_attribute(result, "frame-color", get_color_name(type.colors.param_container.frame), allocator);
+  add_attribute(result, "back-color", get_color_name(type, type.colors.param_container.fill), allocator);
+  add_attribute(result, "frame-color", get_color_name(type, type.colors.param_container.frame), allocator);
   add_attribute(result, "origin", size_to_string(0, param_row_height + padding_param_group * 4), allocator);
   add_attribute(result, "size", size_to_string(part.width, part.height - param_row_height - padding_param_group * 4), allocator);
   return result;
 }
 
 static Value
-build_ui_part_header_label(
-  std::string const& alignment, std::string const& title, 
-  std::int32_t left, std::int32_t width, ui_color const& color, Document::AllocatorType& allocator)
+build_ui_part_header_label(part_type_ui_description const& type, std::string const& alignment, std::string const& title, 
+  std::int32_t left, std::int32_t width, named_ui_color const& color, Document::AllocatorType& allocator)
 {
   Value result(kObjectType);
   add_attribute(result, "title", title, allocator);
@@ -677,7 +699,7 @@ build_ui_part_header_label(
   add_attribute(result, "transparent", "true", allocator);
   add_attribute(result, "font", "~ NormalFontSmall", allocator);
   add_attribute(result, "text-alignment", alignment, allocator);
-  add_attribute(result, "font-color", get_color_name(color), allocator);
+  add_attribute(result, "font-color", get_color_name(type, color), allocator);
   add_attribute(result, "origin", size_to_string(left, -2 * padding_param_group), allocator);
   add_attribute(result, "size", size_to_string(width, param_row_height + padding_param_group * 4), allocator);
   return result;
@@ -711,9 +733,8 @@ build_ui_part_header_container_image(part_type_ui_description const& type,
 }
 
 static Value
-build_ui_part_connector(
-  std::int32_t columns, connector_direction direction, 
-  ui_color const& color, Document::AllocatorType& allocator)
+build_ui_part_connector(part_type_ui_description const& type, std::int32_t columns, 
+  connector_direction direction, named_ui_color const& color, Document::AllocatorType& allocator)
 {
   std::int32_t top = 0;
   std::int32_t left = -1;
@@ -739,7 +760,7 @@ build_ui_part_connector(
 
   add_attribute(result, "class", "inf_part_connector", allocator);
   add_attribute(result, "origin", size_to_string(left, top), allocator);
-  add_attribute(result, "connector-color", get_color_name(color), allocator);
+  add_attribute(result, "connector-color", get_color_name(type, color), allocator);
   add_attribute(result, "connector-direction", std::to_string(direction), allocator);
   add_attribute(result, "size", size_to_string(header_connector_size, header_connector_size), allocator);
   return result;
@@ -751,7 +772,7 @@ build_ui_part_header_container(part_type_ui_description const& type,
 {
   Value result = build_ui_part_header_container_base(type, part, allocator);
   add_attribute(result, "background-color-draw-style", "filled", allocator);
-  add_attribute(result, "background-color", get_color_name(type.colors.header_container.fill), allocator);
+  add_attribute(result, "background-color", get_color_name(type, type.colors.header_container.fill), allocator);
 
   std::int32_t enabled_width = 15;
   std::int32_t connectors_width = 0;
@@ -774,12 +795,12 @@ build_ui_part_header_container(part_type_ui_description const& type,
       type.colors.header_check, check_left, checkbox_width, 0, allocator);
     add_child(result, "CCheckBox", enabled_box, allocator);
     std::string enabled = type.selector_param.info == nullptr? title: "On";
-    add_child(result, "CTextLabel", build_ui_part_header_label("left", enabled, 
+    add_child(result, "CTextLabel", build_ui_part_header_label(type, "left", enabled, 
       right - enabled_width - connectors_width, enabled_width, type.colors.header_label, allocator), allocator);
   } else if(part.enabled_param.info == nullptr)
   {
     assert(type.selector_param.info == nullptr);
-    add_child(result, "CTextLabel", build_ui_part_header_label("left", title, 
+    add_child(result, "CTextLabel", build_ui_part_header_label(type, "left", title, 
       2 * padding_param_group - margin, param_total_width, type.colors.header_label, allocator), allocator);
   } 
 
@@ -788,13 +809,13 @@ build_ui_part_header_container(part_type_ui_description const& type,
   std::int32_t info_width = param_total_width - margin - padding_param_group;
   if(part.enabled_param.info != nullptr) info_width -= checkbox_width + enabled_width + margin + 2 * padding_param_group;
   std::string info = std::string(" ") + ui.info;
-  add_child(result, "CTextLabel", build_ui_part_header_label("right", 
+  add_child(result, "CTextLabel", build_ui_part_header_label(type, "right", 
     info, info_left, info_width, type.colors.info_label, allocator), allocator);
 
   for(std::int32_t connector = connector_direction::first; connector <= connector_direction::last; connector *= 2)
     if((ui.connectors & connector) != 0)
-      add_child(result, "inf_part_connector", build_ui_part_connector(
-        ui.columns, static_cast<connector_direction>(connector), ui.colors.connector, allocator), allocator);
+      add_child(result, "inf_part_connector", build_ui_part_connector(type, ui.columns, 
+      static_cast<connector_direction>(connector), ui.colors.connector, allocator), allocator);
   return result;
 }
 
@@ -807,8 +828,8 @@ build_ui_part_header_container_border(part_type_ui_description const& type,
   add_attribute(result, "style-round-rect", "true", allocator);
   add_attribute(result, "origin", size_to_string(0, 0), allocator);
   add_attribute(result, "round-rect-radius", std::to_string(margin), allocator);
-  add_attribute(result, "back-color", get_color_name(type.colors.header_container.fill), allocator);
-  add_attribute(result, "frame-color", get_color_name(type.colors.header_container.frame), allocator);
+  add_attribute(result, "back-color", get_color_name(type, type.colors.header_container.fill), allocator);
+  add_attribute(result, "frame-color", get_color_name(type, type.colors.header_container.frame), allocator);
   add_attribute(result, "size", size_to_string(part.width, param_row_height + padding_param_group * 4), allocator);
   return result;
 }
@@ -823,7 +844,7 @@ build_ui_part_container(part_type_ui_description const& type,
   add_attribute(result, "background-color-draw-style", "stroked", allocator);
   add_attribute(result, "name", std::to_string(part.runtime_index), allocator);
   add_attribute(result, "size", size_to_string(part.width, part.height), allocator);
-  add_attribute(result, "background-color", get_color_name(transparent), allocator);
+  add_attribute(result, "background-color", get_color_name(part_plugin_name, color_transparent), allocator);
   add_child(result, "CTextLabel", build_ui_part_header_container_border(type, part, allocator), allocator);
   add_child(result, "inf_view_container_fix", build_ui_part_header_container_image(type, part, allocator), allocator);
   add_child(result, "inf_view_container_fix", build_ui_part_header_container(type, part, allocator), allocator);
@@ -879,13 +900,13 @@ build_ui_part_tab_header(part_type_ui_description const& type,
   result.RemoveMember("size");
   add_attribute(result, "tab-items", items, allocator);
   add_attribute(result, "font", "~ NormalFontSmall", allocator); 
-  add_attribute(result, "back-color", get_color_name(colors.back), allocator); 
-  add_attribute(result, "font-color", get_color_name(colors.font), allocator);
-  add_attribute(result, "header-font-color", get_color_name(colors.header_font), allocator);
-  add_attribute(result, "inner-frame-color", get_color_name(colors.inner_frame), allocator);
-  add_attribute(result, "outer-frame-color", get_color_name(colors.outer_frame), allocator);
-  add_attribute(result, "active-back-color", get_color_name(colors.active_back), allocator);
-  add_attribute(result, "active-font-color", get_color_name(colors.active_font), allocator);
+  add_attribute(result, "back-color", get_color_name(type, colors.back), allocator);
+  add_attribute(result, "font-color", get_color_name(type, colors.font), allocator);
+  add_attribute(result, "header-font-color", get_color_name(type, colors.header_font), allocator);
+  add_attribute(result, "inner-frame-color", get_color_name(type, colors.inner_frame), allocator);
+  add_attribute(result, "outer-frame-color", get_color_name(type, colors.outer_frame), allocator);
+  add_attribute(result, "active-back-color", get_color_name(type, colors.active_back), allocator);
+  add_attribute(result, "active-font-color", get_color_name(type, colors.active_font), allocator);
   add_attribute(result, "tab-title", type.parts[0].info->descriptor->static_name.short_, allocator);
   add_attribute(result, "size", size_to_string(width, param_row_height + padding_param_group), allocator);
   return result;

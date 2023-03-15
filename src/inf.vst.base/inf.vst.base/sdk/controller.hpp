@@ -59,9 +59,7 @@ public:
   void view_removed(vst_editor* editor);
   void view_attached(vst_editor* editor);
 
-  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
-  _editor(nullptr), _preset_items_initialized(false), _preset_items(),
-  _state(topology->params.size()), _topology(std::move(topology)) {}
+  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology);
 
   tresult endEdit(ParamID tag) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;

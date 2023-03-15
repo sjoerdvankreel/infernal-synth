@@ -46,6 +46,7 @@ struct part_type_ui_description
   std::int32_t height;
   std::int32_t column; // Own column.
 
+  std::string part_name;
   inf::base::part_ui_colors colors; // Type ui colors.
   param_ui_description selector_param; // Osc1/2 etc.
   std::vector<part_ui_description> parts;
