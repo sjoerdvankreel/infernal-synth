@@ -1,17 +1,17 @@
 * for each release
-- v create version branch
-- v update hiir
-- v update vst3 sdk
-- v update version number in code
-- v update version number in cmake unless only bugfix release
-- v gcc build
-- v diff presets
-- v update history
-- v debug run demos
-- v run pluginval
-- v run the vst validator
-- v keep manual up to date
-- v don't forget to tag
+- x create version branch
+- x update hiir
+- x update vst3 sdk
+- x update version number in code
+- x update version number in cmake unless only bugfix release
+- x gcc build
+- x diff presets
+- x update history
+- x debug run demos
+- x run pluginval
+- x run the vst validator
+- x keep manual up to date
+- x don't forget to tag
 
 * host bugs
 - renoise/flstudio automation serialization is broken
@@ -25,11 +25,11 @@
 
 * wishlist big
 - CLAP support
-- fx types: compressor
 - osc types: feedback lead
 - filter types: formant, vowel
-- scale CV amount by global CV param
 - noise types: fractal, perlin
+- fx types: compressor, phaser/flanger/chorus
+- scale CV amount by global CV param
 - improve current noise generator (1/fs)
 - improve k+s generator (allow more stretching)
 - improve dsf generator: high partials roll off too fast
