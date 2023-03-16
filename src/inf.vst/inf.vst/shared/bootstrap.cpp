@@ -15,8 +15,8 @@ void* moduleHandle = nullptr;
 #endif  
 
 using namespace VSTGUI;
+using namespace inf::vst;
 using namespace inf::base;
-using namespace inf::vst::base;
 
 extern bool InitModule();
 extern bool DeinitModule();

@@ -20,8 +20,8 @@
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
+using namespace inf::vst;
 using namespace inf::base;
-using namespace inf::vst::base;
 using namespace inf::vst::tool::shared;
 
 static std::int32_t

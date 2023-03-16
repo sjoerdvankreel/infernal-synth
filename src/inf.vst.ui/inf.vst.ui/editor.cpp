@@ -1,4 +1,4 @@
-#include <inf.vst/ui/vst_editor.hpp>
+#include <inf.vst.ui/editor.hpp>
 #include <inf.vst/sdk/parameter.hpp>
 #include <inf.vst/sdk/controller.hpp>
 #include <inf.vst/shared/support.hpp>
@@ -10,7 +10,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
 
-namespace inf::vst {
+namespace inf::vst::ui {
     
 vst_editor::  
 vst_editor(EditController* controller, UTF8StringPtr template_name,
@@ -141,4 +141,4 @@ vst_editor::update_dependent_visibility(ParamID tag)
   }
 }
 
-} // namespace inf::vst
+} // namespace inf::vst::ui

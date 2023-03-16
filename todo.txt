@@ -51,3 +51,4 @@
 - remove uidescription linker dependency
 - reduce controller.uidesc to image names, image offsets and color scheme
 - drop view_container_fix etc (anything that's only there for uidescription binding)
+- rename/group final plugin directories

@@ -1,12 +1,12 @@
-#ifndef INF_VST_UI_VST_EDITOR_HPP
-#define INF_VST_UI_VST_EDITOR_HPP
+#ifndef INF_VST_UI_EDITOR_HPP
+#define INF_VST_UI_EDITOR_HPP
 
 #include <inf.base/topology/topology_info.hpp>
+#include <inf.base.ui/controls/graph_plot.hpp>
 #include <vstgui/plugin-bindings/vst3editor.h>
-#include <inf.vst/ui/graph_plot.hpp>
 #include <vector>
 
-namespace inf::vst {
+namespace inf::vst::ui {
 
 // Vst3 editor with basic support for declarative parameter 
 // visibility. See param_ui_descriptor.relevant_if_param.
@@ -26,7 +26,7 @@ public VSTGUI::VST3Editor
   using UTF8StringPtr = VSTGUI::UTF8StringPtr;
   using EditController = Steinberg::Vst::EditController;
   
-  std::vector<graph_plot*> _graphs;
+  std::vector<base::ui::graph_plot*> _graphs;
   std::vector<std::vector<CControl*>> _controls;
   inf::base::topology_info const* const _topology;
 
@@ -52,5 +52,5 @@ public:
   { return findParameter(pos.x, pos.y, id); }
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_VST_EDITOR_HPP
+} // namespace inf::vst::ui
+#endif // INF_VST_UI_EDITOR_HPP

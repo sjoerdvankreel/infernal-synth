@@ -13,9 +13,9 @@
 #include <public.sdk/source/main/pluginfactory.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 
+using namespace inf::vst;
 using namespace inf::base;
 using namespace inf::synth;
-using namespace inf::vst::base;
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
