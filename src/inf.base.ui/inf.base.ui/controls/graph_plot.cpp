@@ -1,8 +1,5 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
-#include <inf.vst/sdk/controller.hpp>
-#include <inf.vst/shared/bootstrap.hpp>
-
 #include <inf.base/processor/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
 
@@ -49,7 +46,7 @@ graph_plot_creator::create(
 
   part_id id = { part_type, part_index };
   tooltip = attrs.getAttributeValue("tooltip");
-  auto result = new graph_plot(colors, row_span, column_span, _topology->create_graph_processor(id, graph_type));
+  auto result = new graph_plot(colors, row_span, column_span, _state, _topology->create_graph_processor(id, graph_type));
   if(tooltip != nullptr) result->setTooltipText(tooltip->data());
   return result;
 } 
@@ -80,19 +77,21 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   context->setDrawMode(kAntiAliasing); 
   context->setFrameColor(to_vst_color(_colors.grid.color));
   std::int32_t const h_segment_count = 8 * _column_span;
-  float segment_width = size.x / h_segment_count;
+  double segment_width = size.x / h_segment_count;
   for (std::int32_t i = 1; i < h_segment_count; i++)
     context->drawLine(CPoint(i * segment_width, 1), CPoint(i * segment_width, size.y - 1));  
   std::int32_t const v_segment_count = 4 * _row_span;
-  float segment_height = size.y / v_segment_count;
+  double segment_height = size.y / v_segment_count;
   for (std::int32_t i = 1; i < v_segment_count; i++)
     context->drawLine(CPoint(1, i * segment_height), CPoint(size.x - 1, i * segment_height));
    
   bool bipolar;
-  auto editor = static_cast<VST3Editor*>(getFrame()->getEditor());
-  auto state = static_cast<vst_controller const*>(editor->getController())->state();
-  std::vector<graph_point> const& graph_data = _processor->plot(state, sample_rate, render_size.x, render_size.y, bipolar);
-  float opacity = _processor->opacity(state);
+  std::vector<graph_point> const& graph_data = _processor->plot(
+    _state, sample_rate,
+    static_cast<std::int32_t>(render_size.x), 
+    static_cast<std::int32_t>(render_size.y), 
+    bipolar);
+  float opacity = _processor->opacity(_state);
   if(graph_data.size() == 0) return;
     
   // Area.
@@ -110,10 +109,10 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   fill_path->addLine(render_size.x + padx / 2, render_size.y * base_y + pady / 2 + 2.0);
   GradientColorStopMap unipolar_map({
     { 0.0, to_vst_color(_colors.area.color.opacity(opacity)) },
-    { 1.0, to_vst_color(_colors.area.color.opacity(opacity * 0.1)) } });
+    { 1.0, to_vst_color(_colors.area.color.opacity(opacity * 0.1f)) } });
   GradientColorStopMap bipolar_map({
     { 0.0, to_vst_color(_colors.area.color.opacity(opacity)) },
-    { 0.5, to_vst_color(_colors.area.color.opacity(opacity * 0.1)) },
+    { 0.5, to_vst_color(_colors.area.color.opacity(opacity * 0.1f)) },
     { 1.0, to_vst_color(_colors.area.color.opacity(opacity)) } });
   CGradient* gradient = CGradient::create(bipolar? bipolar_map: unipolar_map);
   if(bipolar)

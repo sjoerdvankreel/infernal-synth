@@ -19,30 +19,32 @@ public VSTGUI::CView
 
   std::int32_t const _row_span;
   std::int32_t const _column_span;
-  inf::base::graph_ui_colors const _colors;
-  std::unique_ptr<inf::base::graph_processor> _processor;
+  param_value const* const _state;
+  graph_ui_colors const _colors;
+  std::unique_ptr<graph_processor> _processor;
 public:
   void draw(VSTGUI::CDrawContext* context) override;
-  inf::base::graph_processor* processor() const { return _processor.get(); }
+  graph_processor* processor() const { return _processor.get(); }
 public:
   graph_plot(
-    inf::base::graph_ui_colors const& colors, std::int32_t row_span, std::int32_t column_span,
-    std::unique_ptr<inf::base::graph_processor>&& processor):
+    graph_ui_colors const& colors, std::int32_t row_span, std::int32_t column_span,
+    param_value const* state, std::unique_ptr<graph_processor>&& processor):
   VSTGUI::CView(VSTGUI::CRect(0, 0, 0, 0)), 
   _row_span(row_span), _column_span(column_span), 
-  _colors(colors), _processor(std::move(processor)) { }
+  _state(state), _colors(colors), _processor(std::move(processor)) { }
 };
 
 // VSTGUI graph factory.
 class graph_plot_creator :
 public VSTGUI::ViewCreatorAdapter
 {
-  inf::base::topology_info const* _topology;
+  topology_info const* _topology;
+  param_value const* const _state;
 public:
   VSTGUI::IdStringPtr getViewName() const override { return "inf_graph_plot"; }
-  graph_plot_creator(inf::base::topology_info const* topology) : _topology(topology) {}
   VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCView; }
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
+  graph_plot_creator(topology_info const* topology, param_value const* state) : _topology(topology), _state(state) {}
 };
 
 } // namespace inf::base::ui
