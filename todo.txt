@@ -48,7 +48,6 @@
 - get rid of uidesc
 - drop uigenerator tool
 - make project dependency diagram
-- vst.base must not reference vstgui
 - remove uidescription linker dependency
-- rename inf.vst.base namespaces and include guards
 - reduce controller.uidesc to image names, image offsets and color scheme
+- drop view_container_fix etc (anything that's only there for uidescription binding)
