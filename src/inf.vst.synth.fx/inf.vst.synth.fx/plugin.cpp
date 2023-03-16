@@ -6,7 +6,7 @@
 #include <inf.vst.synth.fx/plugin.hpp>
 #include <inf.vst/sdk/processor.hpp>
 #include <inf.vst/sdk/controller.hpp>
-#include <inf.vst/shared/bootstrap.hpp>
+#include <inf.vst.ui/bootstrap.hpp>
 
 #include <public.sdk/source/main/pluginfactory.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>

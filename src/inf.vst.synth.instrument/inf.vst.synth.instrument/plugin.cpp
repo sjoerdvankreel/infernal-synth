@@ -7,7 +7,7 @@
 
 #include <inf.vst/sdk/processor.hpp>
 #include <inf.vst/sdk/controller.hpp>
-#include <inf.vst/shared/bootstrap.hpp>
+#include <inf.vst.ui/bootstrap.hpp>
 #include <inf.vst.synth.instrument/plugin.hpp>
 
 #include <public.sdk/source/main/pluginfactory.h>

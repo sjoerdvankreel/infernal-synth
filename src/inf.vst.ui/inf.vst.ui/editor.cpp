@@ -9,6 +9,7 @@
 
 using namespace VSTGUI;
 using namespace inf::base;
+using namespace inf::base::ui;
 
 namespace inf::vst::ui {
     
