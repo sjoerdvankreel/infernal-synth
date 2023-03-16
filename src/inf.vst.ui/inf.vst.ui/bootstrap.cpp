@@ -38,7 +38,7 @@ bool ExitDll()
   if (_inf_module_counter > 0) return true;
   if (_inf_module_counter < 0) return false;
   if (!DeinitModule()) return false;
-  inf::base:ui::terminate(_topology);
+  inf::base::ui::terminate();
   delete _topology;
   _topology = nullptr;
   return true;

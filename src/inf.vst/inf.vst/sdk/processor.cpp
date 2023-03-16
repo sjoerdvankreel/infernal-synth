@@ -2,7 +2,6 @@
 #include <inf.vst/sdk/processor.hpp>
 #include <inf.vst/sdk/parameter.hpp>
 #include <inf.vst/shared/support.hpp>
-#include <inf.vst/shared/bootstrap.hpp>
 #include <inf.vst/shared/io_stream.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
