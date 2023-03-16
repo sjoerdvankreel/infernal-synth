@@ -1,13 +1,13 @@
-#include <inf.vst/ui/support.hpp>
+#include <inf.base.ui/shared/support.hpp>
 #include <inf.base/shared/support.hpp>
-#include <inf.vst/ui/rotary_knob.hpp>
+#include <inf.base.ui/controls/rotary_knob.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 #include <cassert>
 
 using namespace VSTGUI;
 using namespace inf::base;
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 static CPoint
 point_on_circle(
@@ -173,4 +173,4 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   }
 } 
 
-} // namespace inf::vst
+} // namespace inf::base::ui

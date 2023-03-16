@@ -1,12 +1,12 @@
-#ifndef INF_VST_UI_VIEW_CONTAINER_FIX_HPP
-#define INF_VST_UI_VIEW_CONTAINER_FIX_HPP
+#ifndef INF_BASE_UI_CONTROLS_VIEW_CONTAINER_FIX_HPP
+#define INF_BASE_UI_CONTROLS_VIEW_CONTAINER_FIX_HPP
 
 #include <vstgui/vstgui.h>
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/viewcreator/viewcontainercreator.h>
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 // View container respecting bitmap offset.
 class view_container_fix : 
@@ -28,5 +28,5 @@ public:
   bool apply(VSTGUI::CView* view, VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_VIEW_CONTAINER_FIX_HPP
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_CONTROLS_VIEW_CONTAINER_FIX_HPP

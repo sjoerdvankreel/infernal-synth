@@ -1,11 +1,11 @@
-#include <inf.vst/ui/support.hpp>
-#include <inf.vst/ui/tab_header.hpp>
+#include <inf.base.ui/shared/support.hpp>
+#include <inf.base.ui/controls/tab_header.hpp>
 #include <sstream>
 
 using namespace VSTGUI;
 using namespace inf::base;
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 CView* 
 tab_header_creator::create(UIAttributes const& attrs, IUIDescription const* desc) const
@@ -127,5 +127,5 @@ tab_header::draw(CDrawContext* context)
   setDirty(false);
 }
  
-} // namespace inf::vst
+} // namespace inf::base::ui
  

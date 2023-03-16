@@ -1,5 +1,5 @@
-#ifndef INF_VST_UI_TAB_HEADER_HPP
-#define INF_VST_UI_TAB_HEADER_HPP
+#ifndef INF_BASE_UI_CONTROLS_TAB_HEADER_HPP
+#define INF_BASE_UI_CONTROLS_TAB_HEADER_HPP
 
 #include <inf.base/topology/part_ui_descriptor.hpp>
 
@@ -12,7 +12,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 // Tab header control without bitmaps.
 class tab_header : public VSTGUI::CParamDisplay
@@ -45,5 +45,5 @@ public:
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_TAB_HEADER_HPP
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_CONTROLS_TAB_HEADER_HPP

@@ -1,10 +1,10 @@
-#include <inf.vst/ui/view_container_fix.hpp>
+#include <inf.base.ui/controls/view_container_fix.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 CView* 
 view_container_fix_creator::create(
@@ -22,4 +22,4 @@ view_container_fix_creator::apply(
   return true;
 }
 
-} // namespace inf::vst
+} // namespace inf::base::ui

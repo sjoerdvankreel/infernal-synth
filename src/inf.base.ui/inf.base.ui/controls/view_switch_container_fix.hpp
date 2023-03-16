@@ -1,5 +1,5 @@
-#ifndef INF_VST_UI_VIEW_SWITCH_CONTAINER_FIX_HPP
-#define INF_VST_UI_VIEW_SWITCH_CONTAINER_FIX_HPP
+#ifndef INF_BASE_UI_CONTROLS_VIEW_SWITCH_CONTAINER_FIX_HPP
+#define INF_BASE_UI_CONTROLS_VIEW_SWITCH_CONTAINER_FIX_HPP
 
 #include <vstgui/vstgui.h>
 #include <vstgui/vstgui_uidescription.h>
@@ -7,7 +7,7 @@
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/viewcreator/uiviewswitchcontainercreator.h>
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 // View switch container triggering repaint for conditional visibility.
 class view_switch_container_fix : 
@@ -41,5 +41,5 @@ public:
   bool apply(VSTGUI::CView* view, VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_VIEW_SWITCH_CONTAINER_FIX_HPP
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_CONTROLS_VIEW_SWITCH_CONTAINER_FIX_HPP

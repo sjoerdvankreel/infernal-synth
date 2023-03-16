@@ -1,5 +1,5 @@
-#ifndef INF_VST_UI_ROTARY_KNOB_HPP
-#define INF_VST_UI_ROTARY_KNOB_HPP
+#ifndef INF_BASE_UI_CONTROLS_ROTARY_KNOB_HPP
+#define INF_BASE_UI_CONTROLS_ROTARY_KNOB_HPP
 
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -9,7 +9,7 @@
 #include <vstgui/uidescription/viewcreator/knobcreator.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 // Custom drawn knob, follows color palette.
 class rotary_knob : 
@@ -37,5 +37,5 @@ public:
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_ROTARY_KNOB_HPP
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_CONTROLS_ROTARY_KNOB_HPP

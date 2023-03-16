@@ -1,5 +1,5 @@
-#ifndef INF_VST_UI_OPTION_MENU_FIX_HPP
-#define INF_VST_UI_OPTION_MENU_FIX_HPP
+#ifndef INF_BASE_UI_CONTROLS_OPTION_MENU_FIX_HPP
+#define INF_BASE_UI_CONTROLS_OPTION_MENU_FIX_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 
@@ -9,7 +9,7 @@
 #include <vstgui/uidescription/viewcreator/optionmenucreator.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 // Option menu with items-per-column support.
 class option_menu_fix: 
@@ -31,5 +31,5 @@ public:
   bool apply(VSTGUI::CView* view, VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_OPTION_MENU_FIX_HPP
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_CONTROLS_OPTION_MENU_FIX_HPP

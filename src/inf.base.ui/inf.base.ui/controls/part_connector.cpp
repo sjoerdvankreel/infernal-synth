@@ -1,5 +1,5 @@
-#include <inf.vst/ui/support.hpp>
-#include <inf.vst/ui/part_connector.hpp>
+#include <inf.base.ui/shared/support.hpp>
+#include <inf.base.ui/controls/part_connector.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 #include <cassert>
@@ -8,7 +8,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
    
-namespace inf::vst {
+namespace inf::base::ui {
       
 CView*  
 part_connector_creator::create(
@@ -91,4 +91,4 @@ part_connector::draw(VSTGUI::CDrawContext* context)
   path->forget();
 }
 
-} // namespace inf::vst
+} // namespace inf::base::ui

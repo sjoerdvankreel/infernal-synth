@@ -1,5 +1,5 @@
-#include <inf.vst/ui/support.hpp>
-#include <inf.vst/ui/graph_plot.hpp>
+#include <inf.base.ui/shared/support.hpp>
+#include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.vst/sdk/controller.hpp>
 #include <inf.vst/shared/bootstrap.hpp>
 
@@ -14,7 +14,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
    
-namespace inf::vst {
+namespace inf::base::ui {
       
 CView*  
 graph_plot_creator::create(
@@ -138,4 +138,4 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   stroke_path->forget();
 }
 
-} // namespace inf::vst
+} // namespace inf::base::ui

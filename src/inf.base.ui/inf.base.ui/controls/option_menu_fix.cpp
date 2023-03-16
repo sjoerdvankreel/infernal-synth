@@ -1,11 +1,11 @@
-#include <inf.vst/ui/option_menu_fix.hpp>
+#include <inf.base.ui/controls/option_menu_fix.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 using namespace inf::base;
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace inf::vst {
+namespace inf::base::ui {
   
 CView* 
 option_menu_fix_creator::create(
@@ -23,4 +23,4 @@ option_menu_fix_creator::apply(
   return true;
 }
 
-} // namespace inf::vst
+} // namespace inf::base::ui

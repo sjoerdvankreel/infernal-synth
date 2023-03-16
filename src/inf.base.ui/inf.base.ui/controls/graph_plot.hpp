@@ -1,5 +1,5 @@
-#ifndef INF_VST_UI_GRAPH_PLOT_HPP
-#define INF_VST_UI_GRAPH_PLOT_HPP
+#ifndef INF_BASE_UI_CONTROLS_GRAPH_PLOT_HPP
+#define INF_BASE_UI_CONTROLS_GRAPH_PLOT_HPP
 
 #include <inf.base/processor/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -8,7 +8,7 @@
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-namespace inf::vst {
+namespace inf::base::ui {
 
 // Graph component backed by graph_descriptor and graph_processor.
 class graph_plot : 
@@ -45,5 +45,5 @@ public:
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_GRAPH_PLOT_HPP
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_CONTROLS_GRAPH_PLOT_HPP
