@@ -46,7 +46,7 @@ graph_plot_creator::create(
 
   part_id id = { part_type, part_index };
   tooltip = attrs.getAttributeValue("tooltip");
-  auto result = new graph_plot(colors, row_span, column_span, _state, _topology->create_graph_processor(id, graph_type));
+  graph_plot* result = new graph_plot(colors, row_span, column_span, _topology->create_graph_processor(id, graph_type));
   if(tooltip != nullptr) result->setTooltipText(tooltip->data());
   return result;
 } 
