@@ -1,9 +1,9 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.vst.base/sdk/processor.hpp>
-#include <inf.vst.base/sdk/parameter.hpp>
-#include <inf.vst.base/shared/support.hpp>
-#include <inf.vst.base/shared/bootstrap.hpp>
-#include <inf.vst.base/shared/io_stream.hpp>
+#include <inf.vst/sdk/processor.hpp>
+#include <inf.vst/sdk/parameter.hpp>
+#include <inf.vst/shared/support.hpp>
+#include <inf.vst/shared/bootstrap.hpp>
+#include <inf.vst/shared/io_stream.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <base/source/fstreamer.h>

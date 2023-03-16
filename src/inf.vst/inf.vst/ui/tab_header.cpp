@@ -1,5 +1,5 @@
-#include <inf.vst.base/ui/support.hpp>
-#include <inf.vst.base/ui/tab_header.hpp>
+#include <inf.vst/ui/support.hpp>
+#include <inf.vst/ui/tab_header.hpp>
 #include <sstream>
 
 using namespace VSTGUI;

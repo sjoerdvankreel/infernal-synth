@@ -1,4 +1,4 @@
-#include <inf.vst.base/ui/support.hpp>
+#include <inf.vst/ui/support.hpp>
 
 using namespace VSTGUI;
 

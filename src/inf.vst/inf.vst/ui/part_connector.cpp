@@ -1,5 +1,5 @@
-#include <inf.vst.base/ui/support.hpp>
-#include <inf.vst.base/ui/part_connector.hpp>
+#include <inf.vst/ui/support.hpp>
+#include <inf.vst/ui/part_connector.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 #include <cassert>

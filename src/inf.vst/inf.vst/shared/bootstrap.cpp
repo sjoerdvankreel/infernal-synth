@@ -1,12 +1,12 @@
-#include <inf.vst.base/ui/tab_header.hpp>
-#include <inf.vst.base/ui/graph_plot.hpp>
-#include <inf.vst.base/ui/rotary_knob.hpp>
-#include <inf.vst.base/ui/part_connector.hpp> 
-#include <inf.vst.base/ui/option_menu_fix.hpp>
-#include <inf.vst.base/ui/nested_option_menu.hpp>
-#include <inf.vst.base/ui/view_container_fix.hpp>
-#include <inf.vst.base/ui/view_switch_container_fix.hpp>
-#include <inf.vst.base/shared/bootstrap.hpp>
+#include <inf.vst/ui/tab_header.hpp>
+#include <inf.vst/ui/graph_plot.hpp>
+#include <inf.vst/ui/rotary_knob.hpp>
+#include <inf.vst/ui/part_connector.hpp> 
+#include <inf.vst/ui/option_menu_fix.hpp>
+#include <inf.vst/ui/nested_option_menu.hpp>
+#include <inf.vst/ui/view_container_fix.hpp>
+#include <inf.vst/ui/view_switch_container_fix.hpp>
+#include <inf.vst/shared/bootstrap.hpp>
 #include <vstgui/vstgui_uidescription.h>
 
 #if WIN32

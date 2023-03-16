@@ -1,7 +1,7 @@
-#include <inf.vst.base/ui/support.hpp>
-#include <inf.vst.base/ui/graph_plot.hpp>
-#include <inf.vst.base/sdk/controller.hpp>
-#include <inf.vst.base/shared/bootstrap.hpp>
+#include <inf.vst/ui/support.hpp>
+#include <inf.vst/ui/graph_plot.hpp>
+#include <inf.vst/sdk/controller.hpp>
+#include <inf.vst/shared/bootstrap.hpp>
 
 #include <inf.base/processor/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>

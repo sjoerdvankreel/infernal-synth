@@ -1,4 +1,4 @@
-#include <inf.vst.base/ui/nested_option_menu.hpp>
+#include <inf.vst/ui/nested_option_menu.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 using namespace inf::base;

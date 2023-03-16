@@ -1,5 +1,5 @@
-#include <inf.vst.base/sdk/parameter.hpp>
-#include <inf.vst.base/shared/support.hpp>
+#include <inf.vst/sdk/parameter.hpp>
+#include <inf.vst/shared/support.hpp>
 #include <cassert>
 
 using namespace inf::base;

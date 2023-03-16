@@ -3,7 +3,7 @@
 
 #include <inf.base/topology/topology_info.hpp>
 #include <vstgui/plugin-bindings/vst3editor.h>
-#include <inf.vst.base/ui/graph_plot.hpp>
+#include <inf.vst/ui/graph_plot.hpp>
 #include <vector>
 
 namespace inf::vst {

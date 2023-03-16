@@ -15,11 +15,11 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <inf.base/shared/support.hpp>
-#include <inf.vst.base/ui/vst_editor.hpp>
-#include <inf.vst.base/sdk/parameter.hpp>
-#include <inf.vst.base/sdk/controller.hpp>
-#include <inf.vst.base/shared/support.hpp>
-#include <inf.vst.base/shared/io_stream.hpp>
+#include <inf.vst/ui/vst_editor.hpp>
+#include <inf.vst/sdk/parameter.hpp>
+#include <inf.vst/sdk/controller.hpp>
+#include <inf.vst/shared/support.hpp>
+#include <inf.vst/shared/io_stream.hpp>
 
 #include <vector>
 #include <cstring>

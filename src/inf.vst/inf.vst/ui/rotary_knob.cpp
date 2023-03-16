@@ -1,6 +1,6 @@
-#include <inf.vst.base/ui/support.hpp>
+#include <inf.vst/ui/support.hpp>
 #include <inf.base/shared/support.hpp>
-#include <inf.vst.base/ui/rotary_knob.hpp>
+#include <inf.vst/ui/rotary_knob.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 #include <cassert>
 

@@ -1,7 +1,7 @@
 #ifndef INF_VST_SDK_CONTROLLER_HPP
 #define INF_VST_SDK_CONTROLLER_HPP
 
-#include <inf.vst.base/ui/vst_editor.hpp>
+#include <inf.vst/ui/vst_editor.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <pluginterfaces/vst/vsttypes.h>

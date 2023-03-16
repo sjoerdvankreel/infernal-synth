@@ -1,4 +1,4 @@
-#include <inf.vst.base/ui/view_container_fix.hpp>
+#include <inf.vst/ui/view_container_fix.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 using namespace VSTGUI;
