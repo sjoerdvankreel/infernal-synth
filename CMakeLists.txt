@@ -130,7 +130,7 @@ target_link_libraries(infernal.vst debug "${VST3_SDK_COMMON_LIB_Debug}" optimize
 target_link_libraries(infernal.vst debug "${VST3_PLUGINTERFACES_LIB_Debug}" optimized "${VST3_PLUGINTERFACES_LIB_Release}")
 if (MSVC)
 source_group(TREE "../../${INF_VST_SRC_DIR}" FILES ${INF_VST_SRC})
-target_compile_options(infernal.vst.synth.fx.generic PRIVATE /external:I ${VST_SDK_377_SRC_DIR_WIN32})
+target_compile_options(infernal.vst PRIVATE /external:I ${VST_SDK_377_SRC_DIR_WIN32})
 endif()
 
 # Inf vst synth fx generic.
