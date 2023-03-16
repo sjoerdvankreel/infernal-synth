@@ -10,7 +10,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
 
-namespace inf::vst::base {
+namespace inf::vst {
     
 vst_editor::  
 vst_editor(EditController* controller, UTF8StringPtr template_name,
@@ -141,4 +141,4 @@ vst_editor::update_dependent_visibility(ParamID tag)
   }
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

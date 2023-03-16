@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_SDK_PARAMETER_HPP
-#define INF_VST_BASE_SDK_PARAMETER_HPP
+#ifndef INF_VST_SDK_PARAMETER_HPP
+#define INF_VST_SDK_PARAMETER_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <public.sdk/source/vst/vstparameters.h>
@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <algorithm>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 // Vst parameter based on param_descriptor.
 class vst_parameter:
@@ -32,5 +32,5 @@ public:
   bool fromString(TChar const* string, ParamValue& normalized) const override;
 };
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_SDK_PARAMETER_HPP
+} // namespace inf::vst
+#endif // INF_VST_SDK_PARAMETER_HPP

@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_UI_SUPPORT_HPP
-#define INF_VST_BASE_UI_SUPPORT_HPP
+#ifndef INF_VST_UI_SUPPORT_HPP
+#define INF_VST_UI_SUPPORT_HPP
 
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -10,7 +10,7 @@
 #include <string>
 #include <cstdint>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 inline VSTGUI::CColor
 to_vst_color(inf::base::ui_color const& color)
@@ -22,5 +22,5 @@ from_vst_color(VSTGUI::CColor const& color)
 inf::base::ui_color
 from_vst_color_name(std::string const* name, VSTGUI::IUIDescription const* desc);
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_UI_SUPPORT_HPP
+} // namespace inf::vst
+#endif // INF_VST_UI_SUPPORT_HPP

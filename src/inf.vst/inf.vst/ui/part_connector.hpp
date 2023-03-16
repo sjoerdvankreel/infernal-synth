@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_UI_PART_CONNECTOR_HPP
-#define INF_VST_BASE_UI_PART_CONNECTOR_HPP
+#ifndef INF_VST_UI_PART_CONNECTOR_HPP
+#define INF_VST_UI_PART_CONNECTOR_HPP
 
 #include <inf.base/topology/part_ui_descriptor.hpp>
 
@@ -7,7 +7,7 @@
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 // Arrow pointing from one part to another.
 class part_connector : 
@@ -32,5 +32,5 @@ public:
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_UI_PART_CONNECTOR_HPP
+} // namespace inf::vst
+#endif // INF_VST_UI_PART_CONNECTOR_HPP

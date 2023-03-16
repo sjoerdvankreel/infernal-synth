@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_SHARED_SUPPORT_HPP
-#define INF_VST_BASE_SHARED_SUPPORT_HPP
+#ifndef INF_VST_SHARED_SUPPORT_HPP
+#define INF_VST_SHARED_SUPPORT_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <pluginterfaces/base/ftypes.h>
@@ -8,7 +8,7 @@
 #include <cassert>
 #include <algorithm>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 inline std::basic_string<Steinberg::Vst::TChar>
 to_vst_string(char const* str)
@@ -58,5 +58,5 @@ vst_normalized_to_base(
   return inf::base::param_value(vst_normalized_to_discrete(descriptor, val));
 }
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_SHARED_SUPPORT_HPP
+} // namespace inf::vst
+#endif // INF_VST_SHARED_SUPPORT_HPP

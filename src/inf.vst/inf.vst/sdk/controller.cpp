@@ -32,7 +32,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;                  
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
@@ -378,4 +378,4 @@ vst_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   return result;
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

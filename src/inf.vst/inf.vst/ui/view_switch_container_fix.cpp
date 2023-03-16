@@ -6,7 +6,7 @@ using namespace inf::base;
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 CView* 
 view_switch_container_fix_creator::create(
@@ -59,4 +59,4 @@ view_switch_controller_fix::valueChanged(VSTGUI::CControl* control)
     }
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

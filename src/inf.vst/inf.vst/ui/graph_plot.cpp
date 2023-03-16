@@ -14,7 +14,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
    
-namespace inf::vst::base {
+namespace inf::vst {
       
 CView*  
 graph_plot_creator::create(
@@ -138,4 +138,4 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
   stroke_path->forget();
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

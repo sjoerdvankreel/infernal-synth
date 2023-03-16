@@ -6,7 +6,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
-namespace inf::vst::base {
+namespace inf::vst {
   
 static double 
 param_step_count(param_descriptor const& param)
@@ -133,4 +133,4 @@ vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
   return true;
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

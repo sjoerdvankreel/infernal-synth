@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_UI_NESTED_OPTION_MENU_HPP
-#define INF_VST_BASE_UI_NESTED_OPTION_MENU_HPP
+#ifndef INF_VST_UI_NESTED_OPTION_MENU_HPP
+#define INF_VST_UI_NESTED_OPTION_MENU_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 
@@ -9,7 +9,7 @@
 #include <vstgui/uidescription/viewcreator/optionmenucreator.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 // Option menu with submenu support from topology.
 class nested_option_menu: 
@@ -42,5 +42,5 @@ public:
   bool apply(VSTGUI::CView* view, VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
 };
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_UI_NESTED_OPTION_MENU_HPP
+} // namespace inf::vst
+#endif // INF_VST_UI_NESTED_OPTION_MENU_HPP

@@ -7,7 +7,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 static CPoint
 point_on_circle(
@@ -173,4 +173,4 @@ rotary_knob::draw(VSTGUI::CDrawContext* context)
   }
 } 
 
-} // namespace inf::vst::base
+} // namespace inf::vst

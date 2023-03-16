@@ -8,7 +8,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
    
-namespace inf::vst::base {
+namespace inf::vst {
       
 CView*  
 part_connector_creator::create(
@@ -91,4 +91,4 @@ part_connector::draw(VSTGUI::CDrawContext* context)
   path->forget();
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

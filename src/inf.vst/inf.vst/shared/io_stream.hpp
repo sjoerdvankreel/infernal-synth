@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_SHARED_IO_STREAM_HPP
-#define INF_VST_BASE_SHARED_IO_STREAM_HPP
+#ifndef INF_VST_SHARED_IO_STREAM_HPP
+#define INF_VST_SHARED_IO_STREAM_HPP
 
 #include <base/source/fstreamer.h>
 #include <inf.base/shared/io_stream.hpp>
@@ -7,7 +7,7 @@
 #include <string>
 #include <cstdint>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 // Forwarding to vst3 I/O.
 class vst_io_stream:
@@ -32,5 +32,5 @@ public:
   bool write_uint32(std::uint32_t val) override { return _streamer->writeInt32u(val); }
 };
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_SHARED_IO_STREAM_HPP
+} // namespace inf::vst
+#endif // INF_VST_SHARED_IO_STREAM_HPP

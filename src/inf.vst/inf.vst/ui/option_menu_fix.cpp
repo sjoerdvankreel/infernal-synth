@@ -5,7 +5,7 @@ using namespace inf::base;
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace inf::vst::base {
+namespace inf::vst {
   
 CView* 
 option_menu_fix_creator::create(
@@ -23,4 +23,4 @@ option_menu_fix_creator::apply(
   return true;
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

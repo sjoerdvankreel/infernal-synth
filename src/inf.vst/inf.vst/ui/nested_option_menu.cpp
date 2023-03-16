@@ -5,7 +5,7 @@ using namespace inf::base;
 using namespace VSTGUI;
 using namespace VSTGUI::UIViewCreator;
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 static void 
 add_item(COptionMenu* menu, std::string const* path, std::size_t path_count)
@@ -93,4 +93,4 @@ nested_option_menu::onOptionMenuSetPopupResult(COptionMenu* menu, COptionMenu* s
   return true; // Prevent set value, need to restore flat list first.
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

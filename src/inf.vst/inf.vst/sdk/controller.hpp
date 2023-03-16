@@ -1,5 +1,5 @@
-#ifndef INF_VST_BASE_SDK_CONTROLLER_HPP
-#define INF_VST_BASE_SDK_CONTROLLER_HPP
+#ifndef INF_VST_SDK_CONTROLLER_HPP
+#define INF_VST_SDK_CONTROLLER_HPP
 
 #include <inf.vst.base/ui/vst_editor.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -10,7 +10,7 @@
 
 #include <vector>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 // For factory presets (just every .vstpreset in the resources folder).
 struct preset_item
@@ -70,5 +70,5 @@ public:
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
 };
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_SDK_CONTROLLER_HPP
+} // namespace inf::vst
+#endif // INF_VST_SDK_CONTROLLER_HPP

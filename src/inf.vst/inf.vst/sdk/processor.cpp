@@ -19,7 +19,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst; 
   
-namespace inf::vst::base {
+namespace inf::vst {
 
 // Don't update output too often.
 std::int32_t const 
@@ -297,4 +297,4 @@ vst_processor::process_output_parameters(
   }
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst

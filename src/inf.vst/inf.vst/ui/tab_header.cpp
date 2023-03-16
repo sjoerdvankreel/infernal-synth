@@ -5,7 +5,7 @@
 using namespace VSTGUI;
 using namespace inf::base;
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 CView* 
 tab_header_creator::create(UIAttributes const& attrs, IUIDescription const* desc) const
@@ -127,5 +127,5 @@ tab_header::draw(CDrawContext* context)
   setDirty(false);
 }
  
-} // namespace inf::vst::base
+} // namespace inf::vst
  

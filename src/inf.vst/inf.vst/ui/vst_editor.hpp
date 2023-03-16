@@ -1,12 +1,12 @@
-#ifndef INF_VST_BASE_UI_VST_EDITOR_HPP
-#define INF_VST_BASE_UI_VST_EDITOR_HPP
+#ifndef INF_VST_UI_VST_EDITOR_HPP
+#define INF_VST_UI_VST_EDITOR_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <inf.vst.base/ui/graph_plot.hpp>
 #include <vector>
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 // Vst3 editor with basic support for declarative parameter 
 // visibility. See param_ui_descriptor.relevant_if_param.
@@ -52,5 +52,5 @@ public:
   { return findParameter(pos.x, pos.y, id); }
 };
 
-} // namespace inf::vst::base
-#endif // INF_VST_BASE_UI_VST_EDITOR_HPP
+} // namespace inf::vst
+#endif // INF_VST_UI_VST_EDITOR_HPP

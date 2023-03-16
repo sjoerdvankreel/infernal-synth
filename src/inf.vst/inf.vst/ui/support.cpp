@@ -2,7 +2,7 @@
 
 using namespace VSTGUI;
 
-namespace inf::vst::base {
+namespace inf::vst {
 
 inf::base::ui_color
 from_vst_color_name(std::string const* name, IUIDescription const* desc)
@@ -15,4 +15,4 @@ from_vst_color_name(std::string const* name, IUIDescription const* desc)
   return from_vst_color(color);
 }
 
-} // namespace inf::vst::base
+} // namespace inf::vst
