@@ -32,7 +32,7 @@
 - scale CV amount by global CV param
 - improve current noise generator (1/fs)
 - improve k+s generator (allow more stretching)
-- improve dsf generator: high partials roll off too fast
+- improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
 - tabbed ui
