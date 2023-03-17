@@ -17,28 +17,26 @@ public VSTGUI::CView
   static inline float const bpm = 120.0f;
   static inline float const sample_rate = 48000.0f;
 
+  part_id const _part_id;
+  std::int32_t const _graph_type;
+  graph_ui_colors const _colors;
   std::int32_t const _row_span;
   std::int32_t const _column_span;
-  graph_ui_colors const _colors;
   std::unique_ptr<graph_processor> _processor;
 public:
   void draw(VSTGUI::CDrawContext* context) override;
   graph_processor* processor() const { return _processor.get(); }
 public:
-  graph_plot(graph_ui_colors const& colors, std::int32_t row_span,
-    std::int32_t column_span, std::unique_ptr<graph_processor>&& processor):
-  VSTGUI::CView(VSTGUI::CRect(0, 0, 0, 0)), 
-  _row_span(row_span), _column_span(column_span), 
-  _colors(colors), _processor(std::move(processor)) { }
+  graph_plot(part_id part_id, std::int32_t graph_type, graph_ui_colors const& colors, std::int32_t row_span, std::int32_t column_span):
+  VSTGUI::CView(VSTGUI::CRect(0, 0, 0, 0)), _part_id(part_id), _graph_type(graph_type),
+  _row_span(row_span), _column_span(column_span), _colors(colors) { }
 };
 
 // VSTGUI graph factory.
 class graph_plot_creator :
 public VSTGUI::ViewCreatorAdapter
 {
-  topology_info const* _topology;
 public:
-  graph_plot_creator(topology_info const* topology) : _topology(topology) {}
   VSTGUI::IdStringPtr getViewName() const override { return "inf_graph_plot"; }
   VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCView; }
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;

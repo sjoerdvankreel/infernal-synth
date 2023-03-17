@@ -1,5 +1,6 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
+#include <inf.base.ui/shared/ui_edit_controller.hpp>
 #include <inf.base/processor/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
 
@@ -46,7 +47,7 @@ graph_plot_creator::create(
 
   part_id id = { part_type, part_index };
   tooltip = attrs.getAttributeValue("tooltip");
-  graph_plot* result = new graph_plot(colors, row_span, column_span, _topology->create_graph_processor(id, graph_type));
+  graph_plot* result = new graph_plot(id, graph_type, colors, row_span, column_span);
   if(tooltip != nullptr) result->setTooltipText(tooltip->data());
   return result;
 } 
@@ -86,12 +87,13 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
     context->drawLine(CPoint(1, i * segment_height), CPoint(size.x - 1, i * segment_height));
    
   bool bipolar;
+  param_value const* state = find_editor(this)->state();
   std::vector<graph_point> const& graph_data = _processor->plot(
-    _state, sample_rate,
+    state, sample_rate,
     static_cast<std::int32_t>(render_size.x), 
     static_cast<std::int32_t>(render_size.y), 
     bipolar);
-  float opacity = _processor->opacity(_state);
+  float opacity = _processor->opacity(state);
   if(graph_data.size() == 0) return;
     
   // Area.

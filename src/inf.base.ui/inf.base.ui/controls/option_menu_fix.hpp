@@ -1,8 +1,6 @@
 #ifndef INF_BASE_UI_CONTROLS_OPTION_MENU_FIX_HPP
 #define INF_BASE_UI_CONTROLS_OPTION_MENU_FIX_HPP
 
-#include <inf.base/topology/topology_info.hpp>
-
 #include <vstgui/vstgui.h>
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/lib/controls/coptionmenu.h>

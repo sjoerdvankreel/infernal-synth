@@ -1,8 +1,6 @@
 #ifndef INF_BASE_UI_CONTROLS_NESTED_OPTION_MENU_HPP
 #define INF_BASE_UI_CONTROLS_NESTED_OPTION_MENU_HPP
 
-#include <inf.base/topology/topology_info.hpp>
-
 #include <vstgui/vstgui.h>
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/lib/controls/coptionmenu.h>
@@ -18,10 +16,9 @@ public VSTGUI::IOptionMenuListener
 {
   std::string _selected_item;
   VSTGUI::CMenuItemList _flat_list;
-  inf::base::topology_info const* const _topology;
 public:
+  nested_option_menu();
   ~nested_option_menu();
-  nested_option_menu(inf::base::topology_info const* topology);
   CLASS_METHODS(nested_option_menu, COptionMenu)
 
   void onOptionMenuPrePopup(VSTGUI::COptionMenu* menu) override;
@@ -33,9 +30,8 @@ public:
 class nested_option_menu_creator :
 public VSTGUI::UIViewCreator::OptionMenuCreator
 {
-  inf::base::topology_info const* const _topology;
 public:
-  nested_option_menu_creator(inf::base::topology_info const* topology): _topology(topology) {}
+  nested_option_menu_creator() {}
   VSTGUI::IdStringPtr getViewName() const override { return "inf_nested_option_menu"; }
   VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCOptionMenu; }
   VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;

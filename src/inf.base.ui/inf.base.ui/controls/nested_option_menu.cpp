@@ -1,3 +1,4 @@
+#include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/controls/nested_option_menu.hpp>
 #include <vstgui/uidescription/uiviewcreator.h>
 
@@ -33,14 +34,13 @@ nested_option_menu::
 { unregisterOptionMenuListener(this); }
 
 nested_option_menu::
-nested_option_menu(topology_info const* topology) : 
-COptionMenu(), _topology(topology)
+nested_option_menu(): COptionMenu()
 { registerOptionMenuListener(this); }
   
 CView* 
 nested_option_menu_creator::create(
   UIAttributes const& attrs, IUIDescription const* desc) const
-{ return new nested_option_menu(_topology); }
+{ return new nested_option_menu(); }
  
 bool 
 nested_option_menu_creator::apply(
@@ -55,8 +55,9 @@ nested_option_menu::onOptionMenuPrePopup(COptionMenu* menu)
   beginEdit();
   _flat_list = *menuItems;
   menuItems->clear();
-  auto index = _topology->param_id_to_index.at(getTag());
-  auto const& param = _topology->params.at(index);
+  topology_info const* topology = find_editor(this)->topology();
+  auto index = topology->param_id_to_index.at(getTag());
+  auto const& param = topology->params.at(index);
   auto items = param.descriptor->data.discrete.items;
   for(std::size_t i = 0; i < items->size(); i++)
     add_item(menu, items->at(i).submenu_path.data(), items->at(i).submenu_path.size());
