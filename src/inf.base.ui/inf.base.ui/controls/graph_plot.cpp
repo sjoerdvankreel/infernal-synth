@@ -1,6 +1,6 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
-#include <inf.base.ui/shared/ui_edit_controller.hpp>
+#include <inf.base.ui/shared/plugin_controller.hpp>
 #include <inf.base/processor/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
 

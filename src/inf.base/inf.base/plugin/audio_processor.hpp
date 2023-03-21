@@ -1,7 +1,7 @@
-#ifndef INF_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
-#define INF_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
+#ifndef INF_BASE_PLUGIN_AUDIO_PROCESSOR_HPP
+#define INF_BASE_PLUGIN_AUDIO_PROCESSOR_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.base/shared/cont_storage.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
@@ -61,4 +61,4 @@ public:
 };
 
 } // namespace inf::base
-#endif // INF_BASE_PROCESSOR_AUDIO_PROCESSOR_HPP
+#endif // INF_BASE_PLUGIN_AUDIO_PROCESSOR_HPP

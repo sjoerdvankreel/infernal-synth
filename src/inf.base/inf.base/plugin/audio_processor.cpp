@@ -1,6 +1,6 @@
 #include <inf.base/shared/state.hpp>
 #include <inf.base/shared/support.hpp>
-#include <inf.base/processor/audio_processor.hpp>
+#include <inf.base/plugin/audio_processor.hpp>
 #include <cassert>
 
 namespace inf::base {

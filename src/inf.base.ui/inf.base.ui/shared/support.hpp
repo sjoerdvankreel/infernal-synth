@@ -3,12 +3,14 @@
 
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
-#include <inf.base.ui/shared/ui_edit_controller.hpp>
+#include <inf.base.ui/shared/plugin_controller.hpp>
 
 #include <vstgui/lib/ccolor.h>
+#include <vstgui/lib/cframe.h>
 #include <vstgui/uidescription/uiviewcreator.h>
 
 #include <string>
+#include <vector>
 #include <cstdint>
 
 namespace inf::base::ui {
@@ -19,10 +21,12 @@ to_vst_color(inf::base::ui_color const& color)
 inline inf::base::ui_color
 from_vst_color(VSTGUI::CColor const& color)
 { return inf::base::ui_color(color.alpha, color.red, color.green, color.blue); }
-inline ui_edit_controller const*
+inline plugin_controller const*
 find_editor(VSTGUI::CView const* view)
-{ return static_cast<ui_edit_controller const*>(view->getFrame()->getEditor()); }
+{ return dynamic_cast<plugin_controller const*>(view->getFrame()->getEditor()); }
 
+std::vector<VSTGUI::CMenuItem*>
+create_context_menu(plugin_controller* controller);
 inf::base::ui_color
 from_vst_color_name(std::string const* name, VSTGUI::IUIDescription const* desc);
 

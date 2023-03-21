@@ -1,7 +1,7 @@
-#ifndef INF_BASE_PROCESSOR_GRAPH_PROCESSOR_HPP
-#define INF_BASE_PROCESSOR_GRAPH_PROCESSOR_HPP
+#ifndef INF_BASE_PLUGIN_GRAPH_PROCESSOR_HPP
+#define INF_BASE_PLUGIN_GRAPH_PROCESSOR_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
@@ -65,4 +65,4 @@ _graph_data(), _state_copy(topology->params.size()),
 _continuous_automation(topology->input_param_count), _continuous_automation_buffer() {}
 
 } // namespace inf::base
-#endif // INF_BASE_PROCESSOR_GRAPH_PROCESSOR_HPP
+#endif // INF_BASE_PLUGIN_GRAPH_PROCESSOR_HPP

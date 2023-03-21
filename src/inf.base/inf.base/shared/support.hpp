@@ -1,7 +1,7 @@
 #ifndef INF_BASE_SHARED_SUPPORT_HPP
 #define INF_BASE_SHARED_SUPPORT_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <cmath>

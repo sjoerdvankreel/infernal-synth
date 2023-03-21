@@ -1,8 +1,4 @@
 #include <inf.vst.ui/ui_controller.hpp>
-#include <vstgui/lib/platform/platformfactory.h>
-#if WIN32
-#include <vstgui/lib/platform/win32/win32factory.h>
-#endif
    
 using namespace VSTGUI;
 using namespace inf::base;
@@ -23,6 +19,33 @@ vst_ui_controller::createView(char const* name)
   setKnobMode(KnobModes::kLinearMode);
   return result;
 }   
+
+void
+vst_ui_controller::view_removed(IPlugView* editor)
+{
+  assert(editor != nullptr);
+  assert(_editor != nullptr);
+  _editor = nullptr;
+}
+
+void
+vst_ui_controller::view_attached(IPlugView* editor)
+{
+  assert(editor != nullptr);
+  assert(_editor == nullptr);
+  _editor = editor;
+  sync_ui_parameters();
+}
+tresult
+vst_ui_controller::endEdit(ParamID tag)
+{
+  update_state(tag);
+  if (_editor == nullptr) return EditControllerEx1::endEdit(tag);
+
+  // Update visibility of dependent parameters and rerender graphs.
+  _editor->update_dependent_visibility(tag);
+  return EditControllerEx1::endEdit(tag);
+}
 
 // Right-click context menu, init/clear patch.
 void
