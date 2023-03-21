@@ -1,7 +1,7 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
-#include <inf.base.ui/shared/plugin_controller.hpp>
-#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/plugin/plugin_controller.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vstgui/uidescription/uiviewcreator.h>

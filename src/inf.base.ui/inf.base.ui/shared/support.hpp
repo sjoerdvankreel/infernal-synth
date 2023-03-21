@@ -1,9 +1,9 @@
 #ifndef INF_BASE_UI_SHARED_SUPPORT_HPP
 #define INF_BASE_UI_SHARED_SUPPORT_HPP
 
+#include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
-#include <inf.base.ui/shared/plugin_controller.hpp>
 
 #include <vstgui/lib/ccolor.h>
 #include <vstgui/lib/cframe.h>

@@ -1,9 +1,9 @@
 #ifndef INF_VST_SDK_PROCESSOR_HPP
 #define INF_VST_SDK_PROCESSOR_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
+#include <inf.base/plugin/audio_processor.hpp>
 #include <inf.base/topology/topology_info.hpp>
-#include <inf.base/processor/audio_processor.hpp>
 
 #include <pluginterfaces/vst/ivstevents.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>

@@ -1,6 +1,7 @@
 #ifndef INF_VST_SDK_CONTROLLER_HPP
 #define INF_VST_SDK_CONTROLLER_HPP
 
+#include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/topology_info.hpp>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
@@ -11,7 +12,8 @@ namespace inf::vst {
 
 // Vst edit controller.
 class vst_controller: 
-public Steinberg::Vst::EditControllerEx1
+public Steinberg::Vst::EditControllerEx1,
+public inf::base::plugin_controller
 {
 protected:
   using tresult = Steinberg::tresult;
@@ -37,7 +39,7 @@ public:
   tresult PLUGIN_API initialize(FUnknown* context) override;
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
-  std::vector<inf::base::preset_item>* preset_items() { return &_preset_items; }
+  std::vector<inf::base::preset_item>& preset_items() { return _preset_items; }
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
 };
 

@@ -45,6 +45,14 @@
 - provide an alternate way to pop up the context menu or integrate it in the plugin ui
 
 # programmatic ui
+* inf.base
+* inf.base.ui
+* inf.base.vst
+* inf.base.vst.ui
+* inf.synth
+* inf.synth.ui
+* inf.synth.vst.fx.generic et all
+
 - get rid of uidesc
 - drop uigenerator tool
 - make tool vst independent

@@ -1,7 +1,7 @@
 #ifndef INF_BASE_UI_CONTROLS_GRAPH_PLOT_HPP
 #define INF_BASE_UI_CONTROLS_GRAPH_PLOT_HPP
 
-#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vstgui/vstgui.h>

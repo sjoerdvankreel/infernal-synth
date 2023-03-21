@@ -19,7 +19,7 @@ struct preset_item
 class plugin_controller
 {
 public:
-  virtual param_value* state() const = 0;
+  virtual param_value const* state() const = 0;
   virtual topology_info const* topology() const = 0;
   virtual void update_dependent_visibility(std::int32_t param_id) const = 0;
 
