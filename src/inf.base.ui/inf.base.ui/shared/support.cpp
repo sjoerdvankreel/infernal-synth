@@ -25,7 +25,7 @@ from_vst_color_name(std::string const* name, IUIDescription const* desc)
 static void
 clear_module(plugin_controller* controller, std::int32_t type, std::int32_t index)
 {
-  param_value* state = controller->state();
+  param_value const* state = controller->state();
   topology_info const* topology = controller->topology();
   std::int32_t param_start = topology->param_bounds[type][index];
   std::int32_t param_count = topology->static_parts[type].param_count;
