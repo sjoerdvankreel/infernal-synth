@@ -1,5 +1,7 @@
-#include <inf.base.vst.ui/bootstrap.hpp>
+#include <pluginterfaces/base/funknown.h>
 #include <inf.base.ui/shared/bootstrap.hpp>
+#include <inf.base/topology/topology_info.hpp>
+
 #include <cstdint>
 
 #if WIN32
@@ -13,11 +15,7 @@ extern bool InitModule();
 extern bool DeinitModule();
 static std::int32_t _inf_module_counter = 0;
  
-extern "C" { 
-
-SMTG_EXPORT_SYMBOL topology_info*
-inf_vst_create_topology()
-{ return inf_vst_create_topology_impl(); }
+extern "C" {
 
 SMTG_EXPORT_SYMBOL
 bool InitDll()

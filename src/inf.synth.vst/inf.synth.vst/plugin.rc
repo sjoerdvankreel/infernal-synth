@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <inf.synth.vst.instrument/plugin.hpp>
+#include <inf.synth.vst/plugin.hpp>
 
 #define APSTUDIO_READONLY_SYMBOLS
 
@@ -24,10 +24,10 @@ BEGIN
             VALUE "FileVersion", INF_SYNTH_VST_VERSION
             VALUE "ProductVersion", INF_SYNTH_VST_VERSION
             VALUE "CompanyName", INF_SYNTH_VST_COMPANY_NAME
-            VALUE "OriginalFilename", INF_SYNTH_VST_ORIG_FILE_NAME
-            VALUE "FileDescription", INF_SYNTH_VST_ORIG_FILE_NAME
             VALUE "InternalName", INF_SYNTH_VST_ORIG_FILE_NAME
+            VALUE "FileDescription", INF_SYNTH_VST_ORIG_FILE_NAME
             VALUE "LegalCopyright", INF_SYNTH_VST_LEGAL_COPYRIGHT
+            VALUE "OriginalFilename", INF_SYNTH_VST_ORIG_FILE_NAME
             VALUE "LegalTrademarks", INF_SYNTH_VST_LEGAL_TRADEMARKS
         END
     END
