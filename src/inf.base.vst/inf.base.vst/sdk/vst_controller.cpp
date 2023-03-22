@@ -29,8 +29,7 @@ namespace inf::base::vst {
 
 vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
-_state(topology->params.size()), _preset_items(), _topology(std::move(topology))
-{ _topology->init_factory_preset(_state.data()); }
+plugin_controller(std::move(topology)) {}
 
 void
 vst_controller::load_preset(std::size_t index)

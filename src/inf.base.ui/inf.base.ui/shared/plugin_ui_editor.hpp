@@ -13,7 +13,6 @@ namespace inf::base::ui {
 class plugin_ui_editor
 {
   plugin_controller* const _controller;
-  topology_info const* const _topology;
   std::vector<base::ui::graph_plot*> _graphs;
   std::vector<std::vector<VSTGUI::CControl*>> _controls;
 
@@ -26,7 +25,6 @@ protected:
 
 public:
   void update_dependent_visibility(std::int32_t tag);
-  topology_info const* topology() const { return _topology; }
   plugin_controller* controller() const { return _controller; }
 
 protected:
