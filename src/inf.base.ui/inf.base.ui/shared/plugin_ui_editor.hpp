@@ -31,7 +31,7 @@ public:
 
 protected:
   void view_added(CFrame* view_frame, CView* view);
-  void void_removed(CFrame* view_frame, CView* view);
+  void view_removed(CFrame* view_frame, CView* view);
   plugin_ui_editor(plugin_controller* controller, topology_info const* topology);
 };
 

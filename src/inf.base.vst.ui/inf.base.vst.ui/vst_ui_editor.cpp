@@ -13,7 +13,7 @@ using namespace inf::base::ui;
 namespace inf::base::vst::ui {
     
 vst_ui_editor::
-vst_ui_editor(EditController* controller, UTF8StringPtr template_name,
+vst_ui_editor(vst_ui_controller* controller, UTF8StringPtr template_name,
   UTF8StringPtr xml_file, topology_info const* topology):
 VST3Editor(controller, template_name, xml_file),
 plugin_ui_editor(controller, topology)
@@ -34,7 +34,7 @@ vst_ui_editor::onViewAdded(CFrame* view_frame, CView* view)
 void 
 vst_ui_editor::onViewRemoved(CFrame* view_frame, CView* view)
 {
-  plugin_ui_editor::view_remove(view_frame, view);
+  plugin_ui_editor::view_removed(view_frame, view);
   VST3Editor::onViewRemoved(view_frame, view);
 }
 

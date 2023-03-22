@@ -36,7 +36,7 @@ plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
 }
  
 void 
-plugin_ui_editor::void_removed(CFrame* view_frame, CView* view)
+plugin_ui_editor::view_removed(CFrame* view_frame, CView* view)
 {
   // Keep track of graphs.
   graph_plot* graph = dynamic_cast<graph_plot*>(view);
