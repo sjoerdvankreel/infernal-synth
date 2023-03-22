@@ -10,7 +10,7 @@
 
 namespace inf::base::ui {
 
-class public_ui_editor
+class plugin_ui_editor
 {
   plugin_controller* const _controller;
   topology_info const* const _topology;
@@ -32,7 +32,7 @@ protected:
   void view_added(CFrame* view_frame, CView* view);
   void void_removed(CFrame* view_frame, CView* view);
   void update_dependent_visibility(std::int32_t tag);
-  public_ui_editor(plugin_controller* controller, topology_info const* topology);
+  plugin_ui_editor(plugin_controller* controller, topology_info const* topology);
 };
 
 } // namespace inf::base::vst::ui

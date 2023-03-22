@@ -10,12 +10,12 @@ using namespace inf::base::ui;
 
 namespace inf::base::ui {
 
-public_ui_editor::
-public_ui_editor(plugin_controller* controller, topology_info const* topology):
+plugin_ui_editor::
+plugin_ui_editor(plugin_controller* controller, topology_info const* topology):
 _controller(controller), _topology(topology), _graphs(), _controls() {}
 
 void 
-public_ui_editor::view_added(CFrame* view_frame, CView* view)
+plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
 {
   // Keep track of graphs.
   graph_plot* graph = dynamic_cast<graph_plot*>(view);
@@ -36,7 +36,7 @@ public_ui_editor::view_added(CFrame* view_frame, CView* view)
 }
  
 void 
-public_ui_editor::void_removed(CFrame* view_frame, CView* view)
+plugin_ui_editor::void_removed(CFrame* view_frame, CView* view)
 {
   // Keep track of graphs.
   graph_plot* graph = dynamic_cast<graph_plot*>(view);
@@ -57,7 +57,7 @@ public_ui_editor::void_removed(CFrame* view_frame, CView* view)
 } 
     
 void               
-public_ui_editor::update_dependent_visibility(std::int32_t tag)
+plugin_ui_editor::update_dependent_visibility(std::int32_t tag)
 {
   // Update graphs where needed.  
   std::int32_t param_index = _topology->param_id_to_index.at(tag);
