@@ -5,9 +5,9 @@
 #include <inf.synth/audio_bank/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 
-#include <inf.base.vst/sdk/processor.hpp>
-#include <inf.base.vst.ui/ui_controller.hpp>
 #include <inf.base.vst.ui/bootstrap.hpp>
+#include <inf.base.vst.ui/vst_ui_controller.hpp>
+#include <inf.base.vst/sdk/vst_processor.hpp>
 #include <inf.synth.vst.instrument/plugin.hpp>
 
 #include <public.sdk/source/main/pluginfactory.h>

@@ -44,7 +44,6 @@
 - provide an alternate way to pop up the context menu or integrate it in the plugin ui
 
 # programmatic ui
-- rename files with vst_ types to vst_
 - get rid of uidesc
 - drop uigenerator tool
 - make project dependency diagram
