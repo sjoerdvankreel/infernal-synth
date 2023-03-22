@@ -2,7 +2,6 @@
 #define INF_BASE_VST_UI_UI_CONTROLLER_HPP
 
 #include <inf.base.vst/sdk/controller.hpp>
-#include <inf.base.vst.ui/editor.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <pluginterfaces/vst/vsttypes.h>

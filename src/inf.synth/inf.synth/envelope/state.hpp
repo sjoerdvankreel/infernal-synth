@@ -1,7 +1,7 @@
 #ifndef INF_SYNTH_ENVELOPE_STATE_HPP
 #define INF_SYNTH_ENVELOPE_STATE_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <cstdint>
 
 namespace inf::synth {

@@ -2,7 +2,7 @@
 #define INF_SYNTH_EFFECT_GRAPH_HPP
 
 #include <inf.base/shared/support.hpp>
-#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 
 #include <array>
 #include <vector>

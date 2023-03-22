@@ -1,4 +1,5 @@
 #include <inf.base.ui/shared/support.hpp>
+#include <inf.base.vst.ui/editor.hpp>
 #include <inf.base.vst.ui/ui_controller.hpp>
    
 using namespace VSTGUI;
