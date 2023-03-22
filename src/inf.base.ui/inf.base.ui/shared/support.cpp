@@ -10,7 +10,7 @@
 using namespace VSTGUI;
 
 namespace inf::base::ui {
-
+ 
 inf::base::ui_color
 from_vst_color_name(std::string const* name, IUIDescription const* desc)
 {
