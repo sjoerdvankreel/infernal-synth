@@ -171,7 +171,7 @@ create_context_menu(plugin_controller* controller)
     base_path = factory->getResourceBasePath();
 #endif
     if (!base_path) return result;
-    VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets";
+    VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets/";
     typed_base_path += topology->is_instrument()? "Instrument": "Fx";
     for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
     {
