@@ -4,11 +4,6 @@
 
 #include <cstdint>
 
-#if WIN32
-#include <Windows.h>
-void* moduleHandle = nullptr;
-#endif  
-
 using namespace inf::base;
 
 extern bool InitModule();
@@ -36,15 +31,5 @@ bool ExitDll()
   inf::base::ui::terminate();
   return true;
 }
-
-#if WIN32
-BOOL WINAPI
-DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
-{
-  if (reason != DLL_PROCESS_ATTACH) return TRUE;
-  moduleHandle = instance;
-  return TRUE;
-}
-#endif
 
 } // extern "C"

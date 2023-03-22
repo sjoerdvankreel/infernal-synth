@@ -12,6 +12,18 @@
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <public.sdk/source/main/pluginfactory_constexpr.h>
 
+#if WIN32
+#include <Windows.h>
+void* moduleHandle = nullptr;
+BOOL WINAPI
+DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
+{
+  if (reason != DLL_PROCESS_ATTACH) return TRUE;
+  moduleHandle = instance;
+  return TRUE;
+}
+#endif  
+
 using namespace inf::base;
 using namespace inf::base::vst;
 using namespace inf::base::vst::ui;
