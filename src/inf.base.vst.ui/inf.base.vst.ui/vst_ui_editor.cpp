@@ -2,7 +2,6 @@
 #include <inf.base.vst/sdk/vst_parameter.hpp>
 #include <inf.base.vst.ui/vst_ui_editor.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
-#include <inf.base.ui/controls/rotary_knob.hpp>
 
 #include <cassert>
 #include <algorithm>
@@ -14,43 +13,36 @@ using namespace inf::base::ui;
 namespace inf::base::vst::ui {
     
 vst_ui_editor::
-vst_ui_editor(vst_ui_controller* controller, topology_info const* topology):
-plugin_ui_editor(controller, topology),
-VSTGUIEditor(controller)
+vst_ui_editor(vst_ui_controller* controller, UTF8StringPtr template_name,
+  UTF8StringPtr xml_file, topology_info const* topology):
+VST3Editor(controller, template_name, xml_file),
+plugin_ui_editor(controller, topology)
 { 
   assert(topology != nullptr);
+  assert(xml_file != nullptr);
   assert(controller != nullptr);
+  assert(template_name != nullptr);
 }
 
-void PLUGIN_API
-vst_ui_editor::close()
+void 
+vst_ui_editor::onViewAdded(CFrame* view_frame, CView* view)
 {
-  //Steinberg::IdleUpdateHandler::stop();
-  if (getFrame() == nullptr) return;
-  getFrame()->removeAll(true);
-  if (getFrame()->getNbReference() > 1)
-  {
-    getFrame()->forget();
-    return;
-  }
-  getFrame()->close();
+  VST3Editor::onViewAdded(view_frame, view);
+  plugin_ui_editor::view_added(view_frame, view);
+}
+ 
+void 
+vst_ui_editor::onViewRemoved(CFrame* view_frame, CView* view)
+{
+  plugin_ui_editor::view_removed(view_frame, view);
+  VST3Editor::onViewRemoved(view_frame, view);
 }
 
-bool PLUGIN_API 
+// Set initial visibility when the plugin ui is opened.
+bool PLUGIN_API
 vst_ui_editor::open(void* parent, const PlatformType& type)
 {
-  frame = new CFrame(CRect(0, 0, 640, 480), this);
-  knob_ui_colors cols = {};
-  cols.drag.color = 0xFFFF0000;
-  cols.fill.color = 0xFFFF0000;
-  auto knob = new inf::base::ui::rotary_knob(cols, true, false);
-  knob->setViewSize(CRect(0, 0, 30, 30));
-  frame->addView(knob);
-  getFrame()->enableTooltips(true);
-  getFrame()->setTransparency(true);
-  getFrame()->setViewAddedRemovedObserver(this);
-  getFrame()->open(parent, type, nullptr);
-  //Steinberg::IdleUpdateHandler::start();
+  if (!VST3Editor::open(parent, type)) return false;
   dynamic_cast<vst_ui_controller&>(*getController()).sync_ui_parameters();
   return true;
 }
