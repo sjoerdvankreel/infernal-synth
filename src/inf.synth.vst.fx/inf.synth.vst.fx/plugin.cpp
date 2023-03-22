@@ -3,27 +3,29 @@
 #include <inf.synth/cv_bank/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
 
-#include <inf.vst.synth.fx/plugin.hpp>
-#include <inf.vst/sdk/processor.hpp>
-#include <inf.vst/sdk/controller.hpp>
-#include <inf.vst.ui/bootstrap.hpp>
+#include <inf.synth.vst.fx/plugin.hpp>
+#include <inf.base.vst/sdk/processor.hpp>
+#include <inf.base.vst/sdk/controller.hpp>
+#include <inf.base.vst.ui/bootstrap.hpp>
+#include <inf.base.vst.ui/ui_controller.hpp>
 
 #include <public.sdk/source/main/pluginfactory.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 
-using namespace inf::vst;
 using namespace inf::base;
+using namespace inf::base::vst;
+using namespace inf::base::vst::ui;
 using namespace inf::synth;
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
 #if INF_VERSIONED
-static FUID const inf_vst_processor_id(0x88B6D7ED, 0x1B3A4AAE, 0xA9612A67, 0x56F66197);
-static FUID const inf_vst_controller_id(0x5E5E1287, 0xDFA148FE, 0xA543CCEE, 0x286FF4DE);
+static FUID const inf_synth_vst_processor_id(0x88B6D7ED, 0x1B3A4AAE, 0xA9612A67, 0x56F66197);
+static FUID const inf_synth_vst_controller_id(0x5E5E1287, 0xDFA148FE, 0xA543CCEE, 0x286FF4DE);
 #elif !INF_VERSIONED
-static FUID const inf_vst_processor_id(0x00AE86BB, 0x62E6495B, 0xBB947F2F, 0x7D98CC1A);
-static FUID const inf_vst_controller_id(0x101EB406, 0x0A0F4361, 0xBBFF18B5, 0xF566FEBE);
+static FUID const inf_synth_vst_processor_id(0x00AE86BB, 0x62E6495B, 0xBB947F2F, 0x7D98CC1A);
+static FUID const inf_synth_vst_controller_id(0x101EB406, 0x0A0F4361, 0xBBFF18B5, 0xF566FEBE);
 #else
 #error
 #endif
@@ -35,9 +37,9 @@ public:
   bool is_instrument() const override { return false; }
   void init_clear_patch(param_value* state) const override;
   void init_factory_preset(param_value* state) const override;
-  char const* plugin_name() const { return INF_VST_INFERNAL_SYNTH_NAME; }
-  std::uint16_t version_major() const { return INF_VST_INFERNAL_SYNTH_VERSION_MAJOR; }
-  std::uint16_t version_minor() const { return INF_VST_INFERNAL_SYNTH_VERSION_MINOR; }
+  char const* plugin_name() const { return INF_SYNTH_VST_NAME; }
+  std::uint16_t version_major() const { return INF_SYNTH_VST_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return INF_SYNTH_VST_VERSION_MINOR; }
 };
 
 void
@@ -153,34 +155,34 @@ inf_vst_create_topology_impl()
   return result;
 }
 
-static FUnknown* inf_vst_controller_factory(void* context)
+static FUnknown* inf_synth_vst_controller_factory(void* context)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology());
-  auto controller = new vst_controller(std::move(topology));
+  auto controller = new vst_ui_controller(std::move(topology));
   return static_cast<IEditController*>(controller);
 }
 
-static FUnknown* inf_vst_processor_factory(void* context)
+static FUnknown* inf_synth_vst_processor_factory(void* context)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology());
-  auto processor = new vst_processor(std::move(topology), inf_vst_controller_id);
+  auto processor = new vst_processor(std::move(topology), inf_synth_vst_controller_id);
   return static_cast<IAudioProcessor*>(processor);
 }
 
 BEGIN_FACTORY_DEF(
-  INF_VST_INFERNAL_SYNTH_COMPANY_NAME,
-  INF_VST_INFERNAL_SYNTH_COMPANY_WEB,
-  INF_VST_INFERNAL_SYNTH_COMPANY_MAIL)
+  INF_SYNTH_VST_COMPANY_NAME,
+  INF_SYNTH_VST_COMPANY_WEB,
+  INF_SYNTH_VST_COMPANY_MAIL)
 
   DEF_CLASS2(
-    INLINE_UID_FROM_FUID(inf_vst_processor_id),
-    PClassInfo::kManyInstances, kVstAudioEffectClass, INF_VST_INFERNAL_SYNTH_NAME,
+    INLINE_UID_FROM_FUID(inf_synth_vst_processor_id),
+    PClassInfo::kManyInstances, kVstAudioEffectClass, INF_SYNTH_VST_NAME,
     Steinberg::Vst::kDistributable, Steinberg::Vst::PlugType::kFx, 
-    INF_VST_INFERNAL_SYNTH_VERSION, kVstVersionString, inf_vst_processor_factory)
+    INF_SYNTH_VST_VERSION, kVstVersionString, inf_synth_vst_processor_factory)
   
   DEF_CLASS2(
-    INLINE_UID_FROM_FUID(inf_vst_controller_id),
+    INLINE_UID_FROM_FUID(inf_synth_vst_controller_id),
     PClassInfo::kManyInstances, kVstComponentControllerClass, 
-    INF_VST_INFERNAL_SYNTH_CONTROLLER_NAME, 0, "",
-    INF_VST_INFERNAL_SYNTH_VERSION, kVstVersionString, inf_vst_controller_factory)
+    INF_SYNTH_VST_CONTROLLER_NAME, 0, "",
+    INF_SYNTH_VST_VERSION, kVstVersionString, inf_synth_vst_controller_factory)
 END_FACTORY
