@@ -38,7 +38,6 @@
 - tabbed ui
 - larger knobs
 - remove voice/master graphs
-- programmatic ui, no uidesc
 - reduce the use of background images
 - drop text edit fields & put active knob value in 1 single place
 - filter out incompatible menu options (osc sync, ram, audio routing)

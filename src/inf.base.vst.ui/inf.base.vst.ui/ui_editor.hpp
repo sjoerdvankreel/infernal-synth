@@ -1,5 +1,5 @@
-#ifndef INF_BASE_VST_UI_EDITOR_HPP
-#define INF_BASE_VST_UI_EDITOR_HPP
+#ifndef INF_BASE_VST_UI_UI_EDITOR_HPP
+#define INF_BASE_VST_UI_UI_EDITOR_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
@@ -17,7 +17,7 @@ namespace inf::base::vst::ui {
 // onViewAdded/onViewRemoved/update_dependent_visibility if you need
 // to play around with the editor. Conditional visibility 
 // obviously won't work then.
-class vst_editor: 
+class vst_ui_editor: 
 public VSTGUI::VST3Editor
 {
   using CView = VSTGUI::CView;
@@ -33,7 +33,7 @@ public VSTGUI::VST3Editor
   inf::base::topology_info const* const _topology;
 
 public:
-  vst_editor(EditController* controller, UTF8StringPtr template_name,
+  vst_ui_editor(EditController* controller, UTF8StringPtr template_name,
     UTF8StringPtr xml_file, inf::base::topology_info const* topology);
 
   void update_dependent_visibility(ParamID tag);
@@ -48,4 +48,4 @@ public:
 };
 
 } // namespace inf::base::vst::ui
-#endif // INF_BASE_VST_UI_EDITOR_HPP
+#endif // INF_BASE_VST_UI_UI_EDITOR_HPP

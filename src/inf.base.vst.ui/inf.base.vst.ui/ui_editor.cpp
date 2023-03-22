@@ -1,4 +1,4 @@
-#include <inf.base.vst.ui/editor.hpp>
+#include <inf.base.vst.ui/ui_editor.hpp>
 #include <inf.base.vst/sdk/parameter.hpp>
 #include <inf.base.vst/shared/support.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
@@ -12,8 +12,8 @@ using namespace inf::base::ui;
 
 namespace inf::base::vst::ui {
     
-vst_editor::  
-vst_editor(EditController* controller, UTF8StringPtr template_name,
+vst_ui_editor::
+vst_ui_editor(EditController* controller, UTF8StringPtr template_name,
   UTF8StringPtr xml_file, topology_info const* topology):
 VST3Editor(controller, template_name, xml_file),
 _graphs(), _controls(topology->params.size()), _topology(topology)
@@ -26,7 +26,7 @@ _graphs(), _controls(topology->params.size()), _topology(topology)
 
 // Set initial visibility when the plugin ui is opened.
 bool PLUGIN_API
-vst_editor::open(void* parent, const PlatformType& type)
+vst_ui_editor::open(void* parent, const PlatformType& type)
 {
   if (!VST3Editor::open(parent, type)) return false;
   dynamic_cast<vst_ui_controller&>(*getController()).sync_ui_parameters();
@@ -34,7 +34,7 @@ vst_editor::open(void* parent, const PlatformType& type)
 }
 
 void 
-vst_editor::onViewAdded(CFrame* view_frame, CView* view)
+vst_ui_editor::onViewAdded(CFrame* view_frame, CView* view)
 {
   VST3Editor::onViewAdded(view_frame, view);
 
@@ -58,7 +58,7 @@ vst_editor::onViewAdded(CFrame* view_frame, CView* view)
 }
  
 void 
-vst_editor::onViewRemoved(CFrame* view_frame, CView* view)
+vst_ui_editor::onViewRemoved(CFrame* view_frame, CView* view)
 {
   // Keep track of graphs.
   graph_plot* graph = dynamic_cast<graph_plot*>(view);
@@ -81,7 +81,7 @@ vst_editor::onViewRemoved(CFrame* view_frame, CView* view)
 } 
     
 void               
-vst_editor::update_dependent_visibility(ParamID tag)
+vst_ui_editor::update_dependent_visibility(ParamID tag)
 {
   // Update graphs where needed.  
   std::int32_t param_index = _topology->param_id_to_index.at(tag);
