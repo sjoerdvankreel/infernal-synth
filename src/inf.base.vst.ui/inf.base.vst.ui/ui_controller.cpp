@@ -36,7 +36,7 @@ vst_ui_controller::update_dependent_visibility(std::int32_t param_id) const
 {
   auto editor = _editor;
   if(editor == nullptr) return;
-  dynamic_cast<vst_editor&>(*_editor).update_dependent_visibility(param_id);
+  dynamic_cast<vst_ui_editor&>(*_editor).update_dependent_visibility(param_id);
 }
 
 tresult
@@ -46,7 +46,7 @@ vst_ui_controller::endEdit(ParamID tag)
   if (_editor == nullptr) return EditControllerEx1::endEdit(tag);
 
   // Update visibility of dependent parameters and rerender graphs.
-  dynamic_cast<vst_editor&>(*_editor).update_dependent_visibility(tag);
+  dynamic_cast<vst_ui_editor&>(*_editor).update_dependent_visibility(tag);
   return EditControllerEx1::endEdit(tag);
 }
 
@@ -58,7 +58,7 @@ COptionMenu*
 vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
 {
   ParamID tag;
-  auto& inf_editor = dynamic_cast<vst_editor&>(*editor);
+  auto& inf_editor = dynamic_cast<vst_ui_editor&>(*editor);
   tresult found = inf_editor.find_parameter(pos, tag);
   if(found == kResultOk) return VST3EditorDelegate::createContextMenu(pos, editor);
 
@@ -75,7 +75,7 @@ IPlugView* PLUGIN_API
 vst_ui_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_editor* result = new vst_editor(this, "view", "UI/controller.uidesc", _topology.get());
+  vst_ui_editor* result = new vst_ui_editor(this, "view", "UI/controller.uidesc", _topology.get());
   setKnobMode(KnobModes::kLinearMode);
   return result;
 }
