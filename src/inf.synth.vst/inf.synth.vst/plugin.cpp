@@ -6,6 +6,7 @@
 #include <inf.synth/oscillator/topology.hpp>
 
 #include <inf.synth.vst/plugin.hpp>
+#include <inf.base.ui/shared/bootstrap.hpp>
 #include <inf.base.vst/sdk/vst_processor.hpp>
 #include <inf.base.vst.ui/vst_ui_controller.hpp>
 
@@ -31,6 +32,34 @@ using namespace inf::synth;
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
+
+extern bool InitModule();
+extern bool DeinitModule();
+static std::int32_t _inf_module_counter = 0;
+ 
+extern "C" {
+
+SMTG_EXPORT_SYMBOL
+bool InitDll()
+{
+  if (++_inf_module_counter != 1) return true;
+  if (!InitModule()) return false;
+  inf::base::ui::initialize();
+  return true;
+}
+
+SMTG_EXPORT_SYMBOL
+bool ExitDll()
+{
+  --_inf_module_counter;
+  if (_inf_module_counter > 0) return true;
+  if (_inf_module_counter < 0) return false;
+  if (!DeinitModule()) return false;
+  inf::base::ui::terminate();
+  return true;
+}
+
+} // extern "C"
 
 #if INF_VERSIONED
 static const DECLARE_UID(fx_processor_id, 0x88B6D7ED, 0x1B3A4AAE, 0xA9612A67, 0x56F66197);
