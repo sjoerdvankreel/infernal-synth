@@ -12,6 +12,8 @@
 
 namespace inf::base::vst::ui {
 
+class vst_ui_editor;
+
 // Vst edit controller dynamically generated from topology_info.
 class vst_ui_controller: 
 public inf::base::vst::vst_controller, 
@@ -19,6 +21,9 @@ public VSTGUI::VST3EditorDelegate
 {
   using IPlugView = Steinberg::IPlugView; 
   IPlugView* _editor = nullptr;
+
+protected:
+  virtual vst_ui_editor* create_editor() const = 0;
 
 public:
   explicit vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology);

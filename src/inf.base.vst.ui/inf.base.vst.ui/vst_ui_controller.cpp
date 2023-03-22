@@ -31,6 +31,14 @@ vst_ui_controller::view_attached(IPlugView* editor)
   sync_ui_parameters();
 }
 
+IPlugView* PLUGIN_API
+vst_ui_controller::createView(char const* name)
+{
+  if (ConstString(name) != ViewType::kEditor) return nullptr;
+  setKnobMode(KnobModes::kLinearMode);
+  return create_editor();
+}
+
 tresult
 vst_ui_controller::endEdit(ParamID tag)
 {
@@ -62,15 +70,6 @@ vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   std::vector<CMenuItem*> context_menu(create_context_menu(this));
   for(auto it = context_menu.begin(); it != context_menu.end(); ++it)
     result->addEntry(*it);
-  return result;
-}
-
-IPlugView* PLUGIN_API
-vst_ui_controller::createView(char const* name)
-{
-  if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_ui_editor* result = new vst_ui_editor(this, _topology.get());
-  setKnobMode(KnobModes::kLinearMode);
   return result;
 }
 

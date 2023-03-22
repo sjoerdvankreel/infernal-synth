@@ -21,6 +21,9 @@ public VSTGUI::IViewAddedRemovedObserver
   using ParamID = Steinberg::Vst::ParamID;
   using EditController = Steinberg::Vst::EditController;
 
+protected:
+  virtual VSTGUI::CFrame* create_frame() const = 0;
+
 public:
   vst_ui_editor(vst_ui_controller* controller, inf::base::topology_info const* topology);
 
