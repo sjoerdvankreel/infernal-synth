@@ -15,6 +15,7 @@ using namespace inf::base;
 namespace inf::tool::vst::shared {
 
 typedef topology_info* (*inf_create_topology_t)(void);
+typedef topology_info* (*inf_create_topology2_t)(std::int32_t);
 
 static void*
 load_library(char const* file)
@@ -67,16 +68,20 @@ load_topology(char const* library_path)
   std::cout << "Loaded library " << library_path << ".\n";
   if ((init_dll = get_proc_address(library, "InitDll")) == nullptr)
     return std::cout << library_path << " does not export InitDll.\n", std::move(result);
-  if ((exit_dll = get_proc_address(library, "ExitDll")) == nullptr)
-    return std::cout << library_path << " does not export ExitDll.\n", std::move(result);
-  if ((create_topology = get_proc_address(library, "inf_vst_create_topology")) == nullptr)
-    if ((create_topology = get_proc_address(library, "svn_vst_create_topology")) == nullptr)
-      return std::cout << library_path << " does not export (svn/inf)_vst_create_topology.\n", std::move(result);
   if (!reinterpret_cast<inf_init_exit_dll_t>(init_dll)())
     return std::cout << "InitDll returned false.\n", std::move(result);
-  topology = reinterpret_cast<inf_create_topology_t>(create_topology)();
+  if ((exit_dll = get_proc_address(library, "ExitDll")) == nullptr)
+    return std::cout << library_path << " does not export ExitDll.\n", std::move(result);
+  if ((create_topology = get_proc_address(library, "inf_vst_create_topology2")) != nullptr)
+    topology = reinterpret_cast<inf_create_topology2_t>(create_topology)(1);
+  else if ((create_topology = get_proc_address(library, "inf_vst_create_topology")) != nullptr)
+    topology = reinterpret_cast<inf_create_topology_t>(create_topology)();
+  else if ((create_topology = get_proc_address(library, "svn_vst_create_topology")) != nullptr)
+    topology = reinterpret_cast<inf_create_topology_t>(create_topology)();
+  else
+    return std::cout << library_path << " does not export (svn/inf)_vst_create_topology(2).\n", std::move(result);
   if (topology == nullptr)
-    return std::cout << "(svn/inf)_vst_create_topology returned NULL.\n", std::move(result);
+    return std::cout << "(svn/inf)_vst_create_topology(2) returned NULL.\n", std::move(result);
   return std::make_unique<loaded_topology>(
     std::unique_ptr<topology_info>(topology), 
     reinterpret_cast<inf_init_exit_dll_t>(exit_dll));
