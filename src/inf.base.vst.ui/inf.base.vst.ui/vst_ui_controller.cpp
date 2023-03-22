@@ -49,10 +49,12 @@ vst_ui_controller::endEdit(ParamID tag)
 COptionMenu* 
 vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
 {
+#if 0
   ParamID tag;
   auto& inf_editor = dynamic_cast<vst_ui_editor&>(*editor);
   tresult found = inf_editor.find_parameter(pos, tag);
   if(found == kResultOk) return VST3EditorDelegate::createContextMenu(pos, editor);
+#endif
 
   // Init, clear, copy/swap items, and preset selector. 
   // Just do it manually, kIsProgramChange don't work well.
@@ -67,7 +69,7 @@ IPlugView* PLUGIN_API
 vst_ui_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_ui_editor* result = new vst_ui_editor(this, "view", "UI/controller.uidesc", _topology.get());
+  vst_ui_editor* result = new vst_ui_editor(this, _topology.get());
   setKnobMode(KnobModes::kLinearMode);
   return result;
 }
