@@ -12,12 +12,13 @@ namespace inf::base::ui {
 
 plugin_ui_editor::
 plugin_ui_editor(plugin_controller* controller, topology_info const* topology):
-_controller(controller), _topology(topology), _graphs(), _controls() {}
+_controller(controller), _graphs(), _controls() {}
 
 void 
 plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
 {
   // Keep track of graphs.
+  auto const* topology = controller()->topology();
   graph_plot* graph = dynamic_cast<graph_plot*>(view);
   if (graph != nullptr)
     _graphs.push_back(graph);
@@ -27,11 +28,11 @@ plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
   if (control != nullptr && control->getTag() >= 0)
   {
     // Control loses its value if removed and re-added.
-    std::int32_t param_index = _topology->param_id_to_index.at(control->getTag());
-    assert(param_index >= 0 && param_index < static_cast<std::int32_t>(_topology->params.size()));
+    std::int32_t param_index = topology->param_id_to_index.at(control->getTag());
+    assert(param_index >= 0 && param_index < static_cast<std::int32_t>(topology->params.size()));
     _controls[param_index].push_back(control);
     param_value val = _controller->state()[param_index];
-    control->setValue(base_to_vst_normalized(_topology, param_index, val));
+    control->setValue(base_to_vst_normalized(topology, param_index, val));
   }
 }
  
@@ -60,13 +61,14 @@ void
 plugin_ui_editor::update_dependent_visibility(std::int32_t tag)
 {
   // Update graphs where needed.  
-  std::int32_t param_index = _topology->param_id_to_index.at(tag);
-  assert(param_index >= 0 && param_index < static_cast<std::int32_t>(_topology->params.size()));
+  auto const* topology = controller()->topology();
+  std::int32_t param_index = topology->param_id_to_index.at(tag);
+  assert(param_index >= 0 && param_index < static_cast<std::int32_t>(topology->params.size()));
   for (std::size_t i = 0; i < _graphs.size(); i++)
     if (_graphs[i]->processor()->needs_repaint(param_index))
       _graphs[i]->setDirty(true);
        
-  auto const& dependents = _topology->ui_param_dependencies[param_index];
+  auto const& dependents = topology->ui_param_dependencies[param_index];
   for(std::size_t d = 0; d < dependents.size(); d++)
   {                  
     CView* visible_view = nullptr;
@@ -76,18 +78,18 @@ plugin_ui_editor::update_dependent_visibility(std::int32_t tag)
     {
       // Visible if all dependencies are met.
       bool visible = true;
-      auto const& param = _topology->params[dependents[d]];
+      auto const& param = topology->params[dependents[d]];
       if(param.descriptor->data.ui != nullptr)
         for (std::size_t i = 0; i < param.descriptor->data.ui->relevance.size(); i++)
         {
-          std::int32_t part_index = _topology->parts[param.part_index].type_index;
-          std::int32_t part_type = _topology->parts[param.part_index].descriptor->type;
-          std::int32_t offset = _topology->param_bounds[part_type][part_index];
+          std::int32_t part_index = topology->parts[param.part_index].type_index;
+          std::int32_t part_type = topology->parts[param.part_index].descriptor->type;
+          std::int32_t offset = topology->param_bounds[part_type][part_index];
           std::int32_t that_param = param.descriptor->data.ui->relevance[i].if_param;
-          std::int32_t that_tag = _topology->param_index_to_id[that_param + offset];
+          std::int32_t that_tag = topology->param_index_to_id[that_param + offset];
           double normalized = _controller->getParamNormalized(that_tag);
-          std::int32_t value = vst_normalized_to_base(_topology, that_param + offset, normalized).discrete;
-          visible &= _topology->params[dependents[d]].descriptor->data.ui->relevance[i].predicate(value);
+          std::int32_t value = vst_normalized_to_base(topology, that_param + offset, normalized).discrete;
+          visible &= topology->params[dependents[d]].descriptor->data.ui->relevance[i].predicate(value);
         }  
 
       // Show/hide dependent controls.
