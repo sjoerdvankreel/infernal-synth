@@ -3,6 +3,8 @@
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
+#include <inf.base.vst.ui/ui_controller.hpp>
+
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vector>
 
@@ -35,16 +37,13 @@ public:
     UTF8StringPtr xml_file, inf::base::topology_info const* topology);
 
   void update_dependent_visibility(ParamID tag);
-
-  void attachedToParent() override;
-  void removedFromParent() override;
   void onViewAdded(CFrame* view_frame, CView* view) override;
   void onViewRemoved(CFrame* view_frame, CView* view) override;
   bool PLUGIN_API open(void* parent, const PlatformType& type) override;
 
   inf::base::topology_info const* topology() const { return _topology; }
-  void attachedToParent() { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
-  void removedFromParent() { dynamic_cast<vst_ui_controller&>(*getController()).view_removed(this); }
+  void attachedToParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
+  void removedFromParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_removed(this); }
   Steinberg::tresult PLUGIN_API find_parameter(VSTGUI::CPoint const& pos, Steinberg::Vst::ParamID& id) { return findParameter(pos.x, pos.y, id); }
 };
 

@@ -1,7 +1,6 @@
 #include <inf.base.vst.ui/editor.hpp>
 #include <inf.base.vst/sdk/parameter.hpp>
 #include <inf.base.vst/shared/support.hpp>
-#include <inf.base.vst.ui/ui_controller.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <cassert>

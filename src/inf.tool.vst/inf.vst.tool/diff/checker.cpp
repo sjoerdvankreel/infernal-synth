@@ -1,8 +1,8 @@
-#include <inf.vst/sdk/parameter.hpp>
-#include <inf.vst/shared/support.hpp>
-#include <inf.vst/shared/io_stream.hpp>
-#include <inf.vst.tool/diff/checker.hpp>
-#include <inf.vst.tool/shared/load_topology.hpp>
+#include <inf.base.vst/sdk/parameter.hpp>
+#include <inf.base.vst/shared/support.hpp>
+#include <inf.base.vst/shared/io_stream.hpp>
+#include <inf.tool.vst/diff/checker.hpp>
+#include <inf.tool.vst/shared/load_topology.hpp>
 
 #include <base/source/fstreamer.h>
 #include <public.sdk/source/vst/vstpresetfile.h>

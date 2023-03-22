@@ -2,7 +2,7 @@
 #define INF_SYNTH_CV_BANK_GRAPH_HPP
 
 #include <inf.base/shared/state.hpp>
-#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 
 #include <vector>
 #include <cstdint>
