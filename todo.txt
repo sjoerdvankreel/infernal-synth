@@ -47,7 +47,6 @@
 # programmatic ui
 - get rid of uidesc
 - drop uigenerator tool
-- make tool vst independent
 - make project dependency diagram
 - remove uidescription linker dependency
 - move dependent visibility code to base ui project

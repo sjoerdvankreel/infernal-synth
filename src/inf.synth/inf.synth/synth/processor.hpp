@@ -10,7 +10,7 @@
 #include <inf.synth/audio_bank/processor.hpp>
 #include <inf.synth/voice_master/processor.hpp>
 #include <inf.synth/shared/scratch_space.hpp>
-#include <inf.base/processor/audio_processor.hpp>
+#include <inf.base/plugin/audio_processor.hpp>
 
 namespace inf::synth {
 
