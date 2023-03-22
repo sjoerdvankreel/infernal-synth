@@ -1,9 +1,8 @@
-#ifndef INF_BASE_VST_UI_UI_EDITOR_HPP
-#define INF_BASE_VST_UI_UI_EDITOR_HPP
+#ifndef INF_BASE_VST_UI_VST_UI_EDITOR_HPP
+#define INF_BASE_VST_UI_VST_UI_EDITOR_HPP
 
-#include <inf.base/topology/topology_info.hpp>
-#include <inf.base.ui/controls/graph_plot.hpp>
-#include <inf.base.vst.ui/ui_controller.hpp>
+#include <inf.base.ui/shared/plugin_ui_editor.hpp>
+#include <inf.base.vst.ui/vst_ui_controller.hpp>
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vector>
@@ -18,34 +17,24 @@ namespace inf::base::vst::ui {
 // to play around with the editor. Conditional visibility 
 // obviously won't work then.
 class vst_ui_editor: 
-public VSTGUI::VST3Editor
+public VSTGUI::VST3Editor,
+public inf::base::ui::plugin_ui_editor
 {
-  using CView = VSTGUI::CView;
-  using CFrame = VSTGUI::CFrame;
-  using CControl = VSTGUI::CControl;
   using ParamID = Steinberg::Vst::ParamID;
-  using PlatformType = VSTGUI::PlatformType;
-  using UTF8StringPtr = VSTGUI::UTF8StringPtr;
   using EditController = Steinberg::Vst::EditController;
-  
-  std::vector<base::ui::graph_plot*> _graphs;
-  std::vector<std::vector<CControl*>> _controls;
-  inf::base::topology_info const* const _topology;
 
 public:
   vst_ui_editor(EditController* controller, UTF8StringPtr template_name,
     UTF8StringPtr xml_file, inf::base::topology_info const* topology);
 
-  void update_dependent_visibility(ParamID tag);
   void onViewAdded(CFrame* view_frame, CView* view) override;
   void onViewRemoved(CFrame* view_frame, CView* view) override;
   bool PLUGIN_API open(void* parent, const PlatformType& type) override;
 
-  inf::base::topology_info const* topology() const { return _topology; }
   void attachedToParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
   void removedFromParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_removed(this); }
   Steinberg::tresult PLUGIN_API find_parameter(VSTGUI::CPoint const& pos, Steinberg::Vst::ParamID& id) { return findParameter(pos.x, pos.y, id); }
 };
 
 } // namespace inf::base::vst::ui
-#endif // INF_BASE_VST_UI_UI_EDITOR_HPP
+#endif // INF_BASE_VST_UI_VST_UI_EDITOR_HPP

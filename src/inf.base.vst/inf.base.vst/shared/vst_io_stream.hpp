@@ -1,5 +1,5 @@
-#ifndef INF_BASE_VST_SHARED_IO_STREAM_HPP
-#define INF_BASE_VST_SHARED_IO_STREAM_HPP
+#ifndef INF_BASE_VST_SHARED_VST_IO_STREAM_HPP
+#define INF_BASE_VST_SHARED_VST_IO_STREAM_HPP
 
 #include <base/source/fstreamer.h>
 #include <inf.base/shared/io_stream.hpp>
@@ -33,4 +33,4 @@ public:
 };
 
 } // namespace inf::base::vst
-#endif // INF_BASE_VST_SHARED_IO_STREAM_HPP
+#endif // INF_BASE_VST_SHARED_VST_IO_STREAM_HPP

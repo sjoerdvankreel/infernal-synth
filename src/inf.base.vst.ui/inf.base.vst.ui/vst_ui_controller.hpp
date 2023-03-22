@@ -1,5 +1,5 @@
-#ifndef INF_BASE_VST_UI_UI_CONTROLLER_HPP
-#define INF_BASE_VST_UI_UI_CONTROLLER_HPP
+#ifndef INF_BASE_VST_UI_VST_UI_CONTROLLER_HPP
+#define INF_BASE_VST_UI_VST_UI_CONTROLLER_HPP
 
 #include <inf.base.vst/sdk/controller.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -34,4 +34,4 @@ public:
 };
 
 } // namespace inf::base::vst::ui
-#endif // INF_BASE_VST_UI_UI_CONTROLLER_HPP
+#endif // INF_BASE_VST_UI_VST_UI_CONTROLLER_HPP
