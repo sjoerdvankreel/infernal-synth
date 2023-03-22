@@ -1,8 +1,8 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.vst/sdk/processor.hpp>
-#include <inf.vst/sdk/parameter.hpp>
-#include <inf.vst/shared/support.hpp>
-#include <inf.vst/shared/io_stream.hpp>
+#include <inf.base.vst/sdk/processor.hpp>
+#include <inf.base.vst/sdk/parameter.hpp>
+#include <inf.base.vst/shared/support.hpp>
+#include <inf.base.vst/shared/io_stream.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <base/source/fstreamer.h>
@@ -18,7 +18,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst; 
   
-namespace inf::vst {
+namespace inf::base::vst {
 
 // Don't update output too often.
 std::int32_t const 
@@ -296,4 +296,4 @@ vst_processor::process_output_parameters(
   }
 }
 
-} // namespace inf::vst
+} // namespace inf::base::vst

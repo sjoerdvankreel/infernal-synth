@@ -1,5 +1,5 @@
-#ifndef INF_VST_SDK_CONTROLLER_HPP
-#define INF_VST_SDK_CONTROLLER_HPP
+#ifndef INF_BASE_VST_SDK_CONTROLLER_HPP
+#define INF_BASE_VST_SDK_CONTROLLER_HPP
 
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -8,7 +8,7 @@
 
 #include <vector>
 
-namespace inf::vst {
+namespace inf::base::vst {
 
 // Vst edit controller.
 class vst_controller: 
@@ -47,5 +47,5 @@ public:
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
 };
 
-} // namespace inf::vst
-#endif // INF_VST_SDK_CONTROLLER_HPP
+} // namespace inf::base::vst
+#endif // INF_BASE_VST_SDK_CONTROLLER_HPP

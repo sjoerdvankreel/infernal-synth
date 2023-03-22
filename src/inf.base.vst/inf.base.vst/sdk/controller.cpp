@@ -11,10 +11,10 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <inf.base/shared/support.hpp>
-#include <inf.vst/sdk/parameter.hpp>
-#include <inf.vst/sdk/controller.hpp>
-#include <inf.vst/shared/support.hpp>
-#include <inf.vst/shared/io_stream.hpp>
+#include <inf.base.vst/sdk/parameter.hpp>
+#include <inf.base.vst/sdk/controller.hpp>
+#include <inf.base.vst/shared/support.hpp>
+#include <inf.base.vst/shared/io_stream.hpp>
 
 #include <vector>
 #include <cstring>
@@ -25,7 +25,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;                  
 
-namespace inf::vst {
+namespace inf::base::vst {
 
 vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
@@ -150,4 +150,4 @@ vst_controller::initialize(FUnknown* context)
   return kResultTrue;
 }
 
-} // namespace inf::vst
+} // namespace inf::base::vst

@@ -1,6 +1,6 @@
-#include <inf.vst/shared/io_stream.hpp>
+#include <inf.base.vst/shared/io_stream.hpp>
 
-namespace inf::vst {
+namespace inf::base::vst {
 
 bool 
 vst_io_stream::read_int32(std::int32_t& val)
@@ -45,4 +45,4 @@ vst_io_stream::write_string(std::string const& val)
   return true;
 }
 
-} // namespace inf::vst
+} // namespace inf::base::vst

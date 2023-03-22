@@ -1,12 +1,12 @@
-#include <inf.vst/sdk/parameter.hpp>
-#include <inf.vst/shared/support.hpp>
+#include <inf.base.vst/sdk/parameter.hpp>
+#include <inf.base.vst/shared/support.hpp>
 #include <cassert>
 
 using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
-namespace inf::vst {
+namespace inf::base::vst {
   
 static double 
 param_step_count(param_descriptor const& param)
@@ -133,4 +133,4 @@ vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
   return true;
 }
 
-} // namespace inf::vst
+} // namespace inf::base::vst
