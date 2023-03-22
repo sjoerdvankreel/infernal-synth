@@ -12,7 +12,7 @@ namespace inf::base::ui {
 
 plugin_ui_editor::
 plugin_ui_editor(plugin_controller* controller, topology_info const* topology):
-_controller(controller), _graphs(), _controls() {}
+_controller(controller), _graphs(), _controls(topology->params.size()) {}
 
 void 
 plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
