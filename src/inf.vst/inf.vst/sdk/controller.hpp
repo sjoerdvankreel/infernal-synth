@@ -43,7 +43,7 @@ public:
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
   std::vector<inf::base::preset_item>& preset_items() { return _preset_items; }
-  void restart() override { componentHandler->restartComponent(kParamValuesChanged); }
+  void restart() override { componentHandler->restartComponent(Steinberg::Vst::kParamValuesChanged); }
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
 };
 

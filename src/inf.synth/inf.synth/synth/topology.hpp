@@ -1,9 +1,9 @@
 #ifndef INF_SYNTH_SYNTH_TOPOLOGY_HPP
 #define INF_SYNTH_SYNTH_TOPOLOGY_HPP
 
+#include <inf.base/plugin/audio_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.base/processor/audio_processor.hpp>
-#include <inf.base/processor/graph_processor.hpp>
 
 #include <memory>
 #include <cstdint>
