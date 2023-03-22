@@ -1,4 +1,4 @@
-#include <inf.base.vst/shared/io_stream.hpp>
+#include <inf.base.vst/shared/vst_io_stream.hpp>
 
 namespace inf::base::vst {
 

@@ -4,10 +4,10 @@
 #include <inf.synth/audio_bank/topology.hpp>
 
 #include <inf.synth.vst.fx/plugin.hpp>
-#include <inf.base.vst/sdk/processor.hpp>
-#include <inf.base.vst/sdk/controller.hpp>
+#include <inf.base.vst/sdk/vst_processor.hpp>
+#include <inf.base.vst/sdk/vst_controller.hpp>
 #include <inf.base.vst.ui/bootstrap.hpp>
-#include <inf.base.vst.ui/ui_controller.hpp>
+#include <inf.base.vst.ui/vst_ui_controller.hpp>
 
 #include <public.sdk/source/main/pluginfactory.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>

@@ -1,6 +1,6 @@
-#include <inf.base.vst/sdk/parameter.hpp>
+#include <inf.base.vst/sdk/vst_parameter.hpp>
 #include <inf.base.vst/shared/support.hpp>
-#include <inf.base.vst/shared/io_stream.hpp>
+#include <inf.base.vst/shared/vst_io_stream.hpp>
 #include <inf.tool.vst/diff/checker.hpp>
 #include <inf.tool.vst/shared/load_topology.hpp>
 

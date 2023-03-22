@@ -11,10 +11,10 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <inf.base/shared/support.hpp>
-#include <inf.base.vst/sdk/parameter.hpp>
-#include <inf.base.vst/sdk/controller.hpp>
+#include <inf.base.vst/sdk/vst_parameter.hpp>
+#include <inf.base.vst/sdk/vst_controller.hpp>
 #include <inf.base.vst/shared/support.hpp>
-#include <inf.base.vst/shared/io_stream.hpp>
+#include <inf.base.vst/shared/vst_io_stream.hpp>
 
 #include <vector>
 #include <cstring>
