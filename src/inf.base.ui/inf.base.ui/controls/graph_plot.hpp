@@ -24,8 +24,8 @@ public VSTGUI::CView
   std::int32_t const _column_span;
   std::unique_ptr<graph_processor> _processor;
 public:
+  graph_processor* processor();
   void draw(VSTGUI::CDrawContext* context) override;
-  graph_processor* processor() const { return _processor.get(); }
 public:
   graph_plot(part_id part_id, std::int32_t graph_type, graph_ui_colors const& colors, std::int32_t row_span, std::int32_t column_span):
   VSTGUI::CView(VSTGUI::CRect(0, 0, 0, 0)), _part_id(part_id), _graph_type(graph_type),

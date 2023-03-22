@@ -52,6 +52,15 @@ graph_plot_creator::create(
   return result;
 } 
 
+graph_processor* 
+graph_plot::processor()
+{
+  if(_processor) return _processor.get();
+  auto const* topology = find_editor(this)->controller()->topology();
+  _processor = topology->create_graph_processor(_part_id, _graph_type);
+  return _processor.get();
+}
+
 void
 graph_plot::draw(VSTGUI::CDrawContext* context)
 {
