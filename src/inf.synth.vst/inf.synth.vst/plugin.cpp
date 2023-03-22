@@ -94,7 +94,8 @@ static FUnknown*
 create_processor(std::int32_t is_instrument)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology(is_instrument));
-  auto processor = new vst_processor(std::move(topology), is_instrument? instrument_controller_id: fx_controller_id);
+  auto tuid = is_instrument ? instrument_controller_id : fx_controller_id;
+  auto processor = new vst_processor(std::move(topology), FUID::fromTUID(tuid));
   return static_cast<IAudioProcessor*>(processor);
 }
 
