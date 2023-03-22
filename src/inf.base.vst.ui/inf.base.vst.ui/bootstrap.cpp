@@ -1,4 +1,4 @@
-#include <inf.vst.ui/bootstrap.hpp>
+#include <inf.base.vst.ui/bootstrap.hpp>
 #include <inf.base.ui/shared/bootstrap.hpp>
 #include <cstdint>
 

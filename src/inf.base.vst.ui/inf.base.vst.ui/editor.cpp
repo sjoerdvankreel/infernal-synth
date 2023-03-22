@@ -1,7 +1,7 @@
-#include <inf.vst.ui/editor.hpp>
-#include <inf.vst/sdk/parameter.hpp>
-#include <inf.vst/sdk/controller.hpp>
-#include <inf.vst/shared/support.hpp>
+#include <inf.base.vst.ui/editor.hpp>
+#include <inf.base.vst/sdk/parameter.hpp>
+#include <inf.base.vst/sdk/controller.hpp>
+#include <inf.base.vst/shared/support.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <cassert>
@@ -11,7 +11,7 @@ using namespace VSTGUI;
 using namespace inf::base;
 using namespace inf::base::ui;
 
-namespace inf::vst::ui {
+namespace inf::base::vst::ui {
     
 vst_editor::  
 vst_editor(EditController* controller, UTF8StringPtr template_name,
@@ -142,4 +142,4 @@ vst_editor::update_dependent_visibility(ParamID tag)
   }
 }
 
-} // namespace inf::vst::ui
+} // namespace inf::base::vst::ui

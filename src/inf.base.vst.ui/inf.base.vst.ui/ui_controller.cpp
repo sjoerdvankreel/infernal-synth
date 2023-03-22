@@ -1,11 +1,11 @@
-#include <inf.vst.ui/ui_controller.hpp>
+#include <inf.base.vst.ui/ui_controller.hpp>
    
 using namespace VSTGUI;
 using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;                  
 
-namespace inf::vst::ui {
+namespace inf::base::vst::ui {
 
 vst_ui_controller::
 vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
@@ -244,4 +244,4 @@ vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   return result;
 }
 
-} // namespace inf::vst::ui
+} // namespace inf::base::vst::ui

@@ -1,8 +1,8 @@
-#ifndef INF_VST_UI_UI_CONTROLLER_HPP
-#define INF_VST_UI_UI_CONTROLLER_HPP
+#ifndef INF_BASE_VST_UI_UI_CONTROLLER_HPP
+#define INF_BASE_VST_UI_UI_CONTROLLER_HPP
 
-#include <inf.vst/sdk/controller.hpp>
-#include <inf.vst.ui/editor.hpp>
+#include <inf.base.vst/sdk/controller.hpp>
+#include <inf.base.vst.ui/editor.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 #include <pluginterfaces/vst/vsttypes.h>
@@ -11,16 +11,14 @@
 
 #include <vector>
 
-namespace inf::vst::ui {
+namespace inf::base::vst::ui {
 
 // Vst edit controller dynamically generated from topology_info.
 class vst_ui_controller: 
-public inf::vst::vst_controller, 
+public inf::base::vst::vst_controller, 
 public VSTGUI::VST3EditorDelegate
 {
-  using IPlugView = Steinberg::IPlugView;
-
-  
+  using IPlugView = Steinberg::IPlugView;  
 
   // Context menu.
   // Apply = source begin, target begin, param count.
@@ -42,5 +40,5 @@ public:
   VSTGUI::COptionMenu* createContextMenu(VSTGUI::CPoint const& pos, VSTGUI::VST3Editor* editor) override;
 };
 
-} // namespace inf::vst
-#endif // INF_VST_UI_UI_CONTROLLER_HPP
+} // namespace inf::base::vst::ui
+#endif // INF_BASE_VST_UI_UI_CONTROLLER_HPP
