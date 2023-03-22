@@ -39,7 +39,7 @@ public:
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
 
-  virtual double get_plugin_param(std::int32_t tag) const = 0;
+  virtual double get_plugin_param(std::int32_t tag) = 0;
   virtual double base_to_plugin_param(std::int32_t index, param_value val) const = 0;
   virtual param_value plugin_to_base_param(std::int32_t index, double val) const = 0;
 };

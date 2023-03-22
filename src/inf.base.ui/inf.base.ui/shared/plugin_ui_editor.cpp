@@ -32,7 +32,7 @@ plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
     assert(param_index >= 0 && param_index < static_cast<std::int32_t>(topology->params.size()));
     _controls[param_index].push_back(control);
     param_value val = _controller->state()[param_index];
-    control->setValue(base_to_vst_normalized(topology, param_index, val));
+    control->setValue(_controller->base_to_plugin_param(param_index, val));
   }
 }
  
@@ -87,8 +87,8 @@ plugin_ui_editor::update_dependent_visibility(std::int32_t tag)
           std::int32_t offset = topology->param_bounds[part_type][part_index];
           std::int32_t that_param = param.descriptor->data.ui->relevance[i].if_param;
           std::int32_t that_tag = topology->param_index_to_id[that_param + offset];
-          double normalized = _controller->getParamNormalized(that_tag);
-          std::int32_t value = vst_normalized_to_base(topology, that_param + offset, normalized).discrete;
+          double normalized = _controller->get_plugin_param(that_tag);
+          std::int32_t value = _controller->plugin_to_base_param(that_param + offset, normalized).discrete;
           visible &= topology->params[dependents[d]].descriptor->data.ui->relevance[i].predicate(value);
         }  
 
