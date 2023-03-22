@@ -46,6 +46,7 @@
 # programmatic ui
 - get rid of uidesc
 - drop uigenerator tool
+- merge fx/ins in 1 binary
 - make project dependency diagram
 - remove uidescription linker dependency
 - reduce controller.uidesc to image names, image offsets and color scheme
