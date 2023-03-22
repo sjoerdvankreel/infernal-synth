@@ -49,6 +49,29 @@ vst_controller::load_preset(std::size_t index)
   set_component_state(&memory, true);
 }
 
+void 
+vst_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
+{
+  beginEdit(target_tag);
+  setParamNormalized(target_tag, getParamNormalized(source_tag));
+  performEdit(target_tag, getParamNormalized(source_tag));
+  endEdit(target_tag);
+}
+
+void
+vst_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
+{
+  ParamValue target = getParamNormalized(target_tag);
+  beginEdit(target_tag);
+  setParamNormalized(target_tag, getParamNormalized(source_tag));
+  performEdit(target_tag, getParamNormalized(source_tag));
+  endEdit(target_tag);
+  beginEdit(source_tag);
+  setParamNormalized(source_tag, target);
+  performEdit(source_tag, target);
+  endEdit(source_tag);
+}
+
 void
 vst_controller::sync_ui_parameters()
 {
@@ -103,6 +126,7 @@ vst_controller::load_component_state(param_value* state, bool perform_edit)
 
   // Set initial ui visibility state.
   sync_ui_parameters();
+  restart();
 }
 
 tresult PLUGIN_API
