@@ -171,7 +171,9 @@ create_context_menu(plugin_controller* controller)
     base_path = factory->getResourceBasePath();
 #endif
     if (!base_path) return result;
-    for (auto const& entry : std::filesystem::directory_iterator((base_path.value() + "/Presets").data()))
+    VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets";
+    typed_base_path += topology->is_instrument()? "Instrument": "Fx";
+    for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
     {
       if (entry.path().extension().string() != ".vstpreset") continue;
       preset_item item;
