@@ -32,7 +32,7 @@ plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
     assert(param_index >= 0 && param_index < static_cast<std::int32_t>(topology->params.size()));
     _controls[param_index].push_back(control);
     param_value val = _controller->state()[param_index];
-    control->setValue(_controller->base_to_plugin_param(param_index, val));
+    control->setValue(static_cast<float>(_controller->base_to_plugin_param(param_index, val)));
   }
 }
  

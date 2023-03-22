@@ -29,7 +29,7 @@ public:
 public:
   graph_plot(part_id part_id, std::int32_t graph_type, graph_ui_colors const& colors, std::int32_t row_span, std::int32_t column_span):
   VSTGUI::CView(VSTGUI::CRect(0, 0, 0, 0)), _part_id(part_id), _graph_type(graph_type),
-  _row_span(row_span), _column_span(column_span), _colors(colors) { }
+  _colors(colors), _row_span(row_span), _column_span(column_span) { }
 };
 
 // VSTGUI graph factory.

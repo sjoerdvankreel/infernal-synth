@@ -1,5 +1,5 @@
 #include <inf.base.ui/shared/support.hpp>
-#include <vstgui4/vstgui/lib/controls/coptionmenu.h>
+#include <vstgui/lib/controls/coptionmenu.h>
 #include <vstgui/lib/platform/platformfactory.h>
 #if WIN32
 #include <vstgui/lib/platform/win32/win32factory.h>

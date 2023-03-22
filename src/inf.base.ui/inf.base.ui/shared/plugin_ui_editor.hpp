@@ -4,8 +4,6 @@
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
-
-#include <vstgui/plugin-bindings/vst3editor.h>
 #include <vector>
 
 namespace inf::base::ui {
