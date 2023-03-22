@@ -87,7 +87,7 @@ graph_plot::draw(VSTGUI::CDrawContext* context)
     context->drawLine(CPoint(1, i * segment_height), CPoint(size.x - 1, i * segment_height));
    
   bool bipolar;
-  param_value const* state = find_editor(this)->state();
+  param_value const* state = find_editor(this)->controller()->state();
   std::vector<graph_point> const& graph_data = _processor->plot(
     state, sample_rate,
     static_cast<std::int32_t>(render_size.x), 

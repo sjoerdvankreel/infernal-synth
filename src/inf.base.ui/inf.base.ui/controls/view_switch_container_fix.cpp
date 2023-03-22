@@ -40,8 +40,8 @@ view_switch_controller_fix::valueChanged(VSTGUI::CControl* control)
   // Repaint all dependent parameters for all discrete parameters of both the switched-in and switched-out view part.
   // Just fake all discrete parameters for the part have updated, real valued params can't be used for conditional visibility.
   std::int32_t param_tag = control->getTag();
-  plugin_controller const* editor = find_editor(viewSwitch);
-  topology_info const* topology = editor->topology();
+  plugin_ui_editor* editor = find_editor(viewSwitch);
+  topology_info const* topology = editor->controller()->topology();
   std::int32_t param_index = topology->param_id_to_index.at(param_tag);
   auto selector_part_ids = topology->inverse_bounds[param_index];
   std::int32_t selector_param_start = topology->param_bounds[selector_part_ids.type][selector_part_ids.index];

@@ -55,7 +55,7 @@ nested_option_menu::onOptionMenuPrePopup(COptionMenu* menu)
   beginEdit();
   _flat_list = *menuItems;
   menuItems->clear();
-  topology_info const* topology = find_editor(this)->topology();
+  topology_info const* topology = find_editor(this)->controller()->topology();
   auto index = topology->param_id_to_index.at(getTag());
   auto const& param = topology->params.at(index);
   auto items = param.descriptor->data.discrete.items;
