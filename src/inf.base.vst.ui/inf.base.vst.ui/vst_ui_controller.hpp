@@ -29,7 +29,6 @@ public:
 
   tresult endEdit(ParamID tag) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
-  void update_dependent_visibility(std::int32_t param_id) const override;
   VSTGUI::COptionMenu* createContextMenu(VSTGUI::CPoint const& pos, VSTGUI::VST3Editor* editor) override;
 };
 
