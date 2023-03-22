@@ -8,7 +8,7 @@
 
 using namespace inf::base;
 
-namespace inf::vst::tool::ui {
+namespace inf::tool::vst::ui {
 
 static bool 
 param_inside_graph(
@@ -218,4 +218,4 @@ controller_ui_description::create(topology_info const& topology)
   return result;
 }
 
-} // namespace inf::vst::tool::ui
+} // namespace inf::tool::vst::ui

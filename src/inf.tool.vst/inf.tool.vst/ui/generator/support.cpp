@@ -7,7 +7,7 @@
 using namespace rapidjson;
 using namespace inf::base;
 
-namespace inf::vst::tool::ui {
+namespace inf::tool::vst::ui {
 
 std::string
 to_machine_friendly(std::string const& val)
@@ -105,4 +105,4 @@ get_control_tag(part_info const& part, param_info const& param)
   return to_machine_friendly(result);
 }
 
-} // namespace inf::vst::tool::ui
+} // namespace inf::tool::vst::ui

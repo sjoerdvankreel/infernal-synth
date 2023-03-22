@@ -20,9 +20,9 @@
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
-using namespace inf::vst;
 using namespace inf::base;
-using namespace inf::vst::tool::shared;
+using namespace inf::base::vst;
+using namespace inf::tool::vst::shared;
 
 static std::int32_t
 find_part(
@@ -114,7 +114,7 @@ load_preset(topology_info const* topo, param_value* state, char const* path)
   return stream.load(*topo, state);
 }
 
-namespace inf::vst::tool::diff {
+namespace inf::tool::vst::diff {
 
 std::int32_t
 check_plugin(
@@ -310,4 +310,4 @@ check_preset_folder(
   return 0;
 }
 
-} // namespace inf::vst::tool::diff
+} // namespace inf::tool::vst::diff

@@ -16,9 +16,9 @@
 
 using namespace rapidjson;
 using namespace inf::base;
-using namespace inf::vst::tool::shared;
+using namespace inf::tool::vst::shared;
 
-namespace inf::vst::tool::ui {
+namespace inf::tool::vst::ui {
 
 static std::string const
 part_plugin_name = "plugin";
@@ -1024,4 +1024,4 @@ write_vstgui_json(char const* library_path, char const* output_path)
   return 0;
 }
 
-} // namespace inf::vst::tool::ui
+} // namespace inf::tool::vst::ui

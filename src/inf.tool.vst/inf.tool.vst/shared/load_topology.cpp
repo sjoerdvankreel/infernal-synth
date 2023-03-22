@@ -12,7 +12,7 @@
 
 using namespace inf::base;
 
-namespace inf::vst::tool::shared {
+namespace inf::tool::vst::shared {
 
 typedef topology_info* (*inf_create_topology_t)(void);
 
@@ -82,4 +82,4 @@ load_topology(char const* library_path)
     reinterpret_cast<inf_init_exit_dll_t>(exit_dll));
 }
 
-} // namespace inf::vst::tool::shared
+} // namespace inf::tool::vst::shared
