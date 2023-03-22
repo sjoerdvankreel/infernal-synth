@@ -1,6 +1,6 @@
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.vst.tool/ui/description/support.hpp>
-#include <inf.vst.tool/ui/description/description.hpp>
+#include <inf.tool.vst/ui/description/support.hpp>
+#include <inf.tool.vst/ui/description/description.hpp>
 
 #include <map>
 #include <stdexcept>

@@ -1,10 +1,10 @@
-#ifndef INF_VST_TOOL_SHARED_LOAD_TOPOLOGY_HPP
-#define INF_VST_TOOL_SHARED_LOAD_TOPOLOGY_HPP
+#ifndef INF_TOOL_VST_SHARED_LOAD_TOPOLOGY_HPP
+#define INF_TOOL_VST_SHARED_LOAD_TOPOLOGY_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <memory>
 
-namespace inf::vst::tool::shared {
+namespace inf::tool::vst::shared {
 
 // Unload library on release.
 typedef bool (*inf_init_exit_dll_t)(void);
@@ -26,5 +26,5 @@ public:
 std::unique_ptr<loaded_topology>
 load_topology(char const* library_path);
 
-} // namespace inf::vst::tool::shared
-#endif // INF_VST_TOOL_SHARED_LOAD_TOPOLOGY_HPP
+} // namespace inf::tool::vst::shared
+#endif // INF_TOOL_VST_SHARED_LOAD_TOPOLOGY_HPP

@@ -1,11 +1,11 @@
-#include <inf.vst.tool/diff/checker.hpp>
-#include <inf.vst.tool/ui/generator/generator.hpp>
+#include <inf.tool.vst/diff/checker.hpp>
+#include <inf.tool.vst/ui/generator/generator.hpp>
 
 #include <cstring>
 #include <iostream>
 
-using namespace inf::vst::tool::ui;
-using namespace inf::vst::tool::diff;
+using namespace inf::tool::vst::ui;
+using namespace inf::tool::vst::diff;
 
 int
 main(int argc, char** argv)

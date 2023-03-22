@@ -1,4 +1,4 @@
-#include <inf.vst.tool/shared/load_topology.hpp>
+#include <inf.tool.vst/shared/load_topology.hpp>
 #include <cassert>
 #include <iostream>
 

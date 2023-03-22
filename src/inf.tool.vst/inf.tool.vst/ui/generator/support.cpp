@@ -1,4 +1,4 @@
-#include <inf.vst.tool/ui/generator/support.hpp>
+#include <inf.tool.vst/ui/generator/support.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
 
 #include <sstream>

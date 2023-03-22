@@ -1,5 +1,5 @@
-#ifndef INF_VST_TOOL_UI_DESCRIPTION_DESCRIPTION_HPP
-#define INF_VST_TOOL_UI_DESCRIPTION_DESCRIPTION_HPP
+#ifndef INF_TOOL_VST_UI_DESCRIPTION_DESCRIPTION_HPP
+#define INF_TOOL_VST_UI_DESCRIPTION_DESCRIPTION_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base/topology/part_ui_descriptor.hpp>
@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <ostream>
 
-namespace inf::vst::tool::ui {
+namespace inf::tool::vst::ui {
 
 // Grid/table index for single parameter.
 struct param_ui_description
@@ -68,5 +68,5 @@ struct controller_ui_description
   create(inf::base::topology_info const& topology);
 };
 
-} // namespace inf::vst::tool::ui
-#endif // INF_VST_TOOL_UI_DESCRIPTION_DESCRIPTION_HPP
+} // namespace inf::tool::vst::ui
+#endif // INF_TOOL_VST_UI_DESCRIPTION_DESCRIPTION_HPP

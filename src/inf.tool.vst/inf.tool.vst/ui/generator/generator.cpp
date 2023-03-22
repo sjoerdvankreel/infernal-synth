@@ -1,6 +1,6 @@
-#include <inf.vst.tool/ui/generator/support.hpp>
-#include <inf.vst.tool/ui/generator/generator.hpp>
-#include <inf.vst.tool/shared/load_topology.hpp>
+#include <inf.tool.vst/ui/generator/support.hpp>
+#include <inf.tool.vst/ui/generator/generator.hpp>
+#include <inf.tool.vst/shared/load_topology.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
