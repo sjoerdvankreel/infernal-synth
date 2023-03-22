@@ -31,6 +31,14 @@ vst_ui_controller::view_attached(IPlugView* editor)
   sync_ui_parameters();
 }
 
+void 
+vst_ui_controller::update_dependent_visibility(std::int32_t param_id) const
+{
+  auto editor = _editor;
+  if(editor == nullptr) return;
+  dynamic_cast<vst_editor&>(*_editor).update_dependent_visibility(param_id);
+}
+
 tresult
 vst_ui_controller::endEdit(ParamID tag)
 {
