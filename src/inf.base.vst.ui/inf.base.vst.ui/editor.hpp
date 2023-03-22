@@ -31,25 +31,21 @@ public VSTGUI::VST3Editor
   inf::base::topology_info const* const _topology;
 
 public:
-  // Let controller know we live or die.
-  void attachedToParent() override;
-  void removedFromParent() override;
-
-  // Keeping track of graphs and controls by tag for fast access.
-  void onViewAdded(CFrame* view_frame, CView* view) override;
-  void onViewRemoved(CFrame* view_frame, CView* view) override;
-
-  // Update visibility of dependent views and rerender graphs.
-  void update_dependent_visibility(ParamID tag);
-  bool PLUGIN_API open(void* parent, const PlatformType& type) override;
-
-  inf::base::topology_info const* topology() const { return _topology; }
   vst_editor(EditController* controller, UTF8StringPtr template_name,
     UTF8StringPtr xml_file, inf::base::topology_info const* topology);
 
-  // Expose IParameterFinder.
-  Steinberg::tresult PLUGIN_API find_parameter(VSTGUI::CPoint const& pos, Steinberg::Vst::ParamID& id)
-  { return findParameter(pos.x, pos.y, id); }
+  void update_dependent_visibility(ParamID tag);
+
+  void attachedToParent() override;
+  void removedFromParent() override;
+  void onViewAdded(CFrame* view_frame, CView* view) override;
+  void onViewRemoved(CFrame* view_frame, CView* view) override;
+  bool PLUGIN_API open(void* parent, const PlatformType& type) override;
+
+  inf::base::topology_info const* topology() const { return _topology; }
+  void attachedToParent() { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
+  void removedFromParent() { dynamic_cast<vst_ui_controller&>(*getController()).view_removed(this); }
+  Steinberg::tresult PLUGIN_API find_parameter(VSTGUI::CPoint const& pos, Steinberg::Vst::ParamID& id) { return findParameter(pos.x, pos.y, id); }
 };
 
 } // namespace inf::base::vst::ui

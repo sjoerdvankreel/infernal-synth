@@ -26,14 +26,14 @@ protected:
   std::vector<inf::base::preset_item> _preset_items;
   std::unique_ptr<inf::base::topology_info> _topology;
 
-private:
-  void sync_ui_parameters();
+protected:
   void update_state(ParamID tag);
   tresult set_component_state(IBStream* state, bool perform_edit);
 
 public:
   explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology);
 
+  void sync_ui_parameters();
   void load_preset(std::size_t index) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;

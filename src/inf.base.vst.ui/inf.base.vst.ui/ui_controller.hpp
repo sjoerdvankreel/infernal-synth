@@ -18,24 +18,17 @@ class vst_ui_controller:
 public inf::base::vst::vst_controller, 
 public VSTGUI::VST3EditorDelegate
 {
-  using IPlugView = Steinberg::IPlugView;  
-
-  // Context menu.
-  // Apply = source begin, target begin, param count.
-  void add_patch_items(VSTGUI::COptionMenu* menu);
-  void add_clear_items(VSTGUI::COptionMenu* menu);
-  void add_preset_select_items(VSTGUI::COptionMenu* menu);
-  void add_copy_swap_menu_items(VSTGUI::COptionMenu* menu, 
-    std::string const& action, std::string const& target_prefix,
-    std::function<void(std::int32_t, std::int32_t, std::int32_t)> apply);
+  using IPlugView = Steinberg::IPlugView; 
+  IPlugView* _editor = nullptr;
 
 public:
+  explicit vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology);
+
   // Update the editor ui if dependent params change.
   void view_removed(IPlugView* editor);
   void view_attached(IPlugView* editor);
-  tresult endEdit(ParamID tag) override;
 
-  explicit vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology);
+  tresult endEdit(ParamID tag) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
   VSTGUI::COptionMenu* createContextMenu(VSTGUI::CPoint const& pos, VSTGUI::VST3Editor* editor) override;
 };

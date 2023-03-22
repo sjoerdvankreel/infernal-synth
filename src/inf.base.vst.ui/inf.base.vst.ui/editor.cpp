@@ -1,7 +1,7 @@
 #include <inf.base.vst.ui/editor.hpp>
 #include <inf.base.vst/sdk/parameter.hpp>
-#include <inf.base.vst/sdk/controller.hpp>
 #include <inf.base.vst/shared/support.hpp>
+#include <inf.base.vst.ui/ui_controller.hpp>
 #include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <cassert>
@@ -25,20 +25,12 @@ _graphs(), _controls(topology->params.size()), _topology(topology)
   assert(template_name != nullptr);
 }
 
-void 
-vst_editor::removedFromParent()
-{ dynamic_cast<vst_controller&>(*getController()).view_removed(this); }
-
-void 
-vst_editor::attachedToParent()
-{ dynamic_cast<vst_controller&>(*getController()).view_attached(this); }
-
 // Set initial visibility when the plugin ui is opened.
 bool PLUGIN_API
 vst_editor::open(void* parent, const PlatformType& type)
 {
   if (!VST3Editor::open(parent, type)) return false;
-  static_cast<vst_controller*>(this->controller.get())->sync_ui_parameters();
+  dynamic_cast<vst_ui_controller&>(*getController()).sync_ui_parameters();
   return true;
 }
 
@@ -53,7 +45,7 @@ vst_editor::onViewAdded(CFrame* view_frame, CView* view)
     _graphs.push_back(graph);
     
   // Keep track of controls by tag.
-  auto* view_controller = static_cast<vst_controller*>(getController());
+  auto& view_controller = dynamic_cast<vst_controller&>(*getController());
   CControl* control = dynamic_cast<CControl*>(view);
   if (control != nullptr && control->getTag() >= 0)
   {
@@ -61,7 +53,7 @@ vst_editor::onViewAdded(CFrame* view_frame, CView* view)
     std::int32_t param_index = _topology->param_id_to_index.at(control->getTag());
     assert(param_index >= 0 && param_index < static_cast<std::int32_t>(_topology->params.size()));
     _controls[param_index].push_back(control);
-    param_value val = view_controller->state()[param_index];
+    param_value val = view_controller.state()[param_index];
     control->setValue(base_to_vst_normalized(_topology, param_index, val));
   }
 }
@@ -113,13 +105,13 @@ vst_editor::update_dependent_visibility(ParamID tag)
       if(param.descriptor->data.ui != nullptr)
         for (std::size_t i = 0; i < param.descriptor->data.ui->relevance.size(); i++)
         {
-          auto edit_controller = static_cast<vst_controller*>(getController());
+          auto& edit_controller = dynamic_cast<vst_controller&>(*getController());
           std::int32_t part_index = _topology->parts[param.part_index].type_index;
           std::int32_t part_type = _topology->parts[param.part_index].descriptor->type;
           std::int32_t offset = _topology->param_bounds[part_type][part_index];
           std::int32_t that_param = param.descriptor->data.ui->relevance[i].if_param;
           std::int32_t that_tag = _topology->param_index_to_id[that_param + offset];
-          double normalized = edit_controller->getParamNormalized(that_tag);
+          double normalized = edit_controller.getParamNormalized(that_tag);
           std::int32_t value = vst_normalized_to_base(_topology, that_param + offset, normalized).discrete;
           visible &= _topology->params[dependents[d]].descriptor->data.ui->relevance[i].predicate(value);
         }  
