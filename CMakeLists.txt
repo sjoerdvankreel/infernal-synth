@@ -33,6 +33,7 @@ add_compile_options(-Wno-sign-compare)
 add_compile_options(-Wno-unused-parameter)
 add_compile_options(-ffast-math)
 add_compile_options(-march=native)
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
