@@ -52,6 +52,7 @@
 
 # basic linux support
 - linux host demos
+- zip script
 - custom vstgui build + bugfixes
 - everything from linux branch todo
 - all bugfixes from linux brancgh
