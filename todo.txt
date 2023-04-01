@@ -51,3 +51,9 @@
 - remove uidescription linker dependency
 - reduce controller.uidesc to image names, image offsets and color scheme
 - drop view_container_fix etc (anything that's only there for uidescription binding)
+
+# basic linux support
+- linux host demos
+- custom vstgui build + bugfixes
+- everything from linux branch todo
+- all bugfixes from linux branch
