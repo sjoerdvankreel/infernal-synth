@@ -17,8 +17,6 @@
 - renoise/flstudio automation serialization is broken
 
 * wishlist small
-- buy reaper
-- static linked version
 - load/save patch option
 - new menu option: clear all unused
 - make more presets + group by folder
@@ -56,4 +54,4 @@
 - linux host demos
 - custom vstgui build + bugfixes
 - everything from linux branch todo
-- all bugfixes from linux branch
+- all bugfixes from linux brancgh
