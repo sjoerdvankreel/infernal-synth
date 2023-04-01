@@ -56,3 +56,7 @@
 - custom vstgui build + bugfixes
 - everything from linux branch todo
 - all bugfixes from linux brancgh
+linux build
+- strip symbols
+- host demos with renoise/reaper/bitwig/(+fruity?)
+- clean build scripts, drop vst3 cmake prefixes for vstgui libs, more stuff

@@ -51,7 +51,7 @@ vst_processor::canProcessSampleSize(int32 symbolic_size)
 tresult PLUGIN_API 
 vst_processor::setProcessing(TBool state)
 {
-  _processor->set_processing(state);
+  if(_processor) _processor->set_processing(state);
   return AudioEffect::setProcessing(state);
 }
 

@@ -15,15 +15,7 @@
 
 #if WIN32
 #include <Windows.h>
-void* moduleHandle = nullptr;
-BOOL WINAPI
-DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
-{
-  if (reason != DLL_PROCESS_ATTACH) return TRUE;
-  moduleHandle = instance;
-  return TRUE;
-}
-#endif  
+#endif
 
 using namespace inf::base;
 using namespace inf::base::vst;
@@ -35,31 +27,8 @@ using namespace Steinberg::Vst;
 
 extern bool InitModule();
 extern bool DeinitModule();
+void* moduleHandle = nullptr;
 static std::int32_t _inf_module_counter = 0;
- 
-extern "C" {
-
-SMTG_EXPORT_SYMBOL
-bool InitDll()
-{
-  if (++_inf_module_counter != 1) return true;
-  if (!InitModule()) return false;
-  inf::base::ui::initialize();
-  return true;
-}
-
-SMTG_EXPORT_SYMBOL
-bool ExitDll()
-{
-  --_inf_module_counter;
-  if (_inf_module_counter > 0) return true;
-  if (_inf_module_counter < 0) return false;
-  if (!DeinitModule()) return false;
-  inf::base::ui::terminate();
-  return true;
-}
-
-} // extern "C"
 
 #if INF_VERSIONED
 static const DECLARE_UID(fx_processor_id, 0x88B6D7ED, 0x1B3A4AAE, 0xA9612A67, 0x56F66197);
@@ -74,6 +43,43 @@ static const DECLARE_UID(instrument_controller_id, 0x57068B2B, 0x63374143, 0x85F
 #else
 #error
 #endif
+
+static bool 
+inf_init(void* module_handle)
+{
+  if (++_inf_module_counter != 1) return true;
+  moduleHandle = module_handle;
+  if (!InitModule()) return false;
+  inf::base::ui::initialize();
+  return true;
+}
+
+static
+bool inf_exit()
+{
+  --_inf_module_counter;
+  if (_inf_module_counter > 0) return true;
+  if (_inf_module_counter < 0) return false;
+  inf::base::ui::terminate();
+  if (!DeinitModule()) return false;
+  moduleHandle = nullptr;
+  return true;
+}
+
+#if WIN32
+BOOL WINAPI
+DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
+{
+  if (reason != DLL_PROCESS_ATTACH) return TRUE;
+  moduleHandle = instance;
+  return TRUE;
+}
+extern "C" SMTG_EXPORT_SYMBOL bool ExitDll() { return inf_exit(); }
+extern "C" SMTG_EXPORT_SYMBOL bool InitDll() { return inf_init(moduleHandle); }
+#else
+extern "C" SMTG_EXPORT_SYMBOL bool ModuleExit(void) { return inf_exit(); }
+extern "C" SMTG_EXPORT_SYMBOL bool ModuleEntry(void* handle) { return inf_init(handle); }
+#endif  
 
 class synth_vst_topology :
 public synth_topology
@@ -120,13 +126,13 @@ create_instrument_topology()
 }
 
 extern "C" SMTG_EXPORT_SYMBOL 
-topology_info* inf_vst_create_topology(std::int32_t is_instrument)
+topology_info* inf_vst_create_topology2(std::int32_t is_instrument)
 { return is_instrument? create_instrument_topology(): create_fx_topology(); }
 
 static FUnknown*
 create_controller(std::int32_t is_instrument)
 {
-  auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology(is_instrument));
+  auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
   auto controller = new vst_ui_controller(std::move(topology));
   return static_cast<IEditController*>(controller);
 }
@@ -134,7 +140,7 @@ create_controller(std::int32_t is_instrument)
 static FUnknown* 
 create_processor(std::int32_t is_instrument)
 {
-  auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology(is_instrument));
+  auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
   auto tuid = is_instrument ? instrument_controller_id : fx_controller_id;
   auto processor = new vst_processor(std::move(topology), FUID::fromTUID(tuid));
   return static_cast<IAudioProcessor*>(processor);

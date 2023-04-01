@@ -124,7 +124,7 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
   }
 }
 
-inline void
+void
 cv_bank_processor::apply_voice_state(
   cv_hold_sample const* gcv_uni_hold, cv_hold_sample const* gcv_bi_hold,
   cv_hold_sample const* glfo_hold, float velo, std::int32_t midi, std::int32_t sample_count)

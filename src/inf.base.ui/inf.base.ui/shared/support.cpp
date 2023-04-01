@@ -3,6 +3,8 @@
 #include <vstgui/lib/platform/platformfactory.h>
 #if WIN32
 #include <vstgui/lib/platform/win32/win32factory.h>
+#else
+#include <vstgui/lib/platform/linux/linuxfactory.h>
 #endif
 
 #include <filesystem>
@@ -164,11 +166,12 @@ create_context_menu(plugin_controller* controller)
   if (controller->preset_items().size() == 0)
   {
     VSTGUI::Optional<VSTGUI::UTF8String> base_path = {};
-    // I really want my GCC -WALL compilation. Has saved me more than once.
 #if WIN32
     auto const* factory = getPlatformFactory().asWin32Factory();
-    if (factory == nullptr) return result;
     base_path = factory->getResourceBasePath();
+#else
+    auto const* factory = getPlatformFactory().asLinuxFactory();
+    base_path = VSTGUI::Optional<VSTGUI::UTF8String>(factory->getResourcePath());
 #endif
     if (!base_path) return result;
     VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets/";

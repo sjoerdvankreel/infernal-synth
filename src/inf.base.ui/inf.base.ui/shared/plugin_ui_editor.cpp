@@ -28,11 +28,15 @@ plugin_ui_editor::view_added(CFrame* view_frame, CView* view)
   if (control != nullptr && control->getTag() >= 0)
   {
     // Control loses its value if removed and re-added.
-    std::int32_t param_index = topology->param_id_to_index.at(control->getTag());
-    assert(param_index >= 0 && param_index < static_cast<std::int32_t>(topology->params.size()));
-    _controls[param_index].push_back(control);
-    param_value val = _controller->state()[param_index];
-    control->setValue(static_cast<float>(_controller->base_to_plugin_param(param_index, val)));
+    auto tag_iter = topology->param_id_to_index.find(control->getTag());
+    if (tag_iter != topology->param_id_to_index.end())
+    {
+      std::int32_t param_index = tag_iter->second;
+      assert(param_index >= 0 && param_index < static_cast<std::int32_t>(topology->params.size()));
+      _controls[param_index].push_back(control);
+      param_value val = controller()->state()[param_index];
+      control->setValue(static_cast<float>(_controller->base_to_plugin_param(param_index, val)));
+    }
   }
 }
  
