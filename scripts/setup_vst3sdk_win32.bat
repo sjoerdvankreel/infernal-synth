@@ -1,3 +1,6 @@
+cd ..
+if not exist "vst3sdk" mkdir vst3sdk
+cd vst3sdk
 if not exist "vst3sdk" git clone --recursive https://github.com/steinbergmedia/vst3sdk.git
 cd vst3sdk
 git checkout v3.7.7_build_19
