@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+#git config --global --add safe.directory '*'
+
 cd ..
 if [ ! -d "vst3sdk" ]; then
   git clone --recursive https://github.com/steinbergmedia/vst3sdk.git
