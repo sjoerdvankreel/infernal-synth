@@ -51,13 +51,13 @@ endif ()
 find_library(VSTGUI_LIB_Debug vstgui PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
 find_library(VSTGUI_SUPPORT_LIB_Debug vstgui_support PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
 find_library(VSTGUI_UIDESCRIPTION_LIB_Debug vstgui_uidescription PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
-set (VSTGUI_LIBRARIES_Debug ${VSTGUI_LIB_Debug} ${VSTGUI_UIDESCRIPTION_LIB_Debug} ${VSTGUI_UIDESCRIPTION_LIB_Debug})
+set (VSTGUI_LIBRARIES_Debug ${VSTGUI_LIB_Debug} ${VSTGUI_UIDESCRIPTION_LIB_Debug} ${VSTGUI_SUPPORT_LIB_Debug})
 
 # VSTGUI fork release binaries.
 find_library(VSTGUI_LIB_Release vstgui PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
 find_library(VSTGUI_SUPPORT_LIB_Release vstgui_support PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
 find_library(VSTGUI_UIDESCRIPTION_LIB_Release vstgui_uidescription PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
-set (VSTGUI_LIBRARIES_Release ${VSTGUI_LIB_Release} ${VSTGUI_UIDESCRIPTION_LIB_Release} ${VSTGUI_UIDESCRIPTION_LIB_Release})
+set (VSTGUI_LIBRARIES_Release ${VSTGUI_LIB_Release} ${VSTGUI_UIDESCRIPTION_LIB_Release} ${VSTGUI_SUPPORT_LIB_Release})
 
 # VST SDK debug binaries.
 find_library(VST3_BASE_LIB_Debug base PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
