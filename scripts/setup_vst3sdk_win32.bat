@@ -14,6 +14,6 @@ if not exist "vst3sdk" mkdir vst3sdk
 cd vst3sdk 
 if not exist "win32" mkdir win32
 cd win32
-cmake ../../../vst3sdk
+cmake -DVSTGUI_ENABLE_INFERNAL=1 ../../../vst3sdk
 msbuild /property:Configuration=Debug vstsdk.sln
 msbuild /property:Configuration=Release vstsdk.sln
