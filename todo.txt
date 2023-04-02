@@ -52,6 +52,7 @@
 - drop view_container_fix etc (anything that's only there for uidescription binding)
 
 # basic linux support
+- contact ardour about pango drama
 - linux host demos
 - zip script
 - custom vstgui build + bugfixes
