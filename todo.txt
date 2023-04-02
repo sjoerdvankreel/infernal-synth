@@ -12,6 +12,7 @@
 - x run the vst validator
 - x keep manual up to date
 - x don't forget to tag
+- x run win32 & linux host demos reaper, renoise, bitwig, fls (windows) / reaper, renoise, bitwig, ardour (linux)
 
 * host bugs
 - renoise/flstudio automation serialization is broken
