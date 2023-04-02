@@ -38,13 +38,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
 # VST3 sdk libraries, should be setup already.
-set (VST3_SDK_SRC_DIR vst3sdk)
+set (VST3_SDK_SRC_DIR "${PROJECT_SOURCE_DIR}/vst3sdk")
 if (MSVC)
-set (VST3_SDK_BUILD_DEBUG_DIR build/vst3sdk/win32/lib/Debug)
-set (VST3_SDK_BUILD_RELEASE_DIR build/vst3sdk/win32/lib/Release)
+set (VST3_SDK_BUILD_DEBUG_DIR "${PROJECT_SOURCE_DIR}/build/vst3sdk/win32/lib/Debug")
+set (VST3_SDK_BUILD_RELEASE_DIR "${PROJECT_SOURCE_DIR}/build/vst3sdk/win32/lib/Release")
 else ()
-set (VST3_SDK_BUILD_DEBUG_DIR build/vst3sdk/linux/debug/lib/Debug)
-set (VST3_SDK_BUILD_RELEASE_DIR build/vst3sdk/linux/release/lib/Release)
+set (VST3_SDK_BUILD_DEBUG_DIR "${PROJECT_SOURCE_DIR}/build/vst3sdk/linux/debug/lib/Debug")
+set (VST3_SDK_BUILD_RELEASE_DIR "${PROJECT_SOURCE_DIR}/build/vst3sdk/linux/release/lib/Release")
 endif ()
 
 # VSTGUI fork debug binaries.
