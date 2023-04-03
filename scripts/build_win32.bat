@@ -1,15 +1,10 @@
 @echo off
 if [%1] == [] goto usage
 
-cd ..
-if not exist build\infernal\win32 mkdir build\infernal\win32
-cd build\infernal\win32
-cmake -DHIIR_140_SRC_DIR="%1" ../../../
-msbuild /property:Configuration=Debug infernal-synth.sln
-msbuild /property:Configuration=Release infernal-synth.sln
-cd ..\..\..\scripts
+setup_vst3sdk_win32
+build_infernal_win32 %1
 goto :eof
 
 :usage
-echo "Usage: build_win32 <path-to-hiir>"
+echo "Usage: %0 <path-to-hiir>"
 exit /B 1
