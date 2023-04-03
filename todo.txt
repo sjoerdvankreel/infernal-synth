@@ -2,10 +2,10 @@
 - v create version branch
 - v update hiir
 - v update vst3 sdk
-- x update version number in code
-- x update version number in cmake unless only bugfix release
-- x gcc build
-- x diff presets
+- v update version number in code
+- v update version number in cmake unless only bugfix release
+- v gcc build
+- v diff presets
 - x update history
 - x debug run demos
 - x run pluginval
@@ -59,6 +59,4 @@
 - everything from linux branch todo
 - all bugfixes from linux brancgh
 linux build
-- strip symbols
 - host demos with renoise/reaper/bitwig/(+fruity?)
-- clean build scripts, drop vst3 cmake prefixes for vstgui libs, more stuff
