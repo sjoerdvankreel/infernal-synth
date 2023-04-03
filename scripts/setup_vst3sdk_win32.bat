@@ -4,7 +4,7 @@ cd vst3sdk
 git checkout v3.7.7_build_19
 git submodule set-url -- vstgui4 https://github.com/sjoerdvankreel/vstgui.git
 cd vstgui4
-git checkout develop
+git checkout infernal
 git pull
 cd ..\..
 if not exist "build\vst3sdk\win32" mkdir build\vst3sdk\win32
