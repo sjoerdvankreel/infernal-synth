@@ -15,8 +15,16 @@ cd vstgui4
 git fetch
 git checkout infernal
 git pull
-cd ../..
+cd ..
 
+git submodule set-url -- public.sdk https://github.com/sjoerdvankreel/vst3_public_sdk.git
+cd public.sdk
+git fetch
+git checkout infernal
+git pull
+cd ..
+
+cd ..
 mkdir -p build/vst3sdk/linux
 cd build/vst3sdk/linux
 
