@@ -22,6 +22,8 @@ class vst_ui_editor:
 public VSTGUI::VST3Editor,
 public inf::base::ui::plugin_ui_editor
 {
+  using CFrame = VSTGUI::CFrame;
+  using MouseEvent = VSTGUI::MouseEvent;
   using ParamID = Steinberg::Vst::ParamID;
   using EditController = Steinberg::Vst::EditController;
 
@@ -31,6 +33,7 @@ public:
 
   void onViewAdded(CFrame* view_frame, CView* view) override;
   void onViewRemoved(CFrame* view_frame, CView* view) override;
+  void onMouseEvent(MouseEvent& event, CFrame* which_frame) override;
   bool PLUGIN_API open(void* parent, const PlatformType& type) override;
 
   void attachedToParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
