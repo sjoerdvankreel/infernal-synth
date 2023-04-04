@@ -8,7 +8,7 @@ then
 fi
 
 echo "Setting up vst sdk..."
-./setup_vst3sdk_linux.sh
+sh ./setup_vst3sdk_linux.sh
 
 echo "Building infernal..."
-./build_infernal_linux.sh $1
+sh ./build_infernal_linux.sh $1
