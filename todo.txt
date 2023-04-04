@@ -60,4 +60,4 @@
 - all bugfixes from linux brancgh
 linux build
 - host demos with renoise/reaper/bitwig/(+fruity?)
-- todo this version: left-click context menu, load/save preset, faster linux menus
+- todo this version: left-click context menu, load/save preset, faster linux menus, working linux reaper menus, generate ui on linux
