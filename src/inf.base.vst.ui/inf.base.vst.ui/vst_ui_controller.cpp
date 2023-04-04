@@ -44,8 +44,7 @@ vst_ui_controller::endEdit(ParamID tag)
 
 // Add copy/switch functionality and load-preset to context menu. 
 // Unless user clicked an actual control, then we MUST popup the
-// host context menu and cannot augment it otherwise some hosts
-// freak out (bitwig, fruity).
+// host context menu and cannot augment it otherwise FL studio crashes.
 COptionMenu* 
 vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
 {

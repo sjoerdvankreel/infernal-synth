@@ -38,8 +38,8 @@ public:
   void load_component_state(inf::base::param_value* state, bool perform_edit) override;
 
   double get_plugin_param(std::int32_t tag) override { return getParamNormalized(tag); }
-  void restart() override { componentHandler->restartComponent(Steinberg::Vst::kParamValuesChanged); }
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
+  void restart() override { if (componentHandler != nullptr) componentHandler->restartComponent(Steinberg::Vst::kParamValuesChanged); }
   double base_to_plugin_param(std::int32_t index, param_value val) const override { return base_to_vst_normalized(topology(), index, val); }
   param_value plugin_to_base_param(std::int32_t index, double val) const override { return vst_normalized_to_base(topology(), index, val); }
 };
