@@ -109,7 +109,7 @@ create_context_menu(plugin_controller* controller)
   std::vector<CCommandMenuItem*> clear_single;
   std::vector<CCommandMenuItem*> clear_multiple;
   auto clear_items = new COptionMenu();
-  auto clear_item = new CCommandMenuItem(CCommandMenuItem::Desc("Clear"));
+  auto clear_item = new CCommandMenuItem(CCommandMenuItem::Desc("Clear module"));
   for (std::int32_t i = 0; i < topology->static_part_count; i++)
   {
     if (topology->static_parts[i].kind != part_kind::input) continue;
@@ -143,7 +143,7 @@ create_context_menu(plugin_controller* controller)
   result.push_back(clear_item);
 
   // Copy module to.
-  result.push_back(create_copy_swap_context_menu(controller, "Copy", "To",
+  result.push_back(create_copy_swap_context_menu(controller, "Copy module", "To",
     [controller](std::int32_t source_begin, std::int32_t target_begin, std::int32_t param_count) {
       for (std::int32_t i = 0; i < param_count; i++)
       {
@@ -153,7 +153,7 @@ create_context_menu(plugin_controller* controller)
       }}));
 
   // Swap module with.
-  result.push_back(create_copy_swap_context_menu(controller, "Swap", "With",
+  result.push_back(create_copy_swap_context_menu(controller, "Swap module", "With",
     [controller](std::int32_t source_begin, std::int32_t target_begin, std::int32_t param_count) {
       for (std::int32_t i = 0; i < param_count; i++)
       {
