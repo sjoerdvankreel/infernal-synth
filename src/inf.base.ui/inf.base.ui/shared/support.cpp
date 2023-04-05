@@ -106,6 +106,9 @@ create_context_menu(plugin_ui_editor* editor)
   });
   result.push_back(clear_patch);
 
+  // Separate init / clear.
+  result.push_back(new CMenuItem("", nullptr, 0, nullptr, CMenuItem::kSeparator));
+
   // Load preset.
   auto load_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Load preset"));
   load_preset->setActions([controller, editor](CCommandMenuItem*) {
@@ -130,6 +133,49 @@ create_context_menu(plugin_ui_editor* editor)
   });
   result.push_back(save_preset);
 
+  // Scan directory only once.
+  if (controller->factory_presets().size() == 0)
+  {
+    VSTGUI::Optional<VSTGUI::UTF8String> base_path = {};
+#if WIN32
+    auto const* factory = getPlatformFactory().asWin32Factory();
+    base_path = factory->getResourceBasePath();
+#else
+    auto const* factory = getPlatformFactory().asLinuxFactory();
+    base_path = VSTGUI::Optional<VSTGUI::UTF8String>(factory->getResourcePath());
+#endif
+    if (!base_path) return result;
+    VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets/";
+    typed_base_path += topology->is_instrument() ? "Instrument" : "Fx";
+    for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
+    {
+      if (entry.path().extension().string() != ".vstpreset") continue;
+      factory_preset preset;
+      preset.path = entry.path().string();
+      preset.name = entry.path().stem().string();
+      controller->factory_presets().push_back(preset);
+    }
+  }
+
+  // Add submenu with presets.
+  if (controller->factory_presets().size() > 0)
+  {
+    auto factories_item = new CCommandMenuItem(CCommandMenuItem::Desc("Factory presets"));
+    auto factories_menu = new COptionMenu();
+    for (std::size_t i = 0; i < controller->factory_presets().size(); i++)
+    {
+      auto factory_item = new CCommandMenuItem(CCommandMenuItem::Desc(controller->factory_presets()[i].name.c_str()));
+      factories_menu->addEntry(factory_item);
+      factory_item->setActions([controller, i](CCommandMenuItem*) {
+        controller->load_preset(controller->factory_presets()[i].path, true); });
+    }
+    factories_item->setSubmenu(factories_menu);
+    result.push_back(factories_item);
+  }
+
+  // Separate load / save / factory.
+  result.push_back(new CMenuItem("", nullptr, 0, nullptr, CMenuItem::kSeparator));
+  
   // Clear single module.
   std::vector<CCommandMenuItem*> clear_single;
   std::vector<CCommandMenuItem*> clear_multiple;
@@ -186,44 +232,6 @@ create_context_menu(plugin_ui_editor* editor)
         std::int32_t target_tag = controller->topology()->param_index_to_id[target_begin + i];
         controller->swap_param(source_tag, target_tag);
       }}));
-
-  // Scan directory only once.
-  if (controller->factory_presets().size() == 0)
-  {
-    VSTGUI::Optional<VSTGUI::UTF8String> base_path = {};
-#if WIN32
-    auto const* factory = getPlatformFactory().asWin32Factory();
-    base_path = factory->getResourceBasePath();
-#else
-    auto const* factory = getPlatformFactory().asLinuxFactory();
-    base_path = VSTGUI::Optional<VSTGUI::UTF8String>(factory->getResourcePath());
-#endif
-    if (!base_path) return result;
-    VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets/";
-    typed_base_path += topology->is_instrument()? "Instrument": "Fx";
-    for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
-    {
-      if (entry.path().extension().string() != ".vstpreset") continue;
-      factory_preset preset;
-      preset.path = entry.path().string();
-      preset.name = entry.path().stem().string();
-      controller->factory_presets().push_back(preset);
-    }
-  }
-
-  // Add submenu with presets.
-  if (controller->factory_presets().size() == 0) return result;
-  auto factories_item = new CCommandMenuItem(CCommandMenuItem::Desc("Factory presets"));
-  auto factories_menu = new COptionMenu();
-  for (std::size_t i = 0; i < controller->factory_presets().size(); i++)
-  {
-    auto factory_item = new CCommandMenuItem(CCommandMenuItem::Desc(controller->factory_presets()[i].name.c_str()));
-    factories_menu->addEntry(factory_item);
-    factory_item->setActions([controller, i](CCommandMenuItem*) { 
-      controller->load_preset(controller->factory_presets()[i].path, true); });
-  }
-  factories_item->setSubmenu(factories_menu);
-  result.push_back(factories_item);
 
   return result;
 }
