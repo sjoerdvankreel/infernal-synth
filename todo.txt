@@ -1,25 +1,23 @@
 * for each release
-- x create version branch
-- x update hiir
-- x update vst3 sdk
-- x update version number in code
-- x update version number in cmake unless only bugfix release
-- x gcc build
-- x diff presets
-- x update history
-- x debug run demos
-- x run pluginval
-- x run the vst validator
-- x keep manual up to date
+- v create version branch
+- v update hiir
+- v update vst3 sdk
+- v update version number in code
+- v update version number in cmake unless only bugfix release
+- v gcc build
+- v diff presets
+- v update history
+- v debug run demos
+- v run pluginval
+- v run the vst validator
+- v keep manual up to date
 - x don't forget to tag
+- v run win32 & linux host demos
 
 * host bugs
-- renoise/flstudio automation serialization is broken
+- renoise automation serialization is broken
 
 * wishlist small
-- buy reaper
-- static linked version
-- load/save patch option
 - new menu option: clear all unused
 - make more presets + group by folder
 
@@ -32,14 +30,18 @@
 - scale CV amount by global CV param
 - improve current noise generator (1/fs)
 - improve k+s generator (allow more stretching)
-- improve dsf generator: high partials roll off too fast
+- improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
 - tabbed ui
 - larger knobs
+- get rid of uidesc
+- drop uigenerator tool
+- global "edit menu" button
 - remove voice/master graphs
-- programmatic ui, no uidesc
 - reduce the use of background images
+- remove uidescription linker dependency
 - drop text edit fields & put active knob value in 1 single place
 - filter out incompatible menu options (osc sync, ram, audio routing)
-- provide an alternate way to pop up the context menu or integrate it in the plugin ui
+- reduce controller.uidesc to image names, image offsets and color scheme
+- drop view_container_fix etc (anything that's only there for uidescription binding)

@@ -1,9 +1,9 @@
 #ifndef INF_SYNTH_SYNTH_TOPOLOGY_HPP
 #define INF_SYNTH_SYNTH_TOPOLOGY_HPP
 
+#include <inf.base/plugin/audio_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.base/processor/audio_processor.hpp>
-#include <inf.base/processor/graph_processor.hpp>
 
 #include <memory>
 #include <cstdint>
@@ -23,7 +23,22 @@ typedef part_type_t::value part_type;
 struct synth_topology : 
 public base::topology_info
 {
+  bool const _is_instrument;
+
+  void init_fx_clear_patch(base::param_value* state) const;
+  void init_fx_factory_preset(base::param_value* state) const;
+  void init_instrument_clear_patch(base::param_value* state) const;
+  void init_instrument_factory_preset(base::param_value* state) const;
+
+protected:
+  synth_topology(bool is_instrument): 
+  _is_instrument(is_instrument) {}
+
 public:
+  void init_clear_patch(base::param_value* state) const override;
+  void init_factory_preset(base::param_value* state) const override;
+  bool is_instrument() const override { return _is_instrument; }
+
   std::unique_ptr<base::audio_processor> 
   create_audio_processor(
     base::param_value* state, std::int32_t* changed, 

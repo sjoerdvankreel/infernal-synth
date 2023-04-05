@@ -83,12 +83,15 @@ However, individual components are either bandlimited or have options to reduce 
     
 ## Context menu options
 
-Right-click somewhere in the plugin (not on a parameter, that pops up the host menu) to pop-up the context menu.\
-Select "Clear patch" to clear all settings.\
-Select "Init patch" to reset settings to factory default.\
-Select Load preset &gt; [preset name] to reset settings to a factory preset.\
-Select "Clear", "Copy", or "Swap" to edit the current module definition.\
-Please note that the associated routing (Audio bank/CV bank) is NOT updated.
+Context menu opens by right-click or ctrl+left-click (not on a parameter, that pops up the host menu).\
+Alternatively, the context menu may be opened by keyboard combination ctrl+alt+shift+m.
+
+- Init patch resets settings to factory default.
+- Clear patch clears all settings except the bare minimum required to produce sound.
+- Save preset allows to save the current plugin state to disk (vstpreset file).
+- Load preset allows to load an existing preset from disk. Note: this will silently fail if the selected preset was made using another plugin. (This also goes for versioned/generic and instrument/fx builds of InfernalSynth).
+- Factory presets provides a couple of built-in patches.
+- Clear, copy and swap module may be used to update a particular module. Please note that the associated routing (Audio bank/CV bank) is NOT updated.
 
 ![Context menu](static/context_menu.png)
 

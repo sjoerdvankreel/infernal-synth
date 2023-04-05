@@ -5,7 +5,7 @@
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/shared/audio_part_processor.hpp>
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
 namespace inf::synth {

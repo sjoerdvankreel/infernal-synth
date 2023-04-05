@@ -1,7 +1,7 @@
 #ifndef INF_SYNTH_ENVELOPE_GRAPH_HPP
 #define INF_SYNTH_ENVELOPE_GRAPH_HPP
 
-#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 #include <cstdint>
 
 namespace inf::synth {

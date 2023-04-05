@@ -1,7 +1,7 @@
 #ifndef INF_SYNTH_OSCILLATOR_STATE_HPP
 #define INF_SYNTH_OSCILLATOR_STATE_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.synth/oscillator/config.hpp>
 
 #include <cmath>

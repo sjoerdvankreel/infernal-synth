@@ -4,7 +4,7 @@
 #include <inf.synth/effect/graph1.hpp>
 #include <inf.base/shared/support.hpp>
 #include <inf.base/shared/spectrum_analyzer.hpp>
-#include <inf.base/processor/graph_processor.hpp>
+#include <inf.base/plugin/graph_processor.hpp>
 
 #include <array>
 #include <vector>

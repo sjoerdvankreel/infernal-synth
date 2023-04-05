@@ -1,3 +1,11 @@
+April 5, 2023 - V1.1.3.
+
+* Small host-specific fixes.
+* Cltrl+left-click opens context menu.
+* Ctrl+alt+shift+m opens context menu.
+* Merge instrument and fx plugin into 1 binary.
+* Load/save preset from within the plugin itself (don't rely on the host). 
+
 March 15, 2023 - V1.1.2.
 
 * Rewrite uidesc and rename background images to allow a bit of theming.

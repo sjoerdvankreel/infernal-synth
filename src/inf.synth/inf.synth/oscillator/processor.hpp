@@ -1,7 +1,7 @@
 #ifndef INF_SYNTH_OSCILLATOR_PROCESSOR_HPP
 #define INF_SYNTH_OSCILLATOR_PROCESSOR_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.synth/oscillator/state.hpp>
 #include <inf.synth/shared/audio_part_processor.hpp>
 

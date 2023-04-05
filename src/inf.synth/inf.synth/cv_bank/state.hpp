@@ -4,7 +4,7 @@
 #include <inf.synth/synth/config.hpp>
 #include <inf.synth/shared/state.hpp>
 #include <inf.synth/voice_master/topology.hpp>
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.base/shared/cont_storage.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 

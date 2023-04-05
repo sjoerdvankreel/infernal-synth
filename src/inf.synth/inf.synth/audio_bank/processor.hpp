@@ -1,7 +1,7 @@
 #ifndef INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
 #define INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.synth/audio_bank/state.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
 

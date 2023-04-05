@@ -1,7 +1,7 @@
 #ifndef INF_SYNTH_ENVELOPE_PROCESSOR_HPP
 #define INF_SYNTH_ENVELOPE_PROCESSOR_HPP
 
-#include <inf.base/processor/state.hpp>
+#include <inf.base/plugin/state.hpp>
 #include <inf.synth/envelope/state.hpp>
 #include <inf.synth/shared/part_processor.hpp>
 
