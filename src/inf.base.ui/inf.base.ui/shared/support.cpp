@@ -82,9 +82,10 @@ create_copy_swap_context_menu(plugin_controller* controller,
 }
 
 std::vector<VSTGUI::CMenuItem*>
-create_context_menu(plugin_controller* controller)
+create_context_menu(plugin_ui_editor* editor)
 {
   std::vector<VSTGUI::CMenuItem*> result;
+  plugin_controller* controller = editor->controller();
   topology_info const* topology = controller->topology();
 
   // Init patch to defaults.
@@ -107,13 +108,25 @@ create_context_menu(plugin_controller* controller)
 
   // Load preset.
   auto load_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Load preset"));
-  load_preset->setActions([controller](CCommandMenuItem*) {
+  load_preset->setActions([controller, editor](CCommandMenuItem*) {
+    CNewFileSelector* selector = CNewFileSelector::create(editor->frame(), CNewFileSelector::kSelectFile);
+    selector->setDefaultExtension(CFileExtension("VST3 preset", "vstpreset"));
+    selector->setTitle("Load preset");
+    if (selector->runModal() && selector->getNumSelectedFiles() == 1)
+      controller->load_preset(selector->getSelectedFile(0));
+    selector->forget();
   });
   result.push_back(load_preset);
 
   // Save preset.
   auto save_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Save preset"));
-  save_preset->setActions([controller](CCommandMenuItem*) {
+  save_preset->setActions([controller, editor](CCommandMenuItem*) {
+    CNewFileSelector* selector = CNewFileSelector::create(editor->frame(), CNewFileSelector::kSelectSaveFile);
+    selector->setDefaultExtension(CFileExtension("VST3 preset", "vstpreset"));
+    selector->setTitle("Save preset");
+    if (selector->runModal() && selector->getNumSelectedFiles() == 1)
+      controller->save_preset(selector->getSelectedFile(0));
+    selector->forget();
   });
   result.push_back(save_preset);
 

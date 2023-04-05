@@ -18,19 +18,24 @@ public Steinberg::Vst::EditControllerEx1,
 public inf::base::plugin_controller
 {
 protected:
+  using FUID = Steinberg::FUID;
   using tresult = Steinberg::tresult;
   using IBStream = Steinberg::IBStream;
   using FUnknown = Steinberg::FUnknown;
   using ParamID = Steinberg::Vst::ParamID;
+
+  FUID const _id;
 
 protected:
   void update_state(ParamID tag);
   tresult set_component_state(IBStream* state, bool perform_edit);
 
 public:
-  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology);
+  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id);
 
   void sync_ui_parameters();
+  void save_preset(std::string const& path) override;
+  void load_preset(std::string const& path) override;
   void load_factory_preset(std::size_t index) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;

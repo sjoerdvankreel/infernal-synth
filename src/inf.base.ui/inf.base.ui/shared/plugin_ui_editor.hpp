@@ -22,6 +22,7 @@ protected:
   using UTF8StringPtr = VSTGUI::UTF8StringPtr;
 
 public:
+  virtual CFrame* frame() const = 0;
   void update_dependent_visibility(std::int32_t tag);
   plugin_controller* controller() const { return _controller; }
 

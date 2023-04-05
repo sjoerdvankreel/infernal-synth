@@ -43,6 +43,7 @@ public:
   void onMouseEvent(MouseEvent& event, CFrame* which_frame) override;
   bool PLUGIN_API open(void* parent, const PlatformType& type) override;
 
+  CFrame* frame() const override { return getFrame(); }
   void attachedToParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
   void removedFromParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_removed(this); }
   Steinberg::tresult PLUGIN_API find_parameter(CPoint const& pos, Steinberg::Vst::ParamID& id) { return findParameter(pos.x, pos.y, id); }

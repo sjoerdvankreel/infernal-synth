@@ -133,7 +133,8 @@ static FUnknown*
 create_controller(std::int32_t is_instrument)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
-  auto controller = new vst_ui_controller(std::move(topology));
+  auto tuid = is_instrument ? instrument_controller_id : fx_controller_id;
+  auto controller = new vst_ui_controller(std::move(topology), FUID::fromTUID(tuid));
   return static_cast<IEditController*>(controller);
 }
 
@@ -141,8 +142,8 @@ static FUnknown*
 create_processor(std::int32_t is_instrument)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
-  auto tuid = is_instrument ? instrument_controller_id : fx_controller_id;
-  auto processor = new vst_processor(std::move(topology), FUID::fromTUID(tuid));
+  auto controller_tuid = is_instrument ? instrument_controller_id : fx_controller_id;
+  auto processor = new vst_processor(std::move(topology), FUID::fromTUID(controller_tuid));
   return static_cast<IAudioProcessor*>(processor);
 }
 

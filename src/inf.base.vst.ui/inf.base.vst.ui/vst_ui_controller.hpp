@@ -21,7 +21,7 @@ public VSTGUI::VST3EditorDelegate
   IPlugView* _editor = nullptr;
 
 public:
-  explicit vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology);
+  explicit vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id);
 
   // Update the editor ui if dependent params change.
   void view_removed(IPlugView* editor);

@@ -28,9 +28,27 @@ using namespace Steinberg::Vst;
 namespace inf::base::vst {
 
 vst_controller::
-vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
-plugin_controller(std::move(topology)) {}
+vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id) :
+plugin_controller(std::move(topology)), _id(id) {}
 
+// Save using full vstpreset headers.
+void 
+vst_controller::save_preset(std::string const& path)
+{
+  MemoryStream stream;
+  //PresetFile::savePreset(&stream, uid, vstPlug, controller, nullptr, 0);
+}
+
+// Load using full vstpreset validation.
+void 
+vst_controller::load_preset(std::string const& path)
+{
+
+}
+
+// Factory presets don't check/validate headers.
+// That way we can share presets between versioned/generic.
+// But we lose all validation, so might try to load arbitrary vstpresets.
 void
 vst_controller::load_factory_preset(std::size_t index)
 {

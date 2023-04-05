@@ -27,7 +27,7 @@ find_editor(VSTGUI::CView const* view)
 { return dynamic_cast<plugin_ui_editor*>(view->getFrame()->getEditor()); }
 
 std::vector<VSTGUI::CMenuItem*>
-create_context_menu(plugin_controller* controller);
+create_context_menu(plugin_ui_editor* controller);
 inf::base::ui_color
 from_vst_color_name(std::string const* name, VSTGUI::IUIDescription const* desc);
 

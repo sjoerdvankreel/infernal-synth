@@ -11,8 +11,8 @@ using namespace Steinberg::Vst;
 namespace inf::base::vst::ui {
 
 vst_ui_controller::
-vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
-vst_controller(std::move(topology)) {} 
+vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id) :
+vst_controller(std::move(topology), id) {} 
 
 void
 vst_ui_controller::view_removed(IPlugView* editor)
@@ -54,7 +54,8 @@ vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
   // Init, clear, copy/swap items, and preset selector. 
   // Just do it manually, kIsProgramChange don't work well.
   auto result = new COptionMenu();
-  std::vector<CMenuItem*> context_menu(create_context_menu(this));
+  auto ui_editor = &dynamic_cast<vst_ui_editor&>(*editor);
+  std::vector<CMenuItem*> context_menu(create_context_menu(ui_editor));
   for(auto it = context_menu.begin(); it != context_menu.end(); ++it)
     result->addEntry(*it);
   return result;
