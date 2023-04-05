@@ -3,6 +3,11 @@
 * Small host-specific fixes.
 * Cltrl+left-click opens context menu.
 * Ctrl+alt+shift+m opens context menu.
+* Merge instrument and fx plugin into 1 binary.
+* Make it possible to build and run on linux (experimental).
+
+* New features:
+- Load/save preset from within the plugin itself (don't rely on the host). 
 
 March 15, 2023 - V1.1.2.
 
