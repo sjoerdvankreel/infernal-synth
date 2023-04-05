@@ -6,11 +6,19 @@
 
 namespace inf::tool::vst::shared {
 
+// Library initializer.
+#if WIN32
+typedef bool (*inf_init_library_t)(void);
+#else
+typedef bool (*inf_init_library_t)(void*);
+#endif
+
 // Unload library on release.
-typedef bool (*inf_init_exit_dll_t)(void);
+typedef bool (*inf_exit_library_t)(void);
+
 class loaded_topology
 {
-  inf_init_exit_dll_t _unloader;
+  inf_exit_library_t _unloader;
   std::unique_ptr<inf::base::topology_info> _topology;
 public:
   loaded_topology(loaded_topology&&) = default;
@@ -19,7 +27,7 @@ public:
   loaded_topology& operator=(loaded_topology const&) = delete;
   
   ~loaded_topology();
-  loaded_topology(std::unique_ptr<inf::base::topology_info>&& topology, inf_init_exit_dll_t unloader);
+  loaded_topology(std::unique_ptr<inf::base::topology_info>&& topology, inf_exit_library_t unloader);
   inf::base::topology_info const* topology() const { return _topology.get(); }
 };
 
