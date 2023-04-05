@@ -84,7 +84,7 @@ However, individual components are either bandlimited or have options to reduce 
 ## Context menu options
 
 Context menu opens by right-click or ctrl+left-click (not on a parameter, that pops up the host menu).\
-Alternatively, the context menu may be opened by keyboard combination ctrl+alt+shift+m.\
+Alternatively, the context menu may be opened by keyboard combination ctrl+alt+shift+m.
 
 - Init patch resets settings to factory default.
 - Clear patch clears all settings except the bare minimum required to produce sound.
