@@ -131,7 +131,7 @@ create_context_menu(plugin_ui_editor* editor)
     {
       std::string path(selector->getSelectedFile(0));
       if(!path.ends_with(".vst3preset")) path += std::string(".vst3preset");
-      controller->save_preset(selector->getSelectedFile(0));
+      controller->save_preset(path);
     }
     selector->forget();
   });
