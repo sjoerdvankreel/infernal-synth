@@ -15,10 +15,9 @@
 - x run win32 & linux host demos reaper, renoise, bitwig, fls (windows) / reaper, renoise, bitwig, ardour (linux)
 
 * host bugs
-- renoise/flstudio automation serialization is broken
+- renoise automation serialization is broken
 
 * wishlist small
-- load/save patch option
 - new menu option: clear all unused
 - make more presets + group by folder
 
@@ -36,28 +35,20 @@
 * wishlist ui
 - tabbed ui
 - larger knobs
-- remove voice/master graphs
-- reduce the use of background images
-- drop text edit fields & put active knob value in 1 single place
-- filter out incompatible menu options (osc sync, ram, audio routing)
-- provide an alternate way to pop up the context menu or integrate it in the plugin ui
-
-# programmatic ui
 - get rid of uidesc
 - drop uigenerator tool
-- merge fx/ins in 1 binary
-- make project dependency diagram
+- global "edit menu" button
+- remove voice/master graphs
+- reduce the use of background images
 - remove uidescription linker dependency
+- drop text edit fields & put active knob value in 1 single place
+- filter out incompatible menu options (osc sync, ram, audio routing)
 - reduce controller.uidesc to image names, image offsets and color scheme
 - drop view_container_fix etc (anything that's only there for uidescription binding)
 
-# basic linux support
-- contact ardour about pango drama
-- linux host demos
-- zip script
-- custom vstgui build + bugfixes
-- everything from linux branch todo
-- all bugfixes from linux brancgh
-linux build
-- host demos with renoise/reaper/bitwig/(+fruity?)
-- todo this version: left-click context menu, load/save preset, faster linux menus, working linux reaper menus, generate ui on linux
+* todo this version
+- load/save preset
+- faster linux menus
+- generate ui on linux
+- test linux host demos
+- working linux reaper menus
