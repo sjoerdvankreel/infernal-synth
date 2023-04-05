@@ -110,8 +110,8 @@ static FUnknown*
 create_controller(std::int32_t is_instrument)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
-  auto tuid = is_instrument ? instrument_controller_id : fx_controller_id;
-  auto controller = new vst_ui_controller(std::move(topology), FUID::fromTUID(tuid));
+  auto processor_tuid = is_instrument ? instrument_processor_id : fx_processor_id;
+  auto controller = new vst_ui_controller(std::move(topology), FUID::fromTUID(processor_tuid));
   return static_cast<IEditController*>(controller);
 }
 

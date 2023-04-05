@@ -11,8 +11,8 @@ using namespace Steinberg::Vst;
 namespace inf::base::vst::ui {
 
 vst_ui_controller::
-vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id) :
-vst_controller(std::move(topology), id) {} 
+vst_ui_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id) :
+vst_controller(std::move(topology), processor_id) {}
 
 void
 vst_ui_controller::view_removed(IPlugView* editor)

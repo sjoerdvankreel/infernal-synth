@@ -24,20 +24,19 @@ protected:
   using FUnknown = Steinberg::FUnknown;
   using ParamID = Steinberg::Vst::ParamID;
 
-  FUID const _id;
+  FUID const _processor_id;
 
 protected:
   void update_state(ParamID tag);
   tresult set_component_state(IBStream* state, bool perform_edit);
 
 public:
-  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id);
+  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
   void sync_ui_parameters();
   void save_preset(std::string const& path) override;
-  void load_preset(std::string const& path) override;
-  void load_factory_preset(std::size_t index) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
+  void load_preset(std::string const& path, bool factory) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void load_component_state(inf::base::param_value* state, bool perform_edit) override;

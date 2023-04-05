@@ -28,40 +28,34 @@ using namespace Steinberg::Vst;
 namespace inf::base::vst {
 
 vst_controller::
-vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& id) :
-plugin_controller(std::move(topology)), _id(id) {}
+vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id) :
+plugin_controller(std::move(topology)), _processor_id(processor_id) {}
 
 // Save using full vstpreset headers.
+// See PresetFile::savePreset.
 void 
 vst_controller::save_preset(std::string const& path)
 {
   MemoryStream stream;
+  //PresetFile::savePreset(&stream, _processor_id, vstPlug, controller, nullptr, 0);
   //PresetFile::savePreset(&stream, uid, vstPlug, controller, nullptr, 0);
 }
 
-// Load using full vstpreset validation.
+// See PresetFile::loadPreset. We load processor (component) state
+// from stream into controller, then flush params to processor.
 void 
-vst_controller::load_preset(std::string const& path)
+vst_controller::load_preset(std::string const& path, bool factory)
 {
-
-}
-
-// Factory presets don't check/validate headers.
-// That way we can share presets between versioned/generic.
-// But we lose all validation, so might try to load arbitrary vstpresets.
-void
-vst_controller::load_factory_preset(std::size_t index)
-{
-  if (index >= _factory_presets.size()) return;
-  std::string path = _factory_presets[index].path;
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   std::streamsize size = file.tellg();
   file.seekg(0, std::ios::beg);
-  std::vector<char> buffer(size);
+  std::vector<char> buffer = std::vector<char>(size);
   if (!file.read(buffer.data(), size)) return;
   MemoryStream memory(buffer.data(), buffer.size());
   PresetFile preset(&memory);
   if (!preset.readChunkList()) return;
+  // Allow to share factory presets by versioned/unversioned.
+  if (!factory && preset.getClassID() != _processor_id) return;
   if (!preset.seekToComponentState()) return;
   set_component_state(&memory, true);
 }

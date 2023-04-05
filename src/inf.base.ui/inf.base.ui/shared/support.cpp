@@ -113,7 +113,7 @@ create_context_menu(plugin_ui_editor* editor)
     selector->setDefaultExtension(CFileExtension("VST3 preset", "vstpreset"));
     selector->setTitle("Load preset");
     if (selector->runModal() && selector->getNumSelectedFiles() == 1)
-      controller->load_preset(selector->getSelectedFile(0));
+      controller->load_preset(selector->getSelectedFile(0), false);
     selector->forget();
   });
   result.push_back(load_preset);
@@ -219,7 +219,8 @@ create_context_menu(plugin_ui_editor* editor)
   {
     auto factory_item = new CCommandMenuItem(CCommandMenuItem::Desc(controller->factory_presets()[i].name.c_str()));
     factories_menu->addEntry(factory_item);
-    factory_item->setActions([controller, i](CCommandMenuItem*) { controller->load_factory_preset(i); });
+    factory_item->setActions([controller, i](CCommandMenuItem*) { 
+      controller->load_preset(controller->factory_presets()[i].path, true); });
   }
   factories_item->setSubmenu(factories_menu);
   result.push_back(factories_item);
