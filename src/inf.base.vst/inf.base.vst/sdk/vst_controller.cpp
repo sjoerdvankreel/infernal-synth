@@ -31,19 +31,9 @@ vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id) :
 plugin_controller(std::move(topology)), _processor_id(processor_id) {}
 
-// Save using full vstpreset headers.
-// See PresetFile::savePreset.
-void 
-vst_controller::save_preset(std::string const& path)
-{
-  MemoryStream stream;
-  //PresetFile::savePreset(&stream, _processor_id, vstPlug, controller, nullptr, 0);
-  //PresetFile::savePreset(&stream, uid, vstPlug, controller, nullptr, 0);
-}
-
 // See PresetFile::loadPreset. We load processor (component) state
 // from stream into controller, then flush params to processor.
-void 
+void
 vst_controller::load_preset(std::string const& path, bool factory)
 {
   std::ifstream file(path, std::ios::binary | std::ios::ate);
@@ -60,7 +50,36 @@ vst_controller::load_preset(std::string const& path, bool factory)
   set_component_state(&memory, true);
 }
 
+// Save using full vstpreset headers. See PresetFile::savePreset. 
+// Treat controller state as processor state.
 void 
+vst_controller::save_preset(std::string const& path)
+{
+  MemoryStream preset_state;
+  MemoryStream processor_state;
+  IBStreamer streamer(&processor_state, kLittleEndian);
+  vst_io_stream stream(&streamer);
+  if(!stream.save(*_topology, _state.data())) return;
+  if(processor_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+  if(!PresetFile::savePreset(&preset_state, _processor_id, &processor_state)) return;
+  if(preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+  std::vector<char> contents(static_cast<std::size_t>(preset_state.getSize()), '0');
+  if(preset_state.read(contents.data(), preset_state.getSize(), nullptr) != kResultTrue) return;
+  std::ofstream file(path, std::ios::out | std::ios::binary);
+  if(file.bad()) return;
+  file.write(contents.data(), preset_state.getSize());
+  file.close();
+}
+
+void
+vst_controller::sync_ui_parameters()
+{
+  // Updates visibility of dependent parameters and rendering of graphs.
+  for (std::size_t p = 0; p < _topology->params.size(); p++)
+    endEdit(_topology->param_index_to_id[static_cast<std::int32_t>(p)]);
+}
+
+void
 vst_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
 {
   beginEdit(target_tag);
@@ -81,14 +100,6 @@ vst_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
   setParamNormalized(source_tag, target);
   performEdit(source_tag, target);
   endEdit(source_tag);
-}
-
-void
-vst_controller::sync_ui_parameters()
-{
-  // Updates visibility of dependent parameters and rendering of graphs.
-  for (std::size_t p = 0; p < _topology->params.size(); p++)
-    endEdit(_topology->param_index_to_id[static_cast<std::int32_t>(p)]);
 }
 
 tresult
