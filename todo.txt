@@ -10,9 +10,9 @@
 - x debug run demos
 - x run pluginval
 - x run the vst validator
-- x keep manual up to date
+- v keep manual up to date
 - x don't forget to tag
-- x run win32 & linux host demos reaper, renoise, bitwig, fls (windows) / reaper, renoise, bitwig, ardour (linux)
+- x run win32 & linux host demos
 
 * host bugs
 - renoise automation serialization is broken
@@ -45,7 +45,3 @@
 - filter out incompatible menu options (osc sync, ram, audio routing)
 - reduce controller.uidesc to image names, image offsets and color scheme
 - drop view_container_fix etc (anything that's only there for uidescription binding)
-
-* todo this version
-- generate ui on linux
-- update build instructions
