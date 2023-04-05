@@ -109,11 +109,14 @@ create_context_menu(plugin_ui_editor* editor)
   // Separate init / clear.
   result.push_back(new CMenuItem("", nullptr, 0, nullptr, CMenuItem::kSeparator));
 
+  std::string extension = controller->preset_file_extension().c_str();
+  std::string dot_extension = std::string(".") + extension;
+
   // Load preset.
   auto load_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Load preset"));
-  load_preset->setActions([controller, editor](CCommandMenuItem*) {
+  load_preset->setActions([extension, controller, editor](CCommandMenuItem*) {
     CNewFileSelector* selector = CNewFileSelector::create(editor->frame(), CNewFileSelector::kSelectFile);
-    selector->setDefaultExtension(CFileExtension("VST3 preset", "vstpreset"));
+    selector->setDefaultExtension(CFileExtension("Preset file", extension.c_str()));
     selector->setTitle("Load preset");
     if (selector->runModal() && selector->getNumSelectedFiles() == 1)
       controller->load_preset(selector->getSelectedFile(0), false);
@@ -123,14 +126,14 @@ create_context_menu(plugin_ui_editor* editor)
 
   // Save preset.
   auto save_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Save preset"));
-  save_preset->setActions([controller, editor](CCommandMenuItem*) {
+  save_preset->setActions([extension, dot_extension, controller, editor](CCommandMenuItem*) {
     CNewFileSelector* selector = CNewFileSelector::create(editor->frame(), CNewFileSelector::kSelectSaveFile);
-    selector->setDefaultExtension(CFileExtension("VST3 preset", "vstpreset"));
+    selector->setDefaultExtension(CFileExtension("Preset file", extension.c_str()));
     selector->setTitle("Save preset");
     if (selector->runModal() && selector->getNumSelectedFiles() == 1)
     {
       std::string path(selector->getSelectedFile(0));
-      if(!path.ends_with(".vstpreset")) path += std::string(".vstpreset");
+      if(!path.ends_with(dot_extension)) path += dot_extension;
       controller->save_preset(path);
     }
     selector->forget();
@@ -153,7 +156,7 @@ create_context_menu(plugin_ui_editor* editor)
     typed_base_path += topology->is_instrument() ? "Instrument" : "Fx";
     for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
     {
-      if (entry.path().extension().string() != ".vstpreset") continue;
+      if (entry.path().extension().string() != dot_extension) continue;
       factory_preset preset;
       preset.path = entry.path().string();
       preset.name = entry.path().stem().string();

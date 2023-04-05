@@ -41,6 +41,7 @@ public:
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void load_component_state(inf::base::param_value* state, bool perform_edit) override;
 
+  std::string preset_file_extension() override { return "vstpreset"; }
   double get_plugin_param(std::int32_t tag) override { return getParamNormalized(tag); }
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
   void restart() override { if (componentHandler != nullptr) componentHandler->restartComponent(Steinberg::Vst::kParamValuesChanged); }
