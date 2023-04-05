@@ -105,6 +105,18 @@ create_context_menu(plugin_controller* controller)
   });
   result.push_back(clear_patch);
 
+  // Load preset.
+  auto load_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Load preset"));
+  load_preset->setActions([controller](CCommandMenuItem*) {
+  });
+  result.push_back(load_preset);
+
+  // Save preset.
+  auto save_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Save preset"));
+  save_preset->setActions([controller](CCommandMenuItem*) {
+  });
+  result.push_back(save_preset);
+
   // Clear single module.
   std::vector<CCommandMenuItem*> clear_single;
   std::vector<CCommandMenuItem*> clear_multiple;
