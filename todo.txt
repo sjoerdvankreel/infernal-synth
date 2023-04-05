@@ -12,7 +12,7 @@
 - v run the vst validator
 - v keep manual up to date
 - x don't forget to tag
-- x run win32 & linux host demos
+- v run win32 & linux host demos
 
 * host bugs
 - renoise automation serialization is broken
