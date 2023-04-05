@@ -48,4 +48,4 @@
 
 * todo this version
 - generate ui on linux
-- test linux host demos
+- update build instructions
