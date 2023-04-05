@@ -128,7 +128,11 @@ create_context_menu(plugin_ui_editor* editor)
     selector->setDefaultExtension(CFileExtension("VST3 preset", "vstpreset"));
     selector->setTitle("Save preset");
     if (selector->runModal() && selector->getNumSelectedFiles() == 1)
+    {
+      std::string path(selector->getSelectedFile(0));
+      if(!path.ends_with(".vst3preset")) path += std::string(".vst3preset");
       controller->save_preset(selector->getSelectedFile(0));
+    }
     selector->forget();
   });
   result.push_back(save_preset);
