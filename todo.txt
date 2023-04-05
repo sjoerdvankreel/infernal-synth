@@ -47,6 +47,5 @@
 - drop view_container_fix etc (anything that's only there for uidescription binding)
 
 * todo this version
-- load/save preset
 - generate ui on linux
 - test linux host demos
