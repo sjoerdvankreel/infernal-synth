@@ -9,7 +9,7 @@
 namespace inf::base {
 
 // For factory presets (just every .vstpreset in the resources folder).
-struct preset_item
+struct factory_preset
 {
   std::string name;
   std::string path;
@@ -21,20 +21,20 @@ class plugin_controller
 protected:
   // Separate copy of the parameter state used for graphs.
   std::vector<inf::base::param_value> _state;
-  std::vector<inf::base::preset_item> _preset_items;
   std::unique_ptr<inf::base::topology_info> _topology;
+  std::vector<inf::base::factory_preset> _factory_presets;
 
   plugin_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
-  _state(topology->params.size()), _preset_items(), _topology(std::move(topology))
+  _state(topology->params.size()), _topology(std::move(topology)), _factory_presets()
   { _topology->init_factory_preset(_state.data()); }
 
 public:
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
-  std::vector<inf::base::preset_item>& preset_items() { return _preset_items; }
+  std::vector<inf::base::factory_preset>& factory_presets() { return _factory_presets; }
 
   virtual void restart() = 0;
-  virtual void load_preset(std::size_t index) = 0;
+  virtual void load_factory_preset(std::size_t index) = 0;
   virtual void load_component_state(param_value* state, bool perform_edit) = 0;
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;

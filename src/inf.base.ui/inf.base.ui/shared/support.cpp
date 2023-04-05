@@ -163,7 +163,7 @@ create_context_menu(plugin_controller* controller)
       }}));
 
   // Scan directory only once.
-  if (controller->preset_items().size() == 0)
+  if (controller->factory_presets().size() == 0)
   {
     VSTGUI::Optional<VSTGUI::UTF8String> base_path = {};
 #if WIN32
@@ -179,25 +179,25 @@ create_context_menu(plugin_controller* controller)
     for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
     {
       if (entry.path().extension().string() != ".vstpreset") continue;
-      preset_item item;
-      item.path = entry.path().string();
-      item.name = entry.path().stem().string();
-      controller->preset_items().push_back(item);
+      factory_preset preset;
+      preset.path = entry.path().string();
+      preset.name = entry.path().stem().string();
+      controller->factory_presets().push_back(preset);
     }
   }
 
   // Add submenu with presets.
-  if (controller->preset_items().size() == 0) return result;
-  auto load_item = new CCommandMenuItem(CCommandMenuItem::Desc("Load preset"));
-  auto preset_menu = new COptionMenu();
-  for (std::size_t i = 0; i < controller->preset_items().size(); i++)
+  if (controller->factory_presets().size() == 0) return result;
+  auto factories_item = new CCommandMenuItem(CCommandMenuItem::Desc("Factory presets"));
+  auto factories_menu = new COptionMenu();
+  for (std::size_t i = 0; i < controller->factory_presets().size(); i++)
   {
-    auto preset_item = new CCommandMenuItem(CCommandMenuItem::Desc(controller->preset_items()[i].name.c_str()));
-    preset_menu->addEntry(preset_item);
-    preset_item->setActions([controller, i](CCommandMenuItem*) { controller->load_preset(i); });
+    auto factory_item = new CCommandMenuItem(CCommandMenuItem::Desc(controller->factory_presets()[i].name.c_str()));
+    factories_menu->addEntry(factory_item);
+    factory_item->setActions([controller, i](CCommandMenuItem*) { controller->load_factory_preset(i); });
   }
-  load_item->setSubmenu(preset_menu);
-  result.push_back(load_item);
+  factories_item->setSubmenu(factories_menu);
+  result.push_back(factories_item);
 
   return result;
 }

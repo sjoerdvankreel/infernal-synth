@@ -31,7 +31,7 @@ public:
   explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology);
 
   void sync_ui_parameters();
-  void load_preset(std::size_t index) override;
+  void load_factory_preset(std::size_t index) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;

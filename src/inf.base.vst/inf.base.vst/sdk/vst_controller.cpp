@@ -32,10 +32,10 @@ vst_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
 plugin_controller(std::move(topology)) {}
 
 void
-vst_controller::load_preset(std::size_t index)
+vst_controller::load_factory_preset(std::size_t index)
 {
-  if (index >= _preset_items.size()) return;
-  std::string path = _preset_items[index].path;
+  if (index >= _factory_presets.size()) return;
+  std::string path = _factory_presets[index].path;
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   std::streamsize size = file.tellg();
   file.seekg(0, std::ios::beg);
