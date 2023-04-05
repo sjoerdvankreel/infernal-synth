@@ -95,7 +95,7 @@ char const*
 synth_vst_topology::plugin_name() const
 {
   if(is_instrument()) return INF_SYNTH_VST_INSTRUMENT_NAME;
-  else INF_SYNTH_VST_FX_NAME;
+  else return INF_SYNTH_VST_FX_NAME;
 }
 
 extern "C" SMTG_EXPORT_SYMBOL 
