@@ -83,7 +83,9 @@ However, individual components are either bandlimited or have options to reduce 
     
 ## Context menu options
 
-Right-click somewhere in the plugin (not on a parameter, that pops up the host menu) to pop-up the context menu.\
+Context menu opens by right-click or ctrl+left-click (not on a parameter, that pops up the host menu).\
+Alternatively, the context menu may be opened by keyboard combination ctrl+alt+shift+m.\
+\
 Select "Clear patch" to clear all settings.\
 Select "Init patch" to reset settings to factory default.\
 Select Load preset &gt; [preset name] to reset settings to a factory preset.\

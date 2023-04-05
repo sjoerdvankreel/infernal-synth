@@ -1,6 +1,8 @@
 ?, ? - V1.1.3.
 
-* TODO
+* Small host-specific fixes.
+* Cltrl+left-click opens context menu.
+* Ctrl+alt+shift+m opens context menu.
 
 March 15, 2023 - V1.1.2.
 
