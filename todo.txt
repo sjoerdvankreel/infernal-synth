@@ -52,3 +52,4 @@
 - generate ui on linux
 - test linux host demos
 - working linux reaper menus
+- vstgui linux always use native menus
