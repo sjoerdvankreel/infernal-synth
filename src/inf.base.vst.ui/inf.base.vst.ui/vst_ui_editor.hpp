@@ -23,22 +23,29 @@ public VSTGUI::VST3Editor,
 public inf::base::ui::plugin_ui_editor
 {
   using CFrame = VSTGUI::CFrame;
+  using CPoint = VSTGUI::CPoint;
+  using MouseEvent = VSTGUI::MouseEvent;
   using ParamID = Steinberg::Vst::ParamID;
   using KeyboardEvent = VSTGUI::KeyboardEvent;
   using EditController = Steinberg::Vst::EditController;
+
+  void popup_context_menu();
 
 public:
   vst_ui_editor(vst_ui_controller* controller, UTF8StringPtr template_name,
     UTF8StringPtr xml_file, inf::base::topology_info const* topology);
 
+  bool find_parameter(CPoint const& pos);
   void onKeyboardEvent(KeyboardEvent& event, CFrame* which_frame);
+
   void onViewAdded(CFrame* view_frame, CView* view) override;
   void onViewRemoved(CFrame* view_frame, CView* view) override;
+  void onMouseEvent(MouseEvent& event, CFrame* which_frame) override;
   bool PLUGIN_API open(void* parent, const PlatformType& type) override;
 
   void attachedToParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_attached(this); }
   void removedFromParent() override { dynamic_cast<vst_ui_controller&>(*getController()).view_removed(this); }
-  Steinberg::tresult PLUGIN_API find_parameter(VSTGUI::CPoint const& pos, Steinberg::Vst::ParamID& id) { return findParameter(pos.x, pos.y, id); }
+  Steinberg::tresult PLUGIN_API find_parameter(CPoint const& pos, Steinberg::Vst::ParamID& id) { return findParameter(pos.x, pos.y, id); }
 };
 
 // Allow opening the context menu by ctrl+m,

@@ -48,10 +48,8 @@ vst_ui_controller::endEdit(ParamID tag)
 COptionMenu* 
 vst_ui_controller::createContextMenu(CPoint const& pos, VST3Editor* editor)
 {
-  ParamID tag;
-  auto& inf_editor = dynamic_cast<vst_ui_editor&>(*editor);
-  tresult found = inf_editor.find_parameter(pos, tag);
-  if(found == kResultOk) return VST3EditorDelegate::createContextMenu(pos, editor);
+  if(dynamic_cast<vst_ui_editor&>(*editor).find_parameter(pos))
+    return VST3EditorDelegate::createContextMenu(pos, editor);
 
   // Init, clear, copy/swap items, and preset selector. 
   // Just do it manually, kIsProgramChange don't work well.

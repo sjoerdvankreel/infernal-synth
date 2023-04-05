@@ -7,6 +7,7 @@
 #include <algorithm>
 
 using namespace VSTGUI;
+using namespace Steinberg;
 using namespace inf::base;
 using namespace inf::base::ui;
 
@@ -22,6 +23,13 @@ plugin_ui_editor(controller, topology)
   assert(xml_file != nullptr);
   assert(controller != nullptr);
   assert(template_name != nullptr);
+}
+
+bool
+vst_ui_editor::find_parameter(CPoint const& pos)
+{
+  ParamID tag;
+  return find_parameter(pos, tag) == kResultOk;
 }
 
 void 
@@ -49,6 +57,24 @@ vst_ui_editor::open(void* parent, const PlatformType& type)
   return true;
 }
 
+// Force context menu open on ctrl+left-click on stuff that's not a control.
+// At least studio one (maybe other hosts) dont like opening context menu outside a control.
+void
+vst_ui_editor::onMouseEvent(MouseEvent& event, CFrame* which_frame)
+{
+  if (event.type == EventType::MouseDown
+    && event.buttonState.isLeft()
+    && event.modifiers.is(ModifierKey::Control)
+    && !find_parameter(event.mousePosition))
+  {
+    popup_context_menu();
+    event.consumed = true;
+    return;
+  }
+
+  VST3Editor::onMouseEvent(event, which_frame);
+}
+
 void
 vst_ui_editor::onKeyboardEvent(KeyboardEvent& event, CFrame* which_frame)
 {
@@ -59,19 +85,26 @@ vst_ui_editor::onKeyboardEvent(KeyboardEvent& event, CFrame* which_frame)
   // window is in the foreground so we don't even get a chance
   // to capture the event. So we go with ctrl+alt+shift+m, 
   // since this is only a workaround for hosts which do not get the menu's right.
-  if(event.character != 'm') return;
-
   Modifiers modifiers;
   modifiers.add(ModifierKey::Alt);
   modifiers.add(ModifierKey::Shift);
   modifiers.add(ModifierKey::Control);
-  if(event.modifiers != modifiers) return;
-  
+  if (event.character == 'm' && event.modifiers == modifiers)
+  {
+    popup_context_menu();
+    event.consumed = true;
+  }
+}
+
+// Alternative way to show the context menu for hosts that dont like right-click.
+void
+vst_ui_editor::popup_context_menu()
+{
   // Try to popup at mouse, otherwise some default location.
   CPoint mouse;
   CPoint size = getFrame()->getViewSize().getSize();
   CPoint defaultMouse = CPoint(size.x / 3.0, size.y / 3.0);
-  if(!getFrame()->getCurrentMouseLocation(mouse)) mouse = defaultMouse;
+  if (!getFrame()->getCurrentMouseLocation(mouse)) mouse = defaultMouse;
   if (mouse.x <= 0.0 || mouse.y <= 0.0 || mouse.x >= size.x || mouse.y >= size.y) mouse = defaultMouse;
 
   // Force popup controller context menu without appending host menu items.
@@ -82,7 +115,6 @@ vst_ui_editor::onKeyboardEvent(KeyboardEvent& event, CFrame* which_frame)
     menu->popup(frame_owner, position);
     menu->forget();
   });
-  event.consumed = true;
 }
 
 } // namespace inf::base::vst::ui
