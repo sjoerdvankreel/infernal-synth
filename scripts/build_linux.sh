@@ -1,14 +1,24 @@
 #!/bin/bash
 set -e
 
-if [ "$#" -ne 1 ]
+if [ "$#" -ne 4 ]
 then
-  echo "Usage: $0 <path-to-hiir>"
+  echo "Usage: $0 <path-to-hiir-src> <path-to-vst3sdk-src> <path-to-vst3sdk-debug-binaries> <path-to-vst3sdk-release-binaries>"
   exit 1
 fi
 
-echo "Setting up vst sdk..."
-sh ./setup_vst3sdk_linux.sh
+cd ..
+mkdir -p build/linux/debug
+cd build/linux/debug
+cmake -DCMAKE_BUILD_TYPE=Debug -DHIIR_140_SRC_DIR="$1" -DVST3_SDK_SRC_DIR="$2" -DVST3_SDK_BUILD_DEBUG_DIR="$3" -DVST3_SDK_BUILD_RELEASE_DIR="$4" ../../..
+make
 
-echo "Building infernal..."
-sh ./build_infernal_linux.sh $1
+cd ..
+mkdir -p release
+cd release
+cmake -DCMAKE_BUILD_TYPE=Release -DHIIR_140_SRC_DIR="$1" -DVST3_SDK_SRC_DIR="$2" -DVST3_SDK_BUILD_DEBUG_DIR="$3" -DVST3_SDK_BUILD_RELEASE_DIR="$4" ../../..
+make
+strip --strip-unneeded ../../../dist/linux/Release/InfernalSynth1.1.vst3/Contents/x86_64-linux/InfernalSynth1.1.so
+strip --strip-unneeded ../../../dist/linux/Release/InfernalSynthGeneric.vst3/Contents/x86_64-linux/InfernalSynthGeneric.so
+
+cd ../../../scripts

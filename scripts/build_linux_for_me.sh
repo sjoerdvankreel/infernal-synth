@@ -1,0 +1,1 @@
+sh ./build_linux.sh /media/sf_hiir_1.40 /media/sf_vst3sdk_3.7.7/vst3sdk /media/sf_vst3sdk_3.7.7/linux/debug/lib/Debug /media/sf_vst3sdk_3.7.7/linux/release/lib/Release

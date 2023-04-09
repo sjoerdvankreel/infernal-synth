@@ -1,0 +1,1 @@
+call build_win32 c:\repos\hiir_1.40 C:\repos\vst3sdk_3.7.7\vst3sdk C:\repos\vst3sdk_3.7.7\win32\lib\Debug C:\repos\vst3sdk_3.7.7\win32\lib\Release
