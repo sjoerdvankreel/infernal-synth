@@ -72,6 +72,18 @@ find_library(VST3_SDK_COMMON_LIB_Release sdk_common PATHS "${VST3_SDK_BUILD_RELE
 find_library(VST3_PLUGINTERFACES_LIB_Release pluginterfaces PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
 set (VST3_SDK_LIBRARIES_Release ${VST3_BASE_LIB_Release} ${VST3_SDK_LIB_Release} ${VST3_SDK_COMMON_LIB_Release} ${VST3_PLUGINTERFACES_LIB_Release})
 
+# Juce project since it doesn't seem friendly to pre-built binaries. 
+# Just get everything in there for a workable juce-ui-only setup.
+set(JUCE_UI_SRC_DIR "src/juce.ui")
+file(GLOB_RECURSE JUCE_UI_SRC "${JUCE_UI_SRC_DIR}/*.*")
+add_library(juce.ui STATIC ${JUCE_UI_SRC})
+target_include_directories(juce.ui PRIVATE ${JUCE_UI_SRC_DIR})
+target_include_directories(juce.ui SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+if (MSVC)
+source_group(TREE "../../${JUCE_UI_SRC_DIR}" FILES ${JUCE_UI_SRC})
+target_compile_options(juce.ui /bigobj)
+endif()
+
 # Inf base library.
 set(INF_BASE_SRC_DIR "src/inf.base")
 file(GLOB_RECURSE INF_BASE_SRC "${INF_BASE_SRC_DIR}/*.*")
