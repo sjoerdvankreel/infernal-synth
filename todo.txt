@@ -33,6 +33,8 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
+- switch to juce
+- do the gcc visibility thing
 - tabbed ui
 - larger knobs
 - get rid of uidesc

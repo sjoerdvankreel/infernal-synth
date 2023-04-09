@@ -111,7 +111,7 @@ target_link_libraries(infernal.base.vst.ui infernal.base infernal.base.ui infern
 target_link_libraries(infernal.base.vst.ui debug "${VSTGUI_LIBRARIES_Debug}" optimized "${VSTGUI_LIBRARIES_Release}")
 target_link_libraries(infernal.base.vst.ui debug "${VST3_SDK_LIBRARIES_Debug}" optimized "${VST3_SDK_LIBRARIES_Release}")
 if (MSVC)
-source_group(TREE "../../../${INF_BASE_VST_UI_SRC_DIR}" FILES ${INF_BASE_VST_UI_SRC})
+source_group(TREE "../../${INF_BASE_VST_UI_SRC_DIR}" FILES ${INF_BASE_VST_UI_SRC})
 target_compile_options(infernal.base.vst.ui PRIVATE "SHELL:/external:I ${VST3_SDK_SRC_DIR}/vstgui4" "SHELL:/external:I ${VST3_SDK_SRC_DIR}")
 endif()
 
