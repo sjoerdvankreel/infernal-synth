@@ -34,6 +34,7 @@
 
 * wishlist ui
 - build vst3 without vstgui
+- reconnect host context menus
 - switch to juce
 - do the gcc visibility thing
 - tabbed ui
