@@ -15,18 +15,6 @@ vst_editor(vst_controller* controller):
 EditorView(controller)
 { assert(controller != nullptr); }
 
-tresult PLUGIN_API 
-vst_editor::removed()
-{
-  if (_root)
-  {
-    _root->removeFromDesktop();
-    _root.reset();
-  }
-  _state.clear();
-  return EditorView::removed();
-}
-
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
 {
@@ -38,7 +26,7 @@ vst_editor::checkSizeConstraint(ViewRect* new_rect)
   return Steinberg::kResultTrue;
 }
 
-tresult PLUGIN_API 
+tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
   if (!_root) return EditorView::onSize(new_size);
@@ -50,23 +38,42 @@ vst_editor::onSize(ViewRect* new_size)
   int32 nx = new_size->left;
   int32 nw = new_size->getWidth();
   int32 nh = new_size->getHeight();
-  if (cx != nx || cy != ny || cw != nw || ch != nh) 
+  if (cx != nx || cy != ny || cw != nw || ch != nh)
     return EditorView::onSize(new_size);
   EditorView::onSize(new_size);
   return Steinberg::kResultTrue;
 }
 
+tresult PLUGIN_API 
+vst_editor::removed()
+{
+  if (_root)
+  {
+    _root->removeFromDesktop();
+    _root.reset();
+  }
+  _state.clear();
+#if LINUX
+  get_run_loop()->unregisterEventHandler(this);
+#endif
+  return EditorView::removed();
+}
+
 tresult PLUGIN_API
 vst_editor::attached(void* parent, FIDString type)
 {
+  assert(plugFrame);
   _state.clear();
   _root.reset(create_content(_state));
+#if LINUX
+  get_run_loop()->registerEventHandler(999, this);
+#endif
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
   _root->setVisible(true);
   ViewRect vr(0, 0, _root->getWidth(), _root->getHeight());
   setRect(vr);
-  if (plugFrame) plugFrame->resizeView(this, &vr);
+  plugFrame->resizeView(this, &vr);
   return EditorView::attached(parent, type);
 }
 
@@ -75,10 +82,32 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 {
 #if WIN32
   if (std::strcmp(type, kPlatformTypeHWND) == 0) return kResultTrue;
-#else
+#elif LINUX
   if (std::strcmp(type, kPlatformTypeX11EmbedWindowID) == 0) return kResultTrue;
+#else
+#error
 #endif
   return kResultFalse;
 }
+
+#if LINUX
+void PLUGIN_API
+vst_editor::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
+{
+  if (!plugFrame) return;
+  get_run_loop()->dispatchEvent(fd);
+}
+
+Steinberg::Linux::IRunLoop*
+vst_editor::get_run_loop() const
+{
+  assert(plugFrame);
+  auto iid = Steinberg::Linux::IRunLoop::iid;
+  Steinberg::Linux::IRunLoop* result = nullptr;
+  tresult ok = plugFrame->queryInterface(iid, reinterprest_cast<void**>(&result));
+  assert(ok == kResultOk);
+  return result;
+}
+#endif
 
 } // namespace inf::base::vst
