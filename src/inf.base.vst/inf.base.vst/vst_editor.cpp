@@ -53,9 +53,9 @@ vst_editor::removed()
     _root.reset();
   }
   _state.clear();
-#if LINUX
+#if __linux__
   get_run_loop()->unregisterEventHandler(this);
-#endif
+#endif // __linux__
   return EditorView::removed();
 }
 
@@ -65,9 +65,9 @@ vst_editor::attached(void* parent, FIDString type)
   assert(plugFrame);
   _state.clear();
   _root.reset(create_content(_state));
-#if LINUX
+#if __linux__
   get_run_loop()->registerEventHandler(999, this);
-#endif
+#endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
   _root->setVisible(true);
@@ -90,7 +90,7 @@ vst_editor::isPlatformTypeSupported(FIDString type)
   return kResultFalse;
 }
 
-#if LINUX
+#if __linux__
 void PLUGIN_API
 vst_editor::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
 {
@@ -108,6 +108,6 @@ vst_editor::get_run_loop() const
   assert(ok == kResultOk);
   return result;
 }
-#endif
+#endif // __linux__
 
 } // namespace inf::base::vst

@@ -12,9 +12,9 @@ class vst_controller;
 
 class vst_editor: 
 public Steinberg::Vst::EditorView
-#if LINUX
+#if __linux__
 , public Steinberg::Linux::IEventHandler
-#endif
+#endif // __linux__
 {
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
@@ -27,10 +27,10 @@ protected:
   virtual juce::Component* create_content(inf::base::ui::juce_gui_state& state) = 0;
 
 public:
-#if LINUX
+#if __linux__
   Steinberg::Linux::IRunLoop* get_run_loop() const;
   void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
-#endif
+#endif // __linux__
 
   tresult PLUGIN_API removed() override;
   tresult PLUGIN_API onSize(ViewRect* new_size) override;
