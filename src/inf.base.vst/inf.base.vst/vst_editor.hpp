@@ -16,11 +16,11 @@ public Steinberg::Linux::IEventHandler,
 public Steinberg::FObject
 {
 public:
-  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
   DELEGATE_REFCOUNT(Steinberg::FObject)
   DEFINE_INTERFACES
   DEF_INTERFACE(Steinberg::Linux::IEventHandler)
   END_DEFINE_INTERFACES(Steinberg::FObject)
+  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override { juce::LinuxEventLoopInternal::invokeEventLoopCallbackForFd(fd); }
 };
 #endif // __linux__
 
@@ -38,18 +38,18 @@ protected:
   virtual juce::Component* create_content(inf::base::ui::juce_gui_state& state) = 0;
 
 public:
-#if __linux__
-  int get_default_screen_fd() const;
-  vst_linux_event_handler _handler = {};
-  Steinberg::Linux::IRunLoop* get_run_loop() const;
-#endif // __linux__
-
   tresult PLUGIN_API removed() override;
   tresult PLUGIN_API onSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
   tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
+
+#if __linux__
+  vst_linux_event_handler _handler = {};
+  Steinberg::Linux::IRunLoop* get_run_loop() const;
+  int get_default_screen_fd() const { return juce::X11Symbols::getInstance()->xConnectionNumber(XWindowSystem::getInstance()->getDisplay()); }
+#endif // __linux__
 };
 
 } // namespace inf::base::vst

@@ -90,19 +90,6 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 }
 
 #if __linux__
-void PLUGIN_API
-vst_linux_event_handler::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
-{
-  // TODO invoke juce here
-}
-
-int 
-vst_editor::get_default_screen_fd() const
-{
-  auto display = XWindowSystem::getInstance()->getDisplay();
-  return X11Symbols::getInstance()->xConnectionNumber(display);
-}
-
 Steinberg::Linux::IRunLoop*
 vst_editor::get_run_loop() const
 {
@@ -111,6 +98,7 @@ vst_editor::get_run_loop() const
   Steinberg::Linux::IRunLoop* result = nullptr;
   tresult ok = plugFrame->queryInterface(iid, reinterpret_cast<void**>(&result));
   assert(ok == kResultOk);
+  (void)ok;
   return result;
 }
 #endif // __linux__
