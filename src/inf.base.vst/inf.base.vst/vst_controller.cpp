@@ -36,7 +36,7 @@ IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_editor* result = new vst_editor(this);
+  vst_editor* result = create_editor();
   setKnobMode(KnobModes::kLinearMode);
   return result;
 }

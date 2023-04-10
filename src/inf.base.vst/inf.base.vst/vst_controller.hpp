@@ -5,13 +5,14 @@
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.vst/vst_support.hpp>
 
-#include <juce_gui_basics/juce_gui_basics.h>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
 #include <vector>
 
 namespace inf::base::vst {
+
+class vst_editor;
 
 // Vst edit controller.
 class vst_controller: 
@@ -30,12 +31,11 @@ protected:
 
 protected:
   void update_state(ParamID tag);
-  virtual juce::Component* create_view_content() = 0;
+  virtual vst_editor* create_editor() = 0;
   tresult set_component_state(IBStream* state, bool perform_edit);
+  vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:
-  explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
-
   void save_preset(std::string const& path) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;

@@ -5,7 +5,7 @@ using namespace juce;
 namespace inf::synth::ui {
 
 juce::Component*
-create_synth_UI()
+create_synth_ui()
 {
   Component* result = new TextEditor;
   result->setSize(50, 50);

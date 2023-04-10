@@ -6,7 +6,7 @@
 namespace inf::synth::ui {
 
 juce::Component*
-create_synth_UI();
+create_synth_ui();
 
 } // inf::synth::ui 
 #endif // INF_SYNTH_UI_UI_HPP

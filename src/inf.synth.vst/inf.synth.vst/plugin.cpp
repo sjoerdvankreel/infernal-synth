@@ -5,7 +5,9 @@
 #include <inf.synth/audio_bank/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 
+#include <inf.synth.ui/ui.hpp>
 #include <inf.synth.vst/plugin.hpp>
+#include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_processor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
 
@@ -19,6 +21,7 @@
 using namespace inf::base;
 using namespace inf::base::vst;
 using namespace inf::synth;
+using namespace inf::synth::ui;
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
@@ -77,22 +80,32 @@ extern "C" SMTG_EXPORT_SYMBOL bool ModuleExit(void) { return inf_exit(); }
 extern "C" SMTG_EXPORT_SYMBOL bool ModuleEntry(void* handle) { return inf_init(handle); }
 #endif  
 
+class synth_vst_editor:
+public vst_editor
+{
+public:
+  synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
+  juce::Component* create_content() override { return create_synth_ui(); }
+};
+
+class synth_vst_controller :
+public vst_controller
+{
+public:
+  vst_editor* create_editor() override { return new synth_vst_editor(this); }
+  synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
+  vst_controller(std::move(topology), processor_id) {}
+};
+
 class synth_vst_topology :
 public synth_topology
 {
 public:
   synth_vst_topology(bool is_instrument): synth_topology(is_instrument) {}
-  char const* plugin_name() const override;
   std::uint16_t version_major() const { return INF_SYNTH_VST_VERSION_MAJOR; }
   std::uint16_t version_minor() const { return INF_SYNTH_VST_VERSION_MINOR; }
+  char const* plugin_name() const override { return is_instrument() ? INF_SYNTH_VST_INSTRUMENT_NAME : INF_SYNTH_VST_FX_NAME; }
 };
-
-char const* 
-synth_vst_topology::plugin_name() const
-{
-  if(is_instrument()) return INF_SYNTH_VST_INSTRUMENT_NAME;
-  else return INF_SYNTH_VST_FX_NAME;
-}
 
 extern "C" SMTG_EXPORT_SYMBOL 
 topology_info* inf_vst_create_topology2(std::int32_t is_instrument)
@@ -107,7 +120,7 @@ create_controller(std::int32_t is_instrument)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
   auto processor_tuid = is_instrument ? instrument_processor_id : fx_processor_id;
-  auto controller = new vst_controller(std::move(topology), FUID::fromTUID(processor_tuid));
+  auto controller = new synth_vst_controller(std::move(topology), FUID::fromTUID(processor_tuid));
   return static_cast<IEditController*>(controller);
 }
 
