@@ -81,7 +81,7 @@ target_include_directories(juce.ui PRIVATE ${JUCE_UI_SRC_DIR})
 target_include_directories(juce.ui SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
 if (MSVC)
 source_group(TREE "../../${JUCE_UI_SRC_DIR}" FILES ${JUCE_UI_SRC})
-target_compile_options(juce.ui PRIVATE /bigobj)
+target_compile_options(juce.ui PRIVATE "$<$<CONFIG:Debug>:/bigobj>")
 endif()
 
 # Inf base library.
