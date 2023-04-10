@@ -66,6 +66,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
+  // TODO 999 is xwindow display id
   get_run_loop()->registerEventHandler(this, 999);
 #endif // __linux__
   _root->setOpaque(true);
@@ -95,6 +96,7 @@ void PLUGIN_API
 vst_editor::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
 {
   if (!plugFrame) return;
+  // TODO invoke juce here
   get_run_loop()->dispatchEvent(fd);
 }
 
@@ -104,7 +106,7 @@ vst_editor::get_run_loop() const
   assert(plugFrame);
   auto iid = Steinberg::Linux::IRunLoop::iid;
   Steinberg::Linux::IRunLoop* result = nullptr;
-  tresult ok = plugFrame->queryInterface(iid, reinterprest_cast<void**>(&result));
+  tresult ok = plugFrame->queryInterface(iid, reinterpret_cast<void**>(&result));
   assert(ok == kResultOk);
   return result;
 }
