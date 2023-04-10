@@ -148,6 +148,16 @@ if (MSVC)
 source_group(TREE "../../${INF_SYNTH_SRC_DIR}" FILES ${INF_SYNTH_SRC})
 endif()
 
+# Inf synth ui library.
+set(INF_SYNTH_UI_SRC_DIR "src/inf.synth.ui")
+file(GLOB_RECURSE INF_SYNTH_UI_SRC "${INF_SYNTH_UI_SRC_DIR}/*.*")
+add_library(infernal.synth.ui STATIC ${INF_SYNTH_UI_SRC})
+target_include_directories(infernal.synth.ui PRIVATE ${INF_SYNTH_UI_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_SYNTH_SRC_DIR} ${INF_BASE_SRC_DIR})
+target_link_libraries(infernal.synth.ui infernal.synth infernal.base.ui infernal.base)
+if (MSVC)
+source_group(TREE "../../${INF_SYNTH_UI_SRC_DIR}" FILES ${INF_SYNTH_UI_SRC})
+endif()
+
 # Inf synth vst generic.
 set(INF_SYNTH_VST_GENERIC_SRC_DIR "src/inf.synth.vst")
 file(GLOB_RECURSE INF_SYNTH_VST_GENERIC_SRC "${INF_SYNTH_VST_GENERIC_SRC_DIR}/*.*")
@@ -155,7 +165,7 @@ add_library(infernal.synth.vst.generic SHARED ${INF_SYNTH_VST_GENERIC_SRC})
 target_compile_definitions(infernal.synth.vst.generic PRIVATE -DINF_VERSIONED=0)
 target_include_directories(infernal.synth.vst.generic PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_SYNTH_SRC_DIR} ${INF_SYNTH_UI_SRC_DIR} ${INF_BASE_VST_SRC_DIR} ${INF_BASE_VST_UI_SRC_DIR} ${INF_SYNTH_VST_GENERIC_SRC_DIR})
 target_include_directories(infernal.synth.vst.generic SYSTEM PRIVATE ${VST3_SDK_SRC_DIR})
-target_link_libraries(infernal.synth.vst.generic infernal.base infernal.base.ui infernal.synth infernal.base.vst infernal.base.vst.ui)
+target_link_libraries(infernal.synth.vst.generic infernal.base infernal.base.ui infernal.synth infernal.synth.ui infernal.base.vst infernal.base.vst.ui)
 target_link_libraries(infernal.synth.vst.generic debug "${VST3_SDK_LIBRARIES_Debug}" optimized "${VST3_SDK_LIBRARIES_Release}")
 set_target_properties(infernal.synth.vst.generic PROPERTIES OUTPUT_NAME "InfernalSynthGeneric")
 if (MSVC)
@@ -178,7 +188,7 @@ add_library(infernal.synth.vst.versioned SHARED ${INF_SYNTH_VST_VERSIONED_SRC})
 target_compile_definitions(infernal.synth.vst.versioned PRIVATE -DINF_VERSIONED=1)
 target_include_directories(infernal.synth.vst.versioned PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_SYNTH_SRC_DIR} ${INF_SYNTH_UI_SRC_DIR} ${INF_BASE_VST_SRC_DIR} ${INF_BASE_VST_UI_SRC_DIR} ${INF_SYNTH_VST_GENERIC_SRC_DIR})
 target_include_directories(infernal.synth.vst.versioned SYSTEM PRIVATE ${VST3_SDK_SRC_DIR})
-target_link_libraries(infernal.synth.vst.versioned infernal.base infernal.base.ui infernal.synth infernal.base.vst infernal.base.vst.ui)
+target_link_libraries(infernal.synth.vst.versioned infernal.base infernal.base.ui infernal.synth infernal.synth.ui infernal.base.vst infernal.base.vst.ui)
 target_link_libraries(infernal.synth.vst.versioned debug "${VST3_SDK_LIBRARIES_Debug}" optimized "${VST3_SDK_LIBRARIES_Release}")
 set_target_properties(infernal.synth.vst.versioned PROPERTIES OUTPUT_NAME "InfernalSynth${INFERNAL_VERSION}")
 if (MSVC)
@@ -194,7 +204,7 @@ add_custom_target(copy-ui-synth-versioned ALL DEPENDS infernal.synth.vst.version
 add_custom_target(copy-presets-synth-versioned ALL DEPENDS infernal.synth.vst.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
 endif()
 
-# Inf tool vst ui generator and preset diff tool.
+# Inf vst preset diff tool.
 set(INF_TOOL_VST_SRC_DIR "src/inf.tool.vst")
 file(GLOB_RECURSE INF_TOOL_VST_SRC "${INF_TOOL_VST_SRC_DIR}/*.*")
 add_executable(infernal.tool.vst ${INF_TOOL_VST_SRC})
