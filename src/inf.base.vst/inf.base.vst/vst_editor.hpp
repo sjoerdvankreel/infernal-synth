@@ -5,6 +5,9 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
+#if __linux__
+#include <juce_events/native/juce_linux_EventLoopInternal.h>
+#endif // __linux__
 
 namespace inf::base::vst {
 
@@ -48,7 +51,7 @@ public:
 #if __linux__
   vst_linux_event_handler _handler = {};
   Steinberg::Linux::IRunLoop* get_run_loop() const;
-  int get_default_screen_fd() const { return juce::X11Symbols::getInstance()->xConnectionNumber(XWindowSystem::getInstance()->getDisplay()); }
+  int get_default_screen_fd() const { return juce::X11Symbols::getInstance()->xConnectionNumber(juce::XWindowSystem::getInstance()->getDisplay()); }
 #endif // __linux__
 };
 
