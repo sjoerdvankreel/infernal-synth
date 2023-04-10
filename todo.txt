@@ -33,6 +33,7 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
+- figure out juce component ownership
 - scan vst_controller/editor for unneeded stuff
 - cleanup part_ui_/param_ui_descriptor
 - build vst3 without vstgui
