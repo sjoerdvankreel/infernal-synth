@@ -34,10 +34,10 @@ add_compile_options(-Wno-unused-parameter)
 add_compile_options(-ffast-math)
 add_compile_options(-march=native)
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,--no-undefined -fvisibility=hidden -fvisibility-inlines-hidden")
 endif()
 
-# JUCE flags.
+# Juce flags.
 add_definitions(-DJUCE_USE_CURL=0)
 add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=1)
 add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
@@ -45,6 +45,11 @@ add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 # Vstgui flags. TODO remove.
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DRELEASE=1")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEVELOPMENT=1")
+
+# Juce linux dependencies.
+if (NOT MSVC)
+find_package(Freetype REQUIRED)
+endif()
 
 # Dependency versions.
 set(HIIR_SRC_DIR ${HIIR_140_SRC_DIR})
@@ -89,6 +94,9 @@ target_include_directories(juce.ui SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
 if (MSVC)
 source_group(TREE "../../${JUCE_UI_SRC_DIR}" FILES ${JUCE_UI_SRC})
 target_compile_options(juce.ui PRIVATE "$<$<CONFIG:Debug>:/bigobj>")
+else ()
+target_link_libraries(juce.ui ${FREETYPE_LIBRARIES})
+target_include_directories(juce.ui PRIVATE ${FREETYPE_INCLUDE_DIRS})
 endif()
 
 # Inf base library.
