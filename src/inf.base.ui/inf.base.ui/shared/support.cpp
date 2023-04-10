@@ -1,4 +1,5 @@
 #include <inf.base.ui/shared/support.hpp>
+#include <juce_gui_basics/juce_gui_basics.h>
 #include <vstgui/lib/controls/coptionmenu.h>
 #include <vstgui/lib/platform/platformfactory.h>
 #if WIN32
@@ -9,6 +10,7 @@
 
 #include <filesystem>
 
+using namespace juce;
 using namespace VSTGUI;
 
 namespace inf::base::ui {
@@ -121,6 +123,11 @@ create_context_menu(plugin_ui_editor* editor)
     if (selector->runModal() && selector->getNumSelectedFiles() == 1)
       controller->load_preset(selector->getSelectedFile(0), false);
     selector->forget();
+    MessageBoxOptions options;
+    options = options.withTitle("title1");
+    options = options.withMessage("message2");
+    options = options.withButton("OK3");
+    (void)juce::AlertWindow::show(options);
   });
   result.push_back(load_preset);
 
