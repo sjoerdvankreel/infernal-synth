@@ -6,7 +6,6 @@
 #include <inf.synth/oscillator/topology.hpp>
 
 #include <inf.synth.vst/plugin.hpp>
-#include <inf.base.ui/shared/bootstrap.hpp>
 #include <inf.base.vst/sdk/vst_processor.hpp>
 #include <inf.base.vst.ui/vst_ui_controller.hpp>
 
@@ -50,7 +49,6 @@ inf_init(void* module_handle)
   if (++_inf_module_counter != 1) return true;
   moduleHandle = module_handle;
   if (!InitModule()) return false;
-  inf::base::ui::initialize();
   return true;
 }
 
@@ -60,7 +58,6 @@ bool inf_exit()
   --_inf_module_counter;
   if (_inf_module_counter > 0) return true;
   if (_inf_module_counter < 0) return false;
-  inf::base::ui::terminate();
   if (!DeinitModule()) return false;
   moduleHandle = nullptr;
   return true;
