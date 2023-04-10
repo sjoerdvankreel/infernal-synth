@@ -5,6 +5,7 @@
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.vst/vst_support.hpp>
 
+#include <juce_gui_basics/juce_gui_basics.h>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
@@ -29,6 +30,7 @@ protected:
 
 protected:
   void update_state(ParamID tag);
+  virtual juce::Component* create_view_content() = 0;
   tresult set_component_state(IBStream* state, bool perform_edit);
 
 public:
