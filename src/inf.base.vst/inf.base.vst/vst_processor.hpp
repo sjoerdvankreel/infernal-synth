@@ -1,5 +1,5 @@
-#ifndef INF_BASE_VST_SDK_VST_PROCESSOR_HPP
-#define INF_BASE_VST_SDK_VST_PROCESSOR_HPP
+#ifndef INF_BASE_VST_VST_PROCESSOR_HPP
+#define INF_BASE_VST_VST_PROCESSOR_HPP
 
 #include <inf.base/plugin/state.hpp>
 #include <inf.base/plugin/audio_processor.hpp>
@@ -71,4 +71,4 @@ private:
 };
 
 } // namespace inf::base::vst
-#endif // INF_BASE_VST_SDK_VST_PROCESSOR_HPP
+#endif // INF_BASE_VST_VST_PROCESSOR_HPP

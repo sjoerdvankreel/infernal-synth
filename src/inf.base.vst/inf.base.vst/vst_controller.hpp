@@ -1,9 +1,9 @@
-#ifndef INF_BASE_VST_SDK_VST_CONTROLLER_HPP
-#define INF_BASE_VST_SDK_VST_CONTROLLER_HPP
+#ifndef INF_BASE_VST_VST_CONTROLLER_HPP
+#define INF_BASE_VST_VST_CONTROLLER_HPP
 
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/topology_info.hpp>
-#include <inf.base.vst/shared/support.hpp>
+#include <inf.base.vst/vst_support.hpp>
 
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
@@ -22,6 +22,7 @@ protected:
   using tresult = Steinberg::tresult;
   using IBStream = Steinberg::IBStream;
   using FUnknown = Steinberg::FUnknown;
+  using IPlugView = Steinberg::IPlugView;
   using ParamID = Steinberg::Vst::ParamID;
 
   FUID const _processor_id;
@@ -33,9 +34,9 @@ protected:
 public:
   explicit vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
-  void sync_ui_parameters();
   void save_preset(std::string const& path) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
+  IPlugView* PLUGIN_API createView(char const* name) override;
   void load_preset(std::string const& path, bool factory) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
@@ -50,4 +51,4 @@ public:
 };
 
 } // namespace inf::base::vst
-#endif // INF_BASE_VST_SDK_VST_CONTROLLER_HPP
+#endif // INF_BASE_VST_VST_CONTROLLER_HPP

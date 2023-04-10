@@ -1,5 +1,5 @@
-#ifndef INF_BASE_VST_SHARED_SUPPORT_HPP
-#define INF_BASE_VST_SHARED_SUPPORT_HPP
+#ifndef INF_BASE_VST_VST_SUPPORT_HPP
+#define INF_BASE_VST_VST_SUPPORT_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <pluginterfaces/base/ftypes.h>
@@ -59,4 +59,4 @@ vst_normalized_to_base(
 }
 
 } // namespace inf::base::vst
-#endif // INF_BASE_VST_SHARED_SUPPORT_HPP
+#endif // INF_BASE_VST_VST_SUPPORT_HPP

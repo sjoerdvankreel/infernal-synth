@@ -11,10 +11,11 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <inf.base/shared/support.hpp>
-#include <inf.base.vst/sdk/vst_parameter.hpp>
-#include <inf.base.vst/sdk/vst_controller.hpp>
-#include <inf.base.vst/shared/support.hpp>
-#include <inf.base.vst/shared/vst_io_stream.hpp>
+#include <inf.base.vst/vst_parameter.hpp>
+#include <inf.base.vst/vst_editor.hpp>
+#include <inf.base.vst/vst_controller.hpp>
+#include <inf.base.vst/vst_support.hpp>
+#include <inf.base.vst/vst_io_stream.hpp>
 
 #include <vector>
 #include <cstring>
@@ -30,6 +31,15 @@ namespace inf::base::vst {
 vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id) :
 plugin_controller(std::move(topology)), _processor_id(processor_id) {}
+
+IPlugView* PLUGIN_API
+vst_controller::createView(char const* name)
+{
+  if (ConstString(name) != ViewType::kEditor) return nullptr;
+  vst_editor* result = new vst_editor(this);
+  setKnobMode(KnobModes::kLinearMode);
+  return result;
+}
 
 // See PresetFile::loadPreset. We load processor (component) state
 // from stream into controller, then flush params to processor.
@@ -69,14 +79,6 @@ vst_controller::save_preset(std::string const& path)
   if(file.bad()) return;
   file.write(contents.data(), preset_state.getSize());
   file.close();
-}
-
-void
-vst_controller::sync_ui_parameters()
-{
-  // Updates visibility of dependent parameters and rendering of graphs.
-  for (std::size_t p = 0; p < _topology->params.size(); p++)
-    endEdit(_topology->param_index_to_id[static_cast<std::int32_t>(p)]);
 }
 
 void
@@ -146,8 +148,6 @@ vst_controller::load_component_state(param_value* state, bool perform_edit)
     update_state(tag);
   }
 
-  // Set initial ui visibility state.
-  sync_ui_parameters();
   restart();
 }
 

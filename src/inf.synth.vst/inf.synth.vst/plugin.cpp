@@ -6,8 +6,8 @@
 #include <inf.synth/oscillator/topology.hpp>
 
 #include <inf.synth.vst/plugin.hpp>
-#include <inf.base.vst/sdk/vst_processor.hpp>
-#include <inf.base.vst.ui/vst_ui_controller.hpp>
+#include <inf.base.vst/vst_processor.hpp>
+#include <inf.base.vst/vst_controller.hpp>
 
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <public.sdk/source/main/pluginfactory_constexpr.h>
@@ -18,7 +18,6 @@
 
 using namespace inf::base;
 using namespace inf::base::vst;
-using namespace inf::base::vst::ui;
 using namespace inf::synth;
 
 using namespace Steinberg;
@@ -108,7 +107,7 @@ create_controller(std::int32_t is_instrument)
 {
   auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology2(is_instrument));
   auto processor_tuid = is_instrument ? instrument_processor_id : fx_processor_id;
-  auto controller = new vst_ui_controller(std::move(topology), FUID::fromTUID(processor_tuid));
+  auto controller = new vst_controller(std::move(topology), FUID::fromTUID(processor_tuid));
   return static_cast<IEditController*>(controller);
 }
 
