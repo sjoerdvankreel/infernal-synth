@@ -25,4 +25,4 @@ T* juce_gui_state::create(Args&&... args)
 }
 
 } // namespace inf::base::ui
-#endif INF_BASE_UI_SUPPORT_HPP
+#endif // INF_BASE_UI_SUPPORT_HPP
