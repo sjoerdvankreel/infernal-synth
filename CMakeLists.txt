@@ -63,14 +63,14 @@ find_library(VST3_BASE_LIB_Debug base PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
 find_library(VST3_SDK_LIB_Debug sdk PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
 find_library(VST3_SDK_COMMON_LIB_Debug sdk_common PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
 find_library(VST3_PLUGINTERFACES_LIB_Debug pluginterfaces PATHS "${VST3_SDK_BUILD_DEBUG_DIR}")
-set (VST3_SDK_LIBRARIES_Debug ${VST3_BASE_LIB_Debug} ${VST3_SDK_LIB_Debug} ${VST3_SDK_COMMON_LIB_Debug} ${VST3_PLUGINTERFACES_LIB_Debug})
+set (VST3_SDK_LIBRARIES_Debug ${VST3_SDK_LIB_Debug} ${VST3_SDK_COMMON_LIB_Debug} ${VST3_BASE_LIB_Debug} ${VST3_PLUGINTERFACES_LIB_Debug})
 
 # VST SDK release binaries.
 find_library(VST3_BASE_LIB_Release base PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
 find_library(VST3_SDK_LIB_Release sdk PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
 find_library(VST3_SDK_COMMON_LIB_Release sdk_common PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
 find_library(VST3_PLUGINTERFACES_LIB_Release pluginterfaces PATHS "${VST3_SDK_BUILD_RELEASE_DIR}")
-set (VST3_SDK_LIBRARIES_Release ${VST3_BASE_LIB_Release} ${VST3_SDK_LIB_Release} ${VST3_SDK_COMMON_LIB_Release} ${VST3_PLUGINTERFACES_LIB_Release})
+set (VST3_SDK_LIBRARIES_Release ${VST3_SDK_LIB_Release} ${VST3_SDK_COMMON_LIB_Release} ${VST3_BASE_LIB_Release} ${VST3_PLUGINTERFACES_LIB_Release})
 
 # Juce project since it doesn't seem friendly to pre-built binaries. 
 # Just get everything in there for a workable juce-ui-only setup.
