@@ -53,7 +53,7 @@ vst_editor::removed()
   }
   _state.clear();
 #if __linux__
-  get_run_loop()->unregisterEventHandler(this);
+  get_run_loop()->unregisterEventHandler(&_handler);
 #endif // __linux__
   return EditorView::removed();
 }
@@ -65,7 +65,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  get_run_loop()->registerEventHandler(this, get_default_screen_fd());
+  get_run_loop()->registerEventHandler(&_handler, get_default_screen_fd());
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -91,7 +91,7 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 
 #if __linux__
 void PLUGIN_API
-vst_editor::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
+vst_linux_event_handler::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
 {
   if (!plugFrame) return;
   // TODO invoke juce here

@@ -10,11 +10,17 @@ namespace inf::base::vst {
 
 class vst_controller;
 
+#if __linux__
+class vst_linux_event_handler:
+public Steinberg::Linux::IEventHandler
+{
+public:
+  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
+};
+#endif // __linux__
+
 class vst_editor: 
 public Steinberg::Vst::EditorView
-#if __linux__
-, public Steinberg::Linux::IEventHandler
-#endif // __linux__
 {
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
@@ -29,8 +35,8 @@ protected:
 public:
 #if __linux__
   int get_default_screen_fd() const;
+  vst_linux_event_handler _handler = {};
   Steinberg::Linux::IRunLoop* get_run_loop() const;
-  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
 #endif // __linux__
 
   tresult PLUGIN_API removed() override;
