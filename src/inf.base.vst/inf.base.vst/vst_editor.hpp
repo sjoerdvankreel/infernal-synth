@@ -1,6 +1,7 @@
 #ifndef INF_BASE_VST_VST_EDITOR_HPP
 #define INF_BASE_VST_VST_EDITOR_HPP
 
+#include <inf.base.ui/support.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
@@ -15,11 +16,12 @@ public Steinberg::Vst::EditorView
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
-  std::unique_ptr<juce::Component> _content = nullptr;
+  inf::base::ui::juce_gui_state _state = {};
+  std::unique_ptr<juce::Component> _root = {};
 
 protected:
   explicit vst_editor(vst_controller* controller);
-  virtual juce::Component* create_content() = 0;
+  virtual juce::Component* create_content(inf::base::ui::juce_gui_state& state) = 0;
 
 public:
   tresult PLUGIN_API removed() override;
