@@ -1,9 +1,11 @@
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
+#include <inf.base.ui/support.hpp>
 
 #include <cstring>
 
 using namespace juce;
+using namespace inf::base::ui;
 using namespace Steinberg;
 
 namespace inf::base::vst {
@@ -18,6 +20,7 @@ vst_editor::removed()
 {
   if (_content)
   {
+    recursive_destroy_children(_content.get());
     _content->removeFromDesktop();
     _content.reset();
   }
