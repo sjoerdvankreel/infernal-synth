@@ -3,6 +3,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
+#include <memory>
 
 namespace inf::base::vst {
 
@@ -13,12 +14,14 @@ public Steinberg::Vst::EditorView
 {
   using tresult = Steinberg::tresult;
   using FIDString = Steinberg::FIDString;
+  std::unique_ptr<juce::Component> _content = nullptr;
 
 protected:
   explicit vst_editor(vst_controller* controller);
   virtual juce::Component* create_content() = 0;
 
 public:
+  tresult PLUGIN_API removed() override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
 };
