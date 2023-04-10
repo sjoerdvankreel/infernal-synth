@@ -13,6 +13,7 @@ class vst_editor:
 public Steinberg::Vst::EditorView
 {
   using tresult = Steinberg::tresult;
+  using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
   std::unique_ptr<juce::Component> _content = nullptr;
 
@@ -22,8 +23,11 @@ protected:
 
 public:
   tresult PLUGIN_API removed() override;
+  tresult PLUGIN_API onSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
+  tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
+  Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
 };
 
 } // namespace inf::base::vst

@@ -9,7 +9,6 @@ recursive_destroy_children(juce::Component* component)
   assert(component != nullptr);
   while(component->getNumChildComponents() > 0)
     recursive_destroy_children(component->getChildComponent(0));
-  delete component;
 }
 
 } // namespace inf::base::ui
