@@ -1,7 +1,6 @@
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
 #include <inf.base.ui/support.hpp>
-
 #include <cstring>
 
 using namespace juce;
@@ -66,8 +65,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  // TODO 999 is xwindow display id
-  get_run_loop()->registerEventHandler(this, 999);
+  get_run_loop()->registerEventHandler(this, get_default_screen_fd());
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -97,7 +95,14 @@ vst_editor::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
 {
   if (!plugFrame) return;
   // TODO invoke juce here
-  get_run_loop()->dispatchEvent(fd);
+  // get_run_loop()->dispatchEvent(fd);
+}
+
+int 
+vst_editor::get_default_screen_fd() const
+{
+  auto display = XWindowSystem::getInstance()->getDisplay();
+  return X11Symbols::getInstance()->xConnectionNumber(display);
 }
 
 Steinberg::Linux::IRunLoop*

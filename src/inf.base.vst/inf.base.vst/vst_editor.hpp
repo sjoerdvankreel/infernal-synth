@@ -28,6 +28,7 @@ protected:
 
 public:
 #if __linux__
+  int get_default_screen_fd() const;
   Steinberg::Linux::IRunLoop* get_run_loop() const;
   void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
 #endif // __linux__
