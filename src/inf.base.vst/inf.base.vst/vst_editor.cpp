@@ -40,8 +40,11 @@ vst_editor::attached(void* parent, FIDString type)
 tresult PLUGIN_API 
 vst_editor::isPlatformTypeSupported(FIDString type)
 {
+#if WIN32
   if(std::strcmp(type, kPlatformTypeHWND) == 0) return kResultTrue;
+#else
   if(std::strcmp(type, kPlatformTypeX11EmbedWindowID) == 0) return kResultTrue;
+#endif
   return kResultFalse;
 }
 
