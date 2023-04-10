@@ -12,10 +12,15 @@ class vst_controller;
 
 #if __linux__
 class vst_linux_event_handler:
-public Steinberg::Linux::IEventHandler
+public Steinberg::Linux::IEventHandler,
+public Steinberg::FObject
 {
 public:
   void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
+  DELEGATE_REFCOUNT(Steinberg::FObject)
+  DEFINE_INTERFACES
+  DEF_INTERFACE(Steinberg::Linux::IEventHandler)
+  END_DEFINE_INTERFACES(Steinberg::FObject)
 };
 #endif // __linux__
 

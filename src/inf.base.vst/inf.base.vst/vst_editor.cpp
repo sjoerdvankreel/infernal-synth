@@ -93,9 +93,7 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 void PLUGIN_API
 vst_linux_event_handler::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
 {
-  if (!plugFrame) return;
   // TODO invoke juce here
-  // get_run_loop()->dispatchEvent(fd);
 }
 
 int 
