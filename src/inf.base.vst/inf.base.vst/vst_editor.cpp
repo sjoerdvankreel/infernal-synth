@@ -66,7 +66,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  get_run_loop()->registerEventHandler(999, this);
+  get_run_loop()->registerEventHandler(this, 999);
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -82,7 +82,7 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 {
 #if WIN32
   if (std::strcmp(type, kPlatformTypeHWND) == 0) return kResultTrue;
-#elif LINUX
+#elif __linux__
   if (std::strcmp(type, kPlatformTypeX11EmbedWindowID) == 0) return kResultTrue;
 #else
 #error
