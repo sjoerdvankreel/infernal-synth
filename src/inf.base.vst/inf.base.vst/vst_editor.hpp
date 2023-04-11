@@ -5,6 +5,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
+#include <iostream>
 #if __linux__
 #include <juce_events/native/juce_linux_EventLoopInternal.h>
 #endif // __linux__
@@ -23,7 +24,7 @@ public:
   DEFINE_INTERFACES
   DEF_INTERFACE(Steinberg::Linux::IEventHandler)
   END_DEFINE_INTERFACES(Steinberg::FObject)
-  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override { juce::LinuxEventLoopInternal::invokeEventLoopCallbackForFd(fd); }
+  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
 };
 #endif // __linux__
 
@@ -36,6 +37,12 @@ public Steinberg::Vst::EditorView
   inf::base::ui::juce_gui_state _state = {};
   std::unique_ptr<juce::Component> _root = {};
 
+#if __linux__
+  vst_linux_event_handler _handler = {};
+  int get_default_screen_fd() const;
+  Steinberg::Linux::IRunLoop* get_run_loop() const;
+#endif // __linux__
+
 protected:
   explicit vst_editor(vst_controller* controller);
   virtual juce::Component* create_content(inf::base::ui::juce_gui_state& state) = 0;
@@ -47,12 +54,6 @@ public:
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
   tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
-
-#if __linux__
-  vst_linux_event_handler _handler = {};
-  Steinberg::Linux::IRunLoop* get_run_loop() const;
-  int get_default_screen_fd() const { return juce::X11Symbols::getInstance()->xConnectionNumber(juce::XWindowSystem::getInstance()->getDisplay()); }
-#endif // __linux__
 };
 
 } // namespace inf::base::vst

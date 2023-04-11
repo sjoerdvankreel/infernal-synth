@@ -3,6 +3,8 @@
 #include <inf.base.ui/support.hpp>
 #include <cstring>
 
+#include <iostream>
+
 using namespace juce;
 using namespace inf::base::ui;
 using namespace Steinberg;
@@ -53,7 +55,9 @@ vst_editor::removed()
   }
   _state.clear();
 #if __linux__
+  std::cout << "unregit\n";
   get_run_loop()->unregisterEventHandler(&_handler);
+  std::cout << "dununregit\n";
 #endif // __linux__
   return EditorView::removed();
 }
@@ -65,7 +69,11 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  get_run_loop()->registerEventHandler(&_handler, get_default_screen_fd());
+  std::cout << "regit\n";
+  auto fd = get_default_screen_fd();
+  get_run_loop()->registerEventHandler(&_handler, fd);
+  std::cout << "dunregit\n";
+  std::cout << "for fd " << fd << "\n";
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -90,6 +98,21 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 }
 
 #if __linux__
+void PLUGIN_API 
+vst_linux_event_handler::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
+{
+  std::cout << "get me an f-in fd0\n";
+  juce::LinuxEventLoopInternal::invokeEventLoopCallbackForFd(fd);
+  std::cout << "get me an f-in fd1\n";
+}
+
+int
+vst_editor::get_default_screen_fd() const 
+{ 
+  auto display = juce::XWindowSystem::getInstance()->getDisplay();
+  return juce::X11Symbols::getInstance()->xConnectionNumber(display); 
+}
+
 Steinberg::Linux::IRunLoop*
 vst_editor::get_run_loop() const
 {
@@ -99,6 +122,7 @@ vst_editor::get_run_loop() const
   tresult ok = plugFrame->queryInterface(iid, reinterpret_cast<void**>(&result));
   assert(ok == kResultOk);
   (void)ok;
+  std::cout << "rl = " << result << "\n";
   return result;
 }
 #endif // __linux__
