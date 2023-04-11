@@ -5,7 +5,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
-#include <iostream>
+
 #if __linux__
 #include <juce_events/native/juce_linux_EventLoopInternal.h>
 #endif // __linux__
