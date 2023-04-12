@@ -1,11 +1,11 @@
-#if __linux__
-#include "juce_vst3_wrapper_modified.cpp"
-#endif // __linux__
-
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
 #include <inf.base.ui/support.hpp>
 #include <cstring>
+
+#if __linux__
+#include "juce_vst3_wrapper_modified.cpp"
+#endif // __linux__
 
 using namespace juce;
 using namespace Steinberg;
