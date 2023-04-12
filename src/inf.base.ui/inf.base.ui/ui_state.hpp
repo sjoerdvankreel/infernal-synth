@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include <cstdint>
+#include <utility>
 
 namespace inf::base::ui {
 
@@ -20,7 +21,7 @@ public:
   void clear();
   template <class component_type> component_type* create_component();
   ui_state(plugin_controller* controller) : _controller(controller) {}
-  juce::Slider* create_knob(std::int32_t part, std::int32_t index, std::int32_t param);
+  std::pair<juce::Slider*, juce::Label*> add_new_knob(juce::Component* component, std::int32_t part, std::int32_t index, std::int32_t param);
 };
 
 template <class component_type>
