@@ -1,3 +1,5 @@
+#if __linux__
+
 #include <juce_events/juce_events.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_events/native/juce_linux_EventLoopInternal.h>
@@ -327,3 +329,5 @@ void unregister_listener(void* l, IPlugFrame* f)
 
 
 }
+
+#endif
