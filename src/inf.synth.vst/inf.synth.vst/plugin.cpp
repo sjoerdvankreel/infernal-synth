@@ -19,6 +19,7 @@
 #endif
 
 using namespace inf::base;
+using namespace inf::base::ui;
 using namespace inf::base::vst;
 using namespace inf::synth;
 using namespace inf::synth::ui;
@@ -85,7 +86,7 @@ public vst_editor
 {
 public:
   synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
-  juce::Component* create_content(inf::base::ui::ui_state& state) override { return create_synth_ui(state); }
+  root_component* create_content(inf::base::ui::ui_state& state) override { return create_synth_ui(state); }
 };
 
 class synth_vst_controller :

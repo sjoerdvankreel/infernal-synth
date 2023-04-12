@@ -41,6 +41,15 @@ vst_controller::createView(char const* name)
   return result;
 }
 
+void 
+vst_controller::do_edit(std::int32_t tag, double normalized)
+{
+  beginEdit(tag);
+  setParamNormalized(tag, normalized);
+  performEdit(tag, getParamNormalized(tag));
+  endEdit(tag);
+}
+
 // See PresetFile::loadPreset. We load processor (component) state
 // from stream into controller, then flush params to processor.
 void
@@ -85,30 +94,15 @@ void
 vst_controller::edit_param(std::int32_t index, param_value value)
 {
   std::int32_t tag = topology()->param_index_to_id[index];
-  setParamNormalized(tag, base_to_vst_normalized(topology(), index, value));
-}
-
-void
-vst_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
-{
-  beginEdit(target_tag);
-  setParamNormalized(target_tag, getParamNormalized(source_tag));
-  performEdit(target_tag, getParamNormalized(source_tag));
-  endEdit(target_tag);
+  do_edit(tag, base_to_vst_normalized(topology(), index, value));
 }
 
 void
 vst_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
 {
-  ParamValue target = getParamNormalized(target_tag);
-  beginEdit(target_tag);
-  setParamNormalized(target_tag, getParamNormalized(source_tag));
-  performEdit(target_tag, getParamNormalized(source_tag));
-  endEdit(target_tag);
-  beginEdit(source_tag);
-  setParamNormalized(source_tag, target);
-  performEdit(source_tag, target);
-  endEdit(source_tag);
+  ParamValue target_value = getParamNormalized(target_tag);
+  do_edit(target_tag, getParamNormalized(source_tag));
+  do_edit(source_tag, target_value);
 }
 
 tresult
@@ -146,12 +140,7 @@ vst_controller::load_component_state(param_value* state, bool perform_edit)
     if (!perform_edit)
       setParamNormalized(tag, value);
     else
-    {
-      beginEdit(tag);
-      setParamNormalized(tag, value);
-      performEdit(tag, value);
-      endEdit(tag);
-    }
+      do_edit(tag, value);
     update_state(tag);
   }
 

@@ -9,12 +9,12 @@ using namespace inf::base::ui;
 
 namespace inf::synth::ui {
 
-Component*
+root_component*
 create_synth_ui(ui_state& state)
 {
   std::int32_t w = 800;
   std::int32_t h = 600;
-  Component* result = new Component;
+  root_component* result = new root_component;
   result->setSize(w, h);
   Slider* slider = state.create_knob(part_type::vaudio_bank, 0, audio_bank_param::bal1);
   slider->setSize(50, 50);

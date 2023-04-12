@@ -2,6 +2,7 @@
 #define INF_BASE_VST_VST_EDITOR_HPP
 
 #include <inf.base.ui/ui_state.hpp>
+#include <inf.base.ui/root_component.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
@@ -24,10 +25,6 @@ public Steinberg::Vst::EditorView
   std::unique_ptr<juce::Component> _root = {};
   std::unique_ptr<inf::base::ui::ui_state> _state = {};
 
-protected:
-  explicit vst_editor(vst_controller* controller);
-  virtual juce::Component* create_content(inf::base::ui::ui_state& state) = 0;
-
 public:
   ~vst_editor() override;
   tresult PLUGIN_API removed() override;
@@ -36,6 +33,10 @@ public:
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
   tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
+
+protected:
+  explicit vst_editor(vst_controller* controller);
+  virtual inf::base::ui::root_component* create_content(inf::base::ui::ui_state& state) = 0;
 };
 
 } // namespace inf::base::vst
