@@ -1,8 +1,8 @@
 #ifndef INF_BASE_UI_UI_STATE_HPP
 #define INF_BASE_UI_UI_STATE_HPP
 
+#include <inf.base.ui/knob_listener.hpp>
 #include <inf.base/topology/topology_info.hpp>
-#include <inf.base.ui/slider_listener.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
 #include <vector>
@@ -14,8 +14,8 @@ namespace inf::base::ui {
 class ui_state
 {
   plugin_controller* const _controller;
+  std::vector<std::unique_ptr<knob_listener>> _listeners;
   std::vector<std::unique_ptr<juce::Component>> _components;
-  std::vector<std::unique_ptr<juce::Slider::Listener>> _listeners;
 public:
   void clear();
   template <class component_type> component_type* create_component();

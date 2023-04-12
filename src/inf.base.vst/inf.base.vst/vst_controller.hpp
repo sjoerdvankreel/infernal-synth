@@ -26,6 +26,7 @@ protected:
   using FUnknown = Steinberg::FUnknown;
   using IPlugView = Steinberg::IPlugView;
   using ParamID = Steinberg::Vst::ParamID;
+  using ParamValue = Steinberg::Vst::ParamValue;
 
   FUID const _processor_id;
   void do_edit(std::int32_t tag, double normalized);
@@ -40,9 +41,10 @@ public:
   void save_preset(std::string const& path) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
-  void edit_param(std::int32_t index, param_value value) override;
   void load_preset(std::string const& path, bool factory) override;
+  void editor_changed_param(std::int32_t index, param_value value) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
+  tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
   void load_component_state(inf::base::param_value* state, bool perform_edit) override;
 
   std::string preset_file_extension() override { return "vstpreset"; }
