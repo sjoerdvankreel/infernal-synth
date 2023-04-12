@@ -30,9 +30,6 @@ add_compile_options(-std=c++2a)
 add_compile_options(-Wall)
 add_compile_options(-Wextra)
 add_compile_options(-Werror)
-# Need to pull in part of vst sdk.
-# Can't disable this one with pragma on g++.
-add_compile_options(-Wno-cpp)
 add_compile_options(-Wno-sign-compare)
 add_compile_options(-Wno-unused-parameter)
 add_compile_options(-ffast-math)
