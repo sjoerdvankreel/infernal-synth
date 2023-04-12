@@ -18,6 +18,7 @@ create_synth_ui(ui_state& state)
   result->setSize(w, h);
   auto slider = state.add_new_knob(result, part_type::vaudio_bank, 0, audio_bank_param::bal1);
   slider.first->setSize(50, 50);
+  slider.second->setTopLeftPosition(0, 50);
   slider.second->setSize(50, 10);
   return result;
   /*
