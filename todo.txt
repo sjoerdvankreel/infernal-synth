@@ -33,6 +33,7 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
+- check all ui vs dsp ranges
 - cleanup tag-vs-index
 - cleanup base-vs-ui-vs-vstnormalized
 - double check controller/editor/processor methods, what is still needed
