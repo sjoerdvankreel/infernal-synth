@@ -19,10 +19,6 @@ public Steinberg::Vst::EditorView
   inf::base::ui::juce_gui_state _state = {};
   std::unique_ptr<juce::Component> _root = {};
 
-#if __linux__
-  void* _l = nullptr;
-#endif // __linux__
-
 protected:
   explicit vst_editor(vst_controller* controller);
   virtual juce::Component* create_content(inf::base::ui::juce_gui_state& state) = 0;

@@ -7,29 +7,11 @@ using namespace juce;
 using namespace inf::base::ui;
 using namespace Steinberg;
 
-namespace juce
-{
-  void* create_listener();
-
-  void delete_listener(void* l);
-
-  void register_listener(void* l, IPlugFrame* f);
-
-  void unregister_listener(void* l, IPlugFrame* f);
-
-}
-
 namespace inf::base::vst {
 
 vst_editor::
 vst_editor(vst_controller* controller):
-EditorView(controller)
-{ 
-assert(controller != nullptr); 
-#if __linux__
-_l = juce::create_listener();
-#endif // __linux__
-}
+EditorView(controller) {}
 
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
@@ -70,7 +52,7 @@ vst_editor::removed()
   }
   _state.clear();
 #if __linux__
-  juce::unregister_listener(_l, plugFrame);
+  //juce::unregister_listener(_l, plugFrame);
 #endif // __linux__
   return EditorView::removed();
 }
@@ -82,7 +64,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  juce::unregister_listener(_l, plugFrame);
+  //juce::unregister_listener(_l, plugFrame);
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -96,13 +78,8 @@ vst_editor::attached(void* parent, FIDString type)
 tresult PLUGIN_API
 vst_editor::isPlatformTypeSupported(FIDString type)
 {
-#if WIN32
   if (std::strcmp(type, kPlatformTypeHWND) == 0) return kResultTrue;
-#elif __linux__
   if (std::strcmp(type, kPlatformTypeX11EmbedWindowID) == 0) return kResultTrue;
-#else
-#error
-#endif
   return kResultFalse;
 }
 
