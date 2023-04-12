@@ -6,27 +6,9 @@
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
 
-#if __linux__
-#include <juce_events/native/juce_linux_EventLoopInternal.h>
-#endif // __linux__
-
 namespace inf::base::vst {
 
 class vst_controller;
-
-#if __linux__
-class vst_linux_event_handler:
-public Steinberg::Linux::IEventHandler,
-public Steinberg::FObject
-{
-public:
-  DELEGATE_REFCOUNT(Steinberg::FObject)
-  DEFINE_INTERFACES
-  DEF_INTERFACE(Steinberg::Linux::IEventHandler)
-  END_DEFINE_INTERFACES(Steinberg::FObject)
-  void PLUGIN_API onFDIsSet(Steinberg::Linux::FileDescriptor fd) override;
-};
-#endif // __linux__
 
 class vst_editor: 
 public Steinberg::Vst::EditorView
@@ -38,9 +20,7 @@ public Steinberg::Vst::EditorView
   std::unique_ptr<juce::Component> _root = {};
 
 #if __linux__
-  vst_linux_event_handler _handler = {};
-  int get_default_screen_fd() const;
-  Steinberg::Linux::IRunLoop* get_run_loop() const;
+  void* _l = nullptr;
 #endif // __linux__
 
 protected:

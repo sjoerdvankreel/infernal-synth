@@ -302,13 +302,25 @@ private:
 
 HostMessageThreadState EventHandler::hostMessageThreadState;
 
-static void assertHostMessageThread()
+void* create_listener()
 {
-#if JUCE_LINUX || JUCE_BSD
-  EventHandler::assertHostMessageThread();
-#else
-  JUCE_ASSERT_MESSAGE_THREAD
-#endif
+  return new EventHandler;
 }
+
+void delete_listener(void* l)
+{
+  delete static_cast<EventHandler*>(l);
+}
+
+void register_listener(void* l, IPlugFrame* f)
+{
+  static_cast<EventHandler*>(l)->registerHandlerForFrame(f);
+}
+
+void unregister_listener(void* l, IPlugFrame* f)
+{
+  static_cast<EventHandler*>(l)->unregisterHandlerForFrame(f);
+}
+
 
 }

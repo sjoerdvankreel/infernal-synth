@@ -7,12 +7,29 @@ using namespace juce;
 using namespace inf::base::ui;
 using namespace Steinberg;
 
+namespace juce
+{
+  void* create_listener();
+
+  void delete_listener(void* l);
+
+  void register_listener(void* l, IPlugFrame* f);
+
+  void unregister_listener(void* l, IPlugFrame* f);
+
+}
+
 namespace inf::base::vst {
 
 vst_editor::
 vst_editor(vst_controller* controller):
 EditorView(controller)
-{ assert(controller != nullptr); }
+{ 
+assert(controller != nullptr); 
+#if __linux__
+_l = juce::create_listener();
+#endif // __linux__
+}
 
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
@@ -53,7 +70,7 @@ vst_editor::removed()
   }
   _state.clear();
 #if __linux__
-  get_run_loop()->unregisterEventHandler(&_handler);
+  juce::unregister_listener(_l, plugFrame);
 #endif // __linux__
   return EditorView::removed();
 }
@@ -65,8 +82,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  auto fd = get_default_screen_fd();
-  get_run_loop()->registerEventHandler(&_handler, fd);
+  juce::unregister_listener(_l, plugFrame);
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -89,32 +105,5 @@ vst_editor::isPlatformTypeSupported(FIDString type)
 #endif
   return kResultFalse;
 }
-
-#if __linux__
-void PLUGIN_API 
-vst_linux_event_handler::onFDIsSet(Steinberg::Linux::FileDescriptor fd)
-{
-  juce::LinuxEventLoopInternal::invokeEventLoopCallbackForFd(fd);
-}
-
-int
-vst_editor::get_default_screen_fd() const 
-{ 
-  auto display = juce::XWindowSystem::getInstance()->getDisplay();
-  return juce::X11Symbols::getInstance()->xConnectionNumber(display); 
-}
-
-Steinberg::Linux::IRunLoop*
-vst_editor::get_run_loop() const
-{
-  assert(plugFrame);
-  auto iid = Steinberg::Linux::IRunLoop::iid;
-  Steinberg::Linux::IRunLoop* result = nullptr;
-  tresult ok = plugFrame->queryInterface(iid, reinterpret_cast<void**>(&result));
-  assert(ok == kResultOk);
-  (void)ok;
-  return result;
-}
-#endif // __linux__
 
 } // namespace inf::base::vst
