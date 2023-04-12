@@ -81,6 +81,7 @@ tresult PLUGIN_API
 vst_editor::attached(void* parent, FIDString type)
 {
   assert(plugFrame);
+  MessageManager::getInstance();
   _state.reset(new ui_state(&dynamic_cast<plugin_controller&>(*getController())));
   _root.reset(create_content(*_state.get()));
 #if __linux__
