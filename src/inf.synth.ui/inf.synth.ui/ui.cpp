@@ -1,6 +1,7 @@
 #include <inf.synth.ui/ui.hpp>
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
+#include <inf.synth/audio_bank/topology.hpp>
 
 using namespace juce;
 using namespace inf::base;
@@ -15,7 +16,7 @@ create_synth_ui(ui_state& state)
   std::int32_t h = 600;
   Component* result = new Component;
   result->setSize(w, h);
-  Slider* slider = state.create_knob(part_type::vosc, 0, osc_param::gain);
+  Slider* slider = state.create_knob(part_type::vaudio_bank, 0, audio_bank_param::bal1);
   slider->setSize(50, 50);
   result->addChildComponent(slider);
   return result;
