@@ -39,6 +39,7 @@ public:
   void save_preset(std::string const& path) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
+  void edit_param(std::int32_t index, param_value value) override;
   void load_preset(std::string const& path, bool factory) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;

@@ -39,6 +39,8 @@ public:
   virtual void save_preset(std::string const& path) = 0;
   virtual void load_preset(std::string const& path, bool factory) = 0;
   virtual void load_component_state(param_value* state, bool perform_edit) = 0;
+
+  virtual void edit_param(std::int32_t index, param_value value) = 0;
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
 

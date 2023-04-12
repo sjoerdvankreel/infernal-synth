@@ -99,6 +99,8 @@ struct topology_info
       float sample_rate, std::int32_t max_sample_count) const = 0;
 
   std::int32_t param_start(part_id id) const { return param_bounds[id.type][id.index]; }
+  std::int32_t param_index(part_id id, std::int32_t param) const { return param_start(id) + param; }
+  std::int32_t param_id(part_id id, std::int32_t param) const { return param_index_to_id[param_index(id, param)]; }
 };
 
 } // namespace inf::base

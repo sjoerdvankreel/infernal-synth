@@ -5,7 +5,7 @@
 
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
-#include <inf.base.ui/support.hpp>
+#include <inf.base.ui/ui_state.hpp>
 #include <cstring>
 
 using namespace juce;
@@ -70,7 +70,7 @@ vst_editor::removed()
     _root->removeFromDesktop();
     _root.reset();
   }
-  _state.clear();
+  _state.reset();
 #if __linux__
   _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
@@ -81,8 +81,8 @@ tresult PLUGIN_API
 vst_editor::attached(void* parent, FIDString type)
 {
   assert(plugFrame);
-  _state.clear();
-  _root.reset(create_content(_state));
+  _state.reset(new ui_state(&dynamic_cast<plugin_controller&>(*getController())));
+  _root.reset(create_content(*_state.get()));
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__

@@ -85,7 +85,7 @@ public vst_editor
 {
 public:
   synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
-  juce::Component* create_content(inf::base::ui::juce_gui_state& state) override { return create_synth_ui(state); }
+  juce::Component* create_content(inf::base::ui::ui_state& state) override { return create_synth_ui(state); }
 };
 
 class synth_vst_controller :

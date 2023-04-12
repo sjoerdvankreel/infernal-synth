@@ -33,9 +33,14 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
+- cleanup tag-vs-index
+- cleanup base-vs-ui-vs-vstnormalized
+- double check controller/editor/processor methods, what is still needed
+- fix linux renoise resizing
 - figure out juce component ownership
 - scan vst_controller/editor for unneeded stuff
 - cleanup part_ui_/param_ui_descriptor
+- clear all ui references from base?
 - build vst3 without vstgui
 - reconnect host context menus
 - switch to juce

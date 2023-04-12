@@ -81,6 +81,13 @@ vst_controller::save_preset(std::string const& path)
   file.close();
 }
 
+void 
+vst_controller::edit_param(std::int32_t index, param_value value)
+{
+  std::int32_t tag = topology()->param_index_to_id[index];
+  setParamNormalized(tag, base_to_vst_normalized(topology(), index, value));
+}
+
 void
 vst_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
 {
