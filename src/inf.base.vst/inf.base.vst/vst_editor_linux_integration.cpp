@@ -155,6 +155,9 @@ public:
     LinuxEventLoopInternal::invokeEventLoopCallbackForFd(fd);
   }
 
+  Steinberg::uint32 PLUGIN_API addRef() override { return (Steinberg::uint32) ++refCount; } \
+    Steinberg::uint32 PLUGIN_API release() override { const int r = --refCount; if (r == 0) delete this; return (Steinberg::uint32)r; }
+
   //==============================================================================
   void registerHandlerForFrame(IPlugFrame* plugFrame)
   {
