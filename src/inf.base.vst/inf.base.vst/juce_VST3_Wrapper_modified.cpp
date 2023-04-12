@@ -24,6 +24,8 @@
 */
 
 // *INFERNAL* added these
+#if INF_INCLUDE_JUCE_VST3_WRAPPER
+
 #include <juce_core/juce_core.h>
 #include <juce_events/juce_events.h>
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -259,3 +261,5 @@ HostMessageThreadState EventHandler::hostMessageThreadState;
 #endif
 
 } // namespace juce
+
+#endif // INF_INCLUDE_JUCE_VST3_WRAPPER

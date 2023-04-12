@@ -1,3 +1,8 @@
+#if __linux__
+#define INF_INCLUDE_JUCE_VST3_WRAPPER 1
+#include "juce_VST3_Wrapper_modified.cpp"
+#endif // __linux__
+
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
 #include <inf.base.ui/support.hpp>
