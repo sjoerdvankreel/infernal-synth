@@ -9,9 +9,24 @@ using namespace Steinberg;
 
 namespace inf::base::vst {
 
+#if __linux__
+struct vst_editor::impl
+{
+  juce::SharedResourcePointer<juce::EventHandler> event_handler;
+  juce::SharedResourcePointer<juce::MessageThread> message_thread;
+};
+#endif // __linux__
+
+vst_editor::
+~vst_editor() {}
+
 vst_editor::
 vst_editor(vst_controller* controller):
-EditorView(controller) {}
+EditorView(controller)
+#if __linux__
+, _impl(std::make_unique<impl>())
+#endif // __linux__
+{ assert(controller != nullptr); }
 
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
@@ -52,7 +67,7 @@ vst_editor::removed()
   }
   _state.clear();
 #if __linux__
-  //juce::unregister_listener(_l, plugFrame);
+  _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
   return EditorView::removed();
 }
@@ -64,7 +79,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  //juce::unregister_listener(_l, plugFrame);
+  _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);

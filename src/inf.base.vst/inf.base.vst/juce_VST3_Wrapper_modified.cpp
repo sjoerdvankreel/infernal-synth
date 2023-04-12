@@ -23,7 +23,7 @@
   ==============================================================================
 */
 
-// inf added these
+// *INFERNAL* added these
 #include <juce_core/juce_core.h>
 #include <juce_events/juce_events.h>
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -36,7 +36,7 @@
 #define JUCE_DECLARE_VST3_COM_REF_METHODS \
 Steinberg::uint32 PLUGIN_API addRef() override   { return (Steinberg::uint32) ++refCount; } \
 Steinberg::uint32 PLUGIN_API release() override  { const int r = --refCount; if (r == 0) delete this; return (Steinberg::uint32) r; }
-// inf trimmed everything else
+// *INFERNAL* trimmed everything else
 
 namespace juce
 {
@@ -97,9 +97,9 @@ public:
 
     tresult PLUGIN_API queryInterface (const TUID targetIID, void** obj) override
     {
-      // inf testFor pulls in a load of stuff
+      // *INFERNAL* testFor pulls in a load of stuff
       QUERY_INTERFACE(targetIID, obj, IEventHandler::iid, IEventHandler)
-      * obj = nullptr;
+      *obj = nullptr;
       return kNoInterface;
     }
 

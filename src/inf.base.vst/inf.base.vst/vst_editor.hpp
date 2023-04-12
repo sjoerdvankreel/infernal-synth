@@ -13,6 +13,11 @@ class vst_controller;
 class vst_editor: 
 public Steinberg::Vst::EditorView
 {
+#if __linux__
+  struct impl;
+  std::unique_ptr<impl> _impl;
+#endif // __linux__
+
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
@@ -24,6 +29,7 @@ protected:
   virtual juce::Component* create_content(inf::base::ui::juce_gui_state& state) = 0;
 
 public:
+  ~vst_editor() override;
   tresult PLUGIN_API removed() override;
   tresult PLUGIN_API onSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
