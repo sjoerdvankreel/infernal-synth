@@ -1,35 +1,36 @@
+#if __linux__
+#include "juce_vst3_wrapper_modified.cpp"
+#endif // __linux__
+
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
 #include <inf.base.ui/support.hpp>
 #include <cstring>
 
 using namespace juce;
-using namespace inf::base::ui;
 using namespace Steinberg;
-
-namespace juce
-{
-  void* create_listener();
-
-  void delete_listener(void* l);
-
-  void register_listener(void* l, IPlugFrame* f);
-
-  void unregister_listener(void* l, IPlugFrame* f);
-
-}
+using namespace inf::base::ui;
 
 namespace inf::base::vst {
+
+#if __linux__
+struct vst_editor::impl
+{
+  juce::SharedResourcePointer<juce::EventHandler> event_handler;
+  juce::SharedResourcePointer<juce::MessageThread> message_thread;
+};
+#endif // __linux__
+
+vst_editor::
+~vst_editor() {}
 
 vst_editor::
 vst_editor(vst_controller* controller):
 EditorView(controller)
-{ 
-assert(controller != nullptr); 
 #if __linux__
-_l = juce::create_listener();
+, _impl(std::make_unique<impl>())
 #endif // __linux__
-}
+{ assert(controller != nullptr); }
 
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
@@ -70,7 +71,7 @@ vst_editor::removed()
   }
   _state.clear();
 #if __linux__
-  juce::unregister_listener(_l, plugFrame);
+  _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
   return EditorView::removed();
 }
@@ -82,7 +83,7 @@ vst_editor::attached(void* parent, FIDString type)
   _state.clear();
   _root.reset(create_content(_state));
 #if __linux__
-  juce::unregister_listener(_l, plugFrame);
+  _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
   _root->setOpaque(true);
   _root->addToDesktop(0, (void*)parent);
@@ -96,13 +97,8 @@ vst_editor::attached(void* parent, FIDString type)
 tresult PLUGIN_API
 vst_editor::isPlatformTypeSupported(FIDString type)
 {
-#if WIN32
   if (std::strcmp(type, kPlatformTypeHWND) == 0) return kResultTrue;
-#elif __linux__
   if (std::strcmp(type, kPlatformTypeX11EmbedWindowID) == 0) return kResultTrue;
-#else
-#error
-#endif
   return kResultFalse;
 }
 
