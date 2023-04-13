@@ -217,7 +217,7 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in3, "CV U 2");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out3, "Audio B 1 Amt6");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op3, "Mul");
-  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in4, "CV B2");
+  set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in4, "CV B 2");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::out4, "FX B 4 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::op4, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, gcv_bank_param::in5, "LFO B 1");
