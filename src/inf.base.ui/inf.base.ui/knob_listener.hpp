@@ -21,7 +21,7 @@ public:
 
   ~knob_listener() { _controller->clear_param_listener(_param_index); }
   knob_listener(plugin_controller* controller, juce::Slider* slider, std::int32_t param_index):
-  _slider(slider), _controller(controller), _param_index(param_index) { _controller->set_param_listener(param_index, this); }
+  _slider(slider), _param_index(param_index), _controller(controller) { _controller->set_param_listener(param_index, this); }
 };
 
 } // namespace inf::base::ui
