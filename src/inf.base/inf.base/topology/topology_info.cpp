@@ -95,7 +95,7 @@ topology_info::init(
       std::string runtime_name = type_name;
       if(static_parts[t].kind == part_kind::output) topology->output_param_count += static_parts[t].param_count;
       else topology->input_param_count += static_parts[t].param_count;
-      if (static_parts[t].part_count > 1) runtime_name += std::to_string(i + 1);
+      if (static_parts[t].part_count > 1) runtime_name += " " + std::to_string(i + 1);
       topology->parts.push_back(part_info({ type_index++, runtime_name, param_index, &static_parts[t] }));
       part_index++;
       param_index += static_parts[t].param_count;
