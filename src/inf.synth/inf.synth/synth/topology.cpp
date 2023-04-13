@@ -390,30 +390,30 @@ static std::vector<std::string> const active_glfo_tab_items = list_tab_items(glf
 static std::vector<std::string> const active_vcv_bank_tab_items = list_tab_items(vcv_bank_count);
 static std::vector<std::string> const active_gcv_bank_tab_items = list_tab_items(gcv_bank_count);
 
-static std::vector<list_item> const active_vosc_items = list_items({ "{3B2713C0-6DFF-4257-9CB4-DF5FD0DA603C}", "Osc" }, nullptr, true, vosc_count);
-static std::vector<list_item> const active_veffect_items = list_items({ "{33BB6F1B-3D4F-4D58-998D-417DA711D6C2}", "FX A" }, nullptr, false, veffect_count);
-static std::vector<list_item> const active_geffect_items = list_items({ "{1607D775-53C5-46BE-957A-F697831062CD}", "FX B" }, nullptr, false, geffect_count);
-static std::vector<list_item> const active_vaudio_bank_items = list_items({ "{8AD2E3E5-0DCF-42E3-B9B6-33F775DF917F}", "Audio A" }, nullptr, false, vaudio_bank_count);
-static std::vector<list_item> const active_gaudio_bank_items = list_items({ "{D14108D3-FC7A-49D5-A4CB-AB66BE6F1B1E}", "Audio B" }, nullptr, false, gaudio_bank_count);
-static std::vector<list_item> const active_venv_items = list_items({ "{8545D490-B40D-4154-BFC2-FE86A6F26BB5}", "Env" }, envelope_item_info, true, venv_count);
-static std::vector<list_item> const active_vlfo_items = list_items({ "{5AADD04D-FC8B-4326-97B1-35326F645D09}", "LFO A" }, nullptr, false, vlfo_count);
-static std::vector<list_item> const active_glfo_items = list_items({ "{88E92673-4FA2-45C3-B1D0-71A2A63ECCF4}", "LFO B" }, nullptr, false, glfo_count);
-static std::vector<list_item> const active_vcv_bank_items = list_items({ "{9C450189-3395-4E03-8EB8-1788BE94042F}", "CV A" }, nullptr, false, vcv_bank_count);
-static std::vector<list_item> const active_gcv_bank_items = list_items({ "{8F6E11A2-C364-4301-9D0D-135909C4312B}", "CV B" }, nullptr, false, gcv_bank_count);
+static std::vector<list_item> const active_vosc_items = list_items({ "{3B2713C0-6DFF-4257-9CB4-DF5FD0DA603C}", "Osc" }, vosc_count);
+static std::vector<list_item> const active_veffect_items = list_items({ "{33BB6F1B-3D4F-4D58-998D-417DA711D6C2}", "FX A" }, veffect_count);
+static std::vector<list_item> const active_geffect_items = list_items({ "{1607D775-53C5-46BE-957A-F697831062CD}", "FX B" }, geffect_count);
+static std::vector<list_item> const active_vaudio_bank_items = list_items({ "{8AD2E3E5-0DCF-42E3-B9B6-33F775DF917F}", "Audio A" }, vaudio_bank_count);
+static std::vector<list_item> const active_gaudio_bank_items = list_items({ "{D14108D3-FC7A-49D5-A4CB-AB66BE6F1B1E}", "Audio B" }, gaudio_bank_count);
+static std::vector<list_item> const active_venv_items = list_items({ "{8545D490-B40D-4154-BFC2-FE86A6F26BB5}", "Env" }, venv_count);
+static std::vector<list_item> const active_vlfo_items = list_items({ "{5AADD04D-FC8B-4326-97B1-35326F645D09}", "LFO A" }, vlfo_count);
+static std::vector<list_item> const active_glfo_items = list_items({ "{88E92673-4FA2-45C3-B1D0-71A2A63ECCF4}", "LFO B" }, glfo_count);
+static std::vector<list_item> const active_vcv_bank_items = list_items({ "{9C450189-3395-4E03-8EB8-1788BE94042F}", "CV A" }, vcv_bank_count);
+static std::vector<list_item> const active_gcv_bank_items = list_items({ "{8F6E11A2-C364-4301-9D0D-135909C4312B}", "CV B" }, gcv_bank_count);
  
 static param_descriptor const 
 active_params[active_param::count] =     
 {
-  { "{0EEADBD0-D37B-4B53-A2D5-F22E2154F2D8}", { { "Osc", "Oscillator" }, "", param_kind::ui, param_type::list, { &active_vosc_items, &active_vosc_tab_items }, 0, nullptr } },
-  { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "FX A", "FX A" }, "", param_kind::ui, param_type::list, { &active_veffect_items, &active_veffect_tab_items }, 0, nullptr } },
-  { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "FX B", "FX B" }, "", param_kind::ui, param_type::list, { &active_geffect_items, &active_geffect_tab_items }, 0, nullptr } },
-  { "{4C161E6D-7487-4D98-86DC-73B2B414A299}", { { "Audio A", "Audio Bank A" }, "", param_kind::ui, param_type::list, { &active_vaudio_bank_items, &active_vaudio_bank_tab_items }, 0, nullptr } },
-  { "{2627D0E5-7522-4BE3-8659-AA526CF2186C}", { { "Audio B", "Audio Bank B" }, "", param_kind::ui, param_type::list, { &active_gaudio_bank_items, &active_gaudio_bank_tab_items }, 0, nullptr } },
-  { "{556BF692-55B0-48B4-BD6A-E2CEFA17B012}", { { "Env", "Envelope" }, "", param_kind::ui, param_type::list, { &active_venv_items, &active_venv_tab_items }, 0, nullptr } },
-  { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "LFO A", "LFO A" }, "", param_kind::ui, param_type::list, { &active_vlfo_items, &active_vlfo_tab_items }, 0, nullptr } },
-  { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "LFO B", "LFO B" }, "", param_kind::ui, param_type::list, { &active_glfo_items, &active_glfo_tab_items }, 0, nullptr } },
-  { "{BFCAD318-CB76-4AF7-9B43-3F1776144813}", { { "CV A", "CV Bank A" }, "", param_kind::ui, param_type::list, { &active_vcv_bank_items, &active_vcv_bank_tab_items }, 0, nullptr } },
-  { "{A6203077-A2A1-4509-8F99-86A29BC2EE9B}", { { "CV B", "CV Bank B" }, "", param_kind::ui, param_type::list, { &active_gcv_bank_items, &active_gcv_bank_tab_items }, 0, nullptr } },
+  { "{0EEADBD0-D37B-4B53-A2D5-F22E2154F2D8}", { { "Osc", "Oscillator" }, "", param_kind::ui, param_type::list, { &active_vosc_items, &active_vosc_tab_items } } },
+  { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "FX A", "FX A" }, "", param_kind::ui, param_type::list, { &active_veffect_items, &active_veffect_tab_items } } },
+  { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "FX B", "FX B" }, "", param_kind::ui, param_type::list, { &active_geffect_items, &active_geffect_tab_items } } },
+  { "{4C161E6D-7487-4D98-86DC-73B2B414A299}", { { "Audio A", "Audio Bank A" }, "", param_kind::ui, param_type::list, { &active_vaudio_bank_items, &active_vaudio_bank_tab_items } } },
+  { "{2627D0E5-7522-4BE3-8659-AA526CF2186C}", { { "Audio B", "Audio Bank B" }, "", param_kind::ui, param_type::list, { &active_gaudio_bank_items, &active_gaudio_bank_tab_items } } },
+  { "{556BF692-55B0-48B4-BD6A-E2CEFA17B012}", { { "Env", "Envelope" }, "", param_kind::ui, param_type::list, { &active_venv_items, &active_venv_tab_items } } },
+  { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "LFO A", "LFO A" }, "", param_kind::ui, param_type::list, { &active_vlfo_items, &active_vlfo_tab_items } } },
+  { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "LFO B", "LFO B" }, "", param_kind::ui, param_type::list, { &active_glfo_items, &active_glfo_tab_items } } },
+  { "{BFCAD318-CB76-4AF7-9B43-3F1776144813}", { { "CV A", "CV Bank A" }, "", param_kind::ui, param_type::list, { &active_vcv_bank_items, &active_vcv_bank_tab_items } } },
+  { "{A6203077-A2A1-4509-8F99-86A29BC2EE9B}", { { "CV B", "CV Bank B" }, "", param_kind::ui, param_type::list, { &active_gcv_bank_items, &active_gcv_bank_tab_items } } },
 };
 
 // ---- global topo ----
@@ -421,22 +421,22 @@ active_params[active_param::count] =
 part_descriptor const                                  
 part_descriptors[part_type::count] =                                             
 {                       
-  { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, 0, &vosc_ui },
-  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "FX A", "FX A" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, 10, &veffect_ui}, 
-  { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "FX B", "FX B" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, 11, &geffect_ui},
-  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, audio_bank_param::count, 5, &vaudio_bank_ui },
-  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, audio_bank_param::count, 7, &gaudio_bank_ui },
-  { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "Voice", "Voice" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count, 6, &voice_ui },
-  { "{6DE3AAB2-6D43-41ED-9BBE-E281DB8F7B44}", { "Master", "Master" }, part_kind::input, part_type::master, 1, master_params, master_param::count, 1, &master_ui },
-  { "{FC4885FE-431C-477A-B5B7-84863DB8C07D}", { "Env", "Envelope" }, part_kind::input, part_type::venv, venv_count, envelope_params, envelope_param::count, 14, &venv_ui },
-  { "{56DE75BB-BE73-4B27-B37F-77F6E408F986}", { "LFO A", "LFO A" }, part_kind::input, part_type::vlfo, vlfo_count, vlfo_params, lfo_param::count, 8, &vlfo_ui },
-  { "{5BE4D402-BD27-478B-9C14-A570A4306FFA}", { "LFO B", "LFO B" }, part_kind::input, part_type::glfo, glfo_count, glfo_params, lfo_param::count, 9, &glfo_ui },
-  { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "CV A", "CV Bank A" }, part_kind::input, part_type::vcv_bank, vcv_bank_count, vcv_bank_params, vcv_bank_param::count, 13, &vcv_bank_ui },
-  { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "CV B", "CV Bank B" }, part_kind::input, part_type::gcv_bank, gcv_bank_count, gcv_bank_params, gcv_bank_param::count, 4, &gcv_bank_ui },
-  { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "CV A Plot", "CV Bank A Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, 12, &vcv_plot_ui },
-  { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "CV B Plot", "CV Bank B Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, 3, &gcv_plot_ui },
-  { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, -1, nullptr },
-  { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, 2, &output_ui }
+  { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count },
+  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "FX A", "FX A" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count }, 
+  { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "FX B", "FX B" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count },
+  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, audio_bank_param::count },
+  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, audio_bank_param::count },
+  { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "Voice", "Voice" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count },
+  { "{6DE3AAB2-6D43-41ED-9BBE-E281DB8F7B44}", { "Master", "Master" }, part_kind::input, part_type::master, 1, master_params, master_param::count },
+  { "{FC4885FE-431C-477A-B5B7-84863DB8C07D}", { "Env", "Envelope" }, part_kind::input, part_type::venv, venv_count, envelope_params, envelope_param::count },
+  { "{56DE75BB-BE73-4B27-B37F-77F6E408F986}", { "LFO A", "LFO A" }, part_kind::input, part_type::vlfo, vlfo_count, vlfo_params, lfo_param::count },
+  { "{5BE4D402-BD27-478B-9C14-A570A4306FFA}", { "LFO B", "LFO B" }, part_kind::input, part_type::glfo, glfo_count, glfo_params, lfo_param::count },
+  { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "CV A", "CV Bank A" }, part_kind::input, part_type::vcv_bank, vcv_bank_count, vcv_bank_params, vcv_bank_param::count },
+  { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "CV B", "CV Bank B" }, part_kind::input, part_type::gcv_bank, gcv_bank_count, gcv_bank_params, gcv_bank_param::count },
+  { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "CV A Plot", "CV Bank A Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count },
+  { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "CV B Plot", "CV Bank B Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count },
+  { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count },
+  { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count }
 };         
                                     
 } // namespace inf::synth                               
