@@ -86,20 +86,6 @@ zip_list_table_init_out(std::int32_t const* counts1, std::int32_t const* counts2
 }
 
 std::vector<list_item>
-list_items(list_item const& item, std::int32_t count)
-{
-  std::vector<list_item> result;
-  for (std::int32_t i = 0; i < count; i++)
-  { 
-    std::string name = item.name;
-    name += std::to_string(i + 1);
-    std::string id = std::string(item.id) + "-" + std::to_string(i);
-    result.push_back({ id, name, {} });
-  }
-  return result;
-}
-
-std::vector<list_item>
 multi_list_items(
   list_item const* items, char const* const* suffixes, 
   std::int32_t const* counts, std::int32_t count, bool sub_menu)
@@ -111,7 +97,7 @@ multi_list_items(
       std::vector<std::string> sub_menu_items;
       std::string name = items[i].name;
       if(sub_menu) sub_menu_items.push_back(name);
-      if(counts[i] > 1) name += std::to_string(j + 1);
+      if(counts[i] > 1) name += " " + std::to_string(j + 1);
       if(suffixes != nullptr && suffixes[i] != nullptr) name += " " + std::string(suffixes[i]);
       if(counts[i] > 1 && sub_menu) sub_menu_items.push_back(name);
       std::string id = std::string(items[i].id) + "-" + std::to_string(j);
@@ -135,7 +121,7 @@ zip_list_items(list_item const* items1, std::int32_t const* counts1,
         std::string id = items1[i].id + "-" + std::to_string(j);
         if (counts1[i] > 1) 
         {
-          name += std::to_string(j + 1);
+          name += " " + std::to_string(j + 1);
           submenu_path.push_back(name);
         }
         result.push_back({id, name, submenu_path});
@@ -148,10 +134,10 @@ zip_list_items(list_item const* items1, std::int32_t const* counts1,
         std::string id = items1[i].id + "-" + std::to_string(j) + "-" + items2[i][k].id;
         if(counts1[i] > 1)
         { 
-          name += std::to_string(j + 1);
+          name += " " + std::to_string(j + 1);
           submenu_path.push_back(name);
         }
-        name = name + items2[i][k].name;
+        name = name + " " + items2[i][k].name;
         submenu_path.push_back(name);
         result.push_back({ id, name, submenu_path });
       }
