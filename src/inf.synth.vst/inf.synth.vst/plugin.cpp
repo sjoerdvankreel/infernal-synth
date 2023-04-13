@@ -112,7 +112,7 @@ extern "C" SMTG_EXPORT_SYMBOL
 topology_info* inf_vst_create_topology2(std::int32_t is_instrument)
 { 
   topology_info* result = new synth_vst_topology(is_instrument != 0);
-  topology_info::init(result, part_descriptors, part_type::count, synth_polyphony, synth_max_ui_height);
+  topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
   return result;
 }
 

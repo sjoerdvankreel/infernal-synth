@@ -69,7 +69,7 @@ vaudio_bank_params[audio_bank_param::count] =
 param_descriptor const  
 gaudio_bank_params[audio_bank_param::count] = 
 {
-  { "{85A0A7FB-8319-436E-9979-0A7267F1F636}", { { "On", "Enabled" }, param_kind::block, false, -1, nullptr } },
+  { "{85A0A7FB-8319-436E-9979-0A7267F1F636}", { { "On", "Enabled" }, param_kind::block, false } },
   { "{CD5CD403-259F-4B25-9C33-E246931E973B}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },
   { "{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },
   { "{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },
@@ -82,12 +82,12 @@ gaudio_bank_params[audio_bank_param::count] =
   { "{9F28A209-5A25-4665-BB73-557BE1F3CC05}", { { "Out", "Output 4" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 } } },
   { "{5452CCEE-C962-4239-9F5C-015445598B72}", { { "Out", "Output 5" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 } } },
   { "{E6B0B447-2412-43D1-9BED-66BC67620272}", { { "Out", "Output 6" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 } } },
-  { "{E444E539-65EF-449F-8407-EB128C6082B8}", { { "Amt", "Amount 1" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 12 } },
-  { "{FBCCD63D-1D9A-444C-A622-D9D3E8A771C7}", { { "Amt", "Amount 2" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 13 } },
-  { "{C147FB0B-25A9-44F9-88E2-77CA415F83BB}", { { "Amt", "Amount 3" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 14 } },
-  { "{E394ACC9-DA07-43DF-9BF7-02A57BF3F758}", { { "Amt", "Amount 4" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 15 } },
-  { "{8A1B591B-62AD-4E53-9256-7C4BFB15525F}", { { "Amt", "Amount 5" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 16 } },
-  { "{2D1B1704-9B20-44EE-AC48-E8B09FBA9488}", { { "Amt", "Amount 6" }, "dB", param_kind::continuous, decibel_bounds(2.0f), 17 } },
+  { "{E444E539-65EF-449F-8407-EB128C6082B8}", { { "Amt", "Amount 1" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
+  { "{FBCCD63D-1D9A-444C-A622-D9D3E8A771C7}", { { "Amt", "Amount 2" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
+  { "{C147FB0B-25A9-44F9-88E2-77CA415F83BB}", { { "Amt", "Amount 3" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
+  { "{E394ACC9-DA07-43DF-9BF7-02A57BF3F758}", { { "Amt", "Amount 4" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
+  { "{8A1B591B-62AD-4E53-9256-7C4BFB15525F}", { { "Amt", "Amount 5" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
+  { "{2D1B1704-9B20-44EE-AC48-E8B09FBA9488}", { { "Amt", "Amount 6" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
   { "{3E7BA2FC-2984-4B2F-9936-754BEE44CFCE}", { { "Bal", "Stereo balance 1" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
   { "{D2672F61-8811-420C-A4CA-1ED78D49AC55}", { { "Bal", "Stereo balance 2" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
   { "{10073537-70C6-40FB-8F53-0ABB2C594944}", { { "Bal", "Stereo balance 3" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
