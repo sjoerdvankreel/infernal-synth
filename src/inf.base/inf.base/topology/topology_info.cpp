@@ -1,6 +1,4 @@
 #include <inf.base/topology/topology_info.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
-#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <set>
 #include <memory>
@@ -64,33 +62,25 @@ topology_info::state_check(param_value const* state) const
 // Basically just cram as much stuff as we can that can be statically determined
 // into the topology. Lots of index arrays, saves some loops in the processing call.
 void
-topology_info::init(topology_info* topology, 
-  part_descriptor const* static_parts, std::int32_t part_count, 
-  std::int32_t max_note_events, std::int32_t max_ui_height)
+topology_info::init(
+  topology_info* topology, part_descriptor const* static_parts,
+  std::int32_t part_count, std::int32_t max_note_events)
 {
   assert(part_count > 0);
-  assert(max_ui_height >= 0); 
   assert(max_note_events >= 0);
   assert(static_parts != nullptr);     
 
   topology->input_param_count = 0;
   topology->output_param_count = 0;
   topology->static_parts = static_parts;
-  topology->max_ui_height = max_ui_height;
   topology->static_part_count = part_count;
   topology->max_note_events = max_note_events;
 
-  std::int32_t part_index = 0; 
-  std::int32_t param_index = 0;
-  std::int32_t selector_index = -1;
   bool seen_output = false;
+  std::int32_t part_index = 0;
+  std::int32_t param_index = 0;
   for (std::int32_t t = 0; t < part_count; t++)
   {             
-    if (static_parts[t].kind == part_kind::selector)
-    {
-      assert(selector_index == -1);
-      selector_index = t;
-    }
     assert(!seen_output || static_parts[t].kind == part_kind::output);
     seen_output |= static_parts[t].kind == part_kind::output;
 
@@ -105,11 +95,7 @@ topology_info::init(topology_info* topology,
       std::string runtime_name = type_name;
       if(static_parts[t].kind == part_kind::output) topology->output_param_count += static_parts[t].param_count;
       else topology->input_param_count += static_parts[t].param_count;
-      if (static_parts[t].part_count > 1)
-      {
-        if(static_parts[t].ui->selector_space) runtime_name += " ";
-        runtime_name += std::to_string(i + 1);
-      }
+      if (static_parts[t].part_count > 1) runtime_name += std::to_string(i + 1);
       topology->parts.push_back(part_info({ type_index++, runtime_name, param_index, &static_parts[t] }));
       part_index++;
       param_index += static_parts[t].param_count;
@@ -132,7 +118,6 @@ topology_info::init(topology_info* topology,
     }
   }
 
-  topology->ui_param_dependencies.resize(topology->params.size());
   for (std::size_t p = 0; p < topology->params.size(); p++)
   {
     auto const& this_param = topology->params[p];
@@ -148,27 +133,6 @@ topology_info::init(topology_info* topology,
     topology->param_index_to_id.push_back(hash);
     assert(topology->param_id_to_index.find(hash) == topology->param_id_to_index.end());
     topology->param_id_to_index[hash] = static_cast<std::int32_t>(p);
-
-    // UI relevance mapping.
-    if(this_descriptor.data.ui == nullptr) continue;
-    if(this_descriptor.data.ui->relevance.size() == 0) continue;
-    std::int32_t index = topology->parts[this_param.part_index].type_index;
-    std::int32_t type = topology->parts[this_param.part_index].descriptor->type;
-    for(std::int32_t i = 0; i < this_descriptor.data.ui->relevance.size(); i++)
-    {
-      std::int32_t that_param = this_descriptor.data.ui->relevance[i].if_param;
-      std::int32_t that_index = topology->param_bounds[type][index] + that_param;
-      topology->ui_param_dependencies[that_index].push_back(static_cast<std::int32_t>(p));
-    }
-  }
-
-  if(selector_index != -1)
-  {
-    for (std::int32_t i = 0; i < static_parts[selector_index].param_count; i++)
-      for(std::int32_t j = 0; j < topology->static_part_count; j++)
-        if(j != selector_index && topology->static_parts[j].ui->special_params.selector == i)
-          topology->selector_to_part.push_back(j);
-    assert(static_parts[selector_index].param_count == topology->selector_to_part.size());
   }
 
   // Check for duplicate guids.

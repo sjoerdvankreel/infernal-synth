@@ -10,7 +10,6 @@
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -24,7 +23,6 @@ extern base::param_descriptor const vcv_bank_params[];
 extern base::param_descriptor const vcv_plot_params[];
 extern base::param_descriptor const gcv_bank_params[];
 extern base::param_descriptor const gcv_plot_params[];
-std::vector<base::box_descriptor> cv_bank_borders(std::int32_t param_count);
 
 // for enabled
 inline std::int32_t constexpr cv_bank_param_offset = 1;
@@ -77,14 +75,6 @@ inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_ban
   audio_bank_param::amt4, audio_bank_param::amt5, audio_bank_param::amt6,
   audio_bank_param::bal1, audio_bank_param::bal2, audio_bank_param::bal3, 
   audio_bank_param::bal4, audio_bank_param::bal5, audio_bank_param::bal6 };
-
-// ui
-inline std::vector<base::box_descriptor> const cv_plot_borders = { { 0, 0, 2, 1 } };
-inline std::vector<base::graph_descriptor> const cv_plot_graph_descs = { { -1, "CV", { 0, 1, 2, 3 } } };
-inline std::int32_t const cv_bank_table_col_count = cv_bank_param_type::count;
-inline float const cv_bank_table_col_widths[cv_bank_table_col_count] = { 0.21f, 0.21f, 0.1f, 0.16f, 0.16f, 0.16f };
-inline char const* const cv_bank_table_col_headers[cv_bank_table_col_count] = { "In", "Out", "Op", "Amt", "Off", "Scale" };
-inline base::part_table_descriptor const cv_bank_table = { false, cv_bank_table_col_count, cv_bank_table_col_widths, cv_bank_table_col_headers };
 
 // ---- voice ----
 

@@ -11,14 +11,11 @@
 
 namespace inf::base {
 
-struct param_ui_descriptor;
-
 // Defines how parameters are to be serialized.
 struct param_io_t { enum value { real, discrete, text, count }; };
 typedef param_io_t::value param_io;
 
 // All but real are discrete param types.
-// Mostly just affects the way data is displayed in UI.
 struct param_type_t { enum value { real, toggle, knob, list_knob, text, list, knob_list, count }; };
 typedef param_type_t::value param_type;
 
@@ -179,8 +176,6 @@ struct param_descriptor_data
   param_type const type; // Parameter type.
   char const* const unit; // Parameter unit, e.g. "dB", "Hz".
   param_kind const kind; // Parameter has a fixed value. Don't display in UI and not automatable (useful as modulation target).
-  std::int32_t const ui_index; // Index within the UI grid.
-  param_ui_descriptor const* const ui; // For ui generator. 
   union
   {
     real_descriptor const real; // Real valued specific data.
@@ -197,28 +192,22 @@ struct param_descriptor_data
   bool is_continuous() const { return kind == param_kind::continuous || kind == param_kind::fixed; }
   param_value default_value() const { return type == param_type::real ? param_value(real.default_) : param_value(discrete.default_); }
 
-  // Real.
+  // Toggle.
   param_descriptor_data(
-    item_name const& static_name, char const* unit,
-    param_kind kind, real_descriptor const& real, 
-    std::int32_t ui_index, param_ui_descriptor const* ui) :
-    static_name(static_name), type(param_type::real), unit(unit), 
-    kind(kind), ui_index(ui_index), ui(ui), real(real) {}
+    item_name const& static_name, param_kind kind, bool default_):
+    static_name(static_name), type(param_type::toggle), unit(""), 
+    kind(kind), discrete(discrete_descriptor({ 0, 1, default_ })) {}
 
   // Knob/text.
   param_descriptor_data(
     item_name const& static_name, char const* unit, param_kind kind,
-    param_type type, discrete_descriptor const& discrete,
-    std::int32_t ui_index, param_ui_descriptor const* ui) :
-    static_name(static_name), type(type), unit(unit),
-    kind(kind), ui_index(ui_index), ui(ui), discrete(discrete) {}
+    param_type type, discrete_descriptor const& discrete) :
+    static_name(static_name), type(type), unit(unit), kind(kind), discrete(discrete) {}
 
-  // Toggle.
+  // Real.
   param_descriptor_data(
-    item_name const& static_name, param_kind kind, bool default_, 
-    std::int32_t ui_index, param_ui_descriptor const* ui) :
-    static_name(static_name), type(param_type::toggle), unit(""), kind(kind),
-    ui_index(ui_index), ui(ui), discrete(discrete_descriptor({ 0, 1, default_ })) {}
+    item_name const& static_name, char const* unit, param_kind kind, real_descriptor const& real) :
+    static_name(static_name), type(param_type::real), unit(unit), kind(kind), real(real) {}
 };
 
 // Ties a parameter descriptor to an actual parameter id.

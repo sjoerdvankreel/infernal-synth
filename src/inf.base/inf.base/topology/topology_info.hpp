@@ -38,10 +38,6 @@ struct part_info
 // Also acts as entry point into the plugin.
 struct topology_info
 {
-  // For ui generator.
-  std::int32_t max_ui_height; // Max controller ui height.
-  std::vector<std::vector<std::int32_t>> ui_param_dependencies; // Toggles visibility.
-
   part_descriptor const* static_parts; // Static description of audio processor.
   std::int32_t static_part_count; // Part count in static description.
   std::int32_t max_note_events = 0; // Not necessarily the same as polyphony.
@@ -54,7 +50,6 @@ struct topology_info
   std::vector<std::vector<std::int32_t>> part_bounds; // Runtime part bounds, e.g. bounds[part_type::osc][1] indexes osc 2 part.
   std::vector<std::vector<std::int32_t>> param_bounds; // Runtime parameter bounds, e.g. bounds[part_type::osc][1] indexes osc 2 wave param.
   std::vector<part_id> inverse_bounds; // Runtime inverse param bounds, e.g. bounds[123] = (part_type::env, 2).
-  std::vector<std::int32_t> selector_to_part; // E.g. selector 1 activates selection of part_type::lfo. Static part index.
 
   // Internally all parameters are handled by index, but
   // they are exposed to the vst3 binding as the hash of the parameter guid.
@@ -84,9 +79,9 @@ struct topology_info
   void state_check(param_value const* state) const;
 
   // Output params must follow input params.
-  static void init(topology_info* topology,
-    part_descriptor const* static_parts, std::int32_t part_count,
-    std::int32_t max_notes, std::int32_t max_ui_height);
+  static void init(
+    topology_info* topology, part_descriptor const* static_parts, 
+    std::int32_t part_count, std::int32_t max_notes);
 
   // Plugin entry.
   virtual ~topology_info() {}

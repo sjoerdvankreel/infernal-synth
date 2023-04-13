@@ -3,7 +3,6 @@
 
 #include <inf.synth/synth/config.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -12,8 +11,6 @@
 namespace inf::synth {
 
 // ---- shared ----
-
-std::vector<base::box_descriptor> audio_bank_borders();
   
 struct audio_bank_param_type_t { enum value { in, out, amt, bal, count }; };
 typedef audio_bank_param_type_t::value audio_bank_param_type;
@@ -27,11 +24,6 @@ inline std::int32_t constexpr audio_bank_param_offset = 1; // for enabled
 inline std::int32_t constexpr audio_bank_vgaudio_param_on = 0; // On/off must be 0.
 inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; // On/off must be 0.
 inline std::int32_t constexpr audio_bank_route_count = (audio_bank_param::count - audio_bank_param_offset) / audio_bank_param_type::count;
-
-inline std::int32_t const audio_bank_table_col_count = audio_bank_route_count + 1;
-inline float const audio_bank_table_col_widths[audio_bank_table_col_count] = { 0.1f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f };
-inline char const* const audio_bank_table_row_headers[audio_bank_param_type::count] = { "In", "Out", "Amt", "Bal" };
-inline base::part_table_descriptor const audio_bank_table = { true, audio_bank_table_col_count, audio_bank_table_col_widths, audio_bank_table_row_headers };
 
 // ---- voice ----
 

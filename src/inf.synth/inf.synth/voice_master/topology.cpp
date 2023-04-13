@@ -1,6 +1,5 @@
 #include <inf.synth/voice_master/topology.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.base/topology/param_ui_descriptor.hpp>
 
 using namespace inf::base;
 
@@ -17,15 +16,6 @@ static std::vector<list_item> const master_modes = {
   { "{CF05B74A-F96C-47DF-B908-39477BB6A14B}", "Poly" },
   { "{5EFD4121-52DC-43F2-A853-CC4DB9F8342F}", "Mono" }, 
   { "{49996567-D045-488B-85D0-97EC55FE8CDB}", "Rlease" } };
-
-static param_ui_descriptor const master_port_sync_ui = { false, 0.0f, {
-  { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } }, 
-  { master_param::port_sync, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const master_port_time_ui = { false, 0.0f, {
-  { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } },
-  { master_param::port_sync, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const master_port_on_ui = { false, 0.0f, {
-  { master_param::port_mode, [](std::int32_t v) { return v != master_port_mode::off; } } } }; 
 
 static std::vector<time_signature> const master_port_timesig = synced_timesig(false, { 4, 1 }, {
   { timesig_type::one_over, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 32, 64 } },

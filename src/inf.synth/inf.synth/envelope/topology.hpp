@@ -2,7 +2,6 @@
 #define INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -26,14 +25,6 @@ struct envelope_mode_t { enum value { legato, retrig, multi }; };
 struct envelope_type_t { enum value { sustain, release, follow, count }; };
 typedef envelope_type_t::value envelope_type;
 typedef envelope_mode_t::value envelope_mode;
-
-inline char const* 
-envelope_item_info(std::int32_t index)
-{ return index > 0? nullptr: "Amp"; }; 
-std::vector<base::graph_descriptor> const envelope_graphs =
-{ { -1, "Envelope", { 0, 1, 3, 3 } } };
-std::vector<base::box_descriptor> const envelope_borders =
-{ { 0, 0, 2, 1 }, { 2, 0, 3, 1 }, { 5, 0, 3, 1 }, { 3, 1, 5, 1 }, { 3, 2, 5, 1 }, { 3, 3, 5, 1 } };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_ENVELOPE_TOPOLOGY_HPP

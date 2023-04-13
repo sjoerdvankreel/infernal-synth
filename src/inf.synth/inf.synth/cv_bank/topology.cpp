@@ -3,26 +3,12 @@
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.base/topology/param_ui_descriptor.hpp>
 
 #include <ranges>
 
 using namespace inf::base;
 
 namespace inf::synth {
-
-std::vector<box_descriptor> cv_bank_borders(std::int32_t param_count) 
-{ 
-  std::vector<box_descriptor> result;
-  std::int32_t row_span = (param_count - cv_bank_param_offset) / cv_bank_table_col_count;
-  result.push_back(box_descriptor({ 0, 0, 1, 2 }));
-  result.push_back(box_descriptor({ 0, 2, 1, 2 })); 
-  result.push_back(box_descriptor({ 0, 4, 1, 2 }));
-  result.push_back(box_descriptor({ 1, 0, row_span, 2 }));
-  result.push_back(box_descriptor({ 1, 2, row_span, 2 })); 
-  result.push_back(box_descriptor({ 1, 4, row_span, 2 }));
-  return result;  
-}  
 
 // operation
 static std::vector<list_item> const cv_route_input_ops = {   
@@ -137,12 +123,6 @@ static list_item const vgcv_route_effect_targets[vgcv_route_effect_target::count
   { "{AA53FF25-0415-4890-A061-0B9563AC4C82}", "Rev Sprd" },
   { "{BCD6370B-D963-449F-B091-EE36C9893864}", "Rev Dmp" },
   { "{FD8D3763-B1C0-4F86-8985-8483D523815B}", "Rev APF" } };
-   
-// text spacing
-static bool const gcv_route_input_spaces[gcv_route_input::count] = { true, false, false, false }; 
-static bool const gcv_route_output_spaces[gcv_route_output::count] = { true, false, false, true };
-static bool const vcv_route_output_spaces[vcv_route_output::count] = { true, true, false, false, true };
-static bool const vcv_route_input_spaces[vcv_route_input::count] = { true, true, true, true, true, false, false, false, false, false, false, false };
 
 // output targets  
 static list_item const* const gcv_route_output_targets[gcv_route_output::count] = {
@@ -150,24 +130,17 @@ static list_item const* const gcv_route_output_targets[gcv_route_output::count] 
 static list_item const* const vcv_route_output_targets[vcv_route_output::count] = {
   nullptr, vcv_route_vosc_targets, vgcv_route_effect_targets, vcv_route_audio_bank_targets, vgcv_route_amp_targets };
 static std::vector<list_item> const vcv_route_output_target_list = zip_list_items( 
-  vcv_route_outputs, vcv_route_output_spaces, vcv_route_output_counts,
-  vcv_route_output_targets, vcv_route_output_target_counts, vcv_route_output::count);
+  vcv_route_outputs, vcv_route_output_counts, vcv_route_output_targets, vcv_route_output_target_counts, vcv_route_output::count);
 static std::vector<list_item> const gcv_route_output_target_list = zip_list_items(
-  gcv_route_outputs, gcv_route_output_spaces, gcv_route_output_counts,
-  gcv_route_output_targets, gcv_route_output_target_counts, gcv_route_output::count);
+  gcv_route_outputs, gcv_route_output_counts, gcv_route_output_targets, gcv_route_output_target_counts, gcv_route_output::count);
 
 // input sources
 static char const* const vcv_route_input_suffixes[vcv_route_input::count] = {
   nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
-static list_item_info const vcv_route_input_infos[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, envelope_item_info, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 static std::vector<list_item> const vcv_route_input_sources_list = multi_list_items(
-  vcv_route_inputs, vcv_route_input_infos, vcv_route_input_spaces, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
+  vcv_route_inputs, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
 static std::vector<list_item> const gcv_route_input_sources_list = multi_list_items(
-  gcv_route_inputs, nullptr, gcv_route_input_spaces, nullptr, gcv_route_input_counts, gcv_route_input::count, false);
-   
-// plot params
-static param_ui_descriptor const cv_plot_tgt_ui = { true, 0.0f, {} };
+  gcv_route_inputs,  nullptr, gcv_route_input_counts, gcv_route_input::count, false);
 
 param_descriptor const
 vcv_plot_params[cv_plot_param::count] =

@@ -2,7 +2,6 @@
 #define INF_SYNTH_LFO_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -26,9 +25,6 @@ struct lfo_param_t { enum value {
   custom_delay1, custom_rise1, custom_rise1_slope, custom_hold1, custom_fall1, custom_fall1_slope,
   custom_delay2, custom_fall2, custom_fall2_slope, custom_hold2, custom_rise2, custom_rise2_slope, count }; };
 typedef lfo_param_t::value lfo_param;
-
-inline std::vector<base::graph_descriptor> const lfo_graphs = { { -1, "LFO", { 0, 1, 3, 3 } } };
-inline std::vector<base::box_descriptor> const lfo_borders = { { 0, 0, 3, 1 }, { 3, 0, 4, 1 }, { 3, 1, 4, 3 } };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_LFO_TOPOLOGY_HPP

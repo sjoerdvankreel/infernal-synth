@@ -1,7 +1,6 @@
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.base/topology/param_ui_descriptor.hpp>
 
 using namespace inf::base;
 
@@ -24,9 +23,6 @@ static std::vector<time_signature> const envelope_timesig = synced_timesig(true,
   { timesig_type::over_one, { 1, 2, 3, 4, 5, 6, 7, 8 } } });
 std::vector<float> const envelope_timesig_values = synced_timesig_values(envelope_timesig);
 static std::vector<std::string> const envelope_timesig_names = synced_timesig_names(envelope_timesig); 
-
-static param_ui_descriptor const envelope_time_ui = { false, 0.0f, { { envelope_param::synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const envelope_sync_ui = { false, 0.0f, { { envelope_param::synced, [](std::int32_t v) { return v != 0; } } } };
 
 param_descriptor const
 envelope_params[envelope_param::count] =

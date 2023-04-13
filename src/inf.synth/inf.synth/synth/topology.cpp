@@ -18,8 +18,6 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-static part_ui_colors make_part_ui_colors();
-
 // ---- plugin entry ----
 
 std::unique_ptr<base::audio_processor>
@@ -381,16 +379,16 @@ struct active_param_t { enum value {
   venv, vlfo, glfo, vcv_bank, gcv_bank, count }; };
 typedef active_param_t::value active_param;
 
-static std::vector<std::string> const active_vosc_tab_items = list_tab_items(nullptr, vosc_count);
-static std::vector<std::string> const active_veffect_tab_items = list_tab_items(nullptr, veffect_count);
-static std::vector<std::string> const active_geffect_tab_items = list_tab_items(nullptr, geffect_count);
-static std::vector<std::string> const active_vaudio_bank_tab_items = list_tab_items(nullptr, vaudio_bank_count);
-static std::vector<std::string> const active_gaudio_bank_tab_items = list_tab_items(nullptr, gaudio_bank_count);
-static std::vector<std::string> const active_venv_tab_items = list_tab_items(envelope_item_info, venv_count);
-static std::vector<std::string> const active_vlfo_tab_items = list_tab_items(nullptr, vlfo_count);
-static std::vector<std::string> const active_glfo_tab_items = list_tab_items(nullptr, glfo_count);
-static std::vector<std::string> const active_vcv_bank_tab_items = list_tab_items(nullptr, vcv_bank_count);
-static std::vector<std::string> const active_gcv_bank_tab_items = list_tab_items(nullptr, gcv_bank_count);
+static std::vector<std::string> const active_vosc_tab_items = list_tab_items(vosc_count);
+static std::vector<std::string> const active_veffect_tab_items = list_tab_items(veffect_count);
+static std::vector<std::string> const active_geffect_tab_items = list_tab_items(geffect_count);
+static std::vector<std::string> const active_vaudio_bank_tab_items = list_tab_items(vaudio_bank_count);
+static std::vector<std::string> const active_gaudio_bank_tab_items = list_tab_items(gaudio_bank_count);
+static std::vector<std::string> const active_venv_tab_items = list_tab_items(venv_count);
+static std::vector<std::string> const active_vlfo_tab_items = list_tab_items(vlfo_count);
+static std::vector<std::string> const active_glfo_tab_items = list_tab_items(glfo_count);
+static std::vector<std::string> const active_vcv_bank_tab_items = list_tab_items(vcv_bank_count);
+static std::vector<std::string> const active_gcv_bank_tab_items = list_tab_items(gcv_bank_count);
 
 static std::vector<list_item> const active_vosc_items = list_items({ "{3B2713C0-6DFF-4257-9CB4-DF5FD0DA603C}", "Osc" }, nullptr, true, vosc_count);
 static std::vector<list_item> const active_veffect_items = list_items({ "{33BB6F1B-3D4F-4D58-998D-417DA711D6C2}", "FX A" }, nullptr, false, veffect_count);
@@ -420,35 +418,6 @@ active_params[active_param::count] =
 
 // ---- global topo ----
 
-static part_ui_colors const part_colors = make_part_ui_colors();
- 
-static special_params_descriptor const vlfo_special = { lfo_param::on, 0, active_param::vlfo };
-static special_params_descriptor const glfo_special = { lfo_param::on, 0, active_param::glfo };
-static special_params_descriptor const vosc_special = { osc_param::on, 0, active_param::vosc };
-static special_params_descriptor const venv_special = { envelope_param::on, 1, active_param::venv };
-static special_params_descriptor const vcv_special = { vcv_bank_param::on, 0, active_param::vcv_bank }; 
-static special_params_descriptor const gcv_special = { gcv_bank_param::on, 0, active_param::gcv_bank };
-static special_params_descriptor const veffect_special = { effect_param::on, 0, active_param::veffect };
-static special_params_descriptor const geffect_special = { effect_param::on, 0, active_param::geffect };
-static special_params_descriptor const vaudio_bank_special = { audio_bank_param::on, 0, active_param::vaudio_bank };      
-static special_params_descriptor const gaudio_bank_special = { audio_bank_param::on, 1, active_param::gaudio_bank };                   
-           
-static part_ui_descriptor const vosc_ui = { 4, vosc_special, osc_graphs, part_colors, osc_borders, nullptr, connector_direction::right, "background_oscillator.png", 50, "", true};
-static part_ui_descriptor const veffect_ui = { 4, veffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "background_fx_a.png", 200, "", false};
-static part_ui_descriptor const geffect_ui = { 4, geffect_special, effect_graphs, part_colors, effect_borders, nullptr, connector_direction::none, "background_fx_b.png", 100, "Global", false };
-static part_ui_descriptor const vaudio_bank_ui = { 4, vaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right, "background_audio_a.png", 250, "", false};
-static part_ui_descriptor const gaudio_bank_ui = { 4, gaudio_bank_special, { }, part_colors, audio_bank_borders(), &audio_bank_table, connector_direction::left_right | connector_direction::down, "background_audio_b.png", 150, "Global", false};
-static part_ui_descriptor const voice_ui = { 4, part_no_special, voice_graphs, part_colors, voice_borders, nullptr, connector_direction::down, "background_voice.png", 150, "", true};
-static part_ui_descriptor const master_ui = { 4, part_no_special, master_graphs, part_colors, master_borders, nullptr, connector_direction::left, "background_master.png", 200, "Global", true};
-static part_ui_descriptor const venv_ui = { 4, venv_special, envelope_graphs, part_colors, envelope_borders, nullptr, connector_direction::up, "background_envelope.png", 200, "", true };
-static part_ui_descriptor const vlfo_ui = { 4, vlfo_special, lfo_graphs, part_colors, lfo_borders, nullptr,  connector_direction::right, "background_lfo_a.png", 150, "", false };
-static part_ui_descriptor const glfo_ui = { 4, glfo_special, lfo_graphs, part_colors, lfo_borders, nullptr, connector_direction::none, "background_lfo_b.png", 150, "Global", false };
-static part_ui_descriptor const vcv_bank_ui = { 4, vcv_special, { }, part_colors, cv_bank_borders(vcv_bank_param::count), &cv_bank_table, connector_direction::up, "background_cv_a.png", 150, "", false};
-static part_ui_descriptor const gcv_bank_ui = { 4, gcv_special, { }, part_colors, cv_bank_borders(gcv_bank_param::count), &cv_bank_table, connector_direction::up | connector_direction::halfway_left_up, "background_cv_b.png", 100, "Global", false};
-static part_ui_descriptor const vcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "background_cv_a_plot.png", 175, "", true };
-static part_ui_descriptor const gcv_plot_ui = { 4, part_no_special, cv_plot_graph_descs, part_colors, cv_plot_borders, nullptr, connector_direction::none, "background_cv_b_plot.png", 200, "Global", true};
-static part_ui_descriptor const output_ui = { 4, part_no_special, { }, part_colors, output_borders, &output_table, connector_direction::down, "background_output.png", 275, "Global", true};
-                   
 part_descriptor const                                  
 part_descriptors[part_type::count] =                                             
 {                       
@@ -468,135 +437,6 @@ part_descriptors[part_type::count] =
   { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "CV B Plot", "CV Bank B Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, 3, &gcv_plot_ui },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, -1, nullptr },
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, 2, &output_ui }
-};                 
- 
-part_ui_colors make_part_ui_colors()
-{
-  // No statics, must be in function body because static initialization order.
-
-  ui_color const black = 0xFF000000;
-  ui_color const white = 0xFFFFFFFF;  
-  ui_color const transparent = 0x00000000;
-  ui_color const background = 0xFF6D787E;
-  ui_color const foreground1 = ui_color(0xFFFD9A4D); 
-  ui_color const foreground2 = ui_color(0xFFD1DDE4).darken(0.85f);
-  ui_color const foreground3 = ui_color(0xFF29A5BB); 
-    
-  ui_color const label_color = foreground2;
-  ui_color const border_color = background.darken(0.6f);
-  ui_color const info_label_color = foreground1;
-  ui_color const header_label_color = foreground1;  
-  ui_color const connector_color = foreground1;  
-  ui_color const edit_font_color = foreground2.darken(0.85f); 
-  ui_color const edit_back_color = black.alpha(0x50);
-  ui_color const menu_font_color = foreground1.darken(0.9f);
-  ui_color const menu_back_color = foreground3.darken(0.4).alpha(0x80); 
-  ui_color const knob_menu_font_color = foreground2.darken(0.85f);
-  ui_color const knob_menu_back_color = black.alpha(0x60); 
-  ui_color const table_menu_font_color = foreground2.darken(0.85f);
-  ui_color const table_menu_back_color = black.alpha(0x60);
-  ui_color const check_mark_color = foreground1.alpha(0xC0);  
-  ui_color const check_fill_color = black.alpha(0x80);   
-  ui_color const check_frame_color = foreground3; 
-  ui_color const knob_fill_color = background.darken(0.5f); 
-  ui_color const knob_marker_color = foreground1.darken(0.9f);
-  ui_color const knob_drag_color = foreground3; 
-  ui_color const knob_inner_color = foreground2.darken(0.8f);
-  ui_color const knob_outer_color = background.darken(0.25f);
-  ui_color const knob_light_color = white;  
-  ui_color const knob_shadow_color = black;   
-  ui_color const graph_line_color = foreground3; 
-  ui_color const graph_area_color = foreground3.alpha(0xC0);  
-  ui_color const graph_grid_color = foreground1.alpha(0x18);    
-  ui_color const graph_fill_color = transparent;   
-  ui_color const graph_frame_color = background.darken(0.6f); 
-  ui_color const param_back_color = background.alpha(0x28);
-  ui_color const param_frame_color = background.darken(0.75f).alpha(0x60); 
-  ui_color const header_back_color = foreground1.darken(0.25f).alpha(0x40);
-  ui_color const header_frame_color = background.alpha(0xA0);  
-  ui_color const container_back_color = black.alpha(0xC0);   
-  ui_color const container_frame_color = background.darken(0.5f); 
-  ui_color const tab_header_font_color = foreground1;   
-  ui_color const tab_font_color = foreground2.darken(0.85f); 
-  ui_color const tab_active_font_color = foreground2;   
-  ui_color const tab_inner_frame_color = background.darken(0.33f);
-  ui_color const tab_outer_frame_color = background.darken(0.67f);  
-  ui_color const tab_back_color = background.darken(0.1f).alpha(0xC0);  
-  ui_color const tab_active_back_color = background.darken(0.5f).alpha(0x80);
-  ui_color const header_check_mark_color = foreground1.alpha(0xC0);
-  ui_color const header_check_fill_color = black.alpha(0x80);     
-  ui_color const header_check_frame_color = foreground3; 
-
-  return { 
-    { "label", label_color },
-    { "border", border_color },
-    { "info_label", info_label_color },
-    { "header_label", header_label_color },
-    { "connector", connector_color },
-    { 
-      { "knob_fill", knob_fill_color },
-      { "knob_marker", knob_marker_color },
-      { "knob_drag", knob_drag_color },
-      { "knob_inner", knob_inner_color },
-      { "knob_outer", knob_outer_color },
-      { "knob_light", knob_light_color },
-      { "knob_shadow", knob_shadow_color }
-    },
-    { 
-      { "graph_line", graph_line_color },
-      { "graph_area", graph_area_color },
-      { "graph_grid", graph_grid_color },
-      { "graph_fill", graph_fill_color },
-      { "graph_frame", graph_frame_color }
-    },
-    { 
-      { "edit_font", edit_font_color },
-      { "edit_back", edit_back_color }
-    },
-    { 
-      { "menu_font", menu_font_color },
-      { "menu_back", menu_back_color }
-    },
-    { 
-      { "knob_menu_font", knob_menu_font_color },
-      { "knob_menu_back", knob_menu_back_color }
-    },
-    { 
-      { "table_menu_font", table_menu_font_color },
-      { "table_menu_back", table_menu_back_color }
-    },
-    { 
-      { "tab_header_font", tab_header_font_color },
-      { "tab_font", tab_font_color },
-      { "tab_back", tab_back_color },
-      { "tab_inner_frame", tab_inner_frame_color },
-      { "tab_active_font", tab_active_font_color },
-      { "tab_active_back", tab_active_back_color },
-      { "tab_outer_frame", tab_outer_frame_color }
-    },
-    { 
-      { "check_mark", check_mark_color },
-      { "check_fill", check_fill_color },
-      { "check_frame", check_frame_color }
-    }, 
-    { 
-      { "header_check_mark", header_check_mark_color },
-      { "header_check_fill", header_check_fill_color },
-      { "header_check_frame", header_check_frame_color }
-    },
-    { 
-      { "param_back", param_back_color },
-      { "param_frame", param_frame_color }
-    },
-    { 
-      { "container_back", container_back_color },
-      { "container_frame", container_frame_color }
-    },
-    { 
-      { "header_back", header_back_color },
-      { "header_frame", header_frame_color }
-    }
-  };
-}
+};         
                                     
 } // namespace inf::synth                               

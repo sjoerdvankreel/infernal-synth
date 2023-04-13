@@ -2,7 +2,6 @@
 #define INF_SYNTH_EFFECT_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -36,11 +35,6 @@ typedef effect_filter_type_t::value effect_filter_type;
 typedef effect_shaper_type_t::value effect_shaper_type;
 typedef effect_shp_over_order_t::value effect_shp_over_order;
 typedef effect_flt_stvar_type_t::value effect_flt_stvar_type;
-
-inline std::vector<base::graph_descriptor> const& effect_graphs = {
-{ effect_graph::graph1, "Filter IR/Shaper ramp/Delay left/Reverb left", { 0, 2, 4, 1 } },
-{ effect_graph::graph2, "Filter FR/Shaper spectrum/Delay right/Reverb right", { 0, 3, 4, 1 } } };
-inline std::vector<base::box_descriptor> const effect_borders = { { 0, 0, 1, 2 }, { 1, 0, 3, 2 } };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_TOPOLOGY_HPP

@@ -1,5 +1,4 @@
 #include <inf.synth/output/topology.hpp>
-#include <inf.base/topology/param_ui_descriptor.hpp>
 
 using namespace inf::base;
 
@@ -18,9 +17,6 @@ static std::vector<list_item> const usage_sources = {
   { "{B7B01269-A8B2-4F34-A3F8-E66A5DC07B22}", "LFO B" },
   { "{2579F57B-4E61-4727-8EC5-766F4711FA2D}", "FX A" },
   { "{26C05CA1-6B5C-4B78-B2CB-662B43EF72AC}", "FX B" } };
-
-param_ui_descriptor const high_mod_ui = { false, 0.3f, {} };
-param_ui_descriptor const high_usage_ui = { false, 0.6f, {} };
           
 param_descriptor const  
 output_params[output_param::count] =         
