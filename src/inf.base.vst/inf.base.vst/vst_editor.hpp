@@ -26,18 +26,18 @@ public Steinberg::Vst::EditorView
   juce::Component* get_ui() const { return _ui.get()->get(); }
   bool have_ui() const { return _ui && _ui.get() && _ui.get()->get(); }
 
+protected:
+  explicit vst_editor(vst_controller* controller);
+  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(std::int32_t width) = 0;
+
 public:
   ~vst_editor() override;
   tresult PLUGIN_API removed() override;
   tresult PLUGIN_API onSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
+  tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultTrue; }
-  tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override { return Steinberg::kResultTrue; }
-
-protected:
-  explicit vst_editor(vst_controller* controller);
-  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(juce::Point<std::int32_t> const& size) = 0;
 };
 
 } // namespace inf::base::vst

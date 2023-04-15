@@ -16,9 +16,9 @@ create_content(plugin_controller* controller)
 }
 
 std::unique_ptr<root_element>
-create_synth_ui(plugin_controller* controller, Point<std::int32_t> const& size)
+create_synth_ui(plugin_controller* controller, std::int32_t width)
 {
-  auto result = create_root_ui(controller, size);
+  auto result = create_root_ui(controller, width);
   result->content(create_content(controller));
   return result;
 }

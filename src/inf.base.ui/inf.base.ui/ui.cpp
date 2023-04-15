@@ -15,11 +15,13 @@ ui_element::render()
 Component* 
 root_element::render_core()
 {
+  std::int32_t w = _width;
+  std::int32_t h = w * 2 / 3;
   Component* result = new root_component;
   result->setOpaque(true);
-  result->setBounds(0, 0, _size.x, _size.y);
+  result->setBounds(0, 0, w, h);
   Component* content = _content->render();
-  content->setBounds(0, 0, _size.x, _size.y);
+  content->setBounds(0, 0, w, h);
   result->addChildComponent(content);
   return result;
 }

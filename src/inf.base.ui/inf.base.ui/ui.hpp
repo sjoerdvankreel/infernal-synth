@@ -82,19 +82,19 @@ public:
 class root_element:
 public ui_element
 {
-  juce::Point<std::int32_t> const _size; // Pixel size.
+  std::int32_t const _width; // Pixel size.
   std::unique_ptr<ui_element> _content = {};
 protected:
   juce::Component* render_core() override;
 public:
-  root_element(plugin_controller* controller, juce::Point<std::int32_t> const& size): 
-  ui_element(controller), _size(size) {}
+  root_element(plugin_controller* controller, std::int32_t width):
+  ui_element(controller), _width(width) {}
   void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
 };
 
 inline std::unique_ptr<root_element>
-create_root_ui(plugin_controller* controller, juce::Point<std::int32_t> const& size)
-{ return std::make_unique<root_element>(controller, size); }
+create_root_ui(plugin_controller* controller, std::int32_t width)
+{ return std::make_unique<root_element>(controller, width); }
 
 } // namespace inf::base::ui
 

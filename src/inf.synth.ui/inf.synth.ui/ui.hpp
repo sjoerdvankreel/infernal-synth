@@ -10,9 +10,7 @@
 namespace inf::synth::ui {
 
 std::unique_ptr<inf::base::ui::root_element>
-create_synth_ui(
-  inf::base::plugin_controller* controller, 
-  juce::Point<std::int32_t> const& size);
+create_synth_ui(inf::base::plugin_controller* controller, std::int32_t width);
 
 } // inf::synth::ui 
 #endif // INF_SYNTH_UI_UI_HPP

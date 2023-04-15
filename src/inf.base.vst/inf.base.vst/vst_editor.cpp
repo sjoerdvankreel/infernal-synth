@@ -43,14 +43,27 @@ vst_editor::removed()
   return EditorView::removed();
 }
 
+tresult PLUGIN_API 
+vst_editor::checkSizeConstraint(ViewRect* view_rect)
+{
+  if(!have_ui() || !view_rect)
+    return EditorView::checkSizeConstraint(view_rect);
+  std::int32_t nw = view_rect->getWidth();
+  std::int32_t ow = get_ui()->getWidth();
+  std::int32_t oh = get_ui()->getHeight();
+  view_rect->top = 0;
+  view_rect->left = 0;
+  view_rect->right = static_cast<double>(oh) / ow * nw;
+  return EditorView::checkSizeConstraint(view_rect);
+}
+
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
   if (!have_ui()) return EditorView::onSize(new_size);
-  int32 nw = new_size->getWidth();
   int32 nh = new_size->getHeight();
   get_ui()->removeFromDesktop();
-  _ui = create_ui(juce::Point<std::int32_t>(nw, nh));
+  _ui = create_ui(new_size->getWidth());
   _ui->render();
   get_ui()->addToDesktop(0, systemWindow);
   return EditorView::onSize(new_size);
@@ -61,7 +74,7 @@ vst_editor::attached(void* parent, FIDString type)
 {
   assert(plugFrame);
   MessageManager::getInstance();
-  _ui = create_ui(juce::Point<std::int32_t>(rect.getWidth(), rect.getHeight()));
+  _ui = create_ui(rect.getWidth());
   _ui->render();
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);
