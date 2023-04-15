@@ -24,8 +24,6 @@ public Steinberg::Vst::EditorView
 
   vst_controller* const _controller;
   std::unique_ptr<inf::base::ui::root_element> _ui = {};
-
-  void update_plug_view();
   juce::Component* get_ui() const { return _ui.get()->get(); }
   bool have_ui() const { return _ui && _ui.get() && _ui.get()->get(); }
 
