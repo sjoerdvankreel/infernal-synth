@@ -54,7 +54,7 @@ public:
   cell_element(controller, bounds), _part_id(part_id), _param_index(param_index) {}
 };
 
-std::unique_ptr<param_element>
+inline std::unique_ptr<param_element>
 create_param_ui(plugin_controller* controller,
   std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
   std::int32_t row, std::int32_t column, std::int32_t row_span = 1, std::int32_t column_span = 1)
@@ -92,7 +92,7 @@ public:
   void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
 };
 
-std::unique_ptr<root_element>
+inline std::unique_ptr<root_element>
 create_root_ui(plugin_controller* controller, juce::Point<std::int32_t> const& size)
 { return std::make_unique<root_element>(controller, size); }
 

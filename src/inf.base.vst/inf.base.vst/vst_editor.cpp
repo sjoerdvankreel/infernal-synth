@@ -35,7 +35,7 @@ EditorView(controller)
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
 {
-  if (have_ui()) return kResultFalse;
+  if (!have_ui()) return kResultFalse;
   int cw = _ui.get()->get()->getWidth();
   int ch = _ui.get()->get()->getHeight();
   new_rect->right = new_rect->left + cw;
@@ -46,7 +46,7 @@ vst_editor::checkSizeConstraint(ViewRect* new_rect)
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
-  if (have_ui()) return EditorView::onSize(new_size);
+  if (!have_ui()) return EditorView::onSize(new_size);
   int cw = get_ui()->getWidth();
   int ch = get_ui()->getHeight();
   int cx = get_ui()->getScreenX();
@@ -78,6 +78,7 @@ vst_editor::attached(void* parent, FIDString type)
   assert(plugFrame);
   MessageManager::getInstance();
   _ui = create_ui(juce::Point<std::int32_t>(rect.getWidth(), rect.getHeight()));
+  _ui->render();
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
