@@ -26,7 +26,7 @@ vst_editor::
 
 vst_editor::
 vst_editor(vst_controller* controller):
-EditorView(controller)
+EditorView(controller), _controller(controller)
 #if __linux__
 , _impl(std::make_unique<impl>())
 #endif // __linux__
@@ -43,25 +43,21 @@ vst_editor::removed()
   return EditorView::removed();
 }
 
-tresult PLUGIN_API 
-vst_editor::checkSizeConstraint(ViewRect* view_rect)
+tresult PLUGIN_API
+vst_editor::getSize(ViewRect* new_size)
 {
-  if(!have_ui() || !view_rect)
-    return EditorView::checkSizeConstraint(view_rect);
-  std::int32_t nw = view_rect->getWidth();
-  std::int32_t ow = get_ui()->getWidth();
-  std::int32_t oh = get_ui()->getHeight();
-  view_rect->top = 0;
-  view_rect->left = 0;
-  view_rect->right = static_cast<double>(oh) / ow * nw;
-  return EditorView::checkSizeConstraint(view_rect);
+  if(!have_ui()) return EditorView::getSize(new_size);
+  new_size->top = rect.top;
+  new_size->left = rect.left;
+  new_size->right = rect.left + get_ui()->getWidth();
+  new_size->bottom = rect.top + get_ui()->getHeight();
+  return kResultTrue;
 }
 
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
   if (!have_ui()) return EditorView::onSize(new_size);
-  int32 nh = new_size->getHeight();
   get_ui()->removeFromDesktop();
   _ui = create_ui(new_size->getWidth());
   _ui->render();
@@ -72,7 +68,7 @@ vst_editor::onSize(ViewRect* new_size)
 tresult PLUGIN_API
 vst_editor::attached(void* parent, FIDString type)
 {
-  assert(plugFrame);
+  if(!plugFrame) return EditorView::attached(parent, type);
   MessageManager::getInstance();
   _ui = create_ui(rect.getWidth());
   _ui->render();
@@ -92,6 +88,17 @@ vst_editor::isPlatformTypeSupported(FIDString type)
   if (std::strcmp(type, kPlatformTypeHWND) == 0) return kResultTrue;
   if (std::strcmp(type, kPlatformTypeX11EmbedWindowID) == 0) return kResultTrue;
   return kResultFalse;
+}
+
+tresult PLUGIN_API
+vst_editor::checkSizeConstraint(ViewRect* new_size)
+{
+  if (!have_ui() || !new_size) return EditorView::checkSizeConstraint(new_size);
+  if (new_size->getWidth() < _controller->editor_min_width())
+    new_size->right = new_size->left + _controller->editor_min_width();
+  double aspect_ratio = get_ui()->getWidth() / get_ui()->getHeight();
+  new_size->bottom = new_size->top + static_cast<std::int32_t>(std::ceil(new_size->getWidth() / aspect_ratio));
+  return kResultTrue;
 }
 
 } // namespace inf::base::vst

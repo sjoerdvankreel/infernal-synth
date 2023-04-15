@@ -22,22 +22,24 @@ public Steinberg::Vst::EditorView
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
 
+  vst_controller* const _controller;
   std::unique_ptr<inf::base::ui::root_element> _ui = {};
   juce::Component* get_ui() const { return _ui.get()->get(); }
   bool have_ui() const { return _ui && _ui.get() && _ui.get()->get(); }
-
-protected:
-  explicit vst_editor(vst_controller* controller);
-  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(std::int32_t width) = 0;
 
 public:
   ~vst_editor() override;
   tresult PLUGIN_API removed() override;
   tresult PLUGIN_API onSize(ViewRect* new_size) override;
+  tresult PLUGIN_API getSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
   tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultTrue; }
+
+protected:
+  explicit vst_editor(vst_controller* controller);
+  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(std::int32_t width) = 0;
 };
 
 } // namespace inf::base::vst
