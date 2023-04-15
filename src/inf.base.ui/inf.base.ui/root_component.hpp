@@ -6,12 +6,5 @@
 namespace inf::base::ui 
 {
 
-class root_component:
-public juce::Component
-{
-public:
-  void paint(juce::Graphics& g) override { g.fillAll(juce::Colours::black); }
-};
-
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_ROOT_COMPONENT_HPP
