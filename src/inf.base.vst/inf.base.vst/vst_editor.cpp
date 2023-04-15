@@ -43,6 +43,14 @@ vst_editor::removed()
   return EditorView::removed();
 }
 
+void 
+vst_editor::update_plug_view()
+{
+  ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
+  setRect(vr);
+  plugFrame->resizeView(this, &vr);
+}
+
 tresult PLUGIN_API
 vst_editor::getSize(ViewRect* new_size)
 {
@@ -57,11 +65,15 @@ vst_editor::getSize(ViewRect* new_size)
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
-  if (!have_ui()) return EditorView::onSize(new_size);
+  if (!have_ui() || !new_size
+    || (new_size->left == rect.left && new_size->right == rect.right 
+    && new_size->top == rect.top && new_size->bottom == rect.bottom))
+    return EditorView::onSize(new_size);
   get_ui()->removeFromDesktop();
   _ui = create_ui(new_size->getWidth());
   _ui->render();
   get_ui()->addToDesktop(0, systemWindow);
+  update_plug_view();
   return EditorView::onSize(new_size);
 }
 
@@ -76,9 +88,7 @@ vst_editor::attached(void* parent, FIDString type)
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
   get_ui()->addToDesktop(0, (void*)parent);
-  ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
-  setRect(vr);
-  plugFrame->resizeView(this, &vr);
+  update_plug_view();
   return EditorView::attached(parent, type);
 }
 
