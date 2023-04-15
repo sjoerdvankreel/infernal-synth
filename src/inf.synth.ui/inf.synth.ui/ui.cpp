@@ -12,6 +12,7 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_content(plugin_controller* controller)
 {
+  auto result = create_grid_ui();
   return create_param_ui(controller, part_type::vosc, 0, osc_param::gain, 0, 0);
 }
 
