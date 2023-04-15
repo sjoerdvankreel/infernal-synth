@@ -33,35 +33,6 @@ EditorView(controller)
 { assert(controller != nullptr); }
 
 tresult PLUGIN_API
-vst_editor::checkSizeConstraint(ViewRect* new_rect)
-{
-  if (!have_ui()) return kResultFalse;
-  int cw = _ui.get()->get()->getWidth();
-  int ch = _ui.get()->get()->getHeight();
-  new_rect->right = new_rect->left + cw;
-  new_rect->bottom = new_rect->top + ch;
-  return Steinberg::kResultTrue;
-}
-
-tresult PLUGIN_API
-vst_editor::onSize(ViewRect* new_size)
-{
-  if (!have_ui()) return EditorView::onSize(new_size);
-  int cw = get_ui()->getWidth();
-  int ch = get_ui()->getHeight();
-  int cx = get_ui()->getScreenX();
-  int cy = get_ui()->getScreenY();
-  int32 ny = new_size->top;
-  int32 nx = new_size->left;
-  int32 nw = new_size->getWidth();
-  int32 nh = new_size->getHeight();
-  if (cx != nx || cy != ny || cw != nw || ch != nh)
-    return EditorView::onSize(new_size);
-  EditorView::onSize(new_size);
-  return Steinberg::kResultTrue;
-}
-
-tresult PLUGIN_API 
 vst_editor::removed()
 {
   if (have_ui()) get_ui()->removeFromDesktop();
@@ -70,6 +41,19 @@ vst_editor::removed()
   _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
   return EditorView::removed();
+}
+
+tresult PLUGIN_API
+vst_editor::onSize(ViewRect* new_size)
+{
+  if (!have_ui()) return EditorView::onSize(new_size);
+  int32 nw = new_size->getWidth();
+  int32 nh = new_size->getHeight();
+  get_ui()->removeFromDesktop();
+  _ui = create_ui(juce::Point<std::int32_t>(nw, nh));
+  _ui->render();
+  get_ui()->addToDesktop(0, systemWindow);
+  return EditorView::onSize(new_size);
 }
 
 tresult PLUGIN_API

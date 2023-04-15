@@ -32,8 +32,8 @@ public:
   tresult PLUGIN_API onSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
-  tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultTrue; }
+  tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override { return Steinberg::kResultTrue; }
 
 protected:
   explicit vst_editor(vst_controller* controller);
