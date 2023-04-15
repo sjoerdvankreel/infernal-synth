@@ -38,13 +38,15 @@ public:
 class param_element:
 public cell_element
 {
+  std::int32_t const _part_type;
+  std::int32_t const _part_index;
   std::int32_t const _param_index;
   plugin_controller* const _controller;
 protected:
   juce::Component* render_core() override;
 public:
-  param_element(plugin_controller* controller, std::int32_t param_index) : 
-  _param_index(param_index), _controller(controller) {}
+  param_element(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index): 
+  _part_type(part_type), _part_index(part_index), _param_index(param_index), _controller(controller) {}
 };
 
 class grid_element:

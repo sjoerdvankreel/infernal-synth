@@ -37,7 +37,7 @@ public:
 
 protected:
   explicit vst_editor(vst_controller* controller);
-  virtual inf::base::ui::root_element* create_ui(juce::Point<std::int32_t> const& size) = 0;
+  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(juce::Point<std::int32_t> const& size) = 0;
 };
 
 } // namespace inf::base::vst

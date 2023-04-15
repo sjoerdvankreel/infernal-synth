@@ -77,7 +77,7 @@ vst_editor::attached(void* parent, FIDString type)
 {
   assert(plugFrame);
   MessageManager::getInstance();
-  _ui.reset(create_ui(juce::Point<std::int32_t>(rect.getWidth(), rect.getHeight())));
+  _ui = create_ui(juce::Point<std::int32_t>(rect.getWidth(), rect.getHeight()));
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
