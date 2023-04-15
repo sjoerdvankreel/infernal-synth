@@ -86,7 +86,7 @@ public vst_editor
 {
 public:
   synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
-  root_component* create_content(inf::base::ui::ui_state& state) override { return create_synth_ui(state); }
+  root_element* create_ui() override { return create_synth_ui(&dynamic_cast<plugin_controller&>(*controller.get())); }
 };
 
 class synth_vst_controller :

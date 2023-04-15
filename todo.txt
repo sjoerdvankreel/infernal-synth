@@ -33,6 +33,8 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
+- tooltips
+- graphs
 - fix menu host integration
 - check all ui vs dsp ranges
 - cleanup tag-vs-index

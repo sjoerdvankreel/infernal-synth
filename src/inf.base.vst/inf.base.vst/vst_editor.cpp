@@ -5,7 +5,6 @@
 
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
-#include <inf.base.ui/ui_state.hpp>
 #include <cstring>
 
 using namespace juce;
@@ -36,9 +35,9 @@ EditorView(controller)
 tresult PLUGIN_API
 vst_editor::checkSizeConstraint(ViewRect* new_rect)
 {
-  if (!_root) return kResultFalse;
-  int cw = _root->getWidth();
-  int ch = _root->getHeight();
+  if (have_ui()) return kResultFalse;
+  int cw = _ui.get()->get()->getWidth();
+  int ch = _ui.get()->get()->getHeight();
   new_rect->right = new_rect->left + cw;
   new_rect->bottom = new_rect->top + ch;
   return Steinberg::kResultTrue;
@@ -47,11 +46,11 @@ vst_editor::checkSizeConstraint(ViewRect* new_rect)
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
-  if (!_root) return EditorView::onSize(new_size);
-  int cw = _root->getWidth();
-  int ch = _root->getHeight();
-  int cx = _root->getScreenX();
-  int cy = _root->getScreenY();
+  if (have_ui()) return EditorView::onSize(new_size);
+  int cw = get_ui()->getWidth();
+  int ch = get_ui()->getHeight();
+  int cx = get_ui()->getScreenX();
+  int cy = get_ui()->getScreenY();
   int32 ny = new_size->top;
   int32 nx = new_size->left;
   int32 nw = new_size->getWidth();
@@ -65,12 +64,8 @@ vst_editor::onSize(ViewRect* new_size)
 tresult PLUGIN_API 
 vst_editor::removed()
 {
-  if (_root)
-  {
-    _root->removeFromDesktop();
-    _root.reset();
-  }
-  _state.reset();
+  if (have_ui()) get_ui()->removeFromDesktop();
+  _ui.reset();
 #if __linux__
   _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
@@ -82,15 +77,12 @@ vst_editor::attached(void* parent, FIDString type)
 {
   assert(plugFrame);
   MessageManager::getInstance();
-  _state.reset(new ui_state(&dynamic_cast<plugin_controller&>(*getController())));
-  _root.reset(create_content(*_state.get()));
+  _ui.reset(create_ui(juce::Point<std::int32_t>(rect.getWidth(), rect.getHeight())));
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
-  _root->setOpaque(true);
-  _root->addToDesktop(0, (void*)parent);
-  _root->setVisible(true);
-  ViewRect vr(0, 0, _root->getWidth(), _root->getHeight());
+  get_ui()->addToDesktop(0, (void*)parent);
+  ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
   setRect(vr);
   plugFrame->resizeView(this, &vr);
   return EditorView::attached(parent, type);
