@@ -64,6 +64,8 @@ create_synth_ui(std::int32_t width)
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
   result->look_and_feel().setColour(Slider::ColourIds::thumbColourId, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_shadow, Colour(0xFF000000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFFFFFFFF));
   result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colours::darkgrey);
   result->look_and_feel().setColour(Slider::ColourIds::rotarySliderOutlineColourId, Colour(0xFF29A5BB));
   return result;

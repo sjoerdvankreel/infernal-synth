@@ -27,8 +27,13 @@ inf_look_and_feel::drawRotarySlider(
   float const line_thickness = size * line_thickness_factor;
 
   // fill
-  g.setColour(s.findColour(Slider::ColourIds::rotarySliderFillColourId));
-  g.fillEllipse(fx + (size - inner_size) * 0.5f, fy + (size - inner_size) * 0.5f, inner_size, inner_size);
+  float fillx = fx + (size - inner_size) * 0.5f;
+  float filly = fy + (size - inner_size) * 0.5f;
+  //g.setColour(s.findColour(Slider::ColourIds::rotarySliderFillColourId));
+  auto shadow = s.findColour(colors::knob_shadow);
+  auto high = s.findColour(colors::knob_highlight);
+  g.setGradientFill(ColourGradient(high, fillx, filly, shadow, fillx + inner_size, filly + inner_size, false));
+  g.fillEllipse(fillx, filly, inner_size, inner_size);
 
   // thumb
   Path thumb;

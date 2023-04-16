@@ -9,6 +9,11 @@ class inf_look_and_feel:
 public juce::LookAndFeel_V4
 {
 public:
+  enum colors {
+    knob_shadow,
+    knob_highlight
+  };
+
   void drawRotarySlider(
     juce::Graphics& g, int x, int y, int w, int h,
     float pos, float start, float end, juce::Slider& s) override;
