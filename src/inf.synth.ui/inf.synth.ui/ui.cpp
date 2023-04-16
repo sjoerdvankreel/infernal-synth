@@ -42,7 +42,7 @@ create_bottom_left_container()
 static std::unique_ptr<ui_element>
 create_top_left_container()
 {
-  auto result = create_container_fill_outline_ui(10, 2, Colours::greenyellow, Colours::red);
+  auto result = create_container_fill_ui(10, Colours::darkgrey);
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1));
   return result;
 }
