@@ -55,8 +55,9 @@ inf_look_and_feel::drawRotarySlider(
 
   // thumb
   Path thumb;
-  float line_end_x = cx + radius * inner_size_factor * std::cos(angle);
-  float line_end_y = cy + radius * inner_size_factor * std::sin(angle);
+  float thumb_radius = radius * inner_size_factor * highlight_size_factor;
+  float line_end_x = cx + thumb_radius * std::cos(angle);
+  float line_end_y = cy + thumb_radius * std::sin(angle);
   thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), 1.0f);
   g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
   g.strokePath(thumb, PathStrokeType(thumb_line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
