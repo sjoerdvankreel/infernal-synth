@@ -42,7 +42,7 @@ create_bottom_left_container()
 static std::unique_ptr<ui_element>
 create_top_left_container()
 {
-  auto result = create_container_fill_ui(10, Colours::darkgrey);
+  auto result = create_container_fill_ui(10, Colour(0xFF202020));
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1));
   return result;
 }
@@ -64,7 +64,7 @@ create_synth_ui(std::int32_t width)
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
   result->look_and_feel().setColour(Slider::ColourIds::thumbColourId, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colours::grey);
+  result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colours::darkgrey);
   result->look_and_feel().setColour(Slider::ColourIds::rotarySliderOutlineColourId, Colour(0xFF29A5BB));
   return result;
 }
