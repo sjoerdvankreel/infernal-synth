@@ -4,6 +4,7 @@
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include <map>
 #include <memory>
 #include <cstdint>
 
@@ -20,14 +21,16 @@ class ui_element
 {
   plugin_controller* const _controller;
   std::unique_ptr<juce::Component> _component = {};
+  std::map<std::int32_t, juce::Colour> _colors = {};
+protected:
+  virtual juce::Component* build_core() = 0;
+  ui_element(plugin_controller* controller) : _controller(controller) {}
 public:
   juce::Component* build();
   virtual void layout() = 0;
   juce::Component* component() { return _component.get(); }
   plugin_controller* controller() const { return _controller; }
-protected:
-  virtual juce::Component* build_core() = 0;
-  ui_element(plugin_controller* controller) : _controller(controller) {}
+  void color(std::int32_t id, juce::Colour color) { _colors[id] = color; }
 };
 
 class param_element:
@@ -60,7 +63,7 @@ protected:
 public:
   void layout() override;
   std::int32_t pixel_height(std::int32_t pixel_width);
-  void add_cell(std::unique_ptr<ui_element>&& content, juce::Rectangle<std::int32_t> const& bounds);
+  ui_element* add_cell(std::unique_ptr<ui_element>&& content, juce::Rectangle<std::int32_t> const& bounds);
   grid_element(plugin_controller* controller, juce::Point<std::int32_t> const& size, double xy_ratio) :
     ui_element(controller), _xy_ratio(xy_ratio), _size(size) {}
 };
@@ -69,12 +72,12 @@ inline std::unique_ptr<grid_element>
 create_grid_ui(plugin_controller* controller, std::int32_t rows, std::int32_t cols, double xy_ratio)
 { return std::make_unique<grid_element>(controller, juce::Point(cols, rows), xy_ratio); }
 
-void
+ui_element*
 add_grid_cell(grid_element* grid, 
   std::unique_ptr<ui_element>&& content, 
   std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
 
-void
+ui_element*
 add_grid_param_cell(grid_element* grid, 
   std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
   std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);

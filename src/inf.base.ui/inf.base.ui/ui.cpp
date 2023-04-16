@@ -6,20 +6,22 @@ using namespace inf::base;
 namespace inf::base::ui {
 
 Component* 
-ui_element::build()
-{
-  _component.reset(build_core());
-  _component->setVisible(true);
-  return _component.get();
-}
-
-Component* 
 root_element::build_core()
 {
   Component* result = new root_component;
   result->addChildComponent(_content->build());
   result->setOpaque(true);
   return result;
+}
+
+Component*
+ui_element::build()
+{
+  _component.reset(build_core());
+  for (auto const& color : _colors)
+    _component->setColour(color.first, color.second);
+  _component->setVisible(true);
+  return _component.get();
 }
 
 void
@@ -66,12 +68,14 @@ grid_element::pixel_height(std::int32_t pixel_width)
   return static_cast<std::int32_t>(std::ceil(pixel_width * ratio));
 }
 
-void 
+ui_element*
 grid_element::add_cell(
   std::unique_ptr<ui_element>&& content, Rectangle<std::int32_t> const& bounds)
 {
+  ui_element* result = content.get();
   _cell_bounds.push_back(bounds);
   _cell_contents.push_back(std::move(content));
+  return result;
 }
 
 void
@@ -94,22 +98,22 @@ grid_element::layout()
     _cell_contents[i]->layout();
 }
 
-void
+ui_element*
 add_grid_cell(
   grid_element* grid, std::unique_ptr<ui_element>&& content,
   std::int32_t row, std::int32_t col, std::int32_t row_span, std::int32_t col_span)
 {
   Rectangle<std::int32_t> bounds(col, row, col_span, row_span);
-  grid->add_cell(std::move(content), bounds);
+  return grid->add_cell(std::move(content), bounds);
 }
 
-void
+ui_element*
 add_grid_param_cell(grid_element* grid,
   std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
   std::int32_t row, std::int32_t col, std::int32_t row_span, std::int32_t col_span)
 {
   auto param = create_param_ui(grid->controller(), part_type, part_index, param_index);
-  add_grid_cell(grid, std::move(param), row, col, row_span, col_span);
+  return add_grid_cell(grid, std::move(param), row, col, row_span, col_span);
 }
 
 } // namespace inf::base::ui
