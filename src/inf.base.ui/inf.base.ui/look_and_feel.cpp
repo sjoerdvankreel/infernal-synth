@@ -14,7 +14,8 @@ inf_look_and_feel::drawRotarySlider(
   float const margin_factor = 0.05f;
   float const inner_size_factor = 0.8;
   float const highlight_size_factor = 0.9f;
-  float const line_thickness_factor = 0.05f;
+  float const thumb_line_thickness_factor = 0.025f;
+  float const outline_line_thickness_factor = 0.05f;
 
   // adjust for nonrectangular
   float rx = static_cast<float>(x);
@@ -30,7 +31,8 @@ inf_look_and_feel::drawRotarySlider(
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
   float const fx = static_cast<float>(rx + margin);
   float const fy = static_cast<float>(ry + margin);
-  float const line_thickness = size * line_thickness_factor;
+  float const thumb_line_thickness = size * thumb_line_thickness_factor;
+  float const outline_line_thickness = size * outline_line_thickness_factor;
 
   // knob highlight
   float hlx = fx + (size - inner_size) * 0.5f;
@@ -46,7 +48,7 @@ inf_look_and_feel::drawRotarySlider(
   float knob_fill_size = highlight_size_factor * inner_size;
   float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
   float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-  auto inward = s.findColour(colors::knob_fill_highlight);
+  auto inward = s.findColour(colors::knob_fill_highlight); 
   auto outward = s.findColour(Slider::ColourIds::rotarySliderFillColourId);
   g.setGradientFill(ColourGradient(inward, cx, cy, outward, fillx + knob_fill_size, filly + knob_fill_size, true));
   g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
@@ -57,13 +59,13 @@ inf_look_and_feel::drawRotarySlider(
   float line_end_y = cy + radius * inner_size_factor * std::sin(angle);
   thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), 1.0f);
   g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
-  g.strokePath(thumb, PathStrokeType(line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
+  g.strokePath(thumb, PathStrokeType(thumb_line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
 
   // outline
   Path arc;
   arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
   g.setColour(s.findColour(Slider::ColourIds::rotarySliderOutlineColourId));
-  g.strokePath(arc, PathStrokeType(line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
+  g.strokePath(arc, PathStrokeType(outline_line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
 
   //LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
 
