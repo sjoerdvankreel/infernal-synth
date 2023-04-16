@@ -15,7 +15,7 @@ container_component::paint(Graphics& g)
   }
   if (_flags & flags::outline)
   {
-    g.setColour(_fill);
+    g.setColour(_outline);
     g.drawRoundedRectangle(getLocalBounds().toFloat(), _radius, _thickness);
   }
   if(getChildren().size() != 0)
