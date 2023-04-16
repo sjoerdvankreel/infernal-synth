@@ -33,7 +33,7 @@ create_container3()
 static std::unique_ptr<ui_element>
 create_container2()
 {
-  auto result = create_group_fill_ui(0, 0, Colours::greenyellow);
+  auto result = create_group_fill_ui(0, 10, Colours::greenyellow);
   result->content(create_container3());
   result->color(GroupComponent::ColourIds::textColourId, juce::Colours::purple);
   return result;

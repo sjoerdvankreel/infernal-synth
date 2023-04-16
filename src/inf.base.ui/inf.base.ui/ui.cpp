@@ -13,6 +13,11 @@ group_component::paint(Graphics& g)
     g.setColour(_fill);
     g.fillRoundedRectangle(getLocalBounds().toFloat(), static_cast<float>(_radius));
   }
+  if (_flags & flags::has_outline)
+  {
+    g.setColour(_outline);
+    g.drawRoundedRectangle(getLocalBounds().toFloat(), static_cast<float>(_radius), );
+  }
   if(getChildren().size() != 0)
     getChildComponent(0)->paint(g);
 }
