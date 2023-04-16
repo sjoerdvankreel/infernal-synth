@@ -13,7 +13,7 @@ inf_look_and_feel::drawRotarySlider(
   float const radius = w / 2.0f;
   float const line_thickness = 2.0f;
   float const outline_thickness = 2.0f;
-  float const angle = pos * 2.0f * pi32;
+  float const angle = start + pos * (end - start) - pi32 * 0.5f;
 
   float fx = static_cast<float>(x);
   float fy = static_cast<float>(y);
@@ -33,7 +33,7 @@ inf_look_and_feel::drawRotarySlider(
   float line_end_y = cy + radius * std::sin(angle);
   g.drawLine(cx, cy, line_end_x, line_end_y, line_thickness);
   
-  //LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
+ // LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
 
   /*
   
