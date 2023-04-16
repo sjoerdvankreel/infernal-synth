@@ -5,16 +5,6 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
-Component* 
-root_element::build_core()
-{
-  fill_component* result = new fill_component;
-  result->fill(_fill);
-  result->addChildComponent(_content->build());
-  result->setOpaque(true);
-  return result;
-}
-
 Component*
 ui_element::build()
 {
@@ -25,6 +15,16 @@ ui_element::build()
   return _component.get();
 }
 
+Component* 
+root_element::build_core()
+{
+  fill_component* result = new fill_component;
+  result->fill(_fill);
+  result->addChildComponent(_content->build());
+  result->setOpaque(true);
+  return result;
+}
+
 void
 root_element::layout()
 {
@@ -32,6 +32,22 @@ root_element::layout()
   std::int32_t h = _content->pixel_height(w);
   component()->setBounds(0, 0, w, h);
   _content->component()->setBounds(0, 0, w, h);
+  _content->layout();
+}
+
+Component*
+fill_element::build_core()
+{
+  fill_component* result = new fill_component;
+  result->fill(_fill);
+  result->addChildComponent(_content->build());
+  return result;
+}
+
+void
+fill_element::layout()
+{
+  _content->component()->setBounds(component()->getLocalBounds());
   _content->layout();
 }
 

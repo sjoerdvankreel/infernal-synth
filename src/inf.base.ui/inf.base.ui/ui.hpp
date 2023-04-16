@@ -35,6 +35,24 @@ public:
   void color(std::int32_t id, juce::Colour color) { _colors[id] = color; }
 };
 
+// Just to force a background color.
+class fill_element:
+public ui_element
+{
+  juce::Colour const _fill;
+  std::unique_ptr<ui_element> _content = {};
+protected:
+  juce::Component* build_core() override;
+public:
+  void layout() override;
+  void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
+  fill_element(plugin_controller* controller, juce::Colour const& fill) : ui_element(controller), _fill(fill) {}
+};
+
+inline std::unique_ptr<fill_element>
+create_fill_ui(plugin_controller* controller, juce::Colour const& fill)
+{ return std::make_unique<fill_element>(controller, fill); }
+
 class param_element:
 public ui_element
 {
@@ -87,21 +105,21 @@ add_grid_param_cell(grid_element* grid,
 class root_element:
 public ui_element
 {
-  juce::Colour _fill;
+  juce::Colour const _fill;
   std::int32_t const _width; // Pixel size.
   std::unique_ptr<grid_element> _content = {};
 protected:
   juce::Component* build_core() override;
 public:
   void layout() override;
-  void fill(juce::Colour const& fill) { _fill = fill; }
   void content(std::unique_ptr<grid_element>&& content) { _content = std::move(content); }
-  root_element(plugin_controller* controller, std::int32_t width) : ui_element(controller), _width(width) {}
+  root_element(plugin_controller* controller, std::int32_t width, juce::Colour const& fill) :
+  ui_element(controller), _fill(fill), _width(width) {}
 };
 
 inline std::unique_ptr<root_element>
-create_root_ui(plugin_controller* controller, std::int32_t width)
-{ return std::make_unique<root_element>(controller, width); }
+create_root_ui(plugin_controller* controller, std::int32_t width, juce::Colour const& fill)
+{ return std::make_unique<root_element>(controller, width, fill); }
 
 } // namespace inf::base::ui
 
