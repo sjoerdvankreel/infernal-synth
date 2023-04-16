@@ -63,8 +63,9 @@ public:
   _part_id(part_id), _param_index(param_index) {}
 };
 
-std::unique_ptr<param_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index);
+inline std::unique_ptr<param_element>
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
+{ return std::make_unique<param_element>(part_id(part_type, part_index), param_index); }
 
 class grid_element:
 public ui_element
@@ -78,7 +79,7 @@ protected:
 public:
   void layout() override;
   std::int32_t pixel_height(std::int32_t pixel_width);
-  grid_element(plugin_controller* controller, juce::Point<std::int32_t> const& size, double xy_ratio): _xy_ratio(xy_ratio), _size(size) {}
+  grid_element(juce::Point<std::int32_t> const& size, double xy_ratio): _xy_ratio(xy_ratio), _size(size) {}
   ui_element* add_cell(std::unique_ptr<ui_element>&& content, std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
 };
 

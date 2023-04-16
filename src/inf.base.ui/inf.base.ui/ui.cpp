@@ -59,14 +59,6 @@ param_element::build_core(plugin_controller* controller)
   return result;
 }
 
-std::unique_ptr<param_element>
-create_param_ui(plugin_controller* controller,
-  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
-{ 
-  part_id id(part_type, part_index);
-  return std::make_unique<param_element>(controller, id, param_index);
-}
-
 Component*
 grid_element::build_core(plugin_controller* controller)
 {
@@ -87,7 +79,7 @@ grid_element::pixel_height(std::int32_t pixel_width)
 
 ui_element*
 grid_element::add_cell(std::unique_ptr<ui_element>&& content,
-  std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1)
+  std::int32_t row, std::int32_t col, std::int32_t row_span, std::int32_t col_span)
 {
   ui_element* result = content.get();
   _cell_bounds.push_back(Rectangle<std::int32_t>(col, row, col_span, row_span));
