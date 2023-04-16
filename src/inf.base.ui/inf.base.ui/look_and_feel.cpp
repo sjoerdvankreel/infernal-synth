@@ -14,9 +14,9 @@ inf_look_and_feel::drawRotarySlider(
   float ry = static_cast<float>(y);
   if(h < w) rx += (w - h) * 0.5f;
   if(w < h) ry += (h - w) * 0.5f;
-  float const margin = 3.0f;
-  float const line_thickness = 3.0f;
-  float const outline_thickness = 3.0f;
+  float const margin_factor = 0.05f;
+  float const line_thickness_factor = 0.05f;
+  float const margin = std::min(w, h) * margin_factor;
   float const size = std::min(w, h) - 2.0f * margin;
   float const radius = size / 2.0f;
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
@@ -28,14 +28,14 @@ inf_look_and_feel::drawRotarySlider(
   g.fillEllipse(fx, fy, size, size);
   auto outline = s.findColour(Slider::ColourIds::rotarySliderOutlineColourId);
   g.setColour(outline);
-  g.drawEllipse(fx, fy, size, size, outline_thickness);
+  g.drawEllipse(fx, fy, size, size, size * line_thickness_factor);
   auto thumb = s.findColour(Slider::ColourIds::thumbColourId);
   g.setColour(thumb);
   float cx = rx + margin + size / 2.0f;
   float cy = ry + margin + size / 2.0f;
   float line_end_x = cx + radius * std::cos(angle);
   float line_end_y = cy + radius * std::sin(angle);
-  g.drawLine(cx, cy, line_end_x, line_end_y, line_thickness);
+  g.drawLine(cx, cy, line_end_x, line_end_y, size * line_thickness_factor);
   
  // LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
 
