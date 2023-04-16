@@ -66,7 +66,7 @@ create_synth_ui(std::int32_t width)
   result->look_and_feel().setColour(Slider::ColourIds::thumbColourId, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_shadow, Colour(0xFF000000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFFC0C0C0));
-  result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colour(0xFF606060));
+  result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colour(0xFF404040));
   result->look_and_feel().setColour(Slider::ColourIds::rotarySliderOutlineColourId, Colour(0xFF29A5BB));
   return result;
 }
