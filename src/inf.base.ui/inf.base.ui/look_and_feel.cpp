@@ -12,10 +12,10 @@ inf_look_and_feel::drawRotarySlider(
 {
   // relative to min(w, h)
   float const margin_factor = 0.05f;
-  float const inner_size_factor = 0.8;
+  float const inner_size_factor = 0.75f;
   float const highlight_size_factor = 0.85f;
   float const thumb_line_thickness_factor = 0.025f;
-  float const outline_line_thickness_factor = 0.05f;
+  float const outline_line_thickness_factor = 0.075f;
 
   // adjust for nonrectangular
   float rx = static_cast<float>(x);
@@ -60,13 +60,13 @@ inf_look_and_feel::drawRotarySlider(
   float line_end_y = cy + thumb_radius * std::sin(angle);
   thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), 1.0f);
   g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
-  g.strokePath(thumb, PathStrokeType(thumb_line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
+  g.strokePath(thumb, PathStrokeType(thumb_line_thickness));
 
   // outline
   Path arc;
   arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
   g.setColour(s.findColour(Slider::ColourIds::rotarySliderOutlineColourId));
-  g.strokePath(arc, PathStrokeType(outline_line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
+  g.strokePath(arc, PathStrokeType(outline_line_thickness));
 
   //LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
 
