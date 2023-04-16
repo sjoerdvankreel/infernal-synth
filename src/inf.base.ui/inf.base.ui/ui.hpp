@@ -10,13 +10,30 @@
 
 namespace inf::base::ui {
 
-class container_component:
+enum class group_type
+{
+  outline,
+  outline_header,
+  fill,
+  fill_outline,
+  fill_outline_header
+};
+
+class group_component:
 public juce::Component
 {
-  juce::Colour _fill;
+  group_type const _type;
+  std::int32_t const _radius;
+  std::int32_t const _padding;
+  juce::Colour const _fill;
+  juce::Colour const _header;
+  juce::Colour const _outline;
 public:
-  void fill(juce::Colour const& fill) { _fill = fill; }
-  void paint(juce::Graphics& g) override { g.fillAll(_fill); }
+  void paint(juce::Graphics& g) override;
+  group_component(
+    group_type type, std::int32_t padding, std::int32_t radius, 
+    juce::Colour const& fill, juce::Colour const& outline, juce::Colour const& header) : 
+  _type(type), _padding(padding), _radius(radius), _fill(fill), _header(header), _outline(outline) {}
 };
 
 class ui_element
@@ -32,23 +49,42 @@ public:
   void color(std::int32_t id, juce::Colour color) { _colors[id] = color; }
 };
 
-// Just to force a background color.
-class container_element:
+class group_element:
 public ui_element
 {
+  group_type const _type;
+  std::int32_t const _radius;
+  std::int32_t const _padding;
   juce::Colour const _fill;
+  juce::Colour const _header;
+  juce::Colour const _outline;
   std::unique_ptr<ui_element> _content = {};
 protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
-  container_element(juce::Colour const& fill) : _fill(fill) {}
+  group_element(
+    group_type type, std::int32_t padding, std::int32_t radius,
+    juce::Colour const& fill, juce::Colour const& outline, juce::Colour const& header) : 
+  _type(type), _padding(padding), _radius(radius), _fill(fill), _header(header), _outline(outline) {}
   void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
 };
 
-inline std::unique_ptr<container_element>
-create_container_ui(juce::Colour const& fill)
-{ return std::make_unique<container_element>(fill); }
+inline std::unique_ptr<group_element>
+create_group_fill_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& fill)
+{ return std::make_unique<group_element>(group_type::fill, padding, radius, fill, juce::Colour()); }
+inline std::unique_ptr<group_element>
+create_group_outline_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& outline)
+{ return std::make_unique<group_element>(group_type::outline, padding, radius, juce::Colour(), outline, juce::Colour()); }
+inline std::unique_ptr<group_element>
+create_group_fill_outline_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& fill, juce::Colour const& outline)
+{ return std::make_unique<group_element>(group_type::fill_outline, padding, radius, fill, outline, juce::Colour()); }
+inline std::unique_ptr<group_element>
+create_group_outline_header_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& outline, juce::Colour const& header)
+{ return std::make_unique<group_element>(group_type::outline_header, padding, radius, juce::Colour(), outline, header); }
+inline std::unique_ptr<group_element>
+create_group_fill_outline_header_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& fill, juce::Colour const& outline, juce::Colour const& header)
+{ return std::make_unique<group_element>(group_type::outline_header, padding, radius, fill, outline, header); }
 
 class param_element:
 public ui_element

@@ -18,8 +18,7 @@ ui_element::build(plugin_controller* controller)
 Component* 
 root_element::build_core(plugin_controller* controller)
 {
-  container_component* result = new container_component;
-  result->fill(_fill);
+  group_component* result = new group_component(group_type::fill, 0, 0, Colours::black, Colour(), Colour());
   result->addChildComponent(_content->build(controller));
   result->setOpaque(true);
   return result;
@@ -36,16 +35,15 @@ root_element::layout()
 }
 
 Component*
-container_element::build_core(plugin_controller* controller)
+group_element::build_core(plugin_controller* controller)
 {
-  container_component* result = new container_component;
-  result->fill(_fill);
+  group_component* result = new group_component(_type, _padding, _radius, _fill, _outline, _header);
   result->addChildComponent(_content->build(controller));
   return result;
 }
 
 void
-container_element::layout()
+group_element::layout()
 {
   _content->component()->setBounds(component()->getLocalBounds());
   _content->layout();
