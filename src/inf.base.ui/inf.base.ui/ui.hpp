@@ -10,11 +10,13 @@
 
 namespace inf::base::ui {
 
-class root_component:
+class fill_component:
 public juce::Component
 {
+  juce::Colour _color;
 public:
-  void paint(juce::Graphics& g) override { g.fillAll(juce::Colours::black); }
+  void fill(juce::Colour const& color) { _color = color; }
+  void paint(juce::Graphics& g) override { g.fillAll(_color); }
 };
 
 class ui_element

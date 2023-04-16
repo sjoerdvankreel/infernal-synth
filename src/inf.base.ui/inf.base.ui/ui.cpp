@@ -8,7 +8,8 @@ namespace inf::base::ui {
 Component* 
 root_element::build_core()
 {
-  Component* result = new root_component;
+  fill_component* result = new fill_component;
+  result->fill(juce::Colours::black);
   result->addChildComponent(_content->build());
   result->setOpaque(true);
   return result;
