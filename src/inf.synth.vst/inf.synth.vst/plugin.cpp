@@ -87,7 +87,7 @@ public vst_editor
 public:
   synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
   std::unique_ptr<root_element> create_ui(std::int32_t width) override 
-  { return create_synth_ui(&dynamic_cast<plugin_controller&>(*controller.get()), width); }
+  { return create_synth_ui(width); }
 };
 
 class synth_vst_controller :

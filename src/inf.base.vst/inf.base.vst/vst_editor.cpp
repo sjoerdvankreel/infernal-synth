@@ -63,7 +63,7 @@ vst_editor::onSize(ViewRect* new_size)
     return EditorView::onSize(new_size);
   get_ui()->removeFromDesktop();
   _ui = create_ui(new_size->getWidth());
-  _ui->build();
+  _ui->build(_controller);
   _ui->layout();
   get_ui()->addToDesktop(0, systemWindow);
   return EditorView::onSize(new_size);
@@ -75,7 +75,7 @@ vst_editor::attached(void* parent, FIDString type)
   if(!plugFrame) return EditorView::attached(parent, type);
   MessageManager::getInstance();
   _ui = create_ui(_controller->editor_default_width());
-  _ui->build();
+  _ui->build(_controller);
   _ui->layout();
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);

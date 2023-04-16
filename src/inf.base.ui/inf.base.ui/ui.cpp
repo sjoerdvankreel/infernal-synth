@@ -6,9 +6,9 @@ using namespace inf::base;
 namespace inf::base::ui {
 
 Component*
-ui_element::build()
+ui_element::build(plugin_controller* controller)
 {
-  _component.reset(build_core());
+  _component.reset(build_core(controller));
   for (auto const& color : _colors)
     _component->setColour(color.first, color.second);
   _component->setVisible(true);
@@ -16,11 +16,11 @@ ui_element::build()
 }
 
 Component* 
-root_element::build_core()
+root_element::build_core(plugin_controller* controller)
 {
   container_component* result = new container_component;
   result->fill(_fill);
-  result->addChildComponent(_content->build());
+  result->addChildComponent(_content->build(controller));
   result->setOpaque(true);
   return result;
 }
@@ -36,11 +36,11 @@ root_element::layout()
 }
 
 Component*
-container_element::build_core()
+container_element::build_core(plugin_controller* controller)
 {
   container_component* result = new container_component;
   result->fill(_fill);
-  result->addChildComponent(_content->build());
+  result->addChildComponent(_content->build(controller));
   return result;
 }
 
@@ -52,7 +52,7 @@ container_element::layout()
 }
 
 Component*
-param_element::build_core()
+param_element::build_core(plugin_controller* controller)
 {
   Slider* result = new Slider;
   result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
@@ -68,11 +68,11 @@ create_param_ui(plugin_controller* controller,
 }
 
 Component*
-grid_element::build_core()
+grid_element::build_core(plugin_controller* controller)
 {
   Component* result = new Component;
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
-    result->addChildComponent(_cell_contents[i]->build());
+    result->addChildComponent(_cell_contents[i]->build(controller));
   return result;
 }
 
@@ -86,11 +86,11 @@ grid_element::pixel_height(std::int32_t pixel_width)
 }
 
 ui_element*
-grid_element::add_cell(
-  std::unique_ptr<ui_element>&& content, Rectangle<std::int32_t> const& bounds)
+grid_element::add_cell(std::unique_ptr<ui_element>&& content,
+  std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1)
 {
   ui_element* result = content.get();
-  _cell_bounds.push_back(bounds);
+  _cell_bounds.push_back(Rectangle<std::int32_t>(col, row, col_span, row_span));
   _cell_contents.push_back(std::move(content));
   return result;
 }
@@ -113,24 +113,6 @@ grid_element::layout()
   grid.performLayout(component()->getLocalBounds());
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
     _cell_contents[i]->layout();
-}
-
-ui_element*
-add_grid_cell(
-  grid_element* grid, std::unique_ptr<ui_element>&& content,
-  std::int32_t row, std::int32_t col, std::int32_t row_span, std::int32_t col_span)
-{
-  Rectangle<std::int32_t> bounds(col, row, col_span, row_span);
-  return grid->add_cell(std::move(content), bounds);
-}
-
-ui_element*
-add_grid_param_cell(grid_element* grid,
-  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
-  std::int32_t row, std::int32_t col, std::int32_t row_span, std::int32_t col_span)
-{
-  auto param = create_param_ui(grid->controller(), part_type, part_index, param_index);
-  return add_grid_cell(grid, std::move(param), row, col, row_span, col_span);
 }
 
 } // namespace inf::base::ui
