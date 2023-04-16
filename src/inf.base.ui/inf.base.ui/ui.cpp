@@ -99,7 +99,7 @@ grid_element::layout()
   {
     Rectangle<std::int32_t> bounds = _cell_bounds[i];
     GridItem item(_cell_contents[i]->component());
-    item.withArea(bounds.getY(), bounds.getX(), bounds.getY() + bounds.getHeight(), bounds.getX() + bounds.getWidth());
+    item.withArea(bounds.getY(), bounds.getX(), GridItem::Span(bounds.getHeight()), GridItem::Span(bounds.getWidth()));
     grid.items.add(item);
   }
   grid.performLayout(component()->getLocalBounds());
