@@ -38,15 +38,15 @@ inf_look_and_feel::drawRotarySlider(
   float line_end_y = cy + radius * inner_size_factor * std::sin(angle);
   thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), 1.0f);
   g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
-  g.strokePath(thumb, PathStrokeType(line_thickness));
+  g.strokePath(thumb, PathStrokeType(line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
 
   // outline
   Path arc;
   arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
   g.setColour(s.findColour(Slider::ColourIds::rotarySliderOutlineColourId));
-  g.strokePath(arc, PathStrokeType(line_thickness));
+  g.strokePath(arc, PathStrokeType(line_thickness, PathStrokeType::curved, PathStrokeType::rounded));
 
- // LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
+  //LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
 
   /*
   
