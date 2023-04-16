@@ -99,9 +99,7 @@ grid_element::layout()
   {
     GridItem item(_cell_contents[i]->component());
     Rectangle<std::int32_t> bounds = _cell_bounds[i];
-    auto col_span = GridItem::Span(bounds.getWidth());
-    auto row_span = GridItem::Span(bounds.getHeight());
-    grid.items.add(item.withArea(bounds.getY(), bounds.getX(), row_span, col_span));
+    grid.items.add(item.withArea(bounds.getY() + 1, bounds.getX() + 1, GridItem::Span(bounds.getHeight()), GridItem::Span(bounds.getWidth())));
   }
   grid.performLayout(component()->getLocalBounds());
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
