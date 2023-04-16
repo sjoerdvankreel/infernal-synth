@@ -11,7 +11,8 @@ public juce::LookAndFeel_V4
 public:
   enum colors {
     knob_shadow,
-    knob_highlight
+    knob_highlight,
+    knob_fill_highlight
   };
 
   void drawRotarySlider(

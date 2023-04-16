@@ -46,7 +46,7 @@ inf_look_and_feel::drawRotarySlider(
   float knob_fill_size = highlight_size_factor * inner_size;
   float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
   float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-  auto inward = s.findColour(colors::knob_highlight);
+  auto inward = s.findColour(colors::knob_fill_highlight);
   auto outward = s.findColour(Slider::ColourIds::rotarySliderFillColourId);
   g.setGradientFill(ColourGradient(inward, cx, cy, outward, fillx + knob_fill_size, filly + knob_fill_size, true));
   g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
