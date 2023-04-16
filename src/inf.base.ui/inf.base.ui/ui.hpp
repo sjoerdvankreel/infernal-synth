@@ -10,7 +10,7 @@
 
 namespace inf::base::ui {
 
-class fill_component:
+class container_component:
 public juce::Component
 {
   juce::Colour _fill;
@@ -36,7 +36,7 @@ public:
 };
 
 // Just to force a background color.
-class fill_element:
+class container_element:
 public ui_element
 {
   juce::Colour const _fill;
@@ -46,12 +46,12 @@ protected:
 public:
   void layout() override;
   void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
-  fill_element(plugin_controller* controller, juce::Colour const& fill) : ui_element(controller), _fill(fill) {}
+  container_element(plugin_controller* controller, juce::Colour const& fill) : ui_element(controller), _fill(fill) {}
 };
 
-inline std::unique_ptr<fill_element>
-create_fill_ui(plugin_controller* controller, juce::Colour const& fill)
-{ return std::make_unique<fill_element>(controller, fill); }
+inline std::unique_ptr<container_element>
+create_container_ui(plugin_controller* controller, juce::Colour const& fill)
+{ return std::make_unique<container_element>(controller, fill); }
 
 class param_element:
 public ui_element
@@ -93,8 +93,7 @@ create_grid_ui(plugin_controller* controller, std::int32_t rows, std::int32_t co
 { return std::make_unique<grid_element>(controller, juce::Point(cols, rows), xy_ratio); }
 
 ui_element*
-add_grid_cell(grid_element* grid, 
-  std::unique_ptr<ui_element>&& content, 
+add_grid_cell(grid_element* grid, std::unique_ptr<ui_element>&& content, 
   std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
 
 ui_element*

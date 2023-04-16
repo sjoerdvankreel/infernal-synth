@@ -18,7 +18,7 @@ ui_element::build()
 Component* 
 root_element::build_core()
 {
-  fill_component* result = new fill_component;
+  container_component* result = new container_component;
   result->fill(_fill);
   result->addChildComponent(_content->build());
   result->setOpaque(true);
@@ -36,16 +36,16 @@ root_element::layout()
 }
 
 Component*
-fill_element::build_core()
+container_element::build_core()
 {
-  fill_component* result = new fill_component;
+  container_component* result = new container_component;
   result->fill(_fill);
   result->addChildComponent(_content->build());
   return result;
 }
 
 void
-fill_element::layout()
+container_element::layout()
 {
   _content->component()->setBounds(component()->getLocalBounds());
   _content->layout();
