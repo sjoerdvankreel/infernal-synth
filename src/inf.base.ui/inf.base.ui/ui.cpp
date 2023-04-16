@@ -9,7 +9,7 @@ Component*
 root_element::build_core()
 {
   fill_component* result = new fill_component;
-  result->fill(juce::Colours::black);
+  result->fill(_fill);
   result->addChildComponent(_content->build());
   result->setOpaque(true);
   return result;

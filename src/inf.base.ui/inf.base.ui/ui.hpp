@@ -13,10 +13,10 @@ namespace inf::base::ui {
 class fill_component:
 public juce::Component
 {
-  juce::Colour _color;
+  juce::Colour _fill;
 public:
-  void fill(juce::Colour const& color) { _color = color; }
-  void paint(juce::Graphics& g) override { g.fillAll(_color); }
+  void fill(juce::Colour const& fill) { _fill = fill; }
+  void paint(juce::Graphics& g) override { g.fillAll(_fill); }
 };
 
 class ui_element
@@ -87,15 +87,16 @@ add_grid_param_cell(grid_element* grid,
 class root_element:
 public ui_element
 {
+  juce::Colour _fill;
   std::int32_t const _width; // Pixel size.
   std::unique_ptr<grid_element> _content = {};
 protected:
   juce::Component* build_core() override;
 public:
   void layout() override;
-  root_element(plugin_controller* controller, std::int32_t width):
-  ui_element(controller), _width(width) {}
+  void fill(juce::Colour const& fill) { _fill = fill; }
   void content(std::unique_ptr<grid_element>&& content) { _content = std::move(content); }
+  root_element(plugin_controller* controller, std::int32_t width) : ui_element(controller), _width(width) {}
 };
 
 inline std::unique_ptr<root_element>
