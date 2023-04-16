@@ -106,6 +106,8 @@ void
 grid_element::layout()
 {
   Grid grid;
+  grid.rowGap = Grid::Px(_gap_size);
+  grid.columnGap = Grid::Px(_gap_size);
   for(std::int32_t row = 0; row < _size.y; row++)
     grid.templateRows.add(Grid::TrackInfo(Grid::Fr(1)));
   for (std::int32_t col = 0; col < _size.x; col++)
