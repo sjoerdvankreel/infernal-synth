@@ -65,9 +65,9 @@ public:
     ui_element(controller), _xy_ratio(xy_ratio), _size(size) {}
 };
 
-std::unique_ptr<grid_element>
-create_grid_ui(plugin_controller* controller, 
-  std::int32_t rows, std::int32_t cols, double xy_ratio);
+inline std::unique_ptr<grid_element>
+create_grid_ui(plugin_controller* controller, std::int32_t rows, std::int32_t cols, double xy_ratio)
+{ return std::make_unique<grid_element>(controller, juce::Point(cols, rows), xy_ratio); }
 
 void
 add_grid_cell(grid_element* grid, 

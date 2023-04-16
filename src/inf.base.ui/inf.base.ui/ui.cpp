@@ -89,13 +89,6 @@ grid_element::layout()
     _cell_contents[i]->layout();
 }
 
-std::unique_ptr<grid_element>
-create_grid_ui(plugin_controller* controller, std::int32_t rows, std::int32_t cols, double xy_ratio)
-{
-  Point size(rows, cols);
-  return std::make_unique<grid_element>(controller, size, xy_ratio);
-}
-
 void
 add_grid_cell(
   grid_element* grid, std::unique_ptr<ui_element>&& content,
