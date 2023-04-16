@@ -63,7 +63,8 @@ container_element::build_core(plugin_controller* controller)
 void
 container_element::layout()
 {
-  _content->component()->setBounds(component()->getLocalBounds());
+  auto local = component()->getLocalBounds();
+  _content->component()->setBounds(_radius, _radius, local.getWidth() - 2 * _radius, local.getHeight() - 2 * _radius);
   _content->layout();
 }
 

@@ -14,7 +14,7 @@ namespace inf::base::ui {
 class container_component:
 public juce::Component
 {
-  float const _radius;
+  std::int32_t const _radius;
   float const _thickness;
   juce::Colour const _fill;
   juce::Colour const _outline;
@@ -22,7 +22,7 @@ public juce::Component
 public:
   enum flags { none = 0x0, fill = 0x1, outline = 0x2 };
   void paint(juce::Graphics& g) override;
-  container_component(std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline): 
+  container_component(std::uint32_t flags, std::int32_t radius, float thickness, juce::Colour const& fill, juce::Colour const& outline): 
   _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags) {}
 };
 
@@ -42,8 +42,8 @@ public:
 class container_element:
 public ui_element
 {
-  float const _radius;
   float const _thickness;
+  std::int32_t const _radius;
   juce::Colour const _fill;
   juce::Colour const _outline;
   std::uint32_t const _flags;
@@ -53,18 +53,18 @@ protected:
 public:
   void layout() override;
   void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
-  container_element(std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline) :
+  container_element(std::uint32_t flags, std::int32_t radius, float thickness, juce::Colour const& fill, juce::Colour const& outline) :
   _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags) {}
 };
 
 inline std::unique_ptr<container_element>
-create_container_fill_ui(float radius, juce::Colour const& fill)
+create_container_fill_ui(std::int32_t radius, juce::Colour const& fill)
 { return std::make_unique<container_element>(container_component::flags::fill, radius, 0.0f, fill, juce::Colour()); }
 inline std::unique_ptr<container_element>
-create_container_outline_ui(float radius, float thickness, juce::Colour const& outline)
+create_container_outline_ui(std::int32_t radius, float thickness, juce::Colour const& outline)
 { return std::make_unique<container_element>(container_component::flags::outline, radius, thickness, juce::Colour(), outline); }
 inline std::unique_ptr<container_element>
-create_container_fill_outline_ui(float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
+create_container_fill_outline_ui(std::int32_t radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
 { return std::make_unique<container_element>(container_component::flags::outline | container_component::flags::fill, radius, thickness, fill, outline); }
 
 class param_element:

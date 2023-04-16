@@ -12,7 +12,7 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_right_container()
 {
-  auto result = create_container_fill_ui(5, Colours::orange);
+  auto result = create_container_fill_ui(6, Colours::orange);
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt2));
   return result;
 }
