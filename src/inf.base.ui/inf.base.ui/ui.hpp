@@ -116,6 +116,7 @@ protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
+  inf_look_and_feel& look_and_feel() { return _lnf; }
   void content(std::unique_ptr<grid_element>&& content) { _content = std::move(content); }
   root_element(std::int32_t width, juce::Colour const& fill) : _fill(fill), _width(width) {}
 };

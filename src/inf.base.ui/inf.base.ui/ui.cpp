@@ -71,6 +71,7 @@ Component*
 param_element::build_core(plugin_controller* controller)
 {
   Slider* result = new Slider;
+  result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
   return result;
 }
