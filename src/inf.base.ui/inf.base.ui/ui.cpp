@@ -97,10 +97,11 @@ grid_element::layout()
     grid.templateColumns.add(Grid::TrackInfo(Grid::Fr(1)));
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
   {
-    Rectangle<std::int32_t> bounds = _cell_bounds[i];
     GridItem item(_cell_contents[i]->component());
-    item.withArea(bounds.getY(), bounds.getX(), bounds.getY() + bounds.getHeight(), bounds.getX() + bounds.getWidth());
-    grid.items.add(item);
+    Rectangle<std::int32_t> bounds = _cell_bounds[i];
+    auto col_span = GridItem::Span(bounds.getWidth());
+    auto row_span = GridItem::Span(bounds.getHeight());
+    grid.items.add(item.withArea(bounds.getY(), bounds.getX(), row_span, col_span));
   }
   grid.performLayout(component()->getLocalBounds());
   for (std::size_t i = 0; i < _cell_contents.size(); i++)

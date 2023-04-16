@@ -21,8 +21,8 @@ static std::unique_ptr<grid_element>
 create_content()
 {
   auto result = create_grid_ui(2, 4, 1.0);
-  //result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1), 0, 0, 1, 1);
-  //result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::bal1), 0, 1, 1, 1);
+  result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1), 0, 0, 1, 1);
+  result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::bal1), 0, 1, 1, 1);
   result->add_cell(create_container(), 0, 2, 2, 2);
   return result;
 }
