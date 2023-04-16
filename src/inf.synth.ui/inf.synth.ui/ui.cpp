@@ -9,11 +9,13 @@ using namespace inf::base::ui;
 
 namespace inf::synth::ui {
 
-static std::unique_ptr<ui_element>
+static std::unique_ptr<grid_element>
 create_content(plugin_controller* controller)
 {
-  auto result = create_grid_ui();
-  return create_param_ui(controller, part_type::vosc, 0, osc_param::gain, 0, 0);
+  auto result = create_grid_ui(controller, 1, 2, 1.0);
+  add_grid_param_cell(result.get(), part_type::vaudio_bank, 0, audio_bank_param::amt1, 0, 0, 1, 1);
+  add_grid_param_cell(result.get(), part_type::vaudio_bank, 0, audio_bank_param::bal1, 0, 0, 1, 1);
+  return result;
 }
 
 std::unique_ptr<root_element>
