@@ -2,7 +2,7 @@ cmake_policy(SET CMP0091 NEW)
 cmake_minimum_required(VERSION 3.21)
 
 project(infernal-synth)
-SET(INFERNAL_VERSION "1.1")
+SET(INFERNAL_VERSION "1.2")
 
 # Build config.
 set(CMAKE_CXX_STANDARD 20)
