@@ -15,34 +15,36 @@ inf_look_and_feel::drawRotarySlider(
   if(h < w) rx += (w - h) * 0.5f;
   if(w < h) ry += (h - w) * 0.5f;
   float const margin_factor = 0.05f;
+  float const inner_size_factor = 0.8;
   float const line_thickness_factor = 0.05f;
   float const margin = std::min(w, h) * margin_factor;
   float const size = std::min(w, h) - 2.0f * margin;
   float const radius = size / 2.0f;
+  float const inner_size = size * inner_size_factor;
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
   float const fx = static_cast<float>(rx + margin);
   float const fy = static_cast<float>(ry + margin);
+  float const line_thickness = size * line_thickness_factor;
 
   // fill
-  auto fill = s.findColour(Slider::ColourIds::rotarySliderFillColourId);
-  g.setColour(fill);
-  g.fillEllipse(fx, fy, size, size);
+  g.setColour(s.findColour(Slider::ColourIds::rotarySliderFillColourId));
+  g.fillEllipse(fx + (size - inner_size) * 0.5f, fy + (size - inner_size) * 0.5f, inner_size, inner_size);
 
   // thumb
-  auto thumb = s.findColour(Slider::ColourIds::thumbColourId);
-  g.setColour(thumb);
+  Path thumb;
   float cx = rx + margin + size / 2.0f;
   float cy = ry + margin + size / 2.0f;
-  float line_end_x = cx + radius * std::cos(angle);
-  float line_end_y = cy + radius * std::sin(angle);
-  g.drawLine(cx, cy, line_end_x, line_end_y, size * line_thickness_factor);
+  float line_end_x = cx + radius * inner_size_factor * std::cos(angle);
+  float line_end_y = cy + radius * inner_size_factor * std::sin(angle);
+  thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), line_thickness);
+  g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
+  g.strokePath(thumb, PathStrokeType(line_thickness));
 
   // outline
   Path arc;
-  auto outline = s.findColour(Slider::ColourIds::rotarySliderOutlineColourId);
   arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
-  g.setColour(outline);
-  g.strokePath(arc, PathStrokeType(size * line_thickness_factor));
+  g.setColour(s.findColour(Slider::ColourIds::rotarySliderOutlineColourId));
+  g.strokePath(arc, PathStrokeType(line_thickness));
 
  // LookAndFeel_V4::drawRotarySlider(g, x, y, w, h, pos, start, end, s);
 
