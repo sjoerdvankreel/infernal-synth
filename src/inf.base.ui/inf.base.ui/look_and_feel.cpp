@@ -19,8 +19,6 @@ inf_look_and_feel::drawRotarySlider(
   float const margin = std::min(w, h) * margin_factor;
   float const size = std::min(w, h) - 2.0f * margin;
   float const radius = size / 2.0f;
-  float const angle_end = end - pi32 * 0.5f;
-  float const angle_start = start - pi32 * 0.5f;
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
   float const fx = static_cast<float>(rx + margin);
   float const fy = static_cast<float>(ry + margin);
@@ -42,7 +40,7 @@ inf_look_and_feel::drawRotarySlider(
   // outline
   Path arc;
   auto outline = s.findColour(Slider::ColourIds::rotarySliderOutlineColourId);
-  arc.addCentredArc(cx, cy, radius, radius, 0.0f, angle_start, angle_end, true);
+  arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
   g.setColour(outline);
   g.strokePath(arc, PathStrokeType(size * line_thickness_factor));
 
