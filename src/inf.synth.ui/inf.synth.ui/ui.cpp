@@ -53,7 +53,7 @@ create_content()
 std::unique_ptr<root_element>
 create_synth_ui(std::int32_t width)
 {
-  auto result = create_root_ui(width, juce::Colours::aliceblue);
+  auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
   return result;
 }
