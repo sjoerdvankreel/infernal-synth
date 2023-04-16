@@ -10,14 +10,18 @@ inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x, int y, int w, int h, 
   float pos, float start, float end, juce::Slider& s)
 {
+  float rx = static_cast<float>(x);
+  float ry = static_cast<float>(y);
+  if(h < w) rx += (w - h) * 0.5f;
+  if(w < h) ry += (h - w) * 0.5f;
   float const margin = 3.0f;
   float const line_thickness = 3.0f;
   float const outline_thickness = 3.0f;
   float const size = std::min(w, h) - 2.0f * margin;
   float const radius = size / 2.0f;
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
-  float const fx = static_cast<float>(x + margin);
-  float const fy = static_cast<float>(y + margin);
+  float const fx = static_cast<float>(rx + margin);
+  float const fy = static_cast<float>(ry + margin);
 
   auto fill = s.findColour(Slider::ColourIds::rotarySliderFillColourId);
   g.setColour(fill);
@@ -27,8 +31,8 @@ inf_look_and_feel::drawRotarySlider(
   g.drawEllipse(fx, fy, size, size, outline_thickness);
   auto thumb = s.findColour(Slider::ColourIds::thumbColourId);
   g.setColour(thumb);
-  float cx = margin + size / 2.0f;
-  float cy = margin + size / 2.0f;
+  float cx = rx + margin + size / 2.0f;
+  float cy = ry + margin + size / 2.0f;
   float line_end_x = cx + radius * std::cos(angle);
   float line_end_y = cy + radius * std::sin(angle);
   g.drawLine(cx, cy, line_end_x, line_end_y, line_thickness);
