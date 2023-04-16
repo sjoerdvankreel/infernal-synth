@@ -83,7 +83,12 @@ grid_element::layout()
   for (std::int32_t col = 0; col < _size.x; col++)
     grid.templateColumns.add(Grid::TrackInfo(Grid::Fr(1)));
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
-    grid.items.add(GridItem(_cell_contents[i]->component()));
+  {
+    Rectangle<std::int32_t> bounds = _cell_bounds[i];
+    GridItem item(_cell_contents[i]->component());
+    item.withArea(bounds.getY(), bounds.getX(), bounds.getY() + bounds.getHeight(), bounds.getX() + bounds.getWidth());
+    grid.items.add(item);
+  }
   grid.performLayout(component()->getLocalBounds());
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
     _cell_contents[i]->layout();
