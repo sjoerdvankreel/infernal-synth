@@ -12,7 +12,7 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_container1()
 {
-  auto result = create_container_ui(Colours::orange);
+  auto result = create_group_fill_ui(0, 0, Colours::orange);
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt2));
   return result;
 }
@@ -33,7 +33,7 @@ create_container3()
 static std::unique_ptr<ui_element>
 create_container2()
 {
-  auto result = create_container_ui(Colours::greenyellow);
+  auto result = create_group_fill_ui(0, 0, Colours::greenyellow);
   result->content(create_container3());
   result->color(GroupComponent::ColourIds::textColourId, juce::Colours::purple);
   return result;
