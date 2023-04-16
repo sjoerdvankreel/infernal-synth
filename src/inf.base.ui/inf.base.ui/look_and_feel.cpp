@@ -13,7 +13,7 @@ inf_look_and_feel::drawRotarySlider(
   // relative to min(w, h)
   float const margin_factor = 0.05f;
   float const inner_size_factor = 0.8;
-  float const highlight_size_factor = 0.9f;
+  float const highlight_size_factor = 0.85f;
   float const thumb_line_thickness_factor = 0.025f;
   float const outline_line_thickness_factor = 0.05f;
 
