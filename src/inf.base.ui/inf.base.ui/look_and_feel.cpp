@@ -32,22 +32,27 @@ inf_look_and_feel::drawRotarySlider(
   float const fy = static_cast<float>(ry + margin);
   float const line_thickness = size * line_thickness_factor;
 
-  // fill
+  // knob highlight
   float hlx = fx + (size - inner_size) * 0.5f;
   float hly = fy + (size - inner_size) * 0.5f;
   auto shadow = s.findColour(colors::knob_shadow);
   auto high = s.findColour(colors::knob_highlight);
   g.setGradientFill(ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false));
   g.fillEllipse(hlx, hly, inner_size, inner_size);
+  
+  // knob fill
+  float cx = rx + margin + size / 2.0f;
+  float cy = ry + margin + size / 2.0f;
+  float knob_fill_size = highlight_size_factor * inner_size;
   float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
   float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-  g.setColour(s.findColour(Slider::ColourIds::rotarySliderFillColourId));
-  g.fillEllipse(fillx, filly, highlight_size_factor * inner_size, highlight_size_factor * inner_size);
+  auto inward = s.findColour(colors::knob_highlight);
+  auto outward = s.findColour(Slider::ColourIds::rotarySliderFillColourId);
+  g.setGradientFill(ColourGradient(inward, cx, cy, outward, fillx + knob_fill_size, filly + knob_fill_size, true));
+  g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
 
   // thumb
   Path thumb;
-  float cx = rx + margin + size / 2.0f;
-  float cy = ry + margin + size / 2.0f;
   float line_end_x = cx + radius * inner_size_factor * std::cos(angle);
   float line_end_y = cy + radius * inner_size_factor * std::sin(angle);
   thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), 1.0f);
