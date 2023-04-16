@@ -10,22 +10,19 @@
 
 namespace inf::base::ui {
 
-class group_component:
+class container_component:
 public juce::Component
 {
-  std::uint32_t const _flags;
-  std::int32_t const _radius;
-  std::int32_t const _padding;
+  float const _radius;
+  float const _thickness;
   juce::Colour const _fill;
-  juce::Colour const _header;
   juce::Colour const _outline;
+  std::uint32_t const _flags;
 public:
-  enum flags { none = 0x0, has_fill = 0x1, has_outline = 0x2, has_header = 0x4 };
+  enum flags { none = 0x0, fill = 0x1, outline = 0x2 };
   void paint(juce::Graphics& g) override;
-  group_component(
-    std::uint32_t flags, std::int32_t padding, std::int32_t radius, 
-    juce::Colour const& fill, juce::Colour const& outline, juce::Colour const& header) : 
-  _flags(flags), _padding(padding), _radius(radius), _fill(fill), _header(header), _outline(outline) {}
+  container_component(std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline): 
+  _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags) {}
 };
 
 class ui_element
@@ -41,42 +38,33 @@ public:
   void color(std::int32_t id, juce::Colour color) { _colors[id] = color; }
 };
 
-class group_element:
+class container_element:
 public ui_element
 {
-  std::uint32_t const _flags;
-  std::int32_t const _radius;
-  std::int32_t const _padding;
+  float const _radius;
+  float const _thickness;
   juce::Colour const _fill;
-  juce::Colour const _header;
   juce::Colour const _outline;
+  std::uint32_t const _flags;
   std::unique_ptr<ui_element> _content = {};
 protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
-  group_element(
-    std::uint32_t flags, std::int32_t padding, std::int32_t radius,
-    juce::Colour const& fill, juce::Colour const& outline, juce::Colour const& header) : 
-  _flags(flags), _padding(padding), _radius(radius), _fill(fill), _header(header), _outline(outline) {}
   void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
+  container_element(std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline) :
+  _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags) {}
 };
 
-inline std::unique_ptr<group_element>
-create_group_fill_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& fill)
-{ return std::make_unique<group_element>(group_component::flags::has_fill, padding, radius, fill, juce::Colour(), juce::Colour()); }
-inline std::unique_ptr<group_element>
-create_group_outline_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& outline)
-{ return std::make_unique<group_element>(group_component::flags::has_outline, padding, radius, juce::Colour(), outline, juce::Colour()); }
-inline std::unique_ptr<group_element>
-create_group_fill_outline_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& fill, juce::Colour const& outline)
-{ return std::make_unique<group_element>(group_component::flags::has_fill | group_component::flags::has_outline, padding, radius, fill, outline, juce::Colour()); }
-inline std::unique_ptr<group_element>
-create_group_outline_header_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& outline, juce::Colour const& header)
-{ return std::make_unique<group_element>(group_component::flags::has_header | group_component::flags::has_outline, padding, radius, juce::Colour(), outline, header); }
-inline std::unique_ptr<group_element>
-create_group_fill_outline_header_ui(std::int32_t padding, std::int32_t radius, juce::Colour const& fill, juce::Colour const& outline, juce::Colour const& header)
-{ return std::make_unique<group_element>(group_component::flags::has_header | group_component::flags::has_outline | group_component::flags::has_fill, padding, radius, fill, outline, header); }
+inline std::unique_ptr<container_element>
+create_container_fill_ui(float radius, juce::Colour const& fill)
+{ return std::make_unique<container_element>(container_component::flags::fill, radius, 0.0f, fill, juce::Colour()); }
+inline std::unique_ptr<container_element>
+create_container_outline_ui(float radius, float thickness, juce::Colour const& outline)
+{ return std::make_unique<container_element>(container_component::flags::outline, radius, thickness, juce::Colour(), outline); }
+inline std::unique_ptr<container_element>
+create_container_fill_outline_ui(float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
+{ return std::make_unique<container_element>(container_component::flags::outline | container_component::flags::fill, radius, thickness, fill, outline); }
 
 class param_element:
 public ui_element

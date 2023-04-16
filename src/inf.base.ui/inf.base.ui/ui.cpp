@@ -6,17 +6,17 @@ using namespace inf::base;
 namespace inf::base::ui {
 
 void 
-group_component::paint(Graphics& g)
+container_component::paint(Graphics& g)
 {
-  if (_flags & flags::has_fill)
+  if (_flags & flags::fill)
   {
     g.setColour(_fill);
-    g.fillRoundedRectangle(getLocalBounds().toFloat(), static_cast<float>(_radius));
+    g.fillRoundedRectangle(getLocalBounds().toFloat(), _radius);
   }
-  if (_flags & flags::has_outline)
+  if (_flags & flags::outline)
   {
-    g.setColour(_outline);
-    g.drawRoundedRectangle(getLocalBounds().toFloat(), static_cast<float>(_radius), );
+    g.setColour(_fill);
+    g.drawRoundedRectangle(getLocalBounds().toFloat(), _radius, _thickness);
   }
   if(getChildren().size() != 0)
     getChildComponent(0)->paint(g);
@@ -35,7 +35,7 @@ ui_element::build(plugin_controller* controller)
 Component* 
 root_element::build_core(plugin_controller* controller)
 {
-  group_component* result = new group_component(group_component::flags::has_fill, 0, 0, Colours::black, Colour(), Colour());
+  container_component* result = new container_component(container_component::flags::fill, 0.0f, 0.0f, Colours::black, Colour());
   result->addChildComponent(_content->build(controller));
   result->setOpaque(true);
   return result;
@@ -52,15 +52,15 @@ root_element::layout()
 }
 
 Component*
-group_element::build_core(plugin_controller* controller)
+container_element::build_core(plugin_controller* controller)
 {
-  group_component* result = new group_component(_flags, _padding, _radius, _fill, _outline, _header);
+  container_component* result = new container_component(_flags, _radius, _thickness, _fill, _outline);
   result->addChildComponent(_content->build(controller));
   return result;
 }
 
 void
-group_element::layout()
+container_element::layout()
 {
   _content->component()->setBounds(component()->getLocalBounds());
   _content->layout();

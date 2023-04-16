@@ -10,9 +10,9 @@ using namespace inf::base::ui;
 namespace inf::synth::ui {
 
 static std::unique_ptr<ui_element>
-create_container1()
+create_right_container()
 {
-  auto result = create_group_fill_ui(0, 0, Colours::orange);
+  auto result = create_container_fill_ui(5, Colours::orange);
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt2));
   return result;
 }
@@ -31,11 +31,19 @@ create_container3()
 }
 
 static std::unique_ptr<ui_element>
-create_container2()
+create_bottom_left_container()
 {
-  auto result = create_group_fill_ui(0, 10, Colours::greenyellow);
+  auto result = create_container_outline_ui(10, 2, Colours::greenyellow);
   result->content(create_container3());
   result->color(GroupComponent::ColourIds::textColourId, juce::Colours::purple);
+  return result;
+}
+
+static std::unique_ptr<ui_element>
+create_top_left_container()
+{
+  auto result = create_container_fill_outline_ui(10, 2, Colours::greenyellow, Colours::red);
+  result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1));
   return result;
 }
 
@@ -43,10 +51,10 @@ static std::unique_ptr<grid_element>
 create_content()
 {
   auto result = create_grid_ui(2, 4, 1.0);
-  result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1), 0, 0, 1, 1);
+  result->add_cell(create_top_left_container(), 0, 0, 1, 1);
   result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::bal1), 0, 1, 1, 1);
-  result->add_cell(create_container1(), 0, 2, 2, 2);
-  result->add_cell(create_container2(), 1, 0, 1, 2);
+  result->add_cell(create_right_container(), 0, 2, 2, 2);
+  result->add_cell(create_bottom_left_container(), 1, 0, 1, 2);
   return result;
 }
 
