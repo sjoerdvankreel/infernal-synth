@@ -38,6 +38,7 @@ root_element::build_core(plugin_controller* controller)
   container_component* result = new container_component(container_component::flags::fill, 0.0f, 0.0f, Colours::black, Colour());
   result->addChildComponent(_content->build(controller));
   result->setOpaque(true);
+  result->setLookAndFeel(&_lnf);
   return result;
 }
 

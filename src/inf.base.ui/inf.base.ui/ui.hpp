@@ -1,6 +1,7 @@
 #ifndef INF_BASE_UI_UI_HPP
 #define INF_BASE_UI_UI_HPP
 
+#include <inf.base.ui/look_and_feel.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -107,6 +108,7 @@ create_grid_ui(std::int32_t rows, std::int32_t cols, float gap_size, float xy_ra
 class root_element:
 public ui_element
 {
+  inf_look_and_feel _lnf = {};
   juce::Colour const _fill;
   std::int32_t const _width; // Pixel size.
   std::unique_ptr<grid_element> _content = {};
