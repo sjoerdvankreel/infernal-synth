@@ -50,23 +50,6 @@ inline std::unique_ptr<container_element>
 create_container_ui(juce::Colour const& fill)
 { return std::make_unique<container_element>(fill); }
 
-class group_element:
-public ui_element
-{
-  std::string const _header;
-  std::unique_ptr<ui_element> _content = {};
-protected:
-  juce::Component* build_core(plugin_controller* controller) override;
-public:
-  void layout() override;
-  group_element(std::string const& header) : _header(header) {}
-  void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
-};
-
-inline std::unique_ptr<group_element>
-create_group_ui(std::string const& header)
-{ return std::make_unique<group_element>(header); }
-
 class param_element:
 public ui_element
 {

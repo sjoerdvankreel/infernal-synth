@@ -52,22 +52,6 @@ container_element::layout()
 }
 
 Component*
-group_element::build_core(plugin_controller* controller)
-{
-  GroupComponent* result = new GroupComponent;
-  result->setText(_header);
-  result->addChildComponent(_content->build(controller));
-  return result;
-}
-
-void
-group_element::layout()
-{
-  _content->component()->setBounds(component()->getLocalBounds());
-  _content->layout();
-}
-
-Component*
 param_element::build_core(plugin_controller* controller)
 {
   Slider* result = new Slider;
