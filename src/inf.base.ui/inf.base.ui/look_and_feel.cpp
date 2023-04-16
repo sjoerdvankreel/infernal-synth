@@ -10,13 +10,19 @@ inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x, int y, int w, int h, 
   float pos, float start, float end, juce::Slider& s)
 {
+  // relative to min(w, h)
+  float const margin_factor = 0.05f;
+  float const inner_size_factor = 0.8;
+  float const highlight_size_factor = 0.95;
+  float const line_thickness_factor = 0.05f;
+
+  // adjust for nonrectangular
   float rx = static_cast<float>(x);
   float ry = static_cast<float>(y);
   if(h < w) rx += (w - h) * 0.5f;
   if(w < h) ry += (h - w) * 0.5f;
-  float const margin_factor = 0.05f;
-  float const inner_size_factor = 0.8;
-  float const line_thickness_factor = 0.05f;
+
+  // precompute stuff
   float const margin = std::min(w, h) * margin_factor;
   float const size = std::min(w, h) - 2.0f * margin;
   float const radius = size / 2.0f;
@@ -27,13 +33,16 @@ inf_look_and_feel::drawRotarySlider(
   float const line_thickness = size * line_thickness_factor;
 
   // fill
-  float fillx = fx + (size - inner_size) * 0.5f;
-  float filly = fy + (size - inner_size) * 0.5f;
-  //g.setColour(s.findColour(Slider::ColourIds::rotarySliderFillColourId));
+  float hlx = fx + (size - inner_size) * 0.5f;
+  float hly = fy + (size - inner_size) * 0.5f;
   auto shadow = s.findColour(colors::knob_shadow);
   auto high = s.findColour(colors::knob_highlight);
-  g.setGradientFill(ColourGradient(high, fillx, filly, shadow, fillx + inner_size, filly + inner_size, false));
-  g.fillEllipse(fillx, filly, inner_size, inner_size);
+  g.setGradientFill(ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false));
+  g.fillEllipse(hlx, hly, inner_size, inner_size);
+  float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
+  float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
+  g.setColour(s.findColour(Slider::ColourIds::rotarySliderFillColourId));
+  g.fillEllipse(fillx, filly, highlight_size_factor * inner_size, highlight_size_factor * inner_size);
 
   // thumb
   Path thumb;
