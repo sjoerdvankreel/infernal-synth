@@ -19,6 +19,7 @@ inf_look_and_feel::drawRotarySlider(
   float const center_size_factor = 0.75f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
+  float const center_thickness_factor = 0.0125f;
   float const outline_thickness_factor = 0.075f;
   float const cut_line_thickness_factor = 0.0125f;
 
@@ -81,7 +82,7 @@ inf_look_and_feel::drawRotarySlider(
     g.fillPath(cut);
   }
 
-  // gradient fill
+  // gradient fill center
   float const fill_offset = (highlight_size - center_size) * 0.5f;
   float const fill_x = hl_x + fill_offset;
   float const fill_y = hl_y + fill_offset;
@@ -91,6 +92,11 @@ inf_look_and_feel::drawRotarySlider(
   fill_gradient.addColour(0.25, fill_highlight.interpolatedWith(fill_base, 0.5f));
   g.setGradientFill(fill_gradient);
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
+
+  // stroke center
+  float const center_thickness = outer_size * center_thickness_factor;
+  g.setColour(s.findColour(colors::knob_cuts_inward));
+  g.drawEllipse(fill_x, fill_y, center_size, center_size, center_thickness);
 
   /*
   // fill
