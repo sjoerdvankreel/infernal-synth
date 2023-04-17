@@ -33,7 +33,7 @@ create_container3()
 static std::unique_ptr<ui_element>
 create_bottom_left_container()
 {
-  auto result = create_container_outline_ui(6, 2, Colours::greenyellow);
+  auto result = create_container_fill_ui(6, Colour(0xFF202020));
   result->content(create_container3());
   result->color(GroupComponent::ColourIds::textColourId, juce::Colours::purple);
   return result;
@@ -47,12 +47,20 @@ create_top_left_container()
   return result;
 }
 
+static std::unique_ptr<ui_element>
+create_top_mid_container()
+{
+  auto result = create_container_fill_ui(6, Colour(0xFF202020));
+  result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::bal1));
+  return result;
+}
+
 static std::unique_ptr<grid_element>
 create_content()
 {
   auto result = create_grid_ui(2, 4, 3, 1.0);
   result->add_cell(create_top_left_container(), 0, 0, 1, 1);
-  result->add_cell(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::bal1), 0, 1, 1, 1);
+  result->add_cell(create_top_mid_container(), 0, 1, 1, 1);
   result->add_cell(create_right_container(), 0, 2, 2, 2);
   result->add_cell(create_bottom_left_container(), 1, 0, 1, 2);
   return result;
