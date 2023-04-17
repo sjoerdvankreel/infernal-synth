@@ -75,7 +75,9 @@ inf_look_and_feel::drawRotarySlider(
   float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
   auto fill_base = s.findColour(colors::knob_fill_base);
   auto fill_highlight = s.findColour(colors::knob_fill_highlight);
-  g.setGradientFill(ColourGradient(fill_highlight, cx, cy, fill_base, fillx + knob_fill_size, filly + knob_fill_size, true));
+  auto fill_gradient = ColourGradient(fill_highlight, cx, cy, fill_base, fillx + knob_fill_size, filly + knob_fill_size, true);
+  fill_gradient.addColour(0.25, fill_highlight.interpolatedWith(fill_base, 0.5f));
+  g.setGradientFill(fill_gradient);
   g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
 
   // thumb
