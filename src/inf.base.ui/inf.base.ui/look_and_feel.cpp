@@ -11,6 +11,7 @@ inf_look_and_feel::drawRotarySlider(
   float pos, float start, float end, juce::Slider& s)
 {
   std::int32_t const cut_count = 12;
+  std::int32_t const fill_round_count = 6;
 
   // relative to min(w, h)
   float const margin_factor = 0.05f;
@@ -49,7 +50,7 @@ inf_look_and_feel::drawRotarySlider(
   g.setGradientFill(hl_gradient);
   g.fillEllipse(hlx, hly, inner_size, inner_size);
 
-  // highlight cuts
+  // cuts
   float cx = rx + margin + size / 2.0f;
   float cy = ry + margin + size / 2.0f;
   float hl_cut_radius_outer = radius * inner_size_factor;
@@ -70,15 +71,17 @@ inf_look_and_feel::drawRotarySlider(
   }
   
   // fill
-  float knob_fill_size = highlight_size_factor * inner_size;
-  float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-  float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-  auto fill_base = s.findColour(colors::knob_fill_base);
-  auto fill_highlight = s.findColour(colors::knob_fill_highlight);
-  auto fill_gradient = ColourGradient(fill_highlight, cx, cy, fill_base, fillx + knob_fill_size, filly + knob_fill_size, true);
-  fill_gradient.addColour(0.25, fill_highlight.interpolatedWith(fill_base, 0.5f));
-  g.setGradientFill(fill_gradient);
-  g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
+  float ffill_round_count = static_cast<float>(fill_round_count);
+  for(std::int32_t i = 0; i < fill_round_count; i++)
+  {
+    float knob_fill_size = highlight_size_factor * inner_size * ((ffill_round_count - i) / ffill_round_count);
+    float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
+    float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
+    auto fill_base = s.findColour(colors::knob_fill_base);
+    auto fill_highlight = s.findColour(colors::knob_fill_highlight);
+    g.setColour(fill_base.interpolatedWith(fill_highlight, i / (ffill_round_count - 1.0f)));
+    g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
+  }
 
   // thumb
   Path thumb;
