@@ -10,10 +10,13 @@ public juce::LookAndFeel_V4
 {
 public:
   enum colors {
+    knob_thumb,
     knob_shadow,
+    knob_outline,
     knob_highlight,
     knob_cuts_inward,
     knob_cuts_outward,
+    knob_fill_base,
     knob_fill_highlight
   };
 

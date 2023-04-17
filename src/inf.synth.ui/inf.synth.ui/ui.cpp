@@ -71,14 +71,14 @@ create_synth_ui(std::int32_t width)
 {
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb, Colour(0xFF990000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_shadow, Colour(0xFF000000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline, Colour(0xFF990000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFFCCCCCC));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_fill_base, Colour(0xFF550000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward, Colour(0xFF660000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward, Colour(0x00660000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_fill_highlight, Colour(0xFFCCCCCC));
-  result->look_and_feel().setColour(Slider::ColourIds::thumbColourId, Colour(0xFF990000));
-  result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colour(0xFF550000));
-  result->look_and_feel().setColour(Slider::ColourIds::rotarySliderOutlineColourId, Colour(0xFF990000));
   return result;
 }
 
