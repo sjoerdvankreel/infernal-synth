@@ -10,7 +10,7 @@ inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x, int y, int w, int h, 
   float pos, float start, float end, juce::Slider& s)
 {
-  std::int32_t const cut_count = 8;
+  std::int32_t const cut_count = 20;
 
   // relative to min(w, h)
   float const margin_factor = 0.05f;
@@ -45,10 +45,27 @@ inf_look_and_feel::drawRotarySlider(
   auto high = s.findColour(colors::knob_highlight);
   g.setGradientFill(ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false));
   g.fillEllipse(hlx, hly, inner_size, inner_size);
-  
-  // knob fill
+
+  // cuts
   float cx = rx + margin + size / 2.0f;
   float cy = ry + margin + size / 2.0f;
+  float cut_radius_outer = radius * inner_size_factor;
+  float cut_radius_inner = radius * inner_size_factor * highlight_size_factor;
+  for (std::int32_t i = 0; i < cut_count; i++)
+  {
+    Path cut;
+    float cut_start_x = cx + cut_radius_inner * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_start_y = cy + cut_radius_inner * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_x = cx + cut_radius_outer * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_y = cy + cut_radius_outer * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    cut.addLineSegment(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), 1.0f);
+    auto cut_inward = s.findColour(colors::knob_cuts_inward);
+    auto cut_outward = s.findColour(colors::knob_cuts_outward);
+    g.setGradientFill(ColourGradient(cut_inward, cut_start_x, cut_start_y, cut_outward, cut_end_x, cut_end_y, false));
+    g.strokePath(cut, PathStrokeType(cut_line_thickness));
+  }
+  
+  // knob fill
   float knob_fill_size = highlight_size_factor * inner_size;
   float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
   float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
@@ -65,17 +82,6 @@ inf_look_and_feel::drawRotarySlider(
   thumb.addLineSegment(Line<float>(cx, cy, thumb_end_x, thumb_end_y), 1.0f);
   g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
   g.strokePath(thumb, PathStrokeType(thumb_line_thickness));
-
-  // cuts (0 = thumb)
-  for (std::int32_t i = 1; i < cut_count; i++)
-  {
-    Path cut;
-    float cut_end_x = cx + thumb_radius * std::cos(angle + i * pi32 * 2.0f / cut_count);
-    float cut_end_y = cy + thumb_radius * std::sin(angle + i * pi32 * 2.0f / cut_count);
-    cut.addLineSegment(Line<float>(cx, cy, cut_end_x, cut_end_y), 1.0f);
-    g.setColour(s.findColour(colors::knob_cuts_outward));
-    g.strokePath(cut, PathStrokeType(cut_line_thickness));
-  }
 
   // outline
   Path arc;
