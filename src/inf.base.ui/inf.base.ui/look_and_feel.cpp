@@ -10,13 +10,13 @@ inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x, int y, int w, int h, 
   float pos, float start, float end, juce::Slider& s)
 {
-  std::int32_t const cut_count = 20;
+  std::int32_t const cut_count = 12;
 
   // relative to min(w, h)
   float const margin_factor = 0.05f;
   float const inner_size_factor = 0.75f;
   float const cut_inner_size_factor = 0.9f;
-  float const highlight_size_factor = 0.85f;
+  float const highlight_size_factor = 0.75f;
   float const cut_line_thickness_factor = 0.0125f;
   float const thumb_line_thickness_factor = 0.025f;
   float const outline_line_thickness_factor = 0.075f;

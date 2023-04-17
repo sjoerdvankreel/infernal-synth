@@ -12,7 +12,7 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_right_container()
 {
-  auto result = create_container_fill_ui(6, Colour(0xFF202020));
+  auto result = create_container_fill_ui(6, Colour(0xFF222222));
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt2));
   return result;
 }
@@ -33,7 +33,7 @@ create_container3()
 static std::unique_ptr<ui_element>
 create_bottom_left_container()
 {
-  auto result = create_container_fill_ui(6, Colour(0xFF202020));
+  auto result = create_container_fill_ui(6, Colour(0xFF222222));
   result->content(create_container3());
   result->color(GroupComponent::ColourIds::textColourId, juce::Colours::purple);
   return result;
@@ -42,7 +42,7 @@ create_bottom_left_container()
 static std::unique_ptr<ui_element>
 create_top_left_container()
 {
-  auto result = create_container_fill_ui(6, Colour(0xFF202020));
+  auto result = create_container_fill_ui(6, Colour(0xFF222222));
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::amt1));
   return result;
 }
@@ -50,7 +50,7 @@ create_top_left_container()
 static std::unique_ptr<ui_element>
 create_top_mid_container()
 {
-  auto result = create_container_fill_ui(6, Colour(0xFF202020));
+  auto result = create_container_fill_ui(6, Colour(0xFF222222));
   result->content(create_param_ui(part_type::vaudio_bank, 0, audio_bank_param::bal1));
   return result;
 }
@@ -72,10 +72,10 @@ create_synth_ui(std::int32_t width)
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_shadow, Colour(0xFF000000));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFF990000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFFCCCCCC));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward, Colour(0xFF660000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward, Colour(0x00660000));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_fill_highlight, Colour(0xFFC0C0C0));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_fill_highlight, Colour(0xFFCCCCCC));
   result->look_and_feel().setColour(Slider::ColourIds::thumbColourId, Colour(0xFF990000));
   result->look_and_feel().setColour(Slider::ColourIds::rotarySliderFillColourId, Colour(0xFF550000));
   result->look_and_feel().setColour(Slider::ColourIds::rotarySliderOutlineColourId, Colour(0xFF990000));
