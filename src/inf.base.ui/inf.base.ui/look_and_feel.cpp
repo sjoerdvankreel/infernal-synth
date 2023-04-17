@@ -8,8 +8,82 @@ namespace inf::base::ui {
 void 
 inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x, int y, int w, int h, 
-  float pos, float start, float end, juce::Slider& s)
+  float pos, float start_angle, float end_angle, juce::Slider& s)
 {
+  // config
+  std::int32_t const cut_count = 12;
+  float const cut_inner_size_factor = 0.9f;
+  float const center_size_factor = 0.75f;
+  float const highlight_size_factor = 0.75f;
+  float const outline_thickness_factor = 0.075f;
+  float const cut_line_thickness_factor = 0.0125f;
+
+  // adjust for nonrectangular
+  float left = static_cast<float>(x);
+  float top = static_cast<float>(y);
+  if (w < h) top += (h - w) * 0.5f;
+  if (h < w) left += (w - h) * 0.5f;
+
+  // precompute stuff
+  float const margin_factor = 0.05f;
+  float const margin = std::min(w, h) * margin_factor;
+  float const outer_size = std::min(w, h) - 2.0f * margin;
+  float const highlight_size = outer_size * highlight_size_factor;
+  float const center_size = highlight_size * center_size_factor;
+  float const angle = start_angle + pos * (end_angle - start_angle) - pi32 * 0.5f;
+
+  // precompute bounds
+  float const outer_y = top + margin;
+  float const outer_x = left + margin;
+  float const center_y = top + margin + outer_size / 2.0f;
+  float const center_x = left + margin + outer_size / 2.0f;
+
+  // outline
+  Path outline;
+  float const outer_radius = outer_size / 2.0f;
+  float const outline_thickness = outer_size * outline_thickness_factor;
+  outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, start_angle, end_angle, true);
+  g.setColour(s.findColour(colors::knob_outline));
+  g.strokePath(outline, PathStrokeType(outline_thickness));
+
+  // highlight
+  float const highlight_offset = (outer_size - highlight_size) * 0.5f;
+  float const hl_x = outer_x + highlight_offset;
+  float const hl_y = outer_y + highlight_offset;
+  auto const hl_shadow = s.findColour(colors::knob_shadow);
+  auto const hl_highlight = s.findColour(colors::knob_highlight);
+  auto hl_gradient = ColourGradient(hl_highlight, hl_x, hl_y, hl_shadow, hl_x + highlight_size, hl_y + highlight_size, false);
+  hl_gradient.addColour(0.25, hl_highlight.interpolatedWith(hl_shadow, 0.5f));
+  g.setGradientFill(hl_gradient);
+  g.fillEllipse(hl_x, hl_y, highlight_size, highlight_size);
+
+  // cuts
+  float const cut_line_thickness = outer_size * cut_line_thickness_factor;
+  float const cut_radius_outer = outer_radius * highlight_size_factor;
+  float const cut_radius_inner = cut_radius_outer * center_size_factor * cut_inner_size_factor;
+  float const cut_size = cut_radius_outer - cut_radius_inner;
+  for (std::int32_t i = 0; i < cut_count; i++)
+  {
+    Path cut;
+    float const angle_part = angle + i * pi32 * 2.0f / cut_count;
+    float const cut_end_x = center_x + cut_radius_outer * std::cos(angle_part);
+    float const cut_end_y = center_y + cut_radius_outer * std::sin(angle_part);
+    float const cut_start_x = center_x + cut_radius_inner * std::cos(angle_part);
+    float const cut_start_y = center_y + cut_radius_inner * std::sin(angle_part);
+    cut.addArrow(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), cut_line_thickness, cut_size, cut_size);
+    auto const cut_inward = s.findColour(colors::knob_cuts_inward);
+    auto const cut_outward = s.findColour(colors::knob_cuts_outward);
+    g.setGradientFill(ColourGradient(cut_inward, cut_start_x, cut_start_y, cut_outward, cut_end_x, cut_end_y, false));
+    g.fillPath(cut);
+  }
+
+  float const fill_offset = (highlight_size - center_size) * 0.5f;
+  float const fill_x = hl_x + fill_offset;
+  float const fill_y = hl_y + fill_offset;
+  g.setColour(Colours::green);
+  g.fillEllipse(fill_x, fill_y, center_size, center_size);
+
+/*
   std::int32_t const cut_count = 12;
   std::int32_t const fill_round_count = 6;
 
@@ -97,6 +171,7 @@ inf_look_and_feel::drawRotarySlider(
   arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
   g.setColour(s.findColour(colors::knob_outline));
   g.strokePath(arc, PathStrokeType(outline_line_thickness));
+  */
 }
 
 } // namespace inf::base::ui
