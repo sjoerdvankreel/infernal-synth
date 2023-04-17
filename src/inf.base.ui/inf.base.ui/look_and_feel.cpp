@@ -30,19 +30,19 @@ inf_look_and_feel::drawRotarySlider(
 
   // precompute stuff
   float const margin = std::min(w, h) * margin_factor;
-  float const size = std::min(w, h) - 2.0f * margin;
-  float const radius = size / 2.0f;
-  float const inner_size = size * inner_size_factor;
+  float const outer_size = std::min(w, h) - 2.0f * margin;
+  float const radius = outer_size / 2.0f;
+  float const inner_size = outer_size * inner_size_factor;
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
   float const fx = static_cast<float>(rx + margin);
   float const fy = static_cast<float>(ry + margin);
-  float const cut_line_thickness = size * cut_line_thickness_factor;
-  float const thumb_line_thickness = size * thumb_line_thickness_factor;
-  float const outline_line_thickness = size * outline_line_thickness_factor;
+  float const cut_line_thickness = outer_size * cut_line_thickness_factor;
+  float const thumb_line_thickness = outer_size * thumb_line_thickness_factor;
+  float const outline_line_thickness = outer_size * outline_line_thickness_factor;
 
   // highlight
-  float hlx = fx + (size - inner_size) * 0.5f;
-  float hly = fy + (size - inner_size) * 0.5f;
+  float hlx = fx + (outer_size - inner_size) * 0.5f;
+  float hly = fy + (outer_size - inner_size) * 0.5f;
   auto shadow = s.findColour(colors::knob_shadow);
   auto high = s.findColour(colors::knob_highlight);
   auto hl_gradient = ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false);
@@ -51,8 +51,8 @@ inf_look_and_feel::drawRotarySlider(
   g.fillEllipse(hlx, hly, inner_size, inner_size);
 
   // cuts
-  float cx = rx + margin + size / 2.0f;
-  float cy = ry + margin + size / 2.0f;
+  float cx = rx + margin + outer_size / 2.0f;
+  float cy = ry + margin + outer_size / 2.0f;
   float hl_cut_radius_outer = radius * inner_size_factor;
   float hl_cut_radius_inner = radius * inner_size_factor * highlight_size_factor * cut_inner_size_factor;
   float cut_size = hl_cut_radius_outer - hl_cut_radius_inner;
