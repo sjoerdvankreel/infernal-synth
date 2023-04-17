@@ -51,14 +51,15 @@ inf_look_and_feel::drawRotarySlider(
   float cy = ry + margin + size / 2.0f;
   float hl_cut_radius_outer = radius * inner_size_factor;
   float hl_cut_radius_inner = radius * inner_size_factor * highlight_size_factor;
+  float cut_size = hl_cut_radius_outer - hl_cut_radius_inner;
   for (std::int32_t i = 0; i < cut_count; i++)
   {
-    Path cut;
+    Path cut;    
     float cut_start_x = cx + hl_cut_radius_inner * std::cos(angle + i * pi32 * 2.0f / cut_count);
     float cut_start_y = cy + hl_cut_radius_inner * std::sin(angle + i * pi32 * 2.0f / cut_count);
     float cut_end_x = cx + hl_cut_radius_outer * std::cos(angle + i * pi32 * 2.0f / cut_count);
     float cut_end_y = cy + hl_cut_radius_outer * std::sin(angle + i * pi32 * 2.0f / cut_count);
-    cut.addLineSegment(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), 1.0f);
+    cut.addArrow(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), 1.0f, cut_size, cut_size);
     auto cut_inward = s.findColour(colors::knob_cuts_inward);
     auto cut_outward = s.findColour(colors::knob_cuts_outward);
     g.setGradientFill(ColourGradient(cut_inward, cut_start_x, cut_start_y, cut_outward, cut_end_x, cut_end_y, false));
@@ -76,7 +77,7 @@ inf_look_and_feel::drawRotarySlider(
 
   // fill cuts
   float fill_cut_radius_outer = hl_cut_radius_inner;
-  float fill_cut_radius_inner = fill_cut_radius_outer - (hl_cut_radius_outer - hl_cut_radius_inner);
+  float fill_cut_radius_inner = fill_cut_radius_outer - cut_size;
   for (std::int32_t i = 0; i < cut_count; i++)
   {
     Path cut;
