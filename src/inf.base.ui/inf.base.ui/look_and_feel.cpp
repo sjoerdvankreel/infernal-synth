@@ -12,6 +12,9 @@ inf_look_and_feel::drawRotarySlider(
 {
   // config
   std::int32_t const cut_count = 12;
+  std::int32_t const fill_round_count = 10;
+
+  // config
   float const cut_inner_size_factor = 0.9f;
   float const center_size_factor = 0.75f;
   float const highlight_size_factor = 0.75f;
@@ -77,11 +80,16 @@ inf_look_and_feel::drawRotarySlider(
     g.fillPath(cut);
   }
 
-  float const fill_offset = (highlight_size - center_size) * 0.5f;
-  float const fill_x = hl_x + fill_offset;
-  float const fill_y = hl_y + fill_offset;
-  g.setColour(Colours::green);
-  g.fillEllipse(fill_x, fill_y, center_size, center_size);
+  // fill
+  for (std::int32_t i = 0; i < fill_round_count; i++)
+  {
+    float const fill_size = center_size;
+    float const fill_offset = (highlight_size - center_size) * 0.5f;
+    auto fill_base = s.findColour(colors::knob_fill_base);
+    auto fill_highlight = s.findColour(colors::knob_fill_highlight);
+    g.setColour(fill_base);
+    g.fillEllipse(hl_x + fill_offset, hl_y + fill_offset, fill_size, fill_size);
+  }
 
 /*
   std::int32_t const cut_count = 12;
