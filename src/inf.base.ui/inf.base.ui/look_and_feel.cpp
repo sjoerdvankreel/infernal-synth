@@ -83,11 +83,11 @@ inf_look_and_feel::drawRotarySlider(
   // fill
   for (std::int32_t i = 0; i < fill_round_count; i++)
   {
-    float const fill_size = center_size;
-    float const fill_offset = (highlight_size - center_size) * 0.5f;
+    float const fill_size = center_size * (fill_round_count - i) / fill_round_count;
+    float const fill_offset = (highlight_size - fill_size) * 0.5f;
     auto fill_base = s.findColour(colors::knob_fill_base);
     auto fill_highlight = s.findColour(colors::knob_fill_highlight);
-    g.setColour(fill_base);
+    g.setColour(fill_base.interpolatedWith(fill_highlight, i / static_cast<float>(fill_round_count - 1)));
     g.fillEllipse(hl_x + fill_offset, hl_y + fill_offset, fill_size, fill_size);
   }
 
