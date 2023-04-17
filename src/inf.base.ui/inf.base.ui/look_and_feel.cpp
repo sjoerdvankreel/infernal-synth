@@ -44,7 +44,9 @@ inf_look_and_feel::drawRotarySlider(
   float hly = fy + (size - inner_size) * 0.5f;
   auto shadow = s.findColour(colors::knob_shadow);
   auto high = s.findColour(colors::knob_highlight);
-  g.setGradientFill(ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false));
+  auto hl_gradient = ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false);
+  hl_gradient.addColour(0.25, high.interpolatedWith(shadow, 0.5f));
+  g.setGradientFill(hl_gradient);
   g.fillEllipse(hlx, hly, inner_size, inner_size);
 
   // highlight cuts
