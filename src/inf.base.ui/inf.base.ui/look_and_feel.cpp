@@ -10,10 +10,13 @@ inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x, int y, int w, int h, 
   float pos, float start, float end, juce::Slider& s)
 {
+  std::int32_t const cut_count = 8;
+
   // relative to min(w, h)
   float const margin_factor = 0.05f;
   float const inner_size_factor = 0.75f;
   float const highlight_size_factor = 0.85f;
+  float const cut_line_thickness_factor = 0.0125f;
   float const thumb_line_thickness_factor = 0.025f;
   float const outline_line_thickness_factor = 0.075f;
 
@@ -31,6 +34,7 @@ inf_look_and_feel::drawRotarySlider(
   float const angle = start + pos * (end - start) - pi32 * 0.5f;
   float const fx = static_cast<float>(rx + margin);
   float const fy = static_cast<float>(ry + margin);
+  float const cut_line_thickness = size * cut_line_thickness_factor;
   float const thumb_line_thickness = size * thumb_line_thickness_factor;
   float const outline_line_thickness = size * outline_line_thickness_factor;
 
@@ -56,11 +60,22 @@ inf_look_and_feel::drawRotarySlider(
   // thumb
   Path thumb;
   float thumb_radius = radius * inner_size_factor * highlight_size_factor;
-  float line_end_x = cx + thumb_radius * std::cos(angle);
-  float line_end_y = cy + thumb_radius * std::sin(angle);
-  thumb.addLineSegment(Line<float>(cx, cy, line_end_x, line_end_y), 1.0f);
+  float thumb_end_x = cx + thumb_radius * std::cos(angle);
+  float thumb_end_y = cy + thumb_radius * std::sin(angle);
+  thumb.addLineSegment(Line<float>(cx, cy, thumb_end_x, thumb_end_y), 1.0f);
   g.setColour(s.findColour(Slider::ColourIds::thumbColourId));
   g.strokePath(thumb, PathStrokeType(thumb_line_thickness));
+
+  // cuts (0 = thumb)
+  for (std::int32_t i = 1; i < cut_count; i++)
+  {
+    Path cut;
+    float cut_end_x = cx + thumb_radius * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_y = cy + thumb_radius * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    cut.addLineSegment(Line<float>(cx, cy, cut_end_x, cut_end_y), 1.0f);
+    g.setColour(s.findColour(colors::knob_cuts_outward));
+    g.strokePath(cut, PathStrokeType(cut_line_thickness));
+  }
 
   // outline
   Path arc;

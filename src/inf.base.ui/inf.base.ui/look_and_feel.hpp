@@ -12,7 +12,9 @@ public:
   enum colors {
     knob_shadow,
     knob_highlight,
-    knob_fill_highlight 
+    knob_cuts_inward,
+    knob_cuts_outward,
+    knob_fill_highlight
   };
 
   void drawRotarySlider(
