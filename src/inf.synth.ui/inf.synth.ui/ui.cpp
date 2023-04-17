@@ -77,7 +77,7 @@ create_synth_ui(std::int32_t width)
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFFCCCCCC));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_fill_base, Colour(0xFF222222));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward, Colour(0xFF660000));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward, Colour(0x00660000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward, Colour(0x40660000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_fill_highlight, Colour(0xFFCCCCCC));
   return result;
 }
