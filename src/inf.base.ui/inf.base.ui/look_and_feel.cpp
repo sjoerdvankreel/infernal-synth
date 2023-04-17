@@ -38,7 +38,7 @@ inf_look_and_feel::drawRotarySlider(
   float const thumb_line_thickness = size * thumb_line_thickness_factor;
   float const outline_line_thickness = size * outline_line_thickness_factor;
 
-  // knob highlight
+  // highlight
   float hlx = fx + (size - inner_size) * 0.5f;
   float hly = fy + (size - inner_size) * 0.5f;
   auto shadow = s.findColour(colors::knob_shadow);
@@ -46,18 +46,18 @@ inf_look_and_feel::drawRotarySlider(
   g.setGradientFill(ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false));
   g.fillEllipse(hlx, hly, inner_size, inner_size);
 
-  // cuts
+  // highlight cuts
   float cx = rx + margin + size / 2.0f;
   float cy = ry + margin + size / 2.0f;
-  float cut_radius_outer = radius * inner_size_factor;
-  float cut_radius_inner = radius * inner_size_factor * highlight_size_factor;
+  float hl_cut_radius_outer = radius * inner_size_factor;
+  float hl_cut_radius_inner = radius * inner_size_factor * highlight_size_factor;
   for (std::int32_t i = 0; i < cut_count; i++)
   {
     Path cut;
-    float cut_start_x = cx + cut_radius_inner * std::cos(angle + i * pi32 * 2.0f / cut_count);
-    float cut_start_y = cy + cut_radius_inner * std::sin(angle + i * pi32 * 2.0f / cut_count);
-    float cut_end_x = cx + cut_radius_outer * std::cos(angle + i * pi32 * 2.0f / cut_count);
-    float cut_end_y = cy + cut_radius_outer * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    float cut_start_x = cx + hl_cut_radius_inner * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_start_y = cy + hl_cut_radius_inner * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_x = cx + hl_cut_radius_outer * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_y = cy + hl_cut_radius_outer * std::sin(angle + i * pi32 * 2.0f / cut_count);
     cut.addLineSegment(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), 1.0f);
     auto cut_inward = s.findColour(colors::knob_cuts_inward);
     auto cut_outward = s.findColour(colors::knob_cuts_outward);
@@ -65,7 +65,7 @@ inf_look_and_feel::drawRotarySlider(
     g.strokePath(cut, PathStrokeType(cut_line_thickness));
   }
   
-  // knob fill
+  // fill
   float knob_fill_size = highlight_size_factor * inner_size;
   float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
   float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
@@ -73,6 +73,23 @@ inf_look_and_feel::drawRotarySlider(
   auto outward = s.findColour(Slider::ColourIds::rotarySliderFillColourId);
   g.setGradientFill(ColourGradient(inward, cx, cy, outward, fillx + knob_fill_size, filly + knob_fill_size, true));
   g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
+
+  // fill cuts
+  float fill_cut_radius_outer = hl_cut_radius_inner;
+  float fill_cut_radius_inner = fill_cut_radius_outer - (hl_cut_radius_outer - hl_cut_radius_inner);
+  for (std::int32_t i = 0; i < cut_count; i++)
+  {
+    Path cut;
+    float cut_start_x = cx + fill_cut_radius_inner * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_start_y = cy + fill_cut_radius_inner * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_x = cx + fill_cut_radius_outer * std::cos(angle + i * pi32 * 2.0f / cut_count);
+    float cut_end_y = cy + fill_cut_radius_outer * std::sin(angle + i * pi32 * 2.0f / cut_count);
+    cut.addLineSegment(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), 1.0f);
+    auto cut_inward = s.findColour(colors::knob_cuts_inward);
+    auto cut_outward = s.findColour(colors::knob_cuts_outward);
+    g.setGradientFill(ColourGradient(cut_outward, cut_start_x, cut_start_y, cut_inward, cut_end_x, cut_end_y, false));
+    g.strokePath(cut, PathStrokeType(cut_line_thickness));
+  }
 
   // thumb
   Path thumb;
