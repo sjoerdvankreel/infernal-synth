@@ -16,8 +16,10 @@ public:
     knob_highlight,
     knob_cuts_inward,
     knob_cuts_outward,
+    knob_radial_fill_base,
     knob_gradient_fill_base,
-    knob_gradient_fill_highlight
+    knob_radial_fill_highlight,
+    knob_gradient_fill_highlight,
   };
 
   void drawRotarySlider(
