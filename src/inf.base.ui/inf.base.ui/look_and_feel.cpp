@@ -51,7 +51,7 @@ inf_look_and_feel::drawRotarySlider(
   g.setColour(s.findColour(colors::knob_outline));
   g.strokePath(outline, PathStrokeType(outline_thickness));
 
-  // highlight
+  // highlight gradient
   float const highlight_offset = (outer_size - highlight_size) * 0.5f;
   float const hl_x = outer_x + highlight_offset;
   float const hl_y = outer_y + highlight_offset;
@@ -86,12 +86,27 @@ inf_look_and_feel::drawRotarySlider(
   float const fill_offset = (highlight_size - center_size) * 0.5f;
   float const fill_x = hl_x + fill_offset;
   float const fill_y = hl_y + fill_offset;
+  auto fill_base = s.findColour(colors::knob_gradient_fill_base);
+  auto fill_highlight = s.findColour(colors::knob_gradient_fill_highlight);
+  auto fill_gradient = ColourGradient(fill_highlight, fill_x, fill_y, fill_base, fill_x + center_size, fill_y + center_size, false);
+  fill_gradient.addColour(0.25, fill_highlight.interpolatedWith(fill_base, 0.5f));
+  g.setGradientFill(fill_gradient);
+  g.fillEllipse(fill_x, fill_y, center_size, center_size);
+
+  /*
+  
+   // gradient fill center
+  float const fill_offset = (highlight_size - center_size) * 0.5f;
+  float const fill_x = hl_x + fill_offset;
+  float const fill_y = hl_y + fill_offset;
   auto fill_base = s.findColour(colors::knob_fill_base);
   auto fill_highlight = s.findColour(colors::knob_fill_highlight);
   auto fill_gradient = ColourGradient(fill_highlight, center_x, center_y, fill_base, fill_x + center_size, fill_y + center_size, true);
   fill_gradient.addColour(0.125, fill_highlight.interpolatedWith(fill_base, 0.5f));
   g.setGradientFill(fill_gradient);
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
+
+  */
 
   // stroke center
   float const center_thickness = outer_size * center_thickness_factor;
