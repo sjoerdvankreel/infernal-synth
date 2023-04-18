@@ -97,8 +97,8 @@ inf_look_and_feel::drawRotarySlider(
   // radial fill spot overlay
   float const spot_size = spot_size_factor * center_size;
   float const spot_offset = (center_size - spot_size) * 0.5f;
-  float const spot_x = fill_x - spot_offset * 0.5f;
-  float const spot_y = fill_y - spot_offset * 0.5f;
+  float const spot_x = fill_x + spot_offset * 0.5f;
+  float const spot_y = fill_y + spot_offset * 0.5f;
   float const spot_center_x = center_x - spot_offset;
   float const spot_center_y = center_y - spot_offset;
   auto rad_fill_base = s.findColour(colors::knob_radial_fill_base);
