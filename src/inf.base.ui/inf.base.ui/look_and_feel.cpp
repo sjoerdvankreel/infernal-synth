@@ -105,7 +105,6 @@ inf_look_and_feel::drawRotarySlider(
   auto rad_fill_highlight = s.findColour(colors::knob_radial_fill_highlight);
   auto rad_fill_gradient = ColourGradient(rad_fill_base, spot_center_x, spot_center_y, rad_fill_base, fill_x + spot_size, fill_y + spot_size, true);
   g.setGradientFill(rad_fill_gradient);
-  g.setColour(Colours::blue);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
 
   // stroke center
