@@ -16,6 +16,7 @@ inf_look_and_feel::drawRotarySlider(
 
   // config
   float const cut_xy_ratio = 1.25f;
+  float const spot_size_factor = 0.67f;
   float const center_size_factor = 0.75f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
@@ -93,16 +94,23 @@ inf_look_and_feel::drawRotarySlider(
   g.setGradientFill(grad_fill_gradient);
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
 
-  // radial fill overlay center
+  // radial fill spot overlay
+  float const spot_size = spot_size_factor * center_size;
+  float const spot_offset = (center_size - spot_size) * 0.5f;
+  float const spot_x = fill_x - spot_offset * 0.5f;
+  float const spot_y = fill_y - spot_offset * 0.5f;
+  float const spot_center_x = center_x - spot_offset;
+  float const spot_center_y = center_y - spot_offset;
   auto rad_fill_base = s.findColour(colors::knob_radial_fill_base);
   auto rad_fill_highlight = s.findColour(colors::knob_radial_fill_highlight);
-  auto rad_fill_gradient = ColourGradient(rad_fill_base, center_x, center_y, rad_fill_base, fill_x + center_size, fill_y + center_size, true);
-  rad_fill_gradient.addColour(0.5, rad_fill_highlight);
+  auto rad_fill_gradient = ColourGradient(rad_fill_base, spot_center_x, spot_center_y, rad_fill_base, fill_x + spot_size, fill_y + spot_size, true);
   g.setGradientFill(rad_fill_gradient);
-  //g.fillEllipse(fill_x, fill_y, center_size, center_size);
+  g.setColour(Colours::blue);
+  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
 
   // stroke center
   float const center_thickness = outer_size * center_thickness_factor;
+  center_thickness;
   g.setColour(s.findColour(colors::knob_cuts_inward));
   g.drawEllipse(fill_x, fill_y, center_size, center_size, center_thickness);
 
