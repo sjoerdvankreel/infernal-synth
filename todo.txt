@@ -16,8 +16,10 @@
 
 * host bugs
 - renoise automation serialization is broken
+- waveform always selects first context menu item
 
 * wishlist small
+- support waveform
 - new menu option: clear all unused
 - make more presets + group by folder
 
