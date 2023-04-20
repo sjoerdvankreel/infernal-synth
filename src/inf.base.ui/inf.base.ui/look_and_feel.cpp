@@ -101,11 +101,11 @@ inf_look_and_feel::drawRotarySlider(
   float const spot_y = fill_y + spot_offset * 0.5f;
   float const spot_center_x = spot_x + spot_size * 0.5f;
   float const spot_center_y = spot_y + spot_size * 0.5f;
-  auto rad_fill_base = s.findColour(colors::knob_radial_fill_base);
-  auto rad_fill_highlight = s.findColour(colors::knob_radial_fill_highlight);
-  auto rad_fill_gradient = ColourGradient(rad_fill_highlight, spot_center_x, spot_center_y, rad_fill_base, fill_x + spot_size, fill_y + spot_size, true);
-  rad_fill_gradient.addColour(0.25, rad_fill_highlight.interpolatedWith(rad_fill_base, 0.5f));
-  g.setGradientFill(rad_fill_gradient);
+  auto spot_fill_base = s.findColour(colors::knob_spot_fill_base);
+  auto spot_fill_highlight = s.findColour(colors::knob_spot_fill_highlight);
+  auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, fill_x + spot_size, fill_y + spot_size, true);
+  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
+  g.setGradientFill(spot_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
 
   // stroke center

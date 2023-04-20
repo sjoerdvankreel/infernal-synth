@@ -16,9 +16,9 @@ public:
     knob_highlight,
     knob_cuts_inward,
     knob_cuts_outward,
-    knob_radial_fill_base,
+    knob_spot_fill_base,
     knob_gradient_fill_base,
-    knob_radial_fill_highlight,
+    knob_spot_fill_highlight,
     knob_gradient_fill_highlight,
   };
 
