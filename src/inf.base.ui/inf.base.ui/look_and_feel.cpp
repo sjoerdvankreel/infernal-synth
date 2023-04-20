@@ -56,8 +56,10 @@ inf_look_and_feel::drawRotarySlider(
   for (std::int32_t i = 0; i < fake_conic_outline_count; i++)
   {
     Path active_outline;
-    float active_end_angle = start_angle + (i + 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
-    float active_start_angle = start_angle + (i * 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
+    float fi = static_cast<float>(i);
+    if(fi / fake_conic_outline_count > pos) break;
+    float active_start_angle = start_angle + fi / fake_conic_outline_count * (end_angle - start_angle);
+    float active_end_angle = start_angle + (fi + 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
     active_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, active_start_angle, active_end_angle, true);
     auto active_outline_low = s.findColour(colors::knob_outline_low);
     auto active_outline_high = s.findColour(colors::knob_outline_high);
