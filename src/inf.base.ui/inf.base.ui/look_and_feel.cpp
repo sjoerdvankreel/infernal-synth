@@ -11,13 +11,13 @@ inf_look_and_feel::drawRotarySlider(
   float pos, float start_angle, float end_angle, juce::Slider& s)
 {
   // config
-  std::int32_t const cut_count = 12;
+  std::int32_t const cut_count = 10;
   // std::int32_t const fill_round_count = 10;
 
   // config
   float const cut_xy_ratio = 1.25f;
   float const spot_size_factor = 0.67f;
-  float const center_size_factor = 0.75f;
+  float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
   float const center_thickness_factor = 0.0125f;
