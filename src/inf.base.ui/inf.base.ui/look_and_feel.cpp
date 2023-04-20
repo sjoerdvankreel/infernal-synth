@@ -57,7 +57,7 @@ inf_look_and_feel::drawRotarySlider(
   {
     Path active_outline;
     float fi = static_cast<float>(i);
-    if(fi / fake_conic_outline_count > pos) break;
+    if(fi / fake_conic_outline_count >= pos) break;
     float active_start_angle = start_angle + fi / fake_conic_outline_count * (end_angle - start_angle);
     float active_end_angle = start_angle + (fi + 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
     active_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, active_start_angle, active_end_angle, true);
