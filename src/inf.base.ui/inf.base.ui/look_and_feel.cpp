@@ -12,9 +12,6 @@ inf_look_and_feel::drawRotarySlider(
 {
   // config
   std::int32_t const cut_count = 10;
-  // std::int32_t const fill_round_count = 10;
-
-  // config
   float const cut_xy_ratio = 1.0f;
   float const spot_size_factor = 0.67f;
   float const center_size_factor = 0.67f;
@@ -111,7 +108,7 @@ inf_look_and_feel::drawRotarySlider(
   // stroke center
   float const center_thickness = outer_size * center_thickness_factor;
   center_thickness;
-  g.setColour(s.findColour(colors::knob_cuts_inward));
+  g.setColour(s.findColour(colors::knob_center_stroke));
   g.drawEllipse(fill_x, fill_y, center_size, center_size, center_thickness);
 
   /*

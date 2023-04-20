@@ -16,6 +16,7 @@ public:
     knob_highlight,
     knob_cuts_inward,
     knob_cuts_outward,
+    knob_center_stroke,
     knob_spot_fill_base,
     knob_gradient_fill_base,
     knob_spot_fill_highlight,
