@@ -22,7 +22,7 @@ inf_look_and_feel::drawRotarySlider(
 
   // config
   std::int32_t const cut_count = 10;
-  std::int32_t const fake_conic_outline_count = 256;
+  std::int32_t const fake_conic_outline_count = 1024;
 
   // adjust for nonrectangular
   float left = static_cast<float>(x);
