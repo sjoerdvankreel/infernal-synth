@@ -104,7 +104,7 @@ inf_look_and_feel::drawRotarySlider(
   auto rad_fill_base = s.findColour(colors::knob_radial_fill_base);
   auto rad_fill_highlight = s.findColour(colors::knob_radial_fill_highlight);
   auto rad_fill_gradient = ColourGradient(rad_fill_highlight, spot_center_x, spot_center_y, rad_fill_base, fill_x + spot_size, fill_y + spot_size, true);
-  rad_fill_gradient.addColour(0.33, rad_fill_highlight.interpolatedWith(rad_fill_base, 0.5f));
+  //rad_fill_gradient.addColour(0.33, rad_fill_highlight.interpolatedWith(rad_fill_base, 0.5f));
   g.setGradientFill(rad_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
 
