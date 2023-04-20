@@ -46,7 +46,7 @@ inf_look_and_feel::drawRotarySlider(
   float const outer_radius = outer_size / 2.0f;
   float const outline_thickness = outer_size * outline_thickness_factor;
   outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, start_angle, end_angle, true);
-  g.setColour(s.findColour(colors::knob_outline));
+  g.setColour(s.findColour(colors::knob_outline_inactive));
   g.strokePath(outline, PathStrokeType(outline_thickness));
 
   // highlight gradient
