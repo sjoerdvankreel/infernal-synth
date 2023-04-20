@@ -73,10 +73,10 @@ create_synth_ui(std::int32_t width)
   result->content(create_content());
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb, Colour(0xFF990000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_shadow, Colour(0xFF222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline, Colour(0xFF990000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight, Colour(0xFFEEEEEE));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward, Colour(0xFF660000));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward, Colour(0x40660000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward, Colour(0xFF29A5BB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward, Colour(0x4029A5BB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_base, Colour(0x00333333));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_gradient_fill_base, Colour(0xFF333333));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_highlight, Colour(0x80BBBBBB));
