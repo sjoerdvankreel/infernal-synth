@@ -99,8 +99,8 @@ inf_look_and_feel::drawRotarySlider(
   float const spot_offset = (center_size - spot_size) * 0.5f;
   float const spot_x = fill_x + spot_offset * 0.5f;
   float const spot_y = fill_y + spot_offset * 0.5f;
-  float const spot_center_x = center_x - spot_offset;
-  float const spot_center_y = center_y - spot_offset;
+  float const spot_center_x = spot_x + spot_size * 0.5f;
+  float const spot_center_y = spot_y + spot_size * 0.5f;
   auto rad_fill_base = s.findColour(colors::knob_radial_fill_base);
   auto rad_fill_highlight = s.findColour(colors::knob_radial_fill_highlight);
   auto rad_fill_gradient = ColourGradient(rad_fill_highlight, spot_center_x, spot_center_y, rad_fill_base, fill_x + spot_size, fill_y + spot_size, true);
