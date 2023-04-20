@@ -11,7 +11,6 @@ inf_look_and_feel::drawRotarySlider(
   float pos, float start_angle, float end_angle, juce::Slider& s)
 {
   // config
-  std::int32_t const cut_count = 10;
   float const cut_xy_ratio = 1.0f;
   float const spot_size_factor = 0.67f;
   float const center_size_factor = 0.67f;
@@ -20,6 +19,10 @@ inf_look_and_feel::drawRotarySlider(
   float const center_thickness_factor = 0.0125f;
   float const outline_thickness_factor = 0.075f;
   float const cut_line_thickness_factor = 0.0125f;
+
+  // config
+  std::int32_t const cut_count = 10;
+  std::int32_t const fake_conic_outline_count = 256;
 
   // adjust for nonrectangular
   float left = static_cast<float>(x);
@@ -41,13 +44,26 @@ inf_look_and_feel::drawRotarySlider(
   float const center_y = top + margin + outer_size / 2.0f;
   float const center_x = left + margin + outer_size / 2.0f;
 
-  // outline
-  Path outline;
+  // inactive outline
+  Path inactive_outline;
   float const outer_radius = outer_size / 2.0f;
   float const outline_thickness = outer_size * outline_thickness_factor;
-  outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, start_angle, end_angle, true);
+  inactive_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, start_angle, end_angle, true);
   g.setColour(s.findColour(colors::knob_outline_inactive));
-  g.strokePath(outline, PathStrokeType(outline_thickness));
+  g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
+
+  // active outline
+  for (std::int32_t i = 0; i < fake_conic_outline_count; i++)
+  {
+    Path active_outline;
+    float active_end_angle = start_angle + (i + 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
+    float active_start_angle = start_angle + (i * 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
+    active_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, active_start_angle, active_end_angle, true);
+    auto active_outline_low = s.findColour(colors::knob_outline_low);
+    auto active_outline_high = s.findColour(colors::knob_outline_high);
+    g.setColour(active_outline_low.interpolatedWith(active_outline_high, (i + 1.0f) / fake_conic_outline_count));
+    g.strokePath(active_outline, PathStrokeType(outline_thickness));
+  }
 
   // highlight gradient
   float const highlight_offset = (outer_size - highlight_size) * 0.5f;
