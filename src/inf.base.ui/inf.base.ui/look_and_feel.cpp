@@ -83,6 +83,10 @@ inf_look_and_feel::drawRotarySlider(
   float const cut_radius_outer = outer_radius * highlight_size_factor;
   float const cut_radius_inner = cut_radius_outer * center_size_factor * cut_inner_size_factor;
   float const cut_size = cut_radius_outer - cut_radius_inner;
+  float const cut_top_left_x = center_x + cut_radius_outer * std::cos(0.625f * 2.0f * pi32);
+  float const cut_top_left_y = center_y + cut_radius_outer * std::sin(0.625f * 2.0f * pi32);
+  g.setColour(Colours::blue);
+  g.fillEllipse(cut_top_left_x, cut_top_left_y, 10, 10);
   for (std::int32_t i = 0; i < cut_count; i++)
   {
     Path cut;
