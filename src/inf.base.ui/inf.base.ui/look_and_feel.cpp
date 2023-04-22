@@ -156,7 +156,7 @@ inf_look_and_feel::drawRotarySlider(
     {
       Path stroke;
       float fi = static_cast<float>(i);
-      float thumb_angle_normal = angle / (2.0f * pi32);
+      float thumb_angle_normal = angle / (2.0f * pi32) + 0.25f;
       float thumb_end_angle_normal = thumb_angle_normal + 0.5f / cut_count;
       float thumb_start_angle_normal = thumb_angle_normal - 0.5f / cut_count;
       float stroke_start_angle_normal = 0.375f + dir * fi / fake_conic_gradient_count;
