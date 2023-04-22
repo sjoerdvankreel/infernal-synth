@@ -71,7 +71,8 @@ create_synth_ui(std::int32_t width)
 {
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb, Colour(0xFF990000));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward, Colour(0x002EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward, Colour(0xFF2EB8D1));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));

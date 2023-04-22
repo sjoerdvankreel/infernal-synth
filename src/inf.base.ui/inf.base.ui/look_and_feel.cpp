@@ -145,7 +145,10 @@ inf_look_and_feel::drawRotarySlider(
   float const thumb_start_x = center_x + thumb_radius_inner * std::cos(angle);
   float const thumb_start_y = center_y + thumb_radius_inner * std::sin(angle);
   juce::Line<float> thumb_line(thumb_start_x, thumb_start_y, thumb_end_x, thumb_end_y);
-  g.setColour(Colours::red);
+  auto thumb_in = s.findColour(colors::knob_thumb_inward);
+  auto thumb_out = s.findColour(colors::knob_thumb_outward);
+  auto thumb_gradient = ColourGradient(thumb_out, thumb_end_x, thumb_end_y, thumb_in, thumb_start_x, thumb_start_y, false);
+  g.setGradientFill(thumb_gradient);
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer - thumb_radius_inner);
 
   // stroke center
