@@ -156,14 +156,8 @@ inf_look_and_feel::drawRotarySlider(
     {
       Path stroke;
       float fi = static_cast<float>(i);
-      float thumb_angle_normal = angle / (2.0f * pi32);
-      float thumb_end_angle_normal = thumb_angle_normal + 0.5f / cut_count;
-      float thumb_start_angle_normal = thumb_angle_normal - 0.5f / cut_count;
-      float stroke_start_angle_normal = 0.375f + dir * fi / fake_conic_gradient_count;
-      float stroke_end_angle_normal = 0.375f + dir * (fi + 1.0f) / fake_conic_gradient_count;
-      if (thumb_start_angle_normal <= stroke_start_angle_normal && stroke_start_angle_normal <= thumb_end_angle_normal) continue;
-      float stroke_end_angle = stroke_end_angle_normal * 2.0f * pi32;
-      float stroke_start_angle = stroke_start_angle_normal * 2.0f * pi32;
+      float stroke_start_angle = (0.375f + dir * fi / fake_conic_gradient_count) * 2.0f * pi32;
+      float stroke_end_angle = (0.375f + dir * (fi + 1.0f) / fake_conic_gradient_count) * 2.0f * pi32;
       stroke.addCentredArc(center_x, center_y, center_radius, center_radius, 0.0f, stroke_start_angle, stroke_end_angle, true);
       auto stroke_low = s.findColour(colors::knob_center_stroke_low);
       auto stroke_high = s.findColour(colors::knob_center_stroke_high);
