@@ -72,7 +72,7 @@ Component*
 param_element::build_core(plugin_controller* controller)
 {
   inf_slider* result = new inf_slider;
-  result->setRange(0.0, 1.0, 1.0 / 6.0);
+  result->setRange(0.0, 1.0, 1.0 / 12.0);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
   return result;
