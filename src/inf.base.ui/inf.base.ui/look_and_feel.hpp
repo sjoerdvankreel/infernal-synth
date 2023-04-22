@@ -10,8 +10,6 @@ public juce::LookAndFeel_V4
 {
 public:
   enum colors {
-    knob_thumb_inward,
-    knob_thumb_outward,
     knob_highlight_low,
     knob_highlight_high,
     knob_outline_low,
@@ -21,6 +19,10 @@ public:
     knob_cuts_outward_low,
     knob_cuts_inward_high,
     knob_cuts_outward_high,
+    knob_thumb_inward_low,
+    knob_thumb_outward_low,
+    knob_thumb_inward_high,
+    knob_thumb_outward_high,
     knob_center_stroke_low,
     knob_center_stroke_high,
     knob_spot_fill_base,

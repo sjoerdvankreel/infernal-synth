@@ -71,8 +71,6 @@ create_synth_ui(std::int32_t width)
 {
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_content());
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward, Colour(0x002EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward, Colour(0xFF2EB8D1));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
@@ -82,6 +80,10 @@ create_synth_ui(std::int32_t width)
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_low, Colour(0x40DA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_high, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_high, Colour(0x40FD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0xFFDA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0x40DA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0x40FD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_center_stroke_low, Colour(0xFFDA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_center_stroke_high, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_base, Colour(0x00222222));

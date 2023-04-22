@@ -128,10 +128,15 @@ inf_look_and_feel::drawRotarySlider(
   float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
   float const thumb_end_y = center_y + cut_radius_outer * std::sin(angle);
   juce::Line<float> thumb_line(center_x, center_y, thumb_end_x, thumb_end_y);
-  auto thumb_in = s.findColour(colors::knob_thumb_inward);
-  auto thumb_out = s.findColour(colors::knob_thumb_outward);
-  auto thumb_gradient = ColourGradient(thumb_out, thumb_end_x, thumb_end_y, thumb_in, center_x, center_y, false);
-  g.setGradientFill(thumb_gradient);
+  auto const thumb_inward_low = s.findColour(colors::knob_thumb_inward_low);
+  auto const thumb_outward_low = s.findColour(colors::knob_thumb_outward_low);
+  auto const thumb_inward_high = s.findColour(colors::knob_thumb_inward_high);
+  auto const thumb_outward_high = s.findColour(colors::knob_thumb_outward_high);
+  juce::Point<float> const thumb_pos(thumb_end_x, thumb_end_y);
+  float const thumb_mix_factor = thumb_pos.getDistanceFrom(cut_top_left) / cut_max_distance;
+  auto const thumb_inward_mix = thumb_inward_high.interpolatedWith(thumb_inward_low, thumb_mix_factor);
+  auto const thumb_outward_mix = thumb_outward_high.interpolatedWith(thumb_outward_low, thumb_mix_factor);
+  g.setGradientFill(ColourGradient(thumb_inward_mix, center_x, center_y, thumb_outward_mix, thumb_end_x, thumb_end_y, false));
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer);
 
   // radial fill spot overlay
