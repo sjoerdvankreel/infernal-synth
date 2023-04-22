@@ -22,7 +22,7 @@ inf_look_and_feel::drawRotarySlider(
 
   // config
   std::int32_t const cut_count = 10;
-  std::int32_t const fake_conic_outline_count = 1024;
+  std::int32_t const fake_conic_gradient_count = 1024;
 
   // adjust for nonrectangular
   float left = static_cast<float>(x);
@@ -53,17 +53,17 @@ inf_look_and_feel::drawRotarySlider(
   g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
 
   // active outline
-  for (std::int32_t i = 0; i < fake_conic_outline_count; i++)
+  for (std::int32_t i = 0; i < fake_conic_gradient_count; i++)
   {
     Path active_outline;
     float fi = static_cast<float>(i);
-    if(fi / fake_conic_outline_count >= pos) break;
-    float active_start_angle = start_angle + fi / fake_conic_outline_count * (end_angle - start_angle);
-    float active_end_angle = start_angle + (fi + 1.0f) / fake_conic_outline_count * (end_angle - start_angle);
+    if(fi / fake_conic_gradient_count >= pos) break;
+    float active_start_angle = start_angle + fi / fake_conic_gradient_count * (end_angle - start_angle);
+    float active_end_angle = start_angle + (fi + 1.0f) / fake_conic_gradient_count * (end_angle - start_angle);
     active_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, active_start_angle, active_end_angle, true);
     auto active_outline_low = s.findColour(colors::knob_outline_low);
     auto active_outline_high = s.findColour(colors::knob_outline_high);
-    g.setColour(active_outline_low.interpolatedWith(active_outline_high, (i + 1.0f) / fake_conic_outline_count));
+    g.setColour(active_outline_low.interpolatedWith(active_outline_high, (i + 1.0f) / fake_conic_gradient_count));
     g.strokePath(active_outline, PathStrokeType(outline_thickness));
   }
 
@@ -71,10 +71,10 @@ inf_look_and_feel::drawRotarySlider(
   float const highlight_offset = (outer_size - highlight_size) * 0.5f;
   float const hl_x = outer_x + highlight_offset;
   float const hl_y = outer_y + highlight_offset;
-  auto const hl_shadow = s.findColour(colors::knob_shadow);
-  auto const hl_highlight = s.findColour(colors::knob_highlight);
-  auto hl_gradient = ColourGradient(hl_highlight, hl_x, hl_y, hl_shadow, hl_x + highlight_size, hl_y + highlight_size, false);
-  hl_gradient.addColour(0.25, hl_highlight.interpolatedWith(hl_shadow, 0.5f));
+  auto const hl_low = s.findColour(colors::knob_highlight_low);
+  auto const hl_high = s.findColour(colors::knob_highlight_high);
+  auto hl_gradient = ColourGradient(hl_high, hl_x, hl_y, hl_low, hl_x + highlight_size, hl_y + highlight_size, false);
+  hl_gradient.addColour(0.25, hl_high.interpolatedWith(hl_low, 0.5f));
   g.setGradientFill(hl_gradient);
   g.fillEllipse(hl_x, hl_y, highlight_size, highlight_size);
 
@@ -139,111 +139,8 @@ inf_look_and_feel::drawRotarySlider(
   // stroke center
   float const center_thickness = outer_size * center_thickness_factor;
   center_thickness;
-  g.setColour(s.findColour(colors::knob_center_stroke));
+  g.setColour(s.findColour(colors::knob_center_stroke_high));
   g.drawEllipse(fill_x, fill_y, center_size, center_size, center_thickness);
-
-  /*
-  // fill
-  for (std::int32_t i = 0; i < fill_round_count; i++)
-  {
-    float const fill_size = center_size * (fill_round_count - i) / fill_round_count;
-    float const fill_offset = (highlight_size - fill_size) * 0.5f;
-    auto fill_base = s.findColour(colors::knob_fill_base);
-    auto fill_highlight = s.findColour(colors::knob_fill_highlight);
-    g.setColour(fill_base.interpolatedWith(fill_highlight, i / static_cast<float>(fill_round_count - 1)));
-    g.fillEllipse(hl_x + fill_offset, hl_y + fill_offset, fill_size, fill_size);
-  }
-  */
-
-/*
-  std::int32_t const cut_count = 12;
-  std::int32_t const fill_round_count = 6;
-
-  // relative to min(w, h)
-  float const margin_factor = 0.05f;
-  float const inner_size_factor = 0.75f;
-  float const cut_inner_size_factor = 0.9f;
-  float const highlight_size_factor = 0.75f;
-  float const cut_line_thickness_factor = 0.0125f;
-  float const thumb_line_thickness_factor = 0.025f;
-  float const outline_line_thickness_factor = 0.075f;
-
-  // adjust for nonrectangular
-  float rx = static_cast<float>(x);
-  float ry = static_cast<float>(y);
-  if(h < w) rx += (w - h) * 0.5f;
-  if(w < h) ry += (h - w) * 0.5f;
-
-  // precompute stuff
-  float const margin = std::min(w, h) * margin_factor;
-  float const size = std::min(w, h) - 2.0f * margin;
-  float const radius = size / 2.0f;
-  float const inner_size = size * inner_size_factor;
-  float const angle = start + pos * (end - start) - pi32 * 0.5f;
-  float const fx = static_cast<float>(rx + margin);
-  float const fy = static_cast<float>(ry + margin);
-  float const cut_line_thickness = size * cut_line_thickness_factor;
-  float const thumb_line_thickness = size * thumb_line_thickness_factor;
-  float const outline_line_thickness = size * outline_line_thickness_factor;
-
-  // highlight
-  float hlx = fx + (size - inner_size) * 0.5f;
-  float hly = fy + (size - inner_size) * 0.5f;
-  auto shadow = s.findColour(colors::knob_shadow);
-  auto high = s.findColour(colors::knob_highlight);
-  auto hl_gradient = ColourGradient(high, hlx, hly, shadow, hlx + inner_size, hly + inner_size, false);
-  hl_gradient.addColour(0.25, high.interpolatedWith(shadow, 0.5f));
-  g.setGradientFill(hl_gradient);
-  g.fillEllipse(hlx, hly, inner_size, inner_size);
-
-  // cuts
-  float cx = rx + margin + size / 2.0f;
-  float cy = ry + margin + size / 2.0f;
-  float hl_cut_radius_outer = radius * inner_size_factor;
-  float hl_cut_radius_inner = radius * inner_size_factor * highlight_size_factor * cut_inner_size_factor;
-  float cut_size = hl_cut_radius_outer - hl_cut_radius_inner;
-  for (std::int32_t i = 0; i < cut_count; i++)
-  {
-    Path cut;    
-    float cut_end_x = cx + hl_cut_radius_outer * std::cos(angle + i * pi32 * 2.0f / cut_count);
-    float cut_end_y = cy + hl_cut_radius_outer * std::sin(angle + i * pi32 * 2.0f / cut_count);
-    float cut_start_x = cx + hl_cut_radius_inner * std::cos(angle + i * pi32 * 2.0f / cut_count);
-    float cut_start_y = cy + hl_cut_radius_inner * std::sin(angle + i * pi32 * 2.0f / cut_count);
-    cut.addArrow(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), cut_line_thickness, cut_size, cut_size);
-    auto cut_inward = s.findColour(colors::knob_cuts_inward);
-    auto cut_outward = s.findColour(colors::knob_cuts_outward);
-    g.setGradientFill(ColourGradient(cut_inward, cut_start_x, cut_start_y, cut_outward, cut_end_x, cut_end_y, false));
-    g.fillPath(cut);
-  }
-  
-  // fill
-  float ffill_round_count = static_cast<float>(fill_round_count);
-  for(std::int32_t i = 0; i < fill_round_count; i++)
-  {
-    float knob_fill_size = highlight_size_factor * inner_size * ((ffill_round_count - i) / ffill_round_count);
-    float fillx = hlx + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-    float filly = hly + (1.0f - highlight_size_factor) * 0.5f * inner_size;
-    auto fill_base = s.findColour(colors::knob_fill_base);
-    auto fill_highlight = s.findColour(colors::knob_fill_highlight);
-    g.setColour(fill_base.interpolatedWith(fill_highlight, i / (ffill_round_count - 1.0f)));
-    g.fillEllipse(fillx, filly, knob_fill_size, knob_fill_size);
-  }
-
-  // thumb
-  Path thumb;
-  float thumb_radius = radius * inner_size_factor * highlight_size_factor;
-  float thumb_end_x = cx + thumb_radius * std::cos(angle);
-  float thumb_end_y = cy + thumb_radius * std::sin(angle);
-  thumb.addLineSegment(Line<float>(cx, cy, thumb_end_x, thumb_end_y), 1.0f);
-  g.setColour(s.findColour(colors::knob_thumb));
-  g.strokePath(thumb, PathStrokeType(thumb_line_thickness));
-
-  // outline
-  Path arc;
-  arc.addCentredArc(cx, cy, radius, radius, 0.0f, start, end, true);
-  g.setColour(s.findColour(colors::knob_outline));
-  g.strokePath(arc, PathStrokeType(outline_line_thickness));
-  */
 }
 
 } // namespace inf::base::ui
