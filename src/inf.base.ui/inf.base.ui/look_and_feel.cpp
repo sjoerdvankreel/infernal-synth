@@ -20,6 +20,7 @@ inf_look_and_feel::drawRotarySlider(
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
+  float const outline_step_gap_factor = 0.025f;
   float const center_thickness_factor = 0.0125f;
   float const outline_thickness_factor = 0.075f;
   float const cut_line_thickness_factor = 0.0125f;
@@ -64,6 +65,7 @@ inf_look_and_feel::drawRotarySlider(
   {
     Path active_outline;
     float fi = static_cast<float>(i);
+    float fstep_count = static_cast<float>(step_count);
     float this_pos = fi / fake_conic_gradient_count;
     if(!bipolar && this_pos >= pos) break;
     if (bipolar && this_pos <= 0.5f && pos >= this_pos) continue;
@@ -75,8 +77,13 @@ inf_look_and_feel::drawRotarySlider(
     auto active_outline_high = s.findColour(colors::knob_outline_high);
     float mix_factor = (i + 1.0f) / fake_conic_gradient_count;
     if(bipolar) mix_factor = std::abs(mix_factor * 2.0f - 1.0f);
+    for (std::int32_t sc = 1; sc < step_count; sc++)
+      if (this_pos >= sc / fstep_count - outline_step_gap_factor * 0.5f
+        && this_pos <= sc / fstep_count + outline_step_gap_factor * 0.5f)
+        goto next_conical;
     g.setColour(active_outline_low.interpolatedWith(active_outline_high, mix_factor));
     g.strokePath(active_outline, PathStrokeType(outline_thickness));
+next_conical:;
   }
 
   // highlight gradient
