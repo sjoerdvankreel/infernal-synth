@@ -124,6 +124,19 @@ inf_look_and_feel::drawRotarySlider(
   g.setGradientFill(grad_fill_gradient);
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
 
+  // thumb
+  float const thumb_radius_inner = cut_radius_inner - (cut_radius_outer - cut_radius_inner);
+  float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
+  float const thumb_end_y = center_y + cut_radius_outer * std::sin(angle);
+  float const thumb_start_x = center_x + thumb_radius_inner * std::cos(angle);
+  float const thumb_start_y = center_y + thumb_radius_inner * std::sin(angle);
+  juce::Line<float> thumb_line(thumb_start_x, thumb_start_y, thumb_end_x, thumb_end_y);
+  auto thumb_in = s.findColour(colors::knob_thumb_inward);
+  auto thumb_out = s.findColour(colors::knob_thumb_outward);
+  auto thumb_gradient = ColourGradient(thumb_out, thumb_end_x, thumb_end_y, thumb_in, thumb_start_x, thumb_start_y, false);
+  g.setGradientFill(thumb_gradient);
+  g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer - thumb_radius_inner);
+
   // radial fill spot overlay
   float const spot_size = spot_size_factor * center_size;
   float const spot_offset = (center_size - spot_size) * 0.5f;
@@ -137,19 +150,6 @@ inf_look_and_feel::drawRotarySlider(
   spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
   g.setGradientFill(spot_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
-
-  // thumb
-  float const thumb_radius_inner = cut_radius_inner - (cut_radius_outer - cut_radius_inner);
-  float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
-  float const thumb_end_y = center_y + cut_radius_outer * std::sin(angle);
-  float const thumb_start_x = center_x + thumb_radius_inner * std::cos(angle);
-  float const thumb_start_y = center_y + thumb_radius_inner * std::sin(angle);
-  juce::Line<float> thumb_line(thumb_start_x, thumb_start_y, thumb_end_x, thumb_end_y);
-  auto thumb_in = s.findColour(colors::knob_thumb_inward);
-  auto thumb_out = s.findColour(colors::knob_thumb_outward);
-  auto thumb_gradient = ColourGradient(thumb_out, thumb_end_x, thumb_end_y, thumb_in, thumb_start_x, thumb_start_y, false);
-  g.setGradientFill(thumb_gradient);
-  g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer - thumb_radius_inner);
 
   // stroke center
   float const offset_radians = 0.25f * 2.0f * pi32;
