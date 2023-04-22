@@ -85,8 +85,11 @@ inf_look_and_feel::drawRotarySlider(
   float const cut_size = cut_radius_outer - cut_radius_inner;
   float const cut_top_left_x = center_x + cut_radius_outer * std::cos(0.625f * 2.0f * pi32);
   float const cut_top_left_y = center_y + cut_radius_outer * std::sin(0.625f * 2.0f * pi32);
-  g.setColour(Colours::blue);
-  g.fillEllipse(cut_top_left_x, cut_top_left_y, 10, 10);
+  float const cut_bottom_right_x = center_x + cut_radius_outer * std::cos(0.125f * 2.0f * pi32);
+  float const cut_bottom_right_y = center_y + cut_radius_outer * std::sin(0.125f * 2.0f * pi32);
+  juce::Point<float> const cut_top_left(cut_top_left_x, cut_top_left_y);
+  juce::Point<float> const cut_bottom_right(cut_bottom_right_x, cut_bottom_right_y);
+  float const cut_max_distance = cut_top_left.getDistanceFrom(cut_bottom_right);
   for (std::int32_t i = 0; i < cut_count; i++)
   {
     Path cut;
@@ -100,8 +103,10 @@ inf_look_and_feel::drawRotarySlider(
     auto const cut_outward_low = s.findColour(colors::knob_cuts_outward_low);
     auto const cut_inward_high = s.findColour(colors::knob_cuts_inward_high);
     auto const cut_outward_high = s.findColour(colors::knob_cuts_outward_high);
-    auto const cut_inward_mix = cut_inward_high.interpolatedWith(cut_inward_low, i / (cut_count - 1.0f));
-    auto const cut_outward_mix = cut_outward_high.interpolatedWith(cut_outward_low, i / (cut_count - 1.0f));
+    juce::Point<float> const this_cut_pos(cut_end_x, cut_end_y);
+    float const cut_mix_factor = this_cut_pos.getDistanceFrom(cut_top_left) / cut_max_distance;
+    auto const cut_inward_mix = cut_inward_high.interpolatedWith(cut_inward_low, cut_mix_factor);
+    auto const cut_outward_mix = cut_outward_high.interpolatedWith(cut_outward_low, cut_mix_factor);
     g.setGradientFill(ColourGradient(cut_inward_mix, cut_start_x, cut_start_y, cut_outward_mix, cut_end_x, cut_end_y, false));
     g.fillPath(cut);
   }
