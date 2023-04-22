@@ -13,7 +13,7 @@ inf_look_and_feel::drawRotarySlider(
   // config
   float const cut_xy_ratio = 1.0f;
   float const spot_size_factor = 0.67f;
-  float const thumb_width_factor = 0.1f;
+  float const thumb_width_factor = 0.15f;
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
@@ -125,17 +125,14 @@ inf_look_and_feel::drawRotarySlider(
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
 
   // thumb
-  float const thumb_radius_inner = cut_radius_inner - (cut_radius_outer - cut_radius_inner);
   float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
   float const thumb_end_y = center_y + cut_radius_outer * std::sin(angle);
-  float const thumb_start_x = center_x + thumb_radius_inner * std::cos(angle);
-  float const thumb_start_y = center_y + thumb_radius_inner * std::sin(angle);
-  juce::Line<float> thumb_line(thumb_start_x, thumb_start_y, thumb_end_x, thumb_end_y);
+  juce::Line<float> thumb_line(center_x, center_y, thumb_end_x, thumb_end_y);
   auto thumb_in = s.findColour(colors::knob_thumb_inward);
   auto thumb_out = s.findColour(colors::knob_thumb_outward);
-  auto thumb_gradient = ColourGradient(thumb_out, thumb_end_x, thumb_end_y, thumb_in, thumb_start_x, thumb_start_y, false);
+  auto thumb_gradient = ColourGradient(thumb_out, thumb_end_x, thumb_end_y, thumb_in, center_x, center_y, false);
   g.setGradientFill(thumb_gradient);
-  g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer - thumb_radius_inner);
+  g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer);
 
   // radial fill spot overlay
   float const spot_size = spot_size_factor * center_size;
