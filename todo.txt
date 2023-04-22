@@ -46,6 +46,7 @@
 - scan vst_controller/editor for unneeded stuff
 - tabbed ui
 - larger knobs
+- designate knob as selector (oct/note), in case no gradient knobs
 - global "edit menu" button
 - remove voice/master graphs
 - reduce the use of background images

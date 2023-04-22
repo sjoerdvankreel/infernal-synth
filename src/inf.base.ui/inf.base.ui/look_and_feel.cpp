@@ -25,9 +25,11 @@ inf_look_and_feel::drawRotarySlider(
   float const cut_line_thickness_factor = 0.0125f;
 
   // config
+  std::int32_t step_count = 0;
   std::int32_t const cut_count = 10;
   std::int32_t const fake_conic_gradient_count = 1024;
   bool const bipolar = dynamic_cast<inf_slider&>(s).bipolar();
+  if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(1.0 / s.getInterval()));
 
   // adjust for nonrectangular
   float left = static_cast<float>(x);
