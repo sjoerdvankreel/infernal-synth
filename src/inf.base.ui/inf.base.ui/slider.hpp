@@ -10,7 +10,7 @@ class inf_slider:
 public juce::Slider
 {
 private:
-  bool _bipolar;
+  bool _bipolar = false;
 public:
   bool bipolar() const { return _bipolar; }
   void bipolar(bool bipolar) { _bipolar = bipolar; }
