@@ -90,7 +90,7 @@ inf_look_and_feel::drawRotarySlider(
   juce::Point<float> const cut_top_left(cut_top_left_x, cut_top_left_y);
   juce::Point<float> const cut_bottom_right(cut_bottom_right_x, cut_bottom_right_y);
   float const cut_max_distance = cut_top_left.getDistanceFrom(cut_bottom_right);
-  for (std::int32_t i = 0; i < cut_count; i++)
+  for (std::int32_t i = 1; i < cut_count; i++) // 0 = thumb
   {
     Path cut;
     float const angle_part = angle + i * pi32 * 2.0f / cut_count;
@@ -135,6 +135,16 @@ inf_look_and_feel::drawRotarySlider(
   spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
   g.setGradientFill(spot_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
+
+  // thumb
+  float const thumb_radius_inner = cut_radius_inner - (cut_radius_outer - cut_radius_inner);
+  float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
+  float const thumb_end_y = center_y + cut_radius_outer * std::sin(angle);
+  float const thumb_start_x = center_x + thumb_radius_inner * std::cos(angle);
+  float const thumb_start_y = center_y + thumb_radius_inner * std::sin(angle);
+  juce::Line<float> thumb_line(thumb_start_x, thumb_start_y, thumb_end_x, thumb_end_y);
+  g.setColour(Colours::red);
+  g.drawArrow(thumb_line, 0, 20, cut_radius_outer - thumb_radius_inner);
 
   // stroke center
   float const center_radius = center_size * 0.5f;
