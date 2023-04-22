@@ -92,9 +92,9 @@ inf_look_and_feel::drawRotarySlider(
     float const cut_start_x = center_x + cut_radius_inner * std::cos(angle_part);
     float const cut_start_y = center_y + cut_radius_inner * std::sin(angle_part);
     cut.addArrow(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), cut_line_thickness, cut_size * cut_xy_ratio, cut_size);
-    auto const cut_inward = s.findColour(colors::knob_cuts_inward);
-    auto const cut_outward = s.findColour(colors::knob_cuts_outward);
-    g.setGradientFill(ColourGradient(cut_inward, cut_start_x, cut_start_y, cut_outward, cut_end_x, cut_end_y, false));
+    auto const cut_inward_high = s.findColour(colors::knob_cuts_inward_high);
+    auto const cut_outward_high = s.findColour(colors::knob_cuts_outward_high);
+    g.setGradientFill(ColourGradient(cut_inward_high, cut_start_x, cut_start_y, cut_outward_high, cut_end_x, cut_end_y, false));
     g.fillPath(cut);
   }
 
