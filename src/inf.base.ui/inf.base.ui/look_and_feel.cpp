@@ -13,6 +13,7 @@ inf_look_and_feel::drawRotarySlider(
   // config
   float const cut_xy_ratio = 1.0f;
   float const spot_size_factor = 0.67f;
+  float const thumb_width_factor = 0.1f;
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
@@ -34,6 +35,7 @@ inf_look_and_feel::drawRotarySlider(
   float const margin_factor = 0.05f;
   float const margin = std::min(w, h) * margin_factor;
   float const outer_size = std::min(w, h) - 2.0f * margin;
+  float const thumb_width = outer_size * thumb_width_factor;
   float const highlight_size = outer_size * highlight_size_factor;
   float const center_size = highlight_size * center_size_factor;
   float const angle = start_angle + pos * (end_angle - start_angle) - pi32 * 0.5f;
@@ -144,7 +146,7 @@ inf_look_and_feel::drawRotarySlider(
   float const thumb_start_y = center_y + thumb_radius_inner * std::sin(angle);
   juce::Line<float> thumb_line(thumb_start_x, thumb_start_y, thumb_end_x, thumb_end_y);
   g.setColour(Colours::red);
-  g.drawArrow(thumb_line, 0, 20, cut_radius_outer - thumb_radius_inner);
+  g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer - thumb_radius_inner);
 
   // stroke center
   float const center_radius = center_size * 0.5f;
