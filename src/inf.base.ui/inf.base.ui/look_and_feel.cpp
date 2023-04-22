@@ -149,6 +149,8 @@ inf_look_and_feel::drawRotarySlider(
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer - thumb_radius_inner);
 
   // stroke center
+  float const offset_radians = 0.25f * 2.0f * pi32;
+  float const gap_radians = 1.0f / cut_count * 2.0f * pi32;
   float const center_radius = center_size * 0.5f;
   float const center_thickness = outer_size * center_thickness_factor;
   for (std::int32_t i = 0; i < fake_conic_gradient_count; i++)
@@ -158,6 +160,7 @@ inf_look_and_feel::drawRotarySlider(
     float stroke_start_angle = (0.375f + fi / fake_conic_gradient_count) * 2.0f * pi32;
     float stroke_end_angle = (0.375f + (fi + 1.0f) / fake_conic_gradient_count) * 2.0f * pi32;
     stroke.addCentredArc(center_x, center_y, center_radius, center_radius, 0.0f, stroke_start_angle, stroke_end_angle, true);
+    if(stroke_start_angle - offset_radians >= angle - gap_radians * 0.5f && stroke_end_angle - offset_radians <= angle + gap_radians * 0.5f) continue;
     auto stroke_low = s.findColour(colors::knob_center_stroke_low);
     auto stroke_high = s.findColour(colors::knob_center_stroke_high);
     float mix_factor = 1.0f - std::abs((i + 1.0f) / (fake_conic_gradient_count / 2.0f) - 1.0f);
