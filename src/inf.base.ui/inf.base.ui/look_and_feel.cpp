@@ -70,7 +70,9 @@ inf_look_and_feel::drawRotarySlider(
     active_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, active_start_angle, active_end_angle, true);
     auto active_outline_low = s.findColour(colors::knob_outline_low);
     auto active_outline_high = s.findColour(colors::knob_outline_high);
-    g.setColour(active_outline_low.interpolatedWith(active_outline_high, (i + 1.0f) / fake_conic_gradient_count));
+    float mix_factor = (i + 1.0f) / fake_conic_gradient_count;
+    if(bipolar) mix_factor = 1.0f - std::abs(mix_factor * 2.0f - 1.0f);
+    g.setColour(active_outline_low.interpolatedWith(active_outline_high, mix_factor));
     g.strokePath(active_outline, PathStrokeType(outline_thickness));
   }
 
