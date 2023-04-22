@@ -139,20 +139,19 @@ inf_look_and_feel::drawRotarySlider(
   // stroke center
   float const center_radius = center_size * 0.5f;
   float const center_thickness = outer_size * center_thickness_factor;
-  g.setColour(s.findColour(colors::knob_center_stroke_high));
-  g.drawEllipse(fill_x, fill_y, center_size, center_size, center_thickness);
   for (std::int32_t i = 0; i < fake_conic_gradient_count / 2; i++)
-  {
-    Path stroke;
-    float fi = static_cast<float>(i);
-    float stroke_start_angle = (0.125f + fi / fake_conic_gradient_count) * 2.0f * pi32;
-    float stroke_end_angle = (0.125f + (fi + 1.0f) / fake_conic_gradient_count) * 2.0f * pi32;
-    stroke.addCentredArc(center_x, center_y, center_radius, center_radius, 0.0f, stroke_start_angle, stroke_end_angle, true);
-    auto stroke_low = s.findColour(colors::knob_center_stroke_low);
-    auto stroke_high = s.findColour(colors::knob_center_stroke_high);
-    g.setColour(stroke_low.interpolatedWith(stroke_high, (i + 1.0f) / fake_conic_gradient_count));
-    g.strokePath(stroke, PathStrokeType(center_thickness));
-  }
+    for(std::int32_t dir = -1; dir <= 1; dir += 2)
+    {
+      Path stroke;
+      float fi = static_cast<float>(i);
+      float stroke_start_angle = (0.375f + dir * fi / fake_conic_gradient_count) * 2.0f * pi32;
+      float stroke_end_angle = (0.375f + dir * (fi + 1.0f) / fake_conic_gradient_count) * 2.0f * pi32;
+      stroke.addCentredArc(center_x, center_y, center_radius, center_radius, 0.0f, stroke_start_angle, stroke_end_angle, true);
+      auto stroke_low = s.findColour(colors::knob_center_stroke_low);
+      auto stroke_high = s.findColour(colors::knob_center_stroke_high);
+      g.setColour(stroke_low.interpolatedWith(stroke_high, (i + 1.0f) / (fake_conic_gradient_count * 0.5f)));
+      g.strokePath(stroke, PathStrokeType(center_thickness));
+    }
 }
 
 } // namespace inf::base::ui
