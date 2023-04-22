@@ -71,7 +71,7 @@ inf_look_and_feel::drawRotarySlider(
     auto active_outline_low = s.findColour(colors::knob_outline_low);
     auto active_outline_high = s.findColour(colors::knob_outline_high);
     float mix_factor = (i + 1.0f) / fake_conic_gradient_count;
-    if(bipolar) mix_factor = 1.0f - std::abs(mix_factor * 2.0f - 1.0f);
+    if(bipolar) mix_factor = std::abs(mix_factor * 2.0f - 1.0f);
     g.setColour(active_outline_low.interpolatedWith(active_outline_high, mix_factor));
     g.strokePath(active_outline, PathStrokeType(outline_thickness));
   }
