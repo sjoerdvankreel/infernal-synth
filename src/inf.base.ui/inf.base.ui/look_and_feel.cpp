@@ -13,6 +13,8 @@ inf_look_and_feel::drawRotarySlider(
 {
   // config
   float const cut_xy_ratio = 1.0f;
+  float const margin_factor = 0.05f;
+  float const margin_fixed_px = 2.0f;
   float const spot_size_factor = 0.67f;
   float const thumb_width_factor = 0.15f;
   float const center_size_factor = 0.67f;
@@ -34,8 +36,7 @@ inf_look_and_feel::drawRotarySlider(
   if (h < w) left += (w - h) * 0.5f;
 
   // precompute stuff
-  float const margin_factor = 0.05f;
-  float const margin = std::min(w, h) * margin_factor;
+  float const margin = std::min(w, h) * margin_factor + margin_fixed_px;
   float const outer_size = std::min(w, h) - 2.0f * margin;
   float const thumb_width = outer_size * thumb_width_factor;
   float const highlight_size = outer_size * highlight_size_factor;
