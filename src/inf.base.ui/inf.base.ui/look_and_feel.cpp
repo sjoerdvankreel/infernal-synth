@@ -151,17 +151,18 @@ inf_look_and_feel::drawRotarySlider(
   // stroke center
   float const center_radius = center_size * 0.5f;
   float const center_thickness = outer_size * center_thickness_factor;
+  float const thumb_angle_normal = angle / (2.0f * pi32) + 0.25f;
+  float const thumb_end_angle_normal = thumb_angle_normal + 0.5f / cut_count;
+  float const thumb_start_angle_normal = thumb_angle_normal - 0.5f / cut_count;
   for (std::int32_t i = 0; i < fake_conic_gradient_count / 2; i++)
     for(std::int32_t dir = -1; dir <= 1; dir += 2)
     {
       Path stroke;
       float fi = static_cast<float>(i);
-      float thumb_angle_normal = angle / (2.0f * pi32) + 0.25f;
-      float thumb_end_angle_normal = thumb_angle_normal + 0.5f / cut_count;
-      float thumb_start_angle_normal = thumb_angle_normal - 0.5f / cut_count;
       float stroke_start_angle_normal = 0.375f + dir * fi / fake_conic_gradient_count;
       float stroke_end_angle_normal = 0.375f + dir * (fi + 1.0f) / fake_conic_gradient_count;
-      if (thumb_start_angle_normal <= stroke_start_angle_normal && stroke_start_angle_normal <= thumb_end_angle_normal) continue;
+      if (dir == 1 && thumb_start_angle_normal <= stroke_start_angle_normal && stroke_start_angle_normal <= thumb_end_angle_normal) continue;
+      if (dir == -1 && thumb_start_angle_normal <= stroke_end_angle_normal && stroke_end_angle_normal <= thumb_end_angle_normal) continue;
       float stroke_end_angle = stroke_end_angle_normal * 2.0f * pi32;
       float stroke_start_angle = stroke_start_angle_normal * 2.0f * pi32;
       stroke.addCentredArc(center_x, center_y, center_radius, center_radius, 0.0f, stroke_start_angle, stroke_end_angle, true);
