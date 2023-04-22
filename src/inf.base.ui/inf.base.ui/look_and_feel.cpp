@@ -1,5 +1,6 @@
 #include <inf.base/shared/support.hpp>
 #include <inf.base.ui/look_and_feel.hpp>
+#include <inf.base.ui/slider.hpp>
 
 using namespace juce;
 
@@ -24,6 +25,7 @@ inf_look_and_feel::drawRotarySlider(
   // config
   std::int32_t const cut_count = 10;
   std::int32_t const fake_conic_gradient_count = 1024;
+  bool const bipolar = dynamic_cast<inf_slider&>(s).bipolar();
 
   // adjust for nonrectangular
   float left = static_cast<float>(x);

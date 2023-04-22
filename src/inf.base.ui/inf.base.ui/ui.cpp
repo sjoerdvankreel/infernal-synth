@@ -1,4 +1,5 @@
 #include <inf.base.ui/ui.hpp>
+#include <inf.base.ui/slider.hpp>
 
 using namespace juce;
 using namespace inf::base;
@@ -70,7 +71,8 @@ container_element::layout()
 Component*
 param_element::build_core(plugin_controller* controller)
 {
-  Slider* result = new Slider;
+  inf_slider* result = new inf_slider;
+  result->bipolar(true);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
   return result;
