@@ -20,7 +20,7 @@ inf_look_and_feel::drawRotarySlider(
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
-  float const outline_step_gap_factor = 0.025f;
+  float const outline_step_gap_factor = 0.015f;
   float const center_thickness_factor = 0.0125f;
   float const outline_thickness_factor = 0.075f;
   float const cut_line_thickness_factor = 0.0125f;
