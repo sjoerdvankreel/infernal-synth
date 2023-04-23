@@ -56,7 +56,9 @@ root_element::layout()
 Component*
 container_element::build_core(plugin_controller* controller)
 {
-  container_component* result = new container_component(_flags, _radius, _thickness, _fill, _outline);
+  float const radius = 8.0f;
+  float const thickness = 1.0f;
+  container_component* result = new container_component(_flags, radius, thickness, _fill, _outline);
   result->addChildComponent(_content->build(controller));
   return result;
 }

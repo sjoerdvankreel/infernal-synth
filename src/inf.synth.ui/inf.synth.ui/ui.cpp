@@ -44,9 +44,9 @@ static std::unique_ptr<grid_element>
 create_outer_grid()
 {
   auto result = create_grid_ui({1, 1, 1}, {1, 1, 1, 1});
-  result->add_cell(create_container_fill_ui(create_ram_grid(), 15.0f, Colour(0xFF222222)), 0, 0, 1, 3);
-  result->add_cell(create_container_fill_ui(create_unison_grid(), 15.0f, Colour(0xFF222222)), 1, 0, 2, 2);
-  result->add_cell(create_container_fill_ui(create_note_grid(), 15.0f, Colour(0xFF222222)), 1, 2, 2, 2);
+  result->add_cell(create_container_fill_ui(create_ram_grid(), Colour(0xFF222222)), 0, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF222222)), 1, 0, 2, 2);
+  result->add_cell(create_container_fill_ui(create_note_grid(), Colour(0xFF222222)), 1, 2, 2, 2);
   return result;
 }
 
