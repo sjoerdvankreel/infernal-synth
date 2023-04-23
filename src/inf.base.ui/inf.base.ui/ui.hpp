@@ -122,7 +122,7 @@ public:
 };
 
 inline std::unique_ptr<grid_element>
-create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float gap_size, float xy_ratio)
+create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float gap_size = 0.0f, float xy_ratio = 1.0f)
 { return std::make_unique<grid_element>(row_distribution, column_distribution, gap_size, xy_ratio); }
 
 class root_element:
