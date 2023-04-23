@@ -3,6 +3,8 @@
 
 #include <inf.base/topology/topology_info.hpp>
 
+#include <set>
+#include <map>
 #include <vector>
 #include <string>
 #include <cstdint>
@@ -31,7 +33,7 @@ protected:
   std::vector<inf::base::param_value> _state;
   std::unique_ptr<inf::base::topology_info> _topology;
   std::vector<inf::base::factory_preset> _factory_presets = {};
-  std::map<std::int32_t, param_listener*> _param_listeners = {};
+  std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
 
   plugin_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
   _state(topology->params.size()), _topology(std::move(topology))
@@ -59,9 +61,9 @@ public:
   virtual double base_to_plugin_param(std::int32_t index, param_value val) const = 0;
   virtual param_value plugin_to_base_param(std::int32_t index, double val) const = 0;
 
+  void add_param_listener(std::int32_t param_index, param_listener* listener);
+  void remove_param_listener(std::int32_t param_index, param_listener* listener);
   std::vector<inf::base::factory_preset>& factory_presets() { return _factory_presets; }
-  void clear_param_listener(std::int32_t param_index) { _param_listeners.erase(param_index); }
-  void set_param_listener(std::int32_t param_index, param_listener* listener) { _param_listeners[param_index] = listener; }
 };
 
 } // namespace inf::base

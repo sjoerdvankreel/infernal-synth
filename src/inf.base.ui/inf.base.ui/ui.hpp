@@ -2,7 +2,7 @@
 #define INF_BASE_UI_UI_HPP
 
 #include <inf.base.ui/look_and_feel.hpp>
-#include <inf.base.ui/slider_listener.hpp>
+#include <inf.base.ui/slider_param_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -68,24 +68,6 @@ inline std::unique_ptr<container_element>
 create_container_fill_outline_ui(float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
 { return std::make_unique<container_element>(container_component::flags::outline | container_component::flags::fill, radius, thickness, fill, outline); }
 
-class param_slider_element:
-public ui_element
-{
-  base::part_id const _part_id;
-  std::int32_t const _param_index;
-  std::unique_ptr<slider_listener> _listener = {};
-protected:
-  juce::Component* build_core(plugin_controller* controller) override;
-public:
-  void layout() override {}
-  param_slider_element(base::part_id const& part_id, std::int32_t param_index):
-  _part_id(part_id), _param_index(param_index) {}
-};
-
-inline std::unique_ptr<param_slider_element>
-create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
-{ return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index); }
-
 class param_label_element:
 public ui_element
 {
@@ -102,6 +84,41 @@ public:
 inline std::unique_ptr<param_label_element>
 create_param_label_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 { return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index); }
+
+class param_text_element:
+public ui_element
+{
+  base::part_id const _part_id;
+  std::int32_t const _param_index;
+protected:
+  juce::Component* build_core(plugin_controller* controller) override;
+public:
+  void layout() override {}
+  param_text_element(base::part_id const& part_id, std::int32_t param_index):
+  _part_id(part_id), _param_index(param_index) {}
+};
+
+inline std::unique_ptr<param_text_element>
+create_param_text_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
+{ return std::make_unique<param_text_element>(part_id(part_type, part_index), param_index); }
+
+class param_slider_element:
+public ui_element
+{
+  base::part_id const _part_id;
+  std::int32_t const _param_index;
+  std::unique_ptr<slider_param_listener> _listener = {};
+protected:
+  juce::Component* build_core(plugin_controller* controller) override;
+public:
+  void layout() override {}
+  param_slider_element(base::part_id const& part_id, std::int32_t param_index):
+  _part_id(part_id), _param_index(param_index) {}
+};
+
+inline std::unique_ptr<param_slider_element>
+create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
+{ return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index); }
 
 class grid_element:
 public ui_element

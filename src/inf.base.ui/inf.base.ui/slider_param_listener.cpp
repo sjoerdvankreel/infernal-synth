@@ -1,4 +1,4 @@
-#include <inf.base.ui/slider_listener.hpp>
+#include <inf.base.ui/slider_param_listener.hpp>
 
 using namespace juce;
 using namespace inf::base;
@@ -7,7 +7,7 @@ namespace inf::base::ui
 {
 
 void 
-slider_listener::param_changed(param_value value)
+slider_param_listener::param_changed(param_value value)
 {
   topology_info const* topology = _controller->topology();
   auto const* data = &topology->params[_param_index].descriptor->data;
@@ -16,7 +16,7 @@ slider_listener::param_changed(param_value value)
 }
 
 void
-slider_listener::sliderValueChanged(Slider* slider)
+slider_param_listener::sliderValueChanged(Slider* slider)
 {
   topology_info const* topology = _controller->topology();
   auto const* data = &topology->params[_param_index].descriptor->data;
