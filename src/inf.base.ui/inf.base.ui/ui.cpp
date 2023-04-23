@@ -80,24 +80,6 @@ param_label_element::build_core(plugin_controller* controller)
 }
 
 Component*
-param_text_element::build_core(plugin_controller* controller)
-{
-  param_value ui_value;
-  Label* result = new Label;
-  std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
-  auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
-  if(desc.data.is_continuous())
-    ui_value.real = desc.data.real.display.to_range(static_cast<float>(controller->state()[index].real));
-  else
-    ui_value.discrete = controller->state()[index].discrete;
-  result->setFont(Font(10.0f));
-  result->setJustificationType(Justification::centredBottom);
-  result->setText(desc.data.format(false, ui_value) + desc.data.unit, dontSendNotification);
-  _listener.reset(new text_param_listener(controller, result, index));
-  return result;
-}
-
-Component*
 param_slider_element::build_core(plugin_controller* controller)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);

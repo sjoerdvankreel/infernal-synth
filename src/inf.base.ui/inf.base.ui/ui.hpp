@@ -2,7 +2,6 @@
 #define INF_BASE_UI_UI_HPP
 
 #include <inf.base.ui/look_and_feel.hpp>
-#include <inf.base.ui/text_param_listener.hpp>
 #include <inf.base.ui/slider_param_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -84,24 +83,6 @@ public:
 inline std::unique_ptr<param_label_element>
 create_param_label_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 { return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index); }
-
-class param_text_element:
-public ui_element
-{
-  base::part_id const _part_id;
-  std::int32_t const _param_index;
-  std::unique_ptr<text_param_listener> _listener = {};
-protected:
-  juce::Component* build_core(plugin_controller* controller) override;
-public:
-  void layout() override {}
-  param_text_element(base::part_id const& part_id, std::int32_t param_index):
-  _part_id(part_id), _param_index(param_index) {}
-};
-
-inline std::unique_ptr<param_text_element>
-create_param_text_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
-{ return std::make_unique<param_text_element>(part_id(part_type, part_index), param_index); }
 
 class param_slider_element:
 public ui_element
