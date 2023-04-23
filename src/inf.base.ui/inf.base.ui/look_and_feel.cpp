@@ -53,12 +53,28 @@ inf_look_and_feel::drawRotarySlider(
   float const center_x = left + margin + outer_size / 2.0f;
 
   // inactive outline
-  Path inactive_outline;
   float const outer_radius = outer_size / 2.0f;
   float const outline_thickness = outer_size * outline_thickness_factor;
-  inactive_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, start_angle, end_angle, true);
   g.setColour(s.findColour(colors::knob_outline_inactive));
-  g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
+  if(step_count == 0)
+  {
+    Path inactive_outline;
+    inactive_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, start_angle, end_angle, true);
+    g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
+  }
+  else for (std::int32_t sc = 0; sc < step_count; sc++)
+  {
+    Path inactive_outline;
+    float fsc = static_cast<float>(sc);
+    float this_step = fsc / step_count;
+    float next_step = (fsc + 1.0f) / step_count;
+    float range = end_angle - start_angle;
+    float half_gap = outline_step_gap_factor * 0.5f;
+    float const this_start_angle = sc == 0? start_angle: start_angle + (this_step + half_gap) * range;
+    float const this_end_angle = sc == step_count - 1 ? end_angle : start_angle + (next_step - half_gap) * range;
+    inactive_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, this_start_angle, this_end_angle, true);
+    g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
+  }
 
   // active outline
   for (std::int32_t i = 0; i < fake_conic_gradient_count; i++)
