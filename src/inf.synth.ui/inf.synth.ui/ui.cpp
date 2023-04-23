@@ -44,6 +44,7 @@ create_outer_grid()
 std::unique_ptr<root_element>
 create_synth_ui(std::int32_t width)
 {
+  juce::LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Verdana");
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_outer_grid());
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
