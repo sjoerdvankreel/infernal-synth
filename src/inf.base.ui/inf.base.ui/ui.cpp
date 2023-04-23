@@ -87,7 +87,7 @@ param_label_element::build_core(plugin_controller* controller)
   Label* result = new Label;
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   result->setFont(Font(11.0f));
-  result->setJustificationType(Justification::centred);
+  result->setJustificationType(Justification::centredTop);
   result->setText(desc.data.static_name.short_, dontSendNotification);
   return result;
 }

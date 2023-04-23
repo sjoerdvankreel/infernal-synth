@@ -44,9 +44,9 @@ static std::unique_ptr<grid_element>
 create_outer_grid()
 {
   auto result = create_grid_ui({1, 1, 1}, {1, 1, 1, 1});
-  result->add_cell(create_container_fill_ui(create_ram_grid(), Colour(0xFF222222)), 0, 0, 1, 3);
-  result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF222222)), 1, 0, 2, 2);
-  result->add_cell(create_container_fill_ui(create_note_grid(), Colour(0xFF222222)), 1, 2, 2, 2);
+  result->add_cell(create_container_fill_ui(create_ram_grid(), Colour(0xFF333333)), 0, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF333333)), 1, 0, 2, 2);
+  result->add_cell(create_container_fill_ui(create_note_grid(), Colour(0xFF333333)), 1, 2, 2, 2);
   return result;
 }
 
@@ -60,7 +60,7 @@ create_synth_ui(std::int32_t width)
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFF2EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_inactive, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_inactive, Colour(0xFF666666));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_low, Colour(0xFFDA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_low, Colour(0x40DA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_high, Colour(0xFFFD9A4D));
