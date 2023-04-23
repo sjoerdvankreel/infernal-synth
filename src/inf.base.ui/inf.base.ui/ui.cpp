@@ -73,8 +73,9 @@ param_label_element::build_core(plugin_controller* controller)
 {
   Label* result = new Label;
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
+  result->setFont(Font(String("ProFont"), 12.0f, 0));
+  result->setJustificationType(Justification::centredTop);
   result->setText(desc.data.static_name.short_, dontSendNotification);
-  result->setJustificationType(Justification::centred);
   return result;
 }
 
@@ -89,8 +90,9 @@ param_text_element::build_core(plugin_controller* controller)
     ui_value.real = desc.data.real.display.to_range(static_cast<float>(controller->state()[index].real));
   else
     ui_value.discrete = controller->state()[index].discrete;
+  result->setFont(Font(String("ProFont"), 11.0f, 0));
+  result->setJustificationType(Justification::centredBottom);
   result->setText(desc.data.format(false, ui_value) + desc.data.unit, dontSendNotification);
-  result->setJustificationType(Justification::centred);
   _listener.reset(new text_param_listener(controller, result, index));
   return result;
 }
