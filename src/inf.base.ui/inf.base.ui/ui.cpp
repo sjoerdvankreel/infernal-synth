@@ -131,7 +131,7 @@ grid_element::pixel_height(std::int32_t pixel_width)
 {
   double rows = _size.y;
   double cols = _size.x;
-  double ratio = rows / cols * _xy_ratio;
+  double ratio = rows / cols;
   return static_cast<std::int32_t>(std::ceil(pixel_width * ratio));
 }
 

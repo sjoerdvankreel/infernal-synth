@@ -12,7 +12,7 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_inner_grid()
 {
-  auto result = create_grid_ui(3, 3, 0.0f, 1.0f);
+  auto result = create_grid_ui(3, 3, 0.0f);
   result->add_cell(create_param_text_ui(part_type::vosc, 0, osc_param::ram_src), 0, 0);
   result->add_cell(create_param_text_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 1);
   result->add_cell(create_param_text_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 2);
@@ -36,7 +36,7 @@ create_container()
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui(1, 1, 0.0f, 1.0f);
+  auto result = create_grid_ui(1, 1, 0.0f);
   result->add_cell(create_container(), 0, 0);
   return result;
 }
