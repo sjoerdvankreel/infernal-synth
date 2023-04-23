@@ -46,6 +46,7 @@ create_synth_ui(std::int32_t width)
 {
   auto result = create_root_ui(width, juce::Colours::black);
   result->content(create_outer_grid());
+  result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
