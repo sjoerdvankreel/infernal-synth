@@ -96,6 +96,8 @@ struct topology_info
   std::int32_t param_start(part_id id) const { return param_bounds[id.type][id.index]; }
   std::int32_t param_index(part_id id, std::int32_t param) const { return param_start(id) + param; }
   std::int32_t param_id(part_id id, std::int32_t param) const { return param_index_to_id[param_index(id, param)]; }
+  param_info const& param_info(part_id id, std::int32_t param) const { return params[param_index(id, param)]; }
+  param_descriptor const& param_descriptor(part_id id, std::int32_t param) const { return *param_info(id, param).descriptor; }
 };
 
 } // namespace inf::base

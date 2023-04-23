@@ -2,6 +2,7 @@
 #define INF_BASE_UI_UI_HPP
 
 #include <inf.base.ui/look_and_feel.hpp>
+#include <inf.base.ui/text_param_listener.hpp>
 #include <inf.base.ui/slider_param_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -90,6 +91,7 @@ public ui_element
 {
   base::part_id const _part_id;
   std::int32_t const _param_index;
+  std::unique_ptr<text_param_listener> _listener = {};
 protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
