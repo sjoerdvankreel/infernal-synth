@@ -80,8 +80,15 @@ param_label_element::build_core(plugin_controller* controller)
 Component*
 param_text_element::build_core(plugin_controller* controller)
 {
-  std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
+  param_value ui_value;
   Label* result = new Label;
+  std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
+  auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
+  if(desc.data.is_continuous())
+    ui_value.real = desc.data.real.display.to_range(static_cast<float>(controller->state()[index].real));
+  else
+    ui_value.discrete = controller->state()[index].discrete;
+  result->setText(desc.data.format(false, ui_value), dontSendNotification);
   _listener.reset(new text_param_listener(controller, result, index));
   return result;
 }
@@ -92,8 +99,16 @@ param_slider_element::build_core(plugin_controller* controller)
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider;
-  if(desc.data.is_continuous()) result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
-  else result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
+  if(desc.data.is_continuous())
+  {
+    result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
+    result->setValue(desc.data.real.display.to_range(static_cast<float>(controller->state()[index].real)), dontSendNotification);
+  }
+  else
+  {
+    result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
+    result->setValue(controller->state()[index].discrete, dontSendNotification);
+  }
   result->bipolar(desc.data.is_continuous()? desc.data.real.display.min < 0.0f: desc.data.discrete.min < 0);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
