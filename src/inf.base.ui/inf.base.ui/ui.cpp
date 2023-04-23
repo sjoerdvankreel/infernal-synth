@@ -72,13 +72,16 @@ Component*
 param_element::build_core(plugin_controller* controller)
 {
   topology_info const* topology = controller->topology();
-  param_descriptor const* desc = topology->params[topology->param_index(_part_id, _param_index)].descriptor;
+  std::int32_t index = topology->param_index(_part_id, _param_index);
+  param_descriptor const* desc = topology->params[index].descriptor;
   inf_slider* result = new inf_slider;
   if(desc->data.is_continuous()) result->setRange(0.0, 1.0, 0.0);
   else result->setRange(desc->data.discrete.min, desc->data.discrete.max, 1.0);
   result->bipolar(desc->data.is_continuous()? desc->data.real.display.min < 0.0f: desc->data.discrete.min < 0);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+  _listener.reset(new slider_listener(controller, result, index));
+  result->addListener(_listener.get());
   return result;
 }
 
