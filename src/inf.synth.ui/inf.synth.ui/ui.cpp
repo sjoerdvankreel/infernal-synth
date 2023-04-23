@@ -25,8 +25,8 @@ create_inner_grid()
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1}, {1});
-  result->add_cell(create_container_fill_ui(create_inner_grid(), 5.0f, Colour(0xFF222222)), 0, 0);
+  auto result = create_grid_ui({1}, {1, 1, 1});
+  result->add_cell(create_container_fill_ui(create_inner_grid(), 5.0f, Colour(0xFF222222)), 0, 0, 1, 3);
   return result;
 }
 
