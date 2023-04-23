@@ -12,16 +12,13 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_inner_grid()
 {
-  auto result = create_grid_ui({1, 4, 1}, {1, 1, 1}, 0.0f, 1.0f);
-  result->add_cell(create_param_text_ui(part_type::vosc, 0, osc_param::ram_src), 0, 0);
-  result->add_cell(create_param_text_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 1);
-  result->add_cell(create_param_text_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 2);
-  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_src), 1, 0);
-  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_bal), 1, 1);
-  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_mix), 1, 2);
-  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_src), 2, 0);
-  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_bal), 2, 1);
-  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_mix), 2, 2);
+  auto result = create_grid_ui({5, 1}, {1, 1, 1}, 0.0f, 1.0f);
+  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_src), 0, 0);
+  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 1);
+  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 2);
+  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_src), 1, 0);
+  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_bal), 1, 1);
+  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_mix), 1, 2);
   return result;
 }
 
@@ -36,7 +33,7 @@ create_container()
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1}, {1}, 0.0f, 0.45f);
+  auto result = create_grid_ui({1}, {1}, 0.0f, 0.35f);
   result->add_cell(create_container(), 0, 0);
   return result;
 }

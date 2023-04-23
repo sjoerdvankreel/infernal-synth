@@ -56,3 +56,4 @@
 - filter out incompatible menu options (osc sync, ram, audio routing)
 - reduce controller.uidesc to image names, image offsets and color scheme
 - tooltips, tooltips while dragging knobs etc etc
+- drop text param control?
