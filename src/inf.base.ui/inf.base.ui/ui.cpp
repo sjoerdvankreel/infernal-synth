@@ -74,6 +74,7 @@ param_label_element::build_core(plugin_controller* controller)
   Label* result = new Label;
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   result->setText(desc.data.static_name.short_, dontSendNotification);
+  result->setJustificationType(Justification::centred);
   return result;
 }
 
@@ -89,6 +90,7 @@ param_text_element::build_core(plugin_controller* controller)
   else
     ui_value.discrete = controller->state()[index].discrete;
   result->setText(desc.data.format(false, ui_value) + desc.data.unit, dontSendNotification);
+  result->setJustificationType(Justification::centred);
   _listener.reset(new text_param_listener(controller, result, index));
   return result;
 }
