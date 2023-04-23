@@ -43,8 +43,9 @@ inf_look_and_feel::drawRotarySlider(
 
   // then for outer offset (we're more wide then tall due to gap at bottom)
   top += (1.0f - outer_xy_offset_factor) * 0.5f * h;
-  w += (1.0f - outer_xy_offset_factor) * w;
-  h += (1.0f - outer_xy_offset_factor) * h;
+  left -= (1.0f - outer_xy_offset_factor) * 0.5f * w;
+  w += (1.0f - outer_xy_offset_factor) * std::min(w, h);
+  h += (1.0f - outer_xy_offset_factor) * std::min(w, h);
 
   // precompute stuff
   float const margin = std::min(w, h) * margin_factor + margin_fixed_px;
@@ -59,9 +60,6 @@ inf_look_and_feel::drawRotarySlider(
   float const outer_x = left + margin;
   float const center_y = top + margin + outer_size / 2.0f;
   float const center_x = left + margin + outer_size / 2.0f;
-
-  g.setColour(Colours::red);
-  g.fillRect(left, top, w, h);
 
   // inactive outline
   float const outer_radius = outer_size / 2.0f;
