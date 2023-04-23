@@ -10,20 +10,32 @@ using namespace inf::base::ui;
 namespace inf::synth::ui {
 
 static std::unique_ptr<ui_element>
-create_inner_grid()
+create_ram_grid()
 {
-  auto result = create_grid_ui({1}, {1, 1, 1});
+  auto result = create_grid_ui({ 1 }, {1, 1, 1});
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src), 0, 0);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 1);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 2);
   return result;
 }
 
+static std::unique_ptr<ui_element>
+create_unison_grid()
+{
+  auto result = create_grid_ui({ 1, 1 }, { 1, 1 });
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices), 0, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn), 0, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd), 1, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset), 1, 1);
+  return result;
+}
+
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1}, {1, 1, 1});
-  result->add_cell(create_container_fill_ui(create_inner_grid(), 5.0f, Colour(0xFF222222)), 0, 0, 1, 3);
+  auto result = create_grid_ui({1, 1, 1}, {1, 1, 1});
+  result->add_cell(create_container_fill_ui(create_ram_grid(), 15.0f, Colour(0xFF222222)), 0, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_unison_grid(), 15.0f, Colour(0xFF222222)), 1, 0, 2, 2);
   return result;
 }
 
