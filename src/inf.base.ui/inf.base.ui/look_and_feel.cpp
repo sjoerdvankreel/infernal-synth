@@ -13,14 +13,14 @@ inf_look_and_feel::drawRotarySlider(
 {
   // config
   float const cut_xy_ratio = 1.0f;
-  float const margin_factor = 0.1f;
+  float const margin_factor = 0.05f;
   float const margin_fixed_px = 2.0f;
   float const spot_size_factor = 0.67f;
   float const thumb_width_factor = 0.15f;
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
-  float const outer_xy_offset_factor = 0.9f;
+  float const outer_xy_offset_factor = 0.95f;
   float const outline_step_gap_factor = 0.015f;
   float const center_thickness_factor = 0.0125f;
   float const outline_thickness_factor = 0.075f;
@@ -42,6 +42,7 @@ inf_look_and_feel::drawRotarySlider(
   if (h < w) left += (w - h) * 0.5f;
 
   // then for outer offset (we're more wide then tall due to gap at bottom)
+  top += (1.0f - outer_xy_offset_factor) * 0.5f * h;
   left -= (1.0f - outer_xy_offset_factor) * 0.5f * w;
   w += (1.0f - outer_xy_offset_factor) * std::min(w, h);
   h += (1.0f - outer_xy_offset_factor) * std::min(w, h);
