@@ -145,6 +145,9 @@ inline std::unique_ptr<root_element>
 create_root_ui(std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill)
 { return std::make_unique<root_element>(std::move(content), width, fill); }
 
+std::unique_ptr<ui_element>
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index);
+
 } // namespace inf::base::ui
 
 #endif // INF_BASE_UI_UI_HPP

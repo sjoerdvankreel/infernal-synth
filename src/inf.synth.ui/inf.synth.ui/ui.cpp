@@ -12,13 +12,10 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_inner_grid()
 {
-  auto result = create_grid_ui({2, 1}, {1, 1, 1});
-  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_src), 0, 0);
-  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 1);
-  result->add_cell(create_param_slider_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 2);
-  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_src), 1, 0);
-  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_bal), 1, 1);
-  result->add_cell(create_param_label_ui(part_type::vosc, 0, osc_param::ram_mix), 1, 2);
+  auto result = create_grid_ui({1}, {1, 1, 1});
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src), 0, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 2);
   return result;
 }
 
