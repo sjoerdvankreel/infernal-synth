@@ -105,7 +105,6 @@ create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int
 class grid_element:
 public ui_element
 {
-  float const _gap_size;
   std::vector<std::int32_t> const _row_distribution;
   std::vector<std::int32_t> const _column_distribution;
   std::vector<std::unique_ptr<ui_element>> _cell_contents = {};
@@ -115,14 +114,14 @@ protected:
 public:
   void layout() override;
   std::int32_t pixel_height(std::int32_t pixel_width);
-  grid_element(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float gap_size):
-  _gap_size(gap_size), _row_distribution(row_distribution), _column_distribution(column_distribution) {}
+  grid_element(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution):
+  _row_distribution(row_distribution), _column_distribution(column_distribution) {}
   ui_element* add_cell(std::unique_ptr<ui_element>&& content, std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
 };
 
 inline std::unique_ptr<grid_element>
-create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float gap_size = 0.0f)
-{ return std::make_unique<grid_element>(row_distribution, column_distribution, gap_size); }
+create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution)
+{ return std::make_unique<grid_element>(row_distribution, column_distribution); }
 
 class root_element:
 public ui_element

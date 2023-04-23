@@ -74,7 +74,7 @@ param_label_element::build_core(plugin_controller* controller)
   Label* result = new Label;
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   result->setFont(Font(11.0f));
-  result->setJustificationType(Justification::centredTop);
+  result->setJustificationType(Justification::centred);
   result->setText(desc.data.static_name.short_, dontSendNotification);
   return result;
 }
@@ -134,8 +134,6 @@ void
 grid_element::layout()
 {
   Grid grid;
-  grid.rowGap = Grid::Px(_gap_size);
-  grid.columnGap = Grid::Px(_gap_size);
   for(std::size_t row = 0; row < _row_distribution.size(); row++)
     grid.templateRows.add(Grid::TrackInfo(Grid::Fr(_row_distribution[row])));
   for (std::size_t col = 0; col < _column_distribution.size(); col++)
