@@ -58,3 +58,4 @@
 - tooltips, tooltips while dragging knobs etc etc
 - drop text param control?
 - more contrast
+- show note/oct next to label
