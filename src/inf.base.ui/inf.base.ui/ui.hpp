@@ -86,6 +86,23 @@ inline std::unique_ptr<param_slider_element>
 create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 { return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index); }
 
+class param_label_element:
+public ui_element
+{
+  base::part_id const _part_id;
+  std::int32_t const _param_index;
+protected:
+  juce::Component* build_core(plugin_controller* controller) override;
+public:
+  void layout() override {}
+  param_label_element(base::part_id const& part_id, std::int32_t param_index):
+  _part_id(part_id), _param_index(param_index) {}
+};
+
+inline std::unique_ptr<param_label_element>
+create_param_label_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
+{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index); }
+
 class grid_element:
 public ui_element
 {

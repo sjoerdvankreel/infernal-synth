@@ -86,6 +86,17 @@ param_slider_element::build_core(plugin_controller* controller)
 }
 
 Component*
+param_label_element::build_core(plugin_controller* controller)
+{
+  topology_info const* topology = controller->topology();
+  std::int32_t index = topology->param_index(_part_id, _param_index);
+  param_descriptor const* desc = topology->params[index].descriptor;
+  Label* result = new Label;
+  result->setText(desc->data.static_name.short_, dontSendNotification);
+  return result;
+}
+
+Component*
 grid_element::build_core(plugin_controller* controller)
 {
   Component* result = new Component;

@@ -53,3 +53,4 @@
 - drop text edit fields & put active knob value in 1 single place
 - filter out incompatible menu options (osc sync, ram, audio routing)
 - reduce controller.uidesc to image names, image offsets and color scheme
+- tooltips, tooltips while dragging knobs etc etc
