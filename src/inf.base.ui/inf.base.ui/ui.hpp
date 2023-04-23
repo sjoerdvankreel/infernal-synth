@@ -91,7 +91,7 @@ public ui_element
 protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
-  void layout() override {}
+  void layout() override;
   param_slider_element(base::part_id const& part_id, std::int32_t param_index):
   _part_id(part_id), _param_index(param_index) {}
 };
