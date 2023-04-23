@@ -126,7 +126,9 @@ class grid_element:
 public ui_element
 {
   float const _gap_size;
-  juce::Point<std::int32_t> const _size; // Rows/cols.
+  float const _xy_ratio;
+  std::vector<std::int32_t> const _row_distribution;
+  std::vector<std::int32_t> const _column_distribution;
   std::vector<std::unique_ptr<ui_element>> _cell_contents = {};
   std::vector<juce::Rectangle<std::int32_t>> _cell_bounds = {};
 protected:
@@ -134,13 +136,14 @@ protected:
 public:
   void layout() override;
   std::int32_t pixel_height(std::int32_t pixel_width);
-  grid_element(juce::Point<std::int32_t> const& size, float gap_size): _gap_size(gap_size), _size(size) {}
+  grid_element(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float gap_size, float xy_ratio):
+  _gap_size(gap_size), _xy_ratio(xy_ratio), _row_distribution(row_distribution), _column_distribution(column_distribution) {}
   ui_element* add_cell(std::unique_ptr<ui_element>&& content, std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
 };
 
 inline std::unique_ptr<grid_element>
-create_grid_ui(std::int32_t rows, std::int32_t cols, float gap_size)
-{ return std::make_unique<grid_element>(juce::Point(cols, rows), gap_size); }
+create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float gap_size, float xy_ratio)
+{ return std::make_unique<grid_element>(row_distribution, column_distribution, gap_size, xy_ratio); }
 
 class root_element:
 public ui_element
@@ -155,6 +158,8 @@ public:
   void layout() override;
   inf_look_and_feel& look_and_feel() { return _lnf; }
   void content(std::unique_ptr<grid_element>&& content) { _content = std::move(content); }
+
+  ~root_element() { component()->setLookAndFeel(nullptr); }
   root_element(std::int32_t width, juce::Colour const& fill) : _fill(fill), _width(width) {}
 };
 

@@ -129,9 +129,9 @@ grid_element::build_core(plugin_controller* controller)
 std::int32_t 
 grid_element::pixel_height(std::int32_t pixel_width)
 {
-  double rows = _size.y;
-  double cols = _size.x;
-  double ratio = rows / cols;
+  double rows = static_cast<double>(_row_distribution.size());
+  double cols = static_cast<double>(_column_distribution.size());
+  double ratio = rows / cols * _xy_ratio;
   return static_cast<std::int32_t>(std::ceil(pixel_width * ratio));
 }
 
@@ -151,10 +151,10 @@ grid_element::layout()
   Grid grid;
   grid.rowGap = Grid::Px(_gap_size);
   grid.columnGap = Grid::Px(_gap_size);
-  for(std::int32_t row = 0; row < _size.y; row++)
-    grid.templateRows.add(Grid::TrackInfo(Grid::Fr(1)));
-  for (std::int32_t col = 0; col < _size.x; col++)
-    grid.templateColumns.add(Grid::TrackInfo(Grid::Fr(1)));
+  for(std::size_t row = 0; row < _row_distribution.size(); row++)
+    grid.templateRows.add(Grid::TrackInfo(Grid::Fr(_row_distribution[row])));
+  for (std::size_t col = 0; col < _column_distribution.size(); col++)
+    grid.templateColumns.add(Grid::TrackInfo(Grid::Fr(_column_distribution[col])));
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
   {
     GridItem item(_cell_contents[i]->component());
