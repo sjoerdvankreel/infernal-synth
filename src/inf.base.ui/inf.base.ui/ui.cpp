@@ -172,7 +172,7 @@ grid_element::layout()
 std::unique_ptr<ui_element>
 create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 {
-  auto result = create_grid_ui({ 9, 4 }, { 1 });
+  auto result = create_grid_ui({ 5, 2 }, { 1 });
   result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
   result->add_cell(create_param_label_ui(part_type, part_index, param_index), 1, 0);
   return result;
