@@ -92,7 +92,7 @@ param_slider_element::build_core(plugin_controller* controller)
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider;
-  if(desc.data.is_continuous()) result->setRange(0.0, 1.0, 0.0);
+  if(desc.data.is_continuous()) result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
   else result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
   result->bipolar(desc.data.is_continuous()? desc.data.real.display.min < 0.0f: desc.data.discrete.min < 0);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);

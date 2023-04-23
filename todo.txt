@@ -37,6 +37,7 @@
 - tooltips
 - fix leaks
 - graphs
+- double click sets default
 - fix menu host integration
 - check all ui vs dsp ranges
 - cleanup tag-vs-index
