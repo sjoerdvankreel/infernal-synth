@@ -88,7 +88,7 @@ param_text_element::build_core(plugin_controller* controller)
     ui_value.real = desc.data.real.display.to_range(static_cast<float>(controller->state()[index].real));
   else
     ui_value.discrete = controller->state()[index].discrete;
-  result->setText(desc.data.format(false, ui_value), dontSendNotification);
+  result->setText(desc.data.format(false, ui_value) + desc.data.unit, dontSendNotification);
   _listener.reset(new text_param_listener(controller, result, index));
   return result;
 }

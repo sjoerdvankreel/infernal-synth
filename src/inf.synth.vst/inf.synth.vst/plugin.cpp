@@ -94,7 +94,7 @@ class synth_vst_controller :
 public vst_controller
 {
 public:
-  std::int32_t editor_min_width() const override { return 200; }
+  std::int32_t editor_min_width() const override { return 100; }
   std::int32_t editor_default_width() const override { return 800; }
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
