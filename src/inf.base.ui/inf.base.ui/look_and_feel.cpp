@@ -8,7 +8,7 @@ namespace inf::base::ui {
 
 void 
 inf_look_and_feel::drawRotarySlider(
-  juce::Graphics& g, int x, int y, int w, int h, 
+  juce::Graphics& g, int x0, int y0, int w0, int h0, 
   float pos, float start_angle, float end_angle, juce::Slider& s)
 {
   // config
@@ -20,6 +20,7 @@ inf_look_and_feel::drawRotarySlider(
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
   float const highlight_size_factor = 0.75f;
+  float const outer_xy_offset_factor = 0.925f;
   float const outline_step_gap_factor = 0.015f;
   float const center_thickness_factor = 0.0125f;
   float const outline_thickness_factor = 0.075f;
@@ -33,10 +34,17 @@ inf_look_and_feel::drawRotarySlider(
   if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
 
   // adjust for nonrectangular
-  float left = static_cast<float>(x);
-  float top = static_cast<float>(y);
+  float w = static_cast<float>(w0);
+  float h = static_cast<float>(h0);
+  float top = static_cast<float>(y0);
+  float left = static_cast<float>(x0);
   if (w < h) top += (h - w) * 0.5f;
   if (h < w) left += (w - h) * 0.5f;
+
+  // then for outer offset (we're more wide then tall due to gap at bottom)
+  top += (1.0f - outer_xy_offset_factor) * 0.5f * h;
+  w += (1.0f - outer_xy_offset_factor) * w;
+  h += (1.0f - outer_xy_offset_factor) * h;
 
   // precompute stuff
   float const margin = std::min(w, h) * margin_factor + margin_fixed_px;
@@ -51,6 +59,9 @@ inf_look_and_feel::drawRotarySlider(
   float const outer_x = left + margin;
   float const center_y = top + margin + outer_size / 2.0f;
   float const center_x = left + margin + outer_size / 2.0f;
+
+  g.setColour(Colours::red);
+  g.fillRect(left, top, w, h);
 
   // inactive outline
   float const outer_radius = outer_size / 2.0f;

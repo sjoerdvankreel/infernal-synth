@@ -32,7 +32,7 @@ public:
   };
 
   void drawRotarySlider(
-    juce::Graphics& g, int x, int y, int w, int h,
+    juce::Graphics& g, int x0, int y0, int w0, int h0,
     float pos, float start, float end, juce::Slider& s) override;
 };
 
