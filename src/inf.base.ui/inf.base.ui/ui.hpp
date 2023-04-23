@@ -68,7 +68,7 @@ inline std::unique_ptr<container_element>
 create_container_fill_outline_ui(float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
 { return std::make_unique<container_element>(container_component::flags::outline | container_component::flags::fill, radius, thickness, fill, outline); }
 
-class param_element:
+class param_slider_element:
 public ui_element
 {
   base::part_id const _part_id;
@@ -78,13 +78,13 @@ protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override {}
-  param_element(base::part_id const& part_id, std::int32_t param_index):
+  param_slider_element(base::part_id const& part_id, std::int32_t param_index):
   _part_id(part_id), _param_index(param_index) {}
 };
 
-inline std::unique_ptr<param_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
-{ return std::make_unique<param_element>(part_id(part_type, part_index), param_index); }
+inline std::unique_ptr<param_slider_element>
+create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
+{ return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index); }
 
 class grid_element:
 public ui_element

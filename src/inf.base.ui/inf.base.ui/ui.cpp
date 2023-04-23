@@ -69,7 +69,7 @@ container_element::layout()
 }
 
 Component*
-param_element::build_core(plugin_controller* controller)
+param_slider_element::build_core(plugin_controller* controller)
 {
   topology_info const* topology = controller->topology();
   std::int32_t index = topology->param_index(_part_id, _param_index);
