@@ -36,7 +36,7 @@ create_container()
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1}, {1}, 0.0f, 0.4f);
+  auto result = create_grid_ui({1}, {1}, 0.0f, 0.45f);
   result->add_cell(create_container(), 0, 0);
   return result;
 }
