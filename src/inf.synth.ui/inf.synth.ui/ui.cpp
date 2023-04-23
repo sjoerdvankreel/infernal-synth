@@ -22,28 +22,19 @@ create_inner_grid()
   return result;
 }
 
-static std::unique_ptr<ui_element>
-create_container()
-{
-  auto result = create_container_fill_ui(5.0f, Colour(0xFF222222));
-  result->content(create_inner_grid());
-  return result;
-}
-
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
   auto result = create_grid_ui({1}, {1}, 0.0f, 0.35f);
-  result->add_cell(create_container(), 0, 0);
+  result->add_cell(create_container_fill_ui(create_inner_grid(), 5.0f, Colour(0xFF222222)), 0, 0);
   return result;
 }
 
 std::unique_ptr<root_element>
 create_synth_ui(std::int32_t width)
 {
+  auto result = create_root_ui(create_outer_grid(), width, juce::Colours::black);
   juce::LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Verdana");
-  auto result = create_root_ui(width, juce::Colours::black);
-  result->content(create_outer_grid());
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));

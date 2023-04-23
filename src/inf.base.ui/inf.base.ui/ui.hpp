@@ -54,20 +54,19 @@ protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
-  void content(std::unique_ptr<ui_element>&& content) { _content = std::move(content); }
-  container_element(std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline) :
-  _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags) {}
+  container_element(std::unique_ptr<ui_element>&& content, std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline) :
+  _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<container_element>
-create_container_fill_ui(float radius, juce::Colour const& fill)
-{ return std::make_unique<container_element>(container_component::flags::fill, radius, 0.0f, fill, juce::Colour()); }
+create_container_fill_ui(std::unique_ptr<ui_element>&& content, float radius, juce::Colour const& fill)
+{ return std::make_unique<container_element>(std::move(content), container_component::flags::fill, radius, 0.0f, fill, juce::Colour()); }
 inline std::unique_ptr<container_element>
-create_container_outline_ui(float radius, float thickness, juce::Colour const& outline)
-{ return std::make_unique<container_element>(container_component::flags::outline, radius, thickness, juce::Colour(), outline); }
+create_container_outline_ui(std::unique_ptr<ui_element>&& content, float radius, float thickness, juce::Colour const& outline)
+{ return std::make_unique<container_element>(std::move(content), container_component::flags::outline, radius, thickness, juce::Colour(), outline); }
 inline std::unique_ptr<container_element>
-create_container_fill_outline_ui(float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
-{ return std::make_unique<container_element>(container_component::flags::outline | container_component::flags::fill, radius, thickness, fill, outline); }
+create_container_fill_outline_ui(std::unique_ptr<ui_element>&& content, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline)
+{ return std::make_unique<container_element>(std::move(content), container_component::flags::outline | container_component::flags::fill, radius, thickness, fill, outline); }
 
 class param_label_element:
 public ui_element
@@ -148,24 +147,23 @@ create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<st
 class root_element:
 public ui_element
 {
-  inf_look_and_feel _lnf = {};
   juce::Colour const _fill;
   std::int32_t const _width; // Pixel size.
+  inf_look_and_feel _lnf = {};
   std::unique_ptr<grid_element> _content = {};
 protected:
   juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
   inf_look_and_feel& look_and_feel() { return _lnf; }
-  void content(std::unique_ptr<grid_element>&& content) { _content = std::move(content); }
-
   ~root_element() { component()->setLookAndFeel(nullptr); }
-  root_element(std::int32_t width, juce::Colour const& fill) : _fill(fill), _width(width) {}
+  root_element(std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill) : 
+  _fill(fill), _width(width), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<root_element>
-create_root_ui(std::int32_t width, juce::Colour const& fill)
-{ return std::make_unique<root_element>(width, fill); }
+create_root_ui(std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill)
+{ return std::make_unique<root_element>(std::move(content), width, fill); }
 
 } // namespace inf::base::ui
 
