@@ -72,7 +72,7 @@ Component*
 param_label_element::build_core(plugin_controller* controller)
 {
   Label* result = new Label;
-  auto const& desc = controller->topology()->param_descriptor(_part_id, _param_index);
+  auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   result->setText(desc.data.static_name.short_, dontSendNotification);
   return result;
 }
@@ -90,7 +90,7 @@ Component*
 param_slider_element::build_core(plugin_controller* controller)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
-  auto const& desc = controller->topology()->param_descriptor(_part_id, _param_index);
+  auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider;
   if(desc.data.is_continuous()) result->setRange(0.0, 1.0, 0.0);
   else result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
