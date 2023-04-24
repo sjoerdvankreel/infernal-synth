@@ -137,7 +137,7 @@ grid_element::pixel_height(std::int32_t pixel_width)
 {
   double rows = static_cast<double>(_row_distribution.size());
   double cols = static_cast<double>(_column_distribution.size());
-  return static_cast<std::int32_t>(std::ceil(pixel_width * rows / cols));
+  return static_cast<std::int32_t>(std::ceil(pixel_width * rows / cols * _xy_ratio));
 }
 
 ui_element*
@@ -172,7 +172,7 @@ grid_element::layout()
 std::unique_ptr<ui_element>
 create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 {
-  auto result = create_grid_ui({ 5, 2 }, { 1 });
+  auto result = create_grid_ui({ 11, 4 }, { 1 });
   result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
   result->add_cell(create_param_label_ui(part_type, part_index, param_index), 1, 0);
   return result;

@@ -43,7 +43,7 @@ create_note_grid()
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1, 1, 1}, {1, 1, 1, 1});
+  auto result = create_grid_ui({1, 1, 1}, {1, 1, 1, 1}, 1.25f);
   result->add_cell(create_container_fill_ui(create_ram_grid(), Colour(0xFF333333)), 0, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF333333)), 1, 0, 2, 2);
   result->add_cell(create_container_fill_ui(create_note_grid(), Colour(0xFF333333)), 1, 2, 2, 2);
