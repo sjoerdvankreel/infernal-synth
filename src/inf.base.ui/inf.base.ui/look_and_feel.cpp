@@ -30,7 +30,8 @@ inf_look_and_feel::drawRotarySlider(
   std::int32_t step_count = 0;
   std::int32_t const cut_count = 10;
   std::int32_t const fake_conic_gradient_count = 1024;
-  bool const bipolar = dynamic_cast<inf_slider&>(s).bipolar();
+  auto const descriptor = dynamic_cast<inf_slider&>(s).descriptor();
+  bool const bipolar = descriptor->data.is_continuous() ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
   if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
 
   // adjust for nonrectangular

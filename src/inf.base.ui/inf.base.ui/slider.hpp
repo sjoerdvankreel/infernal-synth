@@ -1,6 +1,7 @@
 #ifndef INF_BASE_UI_SLIDER_HPP
 #define INF_BASE_UI_SLIDER_HPP
 
+#include <inf.base/topology/param_descriptor.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <cstdint>
 
@@ -10,10 +11,10 @@ class inf_slider:
 public juce::Slider
 {
 private:
-  bool _bipolar = false;
+  base::param_descriptor const* _descriptor;
 public:
-  bool bipolar() const { return _bipolar; }
-  void bipolar(bool bipolar) { _bipolar = bipolar; }
+  base::param_descriptor const* descriptor() const { return _descriptor; }
+  inf_slider(base::param_descriptor const* descriptor): _descriptor(descriptor) {}
 };
 
 } // namespace inf::base::ui
