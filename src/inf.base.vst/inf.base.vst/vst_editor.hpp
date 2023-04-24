@@ -1,7 +1,7 @@
 #ifndef INF_BASE_VST_VST_EDITOR_HPP
 #define INF_BASE_VST_VST_EDITOR_HPP
 
-#include <inf.base.ui/ui.hpp>
+#include <inf.base.ui/shared/ui.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>

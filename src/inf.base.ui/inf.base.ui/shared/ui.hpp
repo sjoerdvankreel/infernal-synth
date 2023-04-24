@@ -1,8 +1,10 @@
-#ifndef INF_BASE_UI_UI_HPP
-#define INF_BASE_UI_UI_HPP
+#ifndef INF_BASE_UI_SHARED_UI_HPP
+#define INF_BASE_UI_SHARED_UI_HPP
 
-#include <inf.base.ui/look_and_feel.hpp>
-#include <inf.base.ui/slider_param_listener.hpp>
+#include <inf.base.ui/shared/support.hpp>
+#include <inf.base.ui/shared/look_and_feel.hpp>
+#include <inf.base.ui/controls/label_param_listener.hpp>
+#include <inf.base.ui/controls/slider_param_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -89,19 +91,22 @@ create_group_label_ui(std::string const& text, float rotation_degrees)
 class param_label_element:
 public ui_element
 {
+private:
   base::part_id const _part_id;
   std::int32_t const _param_index;
+  label_display_type const _display_type;
+  std::unique_ptr<label_param_listener> _listener = {};
 public:
   void layout() override {}
-  param_label_element(base::part_id const& part_id, std::int32_t param_index):
-  _part_id(part_id), _param_index(param_index) {}
+  param_label_element(base::part_id const& part_id, std::int32_t param_index, label_display_type type):
+  _part_id(part_id), _param_index(param_index), _display_type(type) {}
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 inline std::unique_ptr<param_label_element>
-create_param_label_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
-{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index); }
+create_param_label_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type)
+{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index, type); }
 
 class param_slider_element:
 public ui_element
@@ -179,8 +184,8 @@ create_root_ui(std::unique_ptr<grid_element>&& content, std::int32_t width, juce
 { return std::make_unique<root_element>(std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index);
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type);
 
 } // namespace inf::base::ui
 
-#endif // INF_BASE_UI_UI_HPP
+#endif // INF_BASE_UI_SHARED_UI_HPP

@@ -60,3 +60,5 @@
 - drop text param control?
 - more contrast
 - show note/oct next to label
+- editor_changed_param must accept ui values
+- fix is_continuous crap / do to_ui / to_base / different types for base / ui / vst normalized?

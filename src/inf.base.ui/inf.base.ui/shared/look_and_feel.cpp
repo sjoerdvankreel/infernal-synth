@@ -1,6 +1,6 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.base.ui/look_and_feel.hpp>
-#include <inf.base.ui/slider.hpp>
+#include <inf.base.ui/shared/look_and_feel.hpp>
+#include <inf.base.ui/controls/slider.hpp>
 
 using namespace juce;
 

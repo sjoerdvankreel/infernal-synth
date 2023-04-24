@@ -51,10 +51,14 @@ vst_controller::do_edit(std::int32_t tag, double normalized)
 }
 
 void 
-vst_controller::editor_changed_param(std::int32_t index, param_value value)
+vst_controller::editor_param_changed(std::int32_t index, param_value ui_value)
 {
+  auto desc = topology()->params[index].descriptor;
+  param_value base_value = ui_value;
+  if(desc->data.is_continuous())
+    base_value.real = desc->data.real.display.from_range(ui_value.real);
   std::int32_t tag = topology()->param_index_to_id[index];
-  do_edit(tag, base_to_vst_normalized(topology(), index, value));
+  do_edit(tag, base_to_vst_normalized(topology(), index, base_value));
 }
 
 void
@@ -71,7 +75,7 @@ vst_controller::setParamNormalized(ParamID tag, ParamValue value)
   tresult result = EditControllerEx1::setParamNormalized(tag, value);
   if(result != kResultOk) return result;
   std::int32_t index = topology()->param_id_to_index.at(tag);
-  controller_changed_param(tag, vst_normalized_to_base(topology(), index, static_cast<float>(value)));
+  controller_param_changed(tag, vst_normalized_to_base(topology(), index, static_cast<float>(value)));
   return kResultOk;
 }
 

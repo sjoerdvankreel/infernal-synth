@@ -1,5 +1,5 @@
-#ifndef INF_BASE_UI_SLIDER_PARAM_LISTENER_HPP
-#define INF_BASE_UI_SLIDER_PARAM_LISTENER_HPP
+#ifndef INF_BASE_UI_CONTROLS_SLIDER_PARAM_LISTENER_HPP
+#define INF_BASE_UI_CONTROLS_SLIDER_PARAM_LISTENER_HPP
 
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <inf.base/plugin/plugin_controller.hpp>
@@ -17,7 +17,7 @@ public param_listener
 
 public:
   void sliderValueChanged(juce::Slider* slider) override;
-  void param_changed(inf::base::param_value value) override;
+  void controller_param_changed(inf::base::param_value ui_value) override;
 
   ~slider_param_listener() { _controller->remove_param_listener(_param_index, this); }
   slider_param_listener(plugin_controller* controller, juce::Slider* slider, std::int32_t param_index):
@@ -25,4 +25,4 @@ public:
 };
 
 } // namespace inf::base::ui
-#endif // INF_BASE_UI_SLIDER_PARAM_LISTENER_HPP
+#endif // INF_BASE_UI_CONTROLS_SLIDER_PARAM_LISTENER_HPP

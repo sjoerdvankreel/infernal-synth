@@ -1,5 +1,5 @@
-#ifndef INF_BASE_UI_LOOK_AND_FEEL_HPP
-#define INF_BASE_UI_LOOK_AND_FEEL_HPP
+#ifndef INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP
+#define INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -44,4 +44,4 @@ public:
 };
 
 } // namespace inf::base::ui
-#endif // INF_BASE_UI_LOOK_AND_FEEL_HPP
+#endif // INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP

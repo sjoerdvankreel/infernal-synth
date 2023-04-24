@@ -15,7 +15,7 @@ namespace inf::base {
 class param_listener
 {
 public:
-  virtual void param_changed(param_value value) = 0;
+  virtual void controller_param_changed(param_value ui_value) = 0;
 };
   
 // For factory presets (just every .vstpreset in the resources folder).
@@ -39,7 +39,7 @@ protected:
   _state(topology->params.size()), _topology(std::move(topology))
   { _topology->init_factory_preset(_state.data()); }
 
-  void controller_changed_param(std::int32_t tag, param_value value);
+  void controller_param_changed(std::int32_t tag, param_value base_value);
 
 public:
   inf::base::param_value const* state() const { return _state.data(); }
@@ -53,9 +53,9 @@ public:
 
   virtual std::int32_t editor_min_width() const = 0;
   virtual std::int32_t editor_default_width() const = 0;
-  virtual void editor_changed_param(std::int32_t index, param_value value) = 0;
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
+  virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
 
   virtual double get_plugin_param(std::int32_t tag) = 0;
   virtual double base_to_plugin_param(std::int32_t index, param_value val) const = 0;

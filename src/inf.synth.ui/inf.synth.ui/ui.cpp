@@ -14,9 +14,9 @@ create_ram_grid()
 {
   auto result = create_grid_ui({ 1 }, {1, 1, 1, 1});
   result->add_cell(create_group_label_ui("RM/AM", 270.0f), 0, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src), 0, 1);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal), 0, 2);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix), 0, 3);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label), 0, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label), 0, 2);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label), 0, 3);
   return result;
 }
 
@@ -25,10 +25,10 @@ create_unison_grid()
 {
   auto result = create_grid_ui({ 1, 1, 1 }, { 1, 1 });
   result->add_cell(create_group_label_ui("Unison", 0.0f), 0, 0, 1, 2);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices), 1, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn), 1, 1);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd), 2, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset), 2, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::both), 1, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_display_type::label), 1, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_display_type::label), 2, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset, label_display_type::label), 2, 1);
   return result;
 }
 
@@ -37,9 +37,9 @@ create_pitch_grid()
 {
   auto result = create_grid_ui({ 1, 1, 1 }, { 1, 1 });
   result->add_cell(create_group_label_ui("Pitch", 0.0f), 0, 0, 1, 2);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note), 1, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct), 1, 1);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent), 2, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note, label_display_type::value), 1, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct, label_display_type::value), 1, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent, label_display_type::value), 2, 0);
   return result;
 }
 

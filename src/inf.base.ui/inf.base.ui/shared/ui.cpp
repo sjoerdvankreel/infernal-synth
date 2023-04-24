@@ -1,5 +1,5 @@
-#include <inf.base.ui/ui.hpp>
-#include <inf.base.ui/slider.hpp>
+#include <inf.base.ui/shared/ui.hpp>
+#include <inf.base.ui/controls/slider.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -109,10 +109,15 @@ Component*
 param_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Label* result = new Label;
-  auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
+  auto topology = controller->topology();
+  auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
+  std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
+  param_value value = controller->state()[index];
+  if(desc.data.is_continuous()) value.real = desc.data.real.display.to_range(value.real);
   result->setFont(Font(param_label_font_height));
   result->setJustificationType(Justification::centredTop);
-  result->setText(desc.data.static_name.short_, dontSendNotification);
+  result->setText(get_label_text(&desc, _display_type, value), dontSendNotification);
+  _listener.reset(new label_param_listener(controller, result, index, _display_type));
   return result;
 }
 
@@ -132,7 +137,7 @@ param_slider_element::build_core(plugin_controller* controller, LookAndFeel cons
   if(desc.data.is_continuous())
   {
     result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
-    result->setValue(desc.data.real.display.to_range(static_cast<float>(controller->state()[index].real)), dontSendNotification);
+    result->setValue(desc.data.real.display.to_range(controller->state()[index].real), dontSendNotification);
   }
   else
   {
@@ -210,13 +215,13 @@ create_grid_ui(
 }
 
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type)
 {
   auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
   auto fixed_label_height = Grid::TrackInfo(Grid::Px(param_label_total_height));
   auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
   result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
-  result->add_cell(create_param_label_ui(part_type, part_index, param_index), 1, 0);
+  result->add_cell(create_param_label_ui(part_type, part_index, param_index, type), 1, 0);
   return result;
 }
 

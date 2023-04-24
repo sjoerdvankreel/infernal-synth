@@ -42,8 +42,8 @@ public:
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
   void load_preset(std::string const& path, bool factory) override;
-  void editor_changed_param(std::int32_t index, param_value value) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
+  void editor_param_changed(std::int32_t index, param_value ui_value) override;
   tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
   void load_component_state(inf::base::param_value* state, bool perform_edit) override;
 
