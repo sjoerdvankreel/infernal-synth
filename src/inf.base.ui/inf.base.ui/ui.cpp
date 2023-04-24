@@ -6,7 +6,7 @@ using namespace juce;
 using namespace inf::base;
 
 static int const container_padding = 2;
-static float const group_label_font_height = 13.0f;
+static float const group_label_font_height = 11.0f;
 static float const group_label_total_height = group_label_font_height + 5.0f;
 static float const param_label_font_height = 11.0f;
 static float const param_label_total_height = param_label_font_height + 5.0f;
@@ -91,8 +91,8 @@ group_label_element::build_core(plugin_controller* controller, LookAndFeel const
 {
   Label* result = new Label;
   result->setText(_text, dontSendNotification);
-  result->setFont(Font(group_label_font_height));
   result->setJustificationType(Justification::centred);
+  result->setFont(Font(group_label_font_height, Font::bold));
   result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::group_label_color));
   return result;
 }
