@@ -57,6 +57,7 @@ create_synth_ui(std::int32_t width)
   auto result = create_root_ui(create_outer_grid(), width, juce::Colours::black);
   juce::LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Verdana");
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::group_label_color, Colour(0xFF2EB8D1));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));

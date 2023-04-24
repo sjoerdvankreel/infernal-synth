@@ -29,6 +29,8 @@ public:
     knob_spot_fill_highlight,
     knob_gradient_fill_base,
     knob_gradient_fill_highlight,
+
+    group_label_color
   };
 
   void drawRotarySlider(

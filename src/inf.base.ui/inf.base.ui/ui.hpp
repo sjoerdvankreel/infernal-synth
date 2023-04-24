@@ -32,10 +32,11 @@ class ui_element
   std::unique_ptr<juce::Component> _component = {};
   std::map<std::int32_t, juce::Colour> _colors = {};
 protected:
-  virtual juce::Component* build_core(plugin_controller* controller) = 0;
+  virtual juce::Component* 
+  build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) = 0;
 public:
   virtual void layout() = 0;
-  juce::Component* build(plugin_controller* controller);
+  juce::Component* build(plugin_controller* controller, juce::LookAndFeel const& lnf);
   juce::Component* component() { return _component.get(); }
   void color(std::int32_t id, juce::Colour color) { _colors[id] = color; }
 };
@@ -48,7 +49,7 @@ public ui_element
   std::uint32_t const _flags;
   std::unique_ptr<ui_element> _content = {};
 protected:
-  juce::Component* build_core(plugin_controller* controller) override;
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
   void layout() override;
   container_element(std::unique_ptr<ui_element>&& content, std::uint32_t flags, juce::Colour const& fill, juce::Colour const& outline) :
@@ -74,10 +75,11 @@ public ui_element
   std::string const _text;
   float const _rotation_degrees;
 protected:
-  juce::Component* build_core(plugin_controller* controller) override;
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
   void layout() override;
-  group_label_element(std::string const& text, float rotation_degrees): _text(text), _rotation_degrees(rotation_degrees) {}
+  group_label_element(std::string const& text, float rotation_degrees): 
+  _text(text), _rotation_degrees(rotation_degrees) {}
 };
 
 inline std::unique_ptr<group_label_element>
@@ -89,12 +91,12 @@ public ui_element
 {
   base::part_id const _part_id;
   std::int32_t const _param_index;
-protected:
-  juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override {}
   param_label_element(base::part_id const& part_id, std::int32_t param_index):
   _part_id(part_id), _param_index(param_index) {}
+protected:
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 inline std::unique_ptr<param_label_element>
@@ -107,12 +109,12 @@ public ui_element
   base::part_id const _part_id;
   std::int32_t const _param_index;
   std::unique_ptr<slider_param_listener> _listener = {};
-protected:
-  juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
   param_slider_element(base::part_id const& part_id, std::int32_t param_index):
   _part_id(part_id), _param_index(param_index) {}
+protected:
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 inline std::unique_ptr<param_slider_element>
@@ -126,8 +128,6 @@ public ui_element
   std::vector<juce::Grid::TrackInfo> const _column_distribution;
   std::vector<std::unique_ptr<ui_element>> _cell_contents = {};
   std::vector<juce::Rectangle<std::int32_t>> _cell_bounds = {};
-protected:
-  juce::Component* build_core(plugin_controller* controller) override;
 public:
   void layout() override;
   std::int32_t pixel_height(std::int32_t pixel_width);
@@ -140,6 +140,8 @@ public:
   ui_element* add_cell(
     std::unique_ptr<ui_element>&& content, std::int32_t row, 
     std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
+protected:
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 std::unique_ptr<grid_element>
@@ -161,13 +163,15 @@ public ui_element
   inf_look_and_feel _lnf = {};
   std::unique_ptr<grid_element> _content = {};
 protected:
-  juce::Component* build_core(plugin_controller* controller) override;
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
-  void layout() override;
-  inf_look_and_feel& look_and_feel() { return _lnf; }
   ~root_element() { component()->setLookAndFeel(nullptr); }
   root_element(std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill) : 
   _fill(fill), _width(width), _content(std::move(content)) {}
+
+  void layout() override;
+  inf_look_and_feel& look_and_feel() { return _lnf; }
+  juce::Component* build(plugin_controller* controller) { return ui_element::build(controller, _lnf); }
 };
 
 inline std::unique_ptr<root_element>
