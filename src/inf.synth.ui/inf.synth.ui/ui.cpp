@@ -23,31 +23,33 @@ create_ram_grid()
 static std::unique_ptr<ui_element>
 create_unison_grid()
 {
-  auto result = create_grid_ui({ 1, 1 }, { 1, 1 });
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices), 0, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn), 0, 1);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd), 1, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset), 1, 1);
+  auto result = create_grid_ui({ 1, 1, 1 }, { 1, 1 });
+  result->add_cell(create_group_label_ui("Unison", 0.0f), 0, 0, 1, 2);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices), 1, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn), 1, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd), 2, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset), 2, 1);
   return result;
 }
 
 static std::unique_ptr<ui_element>
-create_note_grid()
+create_pitch_grid()
 {
-  auto result = create_grid_ui({ 1, 1 }, { 1, 1 });
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note), 0, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct), 0, 1);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent), 1, 0);
+  auto result = create_grid_ui({ 1, 1, 1 }, { 1, 1 });
+  result->add_cell(create_group_label_ui("Pitch", 0.0f), 0, 0, 1, 2);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note), 1, 0);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct), 1, 1);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent), 2, 0);
   return result;
 }
 
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1, 1, 1}, {1, 1, 1, 1});
+  auto result = create_grid_ui({1, 1, 1, 1}, {1, 1, 1, 1});
   result->add_cell(create_container_fill_ui(create_ram_grid(), Colour(0xFF333333)), 0, 0, 1, 4);
-  result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF333333)), 1, 0, 2, 2);
-  result->add_cell(create_container_fill_ui(create_note_grid(), Colour(0xFF333333)), 1, 2, 2, 2);
+  result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF333333)), 1, 0, 3, 2);
+  result->add_cell(create_container_fill_ui(create_pitch_grid(), Colour(0xFF333333)), 1, 2, 3, 2);
   return result;
 }
 
