@@ -56,13 +56,16 @@ public:
 };
 
 inline std::unique_ptr<container_element>
-create_container_fill_ui(std::unique_ptr<ui_element>&& content, juce::Colour const& fill)
+create_container_fill_ui(
+  std::unique_ptr<ui_element>&& content, juce::Colour const& fill)
 { return std::make_unique<container_element>(std::move(content), container_component::flags::fill, fill, juce::Colour()); }
 inline std::unique_ptr<container_element>
-create_container_outline_ui(std::unique_ptr<ui_element>&& content, juce::Colour const& outline)
+create_container_outline_ui(
+  std::unique_ptr<ui_element>&& content, juce::Colour const& outline)
 { return std::make_unique<container_element>(std::move(content), container_component::flags::outline, juce::Colour(), outline); }
 inline std::unique_ptr<container_element>
-create_container_fill_outline_ui(std::unique_ptr<ui_element>&& content, juce::Colour const& fill, juce::Colour const& outline)
+create_container_fill_outline_ui(
+  std::unique_ptr<ui_element>&& content, juce::Colour const& fill, juce::Colour const& outline)
 { return std::make_unique<container_element>(std::move(content), container_component::flags::outline | container_component::flags::fill, fill, outline); }
 
 class param_label_element:
@@ -103,9 +106,8 @@ create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int
 class grid_element:
 public ui_element
 {
-  float const _xy_ratio;
-  std::vector<std::int32_t> const _row_distribution;
-  std::vector<std::int32_t> const _column_distribution;
+  std::vector<juce::Grid::TrackInfo> const _row_distribution;
+  std::vector<juce::Grid::TrackInfo> const _column_distribution;
   std::vector<std::unique_ptr<ui_element>> _cell_contents = {};
   std::vector<juce::Rectangle<std::int32_t>> _cell_bounds = {};
 protected:
@@ -113,14 +115,27 @@ protected:
 public:
   void layout() override;
   std::int32_t pixel_height(std::int32_t pixel_width);
-  grid_element(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float xy_ratio):
-  _row_distribution(row_distribution), _column_distribution(column_distribution), _xy_ratio(xy_ratio) {}
-  ui_element* add_cell(std::unique_ptr<ui_element>&& content, std::int32_t row, std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
+
+  grid_element(
+    std::vector<juce::Grid::TrackInfo> const& row_distribution, 
+    std::vector<juce::Grid::TrackInfo> const& column_distribution):
+  _row_distribution(row_distribution), _column_distribution(column_distribution) {}
+
+  ui_element* add_cell(
+    std::unique_ptr<ui_element>&& content, std::int32_t row, 
+    std::int32_t col, std::int32_t row_span = 1, std::int32_t col_span = 1);
 };
 
+std::unique_ptr<grid_element>
+create_grid_ui(
+  std::vector<std::int32_t> const& row_distribution_relative, 
+  std::vector<std::int32_t> const& column_distribution_relative);
+
 inline std::unique_ptr<grid_element>
-create_grid_ui(std::vector<std::int32_t> const& row_distribution, std::vector<std::int32_t> const& column_distribution, float xy_ratio = 0.0f)
-{ return std::make_unique<grid_element>(row_distribution, column_distribution, xy_ratio); }
+create_grid_ui(
+  std::vector<juce::Grid::TrackInfo> const& row_distribution, 
+  std::vector<juce::Grid::TrackInfo> const& column_distribution)
+{ return std::make_unique<grid_element>(row_distribution, column_distribution); }
 
 class root_element:
 public ui_element

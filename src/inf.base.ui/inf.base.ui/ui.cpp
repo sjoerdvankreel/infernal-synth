@@ -5,6 +5,8 @@ using namespace juce;
 using namespace inf::base;
 
 static int const container_padding = 2;
+static float const label_font_height = 11.0f;
+static float const label_total_height = label_font_height + 5.0f;
 
 static Rectangle<int> 
 with_container_padding(Rectangle<int> const& bounds)
@@ -86,7 +88,7 @@ param_label_element::build_core(plugin_controller* controller)
 {
   Label* result = new Label;
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
-  result->setFont(Font(11.0f));
+  result->setFont(Font(label_font_height));
   result->setJustificationType(Justification::centredTop);
   result->setText(desc.data.static_name.short_, dontSendNotification);
   return result;
@@ -132,12 +134,15 @@ grid_element::build_core(plugin_controller* controller)
   return result;
 }
 
+// For root only.
 std::int32_t 
 grid_element::pixel_height(std::int32_t pixel_width)
 {
   double rows = static_cast<double>(_row_distribution.size());
   double cols = static_cast<double>(_column_distribution.size());
-  return static_cast<std::int32_t>(std::ceil(pixel_width * rows / cols * _xy_ratio));
+  double col_width = pixel_width / cols;
+  double row_height = col_width + label_total_height;
+  return static_cast<std::int32_t>(std::ceil(rows * row_height));
 }
 
 ui_element*
@@ -155,9 +160,9 @@ grid_element::layout()
 {
   Grid grid;
   for(std::size_t row = 0; row < _row_distribution.size(); row++)
-    grid.templateRows.add(Grid::TrackInfo(Grid::Fr(_row_distribution[row])));
+    grid.templateRows.add(_row_distribution[row]);
   for (std::size_t col = 0; col < _column_distribution.size(); col++)
-    grid.templateColumns.add(Grid::TrackInfo(Grid::Fr(_column_distribution[col])));
+    grid.templateColumns.add(_column_distribution[col]);
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
   {
     GridItem item(_cell_contents[i]->component());
@@ -169,10 +174,26 @@ grid_element::layout()
     _cell_contents[i]->layout();
 }
 
+std::unique_ptr<grid_element>
+create_grid_ui(
+  std::vector<std::int32_t> const& row_distribution_relative, 
+  std::vector<std::int32_t> const& column_distribution_relative)
+{
+  std::vector<Grid::TrackInfo> row_distribution;
+  std::vector<Grid::TrackInfo> column_distribution;
+  for(std::size_t i = 0; i < row_distribution_relative.size(); i++)
+    row_distribution.push_back(Grid::TrackInfo(Grid::Fr(row_distribution_relative[i])));
+  for (std::size_t i = 0; i < column_distribution_relative.size(); i++)
+    column_distribution.push_back(Grid::TrackInfo(Grid::Fr(column_distribution_relative[i])));
+  return create_grid_ui(row_distribution, column_distribution);
+}
+
 std::unique_ptr<ui_element>
 create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 {
-  auto result = create_grid_ui({ 11, 4 }, { 1 });
+  auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
+  auto fixed_label_height = Grid::TrackInfo(Grid::Px(label_total_height));
+  auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
   result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
   result->add_cell(create_param_label_ui(part_type, part_index, param_index), 1, 0);
   return result;
