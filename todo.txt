@@ -34,6 +34,7 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
+- drop param_type?
 - separate decimal precision for display/edit
 - tooltips
 - fix leaks
