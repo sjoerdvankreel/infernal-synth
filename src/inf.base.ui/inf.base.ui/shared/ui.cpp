@@ -114,7 +114,7 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   param_value value = controller->state()[index];
   if(desc.data.is_continuous()) value.real = desc.data.real.display.to_range(value.real);
-  result->setFont(Font(param_label_font_height));
+  result->setFont(Font(param_label_font_height, Font::bold));
   result->setJustificationType(Justification::centredTop);
   result->setText(get_label_text(&desc, _display_type, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller, result, index, _display_type));
