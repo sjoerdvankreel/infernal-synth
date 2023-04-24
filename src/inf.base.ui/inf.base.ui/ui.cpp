@@ -1,12 +1,15 @@
 #include <inf.base.ui/ui.hpp>
 #include <inf.base.ui/slider.hpp>
+#include <inf.base/shared/support.hpp>
 
 using namespace juce;
 using namespace inf::base;
 
 static int const container_padding = 2;
-static float const label_font_height = 11.0f;
-static float const label_total_height = label_font_height + 5.0f;
+static float const group_label_font_height = 13.0f;
+static float const group_label_total_height = group_label_font_height + 5.0f;
+static float const param_label_font_height = 11.0f;
+static float const param_label_total_height = param_label_font_height + 5.0f;
 
 static Rectangle<int> 
 with_container_padding(Rectangle<int> const& bounds)
@@ -84,11 +87,30 @@ container_element::layout()
 }
 
 Component*
+group_label_element::build_core(plugin_controller* controller)
+{
+  Label* result = new Label;
+  result->setText(_text, dontSendNotification);
+  result->setFont(Font(group_label_font_height));
+  result->setJustificationType(Justification::centred);
+  result->setColour(Label::ColourIds::textColourId, Colours::red);
+  return result;
+}
+
+void
+group_label_element::layout()
+{
+  auto label = dynamic_cast<Label*>(component());
+  float rotation_angles = _rotation_degrees / 360.0f * 2.0f * pi32;
+  label->setTransform(AffineTransform().rotated(rotation_angles, label->getWidth() / 2.0f, label->getHeight() / 2.0f));
+}
+
+Component*
 param_label_element::build_core(plugin_controller* controller)
 {
   Label* result = new Label;
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
-  result->setFont(Font(label_font_height));
+  result->setFont(Font(param_label_font_height));
   result->setJustificationType(Justification::centredTop);
   result->setText(desc.data.static_name.short_, dontSendNotification);
   return result;
@@ -140,7 +162,7 @@ grid_element::pixel_height(std::int32_t pixel_width)
   double rows = static_cast<double>(_row_distribution.size());
   double cols = static_cast<double>(_column_distribution.size());
   double col_width = pixel_width / cols;
-  double row_height = col_width + label_total_height;
+  double row_height = col_width + param_label_total_height;
   return static_cast<std::int32_t>(std::ceil(rows * row_height));
 }
 
@@ -191,7 +213,7 @@ std::unique_ptr<ui_element>
 create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index)
 {
   auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
-  auto fixed_label_height = Grid::TrackInfo(Grid::Px(label_total_height));
+  auto fixed_label_height = Grid::TrackInfo(Grid::Px(param_label_total_height));
   auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
   result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
   result->add_cell(create_param_label_ui(part_type, part_index, param_index), 1, 0);

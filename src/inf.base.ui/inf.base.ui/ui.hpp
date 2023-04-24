@@ -68,6 +68,22 @@ create_container_fill_outline_ui(
   std::unique_ptr<ui_element>&& content, juce::Colour const& fill, juce::Colour const& outline)
 { return std::make_unique<container_element>(std::move(content), container_component::flags::outline | container_component::flags::fill, fill, outline); }
 
+class group_label_element:
+public ui_element
+{
+  std::string const _text;
+  float const _rotation_degrees;
+protected:
+  juce::Component* build_core(plugin_controller* controller) override;
+public:
+  void layout() override;
+  group_label_element(std::string const& text, float rotation_degrees): _text(text), _rotation_degrees(rotation_degrees) {}
+};
+
+inline std::unique_ptr<group_label_element>
+create_group_label_ui(std::string const& text, float rotation_degrees)
+{ return std::make_unique<group_label_element>(text, rotation_degrees); }
+
 class param_label_element:
 public ui_element
 {
