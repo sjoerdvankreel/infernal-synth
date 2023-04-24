@@ -33,6 +33,11 @@ public:
     group_label_color
   };
 
+  // Disables ellipses and fitting.
+  void drawLabel(
+    juce::Graphics& g, juce::Label& label) override;
+
+  // Custom stuff.
   void drawRotarySlider(
     juce::Graphics& g, int x0, int y0, int w0, int h0,
     float pos, float start, float end, juce::Slider& s) override;

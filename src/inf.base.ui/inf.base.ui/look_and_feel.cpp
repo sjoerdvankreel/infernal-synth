@@ -7,6 +7,17 @@ using namespace juce;
 namespace inf::base::ui {
 
 void 
+inf_look_and_feel::drawLabel(Graphics& g, Label& label)
+{
+  auto const& font = getLabelFont(label);
+  g.fillAll(label.findColour(Label::backgroundColourId));
+  g.setFont(font);
+  g.setColour(label.findColour(Label::textColourId));
+  auto text_area = getLabelBorderSize(label).subtractedFrom(label.getLocalBounds());
+  g.drawText(label.getText(), text_area, label.getJustificationType(), false);
+}
+
+void 
 inf_look_and_feel::drawRotarySlider(
   juce::Graphics& g, int x0, int y0, int w0, int h0, 
   float pos, float start_angle, float end_angle, juce::Slider& s)
