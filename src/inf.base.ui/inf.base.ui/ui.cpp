@@ -6,10 +6,10 @@ using namespace juce;
 using namespace inf::base;
 
 static int const container_padding = 2;
-static float const group_label_font_height = 11.0f;
-static float const group_label_total_height = group_label_font_height + 5.0f;
-static float const param_label_font_height = 11.0f;
-static float const param_label_total_height = param_label_font_height + 5.0f;
+static float const group_label_font_height = 10.0f;
+static float const group_label_total_height = group_label_font_height + 2.0f;
+static float const param_label_font_height = 9.0f;
+static float const param_label_total_height = param_label_font_height + 3.0f;
 
 static Rectangle<int> 
 with_container_padding(Rectangle<int> const& bounds)
