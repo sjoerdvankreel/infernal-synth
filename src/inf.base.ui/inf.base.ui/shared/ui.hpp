@@ -155,6 +155,12 @@ create_grid_ui(
   std::vector<std::int32_t> const& column_distribution_relative);
 
 inline std::unique_ptr<grid_element>
+create_grid_ui(std::int32_t rows, std::int32_t columns)
+{ return create_grid_ui(
+  std::vector<std::int32_t>(rows, 1), 
+  std::vector<std::int32_t>(columns, 1)); }
+
+inline std::unique_ptr<grid_element>
 create_grid_ui(
   std::vector<juce::Grid::TrackInfo> const& row_distribution, 
   std::vector<juce::Grid::TrackInfo> const& column_distribution)

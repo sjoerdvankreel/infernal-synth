@@ -13,7 +13,7 @@ inf_look_and_feel::drawLabel(Graphics& g, Label& label)
   g.fillAll(label.findColour(Label::backgroundColourId));
   g.setFont(font);
   g.setColour(label.findColour(Label::textColourId));
-  auto text_area = getLabelBorderSize(label).subtractedFrom(label.getLocalBounds()).transformedBy(label.getTransform());
+  auto text_area = getLabelBorderSize(label).subtractedFrom(label.getLocalBounds());
   g.drawText(label.getText(), text_area, label.getJustificationType(), false);
 }
 

@@ -102,7 +102,9 @@ group_label_element::layout()
 {
   auto label = dynamic_cast<Label*>(component());
   float rotation_angles = _rotation_degrees / 360.0f * 2.0f * pi32;
-  label->setTransform(AffineTransform().rotated(rotation_angles, label->getWidth() / 2.0f, label->getHeight() / 2.0f));
+  auto transform = AffineTransform().rotated(rotation_angles, label->getWidth() / 2.0f, label->getHeight() / 2.0f);
+  label->setBounds(label->getBounds().transformedBy(transform));
+  label->setTransform(transform);
 }
 
 Component*

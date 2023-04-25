@@ -12,11 +12,11 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_ram_grid()
 {
-  auto result = create_grid_ui({ 1 }, {1, 1, 1, 1});
+  auto result = create_grid_ui(1, 8);
   result->add_cell(create_group_label_ui("RM/AM", 270.0f), 0, 0);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label), 0, 1);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label), 0, 2);
-  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label), 0, 3);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label), 0, 1, 1, 2);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label), 0, 3, 1, 2);
+  result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label), 0, 5, 1, 2);
   return result;
 }
 
