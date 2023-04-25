@@ -13,7 +13,7 @@ static std::unique_ptr<ui_element>
 create_ram_grid()
 {
   auto result = create_grid_ui(1, 8);
-  result->add_cell(create_group_label_ui("RM/AM", 270.0f), 0, 0);
+  result->add_cell(create_group_label_ui("RM/AM", true), 0, 0);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label), 0, 1, 1, 2);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label), 0, 3, 1, 2);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label), 0, 5, 1, 2);
@@ -24,7 +24,7 @@ static std::unique_ptr<ui_element>
 create_unison_grid()
 {
   auto result = create_grid_ui(6, 2);
-  result->add_cell(create_group_label_ui("Unison", 0.0f), 0, 0, 1, 2);
+  result->add_cell(create_group_label_ui("Unison", false), 0, 0, 1, 2);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::both), 1, 0, 2, 1);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_display_type::label), 1, 1, 2, 1);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_display_type::label), 3, 0, 2, 1);
@@ -36,7 +36,7 @@ static std::unique_ptr<ui_element>
 create_pitch_grid()
 {
   auto result = create_grid_ui(6, 2);
-  result->add_cell(create_group_label_ui("Pitch", 0.0f), 0, 0, 1, 2);
+  result->add_cell(create_group_label_ui("Pitch", false), 0, 0, 1, 2);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note, label_display_type::value), 1, 0, 2, 1);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct, label_display_type::value), 1, 1, 2, 1);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent, label_display_type::value), 3, 0, 2, 1);

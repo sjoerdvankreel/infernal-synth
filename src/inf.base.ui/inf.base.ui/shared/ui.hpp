@@ -74,19 +74,19 @@ create_container_fill_outline_ui(
 class group_label_element:
 public ui_element
 {
+  bool const _vertical;
   std::string const _text;
-  float const _rotation_degrees;
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
   void layout() override;
-  group_label_element(std::string const& text, float rotation_degrees): 
-  _text(text), _rotation_degrees(rotation_degrees) {}
+  group_label_element(std::string const& text, bool vertical): 
+  _text(text), _vertical(vertical) {}
 };
 
 inline std::unique_ptr<group_label_element>
-create_group_label_ui(std::string const& text, float rotation_degrees)
-{ return std::make_unique<group_label_element>(text, rotation_degrees); }
+create_group_label_ui(std::string const& text, bool vertical)
+{ return std::make_unique<group_label_element>(text, vertical); }
 
 class param_label_element:
 public ui_element
