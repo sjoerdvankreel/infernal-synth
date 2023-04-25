@@ -23,7 +23,7 @@ create_ram_grid()
 static std::unique_ptr<ui_element>
 create_unison_grid()
 {
-  auto result = create_grid_ui({ 1, 1, 1 }, { 1, 1 });
+  auto result = create_grid_ui(3, 2);
   result->add_cell(create_group_label_ui("Unison", 0.0f), 0, 0, 1, 2);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::both), 1, 0);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_display_type::label), 1, 1);
@@ -35,7 +35,7 @@ create_unison_grid()
 static std::unique_ptr<ui_element>
 create_pitch_grid()
 {
-  auto result = create_grid_ui({ 1, 1, 1 }, { 1, 1 });
+  auto result = create_grid_ui(3, 2);
   result->add_cell(create_group_label_ui("Pitch", 0.0f), 0, 0, 1, 2);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note, label_display_type::value), 1, 0);
   result->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct, label_display_type::value), 1, 1);
@@ -46,7 +46,7 @@ create_pitch_grid()
 static std::unique_ptr<grid_element>
 create_outer_grid()
 {
-  auto result = create_grid_ui({1, 1, 1, 1}, {1, 1, 1, 1});
+  auto result = create_grid_ui(4, 4);
   result->add_cell(create_container_fill_ui(create_ram_grid(), Colour(0xFF333333)), 0, 0, 1, 4);
   result->add_cell(create_container_fill_ui(create_unison_grid(), Colour(0xFF333333)), 1, 0, 3, 2);
   result->add_cell(create_container_fill_ui(create_pitch_grid(), Colour(0xFF333333)), 1, 2, 3, 2);
