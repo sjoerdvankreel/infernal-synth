@@ -45,8 +45,7 @@ inf_look_and_feel::drawLinearSlider(
   float track_size = h * track_size_factor;
   track.startNewSubPath(Point<float>(x, y + h / 2.0f));
   track.lineTo(Point<float>(x + w, y + h / 2.0f));
-  g.setColour(s.findColour(colors::switch_track_off));
-  if (pos >= 0.5) g.setColour(s.findColour(colors::switch_track_on));
+  g.setColour(s.findColour(colors::switch_track));
   g.strokePath(track, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
   // thumb gradient
