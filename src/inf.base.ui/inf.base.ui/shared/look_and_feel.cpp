@@ -23,9 +23,11 @@ inf_look_and_feel::drawLinearSlider(
   float pos0, float min0, float max0,
   Slider::SliderStyle style, Slider& s)
 {  
+  // config
   float const margin_factor = 0.1f;
   float const thumb_size_factor = 1.5f;
 
+  // precompute stuff
   float x = static_cast<float>(x0);
   float y = static_cast<float>(y0);
   float w = static_cast<float>(w0);
@@ -36,6 +38,7 @@ inf_look_and_feel::drawLinearSlider(
   w -= 2.0f * margin_factor * w;
   h -= 2.0f * margin_factor * h;
 
+  // track
   Path track;
   float track_size = h * 0.25f;
   track.startNewSubPath(Point<float>(x, y + h / 2.0f));
@@ -45,10 +48,15 @@ inf_look_and_feel::drawLinearSlider(
   g.setGradientFill(ColourGradient(bg_low, x, y, bg_high, x + w, y, false));
   g.strokePath(track, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
+  // thumb
   float thumb_size = track_size * thumb_size_factor;
   float thumb_y = y + h / 2.0f - 0.5f * thumb_size;
   float thumb_x = x + pos * w - 0.5f * thumb_size;
-  g.setColour(Colours::green);
+  auto const thumb_low = s.findColour(colors::switch_gradient_fill_base);
+  auto const thumb_high = s.findColour(colors::switch_gradient_fill_highlight);
+  auto thumb_gradient = ColourGradient(thumb_high, thumb_x, thumb_y, thumb_low, thumb_x + thumb_size, thumb_y + thumb_size, false);
+  thumb_gradient.addColour(0.25, thumb_high.interpolatedWith(thumb_low, 0.5f));
+  g.setGradientFill(thumb_gradient);
   g.fillEllipse(thumb_x, thumb_y, thumb_size, thumb_size);
 
   /*
