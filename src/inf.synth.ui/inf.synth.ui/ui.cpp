@@ -53,7 +53,7 @@ create_osc_ram_group()
   return create_group_ui(create_group_label_ui("RM/AM", true), std::move(grid));
 }
 
-std::unique_ptr<ui_element>
+static std::unique_ptr<ui_element>
 create_osc_unison_group()
 {
   auto grid = create_grid_ui(2, 2);
@@ -72,7 +72,7 @@ create_oscillator_grid()
   result->add_cell(create_container_fill_ui(create_osc_type_group(), Colour(0xFF333333)), 1, 0, 1, 5);
   result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 2, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 3, 0, 1, 3);
-  //result->add_cell(create_container_fill_ui(create_unison_group(), Colour(0xFF333333)), 1, 0, 2, 2);
+  result->add_cell(create_container_fill_ui(create_osc_unison_group(), Colour(0xFF333333)), 2, 3, 2, 2);
   return result;
 }
 
