@@ -1,5 +1,4 @@
 #include <inf.base.ui/shared/ui.hpp>
-#include <inf.base.ui/controls/slider.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -100,8 +99,8 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setFont(Font(param_label_font_height, Font::bold));
   result->setJustificationType(Justification::centredTop);
-  result->setText(get_label_text(&desc, _display_type, value), dontSendNotification);
-  _listener.reset(new label_param_listener(controller, result, index, _display_type));
+  result->setText(get_label_text(&desc, _kind, value), dontSendNotification);
+  _listener.reset(new label_param_listener(controller, result, index, _kind));
   return result;
 }
 
@@ -117,7 +116,10 @@ param_slider_element::build_core(plugin_controller* controller, LookAndFeel cons
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
-  inf_slider* result = new inf_slider(&desc, _outline_gradient);
+  inf_slider* result = new inf_slider(&desc, _kind);
+  result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+  _listener.reset(new slider_param_listener(controller, result, index));
+  result->addListener(_listener.get());
   if(desc.data.type == param_type::real)
   {
     result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
@@ -128,11 +130,22 @@ param_slider_element::build_core(plugin_controller* controller, LookAndFeel cons
     result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
     result->setValue(controller->state()[index].discrete, dontSendNotification);
   }
-  if(desc.data.type == param_type::toggle) result->setSliderStyle(Slider::SliderStyle::LinearHorizontal);
-  else result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
-  result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-  _listener.reset(new slider_param_listener(controller, result, index));
-  result->addListener(_listener.get());
+  switch (_kind)
+  {
+  case slider_kind::knob:
+  case slider_kind::selector:
+    result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
+    break;
+  case slider_kind::hslider:
+    result->setSliderStyle(Slider::SliderStyle::LinearHorizontal);
+    break;
+  case slider_kind::vslider:
+    result->setSliderStyle(Slider::SliderStyle::LinearVertical);
+    break;
+  default:
+    assert(false);
+    break;
+  }
   return result;
 }
 
@@ -200,13 +213,13 @@ create_grid_ui(
 }
 
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type, bool outline_gradient)
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_kind label_kind, slider_kind slider_kind)
 {
   auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
   auto fixed_label_height = Grid::TrackInfo(Grid::Px(param_label_total_height));
   auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
-  result->add_cell(create_param_slider_ui(part_type, part_index, param_index, outline_gradient), 0, 0);
-  result->add_cell(create_param_label_ui(part_type, part_index, param_index, type), 1, 0);
+  result->add_cell(create_param_slider_ui(part_type, part_index, param_index, slider_kind), 0, 0);
+  result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_kind), 1, 0);
   return result;
 }
 

@@ -7,17 +7,19 @@
 
 namespace inf::base::ui {
 
+enum class slider_kind { knob, selector, hslider, vslider }; 
+  
 class inf_slider:
 public juce::Slider
 {
 private:
-  bool const _outline_gradient;
+  slider_kind _kind;
   base::param_descriptor const* _descriptor;
 public:
-  bool outline_gradient() const { return _outline_gradient; }
+  slider_kind kind() const { return _kind; }
   base::param_descriptor const* descriptor() const { return _descriptor; }
-  inf_slider(base::param_descriptor const* descriptor, bool outline_gradient): 
-  _outline_gradient(outline_gradient), _descriptor(descriptor) {}
+  inf_slider(base::param_descriptor const* descriptor, slider_kind kind):
+  _kind(kind), _descriptor(descriptor) {}
 };
 
 } // namespace inf::base::ui
