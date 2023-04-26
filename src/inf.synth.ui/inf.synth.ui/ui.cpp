@@ -43,10 +43,10 @@ create_pitch_group()
 static std::unique_ptr<grid_element>
 create_oscillator_grid()
 {
-  auto result = create_grid_ui(4, 4);
+  auto result = create_grid_ui(3, 4);
   result->add_cell(create_container_fill_ui(create_ram_group(), Colour(0xFF333333)), 0, 0, 1, 4);
-  result->add_cell(create_container_fill_ui(create_unison_group(), Colour(0xFF333333)), 1, 0, 3, 2);
-  result->add_cell(create_container_fill_ui(create_pitch_group(), Colour(0xFF333333)), 1, 2, 3, 2);
+  result->add_cell(create_container_fill_ui(create_unison_group(), Colour(0xFF333333)), 1, 0, 2, 2);
+  result->add_cell(create_container_fill_ui(create_pitch_group(), Colour(0xFF333333)), 1, 2, 2, 2);
   return result;
 }
 

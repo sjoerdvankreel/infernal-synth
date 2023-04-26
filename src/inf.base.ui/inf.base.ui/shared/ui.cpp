@@ -90,7 +90,6 @@ Component*
 group_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Label* result = new Label;
-  result->setColour(Label::backgroundColourId, Colours::red);
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
   result->setFont(Font(group_label_font_height, Font::bold));
