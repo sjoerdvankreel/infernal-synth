@@ -47,7 +47,7 @@ public:
   // Custom stuff.
   void drawLinearSlider(
   juce::Graphics& g, int x0, int y0, int w0, int h0,
-    float pos, float min0, float max0,
+    float pos0, float min0, float max0,
     juce::Slider::SliderStyle style, juce::Slider& s) override;
   void drawRotarySlider(
     juce::Graphics& g, int x0, int y0, int w0, int h0,
