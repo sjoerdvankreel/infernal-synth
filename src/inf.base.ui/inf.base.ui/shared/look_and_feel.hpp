@@ -30,8 +30,7 @@ public:
     knob_gradient_fill_base,
     knob_gradient_fill_highlight,
 
-    switch_background_low,
-    switch_background_high,
+    switch_track,
     switch_spot_fill_base,
     switch_spot_fill_highlight,
     switch_gradient_fill_base,
