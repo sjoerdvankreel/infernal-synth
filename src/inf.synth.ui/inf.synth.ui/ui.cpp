@@ -12,13 +12,20 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_osc_main_group()
 {
-  auto grid = create_grid_ui(1, 5);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_display_type::label), 0, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::sync_src, label_display_type::label), 0, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_display_type::label), 0, 2);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_display_type::label), 0, 3);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_display_type::label), 0, 4);
+  auto grid = create_grid_ui(1, 3);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_display_type::label), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_display_type::label), 0, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_display_type::label), 0, 2);
   return create_group_ui(create_group_label_ui("Main", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_osc_fm_group()
+{
+  auto grid = create_grid_ui(1, 2);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::sync_src, label_display_type::label), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_display_type::label), 0, 1);
+  return create_group_ui(create_group_label_ui("FM", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -68,7 +75,8 @@ static std::unique_ptr<grid_element>
 create_oscillator_grid()
 {
   auto result = create_grid_ui(4, 5);
-  result->add_cell(create_container_fill_ui(create_osc_main_group(), Colour(0xFF333333)), 0, 0, 1, 5);
+  result->add_cell(create_container_fill_ui(create_osc_main_group(), Colour(0xFF333333)), 0, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_osc_fm_group(), Colour(0xFF333333)), 0, 3, 1, 2);
   result->add_cell(create_container_fill_ui(create_osc_type_group(), Colour(0xFF333333)), 1, 0, 1, 5);
   result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 2, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 3, 0, 1, 3);
