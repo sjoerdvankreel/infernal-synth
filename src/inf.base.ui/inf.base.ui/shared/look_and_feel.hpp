@@ -30,7 +30,8 @@ public:
     knob_gradient_fill_base,
     knob_gradient_fill_highlight,
 
-    switch_track,
+    switch_track_on,
+    switch_track_off,
     switch_spot_fill_base_on,
     switch_spot_fill_base_off,
     switch_spot_fill_highlight_on,
