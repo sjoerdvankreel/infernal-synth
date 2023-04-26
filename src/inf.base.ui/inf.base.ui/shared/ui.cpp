@@ -7,7 +7,7 @@ using namespace inf::base;
 
 static int const container_padding = 2;
 static float const group_label_font_height = 10.0f;
-static float const group_label_total_height = group_label_font_height + 4.0f;
+static float const group_label_total_height = group_label_font_height + 8.0f;
 static float const param_label_font_height = 9.0f;
 static float const param_label_total_height = param_label_font_height + 3.0f;
 
