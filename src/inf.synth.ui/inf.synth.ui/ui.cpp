@@ -12,11 +12,31 @@ namespace inf::synth::ui {
 static std::unique_ptr<ui_element>
 create_osc_main_group()
 {
-  auto grid = create_grid_ui(1, 3);
+  auto grid = create_grid_ui(3, 1);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_display_type::label), 0, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_display_type::label), 0, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_display_type::label), 0, 2);
-  return create_group_ui(create_group_label_ui("Main", true), std::move(grid));
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_display_type::label), 1, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_display_type::label), 2, 0);
+  return create_group_ui(create_group_label_ui("Main", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_osc_pitch_group()
+{
+  auto grid = create_grid_ui(3, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note, label_display_type::value), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct, label_display_type::value), 1, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent, label_display_type::value), 2, 0);
+  return create_group_ui(create_group_label_ui("Pitch", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_osc_ram_group()
+{
+  auto grid = create_grid_ui(3, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label), 1, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label), 2, 0);
+  return create_group_ui(create_group_label_ui("RM/AM", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -26,6 +46,17 @@ create_osc_sync_group()
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::sync_src, label_display_type::value), 0, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_display_type::label), 0, 1);
   return create_group_ui(create_group_label_ui("Sync", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_osc_unison_group()
+{
+  auto grid = create_grid_ui(2, 2);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::both), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_display_type::label), 0, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_display_type::label), 1, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset, label_display_type::label), 1, 1);
+  return create_group_ui(create_group_label_ui("Unison", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -40,45 +71,14 @@ create_osc_type_group()
   return create_group_ui(create_group_label_ui("Mix", true), std::move(grid));
 }
 
-static std::unique_ptr<ui_element>
-create_osc_pitch_group()
-{
-  auto grid = create_grid_ui(1, 3);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::note, label_display_type::value), 0, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::oct, label_display_type::value), 0, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::cent, label_display_type::value), 0, 2);
-  return create_group_ui(create_group_label_ui("Pitch", true), std::move(grid));
-}
-
-static std::unique_ptr<ui_element>
-create_osc_ram_group()
-{
-  auto grid = create_grid_ui(1, 3);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label), 0, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label), 0, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label), 0, 2);
-  return create_group_ui(create_group_label_ui("RM/AM", true), std::move(grid));
-}
-
-static std::unique_ptr<ui_element>
-create_osc_unison_group()
-{
-  auto grid = create_grid_ui(2, 2);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::both), 0, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_display_type::label), 0, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_display_type::label), 1, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset, label_display_type::label), 1, 1);
-  return create_group_ui(create_group_label_ui("Unison", false), std::move(grid));
-}
-
 static std::unique_ptr<grid_element>
 create_oscillator_grid()
 {
   auto result = create_grid_ui(4, 5);
-  result->add_cell(create_container_fill_ui(create_osc_main_group(), Colour(0xFF333333)), 0, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_osc_main_group(), Colour(0xFF333333)), 0, 0, 3, 1);
+  result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 0, 1, 3, 1);
+  result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 0, 2, 3, 1);
   result->add_cell(create_container_fill_ui(create_osc_sync_group(), Colour(0xFF333333)), 0, 3, 1, 2);
-  result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 1, 0, 1, 3);
-  result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 2, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_osc_unison_group(), Colour(0xFF333333)), 1, 3, 2, 2);
   result->add_cell(create_container_fill_ui(create_osc_type_group(), Colour(0xFF333333)), 3, 0, 1, 5);
   return result;
