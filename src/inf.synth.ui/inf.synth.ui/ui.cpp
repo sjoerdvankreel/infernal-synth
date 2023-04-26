@@ -15,7 +15,7 @@ create_osc_main_group()
   auto grid = create_grid_ui(3, 1);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_display_type::label, false), 0, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_display_type::label, true), 1, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_display_type::both, false), 2, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_display_type::label, false), 2, 0);
   return create_group_ui(create_group_label_ui("Main", false), std::move(grid));
 }
 
