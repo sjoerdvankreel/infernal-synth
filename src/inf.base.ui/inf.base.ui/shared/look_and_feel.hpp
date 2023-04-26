@@ -31,10 +31,14 @@ public:
     knob_gradient_fill_highlight,
 
     switch_track,
-    switch_spot_fill_base,
-    switch_spot_fill_highlight,
-    switch_gradient_fill_base,
-    switch_gradient_fill_highlight,
+    switch_spot_fill_base_on,
+    switch_spot_fill_base_off,
+    switch_spot_fill_highlight_on,
+    switch_spot_fill_highlight_off,
+    switch_gradient_fill_base_on,
+    switch_gradient_fill_base_off,
+    switch_gradient_fill_highlight_on,
+    switch_gradient_fill_highlight_off,
 
     group_label_color
   };
