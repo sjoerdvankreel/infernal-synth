@@ -44,7 +44,7 @@ inf_look_and_feel::drawRotarySlider(
   auto const& is = dynamic_cast<inf_slider const&>(s);
   auto const descriptor = is.descriptor();
   bool const outline_gradient = is.outline_gradient();
-  bool const bipolar = descriptor->data.is_continuous() ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
+  bool const bipolar = descriptor->data.type == param_type::real ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
   if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
 
   // adjust for nonrectangular

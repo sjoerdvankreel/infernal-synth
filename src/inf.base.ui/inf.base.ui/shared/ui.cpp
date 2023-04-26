@@ -97,7 +97,7 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   param_value value = controller->state()[index];
-  if(desc.data.is_continuous()) value.real = desc.data.real.display.to_range(value.real);
+  if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setFont(Font(param_label_font_height, Font::bold));
   result->setJustificationType(Justification::centredTop);
   result->setText(get_label_text(&desc, _display_type, value), dontSendNotification);
@@ -118,7 +118,7 @@ param_slider_element::build_core(plugin_controller* controller, LookAndFeel cons
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider(&desc, _outline_gradient);
-  if(desc.data.is_continuous())
+  if(desc.data.type == param_type::real)
   {
     result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
     result->setValue(desc.data.real.display.to_range(controller->state()[index].real), dontSendNotification);

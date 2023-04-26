@@ -55,7 +55,7 @@ vst_controller::editor_param_changed(std::int32_t index, param_value ui_value)
 {
   auto desc = topology()->params[index].descriptor;
   param_value base_value = ui_value;
-  if(desc->data.is_continuous())
+  if(desc->data.type == param_type::real)
     base_value.real = desc->data.real.display.from_range(ui_value.real);
   std::int32_t tag = topology()->param_index_to_id[index];
   do_edit(tag, base_to_vst_normalized(topology(), index, base_value));

@@ -10,7 +10,7 @@ plugin_controller::controller_param_changed(std::int32_t tag, param_value base_v
   {
     param_value ui_value = base_value;
     auto desc = topology()->params[topology()->param_id_to_index.at(tag)];
-    if(desc.descriptor->data.is_continuous())
+    if(desc.descriptor->data.type == param_type::real)
       ui_value.real = desc.descriptor->data.real.display.to_range(base_value.real);
     for(auto& listener: iter->second)
       listener->controller_param_changed(ui_value);
