@@ -21,24 +21,6 @@ with_container_padding(Rectangle<int> const& bounds)
 
 namespace inf::base::ui {
 
-void 
-container_component::paint(Graphics& g)
-{
-  auto bounds = with_container_padding(getLocalBounds()).toFloat();
-  if (_flags & flags::fill)
-  {
-    g.setColour(_fill);
-    g.fillRoundedRectangle(bounds, _radius);
-  }
-  if (_flags & flags::outline)
-  {
-    g.setColour(_outline);
-    g.drawRoundedRectangle(bounds, _radius, _thickness);
-  }
-  if(getChildren().size() != 0)
-    getChildComponent(0)->paint(g);
-}
-
 Component*
 ui_element::build(plugin_controller* controller, LookAndFeel const& lnf)
 {

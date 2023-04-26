@@ -3,6 +3,7 @@
 
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
+#include <inf.base.ui/controls/container.hpp>
 #include <inf.base.ui/controls/label_param_listener.hpp>
 #include <inf.base.ui/controls/slider_param_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
@@ -13,21 +14,6 @@
 #include <cstdint>
 
 namespace inf::base::ui {
-
-class container_component:
-public juce::Component
-{
-  float const _radius;
-  float const _thickness;
-  juce::Colour const _fill;
-  juce::Colour const _outline;
-  std::uint32_t const _flags;
-public:
-  enum flags { none = 0x0, fill = 0x1, outline = 0x2 };
-  void paint(juce::Graphics& g) override;
-  container_component(std::uint32_t flags, float radius, float thickness, juce::Colour const& fill, juce::Colour const& outline): 
-  _radius(radius), _thickness(thickness), _fill(fill), _outline(outline), _flags(flags) {}
-};
 
 class ui_element
 {
