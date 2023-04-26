@@ -52,7 +52,7 @@ static std::unique_ptr<ui_element>
 create_osc_unison_group()
 {
   auto grid = create_grid_ui(2, 2);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::both, false), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_voices, label_display_type::value, true), 0, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_display_type::label, true), 0, 1);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_display_type::label, true), 1, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_offset, label_display_type::label, true), 1, 1);
