@@ -20,33 +20,34 @@ inf_look_and_feel::drawLabel(Graphics& g, Label& label)
 void 
 inf_look_and_feel::drawLinearSlider(
   Graphics& g, int x0, int y0, int w0, int h0,
-  float pos, float min0, float max0,
+  float pos0, float min0, float max0,
   Slider::SliderStyle style, Slider& s)
 {  
   float const margin_factor = 0.1f;
-  float const thumb_size_factor = 0.15f;
+  float const thumb_size_factor = 1.5f;
 
   float x = static_cast<float>(x0);
   float y = static_cast<float>(y0);
   float w = static_cast<float>(w0);
   float h = static_cast<float>(h0);
+  float pos = (pos0 - x) / w;
   x += margin_factor * w;
   y += margin_factor * h;
   w -= 2.0f * margin_factor * w;
   h -= 2.0f * margin_factor * h;
 
   Path track;
-  float height = h * 0.25f;
+  float track_size = h * 0.25f;
   track.startNewSubPath(Point<float>(x, y + h / 2.0f));
   track.lineTo(Point<float>(x + w, y + h / 2.0f));
   auto bg_low = s.findColour(colors::switch_background_low);
   auto bg_high = s.findColour(colors::switch_background_high);
   g.setGradientFill(ColourGradient(bg_low, x, y, bg_high, x + w, y, false));
-  g.strokePath(track, { height, PathStrokeType::curved, PathStrokeType::rounded });
+  g.strokePath(track, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
-  float thumb_size = thumb_size_factor * w;
-  float thumb_y = y - 0.5f * thumb_size;
-  float thumb_x = pos - 0.5f * thumb_size;
+  float thumb_size = track_size * thumb_size_factor;
+  float thumb_y = y + h / 2.0f - 0.5f * thumb_size;
+  float thumb_x = x + pos * w - 0.5f * thumb_size;
   g.setColour(Colours::green);
   g.fillEllipse(thumb_x, thumb_y, thumb_size, thumb_size);
 
