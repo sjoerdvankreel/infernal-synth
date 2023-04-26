@@ -7,7 +7,7 @@ using namespace inf::base;
 
 static int const container_padding = 2;
 static float const group_label_font_height = 10.0f;
-static float const group_label_total_height = group_label_font_height + 2.0f;
+static float const group_label_total_height = group_label_font_height + 4.0f;
 static float const param_label_font_height = 9.0f;
 static float const param_label_total_height = param_label_font_height + 3.0f;
 
@@ -90,6 +90,7 @@ Component*
 group_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Label* result = new Label;
+  result->setColour(Label::backgroundColourId, Colours::red);
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
   result->setFont(Font(group_label_font_height, Font::bold));
@@ -224,6 +225,37 @@ create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t pa
   auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
   result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
   result->add_cell(create_param_label_ui(part_type, part_index, param_index, type), 1, 0);
+  return result;
+}
+
+std::unique_ptr<ui_element>
+create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content)
+{
+  std::vector<Grid::TrackInfo> rows;
+  std::vector<Grid::TrackInfo> cols;
+  if (label->vertical())
+  {
+    rows.push_back(Grid::TrackInfo(Grid::Fr(1)));
+    cols.push_back(Grid::TrackInfo(Grid::Px(group_label_total_height)));
+    cols.push_back(Grid::TrackInfo(Grid::Fr(1)));
+  }
+  else
+  {
+    rows.push_back(Grid::TrackInfo(Grid::Px(group_label_total_height)));
+    rows.push_back(Grid::TrackInfo(Grid::Fr(1)));
+    cols.push_back(Grid::TrackInfo(Grid::Fr(1)));
+  }
+  auto result = create_grid_ui(rows, cols);
+  if (label->vertical())
+  {
+    result->add_cell(std::move(label), 0, 0);
+    result->add_cell(std::move(content), 0, 1);
+  }
+  else
+  {
+    result->add_cell(std::move(label), 0, 0);
+    result->add_cell(std::move(content), 1, 0);
+  }
   return result;
 }
 

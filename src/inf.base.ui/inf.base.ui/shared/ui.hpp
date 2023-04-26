@@ -80,7 +80,8 @@ protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
   void layout() override;
-  group_label_element(std::string const& text, bool vertical): 
+  bool vertical() const { return _vertical; }
+  group_label_element(std::string const& text, bool vertical):
   _text(text), _vertical(vertical) {}
 };
 
@@ -189,6 +190,8 @@ inline std::unique_ptr<root_element>
 create_root_ui(std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill)
 { return std::make_unique<root_element>(std::move(content), width, fill); }
 
+std::unique_ptr<ui_element>
+create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content);
 std::unique_ptr<ui_element>
 create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type);
 
