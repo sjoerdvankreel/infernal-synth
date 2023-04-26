@@ -74,8 +74,10 @@ create_osc_type_group()
 static std::unique_ptr<ui_element>
 create_osc_hslider_group()
 {
-  auto grid = create_grid_ui(1, 3);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::knob), 0, 0);
+  auto grid = create_grid_ui(3, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::hslider), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::hslider), 1, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::hslider), 2, 0);
   return create_group_ui(create_group_label_ui("HSlide", true), std::move(grid));
 }
 
