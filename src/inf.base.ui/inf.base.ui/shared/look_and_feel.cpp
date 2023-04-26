@@ -26,8 +26,8 @@ inf_look_and_feel::drawLinearSlider(
   // config
   float const margin_factor = 0.05f;
   float const spot_size_factor = 0.67f;
-  float const thumb_size_factor = 1.5f;
-  float const track_size_factor = 0.125f;
+  float const thumb_size_factor = 2.0f;
+  float const track_size_factor = 0.1f;
 
   // precompute stuff
   float x = static_cast<float>(x0);
@@ -82,100 +82,6 @@ inf_look_and_feel::drawLinearSlider(
   spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
   g.setGradientFill(spot_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
-
-  /*
-  
- if (slider.isBar())
-    {
-        g.setColour (slider.findColour (Slider::trackColourId));
-        g.fillRect (slider.isHorizontal() ? Rectangle<float> (static_cast<float> (x), (float) y + 0.5f, sliderPos - (float) x, (float) height - 1.0f)
-                                          : Rectangle<float> ((float) x + 0.5f, sliderPos, (float) width - 1.0f, (float) y + ((float) height - sliderPos)));
-    }
-    else
-    {
-        auto isTwoVal   = (style == Slider::SliderStyle::TwoValueVertical   || style == Slider::SliderStyle::TwoValueHorizontal);
-        auto isThreeVal = (style == Slider::SliderStyle::ThreeValueVertical || style == Slider::SliderStyle::ThreeValueHorizontal);
-
-        auto trackWidth = jmin (6.0f, slider.isHorizontal() ? (float) height * 0.25f : (float) width * 0.25f);
-
-        Point<float> startPoint (slider.isHorizontal() ? (float) x : (float) x + (float) width * 0.5f,
-                                 slider.isHorizontal() ? (float) y + (float) height * 0.5f : (float) (height + y));
-
-        Point<float> endPoint (slider.isHorizontal() ? (float) (width + x) : startPoint.x,
-                               slider.isHorizontal() ? startPoint.y : (float) y);
-
-        Path backgroundTrack;
-        backgroundTrack.startNewSubPath (startPoint);
-        backgroundTrack.lineTo (endPoint);
-        g.setColour (slider.findColour (Slider::backgroundColourId));
-        g.strokePath (backgroundTrack, { trackWidth, PathStrokeType::curved, PathStrokeType::rounded });
-
-        Path valueTrack;
-        Point<float> minPoint, maxPoint, thumbPoint;
-
-        if (isTwoVal || isThreeVal)
-        {
-            minPoint = { slider.isHorizontal() ? minSliderPos : (float) width * 0.5f,
-                         slider.isHorizontal() ? (float) height * 0.5f : minSliderPos };
-
-            if (isThreeVal)
-                thumbPoint = { slider.isHorizontal() ? sliderPos : (float) width * 0.5f,
-                               slider.isHorizontal() ? (float) height * 0.5f : sliderPos };
-
-            maxPoint = { slider.isHorizontal() ? maxSliderPos : (float) width * 0.5f,
-                         slider.isHorizontal() ? (float) height * 0.5f : maxSliderPos };
-        }
-        else
-        {
-            auto kx = slider.isHorizontal() ? sliderPos : ((float) x + (float) width * 0.5f);
-            auto ky = slider.isHorizontal() ? ((float) y + (float) height * 0.5f) : sliderPos;
-
-            minPoint = startPoint;
-            maxPoint = { kx, ky };
-        }
-
-        auto thumbWidth = getSliderThumbRadius (slider);
-
-        valueTrack.startNewSubPath (minPoint);
-        valueTrack.lineTo (isThreeVal ? thumbPoint : maxPoint);
-        g.setColour (slider.findColour (Slider::trackColourId));
-        g.strokePath (valueTrack, { trackWidth, PathStrokeType::curved, PathStrokeType::rounded });
-
-        if (! isTwoVal)
-        {
-            g.setColour (slider.findColour (Slider::thumbColourId));
-            g.fillEllipse (Rectangle<float> (static_cast<float> (thumbWidth), static_cast<float> (thumbWidth)).withCentre (isThreeVal ? thumbPoint : maxPoint));
-        }
-
-        if (isTwoVal || isThreeVal)
-        {
-            auto sr = jmin (trackWidth, (slider.isHorizontal() ? (float) height : (float) width) * 0.4f);
-            auto pointerColour = slider.findColour (Slider::thumbColourId);
-
-            if (slider.isHorizontal())
-            {
-                drawPointer (g, minSliderPos - sr,
-                             jmax (0.0f, (float) y + (float) height * 0.5f - trackWidth * 2.0f),
-                             trackWidth * 2.0f, pointerColour, 2);
-
-                drawPointer (g, maxSliderPos - trackWidth,
-                             jmin ((float) (y + height) - trackWidth * 2.0f, (float) y + (float) height * 0.5f),
-                             trackWidth * 2.0f, pointerColour, 4);
-            }
-            else
-            {
-                drawPointer (g, jmax (0.0f, (float) x + (float) width * 0.5f - trackWidth * 2.0f),
-                             minSliderPos - trackWidth,
-                             trackWidth * 2.0f, pointerColour, 1);
-
-                drawPointer (g, jmin ((float) (x + width) - trackWidth * 2.0f, (float) x + (float) width * 0.5f), maxSliderPos - sr,
-                             trackWidth * 2.0f, pointerColour, 3);
-            }
-        }
-    }
-  
-  
-  */
 }
 
 void 
