@@ -128,7 +128,7 @@ param_slider_element::build_core(plugin_controller* controller, LookAndFeel cons
     result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
     result->setValue(controller->state()[index].discrete, dontSendNotification);
   }
-  if(desc.data.type == param_type::toggle) result->setSliderStyle(Slider::SliderStyle::LinearVertical);
+  if(desc.data.type == param_type::toggle) result->setSliderStyle(Slider::SliderStyle::LinearHorizontal);
   else result->setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   _listener.reset(new slider_param_listener(controller, result, index));

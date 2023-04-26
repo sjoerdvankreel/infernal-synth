@@ -30,6 +30,13 @@ public:
     knob_gradient_fill_base,
     knob_gradient_fill_highlight,
 
+    switch_background_low,
+    switch_background_high,
+    switch_spot_fill_base,
+    switch_spot_fill_highlight,
+    switch_gradient_fill_base,
+    switch_gradient_fill_highlight,
+
     group_label_color
   };
 
@@ -39,7 +46,7 @@ public:
 
   // Custom stuff.
   void drawLinearSlider(
-  juce::Graphics&, int x0, int y0, int w0, int h0,
+  juce::Graphics& g, int x0, int y0, int w0, int h0,
     float pos, float min0, float max0,
     juce::Slider::SliderStyle style, juce::Slider& s) override;
   void drawRotarySlider(
