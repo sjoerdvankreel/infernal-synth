@@ -37,7 +37,7 @@ osc_params[osc_param::count] =
   { "{60D81FF7-F9AB-4E19-B7BC-8D7D08CFEAD3}", { { "Kbd", "Keyboard tracking" }, param_kind::voice, true } },
   { "{5E3DB4DC-B459-43C4-9BBD-0FF8F2232AFA}", { { "Oct", "Octave" }, "", param_kind::voice, param_type::list_knob, { 0, 9, 4 } } },
   { "{501C5217-5A5B-48D8-AEFE-CFE67417E8AD}", { { "Note", "Note" }, "", param_kind::voice, param_type::knob_list, { &note_names, "C" } } },
-  { "{FD0A2D20-FCCD-4939-B1CC-BD2EBD998A25}", { { "Cent", "Cent" }, "", param_kind::continuous, linear_bounds(-0.5f, 0.5f, 0.0f, -50.0f, 50.0f, 2) } },
+  { "{FD0A2D20-FCCD-4939-B1CC-BD2EBD998A25}", { { "Cent", "Cent" }, "", param_kind::continuous, linear_bounds(-0.5f, 0.5f, 0.0f, -50.0f, 50.0f, 1) } },
   { "{10D13CC1-EE5C-488A-8F48-F8BA70855B5A}", { { "PM", "Phase modulation" }, "", param_kind::fixed, linear_bounds(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2) } },
   { "{3D379D24-CE2D-4AE2-92EF-3951C7CA608C}", { { "FM", "Frequency modulation" }, "", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{09E50DA8-2467-462F-9822-7E9074A51B53}", { { "Gain", "Gain" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
