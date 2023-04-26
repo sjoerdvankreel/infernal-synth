@@ -24,10 +24,10 @@ inf_look_and_feel::drawLinearSlider(
   Slider::SliderStyle style, Slider& s)
 {  
   // config
-  float const margin_factor = 0.05f;
+  float const margin_factor = 0.1f;
   float const spot_size_factor = 0.67f;
   float const thumb_size_factor = 2.0f;
-  float const track_size_factor = 0.1f;
+  float const track_size_factor = 0.25f;
 
   // precompute stuff
   float x = static_cast<float>(x0);
