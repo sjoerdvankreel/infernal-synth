@@ -20,12 +20,12 @@ create_osc_main_group()
 }
 
 static std::unique_ptr<ui_element>
-create_osc_fm_group()
+create_osc_sync_group()
 {
   auto grid = create_grid_ui(1, 2);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::sync_src, label_display_type::label), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::sync_src, label_display_type::value), 0, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_display_type::label), 0, 1);
-  return create_group_ui(create_group_label_ui("FM", true), std::move(grid));
+  return create_group_ui(create_group_label_ui("Sync", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -76,7 +76,7 @@ create_oscillator_grid()
 {
   auto result = create_grid_ui(4, 5);
   result->add_cell(create_container_fill_ui(create_osc_main_group(), Colour(0xFF333333)), 0, 0, 1, 3);
-  result->add_cell(create_container_fill_ui(create_osc_fm_group(), Colour(0xFF333333)), 0, 3, 1, 2);
+  result->add_cell(create_container_fill_ui(create_osc_sync_group(), Colour(0xFF333333)), 0, 3, 1, 2);
   result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 1, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 2, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_osc_unison_group(), Colour(0xFF333333)), 1, 3, 2, 2);
