@@ -77,10 +77,10 @@ create_oscillator_grid()
   auto result = create_grid_ui(4, 5);
   result->add_cell(create_container_fill_ui(create_osc_main_group(), Colour(0xFF333333)), 0, 0, 1, 3);
   result->add_cell(create_container_fill_ui(create_osc_fm_group(), Colour(0xFF333333)), 0, 3, 1, 2);
-  result->add_cell(create_container_fill_ui(create_osc_type_group(), Colour(0xFF333333)), 1, 0, 1, 5);
-  result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 2, 0, 1, 3);
-  result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 3, 0, 1, 3);
-  result->add_cell(create_container_fill_ui(create_osc_unison_group(), Colour(0xFF333333)), 2, 3, 2, 2);
+  result->add_cell(create_container_fill_ui(create_osc_pitch_group(), Colour(0xFF333333)), 1, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_osc_ram_group(), Colour(0xFF333333)), 2, 0, 1, 3);
+  result->add_cell(create_container_fill_ui(create_osc_unison_group(), Colour(0xFF333333)), 1, 3, 2, 2);
+  result->add_cell(create_container_fill_ui(create_osc_type_group(), Colour(0xFF333333)), 3, 0, 1, 5);
   return result;
 }
 
