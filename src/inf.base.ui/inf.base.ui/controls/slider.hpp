@@ -11,10 +11,13 @@ class inf_slider:
 public juce::Slider
 {
 private:
+  bool const _outline_gradient;
   base::param_descriptor const* _descriptor;
 public:
+  bool outline_gradient() const { return _outline_gradient; }
   base::param_descriptor const* descriptor() const { return _descriptor; }
-  inf_slider(base::param_descriptor const* descriptor): _descriptor(descriptor) {}
+  inf_slider(base::param_descriptor const* descriptor, bool outline_gradient): 
+  _outline_gradient(outline_gradient), _descriptor(descriptor) {}
 };
 
 } // namespace inf::base::ui

@@ -41,7 +41,9 @@ inf_look_and_feel::drawRotarySlider(
   std::int32_t step_count = 0;
   std::int32_t const cut_count = 10;
   std::int32_t const fake_conic_gradient_count = 1024;
-  auto const descriptor = dynamic_cast<inf_slider&>(s).descriptor();
+  auto const& is = dynamic_cast<inf_slider const&>(s);
+  auto const descriptor = is.descriptor();
+  bool const outline_gradient = is.outline_gradient();
   bool const bipolar = descriptor->data.is_continuous() ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
   if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
 
@@ -114,6 +116,7 @@ inf_look_and_feel::drawRotarySlider(
     auto active_outline_high = s.findColour(colors::knob_outline_high);
     float mix_factor = (i + 1.0f) / fake_conic_gradient_count;
     if(bipolar) mix_factor = std::abs(mix_factor * 2.0f - 1.0f);
+    if(!outline_gradient) mix_factor = 1.0f;
     for (std::int32_t sc = 1; sc < step_count; sc++)
       if (this_pos >= sc / fstep_count - outline_step_gap_factor * 0.5f
         && this_pos <= sc / fstep_count + outline_step_gap_factor * 0.5f)

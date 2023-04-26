@@ -117,7 +117,7 @@ param_slider_element::build_core(plugin_controller* controller, LookAndFeel cons
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
-  inf_slider* result = new inf_slider(&desc);
+  inf_slider* result = new inf_slider(&desc, _outline_gradient);
   if(desc.data.is_continuous())
   {
     result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
@@ -199,12 +199,12 @@ create_grid_ui(
 }
 
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type)
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_display_type type, bool outline_gradient)
 {
   auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
   auto fixed_label_height = Grid::TrackInfo(Grid::Px(param_label_total_height));
   auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
-  result->add_cell(create_param_slider_ui(part_type, part_index, param_index), 0, 0);
+  result->add_cell(create_param_slider_ui(part_type, part_index, param_index, outline_gradient), 0, 0);
   result->add_cell(create_param_label_ui(part_type, part_index, param_index, type), 1, 0);
   return result;
 }
