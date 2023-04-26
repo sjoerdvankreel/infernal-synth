@@ -33,10 +33,10 @@ static std::unique_ptr<ui_element>
 create_osc_ram_group()
 {
   auto grid = create_grid_ui(3, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::label, false), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_src, label_display_type::value, false), 0, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_bal, label_display_type::label, true), 1, 0);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::ram_mix, label_display_type::label, true), 2, 0);
-  return create_group_ui(create_group_label_ui("RM/AM", false), std::move(grid));
+  return create_group_ui(create_group_label_ui("R/AM", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
