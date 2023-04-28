@@ -109,7 +109,7 @@ void
 param_slider_element::layout()
 {
   // Cant be inline/header because static with_container_padding.
-  component()->setBounds(with_container_padding(component()->getLocalBounds()));
+  component()->setBounds(with_container_padding(component()->getBounds()));
 }
 
 Component*
