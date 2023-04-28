@@ -22,8 +22,8 @@ void
 inf_label::check_bounds_warning()
 {
 #ifndef NDEBUG
-  if (isTransformed()) return;
   if (_bounds_warning_fired) return;
+  if (!_perform_bounds_check) return;
   auto text_width = getFont().getStringWidth(getText());
   auto text_area = getBorderSize().subtractedFrom(getLocalBounds());
   if (text_area.getWidth() <= 0 || text_width < text_area.getWidth()) return;

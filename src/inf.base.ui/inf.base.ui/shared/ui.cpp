@@ -72,7 +72,7 @@ container_element::layout()
 Component*
 group_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
-  Label* result = new inf_label;
+  Label* result = new inf_label(false);
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
   result->setFont(Font(group_label_font_height, Font::bold));
@@ -93,7 +93,7 @@ group_label_element::layout()
 Component*
 param_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
-  Label* result = new inf_label;
+  Label* result = new inf_label(true);
   auto topology = controller->topology();
   auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
