@@ -221,8 +221,8 @@ create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t pa
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
     auto fixed_label_width = Grid::TrackInfo(Grid::Px(param_label_hslider_width));
     auto result = create_grid_ui({ auto_rest }, { fixed_label_width, auto_rest });
-    result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_kind), 0, 0);
-    result->add_cell(create_param_slider_ui(part_type, part_index, param_index, slider_kind), 0, 1, juce::Justification::centredRight);
+    result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_kind, juce::Justification::centredRight), 0, 0);
+    result->add_cell(create_param_slider_ui(part_type, part_index, param_index, slider_kind), 0, 1);
     return result;
   } else
   {
