@@ -1,4 +1,5 @@
 #include <inf.base.ui/shared/ui.hpp>
+#include <inf.base.ui/controls/label.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -71,7 +72,7 @@ container_element::layout()
 Component*
 group_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
-  Label* result = new Label;
+  Label* result = new inf_label;
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
   result->setFont(Font(group_label_font_height, Font::bold));
@@ -92,7 +93,7 @@ group_label_element::layout()
 Component*
 param_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
-  Label* result = new Label;
+  Label* result = new inf_label;
   auto topology = controller->topology();
   auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
@@ -103,21 +104,6 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   result->setText(get_label_text(&desc, _kind, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller, result, index, _kind));
   return result;
-}
-
-void 
-param_label_element::layout()
-{
-#ifndef NDEBUG
-  static bool fired = false;
-  if(fired) return;
-  auto label = dynamic_cast<Label*>(component());
-  auto text_width = label->getFont().getStringWidth(label->getText());
-  auto text_area = label->getBorderSize().subtractedFrom(label->getLocalBounds());
-  if(text_width < text_area.getWidth()) return;
-  juce::AlertWindow::showMessageBox(MessageBoxIconType::WarningIcon, "Label exceeds bounds", label->getText());
-  fired = true;
-#endif
 }
 
 void 
