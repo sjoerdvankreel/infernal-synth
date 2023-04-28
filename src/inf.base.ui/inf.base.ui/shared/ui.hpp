@@ -86,7 +86,7 @@ private:
   juce::Justification _justification;
   std::unique_ptr<label_param_listener> _listener = {};
 public:
-  void layout() override {}
+  void layout() override;
   param_label_element(base::part_id const& part_id, std::int32_t param_index, label_kind kind, juce::Justification justification):
   _kind(kind), _part_id(part_id), _param_index(param_index), _justification(justification) {}
 protected:

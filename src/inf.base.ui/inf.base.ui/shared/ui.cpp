@@ -8,7 +8,7 @@ static int const container_padding = 2;
 static float const group_label_font_height = 11.0f;
 static float const group_label_total_height = group_label_font_height + 7.0f;
 static float const param_label_font_height = 10.0f;
-static float const param_label_hslider_width = 30.0f;
+static float const param_label_hslider_width = 40.0f;
 static float const param_label_total_height = param_label_font_height + 4.0f;
 
 static Rectangle<int> 
@@ -103,6 +103,21 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   result->setText(get_label_text(&desc, _kind, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller, result, index, _kind));
   return result;
+}
+
+void 
+param_label_element::layout()
+{
+#ifndef NDEBUG
+  static bool fired = false;
+  if(fired) return;
+  auto label = dynamic_cast<Label*>(component());
+  auto text_width = label->getFont().getStringWidth(label->getText());
+  auto text_area = label->getBorderSize().subtractedFrom(label->getLocalBounds());
+  if(text_width > text_area.getWidth()) return;
+  juce::AlertWindow::showMessageBox(MessageBoxIconType::WarningIcon, "Label exceeds bounds", label->getText());
+  fired = true;
+#endif
 }
 
 void 
