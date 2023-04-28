@@ -114,7 +114,7 @@ param_label_element::layout()
   auto label = dynamic_cast<Label*>(component());
   auto text_width = label->getFont().getStringWidth(label->getText());
   auto text_area = label->getBorderSize().subtractedFrom(label->getLocalBounds());
-  if(text_width > text_area.getWidth()) return;
+  if(text_width < text_area.getWidth()) return;
   juce::AlertWindow::showMessageBox(MessageBoxIconType::WarningIcon, "Label exceeds bounds", label->getText());
   fired = true;
 #endif
