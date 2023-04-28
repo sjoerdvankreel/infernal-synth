@@ -8,8 +8,9 @@ using namespace inf::base;
 static int const container_padding = 2;
 static float const group_label_font_height = 11.0f;
 static float const group_label_total_height = group_label_font_height + 7.0f;
+static float const group_label_vertical_width = group_label_font_height + 3.0f;
 static float const param_label_font_height = 10.0f;
-static float const param_label_hslider_width = 40.0f;
+static float const param_label_hslider_width = 32.0f;
 static float const param_label_total_height = param_label_font_height + 4.0f;
 
 static Rectangle<int> 
@@ -86,8 +87,10 @@ group_label_element::layout()
   auto label = dynamic_cast<Label*>(component());
   float rotation_angles = _vertical? 270.0f / 360.0f * 2.0f * pi32: 0.0f;
   auto transform = AffineTransform().rotated(rotation_angles, label->getWidth() / 2.0f, label->getHeight() / 2.0f);
-  label->setBounds(label->getBounds().transformedBy(transform));
   label->setTransform(transform);
+  label->setBounds(label->getBounds().transformedBy(transform));
+  // Bottom: right after transform.
+  label->setJustificationType(_vertical? Justification::centredBottom: Justification::centred);
 }
 
 Component*
@@ -244,7 +247,7 @@ create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui
   if (label->vertical())
   {
     rows.push_back(Grid::TrackInfo(Grid::Fr(1)));
-    cols.push_back(Grid::TrackInfo(Grid::Px(group_label_total_height)));
+    cols.push_back(Grid::TrackInfo(Grid::Px(group_label_vertical_width)));
     cols.push_back(Grid::TrackInfo(Grid::Fr(1)));
   }
   else
