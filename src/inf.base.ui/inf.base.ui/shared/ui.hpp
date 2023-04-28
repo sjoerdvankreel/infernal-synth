@@ -83,18 +83,21 @@ private:
   label_kind const _kind;
   base::part_id const _part_id;
   std::int32_t const _param_index;
+  juce::Justification _justification;
   std::unique_ptr<label_param_listener> _listener = {};
 public:
   void layout() override {}
-  param_label_element(base::part_id const& part_id, std::int32_t param_index, label_kind kind):
-  _kind(kind), _part_id(part_id), _param_index(param_index) {}
+  param_label_element(base::part_id const& part_id, std::int32_t param_index, label_kind kind, juce::Justification justification):
+  _kind(kind), _part_id(part_id), _param_index(param_index), _justification(justification) {}
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 inline std::unique_ptr<param_label_element>
-create_param_label_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_kind kind)
-{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index, kind); }
+create_param_label_ui(
+  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
+  label_kind kind, juce::Justification justification = juce::Justification::centred)
+{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index, kind, justification); }
 
 class param_slider_element:
 public ui_element

@@ -98,8 +98,8 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   param_value value = controller->state()[index];
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
+  result->setJustificationType(_justification);
   result->setFont(Font(param_label_font_height, Font::bold));
-  result->setJustificationType(Justification::centred);
   result->setText(get_label_text(&desc, _kind, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller, result, index, _kind));
   return result;
@@ -222,7 +222,7 @@ create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t pa
     auto fixed_label_width = Grid::TrackInfo(Grid::Px(param_label_hslider_width));
     auto result = create_grid_ui({ auto_rest }, { fixed_label_width, auto_rest });
     result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_kind), 0, 0);
-    result->add_cell(create_param_slider_ui(part_type, part_index, param_index, slider_kind), 0, 1);
+    result->add_cell(create_param_slider_ui(part_type, part_index, param_index, slider_kind), 0, 1, juce::Justification::centredRight);
     return result;
   } else
   {
