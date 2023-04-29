@@ -24,6 +24,7 @@ inf_look_and_feel::drawToggleButton(
 {
   // config
   float const margin_factor = 0.025f;
+  float const spot_size_factor = 0.67f;
   float const center_size_factor = 0.67f;
   float const outline_thickness_factor = 0.075f;
 
@@ -73,6 +74,20 @@ inf_look_and_feel::drawToggleButton(
   grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
   g.setGradientFill(grad_fill_gradient);
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
+
+  // radial fill spot overlay
+  float const spot_size = spot_size_factor * center_size;
+  float const spot_offset = (center_size - spot_size) * 0.5f;
+  float const spot_x = fill_x + spot_offset * 0.5f;
+  float const spot_y = fill_y + spot_offset * 0.5f;
+  float const spot_center_x = spot_x + spot_size * 0.5f;
+  float const spot_center_y = spot_y + spot_size * 0.5f;
+  auto spot_fill_base = b.findColour(colors::knob_spot_fill_base);
+  auto spot_fill_highlight = b.findColour(colors::knob_spot_fill_highlight);
+  auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, fill_x + spot_size, fill_y + spot_size, true);
+  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
+  g.setGradientFill(spot_fill_gradient);
+  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
 }
 
 void 
