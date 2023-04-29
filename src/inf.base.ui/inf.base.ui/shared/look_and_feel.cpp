@@ -41,12 +41,15 @@ inf_look_and_feel::drawLinearSlider(
   h -= 2.0f * margin_factor * h;
   float const small = vertical? w: h;
   float const start_x = vertical? x + w / 2.0f: x;
-  float const start_y = vertical? y + h: y + h / 2.0f;
+  float const start_y = vertical? y: y + h / 2.0f;
   float const end_x = vertical? x + w / 2.0f : x + w;
-  float const end_y = vertical? y: y + h / 2.0f;
+  float const end_y = vertical? y + h: y + h / 2.0f;
   float const pos = vertical? (pos0 - y) / h: (pos0 - x) / w;
   float const pos_x = vertical ? start_x : x + pos * w;
-  float const pos_y = vertical ? y + h - pos * h : start_y;
+  float const pos_y = vertical ? y + pos * h : start_y;
+  float const active_end_y = vertical ? y : end_y;
+  float const active_start_y = vertical? y + h: start_y;
+  float const active_pos_y = vertical? y + pos * h: pos_y;
 
   // track inactive
   Path track_inactive;
@@ -58,11 +61,11 @@ inf_look_and_feel::drawLinearSlider(
 
   // track active
   Path track_active;
-  track_active.startNewSubPath(Point<float>(start_x, start_y));
-  track_active.lineTo(Point<float>(pos_x, pos_y));
+  track_active.startNewSubPath(Point<float>(start_x, active_start_y));
+  track_active.lineTo(Point<float>(pos_x, active_pos_y));
   auto track_low = s.findColour(colors::slider_track_low);
   auto track_high = s.findColour(colors::slider_track_high);
-  g.setGradientFill(ColourGradient(track_low, start_x, start_y, track_high, end_x, end_y, false));
+  g.setGradientFill(ColourGradient(track_low, start_x, active_start_y, track_high, end_x, active_end_y, false));
   g.strokePath(track_active, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
   // thumb gradient
