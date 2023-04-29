@@ -51,20 +51,15 @@ inf_look_and_feel::drawLinearSlider(
   float track_size = small * track_size_factor;
   track.startNewSubPath(Point<float>(start_x, start_y));
   track.lineTo(Point<float>(end_x, end_y));
-  g.setColour(s.findColour(colors::switch_track));
+  g.setColour(s.findColour(colors::slider_track_inactive));
   g.strokePath(track, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
   // thumb gradient
   float thumb_size = track_size * thumb_size_factor;
   float thumb_y = (vertical? y + pos * h: start_y) - 0.5f * thumb_size;
   float thumb_x = (vertical? start_x: x + pos * w) - 0.5f * thumb_size;
-  auto thumb_low = s.findColour(colors::switch_gradient_fill_base_off);
-  auto thumb_high = s.findColour(colors::switch_gradient_fill_highlight_off);
-  if (pos >= 0.5)
-  {
-    thumb_low = s.findColour(colors::switch_gradient_fill_base_on);
-    thumb_high = s.findColour(colors::switch_gradient_fill_highlight_on);
-  }
+  auto thumb_low = s.findColour(colors::slider_gradient_fill_base);
+  auto thumb_high = s.findColour(colors::slider_gradient_fill_highlight);
   auto thumb_gradient = ColourGradient(thumb_high, thumb_x, thumb_y, thumb_low, thumb_x + thumb_size, thumb_y + thumb_size, false);
   thumb_gradient.addColour(0.25, thumb_high.interpolatedWith(thumb_low, 0.5f));
   g.setGradientFill(thumb_gradient);
@@ -77,13 +72,8 @@ inf_look_and_feel::drawLinearSlider(
   float const spot_y = thumb_y + spot_offset * 0.5f;
   float const spot_center_x = spot_x + spot_size * 0.5f;
   float const spot_center_y = spot_y + spot_size * 0.5f;
-  auto spot_fill_base = s.findColour(colors::switch_spot_fill_base_off);
-  auto spot_fill_highlight = s.findColour(colors::switch_spot_fill_highlight_off);
-  if (pos >= 0.5)
-  {
-    spot_fill_base = s.findColour(colors::switch_spot_fill_base_on);
-    spot_fill_highlight = s.findColour(colors::switch_spot_fill_highlight_on);
-  }
+  auto spot_fill_base = s.findColour(colors::slider_spot_fill_base);
+  auto spot_fill_highlight = s.findColour(colors::slider_spot_fill_highlight);
   auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, spot_x + spot_size, spot_y + spot_size, true);
   spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
   g.setGradientFill(spot_fill_gradient);
