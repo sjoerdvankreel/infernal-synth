@@ -14,7 +14,7 @@ create_osc_main_group()
 {
   auto grid = create_grid_ui(6, 1);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_type::label, edit_type::selector), 0, 0, 2, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_type::label, edit_type::toggle), 3, 0, 1, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_type::value, edit_type::toggle), 3, 0, 1, 1);
   grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_type::label, edit_type::knob), 4, 0, 2, 1);
   return create_group_ui(create_group_label_ui("Main", false), std::move(grid));
 }
@@ -144,6 +144,12 @@ create_synth_ui(std::int32_t width)
   result->look_and_feel().setColour(inf_look_and_feel::colors::slider_spot_fill_highlight, Colour(0x80BBBBBB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_base, Colour(0xE0DA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_highlight, Colour(0xE0FD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_on, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_off, Colour(0xFF666666));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_base, Colour(0x00222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_highlight, Colour(0x80BBBBBB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_base, Colour(0xFF222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_highlight, Colour(0xFF999999));
   return result;
 }
 
