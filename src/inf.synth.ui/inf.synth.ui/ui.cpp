@@ -81,6 +81,19 @@ create_osc_hslider_group()
   return create_group_ui(create_group_label_ui("HSlide", true), std::move(grid));
 }
 
+static std::unique_ptr<ui_element>
+create_osc_vslider_group()
+{
+  auto grid = create_grid_ui(1, 6);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::hslider), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::hslider), 0, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::hslider), 0, 2);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::hslider), 0, 3);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::hslider), 0, 4);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::hslider), 0, 5);
+  return create_group_ui(create_group_label_ui("VSlide", false), std::move(grid));
+}
+
 static std::unique_ptr<grid_element>
 create_oscillator_grid()
 {
@@ -92,6 +105,7 @@ create_oscillator_grid()
   result->add_cell(create_container_fill_ui(create_osc_unison_group(), Colour(0xFF333333)), 1, 3, 2, 2);
   result->add_cell(create_container_fill_ui(create_osc_type_group(), Colour(0xFF333333)), 3, 0, 1, 5);
   result->add_cell(create_container_fill_ui(create_osc_hslider_group(), Colour(0xFF333333)), 0, 5, 1, 3);
+  result->add_cell(create_container_fill_ui(create_osc_vslider_group(), Colour(0xFF333333)), 1, 5, 2, 3);
   return result;
 }
 
