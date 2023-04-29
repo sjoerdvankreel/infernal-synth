@@ -45,19 +45,28 @@ inf_look_and_feel::drawLinearSlider(
   float const end_x = vertical? x + w / 2.0f : x + w;
   float const end_y = vertical? y + h: y + h / 2.0f;
   float const pos = vertical? (pos0 - y) / h: (pos0 - x) / w;
+  float const pos_x = vertical ? start_x : x + pos * w;
+  float const pos_y = vertical ? y + pos * h : start_y;
 
-  // track
-  Path track;
+  // track inactive
+  Path track_inactive;
   float track_size = small * track_size_factor;
-  track.startNewSubPath(Point<float>(start_x, start_y));
-  track.lineTo(Point<float>(end_x, end_y));
+  track_inactive.startNewSubPath(Point<float>(start_x, start_y));
+  track_inactive.lineTo(Point<float>(end_x, end_y));
   g.setColour(s.findColour(colors::slider_track_inactive));
-  g.strokePath(track, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
+  g.strokePath(track_inactive, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
+
+  // track active
+  Path track_active;
+  track_active.startNewSubPath(Point<float>(start_x, start_y));
+  track_active.lineTo(Point<float>(pos_x, pos_y));
+  g.setColour(s.findColour(colors::slider_track_active));
+  g.strokePath(track_active, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
   // thumb gradient
   float thumb_size = track_size * thumb_size_factor;
-  float thumb_y = (vertical? y + pos * h: start_y) - 0.5f * thumb_size;
-  float thumb_x = (vertical? start_x: x + pos * w) - 0.5f * thumb_size;
+  float thumb_x = pos_x - 0.5f * thumb_size;
+  float thumb_y = pos_y - 0.5f * thumb_size;
   auto thumb_low = s.findColour(colors::slider_gradient_fill_base);
   auto thumb_high = s.findColour(colors::slider_gradient_fill_highlight);
   auto thumb_gradient = ColourGradient(thumb_high, thumb_x, thumb_y, thumb_low, thumb_x + thumb_size, thumb_y + thumb_size, false);
