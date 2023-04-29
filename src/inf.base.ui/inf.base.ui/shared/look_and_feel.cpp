@@ -23,7 +23,8 @@ inf_look_and_feel::drawToggleButton(
   bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
   // config
-  float const margin_factor = 0.0f;
+  float const margin_factor = 0.025f;
+  float const center_size_factor = 0.67f;
   float const outline_thickness_factor = 0.075f;
 
   // precompute stuff
@@ -53,13 +54,25 @@ inf_look_and_feel::drawToggleButton(
   y += margin_factor * h;
   w -= margin_factor * w * 2.0f;
   h -= margin_factor * h * 2.0f;  
+  float const center_size = w * center_size_factor;
 
-  // inactive outline
+  // outline
   Path inactive_outline;
   float const outline_thickness = w * outline_thickness_factor;
   g.setColour(b.findColour(b.getToggleState() ? colors::switch_outline_on : colors::switch_outline_off));
   inactive_outline.addEllipse(x, y, w, h);
   g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
+
+  // gradient fill center
+  float const fill_offset = (w - center_size) * 0.5f;
+  float const fill_x = x + fill_offset;
+  float const fill_y = y + fill_offset;
+  auto grad_fill_base = b.findColour(colors::switch_gradient_fill_base);
+  auto grad_fill_highlight = b.findColour(colors::switch_gradient_fill_highlight);
+  auto grad_fill_gradient = ColourGradient(grad_fill_highlight, fill_x, fill_y, grad_fill_base, fill_x + center_size, fill_y + center_size, false);
+  grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
+  g.setGradientFill(grad_fill_gradient);
+  g.fillEllipse(fill_x, fill_y, center_size, center_size);
 }
 
 void 
