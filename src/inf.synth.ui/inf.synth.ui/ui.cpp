@@ -85,12 +85,12 @@ static std::unique_ptr<ui_element>
 create_osc_vslider_group()
 {
   auto grid = create_grid_ui(1, 6);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::hslider), 0, 0);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::hslider), 0, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::hslider), 0, 2);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::hslider), 0, 3);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::hslider), 0, 4);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::hslider), 0, 5);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::vslider), 0, 0);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::vslider), 0, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::vslider), 0, 2);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_dtn, label_kind::label, slider_kind::vslider), 0, 3);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::uni_sprd, label_kind::label, slider_kind::vslider), 0, 4);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::fm, label_kind::label, slider_kind::vslider), 0, 5);
   return create_group_ui(create_group_label_ui("VSlide", false), std::move(grid));
 }
 
