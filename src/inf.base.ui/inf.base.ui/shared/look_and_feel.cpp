@@ -98,7 +98,7 @@ inf_look_and_feel::drawLinearSlider(
     track_active.lineTo(Point<float>(pos_x, active_pos_y));
     g.setGradientFill(ColourGradient(track_low, start_x, active_start_y, track_high, end_x, active_end_y, false));
   }
-  g.strokePath(track_active, { track_inner_size, PathStrokeType::curved, PathStrokeType::rounded });
+  g.strokePath(track_active, { track_inner_size, PathStrokeType::curved, bipolar? PathStrokeType::butt: PathStrokeType::rounded });
 
   // thumb gradient
   float thumb_size = track_size * thumb_size_factor;
