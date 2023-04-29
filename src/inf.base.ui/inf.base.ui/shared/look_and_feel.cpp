@@ -132,35 +132,6 @@ inf_look_and_feel::drawLinearSlider(
   spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
   g.setGradientFill(spot_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
-
-#if 0
-  // thumb center + gradient overlay
-  float thumb_size = track_size * thumb_size_factor;
-  float thumb_x = pos_x - 0.5f * thumb_size;
-  float thumb_y = pos_y - 0.5f * thumb_size;
-  auto thumb_low = s.findColour(colors::slider_gradient_fill_base);
-  auto thumb_high = s.findColour(colors::slider_gradient_fill_highlight);
-  auto thumb_gradient = ColourGradient(thumb_high, thumb_x, thumb_y, thumb_low, thumb_x + thumb_size, thumb_y + thumb_size, false);
-  thumb_gradient.addColour(0.25, thumb_high.interpolatedWith(thumb_low, 0.5f));
-  g.setColour(s.findColour(colors::slider_center_fill));
-  g.fillEllipse(thumb_x, thumb_y, thumb_size, thumb_size);
-  g.setGradientFill(thumb_gradient);
-  g.fillEllipse(thumb_x, thumb_y, thumb_size, thumb_size);
-
-  // thumb spot
-  float const spot_size = spot_size_factor * thumb_size;
-  float const spot_offset = (thumb_size - spot_size) * 0.5f;
-  float const spot_x = thumb_x + spot_offset * 0.5f;
-  float const spot_y = thumb_y + spot_offset * 0.5f;
-  float const spot_center_x = spot_x + spot_size * 0.5f;
-  float const spot_center_y = spot_y + spot_size * 0.5f;
-  auto spot_fill_base = s.findColour(colors::slider_spot_fill_base);
-  auto spot_fill_highlight = s.findColour(colors::slider_spot_fill_highlight);
-  auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, spot_x + spot_size, spot_y + spot_size, true);
-  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
-  g.setGradientFill(spot_fill_gradient);
-  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
-#endif
 }
 
 void 
