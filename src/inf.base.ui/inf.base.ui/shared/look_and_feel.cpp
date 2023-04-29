@@ -26,7 +26,7 @@ inf_look_and_feel::drawLinearSlider(
   // config
   float const margin_factor = 0.0f;
   float const spot_size_factor = 0.67f;
-  float const thumb_size_factor = 2.0f;
+  float const thumb_size_factor = 1.75f;
   float const track_size_factor = 0.25f;
   float const track_inner_size_factor = 0.8f;
   bool const vertical = style == Slider::SliderStyle::LinearVertical;
