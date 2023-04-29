@@ -29,6 +29,8 @@ inf_look_and_feel::drawLinearSlider(
   float const thumb_size_factor = 2.0f;
   float const track_size_factor = 0.25f;
   bool const vertical = style == Slider::SliderStyle::LinearVertical;
+  auto const& desc = dynamic_cast<inf_slider const&>(s).descriptor();
+  bool const bipolar = desc->data.type == param_type::real ? desc->data.real.display.min < 0.0f : desc->data.discrete.min < 0;
 
   // precompute stuff
   float x = static_cast<float>(x0);
@@ -50,6 +52,8 @@ inf_look_and_feel::drawLinearSlider(
   float const active_end_y = vertical ? y : end_y;
   float const active_start_y = vertical? y + h: start_y;
   float const active_pos_y = vertical? y + pos * h: pos_y;
+  float const mid_x = vertical ? start_x: x + w / 2.0f;
+  float const mid_y = vertical ? start_y + h / 2.0f : start_y;
 
   // track inactive
   Path track_inactive;
@@ -61,11 +65,21 @@ inf_look_and_feel::drawLinearSlider(
 
   // track active
   Path track_active;
-  track_active.startNewSubPath(Point<float>(start_x, active_start_y));
-  track_active.lineTo(Point<float>(pos_x, active_pos_y));
   auto track_low = s.findColour(colors::slider_track_low);
   auto track_high = s.findColour(colors::slider_track_high);
-  g.setGradientFill(ColourGradient(track_low, start_x, active_start_y, track_high, end_x, active_end_y, false));
+  if(bipolar)
+  {
+    track_active.startNewSubPath(Point<float>(mid_x, mid_y));
+    track_active.lineTo(Point<float>(pos_x, active_pos_y));
+    float const gradient_x = pos >= 0.5f? end_x: start_x;
+    float const gradient_y = vertical && pos >= 0.5f || !vertical && pos < 0.5f? active_start_y: active_end_y;
+    g.setGradientFill(ColourGradient(track_low, mid_x, mid_y, track_high, gradient_x, gradient_y, false));
+  } else
+  {
+    track_active.startNewSubPath(Point<float>(start_x, active_start_y));
+    track_active.lineTo(Point<float>(pos_x, active_pos_y));
+    g.setGradientFill(ColourGradient(track_low, start_x, active_start_y, track_high, end_x, active_end_y, false));
+  }
   g.strokePath(track_active, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
   // thumb gradient
