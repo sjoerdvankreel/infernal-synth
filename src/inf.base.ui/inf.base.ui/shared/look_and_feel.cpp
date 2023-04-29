@@ -60,7 +60,11 @@ inf_look_and_feel::drawLinearSlider(
   float track_size = small * track_size_factor;
   auto hl_low = s.findColour(colors::slider_highlight_low);
   auto hl_high = s.findColour(colors::slider_highlight_high);
-  juce::Rectangle<float> track_rect(start_x - track_size / 2.0f, start_y - track_size / 2.0f, vertical ? track_size : w, vertical ? h : track_size);
+  juce::Rectangle<float> track_rect(
+    start_x - track_size / 2.0f, 
+    start_y - track_size / 2.0f, 
+    vertical ? track_size : w + track_size, 
+    vertical ? h + track_size : track_size);
   auto hl_gradient = ColourGradient(hl_low, track_rect.getTopLeft(), hl_high, track_rect.getBottomRight(), false);
   hl_gradient.addColour(0.75, hl_high.interpolatedWith(hl_low, 0.5f));
   g.setGradientFill(hl_gradient);
