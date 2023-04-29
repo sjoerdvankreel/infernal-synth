@@ -23,7 +23,7 @@ inf_look_and_feel::drawToggleButton(
   bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
   // config
-  float const margin_factor = 0.025f;
+  float const margin_factor = 0.05f;
   float const spot_size_factor = 0.67f;
   float const center_size_factor = 0.67f;
   float const outline_thickness_factor = 0.075f;

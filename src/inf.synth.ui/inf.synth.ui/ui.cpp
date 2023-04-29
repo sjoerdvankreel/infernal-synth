@@ -148,8 +148,8 @@ create_synth_ui(std::int32_t width)
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_off, Colour(0xFF666666));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_base, Colour(0x00222222));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_highlight, Colour(0x80BBBBBB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_base_on, Colour(0xC0DA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_highlight_on, Colour(0xC0FD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_base_on, Colour(0xA0DA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_highlight_on, Colour(0xA0FD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_center_base, Colour(0xFF222222));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_center_highlight, Colour(0xFF999999));
   return result;
