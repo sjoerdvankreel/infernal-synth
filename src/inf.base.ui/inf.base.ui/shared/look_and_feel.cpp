@@ -52,7 +52,6 @@ inf_look_and_feel::drawLinearSlider(
   float const pos_y = vertical ? y + pos * h : start_y;
   float const active_end_y = vertical ? y : end_y;
   float const active_start_y = vertical? y + h: start_y;
-  float const active_pos_y = vertical? y + pos * h: pos_y;
   float const mid_x = vertical ? start_x: x + w / 2.0f;
   float const mid_y = vertical ? start_y + h / 2.0f : start_y;
 
@@ -78,23 +77,23 @@ inf_look_and_feel::drawLinearSlider(
   g.fillRoundedRectangle(track_inner_rect, track_inner_size / 2.0f);
 
   // track active
-  Path track_active;
   auto track_low = s.findColour(colors::slider_track_low);
   auto track_high = s.findColour(colors::slider_track_high);
+  juce::Rectangle<float> track_active_rect(
+    track_inner_rect.getX(), track_inner_rect.getY(), 
+    track_inner_rect.getWidth() * pos, track_inner_rect.getHeight());
+  if(vertical)
+    track_active_rect = juce::Rectangle<float>(
+      track_inner_rect.getX(), track_inner_rect.getY(),
+      track_inner_rect.getWidth(), track_inner_rect.getHeight() * pos);
   if(bipolar)
   {
-    track_active.startNewSubPath(Point<float>(mid_x, mid_y));
-    track_active.lineTo(Point<float>(pos_x, active_pos_y));
     float const gradient_x = pos >= 0.5f? end_x: start_x;
     float const gradient_y = vertical && pos >= 0.5f || !vertical && pos < 0.5f? active_start_y: active_end_y;
     g.setGradientFill(ColourGradient(track_low, mid_x, mid_y, track_high, gradient_x, gradient_y, false));
   } else
-  {
-    track_active.startNewSubPath(Point<float>(start_x, active_start_y));
-    track_active.lineTo(Point<float>(pos_x, active_pos_y));
     g.setGradientFill(ColourGradient(track_low, start_x, active_start_y, track_high, end_x, active_end_y, false));
-  }
-  g.strokePath(track_active, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
+  g.fillRoundedRectangle(track_active_rect, track_inner_size / 2.0f);
 
   // thumb gradient
   float thumb_size = track_size * thumb_size_factor;
