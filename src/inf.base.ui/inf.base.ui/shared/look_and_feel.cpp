@@ -25,8 +25,9 @@ inf_look_and_feel::drawLinearSlider(
 {  
   // config
   float const margin_factor = 0.0f;
+  float const thumb_xy_ratio = 3.0;
   float const spot_size_factor = 0.67f;
-  float const thumb_size_factor = 1.75f;
+  float const thumb_size_factor = 3.0f;
   float const track_size_factor = 0.25f;
   float const track_inner_size_factor = 0.8f;
   bool const vertical = style == Slider::SliderStyle::LinearVertical;
@@ -100,6 +101,39 @@ inf_look_and_feel::drawLinearSlider(
   }
   g.strokePath(track_active, { track_inner_size, PathStrokeType::curved, bipolar? PathStrokeType::butt: PathStrokeType::rounded });
 
+  // thumb fill + gradient overlay
+  (void)spot_size_factor;
+  float const thumb_large = track_size * thumb_size_factor;
+  float const thumb_small = thumb_large / thumb_xy_ratio;
+  juce::Rectangle<float> thumb_rect(
+    pos_x - 0.5f * (vertical? thumb_large: thumb_small), 
+    pos_y - 0.5f * (vertical? thumb_small: thumb_large), 
+    vertical? thumb_large: thumb_small, 
+    vertical? thumb_small: thumb_large);
+  g.setColour(s.findColour(colors::slider_center_fill));
+  g.fillRoundedRectangle(thumb_rect, thumb_small / 2.0f);
+  auto thumb_low = s.findColour(colors::slider_gradient_fill_base);
+  auto thumb_high = s.findColour(colors::slider_gradient_fill_highlight);
+  auto thumb_gradient = ColourGradient(thumb_high, thumb_rect.getTopLeft(), thumb_low, thumb_rect.getBottomRight(), false);
+  thumb_gradient.addColour(0.25, thumb_high.interpolatedWith(thumb_low, 0.5f));
+  g.setGradientFill(thumb_gradient);
+  g.fillRoundedRectangle(thumb_rect, thumb_small / 2.0f);
+
+  // thumb spot
+  float const spot_size = spot_size_factor * thumb_small;
+  float const spot_offset = (thumb_small - spot_size) * 0.5f;
+  float const spot_x = thumb_rect.getX() + spot_offset * 0.5f;
+  float const spot_y = thumb_rect.getY() + spot_offset * 0.5f;
+  float const spot_center_x = spot_x + spot_size * 0.5f;
+  float const spot_center_y = spot_y + spot_size * 0.5f;
+  auto spot_fill_base = s.findColour(colors::slider_spot_fill_base);
+  auto spot_fill_highlight = s.findColour(colors::slider_spot_fill_highlight);
+  auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, spot_x + spot_size, spot_y + spot_size, true);
+  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
+  g.setGradientFill(spot_fill_gradient);
+  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
+
+#if 0
   // thumb center + gradient overlay
   float thumb_size = track_size * thumb_size_factor;
   float thumb_x = pos_x - 0.5f * thumb_size;
@@ -126,6 +160,7 @@ inf_look_and_feel::drawLinearSlider(
   spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
   g.setGradientFill(spot_fill_gradient);
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
+#endif
 }
 
 void 
