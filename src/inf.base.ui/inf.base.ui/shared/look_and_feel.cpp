@@ -41,9 +41,9 @@ inf_look_and_feel::drawLinearSlider(
   h -= 2.0f * margin_factor * h;
   float const small = vertical? w: h;
   float const start_x = vertical? x + w / 2.0f: x;
-  float const start_y = vertical? y: y + h / 2.0f;
+  float const start_y = vertical? y + h: y + h / 2.0f;
   float const end_x = vertical? x + w / 2.0f : x + w;
-  float const end_y = vertical? y + h: y + h / 2.0f;
+  float const end_y = vertical? y: y + h / 2.0f;
   float const pos = vertical? (pos0 - y) / h: (pos0 - x) / w;
   float const pos_x = vertical ? start_x : x + pos * w;
   float const pos_y = vertical ? y + pos * h : start_y;
