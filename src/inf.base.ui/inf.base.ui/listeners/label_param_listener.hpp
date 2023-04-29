@@ -1,5 +1,5 @@
-#ifndef INF_BASE_UI_CONTROLS_LABEL_PARAM_LISTENER_HPP
-#define INF_BASE_UI_CONTROLS_LABEL_PARAM_LISTENER_HPP
+#ifndef INF_BASE_UI_LISTENERS_LABEL_PARAM_LISTENER_HPP
+#define INF_BASE_UI_LISTENERS_LABEL_PARAM_LISTENER_HPP
 
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
@@ -25,4 +25,4 @@ public:
 };
 
 } // namespace inf::base::ui
-#endif // INF_BASE_UI_CONTROLS_LABEL_PARAM_LISTENER_HPP
+#endif // INF_BASE_UI_LISTENERS_LABEL_PARAM_LISTENER_HPP

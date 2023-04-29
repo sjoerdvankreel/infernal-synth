@@ -117,14 +117,25 @@ param_edit_element::layout()
 }
 
 Component*
-param_edit_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
+param_edit_element::build_toggle_core(plugin_controller* controller, LookAndFeel const& lnf)
+{
+  std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
+  ToggleButton* result = new ToggleButton();
+  _toggle_listener.reset(new toggle_param_listener(controller, result, index));
+  result->addListener(_toggle_listener.get());
+  result->setToggleState(controller->state()[index].discrete != 0, dontSendNotification);
+  return result;
+}
+
+Component*
+param_edit_element::build_slider_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider(&desc, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-  _listener.reset(new slider_param_listener(controller, result, index));
-  result->addListener(_listener.get());
+  _slider_listener.reset(new slider_param_listener(controller, result, index));
+  result->addListener(_slider_listener.get());
   if(desc.data.type == param_type::real)
   {
     result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);

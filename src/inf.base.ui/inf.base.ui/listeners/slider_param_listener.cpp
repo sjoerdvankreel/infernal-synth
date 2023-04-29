@@ -1,4 +1,4 @@
-#include <inf.base.ui/controls/slider_param_listener.hpp>
+#include <inf.base.ui/listeners/slider_param_listener.hpp>
 
 using namespace juce;
 using namespace inf::base;
