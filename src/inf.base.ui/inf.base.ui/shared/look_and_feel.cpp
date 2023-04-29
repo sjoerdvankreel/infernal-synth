@@ -28,6 +28,7 @@ inf_look_and_feel::drawLinearSlider(
   float const spot_size_factor = 0.67f;
   float const thumb_size_factor = 2.0f;
   float const track_size_factor = 0.25f;
+  float const track_inner_size_factor = 0.8f;
   bool const vertical = style == Slider::SliderStyle::LinearVertical;
   auto const& desc = dynamic_cast<inf_slider const&>(s).descriptor();
   bool const bipolar = desc->data.type == param_type::real ? desc->data.real.display.min < 0.0f : desc->data.discrete.min < 0;
@@ -55,17 +56,26 @@ inf_look_and_feel::drawLinearSlider(
   float const mid_x = vertical ? start_x: x + w / 2.0f;
   float const mid_y = vertical ? start_y + h / 2.0f : start_y;
 
-  // track inactive
-  //Path track_inactive;
+  // track inactive gradient
   float track_size = small * track_size_factor;
-  //track_inactive.startNewSubPath(Point<float>(start_x, start_y));
-  //track_inactive.lineTo(Point<float>(end_x, end_y));
-  auto highlight_low = s.findColour(colors::slider_highlight_low);
-  auto highlight_high = s.findColour(colors::slider_highlight_high);
-  //auto highlight_gradient = ColourGradient(highlight_high)
-  //g.strokePath(track_inactive, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
-  g.setColour(Colours::green);
-  g.fillRoundedRectangle(start_x - track_size / 2.0f, start_y - track_size / 2.0f, vertical? track_size: w, vertical? h: track_size, track_size / 2.0f);
+  auto hl_low = s.findColour(colors::slider_highlight_low);
+  auto hl_high = s.findColour(colors::slider_highlight_high);
+  juce::Rectangle<float> track_rect(start_x - track_size / 2.0f, start_y - track_size / 2.0f, vertical ? track_size : w, vertical ? h : track_size);
+  auto hl_gradient = ColourGradient(hl_low, track_rect.getTopLeft(), hl_high, track_rect.getBottomRight(), false);
+  hl_gradient.addColour(0.75, hl_high.interpolatedWith(hl_low, 0.5f));
+  g.setGradientFill(hl_gradient);
+  g.fillRoundedRectangle(track_rect, track_size / 2.0f);
+
+  // track inactive fill
+  float track_inner_size = track_size * track_inner_size_factor;
+  float track_inner_offset = track_size - track_inner_size;
+  juce::Rectangle<float> track_inner_rect(
+    track_rect.getX() + track_inner_offset / 2.0f, 
+    track_rect.getY() + track_inner_offset / 2.0f, 
+    track_rect.getWidth() - track_inner_offset, 
+    track_rect.getHeight() - track_inner_offset);
+  g.setColour(s.findColour(colors::slider_track_inactive));
+  g.fillRoundedRectangle(track_inner_rect, track_inner_size / 2.0f);
 
   // track active
   Path track_active;
