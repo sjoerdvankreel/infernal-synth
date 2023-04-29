@@ -53,15 +53,12 @@ inf_look_and_feel::drawToggleButton(
   y += margin_factor * h;
   w -= margin_factor * w * 2.0f;
   h -= margin_factor * h * 2.0f;  
-  float const center_x = x + w / 2.0f;
-  float const center_y = y + h / 2.0f;
 
   // inactive outline
   Path inactive_outline;
-  float const outer_radius = w / 2.0f;
   float const outline_thickness = w * outline_thickness_factor;
   g.setColour(b.findColour(b.getToggleState() ? colors::switch_outline_on : colors::switch_outline_off));
-  inactive_outline.addEllipse(center_x, center_y, outer_radius, outer_radius);
+  inactive_outline.addEllipse(x, y, w, h);
   g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
 }
 
