@@ -35,7 +35,6 @@ inf_look_and_feel::drawLinearSlider(
   float y = static_cast<float>(y0);
   float w = static_cast<float>(w0);
   float h = static_cast<float>(h0);
-  float pos = (pos0 - x) / w;
   x += margin_factor * w;
   y += margin_factor * h;
   w -= 2.0f * margin_factor * w;
@@ -45,6 +44,7 @@ inf_look_and_feel::drawLinearSlider(
   float const start_y = vertical? y: y + h / 2.0f;
   float const end_x = vertical? x + w / 2.0f : x + w;
   float const end_y = vertical? y + h: y + h / 2.0f;
+  float const pos = vertical? (pos0 - y) / h: (pos0 - x) / w;
 
   // track
   Path track;
@@ -56,7 +56,7 @@ inf_look_and_feel::drawLinearSlider(
 
   // thumb gradient
   float thumb_size = track_size * thumb_size_factor;
-  float thumb_y = (vertical? y + pos * w: start_y) - 0.5f * thumb_size;
+  float thumb_y = (vertical? y + pos * h: start_y) - 0.5f * thumb_size;
   float thumb_x = (vertical? start_x: x + pos * w) - 0.5f * thumb_size;
   auto thumb_low = s.findColour(colors::switch_gradient_fill_base_off);
   auto thumb_high = s.findColour(colors::switch_gradient_fill_highlight_off);
