@@ -30,7 +30,8 @@ public:
     knob_gradient_fill_base,
     knob_gradient_fill_highlight,
 
-    slider_track_active,
+    slider_track_low,
+    slider_track_high,
     slider_track_inactive,
     slider_spot_fill_base,
     slider_spot_fill_highlight,
