@@ -10,10 +10,11 @@
 namespace inf::base::ui 
 {
 
-enum class label_kind { label, value, both };
+enum class label_type { label, value };
+enum class edit_type { knob, selector, hslider, vslider, toggle };
 
 std::string
-get_label_text(base::param_descriptor const* descriptor, label_kind kind, base::param_value value);
+get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_SUPPORT_HPP

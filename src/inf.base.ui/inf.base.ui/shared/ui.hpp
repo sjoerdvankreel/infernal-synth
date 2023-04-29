@@ -80,15 +80,15 @@ class param_label_element:
 public ui_element
 {
 private:
-  label_kind const _kind;
+  label_type const _type;
   base::part_id const _part_id;
   std::int32_t const _param_index;
   juce::Justification _justification;
   std::unique_ptr<label_param_listener> _listener = {};
 public:
   void layout() override {}
-  param_label_element(base::part_id const& part_id, std::int32_t param_index, label_kind kind, juce::Justification justification):
-  _kind(kind), _part_id(part_id), _param_index(param_index), _justification(justification) {}
+  param_label_element(base::part_id const& part_id, std::int32_t param_index, label_type type, juce::Justification justification):
+  _type(type), _part_id(part_id), _param_index(param_index), _justification(justification) {}
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
@@ -96,27 +96,27 @@ protected:
 inline std::unique_ptr<param_label_element>
 create_param_label_ui(
   std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  label_kind kind, juce::Justification justification = juce::Justification::centred)
-{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index, kind, justification); }
+  label_type type, juce::Justification justification = juce::Justification::centred)
+{ return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index, type, justification); }
 
 class param_slider_element:
 public ui_element
 {
-  slider_kind const _kind;
+  edit_type const _type;
   base::part_id const _part_id;
   std::int32_t const _param_index;
   std::unique_ptr<slider_param_listener> _listener = {};
 public:
   void layout() override;
-  param_slider_element(base::part_id const& part_id, std::int32_t param_index, slider_kind kind):
-  _part_id(part_id), _param_index(param_index), _kind(kind) {}
+  param_slider_element(base::part_id const& part_id, std::int32_t param_index, edit_type type):
+  _part_id(part_id), _param_index(param_index), _type(type) {}
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 inline std::unique_ptr<param_slider_element>
-create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, slider_kind kind)
-{ return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index, kind); }
+create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type type)
+{ return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index, type); }
 
 class grid_element:
 public ui_element
@@ -184,7 +184,7 @@ create_root_ui(std::unique_ptr<grid_element>&& content, std::int32_t width, juce
 std::unique_ptr<ui_element>
 create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content);
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_kind label_kind, slider_kind slider_kind);
+create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_type label_type, edit_type edit_type);
 
 } // namespace inf::base::ui
 

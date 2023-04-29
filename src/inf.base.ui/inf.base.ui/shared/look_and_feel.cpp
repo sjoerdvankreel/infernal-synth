@@ -154,7 +154,7 @@ inf_look_and_feel::drawRotarySlider(
   std::int32_t const fake_conic_gradient_count = 1024;
   auto const& is = dynamic_cast<inf_slider const&>(s);
   auto const descriptor = is.descriptor();
-  bool const outline_gradient = is.kind() == slider_kind::knob;
+  bool const outline_gradient = is.type() == edit_type::knob;
   bool const bipolar = descriptor->data.type == param_type::real ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
   if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
 
