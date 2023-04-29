@@ -37,6 +37,7 @@ inf_look_and_feel::drawToggleButton(
   float y = static_cast<float>(y0);
   float w = static_cast<float>(w0);
   float h = static_cast<float>(h0);
+  bool const on = b.getToggleState();
 
   // adjust for nonrectangular
   float minwh = std::min(w, h);
@@ -60,7 +61,7 @@ inf_look_and_feel::drawToggleButton(
   // outline
   Path inactive_outline;
   float const outline_thickness = w * outline_thickness_factor;
-  g.setColour(b.findColour(b.getToggleState() ? colors::switch_outline_on : colors::switch_outline_off));
+  g.setColour(b.findColour(on ? colors::switch_outline_on : colors::switch_outline_off));
   inactive_outline.addEllipse(x, y, w, h);
   g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
 
@@ -68,8 +69,8 @@ inf_look_and_feel::drawToggleButton(
   float const fill_offset = (w - center_size) * 0.5f;
   float const fill_x = x + fill_offset;
   float const fill_y = y + fill_offset;
-  auto grad_fill_base = b.findColour(colors::switch_gradient_fill_base);
-  auto grad_fill_highlight = b.findColour(colors::switch_gradient_fill_highlight);
+  auto grad_fill_base = b.findColour(on? colors::switch_gradient_fill_base_on: colors::switch_gradient_fill_base_off);
+  auto grad_fill_highlight = b.findColour(on? colors::switch_gradient_fill_highlight_on: colors::switch_gradient_fill_highlight_off);
   auto grad_fill_gradient = ColourGradient(grad_fill_highlight, fill_x, fill_y, grad_fill_base, fill_x + center_size, fill_y + center_size, false);
   grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
   g.setGradientFill(grad_fill_gradient);
