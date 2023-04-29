@@ -18,6 +18,14 @@ inf_look_and_feel::drawLabel(Graphics& g, Label& label)
 }
 
 void 
+inf_look_and_feel::drawToggleButton(
+  juce::Graphics& g, juce::ToggleButton& b,
+  bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+{
+  LookAndFeel_V4::drawToggleButton(g, b, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
+}
+
+void 
 inf_look_and_feel::drawLinearSlider(
   Graphics& g, int x0, int y0, int w0, int h0,
   float pos0, float min0, float max0,
