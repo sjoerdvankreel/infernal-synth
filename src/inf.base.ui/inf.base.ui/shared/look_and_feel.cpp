@@ -22,7 +22,31 @@ inf_look_and_feel::drawToggleButton(
   juce::Graphics& g, juce::ToggleButton& b,
   bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
-  LookAndFeel_V4::drawToggleButton(g, b, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
+  // precompute stuff
+  int const x0 = b.getLocalBounds().getX();
+  int const y0 = b.getLocalBounds().getY();
+  int const w0 = b.getLocalBounds().getWidth();
+  int const h0 = b.getLocalBounds().getHeight();
+  float x = static_cast<float>(x0);
+  float y = static_cast<float>(y0);
+  float w = static_cast<float>(w0);
+  float h = static_cast<float>(h0);
+
+  // adjust for nonrectangular
+  float minwh = std::min(w, h);
+  if (minwh < w) 
+  {
+    x = (w - minwh) / 2.0f;
+    w = minwh;
+  } else
+  {
+    y = (h - minwh) / 2.0f;
+    h = minwh;
+  }
+
+  juce::Rectangle<float> rect(x, y, w, h);
+  g.setColour(Colours::green);
+  g.fillRect(rect);
 }
 
 void 
