@@ -99,7 +99,7 @@ create_param_label_ui(
   label_type type, juce::Justification justification = juce::Justification::centred)
 { return std::make_unique<param_label_element>(part_id(part_type, part_index), param_index, type, justification); }
 
-class param_slider_element:
+class param_edit_element :
 public ui_element
 {
   edit_type const _type;
@@ -108,15 +108,15 @@ public ui_element
   std::unique_ptr<slider_param_listener> _listener = {};
 public:
   void layout() override;
-  param_slider_element(base::part_id const& part_id, std::int32_t param_index, edit_type type):
+  param_edit_element(base::part_id const& part_id, std::int32_t param_index, edit_type type):
   _part_id(part_id), _param_index(param_index), _type(type) {}
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
-inline std::unique_ptr<param_slider_element>
-create_param_slider_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type type)
-{ return std::make_unique<param_slider_element>(part_id(part_type, part_index), param_index, type); }
+inline std::unique_ptr<param_edit_element>
+create_param_edit_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type type)
+{ return std::make_unique<param_edit_element>(part_id(part_type, part_index), param_index, type); }
 
 class grid_element:
 public ui_element

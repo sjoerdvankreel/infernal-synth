@@ -110,14 +110,14 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
 }
 
 void 
-param_slider_element::layout()
+param_edit_element::layout()
 {
   // Cant be inline/header because static with_container_padding.
   component()->setBounds(with_container_padding(component()->getBounds()));
 }
 
 Component*
-param_slider_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
+param_edit_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
@@ -226,14 +226,14 @@ create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t pa
     auto fixed_label_width = Grid::TrackInfo(Grid::Px(param_label_hslider_width));
     auto result = create_grid_ui({ auto_rest }, { fixed_label_width, auto_rest });
     result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_type, juce::Justification::centredRight), 0, 0);
-    result->add_cell(create_param_slider_ui(part_type, part_index, param_index, edit_type), 0, 1);
+    result->add_cell(create_param_edit_ui(part_type, part_index, param_index, edit_type), 0, 1);
     return result;
   } else
   {
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
     auto fixed_label_height = Grid::TrackInfo(Grid::Px(param_label_total_height));
     auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
-    result->add_cell(create_param_slider_ui(part_type, part_index, param_index, edit_type), 0, 0);
+    result->add_cell(create_param_edit_ui(part_type, part_index, param_index, edit_type), 0, 0);
     result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_type), 1, 0);
     return result;
   }
