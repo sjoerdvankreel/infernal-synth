@@ -100,7 +100,7 @@ inf_look_and_feel::drawLinearSlider(
   }
   g.strokePath(track_active, { track_inner_size, PathStrokeType::curved, bipolar? PathStrokeType::butt: PathStrokeType::rounded });
 
-  // thumb gradient
+  // thumb center + gradient overlay
   float thumb_size = track_size * thumb_size_factor;
   float thumb_x = pos_x - 0.5f * thumb_size;
   float thumb_y = pos_y - 0.5f * thumb_size;
@@ -108,6 +108,8 @@ inf_look_and_feel::drawLinearSlider(
   auto thumb_high = s.findColour(colors::slider_gradient_fill_highlight);
   auto thumb_gradient = ColourGradient(thumb_high, thumb_x, thumb_y, thumb_low, thumb_x + thumb_size, thumb_y + thumb_size, false);
   thumb_gradient.addColour(0.25, thumb_high.interpolatedWith(thumb_low, 0.5f));
+  g.setColour(s.findColour(colors::slider_center_fill));
+  g.fillEllipse(thumb_x, thumb_y, thumb_size, thumb_size);
   g.setGradientFill(thumb_gradient);
   g.fillEllipse(thumb_x, thumb_y, thumb_size, thumb_size);
 
