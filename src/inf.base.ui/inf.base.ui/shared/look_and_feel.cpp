@@ -69,12 +69,27 @@ inf_look_and_feel::drawToggleButton(
   float const fill_offset = (w - center_size) * 0.5f;
   float const fill_x = x + fill_offset;
   float const fill_y = y + fill_offset;
-  auto grad_fill_base = b.findColour(on? colors::switch_gradient_fill_base_on: colors::switch_gradient_fill_base_off);
-  auto grad_fill_highlight = b.findColour(on? colors::switch_gradient_fill_highlight_on: colors::switch_gradient_fill_highlight_off);
-  auto grad_fill_gradient = ColourGradient(grad_fill_highlight, fill_x, fill_y, grad_fill_base, fill_x + center_size, fill_y + center_size, false);
-  grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
-  g.setGradientFill(grad_fill_gradient);
+  auto grad_fill_center_base = b.findColour(colors::switch_gradient_fill_center_base);
+  auto grad_fill_center_highlight = b.findColour(colors::switch_gradient_fill_center_highlight);
+  auto grad_fill_center_gradient = ColourGradient(
+    grad_fill_center_highlight, fill_x, fill_y, 
+    grad_fill_center_base, fill_x + center_size, fill_y + center_size, false);
+  grad_fill_center_gradient.addColour(0.33, grad_fill_center_highlight.interpolatedWith(grad_fill_center_base, 0.5f));
+  g.setGradientFill(grad_fill_center_gradient);
   g.fillEllipse(fill_x, fill_y, center_size, center_size);
+
+  // on overlay gradient fill center
+  if(on)
+  {
+    auto grad_fill_base_on = b.findColour(colors::switch_gradient_fill_base_on);
+    auto grad_fill_highlight_on = b.findColour(colors::switch_gradient_fill_highlight_on);
+    auto grad_fill_on_gradient = ColourGradient(
+      grad_fill_highlight_on, fill_x, fill_y,
+      grad_fill_base_on, fill_x + center_size, fill_y + center_size, false);
+    grad_fill_on_gradient.addColour(0.33, grad_fill_highlight_on.interpolatedWith(grad_fill_base_on, 0.5f));
+    g.setGradientFill(grad_fill_on_gradient);
+    g.fillEllipse(fill_x, fill_y, center_size, center_size);
+  }
 
   // radial fill spot overlay
   float const spot_size = spot_size_factor * center_size;
