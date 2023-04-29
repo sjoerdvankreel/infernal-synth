@@ -59,11 +59,20 @@ inf_look_and_feel::drawToggleButton(
   float const center_size = w * center_size_factor;
 
   // outline
-  Path inactive_outline;
+  Path outline;
   float const outline_thickness = w * outline_thickness_factor;
-  g.setColour(b.findColour(on ? colors::switch_outline_on : colors::switch_outline_off));
-  inactive_outline.addEllipse(x, y, w, h);
-  g.strokePath(inactive_outline, PathStrokeType(outline_thickness));
+  if (on)
+  {
+    auto outline_low = b.findColour(colors::switch_outline_on_low);
+    auto outline_high = b.findColour(colors::switch_outline_on_high);
+    auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
+    outline_gradient.addColour(0.33, outline_high.interpolatedWith(outline_low, 0.5f));
+    g.setGradientFill(outline_gradient);
+  }
+  else
+    g.setColour(b.findColour(colors::switch_outline_off));
+  outline.addEllipse(x, y, w, h);
+  g.strokePath(outline, PathStrokeType(outline_thickness));
 
   // gradient fill center
   float const fill_offset = (w - center_size) * 0.5f;

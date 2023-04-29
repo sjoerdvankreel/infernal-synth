@@ -41,8 +41,9 @@ public:
     slider_gradient_fill_base,
     slider_gradient_fill_highlight,
 
-    switch_outline_on,
     switch_outline_off,
+    switch_outline_on_low,
+    switch_outline_on_high,
     switch_spot_fill_base,
     switch_spot_fill_highlight,
     switch_gradient_fill_base_on,
