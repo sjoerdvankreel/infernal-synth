@@ -28,6 +28,7 @@ inf_look_and_feel::drawLinearSlider(
   float const spot_size_factor = 0.67f;
   float const thumb_size_factor = 2.0f;
   float const track_size_factor = 0.25f;
+  bool const vertical = style == Slider::SliderStyle::LinearVertical;
 
   // precompute stuff
   float x = static_cast<float>(x0);
@@ -39,12 +40,17 @@ inf_look_and_feel::drawLinearSlider(
   y += margin_factor * h;
   w -= 2.0f * margin_factor * w;
   h -= 2.0f * margin_factor * h;
+  float const small = vertical? w: h;
+  float const start_x = vertical? x + w / 2.0f: x;
+  float const start_y = vertical? y: y + h / 2.0f;
+  float const end_x = vertical? x + w / 2.0f : x + w;
+  float const end_y = vertical? y + h: y + h / 2.0f;
 
   // track
   Path track;
-  float track_size = h * track_size_factor;
-  track.startNewSubPath(Point<float>(x, y + h / 2.0f));
-  track.lineTo(Point<float>(x + w, y + h / 2.0f));
+  float track_size = small * track_size_factor;
+  track.startNewSubPath(Point<float>(start_x, start_y));
+  track.lineTo(Point<float>(end_x, end_y));
   g.setColour(s.findColour(colors::switch_track));
   g.strokePath(track, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
 
