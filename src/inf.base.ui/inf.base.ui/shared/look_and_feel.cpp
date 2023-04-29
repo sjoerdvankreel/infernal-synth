@@ -56,12 +56,16 @@ inf_look_and_feel::drawLinearSlider(
   float const mid_y = vertical ? start_y + h / 2.0f : start_y;
 
   // track inactive
-  Path track_inactive;
+  //Path track_inactive;
   float track_size = small * track_size_factor;
-  track_inactive.startNewSubPath(Point<float>(start_x, start_y));
-  track_inactive.lineTo(Point<float>(end_x, end_y));
-  g.setColour(s.findColour(colors::slider_track_inactive));
-  g.strokePath(track_inactive, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
+  //track_inactive.startNewSubPath(Point<float>(start_x, start_y));
+  //track_inactive.lineTo(Point<float>(end_x, end_y));
+  auto highlight_low = s.findColour(colors::slider_highlight_low);
+  auto highlight_high = s.findColour(colors::slider_highlight_high);
+  //auto highlight_gradient = ColourGradient(highlight_high)
+  //g.strokePath(track_inactive, { track_size, PathStrokeType::curved, PathStrokeType::rounded });
+  g.setColour(Colours::green);
+  g.fillRoundedRectangle(start_x - track_size / 2.0f, start_y - track_size / 2.0f, vertical? track_size: w, vertical? h: track_size, track_size / 2.0f);
 
   // track active
   Path track_active;

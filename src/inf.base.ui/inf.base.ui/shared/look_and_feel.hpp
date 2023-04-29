@@ -33,6 +33,8 @@ public:
     slider_track_low,
     slider_track_high,
     slider_track_inactive,
+    slider_highlight_low,
+    slider_highlight_high,
     slider_spot_fill_base,
     slider_spot_fill_highlight,
     slider_gradient_fill_base,
