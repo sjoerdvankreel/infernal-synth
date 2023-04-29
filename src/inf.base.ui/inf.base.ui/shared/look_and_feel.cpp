@@ -56,8 +56,8 @@ inf_look_and_feel::drawLinearSlider(
 
   // thumb gradient
   float thumb_size = track_size * thumb_size_factor;
-  float thumb_y = y + h / 2.0f - 0.5f * thumb_size;
-  float thumb_x = x + pos * w - 0.5f * thumb_size;
+  float thumb_y = (vertical? y + pos * w: start_y) - 0.5f * thumb_size;
+  float thumb_x = (vertical? start_x: x + pos * w) - 0.5f * thumb_size;
   auto thumb_low = s.findColour(colors::switch_gradient_fill_base_off);
   auto thumb_high = s.findColour(colors::switch_gradient_fill_highlight_off);
   if (pos >= 0.5)
