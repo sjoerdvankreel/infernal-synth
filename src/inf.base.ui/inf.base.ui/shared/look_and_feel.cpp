@@ -121,10 +121,10 @@ inf_look_and_feel::drawComboBox(
   Graphics& g, int w0, int h0, bool isButtonDown,
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
 {
-  float x = static_cast<float>(button_x0);
-  float y = static_cast<float>(button_y0);
-  float w = static_cast<float>(button_w0);
-  float h = static_cast<float>(button_h0);
+  float x = static_cast<float>(0);
+  float y = static_cast<float>(0);
+  float w = static_cast<float>(w0);
+  float h = static_cast<float>(h0);
   g.setColour(Colours::green);
   g.drawRoundedRectangle(x, y, w, h, 5, 1);
 }

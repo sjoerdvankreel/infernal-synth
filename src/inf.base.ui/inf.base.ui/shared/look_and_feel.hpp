@@ -1,6 +1,7 @@
 #ifndef INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP
 #define INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP
 
+#include <inf.base.ui/shared/config.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
 namespace inf::base::ui {
@@ -57,6 +58,9 @@ public:
   // Disables ellipses and fitting.
   void drawLabel(
     juce::Graphics& g, juce::Label& label) override;
+
+  juce::Font getComboBoxFont(juce::ComboBox& box) override
+  { return juce::Font(dropdown_font_height, juce::Font::bold); }
 
   // Custom slider.
   void drawLinearSlider(
