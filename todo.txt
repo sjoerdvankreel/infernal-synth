@@ -65,3 +65,4 @@
 - drop label=both option?
 - exact editing
 - go with juce's vst3sdk
+- tooltips, editable labels, show value on slider movement

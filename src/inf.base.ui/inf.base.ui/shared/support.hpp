@@ -11,7 +11,7 @@ namespace inf::base::ui
 {
 
 enum class label_type { label, value };
-enum class edit_type { knob, selector, hslider, vslider, toggle };
+enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };
 
 std::string
 get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);

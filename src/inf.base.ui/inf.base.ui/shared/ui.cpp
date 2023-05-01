@@ -1,5 +1,6 @@
 #include <inf.base.ui/shared/ui.hpp>
 #include <inf.base.ui/controls/label.hpp>
+#include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -116,6 +117,17 @@ param_edit_element::layout()
   component()->setBounds(with_container_padding(component()->getBounds()));
 }
 
+Component* 
+param_edit_element::build_core(plugin_controller* controller, juce::LookAndFeel const& lnf)
+{
+  switch (_type)
+  {
+  case edit_type::toggle: return build_toggle_core(controller, lnf);
+  case edit_type::dropdown: return build_dropdown_core(controller, lnf);
+  default: return build_slider_core(controller, lnf);
+  }
+}
+
 Component*
 param_edit_element::build_toggle_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
@@ -124,6 +136,18 @@ param_edit_element::build_toggle_core(plugin_controller* controller, LookAndFeel
   _toggle_listener.reset(new toggle_param_listener(controller, result, index));
   result->addListener(_toggle_listener.get());
   result->setToggleState(controller->state()[index].discrete != 0, dontSendNotification);
+  return result;
+}
+
+Component*
+param_edit_element::build_dropdown_core(plugin_controller* controller, LookAndFeel const& lnf)
+{
+  std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
+  auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
+  inf_dropdown* result = new inf_dropdown(&desc);
+  _dropdown_listener.reset(new dropdown_param_listener(controller, result, index));
+  result->addListener(_dropdown_listener.get());
+  result->setSelectedItemIndex(controller->state()[index].discrete, dontSendNotification);
   return result;
 }
 

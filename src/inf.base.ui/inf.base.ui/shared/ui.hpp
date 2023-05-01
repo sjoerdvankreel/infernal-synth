@@ -8,6 +8,7 @@
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
 #include <inf.base.ui/listeners/slider_param_listener.hpp>
+#include <inf.base.ui/listeners/dropdown_param_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -108,15 +109,16 @@ public ui_element
   std::int32_t const _param_index;
   std::unique_ptr<toggle_param_listener> _toggle_listener = {};
   std::unique_ptr<slider_param_listener> _slider_listener = {};
+  std::unique_ptr<dropdown_param_listener> _dropdown_listener = {};
   juce::Component* build_toggle_core(plugin_controller* controller, juce::LookAndFeel const& lnf);
   juce::Component* build_slider_core(plugin_controller* controller, juce::LookAndFeel const& lnf);
+  juce::Component* build_dropdown_core(plugin_controller* controller, juce::LookAndFeel const& lnf);
 public:
   void layout() override;
   param_edit_element(base::part_id const& part_id, std::int32_t param_index, edit_type type):
   _type(type), _part_id(part_id), _param_index(param_index) {}
 protected:
-  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override
-  { return _type == edit_type::toggle? build_toggle_core(controller, lnf): build_slider_core(controller, lnf); }
+  juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 };
 
 inline std::unique_ptr<param_edit_element>
