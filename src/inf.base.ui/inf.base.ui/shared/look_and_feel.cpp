@@ -115,6 +115,15 @@ inf_look_and_feel::drawToggleButton(
   g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
 }
 
+// Custom dropdown.
+void 
+inf_look_and_feel::drawComboBox(
+  Graphics& g, int w0, int h0, bool isButtonDown,
+  int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
+{
+  LookAndFeel_V4::drawComboBox(g, w0, h0, isButtonDown, button_x0, button_y0, button_w0, button_h0);
+}
+
 void 
 inf_look_and_feel::drawLinearSlider(
   Graphics& g, int x0, int y0, int w0, int h0,
