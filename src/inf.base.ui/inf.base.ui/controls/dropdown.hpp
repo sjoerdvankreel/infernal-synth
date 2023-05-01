@@ -7,6 +7,8 @@
 #include <cstdint>
 
 namespace inf::base::ui {
+
+inline std::int32_t constexpr dropdown_id_offset = 1000;
   
 class inf_dropdown:
 public juce::ComboBox

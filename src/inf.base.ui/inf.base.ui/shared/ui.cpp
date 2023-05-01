@@ -134,8 +134,8 @@ param_edit_element::build_toggle_core(plugin_controller* controller, LookAndFeel
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   ToggleButton* result = new ToggleButton();
   _toggle_listener.reset(new toggle_param_listener(controller, result, index));
-  result->addListener(_toggle_listener.get());
   result->setToggleState(controller->state()[index].discrete != 0, dontSendNotification);
+  result->addListener(_toggle_listener.get());
   return result;
 }
 
@@ -145,9 +145,11 @@ param_edit_element::build_dropdown_core(plugin_controller* controller, LookAndFe
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_dropdown* result = new inf_dropdown(&desc);
+  for(std::size_t i = 0; i < desc.data.discrete.items->size(); i++)
+    result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
+  result->setSelectedItemIndex(controller->state()[index].discrete, dontSendNotification);
   _dropdown_listener.reset(new dropdown_param_listener(controller, result, index));
   result->addListener(_dropdown_listener.get());
-  result->setSelectedItemIndex(controller->state()[index].discrete, dontSendNotification);
   return result;
 }
 
@@ -158,8 +160,6 @@ param_edit_element::build_slider_core(plugin_controller* controller, LookAndFeel
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider(&desc, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-  _slider_listener.reset(new slider_param_listener(controller, result, index));
-  result->addListener(_slider_listener.get());
   if(desc.data.type == param_type::real)
   {
     result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
@@ -186,6 +186,8 @@ param_edit_element::build_slider_core(plugin_controller* controller, LookAndFeel
     assert(false);
     break;
   }
+  _slider_listener.reset(new slider_param_listener(controller, result, index));
+  result->addListener(_slider_listener.get());
   return result;
 }
 

@@ -12,17 +12,19 @@ class dropdown_param_listener :
 public juce::ComboBox::Listener,
 public param_listener
 {
-  juce::ComboBox* const _dropdown;
+  inf_dropdown* const _dropdown;
   std::int32_t const _param_index;
   plugin_controller* const _controller;
 
 public:
-  void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override {}
-  void controller_param_changed(inf::base::param_value ui_value) override {}
+  void controller_param_changed(inf::base::param_value ui_value) override
+  { _dropdown->setSelectedItemIndex(ui_value.discrete, juce::dontSendNotification); }
+  void comboBoxChanged(juce::ComboBox* dropdown) override
+  { _controller->editor_param_changed(_param_index, param_value(dropdown->getSelectedItemIndex())); }
 
   ~dropdown_param_listener() { _controller->remove_param_listener(_param_index, this); }
-  dropdown_param_listener(plugin_controller* controller, juce::ComboBox* dropdown, std::int32_t param_index):
-    _dropdown(dropdown), _param_index(param_index), _controller(controller) { _controller->add_param_listener(param_index, this); }
+  dropdown_param_listener(plugin_controller* controller, inf_dropdown* dropdown, std::int32_t param_index):
+  _dropdown(dropdown), _param_index(param_index), _controller(controller) { _controller->add_param_listener(param_index, this); }
 };
 
 } // namespace inf::base::ui
