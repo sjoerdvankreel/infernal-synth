@@ -7,8 +7,7 @@
 #include <string>
 #include <cstdint>
 
-namespace inf::base::ui 
-{
+namespace inf::base::ui {
 
 enum class label_type { label, value };
 enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };

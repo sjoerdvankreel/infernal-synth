@@ -1,4 +1,5 @@
 #include <inf.base.ui/shared/ui.hpp>
+#include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/controls/label.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base/shared/support.hpp>
@@ -6,13 +7,7 @@
 using namespace juce;
 using namespace inf::base;
 
-static int const container_padding = 2;
-static float const group_label_font_height = 11.0f;
-static float const group_label_total_height = group_label_font_height + 7.0f;
-static float const group_label_vertical_width = group_label_font_height + 3.0f;
-static float const param_label_font_height = 10.0f;
-static float const param_label_hslider_width = 32.0f;
-static float const param_label_total_height = param_label_font_height + 4.0f;
+namespace inf::base::ui {
 
 static Rectangle<int> 
 with_container_padding(Rectangle<int> const& bounds)
@@ -21,8 +16,6 @@ with_container_padding(Rectangle<int> const& bounds)
     bounds.getX() + container_padding, bounds.getY() + container_padding,
     bounds.getWidth() - 2 * container_padding, bounds.getHeight() - 2 * container_padding);
 }
-
-namespace inf::base::ui {
 
 Component*
 ui_element::build(plugin_controller* controller, LookAndFeel const& lnf)

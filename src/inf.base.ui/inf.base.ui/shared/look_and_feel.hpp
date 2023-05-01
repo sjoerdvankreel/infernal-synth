@@ -64,7 +64,6 @@ public:
     float pos0, float min0, float max0,
     juce::Slider::SliderStyle style, juce::Slider& s) override;
 
-
   // Custom knob.
   void drawRotarySlider(
     juce::Graphics& g, int x0, int y0, int w0, int h0,
