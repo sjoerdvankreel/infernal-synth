@@ -79,6 +79,9 @@ public:
     bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 
   // Custom dropdown.
+  void positionComboBoxText(
+    juce::ComboBox& cb, juce::Label& l)
+  { l.setBounds(cb.getLocalBounds()); }
   void drawComboBox(
     juce::Graphics& g, int w0, int h0, bool isButtonDown,
     int button_x0, int button_y0, int button_w0, int button_h0, juce::ComboBox& cb) override;
