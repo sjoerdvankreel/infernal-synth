@@ -21,7 +21,7 @@ public:
 
   ~slider_param_listener() { _controller->remove_param_listener(_param_index, this); }
   slider_param_listener(plugin_controller* controller, juce::Slider* slider, std::int32_t param_index):
-  _slider(slider), _controller(controller), _param_index(param_index) { _controller->add_param_listener(param_index, this); }
+  _slider(slider), _param_index(param_index), _controller(controller) { _controller->add_param_listener(param_index, this); }
 };
 
 } // namespace inf::base::ui

@@ -76,7 +76,7 @@ group_label_element::build_core(plugin_controller* controller, LookAndFeel const
   Label* result = new inf_label(false);
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
-  result->setFont(Font(group_label_font_height, Font::bold));
+  result->setFont(juce::Font(group_label_font_height, juce::Font::bold));
   result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::group_label_color));
   return result;
 }
@@ -103,7 +103,7 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   param_value value = controller->state()[index];
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setJustificationType(_justification);
-  result->setFont(Font(param_label_font_height, Font::bold));
+  result->setFont(juce::Font(param_label_font_height, juce::Font::bold));
   result->setText(get_label_text(&desc, _type, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller, result, index, _type));
   return result;

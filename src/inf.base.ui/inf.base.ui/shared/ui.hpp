@@ -70,7 +70,7 @@ public:
   void layout() override;
   bool vertical() const { return _vertical; }
   group_label_element(std::string const& text, bool vertical):
-  _text(text), _vertical(vertical) {}
+  _vertical(vertical), _text(text) {}
 };
 
 inline std::unique_ptr<group_label_element>
@@ -113,7 +113,7 @@ public ui_element
 public:
   void layout() override;
   param_edit_element(base::part_id const& part_id, std::int32_t param_index, edit_type type):
-  _part_id(part_id), _param_index(param_index), _type(type) {}
+  _type(type), _part_id(part_id), _param_index(param_index) {}
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override
   { return _type == edit_type::toggle? build_toggle_core(controller, lnf): build_slider_core(controller, lnf); }

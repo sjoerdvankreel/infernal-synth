@@ -64,3 +64,4 @@
 - fix is_continuous crap / do to_ui / to_base / different types for base / ui / vst normalized?
 - drop label=both option?
 - exact editing
+- go with juce's vst3sdk

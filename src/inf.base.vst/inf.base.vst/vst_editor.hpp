@@ -13,6 +13,8 @@ class vst_controller;
 class vst_editor: 
 public Steinberg::Vst::EditorView
 {
+  vst_controller* const _controller;
+
 #if __linux__
   struct impl;
   std::unique_ptr<impl> _impl;
@@ -22,7 +24,6 @@ public Steinberg::Vst::EditorView
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
 
-  vst_controller* const _controller;
   std::unique_ptr<inf::base::ui::root_element> _ui = {};
   juce::Component* get_ui() const { return _ui.get()->component(); }
   bool have_ui() const { return _ui && _ui.get() && _ui.get()->component(); }

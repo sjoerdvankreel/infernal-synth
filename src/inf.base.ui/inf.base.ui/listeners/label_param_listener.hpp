@@ -21,7 +21,7 @@ public:
   void controller_param_changed(inf::base::param_value ui_value) override;
   ~label_param_listener() { _controller->remove_param_listener(_param_index, this); }
   label_param_listener(plugin_controller* controller, juce::Label* label, std::int32_t param_index, label_type type):
-  _label(label), _type(type), _controller(controller), _param_index(param_index) { _controller->add_param_listener(param_index, this); }
+  _type(type), _label(label), _param_index(param_index), _controller(controller) { _controller->add_param_listener(param_index, this); }
 };
 
 } // namespace inf::base::ui
