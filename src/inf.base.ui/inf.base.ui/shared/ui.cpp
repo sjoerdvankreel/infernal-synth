@@ -2,7 +2,6 @@
 #include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/controls/label.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
-#include <inf.base.ui/shared/look_and_feel.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -19,9 +18,9 @@ with_container_padding(Rectangle<int> const& bounds)
 }
 
 Component*
-ui_element::build(plugin_controller* controller)
+ui_element::build(plugin_controller* controller, LookAndFeel const& lnf)
 {
-  _component.reset(build_core(controller));
+  _component.reset(build_core(controller, lnf));
   for (auto const& color : _colors)
     _component->setColour(color.first, color.second);
   _component->setVisible(true);
@@ -29,11 +28,12 @@ ui_element::build(plugin_controller* controller)
 }
 
 Component* 
-root_element::build_core(plugin_controller* controller)
+root_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   container_component* result = new container_component(container_component::flags::fill, 0.0f, 0.0f, Colours::black, Colour());
-  result->addChildComponent(_content->build(controller));
+  result->addChildComponent(_content->build(controller, lnf));
   result->setOpaque(true);
+  result->setLookAndFeel(&_lnf);
   return result;
 }
 
@@ -48,12 +48,12 @@ root_element::layout()
 }
 
 Component*
-container_element::build_core(plugin_controller* controller)
+container_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   float const radius = 8.0f;
   float const thickness = 1.0f;
   container_component* result = new container_component(_flags, radius, thickness, _fill, _outline);
-  result->addChildComponent(_content->build(controller));
+  result->addChildComponent(_content->build(controller, lnf));
   return result;
 }
 
@@ -65,13 +65,13 @@ container_element::layout()
 }
 
 Component*
-group_label_element::build_core(plugin_controller* controller)
+group_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Label* result = new inf_label(false);
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
   result->setFont(juce::Font(group_label_font_height, juce::Font::bold));
-  result->setColour(Label::ColourIds::textColourId, result->getLookAndFeel().findColour(inf_look_and_feel::colors::group_label_color));
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::group_label_color));
   return result;
 }
 
@@ -88,7 +88,7 @@ group_label_element::layout()
 }
 
 Component*
-param_label_element::build_core(plugin_controller* controller)
+param_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Label* result = new inf_label(true);
   auto topology = controller->topology();
@@ -111,18 +111,18 @@ param_edit_element::layout()
 }
 
 Component* 
-param_edit_element::build_core(plugin_controller* controller)
+param_edit_element::build_core(plugin_controller* controller, juce::LookAndFeel const& lnf)
 {
   switch (_type)
   {
-  case edit_type::toggle: return build_toggle_core(controller);
-  case edit_type::dropdown: return build_dropdown_core(controller);
-  default: return build_slider_core(controller);
+  case edit_type::toggle: return build_toggle_core(controller, lnf);
+  case edit_type::dropdown: return build_dropdown_core(controller, lnf);
+  default: return build_slider_core(controller, lnf);
   }
 }
 
 Component*
-param_edit_element::build_toggle_core(plugin_controller* controller)
+param_edit_element::build_toggle_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   ToggleButton* result = new ToggleButton();
@@ -133,7 +133,7 @@ param_edit_element::build_toggle_core(plugin_controller* controller)
 }
 
 Component*
-param_edit_element::build_dropdown_core(plugin_controller* controller)
+param_edit_element::build_dropdown_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
@@ -147,7 +147,7 @@ param_edit_element::build_dropdown_core(plugin_controller* controller)
 }
 
 Component*
-param_edit_element::build_slider_core(plugin_controller* controller)
+param_edit_element::build_slider_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
@@ -185,11 +185,11 @@ param_edit_element::build_slider_core(plugin_controller* controller)
 }
 
 Component*
-grid_element::build_core(plugin_controller* controller)
+grid_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Component* result = new Component;
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
-    result->addChildComponent(_cell_contents[i]->build(controller));
+    result->addChildComponent(_cell_contents[i]->build(controller, lnf));
   return result;
 }
 

@@ -86,9 +86,7 @@ public vst_editor
 {
 public:
   synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
-  std::unique_ptr<inf_look_and_feel> create_lnf() const override 
-  { return create_synth_lnf(); }
-  std::unique_ptr<root_element> create_ui(std::int32_t width) const override 
+  std::unique_ptr<root_element> create_ui(std::int32_t width) override 
   { return create_synth_ui(width); }
 };
 

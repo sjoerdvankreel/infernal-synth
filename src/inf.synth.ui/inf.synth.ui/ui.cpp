@@ -112,52 +112,48 @@ create_oscillator_grid()
 
 std::unique_ptr<root_element>
 create_synth_ui(std::int32_t width)
-{ return create_root_ui(create_oscillator_grid(), width, juce::Colours::black); }
-
-std::unique_ptr<inf::base::ui::inf_look_and_feel>
-create_synth_lnf()
 {
-  auto result = std::make_unique<inf::base::ui::inf_look_and_feel>();
-  result->setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
-  result->setColour(inf_look_and_feel::colors::group_label_color, Colour(0xFFFD9A4D));
-  result->setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
-  result->setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
-  result->setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
-  result->setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFF2EB8D1));
-  result->setColour(inf_look_and_feel::colors::knob_outline_inactive, Colour(0xFF666666));
-  result->setColour(inf_look_and_feel::colors::knob_cuts_inward_low, Colour(0xFFDA6102));
-  result->setColour(inf_look_and_feel::colors::knob_cuts_outward_low, Colour(0x80DA6102));
-  result->setColour(inf_look_and_feel::colors::knob_cuts_inward_high, Colour(0xFFFD9A4D));
-  result->setColour(inf_look_and_feel::colors::knob_cuts_outward_high, Colour(0x80FD9A4D));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80228A9C));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFF228A9C));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x802EB8D1));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFF2EB8D1));
-  result->setColour(inf_look_and_feel::colors::knob_center_stroke_low, Colour(0xFFDA6102));
-  result->setColour(inf_look_and_feel::colors::knob_center_stroke_high, Colour(0xFFFD9A4D));
-  result->setColour(inf_look_and_feel::colors::knob_spot_fill_base, Colour(0x00222222));
-  result->setColour(inf_look_and_feel::colors::knob_spot_fill_highlight, Colour(0x80BBBBBB));
-  result->setColour(inf_look_and_feel::colors::knob_gradient_fill_base, Colour(0xFF222222));
-  result->setColour(inf_look_and_feel::colors::knob_gradient_fill_highlight, Colour(0xFF999999));
-  result->setColour(inf_look_and_feel::colors::slider_center_fill, Colour(0xFF444444));
-  result->setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFF14525D));
-  result->setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFF2EB8D1));
-  result->setColour(inf_look_and_feel::colors::slider_track_inactive, Colour(0xFF222222));
-  result->setColour(inf_look_and_feel::colors::slider_highlight_low, Colour(0xFF444444));
-  result->setColour(inf_look_and_feel::colors::slider_highlight_high, Colour(0xFFAAAAAA));
-  result->setColour(inf_look_and_feel::colors::slider_spot_fill_base, Colour(0x00222222));
-  result->setColour(inf_look_and_feel::colors::slider_spot_fill_highlight, Colour(0x80BBBBBB));
-  result->setColour(inf_look_and_feel::colors::slider_gradient_fill_base, Colour(0xE0DA6102));
-  result->setColour(inf_look_and_feel::colors::slider_gradient_fill_highlight, Colour(0xE0FD9A4D));
-  result->setColour(inf_look_and_feel::colors::switch_outline_off, Colour(0xFF666666));
-  result->setColour(inf_look_and_feel::colors::switch_outline_on_low, Colour(0xFF14525D));
-  result->setColour(inf_look_and_feel::colors::switch_outline_on_high, Colour(0xFF2EB8D1));
-  result->setColour(inf_look_and_feel::colors::switch_spot_fill_base, Colour(0x00222222));
-  result->setColour(inf_look_and_feel::colors::switch_spot_fill_highlight, Colour(0x80BBBBBB));
-  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_base_on, Colour(0xA0DA6102));
-  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_highlight_on, Colour(0xA0FD9A4D));
-  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_center_base, Colour(0xFF222222));
-  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_center_highlight, Colour(0xFF999999));
+  auto result = create_root_ui(create_oscillator_grid(), width, juce::Colours::black);
+  result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::group_label_color, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_inactive, Colour(0xFF666666));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_low, Colour(0xFFDA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_low, Colour(0x80DA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_high, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_high, Colour(0x80FD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80228A9C));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFF228A9C));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x802EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_center_stroke_low, Colour(0xFFDA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_center_stroke_high, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_base, Colour(0x00222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_highlight, Colour(0x80BBBBBB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_gradient_fill_base, Colour(0xFF222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_gradient_fill_highlight, Colour(0xFF999999));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_center_fill, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFF14525D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_track_inactive, Colour(0xFF222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_highlight_low, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_highlight_high, Colour(0xFFAAAAAA));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_spot_fill_base, Colour(0x00222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_spot_fill_highlight, Colour(0x80BBBBBB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_base, Colour(0xE0DA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_highlight, Colour(0xE0FD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_off, Colour(0xFF666666));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_on_low, Colour(0xFF14525D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_on_high, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_base, Colour(0x00222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_highlight, Colour(0x80BBBBBB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_base_on, Colour(0xA0DA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_highlight_on, Colour(0xA0FD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_center_base, Colour(0xFF222222));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_center_highlight, Colour(0xFF999999));
   return result;
 }
 

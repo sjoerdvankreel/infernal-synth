@@ -37,8 +37,6 @@ vst_editor::removed()
 {
   if (have_ui()) get_ui()->removeFromDesktop();
   _ui.reset();
-  juce::LookAndFeel::setDefaultLookAndFeel(nullptr);
-  _lnf.reset();
 #if __linux__
   _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
@@ -76,8 +74,6 @@ vst_editor::attached(void* parent, FIDString type)
 {
   if(!plugFrame) return EditorView::attached(parent, type);
   MessageManager::getInstance();
-  _lnf = create_lnf();
-  juce::LookAndFeel::setDefaultLookAndFeel(_lnf.get());
   _ui = create_ui(_controller->editor_default_width());
   _ui->build(_controller);
   _ui->layout();

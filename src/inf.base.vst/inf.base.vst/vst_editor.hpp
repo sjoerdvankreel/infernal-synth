@@ -2,7 +2,6 @@
 #define INF_BASE_VST_VST_EDITOR_HPP
 
 #include <inf.base.ui/shared/ui.hpp>
-#include <inf.base.ui/shared/look_and_feel.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
@@ -26,7 +25,6 @@ public Steinberg::Vst::EditorView
   using FIDString = Steinberg::FIDString;
 
   std::unique_ptr<inf::base::ui::root_element> _ui = {};
-  std::unique_ptr<inf::base::ui::inf_look_and_feel> _lnf = {};
   juce::Component* get_ui() const { return _ui.get()->component(); }
   bool have_ui() const { return _ui && _ui.get() && _ui.get()->component(); }
 
@@ -42,8 +40,7 @@ public:
 
 protected:
   explicit vst_editor(vst_controller* controller);
-  virtual std::unique_ptr<inf::base::ui::inf_look_and_feel> create_lnf() const = 0;
-  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(std::int32_t width) const = 0;
+  virtual std::unique_ptr<inf::base::ui::root_element> create_ui(std::int32_t width) = 0;
 };
 
 } // namespace inf::base::vst
