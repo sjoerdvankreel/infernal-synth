@@ -133,8 +133,10 @@ inf_look_and_feel::drawComboBox(
   float y = static_cast<float>(0);
   float w = static_cast<float>(w0);
   float h = static_cast<float>(h0);
-  g.setColour(Colours::green);
+  g.setColour(cb.findColour(ComboBox::ColourIds::backgroundColourId));
   g.fillRoundedRectangle(x, y, w, h, 5);
+  g.setColour(cb.findColour(ComboBox::ColourIds::outlineColourId));
+  g.drawRoundedRectangle(x, y, w, h, 5, 1);
 }
 
 void 

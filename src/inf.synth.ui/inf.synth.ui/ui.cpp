@@ -115,7 +115,9 @@ create_synth_ui(std::int32_t width)
 {
   auto result = create_root_ui(create_oscillator_grid(), width, juce::Colours::black);
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(ComboBox::ColourIds::textColourId, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(ComboBox::ColourIds::textColourId, Colour(0xFFA7BECB));
+  result->look_and_feel().setColour(ComboBox::ColourIds::outlineColourId, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(ComboBox::ColourIds::backgroundColourId, Colour(0xFF666666));
   result->look_and_feel().setColour(inf_look_and_feel::colors::group_label_color, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
