@@ -59,9 +59,6 @@ public:
   void drawLabel(
     juce::Graphics& g, juce::Label& label) override;
 
-  juce::Font getComboBoxFont(juce::ComboBox& box) override
-  { return juce::Font(dropdown_font_height, juce::Font::bold); }
-
   // Custom slider.
   void drawLinearSlider(
     juce::Graphics& g, int x0, int y0, int w0, int h0,
@@ -85,6 +82,12 @@ public:
   void drawComboBox(
     juce::Graphics& g, int w0, int h0, bool isButtonDown,
     int button_x0, int button_y0, int button_w0, int button_h0, juce::ComboBox& cb) override;
+
+  juce::Font getPopupMenuFont() override
+  { return juce::Font(dropdown_font_height, juce::Font::bold); }
+  juce::Font getComboBoxFont(juce::ComboBox& box) override
+  { return juce::Font(dropdown_font_height, juce::Font::bold); }
+
 };
 
 } // namespace inf::base::ui
