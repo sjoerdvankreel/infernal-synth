@@ -138,6 +138,7 @@ param_edit_element::build_dropdown_core(plugin_controller* controller, LookAndFe
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller->topology()->get_param_descriptor(_part_id, _param_index);
   inf_dropdown* result = new inf_dropdown(&desc);
+  result->setJustificationType(Justification::centred);
   for(std::size_t i = 0; i < desc.data.discrete.items->size(); i++)
     result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
   result->setSelectedItemIndex(controller->state()[index].discrete, dontSendNotification);
