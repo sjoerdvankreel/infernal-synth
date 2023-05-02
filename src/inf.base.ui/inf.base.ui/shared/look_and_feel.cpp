@@ -117,6 +117,14 @@ inf_look_and_feel::drawToggleButton(
 
 // Custom dropdown.
 void 
+inf_look_and_feel::positionComboBoxText(
+  juce::ComboBox& cb, juce::Label& l)
+{
+  l.setBounds(cb.getLocalBounds());
+  l.setFont(getComboBoxFont(cb));
+}
+
+void 
 inf_look_and_feel::drawComboBox(
   Graphics& g, int w0, int h0, bool isButtonDown,
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
