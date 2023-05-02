@@ -13,10 +13,10 @@ static std::unique_ptr<ui_element>
 create_osc_main_group()
 {
   auto grid = create_grid_ui(6, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_type::label, edit_type::knob), 0, 0, 2, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_type::label, edit_type::selector), 2, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(part_type::vosc, 0, osc_param::type, edit_type::dropdown), 4, 0, 1, 1);
-  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_type::label, edit_type::toggle), 5, 0, 1, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::type, label_type::label, edit_type::selector), 0, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(part_type::vosc, 0, osc_param::type, edit_type::dropdown), 2, 0, 1, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::kbd, label_type::label, edit_type::toggle), 3, 0, 1, 1);
+  grid->add_cell(create_param_ui(part_type::vosc, 0, osc_param::gain, label_type::label, edit_type::knob), 4, 0, 2, 1);
   return create_group_ui(create_group_label_ui("Main", false), std::move(grid));
 }
 
