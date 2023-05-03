@@ -6,7 +6,7 @@ namespace inf::base::ui {
 inline int const container_padding = 2;
 
 inline float const dropdown_hpad = 4.0f;
-inline float const dropdown_vmargin_factor = 0.67f;
+inline float const dropdown_vpad = 12.0f;
 inline float const dropdown_font_min_height = 10.0f;
 inline float const dropdown_font_max_height = 12.0f;
 
