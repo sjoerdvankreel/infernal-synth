@@ -83,8 +83,7 @@ group_label_element::layout(plugin_controller* controller)
   auto transform = AffineTransform().rotated(rotation_angles, label->getWidth() / 2.0f, label->getHeight() / 2.0f);
   label->setTransform(transform);
   label->setBounds(label->getBounds().transformedBy(transform));
-  // Bottom: right after transform.
-  label->setJustificationType(_vertical? Justification::centredBottom: Justification::centred);
+  label->setJustificationType(_vertical? Justification::centred : Justification::centredBottom);
 }
 
 Component*
