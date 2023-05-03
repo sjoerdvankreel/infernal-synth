@@ -70,7 +70,7 @@ group_label_element::build_core(plugin_controller* controller, LookAndFeel const
   Label* result = new inf_label(false);
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
-  result->setFont(juce::Font(group_label_font_height, juce::Font::bold));
+  result->setFont(juce::Font(get_group_label_font_height(controller), juce::Font::bold));
   result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::group_label_color));
   return result;
 }
@@ -273,19 +273,20 @@ create_param_ui(
 }
 
 std::unique_ptr<ui_element>
-create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content)
+create_group_ui(plugin_controller* controller, std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content)
 {
   std::vector<Grid::TrackInfo> rows;
   std::vector<Grid::TrackInfo> cols;
+  auto label_height = get_group_label_total_height(controller);
   if (label->vertical())
   {
     rows.push_back(Grid::TrackInfo(Grid::Fr(1)));
-    cols.push_back(Grid::TrackInfo(Grid::Px(group_label_vertical_width)));
+    cols.push_back(Grid::TrackInfo(Grid::Px(label_height + group_label_vpad)));
     cols.push_back(Grid::TrackInfo(Grid::Fr(1)));
   }
   else
   {
-    rows.push_back(Grid::TrackInfo(Grid::Px(group_label_total_height)));
+    rows.push_back(Grid::TrackInfo(Grid::Px(label_height)));
     rows.push_back(Grid::TrackInfo(Grid::Fr(1)));
     cols.push_back(Grid::TrackInfo(Grid::Fr(1)));
   }

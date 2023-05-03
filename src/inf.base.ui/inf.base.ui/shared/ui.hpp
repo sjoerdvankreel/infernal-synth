@@ -193,7 +193,9 @@ create_param_ui(
   plugin_controller const* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, label_type label_type, edit_type edit_type);
 std::unique_ptr<ui_element>
-create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content);
+create_group_ui(
+  plugin_controller* controller, std::unique_ptr<group_label_element>&& label, 
+  std::unique_ptr<ui_element>&& content);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_UI_HPP
