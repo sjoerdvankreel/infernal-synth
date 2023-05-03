@@ -109,8 +109,9 @@ param_edit_element::layout()
   auto bounds = with_container_padding(component()->getBounds());
   if (_type == edit_type::dropdown)
   {
+    float vpad = get_dropdown_vpad(controller());
     float text_height = get_dropdown_font_height(controller());
-    float total_height = text_height + dropdown_vpad;
+    float total_height = text_height + vpad;
     float total_width = bounds.getWidth() - dropdown_hpad;
     float drop_x = bounds.getX() + dropdown_hpad / 2.0f;
     float drop_y = bounds.getY() + (bounds.getHeight() - total_height) / 2.0f;

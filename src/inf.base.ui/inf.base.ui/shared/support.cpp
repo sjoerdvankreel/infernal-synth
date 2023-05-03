@@ -19,7 +19,7 @@ get_label_text(param_descriptor const* descriptor, label_type type, param_value 
 }
 
 float
-get_scaled_text_size(plugin_controller const* controller, float min_size, float max_size)
+get_scaled_size(plugin_controller const* controller, float min_size, float max_size)
 {
   float const current_width = static_cast<float>(controller->editor_current_width());
   float const scale_min_width = static_cast<float>(controller->editor_font_scaling_min_width());
