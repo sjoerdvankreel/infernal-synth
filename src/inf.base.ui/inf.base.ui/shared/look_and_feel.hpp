@@ -2,13 +2,17 @@
 #define INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP
 
 #include <inf.base.ui/shared/config.hpp>
+#include <inf.base.ui/shared/support.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
+#include <inf.base/plugin/plugin_controller.hpp>
 
 namespace inf::base::ui {
 
 class inf_look_and_feel:
 public juce::LookAndFeel_V4
 {
+  inf::base::plugin_controller const* const _controller;
+
 public:
   enum colors {
     knob_highlight_low,
@@ -55,6 +59,9 @@ public:
     group_label_color
   };
 
+  inf_look_and_feel(inf::base::plugin_controller const* const controller):
+  _controller(controller) {}
+
   // Disables ellipses and fitting.
   void drawLabel(
     juce::Graphics& g, juce::Label& label) override;
@@ -83,9 +90,9 @@ public:
     int button_x0, int button_y0, int button_w0, int button_h0, juce::ComboBox& cb) override;
 
   juce::Font getPopupMenuFont() override
-  { return juce::Font(dropdown_font_height, juce::Font::bold); }
+  { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
   juce::Font getComboBoxFont(juce::ComboBox& box) override
-  { return juce::Font(dropdown_font_height, juce::Font::bold); }
+  { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
 
 };
 

@@ -67,3 +67,4 @@
 - go with juce's vst3sdk
 - tooltips, editable labels, show value on slider movement
 - resizable labels?
+- move config to synth_editor
