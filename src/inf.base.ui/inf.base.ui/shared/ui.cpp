@@ -257,7 +257,7 @@ create_param_ui(
   if (edit_type == edit_type::hslider)
   {
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
-    auto fixed_label_width = Grid::TrackInfo(Grid::Px(param_label_hslider_width));
+    auto fixed_label_width = Grid::TrackInfo(Grid::Px(get_param_label_hslider_width(controller)));
     auto result = create_grid_ui({ auto_rest }, { fixed_label_width, auto_rest });
     result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_type, juce::Justification::centredRight), 0, 0);
     result->add_cell(create_param_edit_ui(part_type, part_index, param_index, edit_type), 0, 1);
