@@ -29,6 +29,7 @@ protected:
   using ParamValue = Steinberg::Vst::ParamValue;
 
   FUID const _processor_id;
+  std::int32_t _editor_width = 0;
   void do_edit(std::int32_t tag, double normalized);
 
 protected:
@@ -38,6 +39,9 @@ protected:
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:
+  std::int32_t editor_current_width() const override { return _editor_width; }
+  void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
+
   void save_preset(std::string const& path) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;

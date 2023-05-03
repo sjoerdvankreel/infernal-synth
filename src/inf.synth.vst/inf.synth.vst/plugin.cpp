@@ -86,16 +86,19 @@ public vst_editor
 {
 public:
   synth_vst_editor(vst_controller* controller): vst_editor(controller) {}
-  std::unique_ptr<root_element> create_ui(std::int32_t width) override 
-  { return create_synth_ui(width); }
+  std::unique_ptr<root_element> create_ui() override 
+  { return create_synth_ui(dynamic_cast<vst_controller*>(controller.get())); }
 };
 
 class synth_vst_controller :
 public vst_controller
 {
 public:
-  std::int32_t editor_min_width() const override { return 100; }
-  std::int32_t editor_default_width() const override { return 800; }
+  std::int32_t editor_min_width() const override { return 400; }
+  std::int32_t editor_default_width() const override { return 600; }
+  std::int32_t editor_font_scaling_min_width() const override { return 500; }
+  std::int32_t editor_font_scaling_max_width() const override { return 700; }
+
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}

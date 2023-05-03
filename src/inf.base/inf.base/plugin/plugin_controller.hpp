@@ -53,6 +53,9 @@ public:
 
   virtual std::int32_t editor_min_width() const = 0;
   virtual std::int32_t editor_default_width() const = 0;
+  virtual std::int32_t editor_current_width() const = 0;
+  virtual std::int32_t editor_font_scaling_min_width() const = 0;
+  virtual std::int32_t editor_font_scaling_max_width() const = 0;
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;

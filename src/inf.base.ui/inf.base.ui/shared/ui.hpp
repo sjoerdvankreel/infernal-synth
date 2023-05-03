@@ -26,7 +26,7 @@ protected:
   virtual juce::Component* 
   build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) = 0;
 public:
-  virtual void layout() = 0;
+  virtual void layout(plugin_controller* controller) = 0;
   juce::Component* build(plugin_controller* controller, juce::LookAndFeel const& lnf);
   juce::Component* component() { return _component.get(); }
   void color(std::int32_t id, juce::Colour color) { _colors[id] = color; }
@@ -42,7 +42,7 @@ public ui_element
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
-  void layout() override;
+  void layout(plugin_controller* controller) override;
   container_element(std::unique_ptr<ui_element>&& content, std::uint32_t flags, juce::Colour const& fill, juce::Colour const& outline) :
   _fill(fill), _outline(outline), _flags(flags), _content(std::move(content)) {}
 };
@@ -68,7 +68,7 @@ public ui_element
 protected:
   juce::Component* build_core(plugin_controller* controller, juce::LookAndFeel const& lnf) override;
 public:
-  void layout() override;
+  void layout(plugin_controller* controller) override;
   bool vertical() const { return _vertical; }
   group_label_element(std::string const& text, bool vertical):
   _vertical(vertical), _text(text) {}
@@ -88,7 +88,7 @@ private:
   juce::Justification _justification;
   std::unique_ptr<label_param_listener> _listener = {};
 public:
-  void layout() override {}
+  void layout(plugin_controller* controller) override {}
   param_label_element(base::part_id const& part_id, std::int32_t param_index, label_type type, juce::Justification justification):
   _type(type), _part_id(part_id), _param_index(param_index), _justification(justification) {}
 protected:
@@ -114,7 +114,7 @@ public ui_element
   juce::Component* build_slider_core(plugin_controller* controller, juce::LookAndFeel const& lnf);
   juce::Component* build_dropdown_core(plugin_controller* controller, juce::LookAndFeel const& lnf);
 public:
-  void layout() override;
+  void layout(plugin_controller* controller) override;
   param_edit_element(base::part_id const& part_id, std::int32_t param_index, edit_type type):
   _type(type), _part_id(part_id), _param_index(param_index) {}
 protected:
@@ -133,8 +133,8 @@ public ui_element
   std::vector<std::unique_ptr<ui_element>> _cell_contents = {};
   std::vector<juce::Rectangle<std::int32_t>> _cell_bounds = {};
 public:
-  void layout() override;
-  std::int32_t pixel_height(std::int32_t pixel_width);
+  void layout(plugin_controller* controller) override;
+  std::int32_t pixel_height(plugin_controller* controller);
 
   grid_element(
     std::vector<juce::Grid::TrackInfo> const& row_distribution, 
@@ -179,7 +179,7 @@ public:
   root_element(std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill) : 
   _fill(fill), _width(width), _content(std::move(content)) {}
 
-  void layout() override;
+  void layout(plugin_controller* controller) override;
   inf_look_and_feel& look_and_feel() { return _lnf; }
   juce::Component* build(plugin_controller* controller) { return ui_element::build(controller, _lnf); }
 };
@@ -189,10 +189,11 @@ create_root_ui(std::unique_ptr<grid_element>&& content, std::int32_t width, juce
 { return std::make_unique<root_element>(std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
-create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content);
+create_param_ui(
+  plugin_controller const* controller, std::int32_t part_type, std::int32_t part_index, 
+  std::int32_t param_index, label_type label_type, edit_type edit_type);
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_type label_type, edit_type edit_type);
+create_group_ui(std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content);
 
 } // namespace inf::base::ui
-
 #endif // INF_BASE_UI_SHARED_UI_HPP

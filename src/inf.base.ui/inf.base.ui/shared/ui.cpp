@@ -38,13 +38,13 @@ root_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 }
 
 void
-root_element::layout()
+root_element::layout(plugin_controller* controller)
 {
   std::int32_t w = _width;
-  std::int32_t h = _content->pixel_height(w);
+  std::int32_t h = _content->pixel_height(controller);
   component()->setBounds(0, 0, w, h);
   _content->component()->setBounds(0, 0, w, h);
-  _content->layout();
+  _content->layout(controller);
 }
 
 Component*
@@ -58,10 +58,10 @@ container_element::build_core(plugin_controller* controller, LookAndFeel const& 
 }
 
 void
-container_element::layout()
+container_element::layout(plugin_controller* controller)
 {
   _content->component()->setBounds(component()->getLocalBounds());
-  _content->layout();
+  _content->layout(controller);
 }
 
 Component*
@@ -76,7 +76,7 @@ group_label_element::build_core(plugin_controller* controller, LookAndFeel const
 }
 
 void
-group_label_element::layout()
+group_label_element::layout(plugin_controller* controller)
 {
   auto label = dynamic_cast<Label*>(component());
   float rotation_angles = _vertical? 270.0f / 360.0f * 2.0f * pi32: 0.0f;
@@ -97,14 +97,14 @@ param_label_element::build_core(plugin_controller* controller, LookAndFeel const
   param_value value = controller->state()[index];
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setJustificationType(_justification);
-  result->setFont(juce::Font(param_label_font_height, juce::Font::bold));
+  result->setFont(juce::Font(get_param_label_font_height(controller), juce::Font::bold));
   result->setText(get_label_text(&desc, _type, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller, result, index, _type));
   return result;
 }
 
 void 
-param_edit_element::layout()
+param_edit_element::layout(plugin_controller* controller)
 {
   // Cant be inline/header because static with_container_padding.
   component()->setBounds(with_container_padding(component()->getBounds()));
@@ -196,12 +196,12 @@ grid_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 
 // For root only.
 std::int32_t 
-grid_element::pixel_height(std::int32_t pixel_width)
+grid_element::pixel_height(plugin_controller* controller)
 {
   double rows = static_cast<double>(_row_distribution.size());
   double cols = static_cast<double>(_column_distribution.size());
-  double col_width = pixel_width / cols;
-  double row_height = col_width + param_label_total_height;
+  double col_width = controller->editor_current_width() / cols;
+  double row_height = col_width + get_param_label_total_height(controller);
   return static_cast<std::int32_t>(std::ceil(rows * row_height));
 }
 
@@ -216,7 +216,7 @@ grid_element::add_cell(std::unique_ptr<ui_element>&& content,
 }
 
 void
-grid_element::layout()
+grid_element::layout(plugin_controller* controller)
 {
   Grid grid;
   for(std::size_t row = 0; row < _row_distribution.size(); row++)
@@ -231,7 +231,7 @@ grid_element::layout()
   }
   grid.performLayout(component()->getLocalBounds());
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
-    _cell_contents[i]->layout();
+    _cell_contents[i]->layout(controller);
 }
 
 std::unique_ptr<grid_element>
@@ -249,7 +249,9 @@ create_grid_ui(
 }
 
 std::unique_ptr<ui_element>
-create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, label_type label_type, edit_type edit_type)
+create_param_ui(
+  plugin_controller const* controller, std::int32_t part_type, std::int32_t part_index, 
+  std::int32_t param_index, label_type label_type, edit_type edit_type)
 {
   if (edit_type == edit_type::hslider)
   {
@@ -262,7 +264,7 @@ create_param_ui(std::int32_t part_type, std::int32_t part_index, std::int32_t pa
   } else
   {
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
-    auto fixed_label_height = Grid::TrackInfo(Grid::Px(param_label_total_height));
+    auto fixed_label_height = Grid::TrackInfo(Grid::Px(get_param_label_total_height(controller)));
     auto result = create_grid_ui({ auto_rest, fixed_label_height }, { auto_rest });
     result->add_cell(create_param_edit_ui(part_type, part_index, param_index, edit_type), 0, 0);
     result->add_cell(create_param_label_ui(part_type, part_index, param_index, label_type), 1, 0);
