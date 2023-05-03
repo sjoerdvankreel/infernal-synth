@@ -9,9 +9,11 @@ inline float const param_label_vpad = 4.0f;
 inline float const param_label_font_min_height = 10.0f;
 inline float const param_label_font_max_height = 12.0f;
 
+inline float const group_label_vpad = 7.0f;
+inline float const group_label_font_min_height = 11.0f;
+inline float const group_label_font_max_height = 13.0f;
+
 inline float const dropdown_font_height = 11.0f;
-inline float const group_label_font_height = 11.0f;
-inline float const group_label_total_height = group_label_font_height + 7.0f;
 inline float const group_label_vertical_width = group_label_font_height + 3.0f;
 inline float const param_label_hslider_width = 32.0f;
 
