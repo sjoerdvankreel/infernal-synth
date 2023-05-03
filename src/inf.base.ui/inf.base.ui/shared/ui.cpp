@@ -79,6 +79,7 @@ void
 group_label_element::layout(plugin_controller* controller)
 {
   auto label = dynamic_cast<Label*>(component());
+  label->setBorderSize(BorderSize<int>());
   float rotation_angles = _vertical? 270.0f / 360.0f * 2.0f * pi32: 0.0f;
   auto transform = AffineTransform().rotated(rotation_angles, label->getWidth() / 2.0f, label->getHeight() / 2.0f);
   label->setTransform(transform);
@@ -90,6 +91,7 @@ Component*
 param_label_element::build_core(plugin_controller* controller, LookAndFeel const& lnf)
 {
   Label* result = new inf_label(true);
+  result->setBorderSize(BorderSize<int>());
   auto topology = controller->topology();
   auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
   std::int32_t index = controller->topology()->param_index(_part_id, _param_index);
