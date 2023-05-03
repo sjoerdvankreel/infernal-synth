@@ -106,7 +106,19 @@ void
 param_edit_element::layout()
 {
   // Cant be inline/header because static with_container_padding.
-  component()->setBounds(with_container_padding(component()->getBounds()));
+  auto bounds = with_container_padding(component()->getBounds());
+  if (_type == edit_type::dropdown)
+  {
+    float text_height = get_dropdown_font_height(controller());
+    float total_height = text_height + dropdown_vpad;
+    float total_width = bounds.getWidth() - dropdown_hpad;
+    float drop_x = bounds.getX() + dropdown_hpad / 2.0f;
+    float drop_y = bounds.getY() + (bounds.getHeight() - total_height) / 2.0f;
+    bounds = Rectangle<int>(
+      static_cast<int>(drop_x), static_cast<int>(drop_y),
+      static_cast<int>(total_width), static_cast<int>(total_height));
+  }
+  component()->setBounds(bounds);
 }
 
 Component* 
