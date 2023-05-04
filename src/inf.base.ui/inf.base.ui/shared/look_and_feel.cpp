@@ -125,6 +125,14 @@ inf_look_and_feel::positionComboBoxText(
 }
 
 void 
+inf_look_and_feel::drawPopupMenuBackground(
+  juce::Graphics& g, int width, int height) 
+{
+  juce::ComboBox unused;
+  drawComboBox(g, width, height, false, 0, 0, 0, 0, unused);
+}
+
+void 
 inf_look_and_feel::drawComboBox(
   Graphics& g, int w0, int h0, bool isButtonDown,
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
@@ -140,16 +148,16 @@ inf_look_and_feel::drawComboBox(
   float const h = static_cast<float>(h0);
 
   // fill
-  auto bg_low = cb.findColour(colors::dropdown_background_low);
-  auto bg_high = cb.findColour(colors::dropdown_background_high);
+  auto bg_low = findColour(colors::dropdown_background_low);
+  auto bg_high = findColour(colors::dropdown_background_high);
   auto bg_gradient = ColourGradient(bg_high, x, y, bg_low, x + w, y + h, false);
   bg_gradient.addColour(0.25, bg_high.interpolatedWith(bg_low, 0.5f));
   g.setGradientFill(bg_gradient);
   g.fillRoundedRectangle(x, y, w, h, corner_size_fixed);
   
   // outline
-  auto outline_low = cb.findColour(colors::dropdown_outline_low);
-  auto outline_high = cb.findColour(colors::dropdown_outline_high);
+  auto outline_low = findColour(colors::dropdown_outline_low);
+  auto outline_high = findColour(colors::dropdown_outline_high);
   auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
   outline_gradient.addColour(0.25, outline_high.interpolatedWith(outline_low, 0.5f));
   g.setGradientFill(outline_gradient);
@@ -157,13 +165,6 @@ inf_look_and_feel::drawComboBox(
     x + outline_size_fixed / 2.0f, y + outline_size_fixed / 2.0f,
     w - outline_size_fixed, h - outline_size_fixed, 
     corner_size_fixed, outline_size_fixed);
-}
-
-void 
-inf_look_and_feel::drawPopupMenuBackground(
-  juce::Graphics& g, int width, int height) 
-{
-  LookAndFeel_V4::drawPopupMenuBackground(g, width, height);
 }
 
 void 
@@ -177,7 +178,6 @@ inf_look_and_feel::drawPopupMenuItem(
     g, area, is_separator, is_active, is_highlighted, is_ticked, 
     has_sub_menu, text, shortcut_key_text, icon, text_colour);
 }
-
 
 void 
 inf_look_and_feel::drawLinearSlider(
