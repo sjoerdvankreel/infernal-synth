@@ -188,7 +188,11 @@ inf_look_and_feel::drawPopupMenuItem(
   // hover bg
   if(is_highlighted)
   {
-    g.setColour(findColour(PopupMenu::ColourIds::highlightedBackgroundColourId));
+    auto hl_low = findColour(colors::dropdown_highlight_background_low);
+    auto hl_high = findColour(colors::dropdown_highlight_background_high);
+    auto hl_gradient = ColourGradient(hl_high, hl_rect.getTopLeft(), hl_low, hl_rect.getBottomRight(), false);
+    hl_gradient.addColour(0.25, hl_high.interpolatedWith(hl_low, 0.5f));
+    g.setGradientFill(hl_gradient);
     g.fillRoundedRectangle(hl_rect, corner_size_fixed);
   }
 

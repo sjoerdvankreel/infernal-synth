@@ -60,6 +60,8 @@ public:
     dropdown_outline_high,
     dropdown_background_low,
     dropdown_background_high,
+    dropdown_highlight_background_low,
+    dropdown_highlight_background_high,
 
     group_label_color
   };
