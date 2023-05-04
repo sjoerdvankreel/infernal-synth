@@ -197,18 +197,19 @@ inf_look_and_feel::drawPopupMenuItem(
   }
 
   // tick
+  juce::Rectangle<float> tick_rect(
+    hl_rect.getX() + text_hpad_fixed / 2.0f, hl_rect.getY(),
+    hl_rect.getHeight() - text_hpad_fixed, hl_rect.getHeight());
   if(is_ticked)
   {
-    auto tick = getTickShape(1.0f);
     g.setColour(findColour(ComboBox::ColourIds::textColourId));
-    juce::Rectangle<float> tick_rect(hl_rect.getX(), hl_rect.getY(), hl_rect.getHeight(), hl_rect.getHeight());
-    g.fillPath(tick, tick.getTransformToScaleToFit(tick_rect, true));
+    g.fillRect(tick_rect);
   }
 
   // text
   juce::Rectangle<float> text_rect(
-    hl_rect.getX() + text_hpad_fixed / 2.0f, hl_rect.getY(),
-    hl_rect.getWidth() - text_hpad_fixed, hl_rect.getHeight());
+    tick_rect.getX() + tick_rect.getWidth(), hl_rect.getY(),
+    hl_rect.getWidth() - tick_rect.getWidth(), hl_rect.getHeight());
   g.setColour(findColour(ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
   g.drawText(text, text_rect, Justification::centredLeft, false);
