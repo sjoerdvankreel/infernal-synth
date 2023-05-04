@@ -93,6 +93,13 @@ public:
   void drawComboBox(
     juce::Graphics& g, int w0, int h0, bool isButtonDown,
     int button_x0, int button_y0, int button_w0, int button_h0, juce::ComboBox& cb) override;
+  void drawPopupMenuBackground(
+    juce::Graphics& g, int width, int height) override;
+  void drawPopupMenuItem(
+    juce::Graphics& g, juce::Rectangle<int> const& area,
+    bool is_separator, bool is_active, bool is_highlighted, bool is_ticked, bool has_sub_menu,
+    juce::String const& text, juce::String const& shortcut_key_text,
+    juce::Drawable const* icon, juce::Colour const* text_colour) override;
 
   juce::Font getPopupMenuFont() override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }

@@ -160,6 +160,26 @@ inf_look_and_feel::drawComboBox(
 }
 
 void 
+inf_look_and_feel::drawPopupMenuBackground(
+  juce::Graphics& g, int width, int height) 
+{
+  LookAndFeel_V4::drawPopupMenuBackground(g, width, height);
+}
+
+void 
+inf_look_and_feel::drawPopupMenuItem(
+  juce::Graphics& g, juce::Rectangle<int> const& area,
+  bool is_separator, bool is_active, bool is_highlighted, bool is_ticked, bool has_sub_menu,
+  juce::String const& text, juce::String const& shortcut_key_text,
+  juce::Drawable const* icon, juce::Colour const* text_colour)
+{
+  LookAndFeel_V4::drawPopupMenuItem(
+    g, area, is_separator, is_active, is_highlighted, is_ticked, 
+    has_sub_menu, text, shortcut_key_text, icon, text_colour);
+}
+
+
+void 
 inf_look_and_feel::drawLinearSlider(
   Graphics& g, int x0, int y0, int w0, int h0,
   float pos0, float min0, float max0,
