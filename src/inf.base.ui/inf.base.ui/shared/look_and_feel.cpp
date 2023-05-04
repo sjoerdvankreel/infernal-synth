@@ -129,14 +129,34 @@ inf_look_and_feel::drawComboBox(
   Graphics& g, int w0, int h0, bool isButtonDown,
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
 {
-  float x = static_cast<float>(0);
-  float y = static_cast<float>(0);
-  float w = static_cast<float>(w0);
-  float h = static_cast<float>(h0);
-  g.setColour(cb.findColour(ComboBox::ColourIds::backgroundColourId));
-  g.fillRoundedRectangle(x, y, w, h, 5);
-  g.setColour(cb.findColour(ComboBox::ColourIds::outlineColourId));
-  g.drawRoundedRectangle(x, y, w, h, 5, 1);
+  // config
+  float const corner_size_fixed = 5.0f;
+  float const outline_size_fixed = 1.0f;
+
+  // precompute stuff
+  float const x = static_cast<float>(0);
+  float const y = static_cast<float>(0);
+  float const w = static_cast<float>(w0);
+  float const h = static_cast<float>(h0);
+
+  // fill
+  auto bg_low = cb.findColour(colors::dropdown_background_low);
+  auto bg_high = cb.findColour(colors::dropdown_background_high);
+  auto bg_gradient = ColourGradient(bg_high, x, y, bg_low, x + w, y + h, false);
+  bg_gradient.addColour(0.25, bg_high.interpolatedWith(bg_low, 0.5f));
+  g.setGradientFill(bg_gradient);
+  g.fillRoundedRectangle(x, y, w, h, corner_size_fixed);
+  
+  // outline
+  auto outline_low = cb.findColour(colors::dropdown_outline_low);
+  auto outline_high = cb.findColour(colors::dropdown_outline_high);
+  auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
+  outline_gradient.addColour(0.25, outline_high.interpolatedWith(outline_low, 0.5f));
+  g.setGradientFill(outline_gradient);
+  g.drawRoundedRectangle(
+    x + outline_size_fixed / 2.0f, y + outline_size_fixed / 2.0f,
+    w - outline_size_fixed, h - outline_size_fixed, 
+    corner_size_fixed, outline_size_fixed);
 }
 
 void 
