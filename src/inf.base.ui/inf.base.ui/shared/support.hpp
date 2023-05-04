@@ -25,6 +25,9 @@ get_dropdown_font_height(inf::base::plugin_controller const* controller)
 inline float
 get_dropdown_vpad(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, dropdown_vpad_min, dropdown_vpad_max); }
+inline float
+get_dropdown_item_height(inf::base::plugin_controller const* controller)
+{ return get_dropdown_font_height(controller) + get_dropdown_vpad(controller); }
 
 inline float
 get_param_label_font_height(inf::base::plugin_controller const* controller)

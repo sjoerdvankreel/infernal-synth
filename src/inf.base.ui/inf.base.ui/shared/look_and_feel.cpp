@@ -172,11 +172,19 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::Graphics& g, juce::Rectangle<int> const& area,
   bool is_separator, bool is_active, bool is_highlighted, bool is_ticked, bool has_sub_menu,
   juce::String const& text, juce::String const& shortcut_key_text,
-  juce::Drawable const* icon, juce::Colour const* text_colour)
+  juce::Drawable const* icon, juce::Colour const*)
 {
-  LookAndFeel_V4::drawPopupMenuItem(
-    g, area, is_separator, is_active, is_highlighted, is_ticked, 
-    has_sub_menu, text, shortcut_key_text, icon, text_colour);
+  g.setColour(findColour(ComboBox::ColourIds::textColourId));
+  g.setFont(getPopupMenuFont());
+  g.drawText(text, area, Justification::centredLeft, false);
+}
+
+void 
+inf_look_and_feel::getIdealPopupMenuItemSize(
+  juce::String const& text, bool is_separator,
+  int standard_menu_item_height, int& ideal_width, int& ideal_height)
+{
+  ideal_height = static_cast<int>(std::ceil(get_dropdown_item_height(_controller)));
 }
 
 void 
