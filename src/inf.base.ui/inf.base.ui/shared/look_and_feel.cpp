@@ -175,27 +175,30 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::Drawable const* icon, juce::Colour const*)
 {
   float const padding_fixed = 4.0f;
+  float const text_hpad_fixed = 4.0f;
   float const corner_size_fixed = 5.0f;
 
   auto farea = area0.toFloat();
-  juce::Rectangle<float> rect(
+  juce::Rectangle<float> hl_rect(
     farea.getX() + padding_fixed / 2.0f,
     farea.getY() + padding_fixed / 2.0f,
     farea.getWidth() - padding_fixed,
-    farea.getHeight() - padding_fixed
-  );
+    farea.getHeight() - padding_fixed);
 
   // hover bg
   if(is_highlighted)
   {
     g.setColour(findColour(PopupMenu::ColourIds::highlightedBackgroundColourId));
-    g.fillRoundedRectangle(rect, corner_size_fixed);
+    g.fillRoundedRectangle(hl_rect, corner_size_fixed);
   }
 
   // text
+  juce::Rectangle<float> text_rect(
+    hl_rect.getX() + text_hpad_fixed / 2.0f, hl_rect.getY(),
+    hl_rect.getWidth() - text_hpad_fixed, hl_rect.getHeight());
   g.setColour(findColour(ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
-  g.drawText(text, rect, Justification::centredLeft, false);
+  g.drawText(text, text_rect, Justification::centredLeft, false);
 }
 
 void 
