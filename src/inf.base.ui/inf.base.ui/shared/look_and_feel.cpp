@@ -174,6 +174,16 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::String const& text, juce::String const& shortcut_key_text,
   juce::Drawable const* icon, juce::Colour const*)
 {
+  float const corner_size_fixed = 5.0f;
+
+  // hover bg
+  if(is_highlighted)
+  {
+    g.setColour(Colours::green);
+    g.fillRoundedRectangle(area.toFloat(), corner_size_fixed);
+  }
+
+  // text
   g.setColour(findColour(ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
   g.drawText(text, area, Justification::centredLeft, false);
