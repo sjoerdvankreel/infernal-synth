@@ -169,24 +169,33 @@ inf_look_and_feel::drawComboBox(
 
 void 
 inf_look_and_feel::drawPopupMenuItem(
-  juce::Graphics& g, juce::Rectangle<int> const& area,
+  juce::Graphics& g, juce::Rectangle<int> const& area0,
   bool is_separator, bool is_active, bool is_highlighted, bool is_ticked, bool has_sub_menu,
   juce::String const& text, juce::String const& shortcut_key_text,
   juce::Drawable const* icon, juce::Colour const*)
 {
+  float const padding_fixed = 4.0f;
   float const corner_size_fixed = 5.0f;
+
+  auto farea = area0.toFloat();
+  juce::Rectangle<float> rect(
+    farea.getX() + padding_fixed / 2.0f,
+    farea.getY() + padding_fixed / 2.0f,
+    farea.getWidth() - padding_fixed,
+    farea.getHeight() - padding_fixed
+  );
 
   // hover bg
   if(is_highlighted)
   {
-    g.setColour(Colours::green);
-    g.fillRoundedRectangle(area.toFloat(), corner_size_fixed);
+    g.setColour(findColour(PopupMenu::ColourIds::highlightedBackgroundColourId));
+    g.fillRoundedRectangle(rect, corner_size_fixed);
   }
 
   // text
   g.setColour(findColour(ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
-  g.drawText(text, area, Justification::centredLeft, false);
+  g.drawText(text, rect, Justification::centredLeft, false);
 }
 
 void 
