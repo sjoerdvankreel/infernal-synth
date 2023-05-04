@@ -192,6 +192,15 @@ inf_look_and_feel::drawPopupMenuItem(
     g.fillRoundedRectangle(hl_rect, corner_size_fixed);
   }
 
+  // tick
+  if(is_ticked)
+  {
+    auto tick = getTickShape(1.0f);
+    g.setColour(findColour(ComboBox::ColourIds::textColourId));
+    juce::Rectangle<float> tick_rect(hl_rect.getX(), hl_rect.getY(), hl_rect.getHeight(), hl_rect.getHeight());
+    g.fillPath(tick, tick.getTransformToScaleToFit(tick_rect, true));
+  }
+
   // text
   juce::Rectangle<float> text_rect(
     hl_rect.getX() + text_hpad_fixed / 2.0f, hl_rect.getY(),
