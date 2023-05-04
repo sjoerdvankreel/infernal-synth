@@ -174,8 +174,8 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::String const& text, juce::String const& shortcut_key_text,
   juce::Drawable const* icon, juce::Colour const*)
 {
-  float const padding_fixed = 4.0f;
-  float const text_hpad_fixed = 4.0f;
+  float const padding_fixed = 2.0f;
+  float const text_hpad_fixed = 8.0f;
   float const corner_size_fixed = 5.0f;
 
   auto farea = area0.toFloat();
