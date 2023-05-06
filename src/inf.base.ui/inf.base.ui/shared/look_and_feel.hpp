@@ -96,9 +96,6 @@ public:
   void drawComboBox(
     juce::Graphics& g, int w0, int h0, bool isButtonDown,
     int button_x0, int button_y0, int button_w0, int button_h0, juce::ComboBox& cb) override;
-  void getIdealPopupMenuItemSize(
-    juce::String const& text, bool is_separator,
-    int standard_menu_item_height, int& ideal_width, int& ideal_height) override;
   void drawPopupMenuBackground(
     juce::Graphics& g, int width, int height) override;
   void drawPopupMenuItem(
@@ -111,7 +108,10 @@ public:
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
   juce::Font getComboBoxFont(juce::ComboBox& box) override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
-
+  void getIdealPopupMenuItemSize(
+    juce::String const& text, bool is_separator,
+    int standard_menu_item_height, int& ideal_width, int& ideal_height) override
+  { ideal_height = static_cast<int>(std::ceil(get_dropdown_item_height(_controller))); }
 };
 
 } // namespace inf::base::ui

@@ -178,7 +178,7 @@ inf_look_and_feel::drawPopupMenuItem(
   float const padding_fixed = 2.0f;
   float const text_hpad_fixed = 8.0f;
   float const corner_size_fixed = 5.0f;
-  float const tick_size_factor = 0.8f;
+  float const tick_size_factor = 0.9f;
 
   auto farea = area0.toFloat();
   juce::Rectangle<float> hl_rect(
@@ -222,14 +222,6 @@ inf_look_and_feel::drawPopupMenuItem(
   g.setColour(findColour(ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
   g.drawText(text, text_rect, Justification::centredLeft, false);
-}
-
-void 
-inf_look_and_feel::getIdealPopupMenuItemSize(
-  juce::String const& text, bool is_separator,
-  int standard_menu_item_height, int& ideal_width, int& ideal_height)
-{
-  ideal_height = static_cast<int>(std::ceil(get_dropdown_item_height(_controller)));
 }
 
 void 
