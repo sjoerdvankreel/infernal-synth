@@ -484,12 +484,7 @@ next_conical:;
   float const fill_x = hl_x + fill_offset;
   float const fill_y = hl_y + fill_offset;
   Rectangle<float> fill_rect(fill_x, fill_y, center_size, center_size);
-  auto grad_fill_base = s.findColour(colors::knob_gradient_fill_base);
-  auto grad_fill_highlight = s.findColour(colors::knob_gradient_fill_highlight);
-  auto grad_fill_gradient = ColourGradient(grad_fill_highlight, fill_rect.getTopLeft(), grad_fill_base, fill_rect.getBottomRight(), false);
-  grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
-  g.setGradientFill(grad_fill_gradient);
-  g.fillEllipse(fill_rect);
+  draw_gradient_circle(g, fill_rect, colors::knob_gradient_fill_base, colors::knob_gradient_fill_highlight);
 
   // thumb
   float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
