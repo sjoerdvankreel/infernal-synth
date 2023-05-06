@@ -178,6 +178,7 @@ inf_look_and_feel::drawPopupMenuItem(
   float const padding_fixed = 2.0f;
   float const text_hpad_fixed = 8.0f;
   float const corner_size_fixed = 5.0f;
+  float const tick_size_factor = 0.8f;
 
   auto farea = area0.toFloat();
   juce::Rectangle<float> hl_rect(
@@ -205,8 +206,13 @@ inf_look_and_feel::drawPopupMenuItem(
     hl_rect.getHeight() - text_hpad_fixed);
   if(is_ticked)
   {
+    juce::Rectangle<float> tick_rect2(
+      tick_rect.getX() + (1.0f - tick_size_factor) / 2.0f * tick_rect.getWidth(),
+      tick_rect.getY() + (1.0f - tick_size_factor) / 2.0f * tick_rect.getHeight(),
+      tick_rect.getWidth() * tick_size_factor,
+      tick_rect.getHeight() * tick_size_factor);
     g.setColour(findColour(colors::dropdown_tick));
-    g.fillEllipse(tick_rect);
+    g.fillEllipse(tick_rect2);
   }
 
   // text
