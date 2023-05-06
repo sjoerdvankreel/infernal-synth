@@ -12,6 +12,7 @@
 namespace inf::base::ui {
 
 enum class label_type { label, value };
+enum class icon_type { sine, saw, square, triangle };
 enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };
 
 float

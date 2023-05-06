@@ -108,16 +108,18 @@ create_param_label_ui(inf::base::plugin_controller* controller,
 class param_icon_element:
 public ui_element
 {
+  icon_type const _type;
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
-  param_icon_element(inf::base::plugin_controller* controller): ui_element(controller) {}
+  param_icon_element(inf::base::plugin_controller* controller, icon_type type):
+  ui_element(controller), _type(type) {}
 };
 
 inline std::unique_ptr<param_icon_element>
-create_param_icon_ui(inf::base::plugin_controller* controller)
-{ return std::make_unique<param_icon_element>(controller); }
+create_param_icon_ui(inf::base::plugin_controller* controller, icon_type type)
+{ return std::make_unique<param_icon_element>(controller, type); }
 
 class param_edit_element :
 public ui_element
@@ -217,13 +219,21 @@ create_root_ui(
 { return std::make_unique<root_element>(controller, std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
+create_group_ui(
+  plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
+  std::unique_ptr<ui_element>&& content);
+std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, label_type label_type, edit_type edit_type);
 std::unique_ptr<ui_element>
-create_group_ui(
-  plugin_controller* controller, std::unique_ptr<group_label_element>&& label, 
-  std::unique_ptr<ui_element>&& content);
+create_iconed_param_ui(
+  plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
+  std::int32_t param_index, icon_type icon_type, edit_type edit_type);
+std::unique_ptr<ui_element>
+create_param_ui(
+  plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon,
+  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type edit_type);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_UI_HPP
