@@ -11,14 +11,25 @@ inf_look_and_feel::fill_gradient_circle(
   juce::Graphics& g, juce::Rectangle<float> rect,
   std::int32_t base_color_id, std::int32_t high_color_id)
 {
-  auto grad_fill_base = findColour(base_color_id);
-  auto grad_fill_highlight = findColour(high_color_id);
-  auto grad_fill_gradient = ColourGradient(
-    grad_fill_highlight, rect.getTopLeft(),
-    grad_fill_base, rect.getBottomRight(), false);
-  grad_fill_gradient.addColour(0.25, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
-  g.setGradientFill(grad_fill_gradient);
+  auto base = findColour(base_color_id);
+  auto highlight = findColour(high_color_id);
+  auto gradient = ColourGradient(highlight, rect.getTopLeft(), base, rect.getBottomRight(), false);
+  gradient.addColour(0.25, highlight.interpolatedWith(base, 0.5f));
+  g.setGradientFill(gradient);
   g.fillEllipse(rect);
+}
+
+void 
+inf_look_and_feel::fill_gradient_rounded_rectangle(
+  juce::Graphics& g, juce::Rectangle<float> rect,
+  std::int32_t base_color_id, std::int32_t high_color_id, float corner_size)
+{
+  auto low = findColour(colors::dropdown_background_low);
+  auto high = findColour(colors::dropdown_background_high);
+  auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
+  gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
+  g.setGradientFill(gradient);
+  g.fillRoundedRectangle(rect, corner_size);
 }
 
 void
@@ -149,13 +160,7 @@ inf_look_and_feel::drawComboBox(
   float const w = static_cast<float>(w0);
   float const h = static_cast<float>(h0);
 
-  // fill
-  auto bg_low = findColour(colors::dropdown_background_low);
-  auto bg_high = findColour(colors::dropdown_background_high);
-  auto bg_gradient = ColourGradient(bg_high, x, y, bg_low, x + w, y + h, false);
-  bg_gradient.addColour(0.25, bg_high.interpolatedWith(bg_low, 0.5f));
-  g.setGradientFill(bg_gradient);
-  g.fillRoundedRectangle(x, y, w, h, corner_size_fixed);
+  fill_gradient_rounded_rectangle(g, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, colors::dropdown_background_high, corner_size_fixed);
   
   // outline
   auto outline_low = findColour(colors::dropdown_outline_low);

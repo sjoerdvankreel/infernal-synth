@@ -19,6 +19,9 @@ public juce::LookAndFeel_V4
   void fill_gradient_circle(
     juce::Graphics& g, juce::Rectangle<float> rect,
     std::int32_t base_color_id, std::int32_t high_color_id);
+  void fill_gradient_rounded_rectangle(
+    juce::Graphics& g, juce::Rectangle<float> rect,
+    std::int32_t base_color_id, std::int32_t high_color_id, float corner_size);
 
 public:
   enum colors {
