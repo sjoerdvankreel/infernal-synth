@@ -13,7 +13,10 @@ public juce::LookAndFeel_V4
 {
   inf::base::plugin_controller const* const _controller;
 
-  void draw_spot(
+  void draw_spot_circle(
+    juce::Graphics& g, juce::Rectangle<float> rect,
+    std::int32_t base_color_id, std::int32_t high_color_id);
+  void draw_gradient_circle(
     juce::Graphics& g, juce::Rectangle<float> rect,
     std::int32_t base_color_id, std::int32_t high_color_id);
 

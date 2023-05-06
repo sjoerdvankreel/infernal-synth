@@ -6,8 +6,23 @@ using namespace juce;
 
 namespace inf::base::ui {
 
+void 
+inf_look_and_feel::draw_gradient_circle(
+  juce::Graphics& g, juce::Rectangle<float> rect,
+  std::int32_t base_color_id, std::int32_t high_color_id)
+{
+  auto grad_fill_base = findColour(base_color_id);
+  auto grad_fill_highlight = findColour(high_color_id);
+  auto grad_fill_gradient = ColourGradient(
+    grad_fill_highlight, rect.getTopLeft(),
+    grad_fill_base, rect.getBottomRight(), false);
+  grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
+  g.setGradientFill(grad_fill_gradient);
+  g.fillEllipse(rect);
+}
+
 void
-inf_look_and_feel::draw_spot(
+inf_look_and_feel::draw_spot_circle(
   Graphics& g, Rectangle<float> rect, 
   std::int32_t base_color_id, std::int32_t high_color_id)
 {
@@ -95,32 +110,11 @@ inf_look_and_feel::drawToggleButton(
   outline.addEllipse(x, y, w, h);
   g.strokePath(outline, PathStrokeType(outline_thickness));
 
-  // gradient fill center
   float const fill_offset = (w - center_size) * 0.5f;
   Rectangle<float> fill_rect(x + fill_offset, y + fill_offset, center_size, center_size);
-  auto grad_fill_center_base = b.findColour(colors::switch_gradient_fill_center_base);
-  auto grad_fill_center_highlight = b.findColour(colors::switch_gradient_fill_center_highlight);
-  auto grad_fill_center_gradient = ColourGradient(
-    grad_fill_center_highlight, fill_rect.getTopLeft(),
-    grad_fill_center_base, fill_rect.getBottomRight(), false);
-  grad_fill_center_gradient.addColour(0.33, grad_fill_center_highlight.interpolatedWith(grad_fill_center_base, 0.5f));
-  g.setGradientFill(grad_fill_center_gradient);
-  g.fillEllipse(fill_rect);
-
-  // on overlay gradient fill center
-  if(on)
-  {
-    auto grad_fill_base_on = b.findColour(colors::switch_gradient_fill_base_on);
-    auto grad_fill_highlight_on = b.findColour(colors::switch_gradient_fill_highlight_on);
-    auto grad_fill_on_gradient = ColourGradient(
-      grad_fill_highlight_on, fill_rect.getTopLeft(),
-      grad_fill_base_on, fill_rect.getBottomRight(), false);
-    grad_fill_on_gradient.addColour(0.33, grad_fill_highlight_on.interpolatedWith(grad_fill_base_on, 0.5f));
-    g.setGradientFill(grad_fill_on_gradient);
-    g.fillEllipse(fill_rect);
-  }
-
-  draw_spot(g, fill_rect, colors::switch_spot_fill_base, colors::switch_spot_fill_highlight);
+  draw_gradient_circle(g, fill_rect, colors::switch_gradient_fill_center_base, colors::switch_gradient_fill_center_highlight);
+  if(on) draw_gradient_circle(g, fill_rect, colors::switch_gradient_fill_base_on, colors::switch_gradient_fill_highlight_on);
+  draw_spot_circle(g, fill_rect, colors::switch_spot_fill_base, colors::switch_spot_fill_highlight);
 }
 
 // Custom dropdown.
@@ -226,7 +220,7 @@ inf_look_and_feel::drawPopupMenuItem(
     g.setGradientFill(fill_gradient);
     g.fillEllipse(tick_rect2);
 
-    draw_spot(g, tick_rect2, colors::dropdown_tick_spot_fill_base, colors::dropdown_tick_spot_fill_highlight);
+    draw_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_base, colors::dropdown_tick_spot_fill_highlight);
   }
 
   // text
@@ -340,7 +334,7 @@ inf_look_and_feel::drawLinearSlider(
 
   // thumb spot
   Rectangle<float> spot_rect(thumb_rect.getX(), thumb_rect.getY(), thumb_small, thumb_small);
-  draw_spot(g, spot_rect, colors::slider_spot_fill_base, colors::slider_spot_fill_highlight);
+  draw_spot_circle(g, spot_rect, colors::slider_spot_fill_base, colors::slider_spot_fill_highlight);
 }
 
 void 
@@ -522,7 +516,7 @@ next_conical:;
   g.setGradientFill(ColourGradient(thumb_inward_mix, center_x, center_y, thumb_outward_mix, thumb_end_x, thumb_end_y, false));
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer);
 
-  draw_spot(g, fill_rect, colors::knob_spot_fill_base, colors::knob_spot_fill_highlight);
+  draw_spot_circle(g, fill_rect, colors::knob_spot_fill_base, colors::knob_spot_fill_highlight);
 
   // stroke center
   float const offset_radians = 0.25f * 2.0f * pi32;
