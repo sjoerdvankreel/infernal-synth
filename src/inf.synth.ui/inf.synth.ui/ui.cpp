@@ -120,6 +120,7 @@ create_synth_ui(plugin_controller* controller)
 
   result->look_and_feel().setColour(PopupMenu::backgroundColourId, Colour(0x00000000));
   result->look_and_feel().setColour(ComboBox::ColourIds::textColourId, Colour(0xFFA7BECB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_tick, Colour(0xFF2EB8D1));
   result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_outline_low, Colour(0xFFDA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_outline_high, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_background_low, Colour(0xFF444444));

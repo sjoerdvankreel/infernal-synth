@@ -56,6 +56,7 @@ public:
     switch_gradient_fill_highlight_on,
     switch_gradient_fill_center_highlight,
 
+    dropdown_tick,
     dropdown_outline_low,
     dropdown_outline_high,
     dropdown_background_low,

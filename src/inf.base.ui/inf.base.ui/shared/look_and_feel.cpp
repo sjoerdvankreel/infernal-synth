@@ -174,6 +174,7 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::String const& text, juce::String const& shortcut_key_text,
   juce::Drawable const* icon, juce::Colour const*)
 {
+  // config
   float const padding_fixed = 2.0f;
   float const text_hpad_fixed = 8.0f;
   float const corner_size_fixed = 5.0f;
@@ -198,12 +199,14 @@ inf_look_and_feel::drawPopupMenuItem(
 
   // tick
   juce::Rectangle<float> tick_rect(
-    hl_rect.getX() + text_hpad_fixed / 2.0f, hl_rect.getY(),
-    hl_rect.getHeight() - text_hpad_fixed, hl_rect.getHeight());
+    hl_rect.getX() + text_hpad_fixed / 2.0f, 
+    hl_rect.getY() + text_hpad_fixed / 2.0f,
+    hl_rect.getHeight() - text_hpad_fixed, 
+    hl_rect.getHeight() - text_hpad_fixed);
   if(is_ticked)
   {
-    g.setColour(findColour(ComboBox::ColourIds::textColourId));
-    g.fillRect(tick_rect);
+    g.setColour(findColour(colors::dropdown_tick));
+    g.fillEllipse(tick_rect);
   }
 
   // text
