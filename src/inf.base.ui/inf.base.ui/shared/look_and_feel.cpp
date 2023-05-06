@@ -213,13 +213,7 @@ inf_look_and_feel::drawPopupMenuItem(
       tick_rect.getY() + (1.0f - tick_size_factor) / 2.0f * tick_rect.getHeight(),
       tick_rect.getWidth() * tick_size_factor,
       tick_rect.getHeight() * tick_size_factor);
-    auto fill_low = findColour(colors::dropdown_tick_gradient_fill_base);
-    auto fill_high = findColour(colors::dropdown_tick_gradient_fill_highlight);
-    auto fill_gradient = ColourGradient(fill_high, tick_rect2.getTopLeft(), fill_low, tick_rect2.getBottomRight(), false);
-    fill_gradient.addColour(0.25, fill_high.interpolatedWith(fill_low, 0.5f));
-    g.setGradientFill(fill_gradient);
-    g.fillEllipse(tick_rect2);
-
+    draw_gradient_circle(g, tick_rect2, colors::dropdown_tick_gradient_fill_base, colors::dropdown_tick_gradient_fill_highlight);
     draw_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_base, colors::dropdown_tick_spot_fill_highlight);
   }
 
