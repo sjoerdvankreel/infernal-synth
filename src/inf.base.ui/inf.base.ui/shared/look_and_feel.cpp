@@ -312,12 +312,7 @@ inf_look_and_feel::drawLinearSlider(
     vertical? thumb_small: thumb_large);
   g.setColour(s.findColour(colors::slider_center_fill));
   g.fillRoundedRectangle(thumb_rect, thumb_small / 2.0f);
-  auto thumb_low = s.findColour(colors::slider_gradient_fill_base);
-  auto thumb_high = s.findColour(colors::slider_gradient_fill_highlight);
-  auto thumb_gradient = ColourGradient(thumb_high, thumb_rect.getTopLeft(), thumb_low, thumb_rect.getBottomRight(), false);
-  thumb_gradient.addColour(0.25, thumb_high.interpolatedWith(thumb_low, 0.5f));
-  g.setGradientFill(thumb_gradient);
-  g.fillRoundedRectangle(thumb_rect, thumb_small / 2.0f);
+  fill_gradient_rounded_rectangle(g, thumb_rect, colors::slider_gradient_fill_base, colors::slider_gradient_fill_highlight, thumb_small / 2.0f, 0.25f);
 
   // thumb spot
   Rectangle<float> spot_rect(thumb_rect.getX(), thumb_rect.getY(), thumb_small, thumb_small);
