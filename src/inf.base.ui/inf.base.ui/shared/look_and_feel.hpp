@@ -56,11 +56,14 @@ public:
     switch_gradient_fill_highlight_on,
     switch_gradient_fill_center_highlight,
 
-    dropdown_tick,
     dropdown_outline_low,
     dropdown_outline_high,
     dropdown_background_low,
     dropdown_background_high,
+    dropdown_tick_spot_fill_base,
+    dropdown_tick_spot_fill_highlight,
+    dropdown_tick_gradient_fill_base,
+    dropdown_tick_gradient_fill_highlight,
     dropdown_highlight_background_low,
     dropdown_highlight_background_high,
 
