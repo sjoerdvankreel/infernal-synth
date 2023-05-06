@@ -7,7 +7,7 @@ using namespace juce;
 namespace inf::base::ui {
 
 void 
-inf_look_and_feel::draw_gradient_circle(
+inf_look_and_feel::fill_gradient_circle(
   juce::Graphics& g, juce::Rectangle<float> rect,
   std::int32_t base_color_id, std::int32_t high_color_id)
 {
@@ -22,7 +22,7 @@ inf_look_and_feel::draw_gradient_circle(
 }
 
 void
-inf_look_and_feel::draw_spot_circle(
+inf_look_and_feel::fill_spot_circle(
   Graphics& g, Rectangle<float> rect, 
   std::int32_t base_color_id, std::int32_t high_color_id)
 {
@@ -112,9 +112,9 @@ inf_look_and_feel::drawToggleButton(
 
   float const fill_offset = (w - center_size) * 0.5f;
   Rectangle<float> fill_rect(x + fill_offset, y + fill_offset, center_size, center_size);
-  draw_gradient_circle(g, fill_rect, colors::switch_gradient_fill_center_base, colors::switch_gradient_fill_center_highlight);
-  if(on) draw_gradient_circle(g, fill_rect, colors::switch_gradient_fill_base_on, colors::switch_gradient_fill_highlight_on);
-  draw_spot_circle(g, fill_rect, colors::switch_spot_fill_base, colors::switch_spot_fill_highlight);
+  fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_center_base, colors::switch_gradient_fill_center_highlight);
+  if(on) fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_base_on, colors::switch_gradient_fill_highlight_on);
+  fill_spot_circle(g, fill_rect, colors::switch_spot_fill_base, colors::switch_spot_fill_highlight);
 }
 
 // Custom dropdown.
@@ -213,8 +213,8 @@ inf_look_and_feel::drawPopupMenuItem(
       tick_rect.getY() + (1.0f - tick_size_factor) / 2.0f * tick_rect.getHeight(),
       tick_rect.getWidth() * tick_size_factor,
       tick_rect.getHeight() * tick_size_factor);
-    draw_gradient_circle(g, tick_rect2, colors::dropdown_tick_gradient_fill_base, colors::dropdown_tick_gradient_fill_highlight);
-    draw_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_base, colors::dropdown_tick_spot_fill_highlight);
+    fill_gradient_circle(g, tick_rect2, colors::dropdown_tick_gradient_fill_base, colors::dropdown_tick_gradient_fill_highlight);
+    fill_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_base, colors::dropdown_tick_spot_fill_highlight);
   }
 
   // text
@@ -328,7 +328,7 @@ inf_look_and_feel::drawLinearSlider(
 
   // thumb spot
   Rectangle<float> spot_rect(thumb_rect.getX(), thumb_rect.getY(), thumb_small, thumb_small);
-  draw_spot_circle(g, spot_rect, colors::slider_spot_fill_base, colors::slider_spot_fill_highlight);
+  fill_spot_circle(g, spot_rect, colors::slider_spot_fill_base, colors::slider_spot_fill_highlight);
 }
 
 void 
@@ -444,7 +444,7 @@ next_conical:;
   float const hl_x = outer_x + highlight_offset;
   float const hl_y = outer_y + highlight_offset;
   Rectangle<float> hl_rect(hl_x, hl_y, highlight_size, highlight_size);
-  draw_gradient_circle(g, hl_rect, colors::knob_highlight_low, colors::knob_highlight_high);
+  fill_gradient_circle(g, hl_rect, colors::knob_highlight_low, colors::knob_highlight_high);
 
   // cuts
   float const cut_line_thickness = outer_size * cut_line_thickness_factor;
@@ -484,7 +484,7 @@ next_conical:;
   float const fill_x = hl_x + fill_offset;
   float const fill_y = hl_y + fill_offset;
   Rectangle<float> fill_rect(fill_x, fill_y, center_size, center_size);
-  draw_gradient_circle(g, fill_rect, colors::knob_gradient_fill_base, colors::knob_gradient_fill_highlight);
+  fill_gradient_circle(g, fill_rect, colors::knob_gradient_fill_base, colors::knob_gradient_fill_highlight);
 
   // thumb
   float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
@@ -501,7 +501,7 @@ next_conical:;
   g.setGradientFill(ColourGradient(thumb_inward_mix, center_x, center_y, thumb_outward_mix, thumb_end_x, thumb_end_y, false));
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer);
 
-  draw_spot_circle(g, fill_rect, colors::knob_spot_fill_base, colors::knob_spot_fill_highlight);
+  fill_spot_circle(g, fill_rect, colors::knob_spot_fill_base, colors::knob_spot_fill_highlight);
 
   // stroke center
   float const offset_radians = 0.25f * 2.0f * pi32;
