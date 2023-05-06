@@ -60,3 +60,4 @@
 - go with juce's vst3sdk
 - tooltips, editable labels, show value on slider movement
 - move config to synth_editor
+- rename base->low color/highlight->high

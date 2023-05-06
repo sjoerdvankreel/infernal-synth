@@ -22,12 +22,12 @@ inf_look_and_feel::fill_gradient_circle(
 void 
 inf_look_and_feel::fill_gradient_rounded_rectangle(
   juce::Graphics& g, juce::Rectangle<float> rect,
-  std::int32_t base_color_id, std::int32_t high_color_id, float corner_size)
+  std::int32_t base_color_id, std::int32_t high_color_id, float corner_size, float mid_point)
 {
   auto low = findColour(base_color_id);
   auto high = findColour(high_color_id);
   auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
-  gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
+  gradient.addColour(mid_point, high.interpolatedWith(low, 0.5f));
   g.setGradientFill(gradient);
   g.fillRoundedRectangle(rect, corner_size);
 }
@@ -160,7 +160,7 @@ inf_look_and_feel::drawComboBox(
   float const w = static_cast<float>(w0);
   float const h = static_cast<float>(h0);
 
-  fill_gradient_rounded_rectangle(g, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, colors::dropdown_background_high, corner_size_fixed);
+  fill_gradient_rounded_rectangle(g, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, colors::dropdown_background_high, corner_size_fixed, 0.25f);
   
   // outline
   auto outline_low = findColour(colors::dropdown_outline_low);
@@ -196,7 +196,7 @@ inf_look_and_feel::drawPopupMenuItem(
 
   // hover bg
   if(is_highlighted)
-    fill_gradient_rounded_rectangle(g, hl_rect, colors::dropdown_highlight_background_low, colors::dropdown_highlight_background_high, corner_size_fixed);
+    fill_gradient_rounded_rectangle(g, hl_rect, colors::dropdown_highlight_background_low, colors::dropdown_highlight_background_high, corner_size_fixed, 0.25f);
 
   // tick
   juce::Rectangle<float> tick_rect(
@@ -265,17 +265,12 @@ inf_look_and_feel::drawLinearSlider(
 
   // track inactive gradient
   float track_size = small * track_size_factor;
-  auto hl_low = s.findColour(colors::slider_highlight_low);
-  auto hl_high = s.findColour(colors::slider_highlight_high);
   juce::Rectangle<float> track_rect(
     start_x - track_size / 2.0f, 
     start_y - track_size / 2.0f, 
     vertical ? track_size : w + track_size, 
     vertical ? h + track_size : track_size);
-  auto hl_gradient = ColourGradient(hl_low, track_rect.getTopLeft(), hl_high, track_rect.getBottomRight(), false);
-  hl_gradient.addColour(0.75, hl_high.interpolatedWith(hl_low, 0.5f));
-  g.setGradientFill(hl_gradient);
-  g.fillRoundedRectangle(track_rect, track_size / 2.0f);
+  fill_gradient_rounded_rectangle(g, track_rect, colors::slider_highlight_high, colors::slider_highlight_low, track_size / 2.0f, 0.75f);
 
   // track inactive fill
   float track_inner_size = track_size * track_inner_size_factor;
