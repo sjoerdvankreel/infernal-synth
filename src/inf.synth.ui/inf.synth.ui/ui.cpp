@@ -64,11 +64,11 @@ static std::unique_ptr<ui_element>
 create_osc_type_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 5);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_sine, label_type::label, edit_type::knob), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_saw, label_type::label, edit_type::knob), 0, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_triangle, label_type::label, edit_type::knob), 0, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_pulse, label_type::label, edit_type::knob), 0, 3);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_pw, label_type::label, edit_type::knob), 0, 4);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_sine, icon_type::sine, edit_type::knob), 0, 0);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_saw, icon_type::saw, edit_type::knob), 0, 1);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_triangle, icon_type::tri, edit_type::knob), 0, 2);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_pulse, icon_type::pulse, edit_type::knob), 0, 3);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_pw, icon_type::pw, edit_type::knob), 0, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Mix", true), std::move(grid));
 }
 
