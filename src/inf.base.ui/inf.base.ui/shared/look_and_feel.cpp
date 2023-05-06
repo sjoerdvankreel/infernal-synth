@@ -16,7 +16,7 @@ inf_look_and_feel::draw_gradient_circle(
   auto grad_fill_gradient = ColourGradient(
     grad_fill_highlight, rect.getTopLeft(),
     grad_fill_base, rect.getBottomRight(), false);
-  grad_fill_gradient.addColour(0.33, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
+  grad_fill_gradient.addColour(0.25, grad_fill_highlight.interpolatedWith(grad_fill_base, 0.5f));
   g.setGradientFill(grad_fill_gradient);
   g.fillEllipse(rect);
 }
@@ -443,12 +443,8 @@ next_conical:;
   float const highlight_offset = (outer_size - highlight_size) * 0.5f;
   float const hl_x = outer_x + highlight_offset;
   float const hl_y = outer_y + highlight_offset;
-  auto const hl_low = s.findColour(colors::knob_highlight_low);
-  auto const hl_high = s.findColour(colors::knob_highlight_high);
-  auto hl_gradient = ColourGradient(hl_high, hl_x, hl_y, hl_low, hl_x + highlight_size, hl_y + highlight_size, false);
-  hl_gradient.addColour(0.25, hl_high.interpolatedWith(hl_low, 0.5f));
-  g.setGradientFill(hl_gradient);
-  g.fillEllipse(hl_x, hl_y, highlight_size, highlight_size);
+  Rectangle<float> hl_rect(hl_x, hl_y, highlight_size, highlight_size);
+  draw_gradient_circle(g, hl_rect, colors::knob_highlight_low, colors::knob_highlight_high);
 
   // cuts
   float const cut_line_thickness = outer_size * cut_line_thickness_factor;
