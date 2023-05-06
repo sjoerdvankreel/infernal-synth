@@ -6,6 +6,28 @@ using namespace juce;
 
 namespace inf::base::ui {
 
+void
+inf_look_and_feel::draw_spot(
+  Graphics& g, Rectangle<float> rect, 
+  std::int32_t base_color_id, std::int32_t high_color_id)
+{
+  float const spot_size_factor = 0.67f;
+  float const spot_size = spot_size_factor * rect.getWidth();
+  float const spot_offset = (rect.getWidth() - spot_size) * 0.5f;
+  float const spot_x = rect.getX() + spot_offset * 0.5f;
+  float const spot_y = rect.getY() + spot_offset * 0.5f;
+  float const spot_center_x = spot_x + spot_size * 0.5f;
+  float const spot_center_y = spot_y + spot_size * 0.5f;
+  auto spot_fill_base = findColour(colors::knob_spot_fill_base);
+  auto spot_fill_highlight = findColour(colors::knob_spot_fill_highlight);
+  auto spot_fill_gradient = ColourGradient(
+    spot_fill_highlight, spot_center_x, spot_center_y, 
+    spot_fill_base, rect.getX() + spot_size, rect.getY() + spot_size, true);
+  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
+  g.setGradientFill(spot_fill_gradient);
+  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
+}
+
 void 
 inf_look_and_feel::drawLabel(Graphics& g, Label& label)
 {
@@ -24,7 +46,6 @@ inf_look_and_feel::drawToggleButton(
 {
   // config
   float const margin_factor = 0.05f;
-  float const spot_size_factor = 0.67f;
   float const center_size_factor = 0.67f;
   float const outline_thickness_factor = 0.075f;
 
@@ -76,16 +97,15 @@ inf_look_and_feel::drawToggleButton(
 
   // gradient fill center
   float const fill_offset = (w - center_size) * 0.5f;
-  float const fill_x = x + fill_offset;
-  float const fill_y = y + fill_offset;
+  Rectangle<float> fill_rect(x + fill_offset, y + fill_offset, center_size, center_size);
   auto grad_fill_center_base = b.findColour(colors::switch_gradient_fill_center_base);
   auto grad_fill_center_highlight = b.findColour(colors::switch_gradient_fill_center_highlight);
   auto grad_fill_center_gradient = ColourGradient(
-    grad_fill_center_highlight, fill_x, fill_y, 
-    grad_fill_center_base, fill_x + center_size, fill_y + center_size, false);
+    grad_fill_center_highlight, fill_rect.getTopLeft(),
+    grad_fill_center_base, fill_rect.getBottomRight(), false);
   grad_fill_center_gradient.addColour(0.33, grad_fill_center_highlight.interpolatedWith(grad_fill_center_base, 0.5f));
   g.setGradientFill(grad_fill_center_gradient);
-  g.fillEllipse(fill_x, fill_y, center_size, center_size);
+  g.fillEllipse(fill_rect);
 
   // on overlay gradient fill center
   if(on)
@@ -93,26 +113,15 @@ inf_look_and_feel::drawToggleButton(
     auto grad_fill_base_on = b.findColour(colors::switch_gradient_fill_base_on);
     auto grad_fill_highlight_on = b.findColour(colors::switch_gradient_fill_highlight_on);
     auto grad_fill_on_gradient = ColourGradient(
-      grad_fill_highlight_on, fill_x, fill_y,
-      grad_fill_base_on, fill_x + center_size, fill_y + center_size, false);
+      grad_fill_highlight_on, fill_rect.getTopLeft(),
+      grad_fill_base_on, fill_rect.getBottomRight(), false);
     grad_fill_on_gradient.addColour(0.33, grad_fill_highlight_on.interpolatedWith(grad_fill_base_on, 0.5f));
     g.setGradientFill(grad_fill_on_gradient);
-    g.fillEllipse(fill_x, fill_y, center_size, center_size);
+    g.fillEllipse(fill_rect);
   }
 
   // radial fill spot overlay
-  float const spot_size = spot_size_factor * center_size;
-  float const spot_offset = (center_size - spot_size) * 0.5f;
-  float const spot_x = fill_x + spot_offset * 0.5f;
-  float const spot_y = fill_y + spot_offset * 0.5f;
-  float const spot_center_x = spot_x + spot_size * 0.5f;
-  float const spot_center_y = spot_y + spot_size * 0.5f;
-  auto spot_fill_base = b.findColour(colors::knob_spot_fill_base);
-  auto spot_fill_highlight = b.findColour(colors::knob_spot_fill_highlight);
-  auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, fill_x + spot_size, fill_y + spot_size, true);
-  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
-  g.setGradientFill(spot_fill_gradient);
-  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
+  draw_spot(g, fill_rect, colors::switch_spot_fill_base, colors::switch_spot_fill_highlight);
 }
 
 // Custom dropdown.
