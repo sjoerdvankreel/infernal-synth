@@ -177,8 +177,9 @@ inf_look_and_feel::drawPopupMenuItem(
   // config
   float const padding_fixed = 2.0f;
   float const text_hpad_fixed = 8.0f;
-  float const corner_size_fixed = 5.0f;
   float const tick_size_factor = 0.9f;
+  float const corner_size_fixed = 5.0f;
+  float const spot_size_factor = 0.67f;
 
   auto farea = area0.toFloat();
   juce::Rectangle<float> hl_rect(
@@ -217,6 +218,19 @@ inf_look_and_feel::drawPopupMenuItem(
     fill_gradient.addColour(0.25, fill_high.interpolatedWith(fill_low, 0.5f));
     g.setGradientFill(fill_gradient);
     g.fillEllipse(tick_rect2);
+
+    float const spot_size = tick_rect2.getWidth() * spot_size_factor;
+    float const spot_offset = (tick_rect2.getWidth() - spot_size) * 0.5f;
+    float const spot_x = tick_rect2.getX() + spot_offset * 0.5f;
+    float const spot_y = tick_rect2.getY() + spot_offset * 0.5f;
+    float const spot_center_x = spot_x + spot_size * 0.5f;
+    float const spot_center_y = spot_y + spot_size * 0.5f;
+    auto spot_fill_base = findColour(colors::dropdown_tick_spot_fill_base);
+    auto spot_fill_highlight = findColour(colors::dropdown_tick_spot_fill_highlight);
+    auto spot_fill_gradient = ColourGradient(spot_fill_highlight, spot_center_x, spot_center_y, spot_fill_base, spot_x + spot_size, spot_y + spot_size, true);
+    spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
+    g.setGradientFill(spot_fill_gradient);
+    g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
   }
 
   // text
