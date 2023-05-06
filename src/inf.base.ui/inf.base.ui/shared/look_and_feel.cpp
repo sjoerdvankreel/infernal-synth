@@ -24,8 +24,8 @@ inf_look_and_feel::fill_gradient_rounded_rectangle(
   juce::Graphics& g, juce::Rectangle<float> rect,
   std::int32_t base_color_id, std::int32_t high_color_id, float corner_size)
 {
-  auto low = findColour(colors::dropdown_background_low);
-  auto high = findColour(colors::dropdown_background_high);
+  auto low = findColour(base_color_id);
+  auto high = findColour(high_color_id);
   auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
   gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
   g.setGradientFill(gradient);
@@ -196,14 +196,7 @@ inf_look_and_feel::drawPopupMenuItem(
 
   // hover bg
   if(is_highlighted)
-  {
-    auto hl_low = findColour(colors::dropdown_highlight_background_low);
-    auto hl_high = findColour(colors::dropdown_highlight_background_high);
-    auto hl_gradient = ColourGradient(hl_high, hl_rect.getTopLeft(), hl_low, hl_rect.getBottomRight(), false);
-    hl_gradient.addColour(0.25, hl_high.interpolatedWith(hl_low, 0.5f));
-    g.setGradientFill(hl_gradient);
-    g.fillRoundedRectangle(hl_rect, corner_size_fixed);
-  }
+    fill_gradient_rounded_rectangle(g, hl_rect, colors::dropdown_highlight_background_low, colors::dropdown_highlight_background_high, corner_size_fixed);
 
   // tick
   juce::Rectangle<float> tick_rect(
