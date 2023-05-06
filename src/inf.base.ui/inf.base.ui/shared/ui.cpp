@@ -1,6 +1,7 @@
 #include <inf.base.ui/shared/ui.hpp>
 #include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/controls/label.hpp>
+#include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base/shared/support.hpp>
 
@@ -99,6 +100,13 @@ param_label_element::build_core(LookAndFeel const& lnf)
   result->setFont(juce::Font(get_param_label_font_height(controller()), juce::Font::bold));
   result->setText(get_label_text(&desc, _type, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller(), result, index, _type));
+  return result;
+}
+
+Component*
+param_icon_element::build_core(LookAndFeel const& lnf)
+{
+  inf_icon* result = new inf_icon();
   return result;
 }
 
@@ -260,7 +268,7 @@ create_grid_ui(
 }
 
 std::unique_ptr<ui_element>
-create_param_ui(
+create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, label_type label_type, edit_type edit_type)
 {
