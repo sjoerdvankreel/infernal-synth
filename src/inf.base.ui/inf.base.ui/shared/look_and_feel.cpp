@@ -9,12 +9,12 @@ namespace inf::base::ui {
 void 
 inf_look_and_feel::fill_gradient_circle(
   juce::Graphics& g, juce::Rectangle<float> rect,
-  std::int32_t base_color_id, std::int32_t high_color_id)
+  std::int32_t low_color_id, std::int32_t high_color_id)
 {
-  auto base = findColour(base_color_id);
-  auto highlight = findColour(high_color_id);
-  auto gradient = ColourGradient(highlight, rect.getTopLeft(), base, rect.getBottomRight(), false);
-  gradient.addColour(0.25, highlight.interpolatedWith(base, 0.5f));
+  auto low = findColour(low_color_id);
+  auto high = findColour(high_color_id);
+  auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
+  gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
   g.setGradientFill(gradient);
   g.fillEllipse(rect);
 }
@@ -22,9 +22,9 @@ inf_look_and_feel::fill_gradient_circle(
 void 
 inf_look_and_feel::fill_gradient_rounded_rectangle(
   juce::Graphics& g, juce::Rectangle<float> rect,
-  std::int32_t base_color_id, std::int32_t high_color_id, float corner_size, float mid_point)
+  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point)
 {
-  auto low = findColour(base_color_id);
+  auto low = findColour(low_color_id);
   auto high = findColour(high_color_id);
   auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
   gradient.addColour(mid_point, high.interpolatedWith(low, 0.5f));
@@ -35,23 +35,23 @@ inf_look_and_feel::fill_gradient_rounded_rectangle(
 void
 inf_look_and_feel::fill_spot_circle(
   Graphics& g, Rectangle<float> rect, 
-  std::int32_t base_color_id, std::int32_t high_color_id)
+  std::int32_t low_color_id, std::int32_t high_color_id)
 {
-  float const spot_size_factor = 0.67f;
-  float const spot_size = spot_size_factor * rect.getWidth();
-  float const spot_offset = (rect.getWidth() - spot_size) * 0.5f;
-  float const spot_x = rect.getX() + spot_offset * 0.5f;
-  float const spot_y = rect.getY() + spot_offset * 0.5f;
-  float const spot_center_x = spot_x + spot_size * 0.5f;
-  float const spot_center_y = spot_y + spot_size * 0.5f;
-  auto spot_fill_base = findColour(colors::knob_spot_fill_base);
-  auto spot_fill_highlight = findColour(colors::knob_spot_fill_highlight);
-  auto spot_fill_gradient = ColourGradient(
-    spot_fill_highlight, spot_center_x, spot_center_y, 
-    spot_fill_base, rect.getX() + spot_size, rect.getY() + spot_size, true);
-  spot_fill_gradient.addColour(0.25, spot_fill_highlight.interpolatedWith(spot_fill_base, 0.5f));
-  g.setGradientFill(spot_fill_gradient);
-  g.fillEllipse(spot_x, spot_y, spot_size, spot_size);
+  float const size_factor = 0.67f;
+  float const size = size_factor * rect.getWidth();
+  float const offset = (rect.getWidth() - size) * 0.5f;
+  float const x = rect.getX() + offset * 0.5f;
+  float const y = rect.getY() + offset * 0.5f;
+  float const center_x = x + size * 0.5f;
+  float const center_y = y + size * 0.5f;
+  auto low = findColour(low_color_id);
+  auto high = findColour(high_color_id);
+  auto gradient = ColourGradient(
+    high, center_x, center_y,
+    low, rect.getX() + size, rect.getY() + size, true);
+  gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
+  g.setGradientFill(gradient);
+  g.fillEllipse(x, y, size, size);
 }
 
 void 
@@ -123,9 +123,9 @@ inf_look_and_feel::drawToggleButton(
 
   float const fill_offset = (w - center_size) * 0.5f;
   Rectangle<float> fill_rect(x + fill_offset, y + fill_offset, center_size, center_size);
-  fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_center_base, colors::switch_gradient_fill_center_highlight);
-  if(on) fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_base_on, colors::switch_gradient_fill_highlight_on);
-  fill_spot_circle(g, fill_rect, colors::switch_spot_fill_base, colors::switch_spot_fill_highlight);
+  fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_center_low, colors::switch_gradient_fill_center_high);
+  if(on) fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_low_on, colors::switch_gradient_fill_high_on);
+  fill_spot_circle(g, fill_rect, colors::switch_spot_fill_low, colors::switch_spot_fill_high);
 }
 
 // Custom dropdown.
@@ -160,7 +160,9 @@ inf_look_and_feel::drawComboBox(
   float const w = static_cast<float>(w0);
   float const h = static_cast<float>(h0);
 
-  fill_gradient_rounded_rectangle(g, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, colors::dropdown_background_high, corner_size_fixed, 0.25f);
+  fill_gradient_rounded_rectangle(
+    g, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, 
+    colors::dropdown_background_high, corner_size_fixed, 0.25f);
   
   // outline
   auto outline_low = findColour(colors::dropdown_outline_low);
@@ -196,7 +198,9 @@ inf_look_and_feel::drawPopupMenuItem(
 
   // hover bg
   if(is_highlighted)
-    fill_gradient_rounded_rectangle(g, hl_rect, colors::dropdown_highlight_background_low, colors::dropdown_highlight_background_high, corner_size_fixed, 0.25f);
+    fill_gradient_rounded_rectangle(
+      g, hl_rect, colors::dropdown_highlight_background_low, 
+      colors::dropdown_highlight_background_high, corner_size_fixed, 0.25f);
 
   // tick
   juce::Rectangle<float> tick_rect(
@@ -211,8 +215,8 @@ inf_look_and_feel::drawPopupMenuItem(
       tick_rect.getY() + (1.0f - tick_size_factor) / 2.0f * tick_rect.getHeight(),
       tick_rect.getWidth() * tick_size_factor,
       tick_rect.getHeight() * tick_size_factor);
-    fill_gradient_circle(g, tick_rect2, colors::dropdown_tick_gradient_fill_base, colors::dropdown_tick_gradient_fill_highlight);
-    fill_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_base, colors::dropdown_tick_spot_fill_highlight);
+    fill_gradient_circle(g, tick_rect2, colors::dropdown_tick_gradient_fill_low, colors::dropdown_tick_gradient_fill_high);
+    fill_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_low, colors::dropdown_tick_spot_fill_high);
   }
 
   // text
@@ -270,7 +274,9 @@ inf_look_and_feel::drawLinearSlider(
     start_y - track_size / 2.0f, 
     vertical ? track_size : w + track_size, 
     vertical ? h + track_size : track_size);
-  fill_gradient_rounded_rectangle(g, track_rect, colors::slider_highlight_high, colors::slider_highlight_low, track_size / 2.0f, 0.75f);
+  fill_gradient_rounded_rectangle(
+    g, track_rect, colors::slider_highlight_high, 
+    colors::slider_highlight_low, track_size / 2.0f, 0.75f);
 
   // track inactive fill
   float track_inner_size = track_size * track_inner_size_factor;
@@ -312,11 +318,13 @@ inf_look_and_feel::drawLinearSlider(
     vertical? thumb_small: thumb_large);
   g.setColour(s.findColour(colors::slider_center_fill));
   g.fillRoundedRectangle(thumb_rect, thumb_small / 2.0f);
-  fill_gradient_rounded_rectangle(g, thumb_rect, colors::slider_gradient_fill_base, colors::slider_gradient_fill_highlight, thumb_small / 2.0f, 0.25f);
+  fill_gradient_rounded_rectangle(
+    g, thumb_rect, colors::slider_gradient_fill_low, 
+    colors::slider_gradient_fill_high, thumb_small / 2.0f, 0.25f);
 
   // thumb spot
   Rectangle<float> spot_rect(thumb_rect.getX(), thumb_rect.getY(), thumb_small, thumb_small);
-  fill_spot_circle(g, spot_rect, colors::slider_spot_fill_base, colors::slider_spot_fill_highlight);
+  fill_spot_circle(g, spot_rect, colors::slider_spot_fill_low, colors::slider_spot_fill_high);
 }
 
 void 
@@ -472,7 +480,7 @@ next_conical:;
   float const fill_x = hl_x + fill_offset;
   float const fill_y = hl_y + fill_offset;
   Rectangle<float> fill_rect(fill_x, fill_y, center_size, center_size);
-  fill_gradient_circle(g, fill_rect, colors::knob_gradient_fill_base, colors::knob_gradient_fill_highlight);
+  fill_gradient_circle(g, fill_rect, colors::knob_gradient_fill_low, colors::knob_gradient_fill_high);
 
   // thumb
   float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
@@ -489,7 +497,7 @@ next_conical:;
   g.setGradientFill(ColourGradient(thumb_inward_mix, center_x, center_y, thumb_outward_mix, thumb_end_x, thumb_end_y, false));
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer);
 
-  fill_spot_circle(g, fill_rect, colors::knob_spot_fill_base, colors::knob_spot_fill_highlight);
+  fill_spot_circle(g, fill_rect, colors::knob_spot_fill_low, colors::knob_spot_fill_high);
 
   // stroke center
   float const offset_radians = 0.25f * 2.0f * pi32;

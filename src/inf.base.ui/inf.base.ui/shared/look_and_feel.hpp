@@ -15,13 +15,13 @@ public juce::LookAndFeel_V4
 
   void fill_spot_circle(
     juce::Graphics& g, juce::Rectangle<float> rect,
-    std::int32_t base_color_id, std::int32_t high_color_id);
+    std::int32_t low_color_id, std::int32_t high_color_id);
   void fill_gradient_circle(
     juce::Graphics& g, juce::Rectangle<float> rect,
-    std::int32_t base_color_id, std::int32_t high_color_id);
+    std::int32_t low_color_id, std::int32_t high_color_id);
   void fill_gradient_rounded_rectangle(
     juce::Graphics& g, juce::Rectangle<float> rect,
-    std::int32_t base_color_id, std::int32_t high_color_id, float corner_size, float mid_point);
+    std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point);
 
 public:
   enum colors {
@@ -40,10 +40,10 @@ public:
     knob_thumb_outward_high,
     knob_center_stroke_low,
     knob_center_stroke_high,
-    knob_spot_fill_base,
-    knob_spot_fill_highlight,
-    knob_gradient_fill_base,
-    knob_gradient_fill_highlight,
+    knob_spot_fill_low,
+    knob_spot_fill_high,
+    knob_gradient_fill_low,
+    knob_gradient_fill_high,
 
     slider_center_fill,
     slider_track_low,
@@ -51,29 +51,29 @@ public:
     slider_track_inactive,
     slider_highlight_low,
     slider_highlight_high,
-    slider_spot_fill_base,
-    slider_spot_fill_highlight,
-    slider_gradient_fill_base,
-    slider_gradient_fill_highlight,
+    slider_spot_fill_low,
+    slider_spot_fill_high,
+    slider_gradient_fill_low,
+    slider_gradient_fill_high,
 
     switch_outline_off,
     switch_outline_on_low,
     switch_outline_on_high,
-    switch_spot_fill_base,
-    switch_spot_fill_highlight,
-    switch_gradient_fill_base_on,
-    switch_gradient_fill_center_base,
-    switch_gradient_fill_highlight_on,
-    switch_gradient_fill_center_highlight,
+    switch_spot_fill_low,
+    switch_spot_fill_high,
+    switch_gradient_fill_low_on,
+    switch_gradient_fill_center_low,
+    switch_gradient_fill_high_on,
+    switch_gradient_fill_center_high,
 
     dropdown_outline_low,
     dropdown_outline_high,
     dropdown_background_low,
     dropdown_background_high,
-    dropdown_tick_spot_fill_base,
-    dropdown_tick_spot_fill_highlight,
-    dropdown_tick_gradient_fill_base,
-    dropdown_tick_gradient_fill_highlight,
+    dropdown_tick_spot_fill_low,
+    dropdown_tick_spot_fill_high,
+    dropdown_tick_gradient_fill_low,
+    dropdown_tick_gradient_fill_high,
     dropdown_highlight_background_low,
     dropdown_highlight_background_high,
 
