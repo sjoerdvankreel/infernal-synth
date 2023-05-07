@@ -32,12 +32,12 @@ class ui_element
   std::unique_ptr<relevance_listener> _relevance_listener = {};
 protected:
   virtual juce::Component* build_core(juce::LookAndFeel const& lnf) = 0;
-  ui_element(inf::base::plugin_controller* const controller) : _controller(controller) {}
+  ui_element(inf::base::plugin_controller* controller) : _controller(controller) {}
 public:
   virtual void layout() = 0;
   juce::Component* build(juce::LookAndFeel const& lnf);
   juce::Component* component() { return _component.get(); }
-  inf::base::plugin_controller* const controller() const { return _controller; }
+  inf::base::plugin_controller* controller() const { return _controller; }
   void relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector);
 };
 

@@ -85,7 +85,7 @@ public:
     group_label_color
   };
 
-  inf_look_and_feel(inf::base::plugin_controller const* const controller):
+  inf_look_and_feel(inf::base::plugin_controller const* controller):
   _controller(controller) {}
 
   // Disables ellipses and fitting.
