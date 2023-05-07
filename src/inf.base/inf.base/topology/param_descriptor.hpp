@@ -135,7 +135,7 @@ discrete_2way_bounds(std::int32_t range, std::int32_t default_) {
 inline real_descriptor 
 percentage_01_bounds(float default_) {
   assert(0.0f <= default_ && default_ <= 1.0f);
-  return { default_, 2, real_bounds::linear(0.0f, 1.0f), real_bounds::linear(0.0f, 100.0f) }; }
+  return { default_, 1, real_bounds::linear(0.0f, 1.0f), real_bounds::linear(0.0f, 100.0f) }; }
 
 inline real_descriptor 
 decibel_bounds(float linear_max) { 
