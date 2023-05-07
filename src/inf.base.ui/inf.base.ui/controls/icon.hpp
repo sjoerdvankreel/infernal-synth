@@ -16,7 +16,7 @@ public juce::Component
   icon_selector const _selector;
 public:
   void paint(juce::Graphics& g) override;
-  void value(std::int32_t v) { _value = v; }
+  void value(std::int32_t v) { _value = v; repaint(); }
   std::int32_t value() const { return _value; }
   inf_icon(std::int32_t value, icon_selector selector): _value(value), _selector(selector) {}
 };

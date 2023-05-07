@@ -6,6 +6,7 @@
 #include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
+#include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
 #include <inf.base.ui/listeners/slider_param_listener.hpp>
@@ -111,21 +112,26 @@ public ui_element
 {
   std::int32_t const _value;
   icon_selector const _selector;
+  base::part_id const _part_id;
+  std::int32_t const _param_index;
+  std::unique_ptr<icon_param_listener> _listener = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override
-  { return new inf_icon(_value, _selector); }
+  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
-  param_icon_element(inf::base::plugin_controller* controller, std::int32_t value, icon_selector selector):
-  ui_element(controller), _value(value), _selector(selector) {}
+  param_icon_element(
+    inf::base::plugin_controller* controller, base::part_id const& part_id, 
+    std::int32_t param_index, std::int32_t value, icon_selector selector):
+  ui_element(controller), _value(value), _selector(selector), _part_id(part_id), _param_index(param_index) {}
 };
 
 inline std::unique_ptr<param_icon_element>
-create_param_icon_ui(inf::base::plugin_controller* controller, std::int32_t value, icon_selector selector)
-{ return std::make_unique<param_icon_element>(controller, value, selector); }
+create_param_icon_ui(
+  inf::base::plugin_controller* controller, std::int32_t part_type, 
+  std::int32_t part_index, std::int32_t param_index, icon_selector selector);
 inline std::unique_ptr<param_icon_element>
 create_param_icon_ui(inf::base::plugin_controller* controller, icon_type type)
-{ return std::make_unique<param_icon_element>(controller, static_cast<std::int32_t>(type), nullptr); }
+{ return std::make_unique<param_icon_element>(controller, part_id(-1, -1), -1, static_cast<std::int32_t>(type), nullptr); }
 
 class param_edit_element :
 public ui_element

@@ -102,10 +102,29 @@ param_label_element::build_core(LookAndFeel const& lnf)
   return result;
 }
 
+Component*
+param_icon_element::build_core(LookAndFeel const& lnf)
+{
+  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+  inf_icon* result = new inf_icon(_value, _selector);
+  if(_selector != nullptr)
+  _listener.reset(new icon_param_listener(controller(), result, index));
+  return result;
+}
+
+std::unique_ptr<param_icon_element>
+create_param_icon_ui(
+  inf::base::plugin_controller* controller, std::int32_t part_type, 
+  std::int32_t part_index, std::int32_t param_index, icon_selector selector)
+{
+  std::int32_t index = controller->topology()->param_index({ part_type, part_index }, param_index);
+  std::int32_t icon_value = controller->state()[index].discrete;
+  return std::make_unique<param_icon_element>(controller, part_id(part_type, part_index), param_index, icon_value, selector);
+}
+
 void 
 param_edit_element::layout()
 {
-  // Cant be inline/header because static with_container_padding.
   auto bounds = with_container_padding(component()->getBounds());
   if (_type == edit_type::dropdown)
   {
@@ -308,9 +327,7 @@ create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
   std::int32_t param_index, edit_type edit_type, icon_selector icon_selector)
 {
-  std::int32_t index = controller->topology()->param_index({ part_type, part_index }, param_index);
-  std::int32_t icon_value = controller->state()[index].discrete;
-  auto icon = create_param_icon_ui(controller, icon_value, icon_selector);
+  auto icon = create_param_icon_ui(controller, part_type, part_index, param_index, icon_selector);
   return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type);
 }
 
