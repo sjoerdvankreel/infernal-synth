@@ -27,7 +27,9 @@ inf_icon::paint(Graphics& g)
   {
     float fi = static_cast<float>(i);
     float ramp = fi/w;
-    switch (_type)
+    icon_type type = static_cast<icon_type>(value());
+    if(_selector != nullptr) type = _selector(value());
+    switch (type)
     {
     case icon_type::pulse: point = 1.0f - std::round(ramp); break;
     case icon_type::saw: point = ramp < 0.5f? ramp + 0.5f: ramp - 0.5f; break;

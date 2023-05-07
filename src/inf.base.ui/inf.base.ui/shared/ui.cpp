@@ -1,7 +1,6 @@
 #include <inf.base.ui/shared/ui.hpp>
 #include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/controls/label.hpp>
-#include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base/shared/support.hpp>
 
@@ -100,13 +99,6 @@ param_label_element::build_core(LookAndFeel const& lnf)
   result->setFont(juce::Font(get_param_label_font_height(controller()), juce::Font::bold));
   result->setText(get_label_text(&desc, _type, value), dontSendNotification);
   _listener.reset(new label_param_listener(controller(), result, index, _type));
-  return result;
-}
-
-Component*
-param_icon_element::build_core(LookAndFeel const& lnf)
-{
-  inf_icon* result = new inf_icon(_type);
   return result;
 }
 
@@ -295,7 +287,7 @@ create_param_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
-  std::int32_t param_index, label_type label_type, edit_type edit_type)
+  std::int32_t param_index, edit_type edit_type, label_type label_type)
 {
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
   auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
@@ -305,9 +297,20 @@ create_labeled_param_ui(
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
-  std::int32_t param_index, icon_type icon_type, edit_type edit_type)
+  std::int32_t param_index, edit_type edit_type, icon_type icon_type)
 {
   auto icon = create_param_icon_ui(controller, icon_type);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type);
+}
+
+std::unique_ptr<ui_element>
+create_iconed_param_ui(
+  plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
+  std::int32_t param_index, edit_type edit_type, icon_selector icon_selector)
+{
+  std::int32_t index = controller->topology()->param_index({ part_type, part_index }, param_index);
+  std::int32_t icon_value = controller->state()[index].discrete;
+  auto icon = create_param_icon_ui(controller, icon_value, icon_selector);
   return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type);
 }
 

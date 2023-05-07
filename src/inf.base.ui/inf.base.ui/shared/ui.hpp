@@ -3,6 +3,7 @@
 
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
+#include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
@@ -108,18 +109,23 @@ create_param_label_ui(inf::base::plugin_controller* controller,
 class param_icon_element:
 public ui_element
 {
-  icon_type const _type;
+  std::int32_t const _value;
+  icon_selector const _selector;
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel const& lnf) override
+  { return new inf_icon(_value, _selector); }
 public:
   void layout() override {}
-  param_icon_element(inf::base::plugin_controller* controller, icon_type type):
-  ui_element(controller), _type(type) {}
+  param_icon_element(inf::base::plugin_controller* controller, std::int32_t value, icon_selector selector):
+  ui_element(controller), _value(value), _selector(selector) {}
 };
 
 inline std::unique_ptr<param_icon_element>
+create_param_icon_ui(inf::base::plugin_controller* controller, std::int32_t value, icon_selector selector)
+{ return std::make_unique<param_icon_element>(controller, value, selector); }
+inline std::unique_ptr<param_icon_element>
 create_param_icon_ui(inf::base::plugin_controller* controller, icon_type type)
-{ return std::make_unique<param_icon_element>(controller, type); }
+{ return std::make_unique<param_icon_element>(controller, static_cast<std::int32_t>(type), nullptr); }
 
 class param_edit_element :
 public ui_element
@@ -225,11 +231,15 @@ create_group_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
-  std::int32_t param_index, label_type label_type, edit_type edit_type);
+  std::int32_t param_index, edit_type edit_type, label_type label_type);
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
-  std::int32_t param_index, icon_type icon_type, edit_type edit_type);
+  std::int32_t param_index, edit_type edit_type, icon_type icon_type);
+std::unique_ptr<ui_element>
+create_iconed_param_ui(
+  plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
+  std::int32_t param_index, edit_type edit_type, icon_selector icon_selector);
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon,

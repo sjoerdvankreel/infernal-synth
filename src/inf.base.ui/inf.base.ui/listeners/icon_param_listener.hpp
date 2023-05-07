@@ -1,0 +1,29 @@
+#ifndef INF_BASE_UI_LISTENERS_ICON_PARAM_LISTENER_HPP
+#define INF_BASE_UI_LISTENERS_ICON_PARAM_LISTENER_HPP
+
+#include <inf.base.ui/controls/icon.hpp>
+#include <inf.base.ui/shared/support.hpp>
+#include <inf.base/plugin/plugin_controller.hpp>
+
+#include <juce_gui_basics/juce_gui_basics.h>
+
+namespace inf::base::ui
+{
+
+class icon_param_listener :
+public param_listener
+{
+  inf_icon* const _icon;
+  std::int32_t const _param_index;
+  plugin_controller* const _controller;
+
+public:
+  void controller_param_changed(inf::base::param_value ui_value) override
+  { _icon->value(ui_value.discrete); }
+  ~icon_param_listener() { _controller->remove_param_listener(_param_index, this); }
+  icon_param_listener(plugin_controller* controller, inf_icon* icon, std::int32_t param_index):
+  _icon(icon), _param_index(param_index), _controller(controller) { _controller->add_param_listener(param_index, this); }
+};
+
+} // namespace inf::base::ui
+#endif // INF_BASE_UI_LISTENERS_ICON_PARAM_LISTENER_HPP
