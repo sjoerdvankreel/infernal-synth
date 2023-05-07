@@ -79,8 +79,8 @@ create_osc_basic_group(plugin_controller* controller)
 {
   auto outer_grid = create_grid_ui(controller, 1, 5);
   outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type), 0, 0);
-  auto inner_grid = create_grid_ui(controller, 3, 1);
-  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0);
+  auto inner_grid = create_grid_ui(controller, 4, 1);
+  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0, 2, 1);
   pw->relevant_if(part_id(part_type::vosc, 0), osc_param::basic_type, false, [](std::int32_t val) { return val == osc_basic_type::pulse; });
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
@@ -101,11 +101,13 @@ create_osc_mix_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_osc_dsf_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 5);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_parts, edit_type::selector, label_type::label), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_dist, edit_type::hslider, label_type::label), 0, 1, 1, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_decay, edit_type::hslider, label_type::label), 0, 3, 1, 2);
-  return create_group_ui(controller, create_group_label_ui(controller, "DSF", true), std::move(grid));
+  auto outer_grid = create_grid_ui(controller, 1, 5);
+  outer_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_parts, edit_type::knob, label_type::label), 0, 0);
+  auto inner_grid = create_grid_ui(controller, 2, 1);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_dist, edit_type::hslider, label_type::label), 0, 0);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_decay, edit_type::hslider, label_type::label), 1, 0);
+  outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
+  return create_group_ui(controller, create_group_label_ui(controller, "DSF", true), std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -134,6 +136,7 @@ create_osc_vslider_group(plugin_controller* controller)
 static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller)
 {
+  // TODO move color to lnf
   auto result = create_grid_ui(controller, 4, 8);
   result->add_cell(create_container_fill_ui(controller, create_osc_main_group(controller), Colour(0xFF333333)), 0, 0, 3, 1);
   result->add_cell(create_container_fill_ui(controller, create_osc_pitch_group(controller), Colour(0xFF333333)), 0, 1, 3, 1);
