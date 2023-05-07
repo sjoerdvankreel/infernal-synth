@@ -29,9 +29,12 @@ inf_icon::paint(Graphics& g)
     float ramp = fi/w;
     switch (_type)
     {
-    case icon_type::pulse: point = std::round(ramp); break;
+    case icon_type::pulse: point = 1.0f - std::round(ramp); break;
     case icon_type::saw: point = ramp < 0.5f? ramp + 0.5f: ramp - 0.5f; break;
     case icon_type::sine: point = (std::sin(2.0f * base::pi32 * ramp) + 1.0f) * 0.5f; break;
+    case icon_type::tri: point = 
+      ramp < 0.25f? 0.5f + ramp * 2.0f: ramp < 0.5f? 1.0f - (ramp - 0.25f) * 2.0f: 
+      ramp < 0.75f? 0.5f - (ramp - 0.5f) * 2.0f: (ramp - 0.75f) * 2.0f; break;
     default: point = ramp; break;
     }
     p.lineTo(x + fi, y + h - point * h);
