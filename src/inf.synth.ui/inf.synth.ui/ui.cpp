@@ -86,7 +86,7 @@ create_osc_basic_group(plugin_controller* controller)
   return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
 }
 
-std::unique_ptr<ui_element>
+static std::unique_ptr<ui_element>
 create_osc_mix_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 5);
@@ -130,7 +130,10 @@ create_oscillator_grid(plugin_controller* controller)
   result->add_cell(create_container_fill_ui(controller, create_osc_ram_group(controller), Colour(0xFF333333)), 0, 2, 3, 1);
   result->add_cell(create_container_fill_ui(controller, create_osc_sync_group(controller), Colour(0xFF333333)), 0, 3, 1, 2);
   result->add_cell(create_container_fill_ui(controller, create_osc_unison_group(controller), Colour(0xFF333333)), 1, 3, 2, 2);
-  result->add_cell(create_container_fill_ui(controller, create_osc_basic_group(controller), Colour(0xFF333333)), 3, 0, 1, 5);
+  auto basic = result->add_cell(create_container_fill_ui(controller, create_osc_basic_group(controller), Colour(0xFF333333)), 3, 0, 1, 5);
+  basic->relevant_if(part_id(part_type::vosc, 0), osc_param::type, true, [](std::int32_t val) { return val == osc_type::basic; });
+  auto mix = result->add_cell(create_container_fill_ui(controller, create_osc_mix_group(controller), Colour(0xFF333333)), 3, 0, 1, 5);
+  mix->relevant_if(part_id(part_type::vosc, 0), osc_param::type, true, [](std::int32_t val) { return val == osc_type::mix; });
   result->add_cell(create_container_fill_ui(controller, create_osc_hslider_group(controller), Colour(0xFF333333)), 0, 5, 1, 3);
   result->add_cell(create_container_fill_ui(controller, create_osc_vslider_group(controller), Colour(0xFF333333)), 1, 5, 2, 3);
   return result;

@@ -59,4 +59,5 @@
 - exact editing
 - go with juce's vst3sdk
 - tooltips, editable labels, show value on slider movement
-- move config to synth_editor
+- move config to synth_editor ?
+- disable unison for noise ?
