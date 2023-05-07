@@ -14,17 +14,17 @@ public juce::LookAndFeel_V4
   inf::base::plugin_controller const* const _controller;
 
   juce::Colour 
-  with_enabled(std::int32_t color_id, bool enabled);
+  with_enabled(juce::Component& component, std::int32_t color_id);
 
-  void fill_spot_circle(
-    juce::Graphics& g, juce::Rectangle<float> rect,
-    std::int32_t low_color_id, std::int32_t high_color_id, bool enabled);
-  void fill_gradient_circle(
-    juce::Graphics& g, juce::Rectangle<float> rect,
-    std::int32_t low_color_id, std::int32_t high_color_id, bool enabled);
-  void fill_gradient_rounded_rectangle(
-    juce::Graphics& g, juce::Rectangle<float> rect, std::int32_t low_color_id, 
-    std::int32_t high_color_id, float corner_size, float mid_point, bool enabled);
+  void fill_spot_circle(juce::Graphics& g, 
+    juce::Component& component, juce::Rectangle<float> rect,
+    std::int32_t low_color_id, std::int32_t high_color_id);
+  void fill_gradient_circle(juce::Graphics& g, 
+    juce::Component& component, juce::Rectangle<float> rect,
+    std::int32_t low_color_id, std::int32_t high_color_id);
+  void fill_gradient_rounded_rectangle(juce::Graphics& g, 
+    juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id, 
+    std::int32_t high_color_id, float corner_size, float mid_point);
 
 public:
   enum colors {

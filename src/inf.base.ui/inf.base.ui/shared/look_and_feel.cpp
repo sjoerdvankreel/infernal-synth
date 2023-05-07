@@ -7,10 +7,10 @@ using namespace juce;
 namespace inf::base::ui {
 
 juce::Colour
-inf_look_and_feel::with_enabled(std::int32_t color_id, bool enabled)
+inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id)
 {
-  auto result = findColour(color_id);
-  if(enabled) return result;
+  auto result = component.findColour(color_id);
+  if(component.isEnabled()) return result;
   std::uint8_t gray = static_cast<std::uint8_t>(
     std::round(result.getRed() * 0.299 + 
     result.getGreen() * 0.587 + 
@@ -20,11 +20,11 @@ inf_look_and_feel::with_enabled(std::int32_t color_id, bool enabled)
 
 void 
 inf_look_and_feel::fill_gradient_circle(
-  juce::Graphics& g, juce::Rectangle<float> rect,
-  std::int32_t low_color_id, std::int32_t high_color_id, bool enabled)
+  Graphics& g, Component& component, juce::Rectangle<float> rect,
+  std::int32_t low_color_id, std::int32_t high_color_id)
 {
-  auto low = with_enabled(low_color_id, enabled);
-  auto high = with_enabled(high_color_id, enabled);
+  auto low = with_enabled(component, low_color_id);
+  auto high = with_enabled(component, high_color_id);
   auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
   gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
   g.setGradientFill(gradient);
@@ -33,11 +33,11 @@ inf_look_and_feel::fill_gradient_circle(
 
 void 
 inf_look_and_feel::fill_gradient_rounded_rectangle(
-  juce::Graphics& g, juce::Rectangle<float> rect, std::int32_t low_color_id, 
-  std::int32_t high_color_id, float corner_size, float mid_point, bool enabled)
+  juce::Graphics& g, Component& component, juce::Rectangle<float> rect, 
+  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point)
 {
-  auto low = with_enabled(low_color_id, enabled);
-  auto high = with_enabled(high_color_id, enabled);
+  auto low = with_enabled(component, low_color_id);
+  auto high = with_enabled(component, high_color_id);
   auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
   gradient.addColour(mid_point, high.interpolatedWith(low, 0.5f));
   g.setGradientFill(gradient);
@@ -46,8 +46,8 @@ inf_look_and_feel::fill_gradient_rounded_rectangle(
 
 void
 inf_look_and_feel::fill_spot_circle(
-  Graphics& g, Rectangle<float> rect, 
-  std::int32_t low_color_id, std::int32_t high_color_id, bool enabled)
+  Graphics& g, Component& component, Rectangle<float> rect,
+  std::int32_t low_color_id, std::int32_t high_color_id)
 {
   float const size_factor = 0.67f;
   float const size = size_factor * rect.getWidth();
@@ -56,8 +56,8 @@ inf_look_and_feel::fill_spot_circle(
   float const y = rect.getY() + offset * 0.5f;
   float const center_x = x + size * 0.5f;
   float const center_y = y + size * 0.5f;
-  auto low = with_enabled(low_color_id, enabled);
-  auto high = with_enabled(high_color_id, enabled);
+  auto low = with_enabled(component, low_color_id);
+  auto high = with_enabled(component, high_color_id);
   auto gradient = ColourGradient(
     high, center_x, center_y,
     low, rect.getX() + size, rect.getY() + size, true);
@@ -70,9 +70,9 @@ void
 inf_look_and_feel::drawLabel(Graphics& g, Label& label)
 {
   auto const& font = getLabelFont(label);
-  g.fillAll(with_enabled(Label::backgroundColourId, label.isEnabled()));
+  g.fillAll(with_enabled(label, Label::backgroundColourId));
   g.setFont(font);
-  g.setColour(with_enabled(Label::textColourId, label.isEnabled()));
+  g.setColour(with_enabled(label, Label::textColourId));
   auto text_area = getLabelBorderSize(label).subtractedFrom(label.getLocalBounds());
   g.drawText(label.getText(), text_area, label.getJustificationType(), false);
 }
@@ -122,22 +122,22 @@ inf_look_and_feel::drawToggleButton(
   float const outline_thickness = w * outline_thickness_factor;
   if (on)
   {
-    auto outline_low = with_enabled(colors::switch_outline_on_low, b.isEnabled());
-    auto outline_high = with_enabled(colors::switch_outline_on_high, b.isEnabled());
+    auto outline_low = with_enabled(b, colors::switch_outline_on_low);
+    auto outline_high = with_enabled(b, colors::switch_outline_on_high);
     auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
     outline_gradient.addColour(0.33, outline_high.interpolatedWith(outline_low, 0.5f));
     g.setGradientFill(outline_gradient);
   }
   else
-    g.setColour(with_enabled(colors::switch_outline_off, b.isEnabled()));
+    g.setColour(with_enabled(b, colors::switch_outline_off));
   outline.addEllipse(x, y, w, h);
   g.strokePath(outline, PathStrokeType(outline_thickness));
 
   float const fill_offset = (w - center_size) * 0.5f;
   Rectangle<float> fill_rect(x + fill_offset, y + fill_offset, center_size, center_size);
-  fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_center_low, colors::switch_gradient_fill_center_high, b.isEnabled());
-  if(on) fill_gradient_circle(g, fill_rect, colors::switch_gradient_fill_low_on, colors::switch_gradient_fill_high_on, b.isEnabled());
-  fill_spot_circle(g, fill_rect, colors::switch_spot_fill_low, colors::switch_spot_fill_high, b.isEnabled());
+  fill_gradient_circle(g, b, fill_rect, colors::switch_gradient_fill_center_low, colors::switch_gradient_fill_center_high);
+  if(on) fill_gradient_circle(g, b, fill_rect, colors::switch_gradient_fill_low_on, colors::switch_gradient_fill_high_on);
+  fill_spot_circle(g, b, fill_rect, colors::switch_spot_fill_low, colors::switch_spot_fill_high);
 }
 
 // Custom dropdown.
@@ -173,12 +173,12 @@ inf_look_and_feel::drawComboBox(
   float const h = static_cast<float>(h0);
 
   fill_gradient_rounded_rectangle(
-    g, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, 
-    colors::dropdown_background_high, corner_size_fixed, 0.25f, cb.isEnabled());
+    g, cb, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, 
+    colors::dropdown_background_high, corner_size_fixed, 0.25f);
   
   // outline
-  auto outline_low = with_enabled(colors::dropdown_outline_low, cb.isEnabled());
-  auto outline_high = with_enabled(colors::dropdown_outline_high, cb.isEnabled());
+  auto outline_low = with_enabled(cb, colors::dropdown_outline_low);
+  auto outline_high = with_enabled(cb, colors::dropdown_outline_high);
   auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
   outline_gradient.addColour(0.25, outline_high.interpolatedWith(outline_low, 0.5f));
   g.setGradientFill(outline_gradient);
@@ -195,6 +195,8 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::String const& text, juce::String const& shortcut_key_text,
   juce::Drawable const* icon, juce::Colour const*)
 {
+  Component dummy;
+  
   // config
   float const padding_fixed = 2.0f;
   float const text_hpad_fixed = 8.0f;
@@ -211,8 +213,8 @@ inf_look_and_feel::drawPopupMenuItem(
   // hover bg
   if(is_highlighted)
     fill_gradient_rounded_rectangle(
-      g, hl_rect, colors::dropdown_highlight_background_low, 
-      colors::dropdown_highlight_background_high, corner_size_fixed, 0.25f, true);
+      g, dummy, hl_rect, colors::dropdown_highlight_background_low,
+      colors::dropdown_highlight_background_high, corner_size_fixed, 0.25f);
 
   // tick
   juce::Rectangle<float> tick_rect(
@@ -227,15 +229,15 @@ inf_look_and_feel::drawPopupMenuItem(
       tick_rect.getY() + (1.0f - tick_size_factor) / 2.0f * tick_rect.getHeight(),
       tick_rect.getWidth() * tick_size_factor,
       tick_rect.getHeight() * tick_size_factor);
-    fill_gradient_circle(g, tick_rect2, colors::dropdown_tick_gradient_fill_low, colors::dropdown_tick_gradient_fill_high, true);
-    fill_spot_circle(g, tick_rect2, colors::dropdown_tick_spot_fill_low, colors::dropdown_tick_spot_fill_high, true);
+    fill_gradient_circle(g, dummy, tick_rect2, colors::dropdown_tick_gradient_fill_low, colors::dropdown_tick_gradient_fill_high);
+    fill_spot_circle(g, dummy, tick_rect2, colors::dropdown_tick_spot_fill_low, colors::dropdown_tick_spot_fill_high);
   }
 
   // text
   juce::Rectangle<float> text_rect(
     tick_rect.getX() + tick_rect.getWidth(), hl_rect.getY(),
     hl_rect.getWidth() - tick_rect.getWidth(), hl_rect.getHeight());
-  g.setColour(with_enabled(ComboBox::ColourIds::textColourId, true));
+  g.setColour(with_enabled(dummy, ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
   g.drawText(text, text_rect, Justification::centredLeft, false);
 }
@@ -287,8 +289,8 @@ inf_look_and_feel::drawLinearSlider(
     vertical ? track_size : w + track_size, 
     vertical ? h + track_size : track_size);
   fill_gradient_rounded_rectangle(
-    g, track_rect, colors::slider_highlight_high, 
-    colors::slider_highlight_low, track_size / 2.0f, 0.75f, s.isEnabled());
+    g, s, track_rect, colors::slider_highlight_high, 
+    colors::slider_highlight_low, track_size / 2.0f, 0.75f);
 
   // track inactive fill
   float track_inner_size = track_size * track_inner_size_factor;
@@ -298,13 +300,13 @@ inf_look_and_feel::drawLinearSlider(
     track_rect.getY() + track_inner_offset / 2.0f, 
     track_rect.getWidth() - track_inner_offset, 
     track_rect.getHeight() - track_inner_offset);
-  g.setColour(with_enabled(colors::slider_track_inactive, s.isEnabled()));
+  g.setColour(with_enabled(s, colors::slider_track_inactive));
   g.fillRoundedRectangle(track_inner_rect, track_inner_size / 2.0f);
 
   // track active
   Path track_active;
-  auto track_low = with_enabled(colors::slider_track_low, s.isEnabled());
-  auto track_high = with_enabled(colors::slider_track_high, s.isEnabled());
+  auto track_low = with_enabled(s, colors::slider_track_low);
+  auto track_high = with_enabled(s, colors::slider_track_high);
   if(bipolar)
   {
     track_active.startNewSubPath(Point<float>(mid_x, mid_y));
@@ -328,15 +330,15 @@ inf_look_and_feel::drawLinearSlider(
     pos_y - 0.5f * (vertical? thumb_small: thumb_large), 
     vertical? thumb_large: thumb_small, 
     vertical? thumb_small: thumb_large);
-  g.setColour(with_enabled(colors::slider_center_fill, s.isEnabled()));
+  g.setColour(with_enabled(s, colors::slider_center_fill));
   g.fillRoundedRectangle(thumb_rect, thumb_small / 2.0f);
   fill_gradient_rounded_rectangle(
-    g, thumb_rect, colors::slider_gradient_fill_low, 
-    colors::slider_gradient_fill_high, thumb_small / 2.0f, 0.25f, s.isEnabled());
+    g, s, thumb_rect, colors::slider_gradient_fill_low, 
+    colors::slider_gradient_fill_high, thumb_small / 2.0f, 0.25f);
 
   // thumb spot
   Rectangle<float> spot_rect(thumb_rect.getX(), thumb_rect.getY(), thumb_small, thumb_small);
-  fill_spot_circle(g, spot_rect, colors::slider_spot_fill_low, colors::slider_spot_fill_high, s.isEnabled());
+  fill_spot_circle(g, s, spot_rect, colors::slider_spot_fill_low, colors::slider_spot_fill_high);
 }
 
 void 
@@ -399,7 +401,7 @@ inf_look_and_feel::drawRotarySlider(
   // inactive outline
   float const outer_radius = outer_size / 2.0f;
   float const outline_thickness = outer_size * outline_thickness_factor;
-  g.setColour(with_enabled(colors::knob_outline_inactive, s.isEnabled()));
+  g.setColour(with_enabled(s, colors::knob_outline_inactive));
   if(step_count == 0)
   {
     Path inactive_outline;
@@ -433,8 +435,8 @@ inf_look_and_feel::drawRotarySlider(
     float active_start_angle = start_angle + fi / fake_conic_gradient_count * (end_angle - start_angle);
     float active_end_angle = start_angle + (fi + 1.0f) / fake_conic_gradient_count * (end_angle - start_angle);
     active_outline.addCentredArc(center_x, center_y, outer_radius, outer_radius, 0.0f, active_start_angle, active_end_angle, true);
-    auto active_outline_low = with_enabled(colors::knob_outline_low, s.isEnabled());
-    auto active_outline_high = with_enabled(colors::knob_outline_high, s.isEnabled());
+    auto active_outline_low = with_enabled(s, colors::knob_outline_low);
+    auto active_outline_high = with_enabled(s, colors::knob_outline_high);
     float mix_factor = (i + 1.0f) / fake_conic_gradient_count;
     if(bipolar) mix_factor = std::abs(mix_factor * 2.0f - 1.0f);
     if(!outline_gradient) mix_factor = 1.0f;
@@ -452,7 +454,7 @@ next_conical:;
   float const hl_x = outer_x + highlight_offset;
   float const hl_y = outer_y + highlight_offset;
   Rectangle<float> hl_rect(hl_x, hl_y, highlight_size, highlight_size);
-  fill_gradient_circle(g, hl_rect, colors::knob_highlight_low, colors::knob_highlight_high, s.isEnabled());
+  fill_gradient_circle(g, s, hl_rect, colors::knob_highlight_low, colors::knob_highlight_high);
 
   // cuts
   float const cut_line_thickness = outer_size * cut_line_thickness_factor;
@@ -475,10 +477,10 @@ next_conical:;
     float const cut_start_x = center_x + cut_radius_inner * std::cos(angle_part);
     float const cut_start_y = center_y + cut_radius_inner * std::sin(angle_part);
     cut.addArrow(Line<float>(cut_start_x, cut_start_y, cut_end_x, cut_end_y), cut_line_thickness, cut_size * cut_xy_ratio, cut_size);
-    auto const cut_inward_low = with_enabled(colors::knob_cuts_inward_low, s.isEnabled());
-    auto const cut_outward_low = with_enabled(colors::knob_cuts_outward_low, s.isEnabled());
-    auto const cut_inward_high = with_enabled(colors::knob_cuts_inward_high, s.isEnabled());
-    auto const cut_outward_high = with_enabled(colors::knob_cuts_outward_high, s.isEnabled());
+    auto const cut_inward_low = with_enabled(s, colors::knob_cuts_inward_low);
+    auto const cut_outward_low = with_enabled(s, colors::knob_cuts_outward_low);
+    auto const cut_inward_high = with_enabled(s, colors::knob_cuts_inward_high);
+    auto const cut_outward_high = with_enabled(s, colors::knob_cuts_outward_high);
     juce::Point<float> const this_cut_pos(cut_end_x, cut_end_y);
     float const cut_mix_factor = this_cut_pos.getDistanceFrom(cut_top_left) / cut_max_distance;
     auto const cut_inward_mix = cut_inward_high.interpolatedWith(cut_inward_low, cut_mix_factor);
@@ -492,16 +494,16 @@ next_conical:;
   float const fill_x = hl_x + fill_offset;
   float const fill_y = hl_y + fill_offset;
   Rectangle<float> fill_rect(fill_x, fill_y, center_size, center_size);
-  fill_gradient_circle(g, fill_rect, colors::knob_gradient_fill_low, colors::knob_gradient_fill_high, s.isEnabled());
+  fill_gradient_circle(g, s, fill_rect, colors::knob_gradient_fill_low, colors::knob_gradient_fill_high);
 
   // thumb
   float const thumb_end_x = center_x + cut_radius_outer * std::cos(angle);
   float const thumb_end_y = center_y + cut_radius_outer * std::sin(angle);
   juce::Line<float> thumb_line(center_x, center_y, thumb_end_x, thumb_end_y);
-  auto const thumb_inward_low = with_enabled(colors::knob_thumb_inward_low, s.isEnabled());
-  auto const thumb_outward_low = with_enabled(colors::knob_thumb_outward_low, s.isEnabled());
-  auto const thumb_inward_high = with_enabled(colors::knob_thumb_inward_high, s.isEnabled());
-  auto const thumb_outward_high = with_enabled(colors::knob_thumb_outward_high, s.isEnabled());
+  auto const thumb_inward_low = with_enabled(s, colors::knob_thumb_inward_low);
+  auto const thumb_outward_low = with_enabled(s, colors::knob_thumb_outward_low);
+  auto const thumb_inward_high = with_enabled(s, colors::knob_thumb_inward_high);
+  auto const thumb_outward_high = with_enabled(s, colors::knob_thumb_outward_high);
   juce::Point<float> const thumb_pos(thumb_end_x, thumb_end_y);
   float const thumb_mix_factor = thumb_pos.getDistanceFrom(cut_top_left) / cut_max_distance;
   auto const thumb_inward_mix = thumb_inward_high.interpolatedWith(thumb_inward_low, thumb_mix_factor);
@@ -509,7 +511,7 @@ next_conical:;
   g.setGradientFill(ColourGradient(thumb_inward_mix, center_x, center_y, thumb_outward_mix, thumb_end_x, thumb_end_y, false));
   g.drawArrow(thumb_line, 0, thumb_width, cut_radius_outer);
 
-  fill_spot_circle(g, fill_rect, colors::knob_spot_fill_low, colors::knob_spot_fill_high, s.isEnabled());
+  fill_spot_circle(g, s, fill_rect, colors::knob_spot_fill_low, colors::knob_spot_fill_high);
 
   // stroke center
   float const offset_radians = 0.25f * 2.0f * pi32;
@@ -527,8 +529,8 @@ next_conical:;
        (stroke_start_angle - offset_radians >= angle - 2.0f * pi32 - gap_radians * 0.5f &&
        stroke_end_angle - offset_radians <= angle - 2.0f * pi32 + gap_radians * 0.5f)) continue;
     stroke.addCentredArc(center_x, center_y, center_radius, center_radius, 0.0f, stroke_start_angle, stroke_end_angle, true);
-    auto stroke_low = with_enabled(colors::knob_center_stroke_low, s.isEnabled());
-    auto stroke_high = with_enabled(colors::knob_center_stroke_high, s.isEnabled());
+    auto stroke_low = with_enabled(s, colors::knob_center_stroke_low);
+    auto stroke_high = with_enabled(s, colors::knob_center_stroke_high);
     float mix_factor = 1.0f - std::abs((i + 1.0f) / (fake_conic_gradient_count / 2.0f) - 1.0f);
     g.setColour(stroke_low.interpolatedWith(stroke_high, mix_factor));
     g.strokePath(stroke, PathStrokeType(center_thickness));
