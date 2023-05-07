@@ -297,15 +297,9 @@ create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, label_type label_type, edit_type edit_type)
 {
-  if (edit_type == edit_type::hslider)
-  {
-    auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, juce::Justification::centredRight);
-    return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type);
-  } else
-  {
-    auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type);
-    return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type);
-  }
+  auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
+  auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
+  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type);
 }
 
 std::unique_ptr<ui_element>
@@ -313,7 +307,8 @@ create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
   std::int32_t param_index, icon_type icon_type, edit_type edit_type)
 {
-  return {};
+  auto icon = create_param_icon_ui(controller, icon_type);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type);
 }
 
 std::unique_ptr<ui_element>

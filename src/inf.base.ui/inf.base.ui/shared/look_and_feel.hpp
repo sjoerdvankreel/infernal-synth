@@ -77,6 +77,7 @@ public:
     dropdown_highlight_background_low,
     dropdown_highlight_background_high,
 
+    icon_stroke_color,
     group_label_color
   };
 

@@ -116,6 +116,7 @@ create_synth_ui(plugin_controller* controller)
   auto result = create_root_ui(controller, create_oscillator_grid(controller), controller->editor_current_width(), juce::Colours::black);
 
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::group_label_color, Colour(0xFFFD9A4D));
 
   result->look_and_feel().setColour(PopupMenu::backgroundColourId, Colour(0x00000000));
