@@ -11,7 +11,10 @@ inf_look_and_feel::with_enabled(std::int32_t color_id, bool enabled)
 {
   auto result = findColour(color_id);
   if(enabled) return result;
-  std::uint8_t gray = static_cast<std::uint8_t>(std::round((result.getRed() + result.getGreen() + result.getBlue()) / 3.0));
+  std::uint8_t gray = static_cast<std::uint8_t>(
+    std::round(result.getRed() * 0.299 + 
+    result.getGreen() * 0.587 + 
+    result.getBlue() * 0.114));
   return Colour(gray, gray, gray, result.getAlpha());
 }
 
