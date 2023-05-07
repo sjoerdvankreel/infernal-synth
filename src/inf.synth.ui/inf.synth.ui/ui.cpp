@@ -79,7 +79,8 @@ create_osc_basic_group(plugin_controller* controller)
   auto outer_grid = create_grid_ui(controller, 1, 5);
   outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type), 0, 0);
   auto inner_grid = create_grid_ui(controller, 3, 1);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0);
+  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0);
+  pw->enable_if(part_id(part_type::vosc, 0), osc_param::basic_type, osc_basic_type::pulse);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
 }

@@ -6,6 +6,7 @@
 #include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
+#include <inf.base.ui/listeners/enabled_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
@@ -22,13 +23,18 @@ namespace inf::base::ui {
 
 class ui_element
 {
+  part_id _enabled_if_part = {};
+  std::int32_t _enabled_if_param = -1;
+  std::int32_t _enabled_if_value = 0;
   inf::base::plugin_controller* const _controller;
   std::unique_ptr<juce::Component> _component = {};
+  std::unique_ptr<enabled_listener> _enabled_listener = {};
 public:
   virtual void layout() = 0;
   juce::Component* build(juce::LookAndFeel const& lnf);
   juce::Component* component() { return _component.get(); }
   inf::base::plugin_controller* const controller() const { return _controller; }
+  void enable_if(part_id id, std::int32_t param_index, std::int32_t param_value);
 protected:
   virtual juce::Component* build_core(juce::LookAndFeel const& lnf) = 0;
   ui_element(inf::base::plugin_controller* const controller) : _controller(controller) {}
