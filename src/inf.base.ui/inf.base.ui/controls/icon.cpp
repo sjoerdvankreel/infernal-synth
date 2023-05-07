@@ -10,8 +10,9 @@ namespace inf::base::ui {
 void 
 inf_icon::paint(Graphics& g)
 {
-  float const line_size = 2.0f;
   float const vpad_top = 1.0f;
+  float const dash_size = 3.0f;
+  float const line_size = 2.0f;
   float const vpad_bottom = 7.0f;
   float const width_factor = 2.0f;
   float const y = vpad_top;
@@ -20,7 +21,7 @@ inf_icon::paint(Graphics& g)
   float const x = getLocalBounds().getX() + (getLocalBounds().getWidth() - w) * 0.5f;
 
   Path p;
-  float point;
+  float point = 0.0f;
   std::int32_t w0 = static_cast<std::int32_t>(w);
   p.startNewSubPath(x, y + h / 2.0f);
   for (std::int32_t i = 0; i < w0; i++)
@@ -29,19 +30,32 @@ inf_icon::paint(Graphics& g)
     float ramp = fi/w;
     switch (_type)
     {
+    case icon_type::pw: point = ramp < 0.67f? 1.0f: 0.0f; break;
     case icon_type::pulse: point = 1.0f - std::round(ramp); break;
     case icon_type::saw: point = ramp < 0.5f? ramp + 0.5f: ramp - 0.5f; break;
     case icon_type::sine: point = (std::sin(2.0f * base::pi32 * ramp) + 1.0f) * 0.5f; break;
     case icon_type::tri: point = 
       ramp < 0.25f? 0.5f + ramp * 2.0f: ramp < 0.5f? 1.0f - (ramp - 0.25f) * 2.0f: 
       ramp < 0.75f? 0.5f - (ramp - 0.5f) * 2.0f: (ramp - 0.75f) * 2.0f; break;
-    default: point = ramp; break;
+    default: assert(false); break;
     }
     p.lineTo(x + fi, y + h - point * h);
   }
   p.lineTo(x + w0 - 1, y + h / 2.0f);
   g.setColour(findColour(inf_look_and_feel::colors::icon_stroke_color));
   g.strokePath(p, PathStrokeType(line_size));
+
+  if (_type == icon_type::pw)
+  {
+    //g.drawDashedLine(Line<float>(x + w / 3.0f, y, x + w / 3.0f, y + h), &dash_size, 1, line_size);
+    //g.drawDashedLine(Line<float>(x + w / 3.0f, y + h, x + w * 2.0f / 3.0f, y + h), &dash_size, 1, line_size);
+    p.clear();
+    p.startNewSubPath(x + w / 3.0f, y);
+    p.lineTo(x + w / 3.0f, y + h);
+    p.lineTo(x + w * 2.0f / 3.0f, y + h); 
+    g.strokePath(p, PathStrokeType(line_size));
+    (void)dash_size;
+  }
 }
 
 } // namespace inf::base::ui
