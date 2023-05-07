@@ -19,7 +19,7 @@ public param_listener
 
 public:
   void controller_param_changed(inf::base::param_value ui_value) override
-  { _component->setVisible(ui_value.discrete == _param_value); }
+  { _component->setEnabled(ui_value.discrete == _param_value); }
   ~enabled_listener() { _controller->remove_param_listener(_param_index, this); }
   enabled_listener(plugin_controller* controller, juce::Component* component, std::int32_t param_index, std::int32_t param_value):
   _param_index(param_index), _param_value(param_value), _component(component), _controller(controller) 
