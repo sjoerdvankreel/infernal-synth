@@ -105,10 +105,12 @@ param_label_element::build_core(LookAndFeel const& lnf)
 Component*
 param_icon_element::build_core(LookAndFeel const& lnf)
 {
-  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   inf_icon* result = new inf_icon(_value, _selector);
   if(_selector != nullptr)
-  _listener.reset(new icon_param_listener(controller(), result, index));
+  {
+    std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+    _listener.reset(new icon_param_listener(controller(), result, index));
+  }
   return result;
 }
 
