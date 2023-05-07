@@ -17,28 +17,31 @@ with_container_padding(Rectangle<int> const& bounds)
     bounds.getWidth() - 2 * container_padding, bounds.getHeight() - 2 * container_padding);
 }
 
+void
+ui_element::relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector)
+{
+  _relevant_if_part = id;
+  _relevant_if_param = param_index;
+  _relevant_if_selector = selector;
+  _hide_if_irrelevant = hide_if_irrelevant;
+}
+
 Component*
 ui_element::build(LookAndFeel const& lnf)
 {
   _component.reset(build_core(lnf));
   _component->setVisible(true);
-  if (_enabled_if_selector != nullptr)
+  _component->setEnabled(true);
+  if (_relevant_if_selector != nullptr)
   {
-    std::int32_t index = controller()->topology()->param_index(_enabled_if_part, _enabled_if_param);
+    std::int32_t index = controller()->topology()->param_index(_relevant_if_part, _relevant_if_param);
     assert(controller()->topology()->params[index].descriptor->data.type != param_type::real);
     param_value value = controller()->state()[index];
-    _component->setEnabled(_enabled_if_selector(value.discrete));
-    _enabled_listener.reset(new enabled_listener(controller(), _component.get(), index, _enabled_if_selector));
+    if(_hide_if_irrelevant) _component->setVisible(_relevant_if_selector(value.discrete));
+    else _component->setEnabled(_relevant_if_selector(value.discrete));
+    _relevance_listener.reset(new relevance_listener(controller(), _component.get(), index, _hide_if_irrelevant, _relevant_if_selector));
   }
   return _component.get();
-}
-
-void 
-ui_element::enable_if(part_id id, std::int32_t param_index, enabled_selector selector)
-{
-  _enabled_if_part = id;
-  _enabled_if_param = param_index;
-  _enabled_if_selector = selector;
 }
 
 Component* 
