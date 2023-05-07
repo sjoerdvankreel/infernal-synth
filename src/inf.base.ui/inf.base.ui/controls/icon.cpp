@@ -11,10 +11,10 @@ void
 inf_icon::paint(Graphics& g)
 {
   float const vpad_top = 1.0f;
-  float const dash_size = 3.0f;
   float const line_size = 2.0f;
   float const vpad_bottom = 7.0f;
   float const width_factor = 2.0f;
+  float const dash_size[2] = { 2.0f, 2.0f };
   float const y = vpad_top;
   float const h = getLocalBounds().getHeight() - vpad_bottom;
   float const w = width_factor * h;
@@ -47,14 +47,12 @@ inf_icon::paint(Graphics& g)
 
   if (_type == icon_type::pw)
   {
-    //g.drawDashedLine(Line<float>(x + w / 3.0f, y, x + w / 3.0f, y + h), &dash_size, 1, line_size);
-    //g.drawDashedLine(Line<float>(x + w / 3.0f, y + h, x + w * 2.0f / 3.0f, y + h), &dash_size, 1, line_size);
     p.clear();
     p.startNewSubPath(x + w / 3.0f, y);
     p.lineTo(x + w * 2.0f / 3.0f, y);
-    p.lineTo(x + w * 2.0f / 3.0f, y + h); 
+    p.lineTo(x + w * 2.0f / 3.0f, y + h);
+    g.setColour(findColour(inf_look_and_feel::colors::icon_stroke_color));
     g.strokePath(p, PathStrokeType(line_size));
-    (void)dash_size;
   }
 }
 
