@@ -120,16 +120,11 @@ inf_look_and_feel::drawToggleButton(
   // outline
   Path outline;
   float const outline_thickness = w * outline_thickness_factor;
-  if (on)
-  {
-    auto outline_low = with_enabled(b, colors::switch_outline_on_low);
-    auto outline_high = with_enabled(b, colors::switch_outline_on_high);
-    auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
-    outline_gradient.addColour(0.33, outline_high.interpolatedWith(outline_low, 0.5f));
-    g.setGradientFill(outline_gradient);
-  }
-  else
-    g.setColour(with_enabled(b, colors::switch_outline_off));
+  auto outline_low = with_enabled(b, colors::switch_outline_low);
+  auto outline_high = with_enabled(b, colors::switch_outline_high);
+  auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
+  outline_gradient.addColour(0.33, outline_high.interpolatedWith(outline_low, 0.5f));
+  g.setGradientFill(outline_gradient);
   outline.addEllipse(x, y, w, h);
   g.strokePath(outline, PathStrokeType(outline_thickness));
 

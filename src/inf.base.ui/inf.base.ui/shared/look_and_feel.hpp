@@ -59,9 +59,8 @@ public:
     slider_gradient_fill_low,
     slider_gradient_fill_high,
 
-    switch_outline_off,
-    switch_outline_on_low,
-    switch_outline_on_high,
+    switch_outline_low,
+    switch_outline_high,
     switch_spot_fill_low,
     switch_spot_fill_high,
     switch_gradient_fill_low_on,

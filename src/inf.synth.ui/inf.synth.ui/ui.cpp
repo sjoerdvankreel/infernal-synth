@@ -193,9 +193,8 @@ create_synth_ui(plugin_controller* controller)
   result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_low, Colour(0xE0DA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_high, Colour(0xE0FD9A4D));
 
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_off, Colour(0xFF666666));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_on_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_on_high, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_low, Colour(0xFF14525D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFF2EB8D1));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_low, Colour(0x00222222));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_high, Colour(0x80BBBBBB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_low_on, Colour(0xA0DA6102));
