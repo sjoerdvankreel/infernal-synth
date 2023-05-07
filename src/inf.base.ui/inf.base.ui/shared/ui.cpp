@@ -22,23 +22,23 @@ ui_element::build(LookAndFeel const& lnf)
 {
   _component.reset(build_core(lnf));
   _component->setVisible(true);
-  if (_enabled_if_param != -1)
+  if (_enabled_if_selector != nullptr)
   {
     std::int32_t index = controller()->topology()->param_index(_enabled_if_part, _enabled_if_param);
     assert(controller()->topology()->params[index].descriptor->data.type != param_type::real);
     param_value value = controller()->state()[index];
-    _component->setEnabled(value.discrete == _enabled_if_value);
-    _enabled_listener.reset(new enabled_listener(controller(), _component.get(), index, _enabled_if_value));
+    _component->setEnabled(_enabled_if_selector(value.discrete));
+    _enabled_listener.reset(new enabled_listener(controller(), _component.get(), index, _enabled_if_selector));
   }
   return _component.get();
 }
 
 void 
-ui_element::enable_if(part_id id, std::int32_t param_index, std::int32_t param_value)
+ui_element::enable_if(part_id id, std::int32_t param_index, enabled_selector selector)
 {
   _enabled_if_part = id;
   _enabled_if_param = param_index;
-  _enabled_if_value = param_value;
+  _enabled_if_selector = selector;
 }
 
 Component* 

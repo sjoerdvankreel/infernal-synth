@@ -57,7 +57,8 @@ static std::unique_ptr<ui_element>
 create_osc_sync_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::sync_src, edit_type::selector, label_type::value), 0, 0);
+  auto sync_src = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::sync_src, edit_type::selector, label_type::value), 0, 0);
+  sync_src->enable_if(part_id(part_type::vosc, 0), osc_param::type, [](std::int32_t val) { return val != osc_type::kps && val != osc_type::noise; });
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::fm, edit_type::knob, label_type::label), 0, 1);
   return create_group_ui(controller, create_group_label_ui(controller, "Sync", true), std::move(grid));
 }
@@ -80,7 +81,7 @@ create_osc_basic_group(plugin_controller* controller)
   outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type), 0, 0);
   auto inner_grid = create_grid_ui(controller, 3, 1);
   auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0);
-  pw->enable_if(part_id(part_type::vosc, 0), osc_param::basic_type, osc_basic_type::pulse);
+  pw->enable_if(part_id(part_type::vosc, 0), osc_param::basic_type, [](std::int32_t val) { return val == osc_basic_type::pulse; });
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
 }
