@@ -14,7 +14,6 @@ inf_icon::paint(Graphics& g)
   float const line_size = 2.0f;
   float const vpad_bottom = 7.0f;
   float const width_factor = 2.0f;
-  float const dash_size[2] = { 2.0f, 2.0f };
   float const y = vpad_top;
   float const h = getLocalBounds().getHeight() - vpad_bottom;
   float const w = width_factor * h;
@@ -30,7 +29,6 @@ inf_icon::paint(Graphics& g)
     float ramp = fi/w;
     switch (_type)
     {
-    case icon_type::pw: point = ramp < 0.33f? 1.0f: 0.0f; break;
     case icon_type::pulse: point = 1.0f - std::round(ramp); break;
     case icon_type::saw: point = ramp < 0.5f? ramp + 0.5f: ramp - 0.5f; break;
     case icon_type::sine: point = (std::sin(2.0f * base::pi32 * ramp) + 1.0f) * 0.5f; break;
@@ -44,16 +42,6 @@ inf_icon::paint(Graphics& g)
   p.lineTo(x + w0 - 1, y + h / 2.0f);
   g.setColour(findColour(inf_look_and_feel::colors::icon_stroke_color));
   g.strokePath(p, PathStrokeType(line_size));
-
-  if (_type == icon_type::pw)
-  {
-    p.clear();
-    p.startNewSubPath(x + w / 3.0f, y);
-    p.lineTo(x + w * 2.0f / 3.0f, y);
-    p.lineTo(x + w * 2.0f / 3.0f, y + h);
-    g.setColour(findColour(inf_look_and_feel::colors::icon_stroke_color));
-    g.strokePath(p, PathStrokeType(line_size));
-  }
 }
 
 } // namespace inf::base::ui

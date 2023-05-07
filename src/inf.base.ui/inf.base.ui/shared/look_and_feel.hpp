@@ -78,6 +78,8 @@ public:
     dropdown_highlight_background_high,
 
     icon_stroke_color,
+    icon_pw_stroke_color,
+
     group_label_color
   };
 

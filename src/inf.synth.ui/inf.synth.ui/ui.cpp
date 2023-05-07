@@ -68,7 +68,7 @@ create_osc_type_group(plugin_controller* controller)
   grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_saw, icon_type::saw, edit_type::knob), 0, 1);
   grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_triangle, icon_type::tri, edit_type::knob), 0, 2);
   grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_pulse, icon_type::pulse, edit_type::knob), 0, 3);
-  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_pw, icon_type::pw, edit_type::knob), 0, 4);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_pw, label_type::label, edit_type::knob), 0, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Mix", true), std::move(grid));
 }
 
@@ -116,8 +116,9 @@ create_synth_ui(plugin_controller* controller)
   auto result = create_root_ui(controller, create_oscillator_grid(controller), controller->editor_current_width(), juce::Colours::black);
 
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::group_label_color, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
 
   result->look_and_feel().setColour(PopupMenu::backgroundColourId, Colour(0x00000000));
   result->look_and_feel().setColour(ComboBox::ColourIds::textColourId, Colour(0xFFA7BECB));
