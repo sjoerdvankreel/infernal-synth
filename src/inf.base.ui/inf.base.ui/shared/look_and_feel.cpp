@@ -148,8 +148,9 @@ void
 inf_look_and_feel::drawPopupMenuBackground(
   juce::Graphics& g, int width, int height) 
 {
-  juce::ComboBox unused;
-  drawComboBox(g, width, height, false, 0, 0, 0, 0, unused);
+  juce::ComboBox dummy;
+  dummy.setLookAndFeel(this);
+  drawComboBox(g, width, height, false, 0, 0, 0, 0, dummy);
 }
 
 void 
@@ -191,6 +192,7 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::Drawable const* icon, juce::Colour const*)
 {
   Component dummy;
+  dummy.setLookAndFeel(this);
   
   // config
   float const padding_fixed = 2.0f;
