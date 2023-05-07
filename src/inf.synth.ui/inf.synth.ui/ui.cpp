@@ -101,13 +101,10 @@ create_osc_mix_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_osc_dsf_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, { 1, 1, 1 }, { 4, 1 });
+  auto grid = create_grid_ui(controller, 3, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_parts, edit_type::hslider, label_type::label), 0, 0);
-  grid->add_cell(create_param_label_ui(controller, part_type::vosc, 0, osc_param::dsf_parts, label_type::value, juce::Justification::centredLeft), 0, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_dist, edit_type::hslider, label_type::label), 1, 0);
-  grid->add_cell(create_param_label_ui(controller, part_type::vosc, 0, osc_param::dsf_dist, label_type::value, juce::Justification::centredLeft), 1, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_decay, edit_type::hslider, label_type::label), 2, 0);
-  grid->add_cell(create_param_label_ui(controller, part_type::vosc, 0, osc_param::dsf_decay, label_type::value, juce::Justification::centredLeft), 2, 1);
   return create_group_ui(controller, create_group_label_ui(controller, "DSF", true), std::move(grid));
 }
 
