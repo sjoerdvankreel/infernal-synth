@@ -76,10 +76,12 @@ create_osc_unison_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_osc_basic_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 5);
-  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::knob, label_type::label), 0, 1);
-  return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(grid));
+  auto outer_grid = create_grid_ui(controller, 1, 5);
+  outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type), 0, 0);
+  auto inner_grid = create_grid_ui(controller, 3, 1);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0);
+  outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
+  return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
 }
 
 std::unique_ptr<ui_element>
