@@ -94,16 +94,18 @@ void
 inf_look_and_feel::drawTooltip(
   juce::Graphics& g, juce::String const& text, int w0, int h0)
 {
+  float const corner_size = 0.0f;
   float const w = static_cast<float>(w0);
   float const h = static_cast<float>(h0);
 
   juce::Component dummy;
   dummy.setLookAndFeel(this);
   fill_gradient_rounded_rectangle(g, dummy, Rectangle<float>(0.0f, 0.0f, w, h), 
-    colors::tooltip_background_low, colors::tooltip_background_high, 0.0f, 0.25f);
+    colors::tooltip_background_low, colors::tooltip_background_high, corner_size, 0.25f);
   stroke_gradient_rounded_rectangle(g, dummy, Rectangle<float>(0.0f, 0.0f, w, h),
-    colors::tooltip_outline_low, colors::tooltip_outline_high, 0.0f, 0.25f, 2.0f);
+    colors::tooltip_outline_low, colors::tooltip_outline_high, corner_size, 0.25f, 2.0f);
   g.setColour(findColour(TooltipWindow::ColourIds::textColourId));
+  g.setFont(getPopupMenuFont());
   g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
 }
 
