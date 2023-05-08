@@ -26,10 +26,10 @@ static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 6, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::type, edit_type::selector, label_type::label), 0, 0, 2, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::type, edit_type::selector, label_type::label, false), 0, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::vosc, 0, osc_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::kbd, edit_type::toggle, label_type::label), 3, 0, 1, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::gain, edit_type::knob, label_type::label), 4, 0, 2, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::kbd, edit_type::toggle, label_type::label, false), 3, 0, 1, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::gain, edit_type::knob, label_type::label, true), 4, 0, 2, 1);
   return create_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
@@ -37,9 +37,9 @@ static std::unique_ptr<ui_element>
 create_osc_pitch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::note, edit_type::selector, label_type::value), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::oct, edit_type::selector, label_type::value), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::cent, edit_type::knob, label_type::value), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::note, edit_type::selector, label_type::value, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::oct, edit_type::selector, label_type::value, false), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::cent, edit_type::knob, label_type::value, false), 2, 0);
   return create_group_ui(controller, create_group_label_ui(controller, "Pitch", false), std::move(grid));
 }
 
@@ -47,9 +47,9 @@ static std::unique_ptr<ui_element>
 create_osc_ram_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::ram_src, edit_type::selector, label_type::value), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::ram_bal, edit_type::knob, label_type::label), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::ram_mix, edit_type::knob, label_type::label), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::ram_src, edit_type::selector, label_type::value, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::ram_bal, edit_type::knob, label_type::label, true), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::ram_mix, edit_type::knob, label_type::label, true), 2, 0);
   return create_group_ui(controller, create_group_label_ui(controller, "R/AM", false), std::move(grid));
 }
 
@@ -57,9 +57,9 @@ static std::unique_ptr<ui_element>
 create_osc_sync_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 2);
-  auto sync_src = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::sync_src, edit_type::selector, label_type::value), 0, 0);
+  auto sync_src = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::sync_src, edit_type::selector, label_type::value, false), 0, 0);
   sync_src->relevant_if(part_id(part_type::vosc, 0), osc_param::type, false, [](std::int32_t val) { return val != osc_type::kps && val != osc_type::noise; });
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::fm, edit_type::knob, label_type::label), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::fm, edit_type::knob, label_type::label, true), 0, 1);
   return create_group_ui(controller, create_group_label_ui(controller, "Sync", true), std::move(grid));
 }
 
@@ -67,10 +67,10 @@ static std::unique_ptr<ui_element>
 create_osc_unison_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 2, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_voices, edit_type::knob, label_type::value), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_dtn, edit_type::knob, label_type::label), 0, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_sprd, edit_type::knob, label_type::label), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_offset, edit_type::knob, label_type::label), 1, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_voices, edit_type::knob, label_type::value, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_dtn, edit_type::knob, label_type::label, true), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_sprd, edit_type::knob, label_type::label, true), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_offset, edit_type::knob, label_type::label, true), 1, 1);
   return create_group_ui(controller, create_group_label_ui(controller, "Unison", false), std::move(grid));
 }
 
@@ -78,9 +78,9 @@ static std::unique_ptr<ui_element>
 create_osc_basic_group(plugin_controller* controller)
 {
   auto outer_grid = create_grid_ui(controller, 1, 5);
-  outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type), 0, 0);
+  outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type, false), 0, 0);
   auto inner_grid = create_grid_ui(controller, 3, 1);
-  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label), 1, 0, 1, 1);
+  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::basic_pw, edit_type::hslider, label_type::label, true), 1, 0, 1, 1);
   pw->relevant_if(part_id(part_type::vosc, 0), osc_param::basic_type, false, [](std::int32_t val) { return val == osc_basic_type::pulse; });
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
@@ -90,11 +90,11 @@ static std::unique_ptr<ui_element>
 create_osc_mix_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 5);
-  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_sine, edit_type::knob, icon_type::sine), 0, 0);
-  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_saw, edit_type::knob, icon_type::saw), 0, 1);
-  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_triangle, edit_type::knob, icon_type::tri), 0, 2);
-  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_pulse, edit_type::knob, icon_type::pulse), 0, 3);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_pw, edit_type::knob, label_type::label), 0, 4);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_sine, edit_type::knob, icon_type::sine, true), 0, 0);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_saw, edit_type::knob, icon_type::saw, true), 0, 1);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_triangle, edit_type::knob, icon_type::tri, true), 0, 2);
+  grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, 0, osc_param::mix_pulse, edit_type::knob, icon_type::pulse, true), 0, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::mix_pw, edit_type::knob, label_type::label, true), 0, 4);
   return create_group_ui(controller, create_group_label_ui(controller, "Mix", true), std::move(grid));
 }
 
@@ -102,9 +102,9 @@ static std::unique_ptr<ui_element>
 create_osc_dsf_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_parts, edit_type::hslider, label_type::label), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_dist, edit_type::hslider, label_type::label), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_decay, edit_type::hslider, label_type::label), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_parts, edit_type::hslider, label_type::label, true), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_dist, edit_type::hslider, label_type::label, true), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::dsf_decay, edit_type::hslider, label_type::label, true), 2, 0);
   return create_group_ui(controller, create_group_label_ui(controller, "DSF", true), std::move(grid));
 }
 

@@ -248,15 +248,15 @@ create_group_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
-  std::int32_t param_index, edit_type edit_type, label_type label_type);
+  std::int32_t param_index, edit_type edit_type, label_type label_type, bool show_tooltip);
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
-  std::int32_t param_index, edit_type edit_type, icon_type icon_type);
+  std::int32_t param_index, edit_type edit_type, icon_type icon_type, bool show_tooltip);
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
-  std::int32_t param_index, edit_type edit_type, icon_selector icon_selector);
+  std::int32_t param_index, edit_type edit_type, icon_selector icon_selector, bool show_tooltip);
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon,

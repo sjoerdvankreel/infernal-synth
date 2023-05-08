@@ -339,9 +339,8 @@ create_param_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
-  std::int32_t param_index, edit_type edit_type, label_type label_type)
+  std::int32_t param_index, edit_type edit_type, label_type label_type, bool show_tooltip)
 {
-  bool show_tooltip = label_type == label_type::label;
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
   auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
   return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, show_tooltip);
@@ -350,19 +349,19 @@ create_labeled_param_ui(
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
-  std::int32_t param_index, edit_type edit_type, icon_type icon_type)
+  std::int32_t param_index, edit_type edit_type, icon_type icon_type, bool show_tooltip)
 {
   auto icon = create_param_icon_ui(controller, icon_type);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, true);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, show_tooltip);
 }
 
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index,
-  std::int32_t param_index, edit_type edit_type, icon_selector icon_selector)
+  std::int32_t param_index, edit_type edit_type, icon_selector icon_selector, bool show_tooltip)
 {
   auto icon = create_param_icon_ui(controller, part_type, part_index, param_index, icon_selector);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, true);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, show_tooltip);
 }
 
 std::unique_ptr<ui_element>
