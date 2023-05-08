@@ -18,16 +18,24 @@ inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id)
   return Colour(gray, gray, gray, result.getAlpha());
 }
 
+juce::ColourGradient 
+inf_look_and_feel::gradient_fill(
+  juce::Component& component, juce::Rectangle<float> rect, 
+  std::int32_t low_color_id, std::int32_t high_color_id, float mid_point)
+{
+  auto low = with_enabled(component, low_color_id);
+  auto high = with_enabled(component, high_color_id);
+  auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
+  gradient.addColour(mid_point, high.interpolatedWith(low, 0.5f));
+  return gradient;
+}
+
 void 
 inf_look_and_feel::fill_gradient_circle(
   Graphics& g, Component& component, juce::Rectangle<float> rect,
   std::int32_t low_color_id, std::int32_t high_color_id)
 {
-  auto low = with_enabled(component, low_color_id);
-  auto high = with_enabled(component, high_color_id);
-  auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
-  gradient.addColour(0.25, high.interpolatedWith(low, 0.5f));
-  g.setGradientFill(gradient);
+  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, 0.25f));
   g.fillEllipse(rect);
 }
 
@@ -36,12 +44,17 @@ inf_look_and_feel::fill_gradient_rounded_rectangle(
   juce::Graphics& g, Component& component, juce::Rectangle<float> rect, 
   std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point)
 {
-  auto low = with_enabled(component, low_color_id);
-  auto high = with_enabled(component, high_color_id);
-  auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
-  gradient.addColour(mid_point, high.interpolatedWith(low, 0.5f));
-  g.setGradientFill(gradient);
+  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, mid_point));
   g.fillRoundedRectangle(rect, corner_size);
+}
+
+void
+inf_look_and_feel::stroke_gradient_rounded_rectangle(
+  juce::Graphics& g, Component& component, juce::Rectangle<float> rect,
+  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point, float line_size)
+{
+  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, mid_point));
+  g.drawRoundedRectangle(rect, corner_size, line_size);
 }
 
 void
@@ -75,6 +88,23 @@ inf_look_and_feel::drawLabel(Graphics& g, Label& label)
   g.setColour(with_enabled(label, Label::textColourId));
   auto text_area = getLabelBorderSize(label).subtractedFrom(label.getLocalBounds());
   g.drawText(label.getText(), text_area, label.getJustificationType(), false);
+}
+
+void 
+inf_look_and_feel::drawTooltip(
+  juce::Graphics& g, juce::String const& text, int w0, int h0)
+{
+  float const w = static_cast<float>(w0);
+  float const h = static_cast<float>(h0);
+
+  juce::Component dummy;
+  dummy.setLookAndFeel(this);
+  fill_gradient_rounded_rectangle(g, dummy, Rectangle<float>(0.0f, 0.0f, w, h), 
+    colors::tooltip_background_low, colors::tooltip_background_high, 0.0f, 0.25f);
+  stroke_gradient_rounded_rectangle(g, dummy, Rectangle<float>(0.0f, 0.0f, w, h),
+    colors::tooltip_outline_low, colors::tooltip_outline_high, 0.0f, 0.25f, 2.0f);
+  g.setColour(Colours::red);
+  g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
 }
 
 void 

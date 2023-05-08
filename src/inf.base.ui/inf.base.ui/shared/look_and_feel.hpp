@@ -16,6 +16,9 @@ public juce::LookAndFeel_V4
   juce::Colour 
   with_enabled(juce::Component& component, std::int32_t color_id);
 
+  juce::ColourGradient gradient_fill(
+    juce::Component& component, juce::Rectangle<float> rect, 
+    std::int32_t low_color_id, std::int32_t high_color_id, float mid_point);
   void fill_spot_circle(juce::Graphics& g, 
     juce::Component& component, juce::Rectangle<float> rect,
     std::int32_t low_color_id, std::int32_t high_color_id);
@@ -25,6 +28,9 @@ public juce::LookAndFeel_V4
   void fill_gradient_rounded_rectangle(juce::Graphics& g, 
     juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id, 
     std::int32_t high_color_id, float corner_size, float mid_point);
+  void stroke_gradient_rounded_rectangle(juce::Graphics& g,
+    juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id,
+    std::int32_t high_color_id, float corner_size, float mid_point, float line_size);
 
 public:
   enum colors {
@@ -82,6 +88,11 @@ public:
     icon_stroke_color,
     icon_pw_stroke_color,
 
+    tooltip_outline_low,
+    tooltip_outline_high,
+    tooltip_background_low,
+    tooltip_background_high,
+
     group_label_color
   };
 
@@ -91,6 +102,11 @@ public:
   // Disables ellipses and fitting.
   void drawLabel(
     juce::Graphics& g, juce::Label& label) override;
+
+  // Custom tooltip.
+  void drawTooltip(
+    juce::Graphics& g, juce::String const& text, 
+    int w0, int h0) override;
 
   // Custom slider.
   void drawLinearSlider(
