@@ -365,7 +365,11 @@ inf_look_and_feel::drawRotarySlider(
   auto const descriptor = is.descriptor();
   bool const outline_gradient = is.type() == edit_type::knob;
   bool const bipolar = descriptor->data.type == param_type::real ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
-  if (s.getInterval() > 0.0) step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
+  if(is.type() == edit_type::selector)
+  {
+    assert(s.getInterval() > 0.0);
+    step_count = static_cast<std::int32_t>(std::round(s.getMaximum() - s.getMinimum()));
+  }
 
   // adjust for nonrectangular
   float w = static_cast<float>(w0);
