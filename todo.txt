@@ -1,4 +1,4 @@
-* for each release
+* for each release 
 - v create version branch
 - v update hiir
 - v update vst3 sdk
