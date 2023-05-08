@@ -10,7 +10,7 @@ void
 slider_param_listener::controller_param_changed(param_value ui_value)
 {
   auto const& data = _controller->topology()->params[_param_index].descriptor->data;
-  if (data.type == param_type::real) _slider->setValue(ui_value.real);
+  if (data.type == param_type::real) _slider->setValue(ui_value.real, dontSendNotification);
   else _slider->setValue(ui_value.discrete, dontSendNotification);
 }
 
