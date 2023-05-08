@@ -164,6 +164,7 @@ create_synth_ui(plugin_controller* controller)
   result->look_and_feel().setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
 
+  result->look_and_feel().setColour(TooltipWindow::ColourIds::textColourId, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_outline_low, Colour(0xFF14525D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF2EB8D1));
   result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF444444));

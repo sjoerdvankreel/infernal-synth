@@ -103,7 +103,7 @@ inf_look_and_feel::drawTooltip(
     colors::tooltip_background_low, colors::tooltip_background_high, 0.0f, 0.25f);
   stroke_gradient_rounded_rectangle(g, dummy, Rectangle<float>(0.0f, 0.0f, w, h),
     colors::tooltip_outline_low, colors::tooltip_outline_high, 0.0f, 0.25f, 2.0f);
-  g.setColour(Colours::red);
+  g.setColour(findColour(TooltipWindow::ColourIds::textColourId));
   g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
 }
 
