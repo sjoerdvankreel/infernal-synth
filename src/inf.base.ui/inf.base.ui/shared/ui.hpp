@@ -6,6 +6,7 @@
 #include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
+#include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
@@ -146,6 +147,7 @@ public ui_element
   edit_type const _type;
   base::part_id const _part_id;
   std::int32_t const _param_index;
+  std::unique_ptr<tooltip_listener> _tooltip_listener = {};
   std::unique_ptr<toggle_param_listener> _toggle_listener = {};
   std::unique_ptr<slider_param_listener> _slider_listener = {};
   std::unique_ptr<dropdown_param_listener> _dropdown_listener = {};
@@ -219,6 +221,7 @@ public ui_element
   juce::Colour const _fill;
   std::int32_t const _width; // Pixel size.
   std::unique_ptr<grid_element> _content = {};
+  std::unique_ptr<juce::TooltipWindow> _tooltip = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:

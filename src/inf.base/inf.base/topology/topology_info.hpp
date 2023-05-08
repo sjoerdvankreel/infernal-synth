@@ -93,6 +93,8 @@ struct topology_info
     create_audio_processor(param_value* state, std::int32_t* changed,
       float sample_rate, std::int32_t max_sample_count) const = 0;
 
+  param_value ui_to_base_value(std::int32_t param_index, param_value ui_value) const;
+  param_value base_to_ui_value(std::int32_t param_index, param_value base_value) const;
   std::int32_t param_start(part_id id) const { return param_bounds[id.type][id.index]; }
   std::int32_t param_index(part_id id, std::int32_t param) const { return param_start(id) + param; }
   std::int32_t param_id(part_id id, std::int32_t param) const { return param_index_to_id[param_index(id, param)]; }

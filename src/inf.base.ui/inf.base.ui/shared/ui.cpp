@@ -51,6 +51,7 @@ root_element::build_core(LookAndFeel const& lnf)
   result->addChildComponent(_content->build(lnf));
   result->setOpaque(true);
   result->setLookAndFeel(&_lnf);
+  _tooltip.reset(new TooltipWindow(result));
   return result;
 }
 
@@ -112,7 +113,7 @@ param_label_element::build_core(LookAndFeel const& lnf)
   auto topology = controller()->topology();
   auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
-  param_value value = controller()->state()[index];
+  param_value value = controller()->ui_value_at(_part_id, _param_index);
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setJustificationType(_justification);
   result->setFont(juce::Font(get_param_label_font_height(controller()), juce::Font::bold));
@@ -163,12 +164,20 @@ param_edit_element::layout()
 Component* 
 param_edit_element::build_core(juce::LookAndFeel const& lnf)
 {
+  Component* result = nullptr;
   switch (_type)
   {
-  case edit_type::toggle: return build_toggle_core(lnf);
-  case edit_type::dropdown: return build_dropdown_core(lnf);
-  default: return build_slider_core(lnf);
+  case edit_type::toggle: result = build_toggle_core(lnf); break;
+  case edit_type::dropdown: result = build_dropdown_core(lnf); break;
+  default: result = build_slider_core(lnf); break;
   }
+  auto client = dynamic_cast<SettableTooltipClient*>(result);
+  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+  _tooltip_listener.reset(new tooltip_listener(controller(), client, index));
+  auto const& info = controller()->topology()->params[index];
+  param_value ui_value = controller()->ui_value_at(_part_id, _param_index);
+  client->setTooltip(juce::String(info.runtime_name) + ": " + info.descriptor->data.format(false, ui_value));
+  return result;
 }
 
 Component*

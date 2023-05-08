@@ -67,6 +67,23 @@ public:
   void add_param_listener(std::int32_t param_index, param_listener* listener);
   void remove_param_listener(std::int32_t param_index, param_listener* listener);
   std::vector<inf::base::factory_preset>& factory_presets() { return _factory_presets; }
+
+  param_value base_value_at_index(std::int32_t param_index) const
+  { return state()[param_index]; }
+  param_value ui_value_at_index(std::int32_t param_index) const
+  { return topology()->base_to_ui_value(param_index, base_value_at_index(param_index)); }
+  param_value ui_value_at(part_id part, std::int32_t param) const
+  { return ui_value_at_index(topology()->param_index(part, param)); }
+  param_value base_value_at(part_id part, std::int32_t param) const
+  { return base_value_at_index(topology()->param_index(part, param)); };
+  param_value ui_value_at_id(std::int32_t param_id) const 
+  { return ui_value_at_index(topology()->param_id_to_index.at(param_id)); }
+  param_value base_value_at_id(std::int32_t param_id) const 
+  { return base_value_at_index(topology()->param_id_to_index.at(param_id)); }
+  param_value ui_value_at(std::int32_t part_type, std::int32_t part_index, std::int32_t param) const
+  { return ui_value_at_index(topology()->param_index(part_id(part_type, part_index), param)); }
+  param_value base_value_at(std::int32_t part_type, std::int32_t part_index, std::int32_t param) const
+  { return base_value_at_index(topology()->param_index(part_id(part_type, part_index), param)); };
 };
 
 } // namespace inf::base

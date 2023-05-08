@@ -28,6 +28,26 @@ topology_info::set_ui_value(
   state[index] = params[index].descriptor->data.parse_ui(value);
 }
 
+param_value
+topology_info::ui_to_base_value(std::int32_t param_index, param_value ui_value) const
+{
+  param_value result = ui_value;
+  auto const& desc = params[param_index];
+  if (desc.descriptor->data.type == param_type::real)
+    result.real = desc.descriptor->data.real.display.from_range(ui_value.real);
+  return result;
+}
+
+param_value
+topology_info::base_to_ui_value(std::int32_t param_index, param_value base_value) const
+{
+  param_value result = base_value;
+  auto const& desc = params[param_index];
+  if (desc.descriptor->data.type == param_type::real)
+    result.real = desc.descriptor->data.real.display.to_range(base_value.real);
+  return result;
+}
+
 void 
 topology_info::init_param_defaults(param_value* state, std::int32_t from, std::int32_t to) const
 {
