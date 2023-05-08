@@ -67,7 +67,7 @@ static std::unique_ptr<ui_element>
 create_osc_unison_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 2, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_voices, edit_type::knob, label_type::value, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_voices, edit_type::selector, label_type::value, false), 0, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_dtn, edit_type::knob, label_type::label, true), 0, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_sprd, edit_type::knob, label_type::label, true), 1, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::uni_offset, edit_type::knob, label_type::label, true), 1, 1);
