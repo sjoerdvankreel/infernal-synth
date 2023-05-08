@@ -108,6 +108,29 @@ create_osc_dsf_group(plugin_controller* controller)
   return create_group_ui(controller, create_group_label_ui(controller, "DSF", true), std::move(grid));
 }
 
+static std::unique_ptr<ui_element>
+create_osc_kps_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 3, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::kps_filter, edit_type::hslider, label_type::label, true), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::kps_feedback, edit_type::hslider, label_type::label, true), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::kps_stretch, edit_type::hslider, label_type::label, true), 2, 0);
+  return create_group_ui(controller, create_group_label_ui(controller, "K+S", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_osc_noise_group(plugin_controller* controller)
+{
+  auto outer_grid = create_grid_ui(controller, 1, 5);
+  outer_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::noise_seed, edit_type::knob, label_type::label, true), 0, 0);
+  auto inner_grid = create_grid_ui(controller, 3, 1);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::noise_color, edit_type::hslider, label_type::label, true), 0, 0);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::noise_x, edit_type::hslider, label_type::label, true), 1, 0);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::noise_y, edit_type::hslider, label_type::label, true), 2, 0);
+  outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
+  return create_group_ui(controller, create_group_label_ui(controller, "Noise", true), std::move(outer_grid));
+}
+
 static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller)
 {
@@ -124,6 +147,10 @@ create_oscillator_grid(plugin_controller* controller)
   mix->relevant_if(part_id(part_type::vosc, 0), osc_param::type, true, [](std::int32_t val) { return val == osc_type::mix; });
   auto dsf = result->add_cell(create_container_fill_ui(controller, create_osc_dsf_group(controller), Colour(0xFF333333)), 3, 0, 1, 5);
   dsf->relevant_if(part_id(part_type::vosc, 0), osc_param::type, true, [](std::int32_t val) { return val == osc_type::dsf; });
+  auto kps = result->add_cell(create_container_fill_ui(controller, create_osc_kps_group(controller), Colour(0xFF333333)), 3, 0, 1, 5);
+  kps->relevant_if(part_id(part_type::vosc, 0), osc_param::type, true, [](std::int32_t val) { return val == osc_type::kps; });
+  auto noise = result->add_cell(create_container_fill_ui(controller, create_osc_noise_group(controller), Colour(0xFF333333)), 3, 0, 1, 5);
+  noise->relevant_if(part_id(part_type::vosc, 0), osc_param::type, true, [](std::int32_t val) { return val == osc_type::noise; });
   return result;
 }
 
