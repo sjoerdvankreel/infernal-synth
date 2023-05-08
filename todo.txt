@@ -62,3 +62,4 @@
 - move config to synth_editor ?
 - disable unison for noise
 - fix hslider label width
+- fix paint problems
