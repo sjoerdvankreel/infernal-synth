@@ -171,12 +171,15 @@ param_edit_element::build_core(juce::LookAndFeel const& lnf)
   case edit_type::dropdown: result = build_dropdown_core(lnf); break;
   default: result = build_slider_core(lnf); break;
   }
-  auto client = dynamic_cast<SettableTooltipClient*>(result);
-  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
-  _tooltip_listener.reset(new tooltip_listener(controller(), client, index));
-  auto const& info = controller()->topology()->params[index];
-  param_value ui_value = controller()->ui_value_at(_part_id, _param_index);
-  client->setTooltip(juce::String(info.runtime_name) + ": " + info.descriptor->data.format(false, ui_value));
+  if(_show_tooltip)
+  {
+    auto client = dynamic_cast<SettableTooltipClient*>(result);
+    std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+    _tooltip_listener.reset(new tooltip_listener(controller(), client, index));
+    auto const& desc = *controller()->topology()->params[index].descriptor;
+    param_value ui_value = controller()->ui_value_at(_part_id, _param_index);
+    client->setTooltip(desc.data.format(false, ui_value) + desc.data.unit);
+  }
   return result;
 }
 
@@ -311,7 +314,7 @@ create_grid_ui(
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon,
-  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type edit_type)
+  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip)
 {
   if (edit_type == edit_type::hslider)
   {
@@ -319,7 +322,7 @@ create_param_ui(
     auto fixed_label_width = Grid::TrackInfo(Grid::Px(get_param_label_hslider_width(controller)));
     auto result = create_grid_ui(controller, { auto_rest }, { fixed_label_width, auto_rest });
     result->add_cell(std::move(label_or_icon), 0, 0);
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type), 0, 1);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, show_tooltip), 0, 1);
     return result;
   }
   else
@@ -327,7 +330,7 @@ create_param_ui(
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
     auto fixed_label_height = Grid::TrackInfo(Grid::Px(get_param_label_total_height(controller)));
     auto result = create_grid_ui(controller, { auto_rest, fixed_label_height }, { auto_rest });
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type), 0, 0);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, show_tooltip), 0, 0);
     result->add_cell(std::move(label_or_icon), 1, 0);
     return result;
   }
@@ -338,9 +341,10 @@ create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, edit_type edit_type, label_type label_type)
 {
+  bool show_tooltip = label_type == label_type::label;
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
   auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
-  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type);
+  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, show_tooltip);
 }
 
 std::unique_ptr<ui_element>
@@ -349,7 +353,7 @@ create_iconed_param_ui(
   std::int32_t param_index, edit_type edit_type, icon_type icon_type)
 {
   auto icon = create_param_icon_ui(controller, icon_type);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, true);
 }
 
 std::unique_ptr<ui_element>
@@ -358,7 +362,7 @@ create_iconed_param_ui(
   std::int32_t param_index, edit_type edit_type, icon_selector icon_selector)
 {
   auto icon = create_param_icon_ui(controller, part_type, part_index, param_index, icon_selector);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, true);
 }
 
 std::unique_ptr<ui_element>

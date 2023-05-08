@@ -27,7 +27,7 @@ create_osc_main_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 6, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::type, edit_type::selector, label_type::label), 0, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::vosc, 0, osc_param::type, edit_type::dropdown), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::vosc, 0, osc_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::kbd, edit_type::toggle, label_type::label), 3, 0, 1, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, 0, osc_param::gain, edit_type::knob, label_type::label), 4, 0, 2, 1);
   return create_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
