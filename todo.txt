@@ -35,15 +35,10 @@
 
 * wishlist ui
 - drop param_type?
-- separate decimal precision for display/edit
-- tooltips
 - fix leaks
 - graphs
 - double click sets default
 - fix menu host integration
-- check all ui vs dsp ranges
-- cleanup tag-vs-index
-- cleanup base-vs-ui-vs-vstnormalized
 - double check controller/editor/processor methods, what is still needed
 - fix linux renoise resizing
 - scan vst_controller/editor for unneeded stuff
@@ -51,15 +46,12 @@
 - global "edit menu" button
 - remove voice/master graphs
 - reduce the use of background images
-- drop text edit fields & put active knob value in 1 single place
 - filter out incompatible menu options (osc sync, ram, audio routing)
 - reduce controller.uidesc to image names, image offsets and color scheme
-- tooltips, tooltips while dragging knobs etc etc
-- fix is_continuous crap / do to_ui / to_base / different types for base / ui / vst normalized?
-- exact editing
+- exact editing - put active knob value in 1 single place
 - go with juce's vst3sdk
-- tooltips, editable labels, show value on slider movement
 - move config to synth_editor ?
 - disable unison for noise
 - fix hslider label width
 - fix paint problems
+- simplify / remove unused group component stuff
