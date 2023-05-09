@@ -154,20 +154,14 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   return result;
 }
 
-static std::unique_ptr<ui_element>
-create_oscillator_group(plugin_controller* controller, std::int32_t part_index)
-{
-  return create_container_outline_ui(controller, create_oscillator_grid(controller, part_index), Colours::red);
-}
-
 std::unique_ptr<root_element>
 create_synth_ui(plugin_controller* controller)
 {
-  auto osc_grid = create_grid_ui(controller, 2, 2);
-  osc_grid->add_cell(create_oscillator_group(controller, 0), 0, 0);
-  osc_grid->add_cell(create_oscillator_group(controller, 1), 0, 1);
-  osc_grid->add_cell(create_oscillator_group(controller, 2), 1, 0);
-  osc_grid->add_cell(create_oscillator_group(controller, 3), 1, 1);
+  auto osc_tab = create_tab_ui(controller);
+  for(std::int32_t i = 0; i < vosc_count; i++)
+    osc_tab->add_tab(std::to_string(i), create_oscillator_grid(controller, i));
+  auto osc_grid = create_grid_ui(controller, 1, 1);
+  osc_grid->add_cell(std::move(osc_tab), 0, 0);
   auto result = create_root_ui(controller, std::move(osc_grid), controller->editor_current_width(), juce::Colours::black);
 
   result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
