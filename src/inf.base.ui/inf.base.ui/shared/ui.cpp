@@ -109,16 +109,22 @@ group_label_element::layout()
 void
 tab_element::layout()
 {
+  dynamic_cast<TabbedComponent*>(component())->getTabbedButtonBar().
   for(std::size_t i = 0; i < _children.size(); i++)
+  {
     _children[i]->layout();
+    if(_extra_elements[i]) _extra_elements[i]->layout();
+  }
 }
 
 ui_element*
-tab_element::add_tab(std::string const& header, std::unique_ptr<ui_element>&& content)
+tab_element::add_tab(std::string const& header,
+  std::unique_ptr<ui_element>&& content, std::unique_ptr<ui_element>&& extra_element)
 {
   auto result = content.get();
   _headers.push_back(header);
   _children.push_back(std::move(content));
+  _extra_elements.push_back(std::move(extra_element));
   return result;
 }
 
@@ -128,6 +134,13 @@ tab_element::build_core(LookAndFeel const& lnf)
   TabbedComponent* result = new TabbedComponent(TabbedButtonBar::TabsAtTop);
   for (std::size_t i = 0; i < _children.size(); i++)
     result->addTab(_headers[i], Colours::transparentBlack, _children[i]->build(lnf), false);
+  for (std::size_t i = 0; i < _children.size(); i++)
+    if(_extra_elements[i])
+    {
+      // Unlike everything else in juce, this seems to want to take ownership.
+      result->getTabbedButtonBar().getTabButton(static_cast<int>(i))->
+        setExtraComponent(_extra_elements[i]->build(lnf), TabBarButton::beforeText);
+    }
   return result;
 }
 

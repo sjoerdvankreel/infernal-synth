@@ -38,6 +38,7 @@ public:
   virtual void layout() = 0;
   juce::Component* build(juce::LookAndFeel const& lnf);
   juce::Component* component() { return _component.get(); }
+  juce::Component* release_component() { return _component.release(); }
   inf::base::plugin_controller* controller() const { return _controller; }
   void relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector);
 };
@@ -95,13 +96,13 @@ public ui_element
 {
   std::vector<std::string> _headers = {};
   std::vector<std::unique_ptr<ui_element>> _children = {};
+  std::vector<std::unique_ptr<ui_element>> _extra_elements = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override;
-  ui_element* add_tab(std::string const& header, std::unique_ptr<ui_element>&& content);
-  tab_element(
-    inf::base::plugin_controller* controller): ui_element(controller) {}
+  tab_element(inf::base::plugin_controller* controller) : ui_element(controller) {}
+  ui_element* add_tab(std::string const& header, std::unique_ptr<ui_element>&& content, std::unique_ptr<ui_element>&& extra_element);
 };
 
 inline std::unique_ptr<tab_element>
