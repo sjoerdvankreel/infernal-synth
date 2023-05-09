@@ -1,5 +1,6 @@
 #include <inf.base.ui/shared/ui.hpp>
 #include <inf.base.ui/shared/config.hpp>
+#include <inf.base.ui/shared/real_bounds_range.hpp>
 #include <inf.base.ui/controls/label.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base/shared/support.hpp>
@@ -216,15 +217,15 @@ param_edit_element::build_slider_core(LookAndFeel const& lnf)
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider(&desc, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-  if(desc.data.type == param_type::real)
-  {
-    result->setRange(desc.data.real.display.min, desc.data.real.display.max, 0.0);
-    result->setValue(desc.data.real.display.to_range(controller()->state()[index].real), dontSendNotification);
-  }
-  else
+  if(desc.data.type != param_type::real)
   {
     result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
     result->setValue(controller()->state()[index].discrete, dontSendNotification);
+  }
+  else
+  {
+    result->setNormalisableRange(real_bounds_range(desc.data.real.display)),
+    result->setValue(desc.data.real.display.to_range(controller()->state()[index].real), dontSendNotification);
   }
   switch (_type)
   {
