@@ -109,7 +109,6 @@ group_label_element::layout()
 void
 tab_element::layout()
 {
-  dynamic_cast<TabbedComponent*>(component())->getTabbedButtonBar().
   for(std::size_t i = 0; i < _children.size(); i++)
   {
     _children[i]->layout();
