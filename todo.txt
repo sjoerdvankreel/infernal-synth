@@ -55,3 +55,4 @@
 - fix hslider label width
 - fix paint problems
 - simplify / remove unused group component stuff
+- drop voice/global ui suffixes
