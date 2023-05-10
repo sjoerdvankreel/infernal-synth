@@ -3,7 +3,6 @@
 #include <inf.base.ui/shared/real_bounds_range.hpp>
 #include <inf.base.ui/controls/label.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
-#include <inf.base.ui/controls/tabbed_component.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -105,33 +104,6 @@ group_label_element::layout()
   label->setTransform(transform);
   label->setBounds(label->getBounds().transformedBy(transform));
   label->setJustificationType(_vertical? Justification::centred : Justification::centredBottom);
-}
-
-ui_element*
-tab_element::add_tab(std::string const& header, std::unique_ptr<ui_element>&& content)
-{
-  auto result = content.get();
-  _headers.push_back(header);
-  _children.push_back(std::move(content));
-  return result;
-}
-
-void
-tab_element::layout()
-{
-  for(std::size_t i = 0; i < _children.size(); i++)
-    _children[i]->layout();
-}
-
-Component*
-tab_element::build_core(LookAndFeel const& lnf)
-{
-  inf_tabbed_component* result = new inf_tabbed_component(TabbedButtonBar::TabsAtTop);
-  for (std::size_t i = 0; i < _children.size(); i++)
-    result->addTab(_headers[i], Colours::transparentBlack, _children[i]->build(lnf), false);
-  if(_bar_extra_after) result->bar_extra_after(_bar_extra_after->build(lnf));
-  if(_bar_extra_before) result->bar_extra_before(_bar_extra_before->build(lnf));
-  return result;
 }
 
 Component*
