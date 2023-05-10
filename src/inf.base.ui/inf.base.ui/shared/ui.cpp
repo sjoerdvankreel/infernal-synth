@@ -106,6 +106,15 @@ group_label_element::layout()
   label->setJustificationType(_vertical? Justification::centred : Justification::centredBottom);
 }
 
+Component* 
+tab_bar_element::build_core(LookAndFeel const& lnf)
+{
+  TabbedButtonBar* result = new TabbedButtonBar(TabbedButtonBar::TabsAtTop);
+  for(std::size_t i = 0; i < _headers.size(); i++)
+    result->addTab(_headers[i], Colours::blue, static_cast<int>(i));
+  return result;
+}
+
 Component*
 param_label_element::build_core(LookAndFeel const& lnf)
 {
