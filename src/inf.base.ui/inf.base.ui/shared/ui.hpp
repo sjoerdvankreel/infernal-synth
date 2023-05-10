@@ -45,9 +45,9 @@ public:
 class container_element:
 public ui_element
 {
-  juce::Colour const _fill;
-  juce::Colour const _outline;
   std::uint32_t const _flags;
+  std::int32_t const _fill_color_id;
+  std::int32_t const _outline_color_id;
   std::unique_ptr<ui_element> _content = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
@@ -55,22 +55,15 @@ public:
   void layout() override;
   container_element(
     inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, 
-    std::uint32_t flags, juce::Colour const& fill, juce::Colour const& outline) :
-  ui_element(controller), _fill(fill), _outline(outline), _flags(flags), _content(std::move(content)) {}
+    std::uint32_t flags, std::int32_t fill_color_id, std::int32_t outline_color_id) :
+  ui_element(controller), _flags(flags), _fill_color_id(fill_color_id), _outline_color_id(outline_color_id), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<container_element>
-create_container_fill_ui(inf::base::plugin_controller* controller,
-  std::unique_ptr<ui_element>&& content, juce::Colour const& fill)
-{ return std::make_unique<container_element>(controller, std::move(content), container_component::flags::fill, fill, juce::Colour()); }
-inline std::unique_ptr<container_element>
-create_container_outline_ui(inf::base::plugin_controller* controller,
-  std::unique_ptr<ui_element>&& content, juce::Colour const& outline)
-{ return std::make_unique<container_element>(controller, std::move(content), container_component::flags::outline, juce::Colour(), outline); }
-inline std::unique_ptr<container_element>
-create_container_fill_outline_ui(inf::base::plugin_controller* controller,
-  std::unique_ptr<ui_element>&& content, juce::Colour const& fill, juce::Colour const& outline)
-{ return std::make_unique<container_element>(controller, std::move(content), container_component::flags::outline | container_component::flags::fill, fill, outline); }
+create_part_group_container_ui(
+  inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content)
+{ return std::make_unique<container_element>(controller, std::move(content), 
+  container_component::flags::fill, inf_look_and_feel::colors::part_group_container, 0); }
 
 class group_label_element:
 public ui_element
@@ -242,7 +235,7 @@ create_root_ui(
 { return std::make_unique<root_element>(controller, std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
-create_group_ui(
+create_part_group_ui(
   plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
   std::unique_ptr<ui_element>&& content);
 std::unique_ptr<ui_element>

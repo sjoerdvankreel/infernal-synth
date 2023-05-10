@@ -48,7 +48,7 @@ ui_element::build(LookAndFeel const& lnf)
 Component* 
 root_element::build_core(LookAndFeel const& lnf)
 {
-  container_component* result = new container_component(container_component::flags::fill, 0.0f, 0.0f, Colours::black, Colour());
+  container_component* result = new container_component(container_component::flags::fill, 0.0f, 0.0f, inf_look_and_feel::colors::root_background, 0);
   result->addChildComponent(_content->build(lnf));
   result->setOpaque(true);
   result->setLookAndFeel(&_lnf);
@@ -71,7 +71,7 @@ container_element::build_core(LookAndFeel const& lnf)
 {
   float const radius = 8.0f;
   float const thickness = 1.0f;
-  container_component* result = new container_component(_flags, radius, thickness, _fill, _outline);
+  container_component* result = new container_component(_flags, radius, thickness, _fill_color_id, _outline_color_id);
   result->addChildComponent(_content->build(lnf));
   return result;
 }
@@ -90,7 +90,7 @@ group_label_element::build_core(LookAndFeel const& lnf)
   result->setText(_text, dontSendNotification);
   result->setJustificationType(Justification::centred);
   result->setFont(juce::Font(get_group_label_font_height(controller()), juce::Font::bold));
-  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::group_label_color));
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::part_group_label));
   return result;
 }
 
@@ -366,7 +366,7 @@ create_iconed_param_ui(
 }
 
 std::unique_ptr<ui_element>
-create_group_ui(plugin_controller* controller, std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content)
+create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_element>&& label, std::unique_ptr<ui_element>&& content)
 {
   std::vector<Grid::TrackInfo> rows;
   std::vector<Grid::TrackInfo> cols;

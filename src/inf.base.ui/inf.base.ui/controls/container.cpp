@@ -1,4 +1,5 @@
 #include <inf.base.ui/controls/container.hpp>
+#include <inf.base.ui/shared/look_and_feel.hpp>
 
 using namespace juce;
 using namespace inf::base;
@@ -21,12 +22,12 @@ container_component::paint(Graphics& g)
   auto bounds = with_container_padding(getLocalBounds()).toFloat();
   if (_flags & flags::fill)
   {
-    g.setColour(_fill);
+    g.setColour(findColour(_fill_color_id));
     g.fillRoundedRectangle(bounds, _radius);
   }
   if (_flags & flags::outline)
   {
-    g.setColour(_outline);
+    g.setColour(findColour(_outline_color_id));
     g.drawRoundedRectangle(bounds, _radius, _thickness);
   }
   if(getChildren().size() != 0)

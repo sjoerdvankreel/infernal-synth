@@ -93,7 +93,9 @@ public:
     tooltip_background_low,
     tooltip_background_high,
 
-    group_label_color
+    root_background,
+    part_group_label,
+    part_group_container
   };
 
   inf_look_and_feel(inf::base::plugin_controller const* controller):
