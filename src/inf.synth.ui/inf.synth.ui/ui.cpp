@@ -150,12 +150,7 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::kps; });
   auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::noise; });
-  
-  auto tab_test = create_tab_bar(controller);
-  for(std::int32_t i = 0; i < vosc_count; i++)
-    tab_test->add_header(std::to_string(i + 1));
-  result->add_cell(std::move(tab_test), 4, 0, 1, 5);
-
+  result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, part_type::vosc, vosc_count, osc_param::on), 4, 0, 1, 5);
   return result;
 }
 

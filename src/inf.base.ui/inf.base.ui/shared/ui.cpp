@@ -110,6 +110,7 @@ Component*
 tab_bar_element::build_core(LookAndFeel const& lnf)
 {
   TabbedButtonBar* result = new TabbedButtonBar(TabbedButtonBar::TabsAtTop);
+  result->setMinimumTabScaleFactor(0.0f);
   for(std::size_t i = 0; i < _headers.size(); i++)
     result->addTab(_headers[i], Colours::blue, static_cast<int>(i));
   return result;
@@ -404,6 +405,21 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
     result->add_cell(std::move(content), 1, 0);
   }
   return result;
+}
+
+std::unique_ptr<ui_element>
+create_part_selector_ui(
+  plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
+  std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selected_part_on_param)
+{
+  auto grid = create_grid_ui(controller, 1, selected_part_count + 2);
+  grid->add_cell(create_param_label_ui(controller, selector_part_type, 0, selector_param_index, label_type::label, Justification::centredLeft), 0, 0);
+  grid->add_cell(create_param_edit_ui(controller, selected_part_type, 0, selected_part_on_param, edit_type::toggle, false), 0, selected_part_count + 1);
+  auto tab_bar = create_tab_bar(controller);
+  for(std::int32_t i = 0; i < selected_part_count; i++)
+    tab_bar->add_header(std::to_string(i + 1));
+  grid->add_cell(std::move(tab_bar), 0, 1, 1, selected_part_count);
+  return create_part_group_container_ui(controller, std::move(grid));
 }
 
 } // namespace inf::base::ui

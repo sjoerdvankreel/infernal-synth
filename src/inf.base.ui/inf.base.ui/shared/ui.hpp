@@ -270,6 +270,10 @@ std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon,
   std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip);
+std::unique_ptr<ui_element>
+create_part_selector_ui(
+  plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index, 
+  std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selected_part_on_param);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_UI_HPP
