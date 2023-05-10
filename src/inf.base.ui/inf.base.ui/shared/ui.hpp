@@ -94,12 +94,16 @@ class tab_element:
 public ui_element
 {
   std::vector<std::string> _headers = {};
+  std::unique_ptr<ui_element> _bar_extra_after = {};
+  std::unique_ptr<ui_element> _bar_extra_before = {};
   std::vector<std::unique_ptr<ui_element>> _children = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override;
   ui_element* add_tab(std::string const& header, std::unique_ptr<ui_element>&& content);
+  void bar_extra_after(std::unique_ptr<ui_element>&& element) { _bar_extra_after = std::move(element); }
+  void bar_extra_before(std::unique_ptr<ui_element>&& element) { _bar_extra_before = std::move(element); }
   tab_element(
     inf::base::plugin_controller* controller): ui_element(controller) {}
 };

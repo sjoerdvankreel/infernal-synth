@@ -158,6 +158,7 @@ std::unique_ptr<root_element>
 create_synth_ui(plugin_controller* controller)
 {
   auto osc_tab = create_tab_ui(controller);
+  osc_tab->bar_extra_before(create_param_label_ui(controller, part_type::active, 0, active_param::vosc, label_type::label));
   for(std::int32_t i = 0; i < vosc_count; i++)
     osc_tab->add_tab(std::to_string(i), create_oscillator_grid(controller, i));
   auto osc_grid = create_grid_ui(controller, 1, 1);

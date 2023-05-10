@@ -373,11 +373,6 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 }
 
 // ---- part selector ----
- 
-struct active_param_t { enum value { 
-  vosc, veffect, geffect, vaudio_bank, gaudio_bank, 
-  venv, vlfo, glfo, vcv_bank, gcv_bank, count }; };
-typedef active_param_t::value active_param;
 
 static std::vector<std::string> const active_vosc_tab_items = list_tab_items(vosc_count);
 static std::vector<std::string> const active_veffect_tab_items = list_tab_items(veffect_count);
