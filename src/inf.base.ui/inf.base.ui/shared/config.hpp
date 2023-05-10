@@ -5,6 +5,9 @@ namespace inf::base::ui {
 
 inline int const container_padding = 2;
 
+inline float const selector_min_height = 24.0f;
+inline float const selector_max_height = 40.0f;
+
 inline float const dropdown_hpad = 4.0f;
 inline float const dropdown_vpad_min = 6.0f;
 inline float const dropdown_vpad_max = 32.0f;

@@ -134,23 +134,24 @@ create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto result = create_grid_ui(controller, 5, 5);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 1, 3, 2, 2);
-  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 3, 0, 1, 5);
+  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
+  auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(5, Grid::Fr(1)));
+  result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, part_type::vosc, vosc_count, osc_param::on), 0, 0, 1, 5);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 1, 0, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 1, 1, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 1, 2, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 1, 3, 1, 2);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 2, 3, 2, 2);
+  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 4, 0, 1, 5);
   basic->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::basic; });
-  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 3, 0, 1, 5);
+  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 4, 0, 1, 5);
   mix->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::mix; });
-  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 3, 0, 1, 5);
+  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 4, 0, 1, 5);
   dsf->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::dsf; });
-  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 3, 0, 1, 5);
+  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 4, 0, 1, 5);
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::kps; });
-  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
+  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 4, 0, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::noise; });
-  result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, part_type::vosc, vosc_count, osc_param::on), 4, 0, 1, 5);
   return result;
 }
 

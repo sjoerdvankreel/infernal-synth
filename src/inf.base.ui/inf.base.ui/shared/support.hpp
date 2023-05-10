@@ -21,6 +21,10 @@ std::string
 get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);
 
 inline float
+get_selector_height(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, selector_min_height, selector_max_height); }
+
+inline float
 get_dropdown_font_height(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, dropdown_font_min_height, dropdown_font_max_height); }
 inline float
