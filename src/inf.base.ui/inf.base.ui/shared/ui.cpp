@@ -106,6 +106,16 @@ group_label_element::layout()
   label->setJustificationType(_vertical? Justification::centred : Justification::centredBottom);
 }
 
+void
+tab_element::layout()
+{
+  for(std::size_t i = 0; i < _children.size(); i++)
+  {
+    _children[i]->layout();
+    if(_extra_elements[i]) _extra_elements[i]->layout();
+  }
+}
+
 ui_element*
 tab_element::add_tab(std::string const& header,
   std::unique_ptr<ui_element>&& content, std::unique_ptr<ui_element>&& extra_element)
@@ -117,33 +127,19 @@ tab_element::add_tab(std::string const& header,
   return result;
 }
 
-void
-tab_element::layout()
-{
-  for(std::size_t i = 0; i < _children.size(); i++)
-  {
-    _children[i]->layout();
-    if (_extra_elements[i])
-    {
-      // Unlike everything else in juce, this seems to want to take ownership.
-      _extra_elements[i]->component()->setBounds(0, 0, 30, 30);
-      auto tabs = dynamic_cast<TabbedComponent*>(component());
-      tabs->getTabbedButtonBar().getTabButton(static_cast<int>(i))->
-        setExtraComponent(_extra_elements[i]->release_component(), TabBarButton::afterText);
-    }
-  }
-}
-
 Component*
 tab_element::build_core(LookAndFeel const& lnf)
 {
   TabbedComponent* result = new TabbedComponent(TabbedButtonBar::TabsAtTop);
   for (std::size_t i = 0; i < _children.size(); i++)
-  {
     result->addTab(_headers[i], Colours::transparentBlack, _children[i]->build(lnf), false);
-    if(_extra_elements[i]) _extra_elements[i]->build(lnf);
-    // Cannot add tab extra component here because tabbar takes ownership but we still need to layout().  
-  }
+  for (std::size_t i = 0; i < _children.size(); i++)
+    if(_extra_elements[i])
+    {
+      // Unlike everything else in juce, this seems to want to take ownership.
+      result->getTabbedButtonBar().getTabButton(static_cast<int>(i))->
+        setExtraComponent(_extra_elements[i]->build(lnf), TabBarButton::beforeText);
+    }
   return result;
 }
 
