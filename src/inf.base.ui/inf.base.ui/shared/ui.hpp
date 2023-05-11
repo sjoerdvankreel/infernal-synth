@@ -57,7 +57,8 @@ public:
   container_element(
     inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, 
     std::uint32_t flags, std::int32_t fill_color_id, std::int32_t outline_color_id, juce::Point<std::int32_t> const& padding) :
-  ui_element(controller), _flags(flags), _fill_color_id(fill_color_id), _outline_color_id(outline_color_id), _content(std::move(content)) {}
+  ui_element(controller), _flags(flags), _padding(padding),
+  _fill_color_id(fill_color_id), _outline_color_id(outline_color_id), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<container_element>
