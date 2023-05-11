@@ -1,9 +1,12 @@
 #ifndef INF_BASE_UI_SHARED_CONFIG_HPP
 #define INF_BASE_UI_SHARED_CONFIG_HPP
 
+#include <juce_gui_basics/juce_gui_basics.h>
+
 namespace inf::base::ui {
 
 inline int const container_padding = 2;
+inline juce::Point<int> container_selector_padding = { 10, 8 };
 
 inline float const selector_min_height = 24.0f;
 inline float const selector_max_height = 40.0f;

@@ -46,6 +46,7 @@ class container_element:
 public ui_element
 {
   std::uint32_t const _flags;
+  juce::Point<std::int32_t> _padding;
   std::int32_t const _fill_color_id;
   std::int32_t const _outline_color_id;
   std::unique_ptr<ui_element> _content = {};
@@ -55,15 +56,15 @@ public:
   void layout() override;
   container_element(
     inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, 
-    std::uint32_t flags, std::int32_t fill_color_id, std::int32_t outline_color_id) :
+    std::uint32_t flags, std::int32_t fill_color_id, std::int32_t outline_color_id, juce::Point<std::int32_t> const& padding) :
   ui_element(controller), _flags(flags), _fill_color_id(fill_color_id), _outline_color_id(outline_color_id), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<container_element>
 create_part_group_container_ui(
-  inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content)
+  inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, juce::Point<std::int32_t> const& padding = {})
 { return std::make_unique<container_element>(controller, std::move(content), 
-  container_component::flags::fill, inf_look_and_feel::colors::part_group_container, 0); }
+  container_component::flags::fill, inf_look_and_feel::colors::part_group_container, 0, padding); }
 
 class group_label_element:
 public ui_element

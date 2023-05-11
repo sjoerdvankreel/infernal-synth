@@ -79,7 +79,13 @@ container_element::build_core(LookAndFeel const& lnf)
 void
 container_element::layout()
 {
-  _content->component()->setBounds(component()->getLocalBounds());
+  auto bounds = component()->getLocalBounds();
+  auto with_padding = Rectangle<int>(
+    bounds.getX() + _padding.x / 2,
+    bounds.getY() + _padding.y / 2,
+    bounds.getWidth() - _padding.x,
+    bounds.getHeight() - _padding.y);
+  _content->component()->setBounds(with_padding);
   _content->layout();
 }
 
@@ -419,7 +425,7 @@ create_part_selector_ui(
   for(std::int32_t i = 0; i < selected_part_count; i++)
     tab_bar->add_header(std::to_string(i + 1));
   grid->add_cell(std::move(tab_bar), 0, 1, 1, selected_part_count);
-  return create_part_group_container_ui(controller, std::move(grid));
+  return create_part_group_container_ui(controller, std::move(grid), container_selector_padding);
 }
 
 } // namespace inf::base::ui
