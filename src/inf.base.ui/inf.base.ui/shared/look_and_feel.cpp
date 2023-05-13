@@ -107,6 +107,16 @@ inf_look_and_feel::drawTooltip(
   g.setColour(findColour(TooltipWindow::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
   g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
+} 
+
+// Custom tabs.
+int 
+inf_look_and_feel::getTabButtonBestWidth(
+  TabBarButton& button, int tab_depth)
+{
+  int width = button.getTabbedButtonBar().getWidth();
+  int count = button.getTabbedButtonBar().getNumTabs();
+  return width / count;
 }
 
 void 

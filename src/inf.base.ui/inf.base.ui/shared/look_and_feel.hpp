@@ -105,6 +105,10 @@ public:
   void drawLabel(
     juce::Graphics& g, juce::Label& label) override;
 
+  // Custom tabs.
+  int getTabButtonBestWidth(
+    juce::TabBarButton& button, int tab_depth) override;
+
   // Custom tooltip.
   void drawTooltip(
     juce::Graphics& g, juce::String const& text, 
