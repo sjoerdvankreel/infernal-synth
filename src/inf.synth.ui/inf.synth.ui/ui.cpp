@@ -163,11 +163,13 @@ create_synth_ui(plugin_controller* controller)
 {
   auto result = create_root_ui(controller, create_oscillator_grid(controller, 0), controller->editor_current_width(), juce::Colours::black);
 
-  result->look_and_feel().setColour(Label::ColourIds::textColourId, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::root_background, Colour(0xFF000000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::param_label, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_label, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_selector_label, Colour(0xFFA7BECB));
+
+  result->look_and_feel().setColour(inf_look_and_feel::colors::root_background, Colour(0xFF000000));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container, Colour(0xFF333333));
 
   result->look_and_feel().setColour(TooltipWindow::ColourIds::textColourId, Colour(0xFFA7BECB));

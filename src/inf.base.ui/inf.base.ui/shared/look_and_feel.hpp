@@ -93,8 +93,11 @@ public:
     tooltip_background_low,
     tooltip_background_high,
 
-    root_background,
+    param_label,
     part_group_label,
+    part_selector_label,
+
+    root_background,
     part_group_container
   };
 

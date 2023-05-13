@@ -133,8 +133,9 @@ param_label_element::build_core(LookAndFeel const& lnf)
   param_value value = controller()->ui_value_at(_part_id, _param_index);
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setJustificationType(_justification);
-  result->setFont(juce::Font(get_param_label_font_height(controller()), juce::Font::bold));
+  result->setFont(juce::Font(_font_height, juce::Font::bold));
   result->setText(get_label_text(&desc, _type, value), dontSendNotification);
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(_color_id));
   _listener.reset(new label_param_listener(controller(), result, index, _type));
   return result;
 }
@@ -419,7 +420,9 @@ create_part_selector_ui(
   std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selector_columns)
 {
   auto grid = create_grid_ui(controller, 1, selector_columns + 1);
-  grid->add_cell(create_param_label_ui(controller, selector_part_type, 0, selector_param_index, label_type::label, Justification::centredLeft), 0, 0);
+  grid->add_cell(create_param_label_ui(
+    controller, selector_part_type, 0, selector_param_index, label_type::label, 
+    Justification::centredLeft, inf_look_and_feel::colors::part_selector_label), 0, 0);
   auto tab_bar = create_tab_bar(controller);
   for(std::int32_t i = 0; i < selected_part_count; i++)
     tab_bar->add_header(std::to_string(i + 1));
