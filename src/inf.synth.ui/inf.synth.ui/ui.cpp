@@ -23,7 +23,7 @@ icon_for_osc_basic_type(std::int32_t value)
 }
 
 static std::unique_ptr<ui_element>
-create_osc_main_grid(plugin_controller* controller, std::int32_t part_index)
+create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 6, 1);
   auto on_kbd_grid = create_grid_ui(controller, 1, 2);
@@ -33,7 +33,7 @@ create_osc_main_grid(plugin_controller* controller, std::int32_t part_index)
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::selector, label_type::label, false), 1, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::dropdown, false), 3, 0, 1, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::gain, edit_type::knob, label_type::label, true), 4, 0, 2, 1);
-  return grid;
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -140,7 +140,7 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
   auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(5, Grid::Fr(1)));
   result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, part_type::vosc, vosc_count, 4), 0, 0, 1, 5);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_main_grid(controller, part_index)), 1, 0, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 1, 0, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 1, 1, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 1, 2, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 1, 3, 1, 2);
