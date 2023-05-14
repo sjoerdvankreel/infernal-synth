@@ -133,6 +133,8 @@ inf_look_and_feel::drawTabButton(
     tbb.getActiveArea().getY() + padding / 2,
     tbb.getActiveArea().getWidth() - padding,
     tbb.getActiveArea().getHeight() - padding);
+
+  // fill
   std::int32_t background_low = colors::tab_button_background_low;
   std::int32_t background_high = colors::tab_button_background_high;
   if (tbb.getIndex() == tbb.getTabbedButtonBar().getCurrentTabIndex())
@@ -140,13 +142,18 @@ inf_look_and_feel::drawTabButton(
     background_low = colors::tab_button_highlight_background_low;
     background_high = colors::tab_button_highlight_background_high;
   }
-
   fill_gradient_rounded_rectangle(
     g, tbb, area.toFloat(), background_low,
     background_high, corner_size_fixed, 0.25f);
+
+  // outline
   stroke_gradient_rounded_rectangle(
     g, tbb, area.toFloat(), colors::tab_button_outline_low,
     colors::tab_button_outline_high, corner_size_fixed, 0.25f, outline_size_fixed);
+
+  // text
+  g.setColour(findColour(TabbedButtonBar::ColourIds::tabTextColourId));
+  g.drawText(tbb.getTitle(), area, Justification::centred, false);
 }
 
 void 

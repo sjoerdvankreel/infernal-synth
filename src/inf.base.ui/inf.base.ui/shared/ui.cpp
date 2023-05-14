@@ -118,7 +118,7 @@ tab_bar_element::build_core(LookAndFeel const& lnf)
   TabbedButtonBar* result = new TabbedButtonBar(TabbedButtonBar::TabsAtTop);
   result->setMinimumTabScaleFactor(0.0f);
   for(std::size_t i = 0; i < _headers.size(); i++)
-    result->addTab(_headers[i], Colours::blue, static_cast<int>(i));
+    result->addTab(_headers[i], Colours::black, static_cast<int>(i));
   return result;
 }
 
@@ -425,7 +425,7 @@ create_part_selector_ui(
   auto grid = create_grid_ui(controller, 1, selector_columns + 1);
   grid->add_cell(create_param_label_ui(
     controller, selector_part_type, 0, selector_param_index, label_type::label, 
-    Justification::centredLeft, inf_look_and_feel::colors::part_selector_label, font_height), 0, 0);
+    Justification::centred, inf_look_and_feel::colors::part_selector_label, font_height), 0, 0);
   auto tab_bar = create_tab_bar(controller);
   for(std::int32_t i = 0; i < selected_part_count; i++)
     tab_bar->add_header(std::to_string(i + 1));
