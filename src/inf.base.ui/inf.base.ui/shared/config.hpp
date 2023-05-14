@@ -10,8 +10,8 @@ inline juce::Point<int> container_selector_padding = { 10, 8 };
 
 inline float const selector_min_height = 24.0f;
 inline float const selector_max_height = 40.0f;
-inline float const selector_font_min_height = 12.0f;
-inline float const selector_font_max_height = 16.0f;
+inline float const selector_font_min_height = 11.0f;
+inline float const selector_font_max_height = 14.0f;
 
 inline float const dropdown_hpad = 4.0f;
 inline float const dropdown_vpad_min = 6.0f;

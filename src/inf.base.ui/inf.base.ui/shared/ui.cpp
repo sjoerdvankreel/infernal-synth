@@ -359,8 +359,10 @@ create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, edit_type edit_type, label_type label_type, bool show_tooltip)
 {
+  float font_height = get_param_label_font_height(controller);
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
-  auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
+  auto label = create_param_label_ui(controller, part_type, part_index, param_index, 
+    label_type, justification, inf_look_and_feel::colors::param_label, font_height);
   return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, show_tooltip);
 }
 
@@ -419,10 +421,11 @@ create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selector_columns)
 {
+  float font_height = get_selector_font_height(controller);
   auto grid = create_grid_ui(controller, 1, selector_columns + 1);
   grid->add_cell(create_param_label_ui(
     controller, selector_part_type, 0, selector_param_index, label_type::label, 
-    Justification::centredLeft, inf_look_and_feel::colors::part_selector_label), 0, 0);
+    Justification::centredLeft, inf_look_and_feel::colors::part_selector_label, font_height), 0, 0);
   auto tab_bar = create_tab_bar(controller);
   for(std::int32_t i = 0; i < selected_part_count; i++)
     tab_bar->add_header(std::to_string(i + 1));
