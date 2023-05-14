@@ -106,8 +106,6 @@ public ui_element
 {
 private:
   label_type const _type;
-  float const _font_height;
-  std::int32_t const _color_id;
   base::part_id const _part_id;
   std::int32_t const _param_index;
   juce::Justification _justification;
@@ -116,18 +114,16 @@ protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
-  param_label_element(
-    inf::base::plugin_controller* controller, base::part_id const& part_id, std::int32_t param_index, 
-    label_type type, juce::Justification justification, std::int32_t color_id, float font_height):
-  ui_element(controller), _type(type), _font_height(font_height), _color_id(color_id),
-  _part_id(part_id), _param_index(param_index), _justification(justification) {}
+  param_label_element(inf::base::plugin_controller* controller, base::part_id const& part_id, 
+    std::int32_t param_index, label_type type, juce::Justification justification):
+  ui_element(controller), _type(type), _part_id(part_id), 
+  _param_index(param_index), _justification(justification) {}
 };
 
 inline std::unique_ptr<param_label_element>
-create_param_label_ui(inf::base::plugin_controller* controller,
-  std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  label_type type, juce::Justification justification, std::int32_t color_id, float font_height)
-{ return std::make_unique<param_label_element>(controller, part_id(part_type, part_index), param_index, type, justification, color_id, font_height); }
+create_param_label_ui(inf::base::plugin_controller* controller, std::int32_t part_type, 
+  std::int32_t part_index, std::int32_t param_index, label_type type, juce::Justification justification)
+{ return std::make_unique<param_label_element>(controller, part_id(part_type, part_index), param_index, type, justification); }
 
 class param_icon_element:
 public ui_element

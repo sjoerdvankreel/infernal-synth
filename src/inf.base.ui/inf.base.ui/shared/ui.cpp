@@ -128,14 +128,15 @@ param_label_element::build_core(LookAndFeel const& lnf)
   Label* result = new inf_label(true);
   result->setBorderSize(BorderSize<int>());
   auto topology = controller()->topology();
+  float font_height = get_param_label_font_height(controller());
   auto const& desc = topology->get_param_descriptor(_part_id, _param_index);
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   param_value value = controller()->ui_value_at(_part_id, _param_index);
   if(desc.data.type == param_type::real) value.real = desc.data.real.display.to_range(value.real);
   result->setJustificationType(_justification);
-  result->setFont(juce::Font(_font_height, juce::Font::bold));
+  result->setFont(juce::Font(font_height, juce::Font::bold));
   result->setText(get_label_text(&desc, _type, value), dontSendNotification);
-  result->setColour(Label::ColourIds::textColourId, lnf.findColour(_color_id));
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::param_label));
   _listener.reset(new label_param_listener(controller(), result, index, _type));
   return result;
 }
@@ -359,10 +360,8 @@ create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t param_index, edit_type edit_type, label_type label_type, bool show_tooltip)
 {
-  float font_height = get_param_label_font_height(controller);
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
-  auto label = create_param_label_ui(controller, part_type, part_index, param_index, 
-    label_type, justification, inf_look_and_feel::colors::param_label, font_height);
+  auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
   return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, show_tooltip);
 }
 
@@ -421,11 +420,9 @@ create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selector_columns)
 {
-  float font_height = get_selector_font_height(controller);
   auto grid = create_grid_ui(controller, 1, selector_columns + 1);
   grid->add_cell(create_param_label_ui(
-    controller, selector_part_type, 0, selector_param_index, label_type::label, 
-    Justification::centred, inf_look_and_feel::colors::part_selector_label, font_height), 0, 0);
+    controller, selector_part_type, 0, selector_param_index, label_type::label, Justification::centred), 0, 0);
   auto tab_bar = create_tab_bar(controller);
   for(std::int32_t i = 0; i < selected_part_count; i++)
     tab_bar->add_header(std::to_string(i + 1));
