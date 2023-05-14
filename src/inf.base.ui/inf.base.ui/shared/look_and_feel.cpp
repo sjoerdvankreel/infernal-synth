@@ -152,8 +152,9 @@ inf_look_and_feel::drawTabButton(
     colors::tab_button_outline_high, corner_size_fixed, 0.25f, outline_size_fixed);
 
   // text
+  g.setFont(juce::Font(12.0f, juce::Font::bold));
   g.setColour(findColour(TabbedButtonBar::ColourIds::tabTextColourId));
-  g.drawText(tbb.getTitle(), area, Justification::centred, false);
+  g.drawText(tbb.getName(), area, Justification::centred, false);
 }
 
 void 
