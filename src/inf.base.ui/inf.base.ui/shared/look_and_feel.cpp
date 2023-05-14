@@ -109,7 +109,6 @@ inf_look_and_feel::drawTooltip(
   g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
 } 
 
-// Custom tabs.
 int 
 inf_look_and_feel::getTabButtonBestWidth(
   TabBarButton& button, int tab_depth)
@@ -117,6 +116,37 @@ inf_look_and_feel::getTabButtonBestWidth(
   int width = button.getTabbedButtonBar().getWidth();
   int count = button.getTabbedButtonBar().getNumTabs();
   return width / count;
+}
+
+void 
+inf_look_and_feel::drawTabButton(
+  juce::TabBarButton& tbb, juce::Graphics& g,
+  bool is_mouse_over, bool is_mouse_down)
+{
+  // config
+  int const padding = 4;
+  float const corner_size_fixed = 5.0f;
+  float const outline_size_fixed = 1.0f;
+
+  auto area = Rectangle<int>(
+    tbb.getActiveArea().getX() + padding / 2,
+    tbb.getActiveArea().getY() + padding / 2,
+    tbb.getActiveArea().getWidth() - padding,
+    tbb.getActiveArea().getHeight() - padding);
+  std::int32_t background_low = colors::tab_button_background_low;
+  std::int32_t background_high = colors::tab_button_background_high;
+  if (tbb.getIndex() == tbb.getTabbedButtonBar().getCurrentTabIndex())
+  {
+    background_low = colors::tab_button_highlight_background_low;
+    background_high = colors::tab_button_highlight_background_high;
+  }
+
+  fill_gradient_rounded_rectangle(
+    g, tbb, area.toFloat(), background_low,
+    background_high, corner_size_fixed, 0.25f);
+  stroke_gradient_rounded_rectangle(
+    g, tbb, area.toFloat(), colors::tab_button_outline_low,
+    colors::tab_button_outline_high, corner_size_fixed, 0.25f, outline_size_fixed);
 }
 
 void 

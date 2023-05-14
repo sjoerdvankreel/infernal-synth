@@ -34,6 +34,59 @@ public juce::LookAndFeel_V4
 
 public:
   enum colors {
+    icon_stroke_color,
+    icon_pw_stroke_color,
+
+    root_background,
+    part_group_container,
+
+    param_label,
+    part_group_label,
+    part_selector_label,
+
+    tooltip_outline_low,
+    tooltip_outline_high,
+    tooltip_background_low,
+    tooltip_background_high,
+
+    tab_button_outline_low,
+    tab_button_outline_high,
+    tab_button_background_low,
+    tab_button_background_high,
+    tab_button_highlight_background_low,
+    tab_button_highlight_background_high,
+
+    switch_outline_low,
+    switch_outline_high,
+    switch_spot_fill_low,
+    switch_spot_fill_high,
+    switch_gradient_fill_low_on,
+    switch_gradient_fill_center_low,
+    switch_gradient_fill_high_on,
+    switch_gradient_fill_center_high,
+
+    slider_center_fill,
+    slider_track_low,
+    slider_track_high,
+    slider_track_inactive,
+    slider_highlight_low,
+    slider_highlight_high,
+    slider_spot_fill_low,
+    slider_spot_fill_high,
+    slider_gradient_fill_low,
+    slider_gradient_fill_high,
+
+    dropdown_outline_low,
+    dropdown_outline_high,
+    dropdown_background_low,
+    dropdown_background_high,
+    dropdown_tick_spot_fill_low,
+    dropdown_tick_spot_fill_high,
+    dropdown_tick_gradient_fill_low,
+    dropdown_tick_gradient_fill_high,
+    dropdown_highlight_background_low,
+    dropdown_highlight_background_high,
+
     knob_highlight_low,
     knob_highlight_high,
     knob_outline_low,
@@ -53,52 +106,6 @@ public:
     knob_spot_fill_high,
     knob_gradient_fill_low,
     knob_gradient_fill_high,
-
-    slider_center_fill,
-    slider_track_low,
-    slider_track_high,
-    slider_track_inactive,
-    slider_highlight_low,
-    slider_highlight_high,
-    slider_spot_fill_low,
-    slider_spot_fill_high,
-    slider_gradient_fill_low,
-    slider_gradient_fill_high,
-
-    switch_outline_low,
-    switch_outline_high,
-    switch_spot_fill_low,
-    switch_spot_fill_high,
-    switch_gradient_fill_low_on,
-    switch_gradient_fill_center_low,
-    switch_gradient_fill_high_on,
-    switch_gradient_fill_center_high,
-
-    dropdown_outline_low,
-    dropdown_outline_high,
-    dropdown_background_low,
-    dropdown_background_high,
-    dropdown_tick_spot_fill_low,
-    dropdown_tick_spot_fill_high,
-    dropdown_tick_gradient_fill_low,
-    dropdown_tick_gradient_fill_high,
-    dropdown_highlight_background_low,
-    dropdown_highlight_background_high,
-
-    icon_stroke_color,
-    icon_pw_stroke_color,
-
-    tooltip_outline_low,
-    tooltip_outline_high,
-    tooltip_background_low,
-    tooltip_background_high,
-
-    param_label,
-    part_group_label,
-    part_selector_label,
-
-    root_background,
-    part_group_container
   };
 
   inf_look_and_feel(inf::base::plugin_controller const* controller):
@@ -111,6 +118,14 @@ public:
   // Custom tabs.
   int getTabButtonBestWidth(
     juce::TabBarButton& button, int tab_depth) override;
+
+  void drawTabButton(
+    juce::TabBarButton& tbb, juce::Graphics& g, 
+    bool is_mouse_over, bool is_mouse_down) override;
+
+  void drawTabAreaBehindFrontButton(
+    juce::TabbedButtonBar& bar, juce::Graphics& g, 
+    const int w, const int h) override {}
 
   // Custom tooltip.
   void drawTooltip(
