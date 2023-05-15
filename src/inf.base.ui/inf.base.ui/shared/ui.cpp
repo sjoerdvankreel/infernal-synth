@@ -428,7 +428,7 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
-  std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selector_columns)
+  std::int32_t selected_part_count, std::int32_t selector_columns)
 {
   auto const& desc = controller->topology()->get_param_descriptor({selector_part_type, 0}, selector_param_index);
   auto grid = create_grid_ui(controller, 1, selector_columns + 1);

@@ -290,7 +290,7 @@ create_param_ui(
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index, 
-  std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selector_columns);
+  std::int32_t selected_part_count, std::int32_t selector_columns);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_UI_HPP
