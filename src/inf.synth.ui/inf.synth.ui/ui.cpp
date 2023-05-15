@@ -156,14 +156,13 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   return result;
 }
 
-static std::unique_ptr<grid_element>
+static std::unique_ptr<ui_element>
 create_oscillator_selector(plugin_controller* controller)
 {
-  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
-  auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
-  result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, vosc_count, 4), 0, 0);
-  result->add_cell(create_oscillator_grid(controller, 0), 1, 0);
-  return result;
+  std::vector<std::unique_ptr<ui_element>> oscillators;
+  for(std::int32_t i = 0; i < vosc_count; i++)
+    oscillators.emplace_back(create_oscillator_grid(controller, i));
+  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 4, std::move(oscillators));
 }
 
 std::unique_ptr<root_element>
