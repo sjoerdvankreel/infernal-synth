@@ -6,8 +6,10 @@
 #include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
+#include <inf.base.ui/controls/tabbed_button_bar.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
+#include <inf.base.ui/listeners/tab_param_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
@@ -104,18 +106,22 @@ create_selector_label_ui(inf::base::plugin_controller* controller, std::string c
 class tab_bar_element :
 public ui_element
 {
+  base::part_id const _part_id;
+  std::int32_t const _param_index;
   std::vector<std::string> _headers = {};
+  std::unique_ptr<tab_param_listener> _listener = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
   void add_header(std::string const& header) { _headers.push_back(header); }
-  tab_bar_element(inf::base::plugin_controller* controller): ui_element(controller) {}
+  tab_bar_element(inf::base::plugin_controller* controller, base::part_id const& part_id, 
+    std::int32_t param_index): ui_element(controller), _part_id(part_id), _param_index(param_index) {}
 };
 
 inline std::unique_ptr<tab_bar_element>
-create_tab_bar(inf::base::plugin_controller* controller)
-{ return std::make_unique<tab_bar_element>(controller); }
+create_tab_bar(inf::base::plugin_controller* controller, base::part_id const& part_id, std::int32_t param_index)
+{ return std::make_unique<tab_bar_element>(controller, part_id, param_index); }
 
 class param_label_element:
 public ui_element

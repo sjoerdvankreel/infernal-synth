@@ -125,10 +125,13 @@ selector_label_element::build_core(LookAndFeel const& lnf)
 Component* 
 tab_bar_element::build_core(LookAndFeel const& lnf)
 {
-  TabbedButtonBar* result = new TabbedButtonBar(TabbedButtonBar::TabsAtTop);
+  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+  inf_tabbed_button_bar* result = new inf_tabbed_button_bar();
   result->setMinimumTabScaleFactor(0.0f);
   for(std::size_t i = 0; i < _headers.size(); i++)
     result->addTab(_headers[i], Colours::black, static_cast<int>(i));
+  _listener.reset(new tab_param_listener(controller(), result, index));
+  result->set_listener(_listener.get());
   return result;
 }
 
@@ -419,10 +422,11 @@ create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
 {
-  auto const& desc = controller->topology()->get_param_descriptor({selector_part_type, 0}, selector_param_index);
+  inf::base::part_id selector_id = { selector_part_type, 0 };
+  auto const& desc = controller->topology()->get_param_descriptor(selector_id, selector_param_index);
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + 1);
   selector_grid->add_cell(create_selector_label_ui(controller, desc.data.static_name.short_), 0, 0);
-  auto tab_bar = create_tab_bar(controller);
+  auto tab_bar = create_tab_bar(controller, selector_id, selector_param_index);
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
     tab_bar->add_header(std::to_string(i + 1));
   selector_grid->add_cell(std::move(tab_bar), 0, 1, 1, selector_columns);
