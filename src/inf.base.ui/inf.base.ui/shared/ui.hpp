@@ -29,6 +29,7 @@ namespace inf::base::ui {
 class ui_element
 {
   part_id _relevant_if_part = {};
+  bool _initially_visible = true;
   bool _hide_if_irrelevant = false;
   std::int32_t _relevant_if_param = -1;
   relevance_selector _relevant_if_selector = nullptr;
@@ -42,6 +43,7 @@ public:
   virtual void layout() = 0;
   juce::Component* build(juce::LookAndFeel const& lnf);
   juce::Component* component() { return _component.get(); }
+  void initially_visible(bool visible) { _initially_visible = visible; }
   inf::base::plugin_controller* controller() const { return _controller; }
   void relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector);
 };

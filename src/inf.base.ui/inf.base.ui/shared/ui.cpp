@@ -32,8 +32,8 @@ Component*
 ui_element::build(LookAndFeel const& lnf)
 {
   _component.reset(build_core(lnf));
-  _component->setVisible(true);
   _component->setEnabled(true);
+  _component->setVisible(_initially_visible);
   if (_relevant_if_selector != nullptr)
   {
     std::int32_t index = controller()->topology()->param_index(_relevant_if_part, _relevant_if_param);
@@ -442,6 +442,10 @@ create_part_selector_ui(
     tabs.push_back(selected_parts[i].get());
     result->add_cell(std::move(selected_parts[i]), 1, 0);
   }
+
+  std::int32_t selected_index = controller->state()[controller->topology()->param_index(selector_id, selector_param_index)].discrete;
+  for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
+    tabs[i]->initially_visible(i == selected_index);
   tab_bar_ptr->set_extra_listener(std::make_unique<tab_button_listener>(
     std::function<void(inf_tabbed_button_bar*)>([tabs](inf_tabbed_button_bar* bar) {
       for(std::int32_t i = 0; i < static_cast<std::int32_t>(tabs.size()); i++)
