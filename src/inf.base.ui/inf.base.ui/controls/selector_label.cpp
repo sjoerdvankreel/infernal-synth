@@ -9,16 +9,18 @@ void
 inf_selector_label::paint(Graphics& g)
 {
   // config
-  int const padding = 2;
+  int const vpad = 2;
+  int const hpadl = 1;
+  int const hpadr = 3;
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 1.0f;
 
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto area = Rectangle<int>(
-    getBounds().getX() + padding / 2,
-    getBounds().getY() + padding / 2,
-    getBounds().getWidth() - padding,
-    getBounds().getHeight() - padding);
+    getBounds().getX() + hpadl,
+    getBounds().getY() + vpad / 2,
+    getBounds().getWidth() - hpadl - hpadr,
+    getBounds().getHeight() - vpad);
 
   // fill
   std::int32_t background_low = inf_look_and_feel::colors::selector_label_background_low;
