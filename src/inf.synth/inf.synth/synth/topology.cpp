@@ -237,7 +237,7 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 // TEMP TODO REVERT THIS - TESTING OSCS ONLY
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::on, "On");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc All");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Voice");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "Voice");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");  
 
