@@ -137,31 +137,39 @@ create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
-  auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(5, Grid::Fr(1)));
-  result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, vosc_count, 4), 0, 0, 1, 5);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 1, 0, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 1, 1, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 1, 2, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 1, 3, 1, 2);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 2, 3, 2, 2);
-  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 4, 0, 1, 5);
+  auto result = create_grid_ui(controller, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(5, Grid::Fr(1)));
+  result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 1, 3, 2, 2);
+  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 3, 0, 1, 5);
   basic->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::basic; });
-  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 4, 0, 1, 5);
+  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 3, 0, 1, 5);
   mix->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::mix; });
-  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 4, 0, 1, 5);
+  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 3, 0, 1, 5);
   dsf->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::dsf; });
-  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 4, 0, 1, 5);
+  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 3, 0, 1, 5);
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::kps; });
-  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 4, 0, 1, 5);
+  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t val) { return val == osc_type::noise; });
+  return result;
+}
+
+static std::unique_ptr<grid_element>
+create_oscillator_selector(plugin_controller* controller)
+{
+  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
+  auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
+  result->add_cell(create_part_selector_ui(controller, part_type::active, active_param::vosc, vosc_count, 4), 0, 0);
+  result->add_cell(create_oscillator_grid(controller, 0), 1, 0);
   return result;
 }
 
 std::unique_ptr<root_element>
 create_synth_ui(plugin_controller* controller)
 {
-  auto result = create_root_ui(controller, create_oscillator_grid(controller, 0), controller->editor_current_width(), juce::Colours::black);
+  auto result = create_root_ui(controller, create_oscillator_selector(controller), controller->editor_current_width(), juce::Colours::black);
 
   result->look_and_feel().setColour(inf_look_and_feel::colors::param_label, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_label, Colour(0xFFFD9A4D));

@@ -94,6 +94,7 @@ class synth_vst_controller :
 public vst_controller
 {
 public:
+  float editor_aspect_ratio() const override { return 0.8f; }
   std::int32_t editor_min_width() const override { return 240; }
   std::int32_t editor_default_width() const override { return 600 * 240 / 400; }
   std::int32_t editor_font_scaling_min_width() const override { return 500 * 240 / 400; }

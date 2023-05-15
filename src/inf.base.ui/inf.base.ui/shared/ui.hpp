@@ -210,7 +210,6 @@ protected:
 
 public:
   void layout() override;
-  std::int32_t pixel_height();
 
   ui_element* add_cell(
     std::unique_ptr<ui_element>&& content, std::int32_t row,
@@ -247,7 +246,7 @@ public ui_element
   inf_look_and_feel _lnf;
   juce::Colour const _fill;
   std::int32_t const _width; // Pixel size.
-  std::unique_ptr<grid_element> _content = {};
+  std::unique_ptr<ui_element> _content = {};
   std::unique_ptr<juce::TooltipWindow> _tooltip = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
@@ -257,14 +256,14 @@ public:
   juce::Component* build() { return ui_element::build(_lnf); }
 
   ~root_element() { component()->setLookAndFeel(nullptr); }
-  root_element(inf::base::plugin_controller* controller, std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill) :
+  root_element(inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, std::int32_t width, juce::Colour const& fill) :
   ui_element(controller), _lnf(controller), _fill(fill), _width(width), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<root_element>
 create_root_ui(
   inf::base::plugin_controller* controller, 
-  std::unique_ptr<grid_element>&& content, std::int32_t width, juce::Colour const& fill)
+  std::unique_ptr<ui_element>&& content, std::int32_t width, juce::Colour const& fill)
 { return std::make_unique<root_element>(controller, std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>

@@ -61,7 +61,7 @@ void
 root_element::layout()
 {
   std::int32_t w = _width;
-  std::int32_t h = _content->pixel_height();
+  std::int32_t h = static_cast<std::int32_t>(std::ceil(1.0f / controller()->editor_aspect_ratio() * w));
   component()->setBounds(0, 0, w, h);
   _content->component()->setBounds(0, 0, w, h);
   _content->layout();
@@ -283,17 +283,6 @@ grid_element::build_core(LookAndFeel const& lnf)
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
     result->addChildComponent(_cell_contents[i]->build(lnf));
   return result;
-}
-
-// For root only.
-std::int32_t 
-grid_element::pixel_height()
-{
-  double rows = static_cast<double>(_row_distribution.size());
-  double cols = static_cast<double>(_column_distribution.size());
-  double col_width = controller()->editor_current_width() / cols;
-  double row_height = col_width + get_param_label_total_height(controller());
-  return static_cast<std::int32_t>(std::ceil(rows * row_height));
 }
 
 ui_element*
