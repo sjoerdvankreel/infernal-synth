@@ -131,7 +131,8 @@ tab_bar_element::build_core(LookAndFeel const& lnf)
   for(std::size_t i = 0; i < _headers.size(); i++)
     result->addTab(_headers[i], Colours::black, static_cast<int>(i));
   _listener.reset(new tab_param_listener(controller(), result, index));
-  result->set_listener(_listener.get());
+  result->add_listener(_listener.get());
+  if(_extra_listener) result->add_listener(_extra_listener.get());
   return result;
 }
 
@@ -427,14 +428,24 @@ create_part_selector_ui(
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + 1);
   selector_grid->add_cell(create_selector_label_ui(controller, desc.data.static_name.short_), 0, 0);
   auto tab_bar = create_tab_bar(controller, selector_id, selector_param_index);
+  auto tab_bar_ptr = tab_bar.get();
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
     tab_bar->add_header(std::to_string(i + 1));
   selector_grid->add_cell(std::move(tab_bar), 0, 1, 1, selector_columns);
 
+  std::vector<ui_element*> tabs;
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
   auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
   result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
-  result->add_cell(std::move(selected_parts[0]), 1, 0);
+  for(std::size_t i = 0; i < selected_parts.size(); i++)
+  {
+    tabs.push_back(selected_parts[i].get());
+    result->add_cell(std::move(selected_parts[i]), 1, 0);
+  }
+  tab_bar_ptr->set_extra_listener(std::make_unique<tab_button_listener>(
+    std::function<void(inf_tabbed_button_bar*)>([tabs](inf_tabbed_button_bar* bar) {
+      for(std::int32_t i = 0; i < static_cast<std::int32_t>(tabs.size()); i++)
+        tabs[i]->component()->setVisible(i == bar->getCurrentTabIndex()); })));
   return result;
 }
 

@@ -10,6 +10,7 @@
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
 #include <inf.base.ui/listeners/tab_param_listener.hpp>
+#include <inf.base.ui/listeners/tab_button_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
@@ -21,6 +22,7 @@
 #include <map>
 #include <memory>
 #include <cstdint>
+#include <functional>
 
 namespace inf::base::ui {
 
@@ -106,15 +108,18 @@ create_selector_label_ui(inf::base::plugin_controller* controller, std::string c
 class tab_bar_element :
 public ui_element
 {
+private:
   base::part_id const _part_id;
   std::int32_t const _param_index;
   std::vector<std::string> _headers = {};
   std::unique_ptr<tab_param_listener> _listener = {};
+  std::unique_ptr<tab_button_listener> _extra_listener = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
   void add_header(std::string const& header) { _headers.push_back(header); }
+  void set_extra_listener(std::unique_ptr<tab_button_listener>&& listener) { _extra_listener = std::move(listener); }
   tab_bar_element(inf::base::plugin_controller* controller, base::part_id const& part_id, 
     std::int32_t param_index): ui_element(controller), _part_id(part_id), _param_index(param_index) {}
 };
