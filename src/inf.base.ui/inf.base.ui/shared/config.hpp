@@ -8,8 +8,8 @@ namespace inf::base::ui {
 inline int const container_padding = 2;
 inline juce::Point<int> container_selector_padding = { 10, 8 };
 
-inline float const selector_min_height = 24.0f;
-inline float const selector_max_height = 40.0f;
+inline float const selector_min_height = 26.0f;
+inline float const selector_max_height = 42.0f;
 inline float const selector_font_min_height = 11.0f;
 inline float const selector_font_max_height = 14.0f;
 

@@ -9,7 +9,7 @@ void
 inf_selector_label::paint(Graphics& g)
 {
   // config
-  int const padding = 4;
+  int const padding = 2;
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 1.0f;
 

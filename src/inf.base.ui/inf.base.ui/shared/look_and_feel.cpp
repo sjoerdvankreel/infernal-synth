@@ -124,7 +124,7 @@ inf_look_and_feel::drawTabButton(
   bool is_mouse_over, bool is_mouse_down)
 {
   // config
-  int const padding = 4;
+  int const padding = 2;
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 1.0f;
 
