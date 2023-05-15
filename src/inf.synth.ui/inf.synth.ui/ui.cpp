@@ -171,8 +171,8 @@ create_synth_ui(plugin_controller* controller)
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container, Colour(0xFF333333));
 
   result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_text, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_outline_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_outline_high, Colour(0xFF2EB8D1));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_outline_low, Colour(0xFFDA6102));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_outline_high, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_background_low, Colour(0xFF444444));
   result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_background_high, Colour(0xFF777777));
 
