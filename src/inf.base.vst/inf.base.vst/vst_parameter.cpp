@@ -34,9 +34,6 @@ param_flags(param_descriptor const* param_desc)
   int32 result = 0;
   switch (param_desc->data.kind)
   {
-  case param_kind::ui:
-    result = ParameterInfo::kNoFlags;
-    break;
   case param_kind::block: 
   case param_kind::voice:
   case param_kind::continuous:
