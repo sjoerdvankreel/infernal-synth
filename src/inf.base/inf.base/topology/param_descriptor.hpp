@@ -19,8 +19,6 @@ typedef param_io_t::value param_io;
 struct param_type_t { enum value { real, toggle, knob, list_knob, text, list, knob_list, count }; };
 typedef param_type_t::value param_type;
 
-// Ui:
-//   Ui only, otherwise same as block.
 // Block: 
 //   automated once at block start.
 // Voice: 
@@ -38,7 +36,7 @@ typedef param_type_t::value param_type;
 // Output:
 //   visible in ui, not editable, not automatable.
 // Note: output params must go in output parts only..
-struct param_kind_t { enum value { ui, block, voice, continuous, fixed, output, count }; };
+struct param_kind_t { enum value { block, voice, continuous, fixed, output, count }; };
 typedef param_kind_t::value param_kind;
 
 // Real valued specific data.

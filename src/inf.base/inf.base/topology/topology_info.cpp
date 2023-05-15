@@ -130,7 +130,6 @@ topology_info::init(
     {
       auto const& descriptor = topology->parts[part].descriptor->params[p];
       assert(!descriptor.data.is_continuous() || descriptor.data.type == param_type::real);
-      assert((part_info.descriptor->kind != part_kind::selector) || descriptor.data.kind == param_kind::ui);
       assert((part_info.descriptor->kind == part_kind::output) == (descriptor.data.kind == param_kind::output));
       std::string runtime_name = part_name + " " + descriptor.data.static_name.detail;
       topology->params.push_back(param_info({ part, runtime_name, &descriptor }));
