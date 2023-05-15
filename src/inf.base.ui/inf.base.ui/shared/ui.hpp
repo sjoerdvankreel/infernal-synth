@@ -85,6 +85,22 @@ inline std::unique_ptr<group_label_element>
 create_group_label_ui(inf::base::plugin_controller* controller, std::string const& text, bool vertical)
 { return std::make_unique<group_label_element>(controller, text, vertical); }
 
+class selector_label_element:
+public ui_element
+{
+  std::string const _text;
+protected:
+  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+public:
+  void layout() override {}
+  selector_label_element(inf::base::plugin_controller* controller, std::string const& text):
+  ui_element(controller), _text(text) {}
+};
+
+inline std::unique_ptr<selector_label_element>
+create_selector_label_ui(inf::base::plugin_controller* controller, std::string const& text)
+{ return std::make_unique<selector_label_element>(controller, text); }
+
 class tab_bar_element :
 public ui_element
 {

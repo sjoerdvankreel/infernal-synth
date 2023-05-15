@@ -2,6 +2,7 @@
 #include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/shared/real_bounds_range.hpp>
 #include <inf.base.ui/controls/label.hpp>
+#include <inf.base.ui/controls/selector_label.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base/shared/support.hpp>
 
@@ -110,6 +111,15 @@ group_label_element::layout()
   label->setTransform(transform);
   label->setBounds(label->getBounds().transformedBy(transform));
   label->setJustificationType(_vertical? Justification::centred : Justification::centredBottom);
+}
+
+Component*
+selector_label_element::build_core(LookAndFeel const& lnf)
+{
+  Label* result = new inf_selector_label();
+  result->setText(_text, dontSendNotification);
+  result->setFont(juce::Font(get_selector_font_height(controller()), juce::Font::bold));
+  return result;
 }
 
 Component* 
@@ -420,9 +430,9 @@ create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t selected_part_type, std::int32_t selected_part_count, std::int32_t selector_columns)
 {
+  auto const& desc = controller->topology()->get_param_descriptor({selector_part_type, 0}, selector_param_index);
   auto grid = create_grid_ui(controller, 1, selector_columns + 1);
-  grid->add_cell(create_param_label_ui(
-    controller, selector_part_type, 0, selector_param_index, label_type::label, Justification::centred), 0, 0);
+  grid->add_cell(create_selector_label_ui(controller, desc.data.static_name.short_), 0, 0);
   auto tab_bar = create_tab_bar(controller);
   for(std::int32_t i = 0; i < selected_part_count; i++)
     tab_bar->add_header(std::to_string(i + 1));

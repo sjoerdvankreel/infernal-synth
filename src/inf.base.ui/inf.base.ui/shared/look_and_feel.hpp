@@ -15,22 +15,9 @@ public juce::LookAndFeel_V4
 
   juce::Colour 
   with_enabled(juce::Component& component, std::int32_t color_id);
-
   juce::ColourGradient gradient_fill(
     juce::Component& component, juce::Rectangle<float> rect, 
     std::int32_t low_color_id, std::int32_t high_color_id, float mid_point);
-  void fill_spot_circle(juce::Graphics& g, 
-    juce::Component& component, juce::Rectangle<float> rect,
-    std::int32_t low_color_id, std::int32_t high_color_id);
-  void fill_gradient_circle(juce::Graphics& g, 
-    juce::Component& component, juce::Rectangle<float> rect,
-    std::int32_t low_color_id, std::int32_t high_color_id);
-  void fill_gradient_rounded_rectangle(juce::Graphics& g, 
-    juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id, 
-    std::int32_t high_color_id, float corner_size, float mid_point);
-  void stroke_gradient_rounded_rectangle(juce::Graphics& g,
-    juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id,
-    std::int32_t high_color_id, float corner_size, float mid_point, float line_size);
 
 public:
   enum colors {
@@ -42,12 +29,17 @@ public:
 
     param_label,
     part_group_label,
-    part_selector_label,
 
     tooltip_outline_low,
     tooltip_outline_high,
     tooltip_background_low,
     tooltip_background_high,
+
+    selector_label_text,
+    selector_label_outline_low,
+    selector_label_outline_high,
+    selector_label_background_low,
+    selector_label_background_high,
 
     tab_button_outline_low,
     tab_button_outline_high,
@@ -110,6 +102,20 @@ public:
 
   inf_look_and_feel(inf::base::plugin_controller const* controller):
   _controller(controller) {}
+
+  // Shared paint routines.
+  void fill_spot_circle(juce::Graphics& g,
+    juce::Component& component, juce::Rectangle<float> rect,
+    std::int32_t low_color_id, std::int32_t high_color_id);
+  void fill_gradient_circle(juce::Graphics& g,
+    juce::Component& component, juce::Rectangle<float> rect,
+    std::int32_t low_color_id, std::int32_t high_color_id);
+  void fill_gradient_rounded_rectangle(juce::Graphics& g,
+    juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id,
+    std::int32_t high_color_id, float corner_size, float mid_point);
+  void stroke_gradient_rounded_rectangle(juce::Graphics& g,
+    juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id,
+    std::int32_t high_color_id, float corner_size, float mid_point, float line_size);
 
   // Disables ellipses and fitting.
   void drawLabel(
