@@ -234,6 +234,15 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 {
   topology_info::init_factory_preset(state);
 
+// TEMP TODO REVERT THIS - TESTING OSCS ONLY
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::on, "On");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc All");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");  
+
+#if 0
+
   // osc 1 detuned saw
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
   set_ui_value(state, part_type::vosc, 0, osc_param::type, "Basic");
@@ -370,6 +379,8 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "5");
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX B 1 SV Frq");
   set_ui_value(state, part_type::vcv_plot, 0, cv_plot_param::target, "FX A 2 SV Frq");
+
+#endif
 }
 
 // ---- part selector ----
