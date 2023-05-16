@@ -21,6 +21,9 @@ static std::vector<list_item> const osc_basic_types = {
   { "{3B1D347E-C3ED-4D4A-BBF9-4441B35D353A}", "Pulse" },
   { "{172E9222-7DAD-4FC7-8748-8A1CBEA3317D}", "Tri" } }; 
 
+static std::int32_t
+osc_max_sync_index(std::int32_t part_index)
+{ return part_index + 1; }
 static std::vector<std::string> const osc_ram_sources = 
 generate_names(vosc_count, [](std::int32_t n) 
 { return std::string("Osc ") + std::to_string(n + 1); });
@@ -33,7 +36,7 @@ osc_params[osc_param::count] =
 {     
   { "{CA9274AE-9F57-4373-8C59-3786ACC1C1CD}", { { "On", "Enabled" }, param_kind::voice, false } },    
   { "{84A7AEC8-25E9-4242-B32E-2E9E780F0E31}", { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &osc_types, osc_type::basic } } },
-  { "{10935D87-24A7-4994-BB9A-D46636933F6F}", { { "Sync", "Sync source" }, "", param_kind::voice, param_type::knob_list, { &osc_sync_sources, osc_sync_off } } },
+  { "{10935D87-24A7-4994-BB9A-D46636933F6F}", { { "Sync", "Sync source" }, "", param_kind::voice, param_type::knob_list, { &osc_sync_sources, osc_sync_off, osc_max_sync_index } } },
   { "{60D81FF7-F9AB-4E19-B7BC-8D7D08CFEAD3}", { { "Kbd", "Keyboard tracking" }, param_kind::voice, true } },
   { "{5E3DB4DC-B459-43C4-9BBD-0FF8F2232AFA}", { { "Oct", "Octave" }, "", param_kind::voice, param_type::list_knob, { 0, 9, 4 } } },
   { "{501C5217-5A5B-48D8-AEFE-CFE67417E8AD}", { { "Note", "Note" }, "", param_kind::voice, param_type::knob_list, { &note_names, "C" } } },

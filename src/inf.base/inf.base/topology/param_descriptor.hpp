@@ -77,7 +77,7 @@ struct discrete_descriptor
 
   // Regular discrete.
   discrete_descriptor(std::int32_t min, std::int32_t max, std::int32_t default_):
-  min(min), max(max), default_(default_), items(nullptr), names(nullptr)
+  min(min), max(max), default_(default_), _max_selector(nullptr), items(nullptr), names(nullptr)
   { assert(min < max && min <= default_ && default_ <= max); }
 
   // For actual dropdown lists.
