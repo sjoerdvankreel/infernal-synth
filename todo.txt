@@ -54,3 +54,4 @@
 - disable unison for noise
 - fix paint problems
 - drop voice/global ui suffixes
+- rewrite the manual

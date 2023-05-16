@@ -2,8 +2,8 @@
 #include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/shared/real_bounds_range.hpp>
 #include <inf.base.ui/controls/label.hpp>
-#include <inf.base.ui/controls/selector_label.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
+#include <inf.base.ui/controls/selector_label.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;

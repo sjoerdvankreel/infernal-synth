@@ -6,6 +6,7 @@
 #include <inf.base.ui/controls/icon.hpp>
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
+#include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base.ui/controls/tabbed_button_bar.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
@@ -209,6 +210,26 @@ create_param_edit_ui(
   inf::base::plugin_controller* controller, std::int32_t part_type,
   std::int32_t part_index, std::int32_t param_index, edit_type type, bool show_tooltip)
 { return std::make_unique<param_edit_element>(controller, part_id(part_type, part_index), param_index, type, show_tooltip); }
+
+class part_graph_element:
+public ui_element
+{
+  base::part_id const _part_id;
+  std::int32_t const _graph_type;
+protected:
+  juce::Component* build_core(juce::LookAndFeel const& lnf) override
+  { return new graph_plot(controller(), _part_id, _graph_type); }
+public:
+  void layout() override {}
+  part_graph_element(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type):
+  ui_element(controller), _part_id(part_id), _graph_type(graph_type) {}
+};
+
+inline std::unique_ptr<part_graph_element>
+create_part_graph_ui(
+  inf::base::plugin_controller* controller, std::int32_t part_type,
+  std::int32_t part_index, std::int32_t const _graph_type)
+{ return std::make_unique<part_graph_element>(controller, part_id(part_type, part_index), _graph_type); }
 
 class grid_element:
 public ui_element
