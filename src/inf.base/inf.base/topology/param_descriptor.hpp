@@ -68,15 +68,6 @@ struct discrete_descriptor
   min(min), max(max), default_(default_), items(nullptr), names(nullptr)
   { assert(min < max && min <= default_ && default_ <= max); }
 
-  // For tabbed controls.
-  discrete_descriptor(std::vector<list_item> const* items, std::vector<std::string> const* tab_items) :
-  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(0), items(items), names(nullptr)
-  { 
-    assert(tab_items->size() == items->size());
-    assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size()));
-  }
-
   // For actual dropdown lists.
   discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_) :
   min(0), max(static_cast<std::int32_t>(items->size() - 1)), 

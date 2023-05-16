@@ -6,15 +6,6 @@
 namespace inf::base {
 
 std::vector<std::string>
-list_tab_items(std::int32_t count)
-{
-  std::vector<std::string> result;
-  for (std::int32_t i = 0; i < count; i++)
-    result.push_back(std::to_string(i + 1));
-  return result;
-}
-
-std::vector<std::string>
 generate_names(std::int32_t count, std::string(*name)(std::int32_t n))
 {
   std::vector<std::string> result;

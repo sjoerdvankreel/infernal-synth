@@ -78,9 +78,6 @@ multi_list_table_init_in(std::int32_t const* counts, std::int32_t count);
 std::vector<std::pair<std::int32_t, std::int32_t>>
 multi_list_table_init_out(std::int32_t const* counts, std::int32_t count);
 
-// E.g. "1", "2", "3".
-std::vector<std::string>
-list_tab_items(std::int32_t count);
 // E.g. ("id", Osc"), 2 -> ("id1", "Osc 1"), ("id2", "Osc 2").
 std::vector<list_item>
 list_items(list_item const& item, std::int32_t count);
