@@ -231,10 +231,11 @@ Component*
 param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+  std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   inf_dropdown* result = new inf_dropdown(&desc);
   result->setJustificationType(Justification::centred);
-  for(std::int32_t i = 0; i <= desc.data.discrete.max; i++)
+  for(std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
     result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
   result->setSelectedItemIndex(controller()->state()[index].discrete, dontSendNotification);
   _dropdown_listener.reset(new dropdown_param_listener(controller(), result, index));
@@ -246,12 +247,13 @@ Component*
 param_edit_element::build_slider_core(LookAndFeel const& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+  std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   inf_slider* result = new inf_slider(&desc, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   if(desc.data.type != param_type::real)
   {
-    result->setRange(desc.data.discrete.min, desc.data.discrete.max, 1.0);
+    result->setRange(desc.data.discrete.min, desc.data.discrete.effective_max(part_index), 1.0);
     result->setValue(controller()->state()[index].discrete, dontSendNotification);
   }
   else

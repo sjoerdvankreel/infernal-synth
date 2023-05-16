@@ -9,22 +9,22 @@ using namespace Steinberg::Vst;
 namespace inf::base::vst {
   
 static double 
-param_step_count(param_descriptor const& param)
+param_step_count(param_info const& info)
 {
-  switch (param.data.type)
+  switch (info.descriptor->data.type)
   {
   case param_type::real: return 0.0;
-  default: return param.data.discrete.max - param.data.discrete.min;
+  default: return info.descriptor->data.discrete.effective_max(info.part_index) - info.descriptor->data.discrete.min;
   }
 }
 
 static double
-param_default_to_vst_normalized(param_descriptor const& param)
+param_default_to_vst_normalized(param_info const& info)
 {
-  switch (param.data.type)
+  switch (info.descriptor->data.type)
   {
-  case param_type::real: return param.data.real.default_;
-  default: return discrete_to_vst_normalized(param, param.data.discrete.default_);
+  case param_type::real: return info.descriptor->data.real.default_;
+  default: return discrete_to_vst_normalized(info, info.descriptor->data.discrete.default_);
   }
 }
 
@@ -62,39 +62,39 @@ param_flags(param_descriptor const* param_desc)
 
 vst_parameter::
 vst_parameter(ParamID tag,
-  part_info const* part, param_info const* param) :
+  part_info const* part, param_info const* info) :
   Parameter(
-    to_vst_string(param->runtime_name.c_str()).c_str(),
+    to_vst_string(info->runtime_name.c_str()).c_str(),
     tag,
-    to_vst_string(param->descriptor->data.unit).c_str(),
-    param_default_to_vst_normalized(*param->descriptor),
-    param_step_count(*param->descriptor),
-    param_flags(param->descriptor),
-    param->part_index + 1, 
-    to_vst_string(param->descriptor->data.static_name.short_).c_str()),
-  _descriptor(param->descriptor)
+    to_vst_string(info->descriptor->data.unit).c_str(),
+    param_default_to_vst_normalized(*info),
+    param_step_count(*info),
+    param_flags(info->descriptor),
+    info->part_index + 1,
+    to_vst_string(info->descriptor->data.static_name.short_).c_str()),
+  _info(info)
 {    
-  assert(param != nullptr);
-  setPrecision(param->descriptor->data.real.precision);
+  assert(info != nullptr);
+  setPrecision(info->descriptor->data.real.precision);
 }
 
 ParamValue
 vst_parameter::toPlain(ParamValue normalized) const
 {
-  switch (_descriptor->data.type)
+  switch (_info->descriptor->data.type)
   {
-  case param_type::real: return _descriptor->data.real.display.to_range(normalized);
-  default: return vst_normalized_to_discrete(*_descriptor, normalized);
+  case param_type::real: return _info->descriptor->data.real.display.to_range(normalized);
+  default: return vst_normalized_to_discrete(*_info, normalized);
   }
 }
 
 ParamValue
 vst_parameter::toNormalized(ParamValue plain) const
 {
-  switch (_descriptor->data.type)
+  switch (_info->descriptor->data.type)
   {
-  case param_type::real: return _descriptor->data.real.display.from_range(plain);
-  default: return discrete_to_vst_normalized(*_descriptor, static_cast<std::int32_t>(plain));
+  case param_type::real: return _info->descriptor->data.real.display.from_range(plain);
+  default: return discrete_to_vst_normalized(*_info, static_cast<std::int32_t>(plain));
   }
 }
 
@@ -103,12 +103,12 @@ vst_parameter::toString(ParamValue normalized, String128 string) const
 {
   param_value value;
   char str8[128] = { 0 };
-  switch (_descriptor->data.type)
+  switch (_info->descriptor->data.type)
   {
   case param_type::real: value.real = toPlain(normalized); break;
-  default: value.discrete = vst_normalized_to_discrete(*_descriptor, normalized); break;
+  default: value.discrete = vst_normalized_to_discrete(*_info, normalized); break;
   }
-  _descriptor->data.format(false, value, str8, 128);
+  _info->descriptor->data.format(false, value, str8, 128);
   for(std::size_t i = 0; i < 128; i++)  
     string[i] = str8[i];
 }
@@ -121,11 +121,11 @@ vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
   while(*string != static_cast<TChar>(0))
     str8.push_back(static_cast<char>(*string++));
   str8.push_back('\0');
-  if (!_descriptor->data.parse(false, str8.data(), value)) return false;
-  switch (_descriptor->data.type)
+  if (!_info->descriptor->data.parse(false, _info->part_index, str8.data(), value)) return false;
+  switch (_info->descriptor->data.type)
   {
   case param_type::real: normalized = toNormalized(value.real); break;
-  default: normalized = discrete_to_vst_normalized(*_descriptor, value.discrete); break;
+  default: normalized = discrete_to_vst_normalized(*_info, value.discrete); break;
   }
   return true;
 }

@@ -57,7 +57,8 @@ real_descriptor::parse_to_normalized(char const* buffer) const
 }
 
 bool
-discrete_descriptor::parse(param_type type, bool io, char const* buffer, std::int32_t& val) const
+discrete_descriptor::parse( 
+  param_type type, bool io, std::int32_t part_index, char const* buffer, std::int32_t& val) const
 {
   std::stringstream str(buffer);
   switch (type)
@@ -67,7 +68,7 @@ discrete_descriptor::parse(param_type type, bool io, char const* buffer, std::in
   case param_type::list_knob:
     str >> val;
     if (val < min) return false;
-    if (val > max) return false;
+    if (val > effective_max(part_index)) return false;
     return true;
   case param_type::toggle:
     if (!std::strcmp("On", buffer)) val = 1;
@@ -76,12 +77,12 @@ discrete_descriptor::parse(param_type type, bool io, char const* buffer, std::in
     return true;
   case param_type::knob_list:
     assert(names != nullptr);
-    for (std::int32_t i = 0; i <= max; i++)
+    for (std::int32_t i = 0; i <= effective_max(part_index); i++)
       if (!std::strcmp((*names)[i].c_str(), buffer)) return val = i, true;
     return false;
   case param_type::list:
     assert(items != nullptr);
-    for (std::int32_t i = 0; i <= max; i++)
+    for (std::int32_t i = 0; i <= effective_max(part_index); i++)
       if (io && !std::strcmp((*items)[i].id.c_str(), buffer)) return val = i, true;
       else if (!io && !std::strcmp((*items)[i].name.c_str(), buffer)) return val = i, true;
     return false;
@@ -92,32 +93,35 @@ discrete_descriptor::parse(param_type type, bool io, char const* buffer, std::in
 }
 
 std::int32_t
-discrete_descriptor::parse_ui(param_type type, char const* buffer) const
+discrete_descriptor::parse_ui(
+  param_type type, std::int32_t part_index, char const* buffer) const
 {
   std::int32_t val;
-  bool ok = parse(type, false, buffer, val);
+  bool ok = parse(type, false, part_index, buffer, val);
   (void)ok;
   assert(ok);
   return val;
 }
 
 bool 
-param_descriptor_data::parse(bool io, char const* buffer, param_value& val) const
+param_descriptor_data::parse(
+  bool io, std::int32_t part_index, char const* buffer, param_value& val) const
 {
   switch (type)
   {
   case param_type::real: return real.parse(buffer, val.real);
-  default: return discrete.parse(type, io, buffer, val.discrete);
+  default: return discrete.parse(type, io, part_index, buffer, val.discrete);
   }
 }
 
 param_value
-param_descriptor_data::parse_ui(char const* buffer) const
+param_descriptor_data::parse_ui(
+  std::int32_t part_index, char const* buffer) const
 {
   switch (type)
   {
   case param_type::real: return param_value(real.parse_to_normalized(buffer));
-  default: return param_value(discrete.parse_ui(type, buffer));
+  default: return param_value(discrete.parse_ui(type, part_index, buffer));
   }
 }
 
@@ -141,6 +145,7 @@ param_descriptor_data::format(bool io, param_value val, char* buffer, std::size_
     else stream << (*discrete.items)[val.discrete].name;
     break;
   case param_type::knob: case param_type::text: case param_type::list_knob:
+    assert(discrete._max_selector == nullptr);
     if (discrete.min < 0 && discrete.max > 0 && val.discrete > 0) prefix = "+";
     stream << prefix << val.discrete;
     break;

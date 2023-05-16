@@ -39,6 +39,9 @@ typedef param_type_t::value param_type;
 struct param_kind_t { enum value { block, voice, continuous, fixed, output, count }; };
 typedef param_kind_t::value param_kind;
 
+// When max control value depends on the current part index.
+typedef std::int32_t(*discrete_max_selector)(std::int32_t part_index);
+
 // Real valued specific data.
 struct real_descriptor
 {
@@ -54,36 +57,45 @@ struct real_descriptor
 struct discrete_descriptor
 {
   std::int32_t const min;
-  std::int32_t const max;
+  std::int32_t const max2;
   std::int32_t default_;
+  discrete_max_selector _max_selector;
   std::vector<list_item> const* const items; // Items for a list parameter.
   std::vector<std::string> const* const names; // Names for a knob-list parameter.
   
   // IO: false parses for UI (display name), true parses for persistance (guids).
-  std::int32_t parse_ui(param_type type, char const* buffer) const;
-  bool parse(param_type type, bool io, char const* buffer, std::int32_t& val) const;
+  std::int32_t parse_ui(param_type type, std::int32_t part_index, char const* buffer) const;
+  bool parse(param_type type, bool io, std::int32_t part_index, char const* buffer, std::int32_t& val) const;
+
+  // Get max given part index.
+  std::int32_t effective_max(std::int32_t part_index) const
+  {
+    std::int32_t result = _max_selector == nullptr ? max2 : _max_selector(part_index);
+    assert(min <= result && result <= max2);
+    return result;
+  }
 
   // Regular discrete.
   discrete_descriptor(std::int32_t min, std::int32_t max, std::int32_t default_):
-  min(min), max(max), default_(default_), items(nullptr), names(nullptr)
+  min(min), max2(max), default_(default_), items(nullptr), names(nullptr)
   { assert(min < max && min <= default_ && default_ <= max); }
 
   // For actual dropdown lists.
-  discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_) :
-  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(default_), items(items), names(nullptr)
+  discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_, discrete_max_selector selector = nullptr) :
+  min(0), max2(static_cast<std::int32_t>(items->size() - 1)),
+  default_(default_), _max_selector(selector), items(items), names(nullptr)
   { assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size())); }
 
   // For knob-lists with dynamically generated data.
-  discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_) :
-  min(0), max(static_cast<std::int32_t>(names->size() - 1)),
-  default_(default_), items(nullptr), names(names)
+  discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_, discrete_max_selector selector = nullptr) :
+  min(0), max2(static_cast<std::int32_t>(names->size() - 1)),
+  default_(default_), _max_selector(selector), items(nullptr), names(names)
   { assert(names->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(names->size())); }
 
   // For actual dropdown lists.
-  discrete_descriptor(std::vector<list_item> const* items, char const* default_) :
-  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(-1), items(items), names(nullptr)
+  discrete_descriptor(std::vector<list_item> const* items, char const* default_, discrete_max_selector selector = nullptr) :
+  min(0), max2(static_cast<std::int32_t>(items->size() - 1)),
+  default_(-1), _max_selector(selector), items(items), names(nullptr)
   { 
     this->default_ = -1;
     assert(items->size() > 0 && default_ != nullptr);
@@ -94,9 +106,9 @@ struct discrete_descriptor
   }
 
   // For knob-lists with dynamically generated data.
-  discrete_descriptor(std::vector<std::string> const* names, char const* default_) :
-  min(0), max(static_cast<std::int32_t>(names->size() - 1)),
-  default_(-1), items(nullptr), names(names)
+  discrete_descriptor(std::vector<std::string> const* names, char const* default_, discrete_max_selector selector = nullptr) :
+  min(0), max2(static_cast<std::int32_t>(names->size() - 1)),
+  default_(-1), _max_selector(selector), items(nullptr), names(names)
   { 
     this->default_ = -1;
     assert(names->size() > 0 && default_ != nullptr);
@@ -165,10 +177,10 @@ struct param_descriptor_data
   };
 
   // IO: false parses/formats for UI (display name), true parses/formats for persistance (guids).
-  param_value parse_ui(char const* buffer) const;
   std::string format(bool io, param_value val) const;
-  bool parse(bool io, char const* buffer, param_value& val) const;
   std::size_t format(bool io, param_value val, char* buffer, std::size_t size) const;
+  param_value parse_ui(std::int32_t part_index, char const* buffer) const;
+  bool parse(bool io, std::int32_t part_index, char const* buffer, param_value& val) const;
 
   param_io io_type() const;
   bool is_continuous() const { return kind == param_kind::continuous || kind == param_kind::fixed; }

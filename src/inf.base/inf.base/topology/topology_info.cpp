@@ -25,7 +25,7 @@ topology_info::set_ui_value(
   std::int32_t part_index, std::int32_t param, char const* value) const
 {
   std::int32_t index = param_bounds[part_type][part_index] + param;
-  state[index] = params[index].descriptor->data.parse_ui(value);
+  state[index] = params[index].descriptor->data.parse_ui(part_index, value);
 }
 
 param_value

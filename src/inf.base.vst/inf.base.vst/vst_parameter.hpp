@@ -9,7 +9,7 @@
 
 namespace inf::base::vst {
 
-// Vst parameter based on param_descriptor.
+// Vst parameter based on param_info.
 class vst_parameter:
 public Steinberg::Vst::Parameter 
 {
@@ -18,12 +18,12 @@ private:
   using ParamID = Steinberg::Vst::ParamID;
   using String128 = Steinberg::Vst::String128;
   using ParamValue = Steinberg::Vst::ParamValue;
-  inf::base::param_descriptor const* const _descriptor;
+  inf::base::param_info const* const _info;
 
 public:
   vst_parameter(ParamID tag,
     inf::base::part_info const* part,
-    inf::base::param_info const* param);
+    inf::base::param_info const* info);
   
   // Forwarding to param_descriptor.
   ParamValue toPlain(ParamValue normalized) const override;

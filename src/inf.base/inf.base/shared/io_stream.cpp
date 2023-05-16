@@ -107,8 +107,9 @@ io_stream::load(topology_info const& topology, param_value* state)
 
     for (std::int32_t rp = 0; rp < topology.input_param_count; rp++)
     {
+      std::int32_t part_index = topology.params[rp].part_index;
       auto const& param = topology.params[rp].descriptor;
-      auto const& part = topology.parts[topology.params[rp].part_index];
+      auto const& part = topology.parts[part_index];
       if(part_guid != part.descriptor->guid) continue;
       if(type_index != part.type_index) continue;
       if(param_guid != param->guid) continue;
@@ -119,7 +120,7 @@ io_stream::load(topology_info const& topology, param_value* state)
       { 
       case param_io::real: state[rp].real = value.real; break;
       case param_io::discrete: state[rp].discrete = value.discrete; break;
-      case param_io::text: if (param->data.parse(true, str_value.data(), value)) state[rp] = value; break;
+      case param_io::text: if (param->data.parse(true, part_index, str_value.data(), value)) state[rp] = value; break;
       default: assert(false); break;
       }
 
@@ -130,7 +131,9 @@ io_stream::load(topology_info const& topology, param_value* state)
       switch (param->data.type)
       { 
       case param_type::real: state[rp].real = std::clamp(state[rp].real, 0.0f, 1.0f); break;
-      default: state[rp].discrete = std::clamp(state[rp].discrete, param->data.discrete.min, param->data.discrete.max); break;
+      default: state[rp].discrete = std::clamp(
+        state[rp].discrete, param->data.discrete.min, 
+        param->data.discrete.effective_max(part_index)); break;
       }
 
       break;
