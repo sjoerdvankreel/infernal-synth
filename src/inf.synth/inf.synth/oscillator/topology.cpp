@@ -22,8 +22,11 @@ static std::vector<list_item> const osc_basic_types = {
   { "{172E9222-7DAD-4FC7-8748-8A1CBEA3317D}", "Tri" } }; 
 
 static std::int32_t
+osc_max_ram_index(std::int32_t part_index)
+{ return part_index; }
+static std::int32_t
 osc_max_sync_index(std::int32_t part_index)
-{ return part_index + 1; }
+{ return part_index; }
 static std::vector<std::string> const osc_ram_sources = 
 generate_names(vosc_count, [](std::int32_t n) 
 { return std::string("Osc ") + std::to_string(n + 1); });
@@ -44,7 +47,7 @@ osc_params[osc_param::count] =
   { "{10D13CC1-EE5C-488A-8F48-F8BA70855B5A}", { { "PM", "Phase modulation" }, "", param_kind::fixed, linear_bounds(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2) } },
   { "{3D379D24-CE2D-4AE2-92EF-3951C7CA608C}", { { "FM", "Frequency modulation" }, "", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{09E50DA8-2467-462F-9822-7E9074A51B53}", { { "Gain", "Gain" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
-  { "{AFA9850B-ACB0-4666-95C0-42D32D197EB2}", { { "Src", "R/AM source" }, "", param_kind::voice, param_type::knob_list, { &osc_ram_sources, 0 } } },
+  { "{AFA9850B-ACB0-4666-95C0-42D32D197EB2}", { { "Src", "R/AM source" }, "", param_kind::voice, param_type::knob_list, { &osc_ram_sources, 0, osc_max_ram_index } } },
   { "{4ED08060-260A-42EC-99E8-A2BEA628B652}", { { "Bal", "R/AM balance" }, "%", param_kind::continuous, percentage_m11_bounds(1.0f) } },
   { "{63C3C4F7-526A-4A1C-BD12-99548A765110}", { { "Mix", "R/AM mix" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) } },
   { "{F5B30B84-5C3E-471F-9B27-D1FB6E06D0AF}", { { "Voices", "Unison voices" }, "", param_kind::voice, param_type::list_knob, { 1, osc_max_voices, 1 } } },
