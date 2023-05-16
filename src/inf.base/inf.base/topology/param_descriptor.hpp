@@ -57,7 +57,7 @@ struct real_descriptor
 struct discrete_descriptor
 {
   std::int32_t const min;
-  std::int32_t const max2;
+  std::int32_t const max;
   std::int32_t default_;
   discrete_max_selector _max_selector;
   std::vector<list_item> const* const items; // Items for a list parameter.
@@ -70,31 +70,31 @@ struct discrete_descriptor
   // Get max given part index.
   std::int32_t effective_max(std::int32_t part_index) const
   {
-    std::int32_t result = _max_selector == nullptr ? max2 : _max_selector(part_index);
-    assert(min <= result && result <= max2);
+    std::int32_t result = _max_selector == nullptr ? max : _max_selector(part_index);
+    assert(min <= result && result <= max);
     return result;
   }
 
   // Regular discrete.
   discrete_descriptor(std::int32_t min, std::int32_t max, std::int32_t default_):
-  min(min), max2(max), default_(default_), items(nullptr), names(nullptr)
+  min(min), max(max), default_(default_), items(nullptr), names(nullptr)
   { assert(min < max && min <= default_ && default_ <= max); }
 
   // For actual dropdown lists.
   discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_, discrete_max_selector selector = nullptr) :
-  min(0), max2(static_cast<std::int32_t>(items->size() - 1)),
+  min(0), max(static_cast<std::int32_t>(items->size() - 1)),
   default_(default_), _max_selector(selector), items(items), names(nullptr)
   { assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size())); }
 
   // For knob-lists with dynamically generated data.
   discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_, discrete_max_selector selector = nullptr) :
-  min(0), max2(static_cast<std::int32_t>(names->size() - 1)),
+  min(0), max(static_cast<std::int32_t>(names->size() - 1)),
   default_(default_), _max_selector(selector), items(nullptr), names(names)
   { assert(names->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(names->size())); }
 
   // For actual dropdown lists.
   discrete_descriptor(std::vector<list_item> const* items, char const* default_, discrete_max_selector selector = nullptr) :
-  min(0), max2(static_cast<std::int32_t>(items->size() - 1)),
+  min(0), max(static_cast<std::int32_t>(items->size() - 1)),
   default_(-1), _max_selector(selector), items(items), names(nullptr)
   { 
     this->default_ = -1;
@@ -107,7 +107,7 @@ struct discrete_descriptor
 
   // For knob-lists with dynamically generated data.
   discrete_descriptor(std::vector<std::string> const* names, char const* default_, discrete_max_selector selector = nullptr) :
-  min(0), max2(static_cast<std::int32_t>(names->size() - 1)),
+  min(0), max(static_cast<std::int32_t>(names->size() - 1)),
   default_(-1), _max_selector(selector), items(nullptr), names(names)
   { 
     this->default_ = -1;
