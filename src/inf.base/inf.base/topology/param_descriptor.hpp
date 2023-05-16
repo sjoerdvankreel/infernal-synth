@@ -58,27 +58,20 @@ struct discrete_descriptor
   std::int32_t default_;
   std::vector<list_item> const* const items; // Items for a list parameter.
   std::vector<std::string> const* const names; // Names for a knob-list parameter.
-  std::vector<std::string> const* const tab_items; // Short names for tab headers.
   
   // IO: false parses for UI (display name), true parses for persistance (guids).
   std::int32_t parse_ui(param_type type, char const* buffer) const;
   bool parse(param_type type, bool io, char const* buffer, std::int32_t& val) const;
 
-  std::string format_tab(std::int32_t index) const
-  { 
-    assert(tab_items != nullptr); 
-    return (*tab_items)[index]; 
-  }
-
   // Regular discrete.
   discrete_descriptor(std::int32_t min, std::int32_t max, std::int32_t default_):
-  min(min), max(max), default_(default_), items(nullptr), names(nullptr), tab_items(nullptr)
+  min(min), max(max), default_(default_), items(nullptr), names(nullptr)
   { assert(min < max && min <= default_ && default_ <= max); }
 
   // For tabbed controls.
   discrete_descriptor(std::vector<list_item> const* items, std::vector<std::string> const* tab_items) :
   min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(0), items(items), names(nullptr), tab_items(tab_items)
+  default_(0), items(items), names(nullptr)
   { 
     assert(tab_items->size() == items->size());
     assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size()));
@@ -87,19 +80,19 @@ struct discrete_descriptor
   // For actual dropdown lists.
   discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_) :
   min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(default_), items(items), names(nullptr), tab_items(nullptr)
+  default_(default_), items(items), names(nullptr)
   { assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size())); }
 
   // For knob-lists with dynamically generated data.
   discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_) :
   min(0), max(static_cast<std::int32_t>(names->size() - 1)),
-  default_(default_), items(nullptr), names(names), tab_items(nullptr)
+  default_(default_), items(nullptr), names(names)
   { assert(names->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(names->size())); }
 
   // For actual dropdown lists.
   discrete_descriptor(std::vector<list_item> const* items, char const* default_) :
   min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(-1), items(items), names(nullptr), tab_items(nullptr)
+  default_(-1), items(items), names(nullptr)
   { 
     this->default_ = -1;
     assert(items->size() > 0 && default_ != nullptr);
@@ -112,7 +105,7 @@ struct discrete_descriptor
   // For knob-lists with dynamically generated data.
   discrete_descriptor(std::vector<std::string> const* names, char const* default_) :
   min(0), max(static_cast<std::int32_t>(names->size() - 1)),
-  default_(-1), items(nullptr), names(names), tab_items(nullptr)
+  default_(-1), items(nullptr), names(names)
   { 
     this->default_ = -1;
     assert(names->size() > 0 && default_ != nullptr);
