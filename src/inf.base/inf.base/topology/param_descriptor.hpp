@@ -69,45 +69,38 @@ struct discrete_descriptor
   { assert(min < max && min <= default_ && default_ <= max); }
 
   // For actual dropdown lists.
-  discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_, std::int32_t max_ = -1) :
-  min(0), max(max_ != -1? max_: static_cast<std::int32_t>(items->size() - 1)), 
+  discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_) :
+  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
   default_(default_), items(items), names(nullptr)
-  { 
-    assert(0 <= max && max <= static_cast<std::int32_t>(items->size() - 1));
-    assert(items->size() > 0 && default_ >= 0 && default_ <= max);
-  }
+  { assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size())); }
 
   // For knob-lists with dynamically generated data.
-  discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_, std::int32_t max_ = -1) :
-  min(0), max(max_ != -1 ? max_ : static_cast<std::int32_t>(names->size() - 1)),
+  discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_) :
+  min(0), max(static_cast<std::int32_t>(names->size() - 1)),
   default_(default_), items(nullptr), names(names)
-  { 
-    assert(0 <= max && max <= static_cast<std::int32_t>(items->size() - 1));
-    assert(names->size() > 0 && default_ >= 0 && default_ <= max); 
-  }
+  { assert(names->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(names->size())); }
 
   // For actual dropdown lists.
-  discrete_descriptor(std::vector<list_item> const* items, char const* default_, std::int32_t max_ = -1) :
-  min(0), max(max_ != -1 ? max_ : static_cast<std::int32_t>(items->size() - 1)),
+  discrete_descriptor(std::vector<list_item> const* items, char const* default_) :
+  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
   default_(-1), items(items), names(nullptr)
   { 
     this->default_ = -1;
-    assert(0 <= max && max <= static_cast<std::int32_t>(items->size() - 1));
     assert(items->size() > 0 && default_ != nullptr);
-    for(std::int32_t i = 0; i <= max; i++)
+    for(std::int32_t i = 0; i < static_cast<std::int32_t>(items->size()); i++)
       if ((*items)[i].name == std::string(default_))
         this->default_ = i;
     assert(this->default_ != -1);
   }
 
   // For knob-lists with dynamically generated data.
-  discrete_descriptor(std::vector<std::string> const* names, char const* default_, std::int32_t max_ = -1) :
-  min(0), max(max_ != -1 ? max_ : static_cast<std::int32_t>(names->size() - 1)),
+  discrete_descriptor(std::vector<std::string> const* names, char const* default_) :
+  min(0), max(static_cast<std::int32_t>(names->size() - 1)),
   default_(-1), items(nullptr), names(names)
   { 
     this->default_ = -1;
     assert(names->size() > 0 && default_ != nullptr);
-    for(std::int32_t i = 0; i <= max; i++)
+    for(std::int32_t i = 0; i < static_cast<std::int32_t>(names->size()); i++)
       if ((*names)[i] == std::string(default_))
         this->default_ = i;
     assert(this->default_ != -1);
