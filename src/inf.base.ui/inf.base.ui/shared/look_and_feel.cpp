@@ -426,7 +426,7 @@ inf_look_and_feel::drawRotarySlider(
   // config
   float const cut_xy_ratio = 1.0f;
   float const margin_factor = 0.075f;
-  float const margin_fixed_px = 0.0f;
+  float const margin_fixed_px = 2.0f;
   float const thumb_width_factor = 0.15f;
   float const center_size_factor = 0.67f;
   float const cut_inner_size_factor = 0.85f;
