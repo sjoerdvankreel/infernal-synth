@@ -9,7 +9,7 @@
 namespace inf::base::ui
 {
 
-typedef bool(*relevance_selector)(std::int32_t value);
+typedef bool(*relevance_selector)(std::int32_t part_index, std::int32_t param_value);
 
 class relevance_listener :
 public param_listener
