@@ -135,10 +135,20 @@ create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
   return create_part_group_ui(controller, create_group_label_ui(controller, "Noise", true), std::move(outer_grid));
 }
 
+static std::unique_ptr<ui_element>
+create_osc_graph_group(plugin_controller* controller, std::int32_t part_index)
+{
+  auto result = create_grid_ui(controller, 3, 1);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::left), 0, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::spectrum), 1, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::right), 2, 0);
+  return result;
+}
+
 static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto result = create_grid_ui(controller, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(5, Grid::Fr(1)));
+  auto result = create_grid_ui(controller, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(8, Grid::Fr(1)));
   result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 3, 1);
@@ -154,6 +164,7 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::kps; });
   auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::noise; });
+  result->add_cell(create_osc_graph_group(controller, part_index), 0, 5, 4, 3);
   return result;
 }
 
@@ -163,7 +174,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 4, std::move(oscillators));
+  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 3, 5, std::move(oscillators));
 }
 
 std::unique_ptr<root_element>
