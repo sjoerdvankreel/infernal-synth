@@ -10,7 +10,7 @@ static float const graph_bpm = 120.0f;
 static float const graph_sample_rate = 48000.0f;
 
 void 
-graph_plot::paint(juce::Graphics& g)
+inf_graph_plot::paint(juce::Graphics& g)
 {
   float const graph_pad = 3.0f;
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());

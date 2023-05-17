@@ -8,7 +8,7 @@
 
 namespace inf::base::ui {
 
-class graph_plot : 
+class inf_graph_plot : 
 public juce::Component
 {
   part_id const _part_id;
@@ -19,7 +19,7 @@ public juce::Component
 public:
   void paint(juce::Graphics& g) override;
 
-  graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type):
+  inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type):
   juce::Component(), _part_id(part_id), _graph_type(graph_type), _controller(controller) {}
 };
 

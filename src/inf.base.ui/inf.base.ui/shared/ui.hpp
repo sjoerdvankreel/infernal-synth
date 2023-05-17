@@ -226,7 +226,7 @@ public ui_element
   std::int32_t const _graph_type;
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override
-  { return new graph_plot(controller(), _part_id, _graph_type); }
+  { return new inf_graph_plot(controller(), _part_id, _graph_type); }
 public:
   void layout() override {}
   part_graph_element(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type):
