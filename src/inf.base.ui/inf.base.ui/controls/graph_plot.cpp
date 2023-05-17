@@ -48,7 +48,8 @@ graph_plot::paint(juce::Graphics& g)
   if (graph_data.size() != 0)
   {
     Path path;
-    path.startNewSubPath(graph_bounds.getX(), graph_bounds.getY());
+    float base_y = bipolar ? 0.5f : 1.0f;
+    path.startNewSubPath(graph_bounds.getX() + graph_data[0].x, graph_bounds.getHeight() * base_y);
     path.lineTo(graph_bounds.getX() + graph_bounds.getWidth(), bounds.getY() + graph_bounds.getHeight());
     g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
     g.strokePath(path, PathStrokeType(1.0f));
