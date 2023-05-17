@@ -1,5 +1,7 @@
 #include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
+
+#include <chrono>
 #include <algorithm>
 
 using namespace juce;
@@ -8,6 +10,44 @@ namespace inf::base::ui {
 
 static float const graph_bpm = 120.0f;
 static float const graph_sample_rate = 48000.0f;
+
+void 
+inf_graph_plot_timer::delayed_repaint_request() 
+{
+  _dirty = true;
+  auto duration = std::chrono::system_clock::now().time_since_epoch();
+  _paint_request_time = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+}
+
+void 
+inf_graph_plot_timer::timerCallback()
+{ 
+  if(_inside_callback || !_dirty) return;
+  _inside_callback = true;
+  auto duration = std::chrono::system_clock::now().time_since_epoch();
+  std::uint64_t now_time = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+  if(now_time - _paint_request_time >= timeout_millis)
+  {
+    _plot->repaint();
+    _dirty = false;
+  }
+  _inside_callback = false;
+}
+
+inf_graph_plot::
+~inf_graph_plot()
+{
+  _repaint_timer.stopTimer();
+  _repaint_timer.plot(nullptr);
+}
+
+inf_graph_plot::
+inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type) :
+  juce::Component(), _part_id(part_id), _graph_type(graph_type), _controller(controller)
+{
+  _repaint_timer.plot(this);
+  _repaint_timer.startTimer(inf_graph_plot_timer::timeout_millis);
+}
 
 graph_processor* 
 inf_graph_plot::processor()
