@@ -17,8 +17,8 @@ public juce::Component
   std::unique_ptr<graph_processor> _processor = {};
   
 public:
-  void paint(juce::Graphics& g) override;
-
+  graph_processor* processor();
+  void paint(juce::Graphics& g) override;  
   inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type):
   juce::Component(), _part_id(part_id), _graph_type(graph_type), _controller(controller) {}
 };

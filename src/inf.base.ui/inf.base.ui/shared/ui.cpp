@@ -277,6 +277,14 @@ param_edit_element::build_slider_core(LookAndFeel const& lnf)
   return result;
 }
 
+juce::Component* 
+part_graph_element::build_core(juce::LookAndFeel const& lnf)
+{ 
+  inf_graph_plot* result = new inf_graph_plot(controller(), _part_id, _graph_type); 
+  _listener.reset(new graph_listener(controller(), result));
+  return result;
+}
+
 Component*
 grid_element::build_core(LookAndFeel const& lnf)
 {

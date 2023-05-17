@@ -9,6 +9,14 @@ namespace inf::base::ui {
 static float const graph_bpm = 120.0f;
 static float const graph_sample_rate = 48000.0f;
 
+graph_processor* 
+inf_graph_plot::processor()
+{
+  if (_processor) return _processor.get();
+  _processor = _controller->topology()->create_graph_processor(_part_id, _graph_type);
+  return _processor.get();
+}
+
 void 
 inf_graph_plot::paint(juce::Graphics& g)
 {
@@ -35,11 +43,9 @@ inf_graph_plot::paint(juce::Graphics& g)
 
   // plot data
   bool bipolar;
-  if(!_processor)
-    _processor = _controller->topology()->create_graph_processor(_part_id, _graph_type);
   param_value const* state = _controller->state();
   //float opacity = _processor->opacity(state);
-  std::vector<graph_point> const& graph_data = _processor->plot(
+  std::vector<graph_point> const& graph_data = processor()->plot(
     state, graph_sample_rate,
     static_cast<std::int32_t>(graph_bounds.getWidth()),
     static_cast<std::int32_t>(graph_bounds.getHeight()),

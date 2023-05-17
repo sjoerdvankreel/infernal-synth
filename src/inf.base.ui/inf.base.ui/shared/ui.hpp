@@ -8,6 +8,7 @@
 #include <inf.base.ui/controls/container.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base.ui/controls/tabbed_button_bar.hpp>
+#include <inf.base.ui/listeners/graph_listener.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
 #include <inf.base.ui/listeners/tab_param_listener.hpp>
@@ -224,9 +225,9 @@ public ui_element
 {
   base::part_id const _part_id;
   std::int32_t const _graph_type;
+  std::unique_ptr<graph_listener> _listener = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override
-  { return new inf_graph_plot(controller(), _part_id, _graph_type); }
+  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
   part_graph_element(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type):
