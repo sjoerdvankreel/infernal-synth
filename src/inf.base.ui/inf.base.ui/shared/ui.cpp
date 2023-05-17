@@ -50,7 +50,9 @@ ui_element::build(LookAndFeel const& lnf)
 Component* 
 root_element::build_core(LookAndFeel const& lnf)
 {
-  container_component* result = new container_component(container_component::flags::fill, 0.0f, 0.0f, inf_look_and_feel::colors::root_background, 0);
+  container_component* result = new container_component(
+    container_component::flags::fill, 0.0f, 0.0f, 
+    inf_look_and_feel::colors::root_background, inf_look_and_feel::colors::root_background, 0, 0);
   result->addChildComponent(_content->build(lnf));
   result->setOpaque(true);
   result->setLookAndFeel(&_lnf);
@@ -72,8 +74,9 @@ Component*
 container_element::build_core(LookAndFeel const& lnf)
 {
   float const radius = 8.0f;
-  float const thickness = 1.0f;
-  container_component* result = new container_component(_flags, radius, thickness, _fill_color_id, _outline_color_id);
+  container_component* result = new container_component(
+    _flags, radius, container_outline_size, _fill_low_color_id, 
+    _fill_high_color_id, _outline_low_color_id, _outline_high_color_id);
   result->addChildComponent(_content->build(lnf));
   return result;
 }

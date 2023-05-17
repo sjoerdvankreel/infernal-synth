@@ -21,14 +21,12 @@ public juce::LookAndFeel_V4
 
 public:
   enum colors {
-    icon_stroke_color,
-    icon_pw_stroke_color,
-
-    root_background,
-    part_group_container,
-
     param_label,
     part_group_label,
+    root_background,
+    
+    icon_stroke_color,
+    icon_pw_stroke_color,
 
     tooltip_outline_low,
     tooltip_outline_high,
@@ -40,6 +38,11 @@ public:
     selector_label_outline_high,
     selector_label_background_low,
     selector_label_background_high,
+
+    part_group_container_fill_low,
+    part_group_container_fill_high,
+    part_group_container_outline_low,
+    part_group_container_outline_high,
 
     tab_button_outline_low,
     tab_button_outline_high,

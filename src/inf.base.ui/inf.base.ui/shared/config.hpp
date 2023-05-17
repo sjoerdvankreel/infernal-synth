@@ -6,6 +6,8 @@
 namespace inf::base::ui {
 
 inline int const container_padding = 2;
+inline float const container_outline_size = 1.0f;
+
 inline juce::Point<int> container_selector_padding = { 10, 8 };
 
 inline float const selector_min_height = 26.0f;

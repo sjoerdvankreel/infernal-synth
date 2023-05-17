@@ -19,17 +19,18 @@ namespace inf::base::ui {
 void 
 container_component::paint(Graphics& g)
 {
+  auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto bounds = with_container_padding(getLocalBounds()).toFloat();
+#if 0  
   if (_flags & flags::fill)
-  {
-    g.setColour(findColour(_fill_color_id));
-    g.fillRoundedRectangle(bounds, _radius);
-  }
+    lnf.fill_gradient_rounded_rectangle(
+      g, *this, bounds, inf_look_and_feel::colors::part_group_container_fill_low, 
+      inf_look_and_feel::colors::part_group_container_fill_high, _radius, 0.5f); 
   if (_flags & flags::outline)
-  {
-    g.setColour(findColour(_outline_color_id));
-    g.drawRoundedRectangle(bounds, _radius, _thickness);
-  }
+    lnf.stroke_gradient_rounded_rectangle(
+      g, *this, bounds, inf_look_and_feel::colors::part_group_container_outline_low,
+      inf_look_and_feel::colors::part_group_container_outline_high, _radius, 0.5f, _thickness);
+#endif
   if(getChildren().size() != 0)
     getChildComponent(0)->paint(g);
 }
