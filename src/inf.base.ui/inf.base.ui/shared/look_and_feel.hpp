@@ -39,6 +39,11 @@ public:
     selector_label_background_low,
     selector_label_background_high,
 
+    part_graph_fill_low,
+    part_graph_fill_high,
+    part_graph_outline_low,
+    part_graph_outline_high,
+
     part_group_container_fill_low,
     part_group_container_fill_high,
     part_group_container_outline_low,

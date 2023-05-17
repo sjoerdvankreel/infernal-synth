@@ -65,9 +65,8 @@ root_element::layout()
 Component*
 container_element::build_core(LookAndFeel const& lnf)
 {
-  float const radius = 8.0f;
   container_component* result = new container_component(
-    _flags, radius, container_outline_size, _fill_low_color_id, 
+    _flags, container_radius, container_outline_size, _fill_low_color_id, 
     _fill_high_color_id, _outline_low_color_id, _outline_high_color_id);
   result->addChildComponent(_content->build(lnf));
   return result;
