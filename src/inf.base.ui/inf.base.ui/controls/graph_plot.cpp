@@ -1,13 +1,18 @@
 #include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
+#include <algorithm>
 
 using namespace juce;
 
 namespace inf::base::ui {
 
+static float const graph_bpm = 120.0f;
+static float const graph_sample_rate = 48000.0f;
+
 void 
 graph_plot::paint(juce::Graphics& g)
 {
+  //float const graph_pad = 6.0f;
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto bounds = with_container_padding(getLocalBounds()).toFloat();
 
@@ -26,6 +31,27 @@ graph_plot::paint(juce::Graphics& g)
   float col_width = bounds.getWidth() / col_count;
   for (int i = 1; i <= grid_vcount; i++)
     g.fillRect(bounds.getX() + i * col_width, bounds.getY(), 1.0f, bounds.getHeight());
+
+  // plot data
+  bool bipolar;
+  if(!_processor)
+    _processor = _controller->topology()->create_graph_processor(_part_id, _graph_type);
+  param_value const* state = _controller->state();
+  //float opacity = _processor->opacity(state);
+  std::vector<graph_point> const& graph_data = _processor->plot(
+    state, graph_sample_rate,
+    static_cast<std::int32_t>(bounds.getWidth()),
+    static_cast<std::int32_t>(bounds.getHeight()),
+    bipolar);
+
+  if (graph_data.size() != 0)
+  {
+    Path path;
+    path.startNewSubPath(bounds.getX(), bounds.getY());
+    path.lineTo(bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight());
+    g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
+    g.strokePath(path, PathStrokeType(1.0f));
+  }
 
   // outline
   lnf.stroke_gradient_rounded_rectangle(g, *this, bounds, 

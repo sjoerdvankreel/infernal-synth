@@ -57,3 +57,4 @@
 - rewrite the manual
 - graph tooltips
 - drop param long names
+- check graph opacity
