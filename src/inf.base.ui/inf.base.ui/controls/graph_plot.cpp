@@ -60,10 +60,8 @@ inf_graph_plot::processor()
 void 
 inf_graph_plot::paint(juce::Graphics& g)
 {
-  float const graph_pad = 3.0f;
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto bounds = with_container_padding(getLocalBounds()).toFloat();
-  auto graph_bounds = bounds.expanded(-graph_pad);
 
   // fill
   lnf.fill_gradient_rounded_rectangle(g, *this, bounds, 
@@ -87,18 +85,18 @@ inf_graph_plot::paint(juce::Graphics& g)
   //float opacity = _processor->opacity(state);
   std::vector<graph_point> const& graph_data = processor()->plot(
     state, graph_sample_rate,
-    static_cast<std::int32_t>(graph_bounds.getWidth()),
-    static_cast<std::int32_t>(graph_bounds.getHeight()),
+    static_cast<std::int32_t>(bounds.getWidth()),
+    static_cast<std::int32_t>(bounds.getHeight()),
     bipolar);
 
   if (graph_data.size() != 0)
   {
     Path path;
     float base_y = bipolar ? 0.5f : 1.0f;
-    path.startNewSubPath(graph_bounds.getX() + graph_data[0].x, graph_bounds.getHeight() * base_y);
+    path.startNewSubPath(bounds.getX() + graph_data[0].x, bounds.getHeight() * base_y);
     for (std::size_t i = 1; i < graph_data.size(); i++)
-      path.lineTo(graph_bounds.getX() + graph_data[i].x, graph_bounds.getHeight() - graph_data[i].y);
-    path.lineTo(graph_bounds.getX() + graph_bounds.getWidth(), bounds.getY() + graph_bounds.getHeight());
+      path.lineTo(bounds.getX() + graph_data[i].x, bounds.getHeight() - graph_data[i].y);
+    path.lineTo(bounds.getX() + bounds.getWidth(), bounds.getY() + bounds.getHeight());
     g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
     g.strokePath(path, PathStrokeType(1.0f));
   }
