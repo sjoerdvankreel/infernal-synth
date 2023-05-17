@@ -17,6 +17,13 @@ class param_listener
 public:
   virtual void controller_param_changed(param_value ui_value) = 0;
 };
+
+// Any param changed by automation callback.
+class any_param_listener
+{
+public:
+  virtual void any_controller_param_changed(std::int32_t index) = 0;
+};
   
 // For factory presets (just every .vstpreset in the resources folder).
 struct factory_preset
@@ -32,6 +39,7 @@ protected:
   // Separate copy of the parameter state used for graphs.
   std::vector<inf::base::param_value> _state;
   std::unique_ptr<inf::base::topology_info> _topology;
+  std::set<any_param_listener*> _any_param_listeners = {};
   std::vector<inf::base::factory_preset> _factory_presets = {};
   std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
 
@@ -65,9 +73,14 @@ public:
   virtual double base_to_plugin_param(std::int32_t index, param_value val) const = 0;
   virtual param_value plugin_to_base_param(std::int32_t index, double val) const = 0;
 
+  std::vector<inf::base::factory_preset>& factory_presets() 
+  { return _factory_presets; }
+  void add_any_param_listener(any_param_listener* listener)
+  { _any_param_listeners.insert(listener); }
+  void remove_any_param_listener(any_param_listener* listener)
+  { _any_param_listeners.erase(listener); }
   void add_param_listener(std::int32_t param_index, param_listener* listener);
   void remove_param_listener(std::int32_t param_index, param_listener* listener);
-  std::vector<inf::base::factory_preset>& factory_presets() { return _factory_presets; }
 
   param_value base_value_at_index(std::int32_t param_index) const
   { return state()[param_index]; }
