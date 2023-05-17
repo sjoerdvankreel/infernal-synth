@@ -50,6 +50,8 @@ graph_plot::paint(juce::Graphics& g)
     Path path;
     float base_y = bipolar ? 0.5f : 1.0f;
     path.startNewSubPath(graph_bounds.getX() + graph_data[0].x, graph_bounds.getHeight() * base_y);
+    for (std::size_t i = 1; i < graph_data.size(); i++)
+      path.lineTo(graph_bounds.getX() + graph_data[i].x, graph_bounds.getHeight() - graph_data[i].y);
     path.lineTo(graph_bounds.getX() + graph_bounds.getWidth(), bounds.getY() + graph_bounds.getHeight());
     g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
     g.strokePath(path, PathStrokeType(1.0f));
