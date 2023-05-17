@@ -56,3 +56,4 @@
 - drop voice/global ui suffixes
 - rewrite the manual
 - graph tooltips
+- drop param long names
