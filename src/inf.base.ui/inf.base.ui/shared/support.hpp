@@ -60,5 +60,13 @@ inline float
 get_param_label_hslider_width(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, param_label_hslider_min_width, param_label_hslider_max_width); }
 
+inline juce::Rectangle<int>
+with_container_padding(juce::Rectangle<int> const& bounds)
+{
+  return juce::Rectangle<int>(
+    bounds.getX() + container_padding, bounds.getY() + container_padding,
+    bounds.getWidth() - 2 * container_padding, bounds.getHeight() - 2 * container_padding);
+}
+
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_SUPPORT_HPP

@@ -11,14 +11,6 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
-static Rectangle<int> 
-with_container_padding(Rectangle<int> const& bounds)
-{
-  return Rectangle<int>(
-    bounds.getX() + container_padding, bounds.getY() + container_padding,
-    bounds.getWidth() - 2 * container_padding, bounds.getHeight() - 2 * container_padding);
-}
-
 void
 ui_element::relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector)
 {
