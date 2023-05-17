@@ -13,9 +13,7 @@ public any_param_listener
   plugin_controller* const _controller;
 
 public:
-  void any_controller_param_changed(std::int32_t index) override
-  { if(_plot->processor()->needs_repaint(index)) _plot->repaint(); }
-
+  void any_controller_param_changed(std::int32_t index) override;
   ~graph_listener() { _controller->remove_any_param_listener(this); }
   graph_listener(plugin_controller* controller, inf_graph_plot* plot):
   _plot(plot), _controller(controller) { _controller->add_any_param_listener(this); }

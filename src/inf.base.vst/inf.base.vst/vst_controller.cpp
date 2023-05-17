@@ -71,6 +71,7 @@ vst_controller::setParamNormalized(ParamID tag, ParamValue value)
 {
   tresult result = EditControllerEx1::setParamNormalized(tag, value);
   if(result != kResultOk) return result;
+  update_state(tag);
   std::int32_t index = topology()->param_id_to_index.at(tag);
   controller_param_changed(tag, vst_normalized_to_base(topology(), index, static_cast<float>(value)));
   return kResultOk;
