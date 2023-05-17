@@ -55,3 +55,4 @@
 - fix paint problems
 - drop voice/global ui suffixes
 - rewrite the manual
+- graph tooltips
