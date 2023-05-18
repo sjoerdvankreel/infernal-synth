@@ -55,10 +55,9 @@
 - fix paint problems
 - drop voice/global ui suffixes
 - rewrite the manual
-- graph tooltips
 - drop param long names
 - check graph opacity
-- ram the graph
 - drop cv plot cycles
 - double click to reset
 - shorter long descs
+- graph bg image
