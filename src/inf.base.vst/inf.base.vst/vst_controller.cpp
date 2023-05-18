@@ -1,6 +1,7 @@
 // Some VST header missing an include.
 #include <cassert>
 
+#include <base/source/fstring.h>
 #include <base/source/fstreamer.h>
 #include <pluginterfaces/base/ibstream.h>
 #include <public.sdk/source/vst/vstpresetfile.h>
