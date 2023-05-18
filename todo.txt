@@ -36,7 +36,6 @@
 * wishlist ui
 - drop param_type?
 - fix leaks
-- double click sets default
 - fix menu host integration
 - double check controller/editor/processor methods, what is still needed
 - fix linux renoise resizing
@@ -49,13 +48,11 @@
 - reduce controller.uidesc to image names, image offsets and color scheme
 - exact editing - put active knob value in 1 single place
 - move config to synth_editor ?
-- disable unison for noise
+- disable unison for noise?
 - fix paint problems
-- drop voice/global ui suffixes
 - rewrite the manual
 - drop param long names
 - check graph opacity
 - drop cv plot cycles
-- double click to reset
 - shorter long descs
 - graph bg image
