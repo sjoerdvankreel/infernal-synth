@@ -200,9 +200,9 @@ create_envelope_selector(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_voice_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 2, 1);
+  auto result = create_grid_ui(controller, 1, 2);
   result->add_cell(create_oscillator_selector(controller), 0, 0);
-  result->add_cell(create_envelope_selector(controller), 1, 0);
+  result->add_cell(create_envelope_selector(controller), 0, 1);
   return result;
 }
 
