@@ -60,3 +60,4 @@
 - check graph opacity
 - ram the graph
 - drop cv plot cycles
+- double click to reset
