@@ -61,3 +61,4 @@
 - double click to reset
 - shorter long descs
 - graph bg image
+- incorporate oddy's linker options
