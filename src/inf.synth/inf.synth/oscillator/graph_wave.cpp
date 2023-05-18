@@ -34,7 +34,7 @@ oscillator_wave_graph::sample_count(param_value const* state, float sample_rate)
   std::int32_t oct = automation.block_discrete(osc_param::oct);
   std::int32_t note = automation.block_discrete(osc_param::note);
   float frequency = note_to_frequency(12 * (oct + 1) + note + cent);
-  return static_cast<std::int32_t>(std::ceil(sample_rate / frequency * cv_plot_cycles));
+  return static_cast<std::int32_t>(std::ceil(sample_rate / frequency));
 }   
  
 void 

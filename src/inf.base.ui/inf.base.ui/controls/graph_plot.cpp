@@ -96,12 +96,18 @@ inf_graph_plot::paint(juce::Graphics& g)
 
   if (graph_data.size() != 0)
   {
+    Path clip;
+    clip.addRoundedRectangle(bounds, 8.0f);
+    g.saveState();
+    g.reduceClipRegion(clip);
+
     Path path;
     path.startNewSubPath(plot_bounds.getX() + graph_data[0].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[0].y);
     for (std::size_t i = 1; i < graph_data.size(); i++)
       path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
     g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
     g.strokePath(path, PathStrokeType(1.0f));
+    g.restoreState();
   }
 
   // outline
