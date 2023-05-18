@@ -56,3 +56,4 @@
 - drop cv plot cycles
 - shorter long descs
 - graph bg image
+- fix the context menu
