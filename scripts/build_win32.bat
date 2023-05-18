@@ -9,7 +9,7 @@ if [%5] == [] goto usage
 cd ..
 if not exist build\win32 mkdir build\win32
 cd build\win32
-cmake -DHIIR_140_SRC_DIR="%1" -DJUCE_705_SRC_DIR="%2" -DVST3_SDK_377_SRC_DIR="%3" -DVST3_SDK_377_BUILD_DEBUG_DIR="%4" -DVST3_SDK_377_BUILD_RELEASE_DIR="%5" ../..
+cmake -DHIIR_140_SRC_DIR="%1" -DJUCE_705_SRC_DIR="%2" -DVST3_SDK_378_SRC_DIR="%3" -DVST3_SDK_378_BUILD_DEBUG_DIR="%4" -DVST3_SDK_378_BUILD_RELEASE_DIR="%5" ../..
 if %errorlevel% neq 0 exit /b !errorlevel!
 
 msbuild /property:Configuration=Debug infernal-synth.sln
