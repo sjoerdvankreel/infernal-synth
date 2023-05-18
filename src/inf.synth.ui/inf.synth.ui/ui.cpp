@@ -1,6 +1,5 @@
 #include <inf.synth.ui/ui.hpp>
 #include <inf.synth/synth/topology.hpp>
-#include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
 
@@ -178,38 +177,10 @@ create_oscillator_selector(plugin_controller* controller)
   return create_part_selector_ui(controller, part_type::active, active_param::vosc, 3, 5, std::move(oscillators));
 }
 
-static std::unique_ptr<ui_element>
-create_env_adr_group(plugin_controller* controller, std::int32_t part_index)
-{
-  auto grid = create_grid_ui(controller, 1, 3);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::attack1_time, edit_type::vslider, label_type::label, true), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::decay1_time, edit_type::vslider, label_type::label, true), 0, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::release1_time, edit_type::vslider, label_type::label, true), 0, 2);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "ADR", true), std::move(grid));
-}
-
-static std::unique_ptr<ui_element>
-create_envelope_selector(plugin_controller* controller)
-{
-  std::vector<std::unique_ptr<ui_element>> envelopes;
-  for (std::int32_t i = 0; i < venv_count; i++)
-    envelopes.emplace_back(create_env_adr_group(controller, i));
-  return create_part_selector_ui(controller, part_type::active, active_param::venv, 1, 1, std::move(envelopes));
-}
-
-static std::unique_ptr<ui_element>
-create_voice_grid(plugin_controller* controller)
-{
-  auto result = create_grid_ui(controller, 2, 1);
-  result->add_cell(create_oscillator_selector(controller), 0, 0);
-  result->add_cell(create_envelope_selector(controller), 1, 0);
-  return result;
-}
-
 std::unique_ptr<root_element>
 create_synth_ui(plugin_controller* controller)
 {
-  auto result = create_root_ui(controller, create_voice_grid(controller), controller->editor_current_width(), juce::Colours::black);
+  auto result = create_root_ui(controller, create_oscillator_selector(controller), controller->editor_current_width(), juce::Colours::black);
 
   result->look_and_feel().setColour(inf_look_and_feel::colors::param_label, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_label, Colour(0xFFFD9A4D));
