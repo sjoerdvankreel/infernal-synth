@@ -201,7 +201,7 @@ create_synth_ui(plugin_controller* controller)
   result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
 
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xFFFD9A4D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xC0FD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFFFD9A4D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_fill_low, Colour(0xFF111111));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_fill_high, Colour(0xFF222222));
