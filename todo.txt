@@ -36,7 +36,6 @@
 * wishlist ui
 - drop param_type?
 - fix leaks
-- graphs
 - double click sets default
 - fix menu host integration
 - double check controller/editor/processor methods, what is still needed
@@ -49,7 +48,6 @@
 - filter out incompatible menu options (audio routing, ?)
 - reduce controller.uidesc to image names, image offsets and color scheme
 - exact editing - put active knob value in 1 single place
-- go with juce's vst3sdk
 - move config to synth_editor ?
 - disable unison for noise
 - fix paint problems
