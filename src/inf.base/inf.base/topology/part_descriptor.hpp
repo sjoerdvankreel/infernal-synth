@@ -30,6 +30,8 @@ struct part_descriptor
   std::int32_t const part_count; // Part count of this type, e.g. 2 lfos.
   param_descriptor const* const params; // Pointer to parameter descriptor array.
   std::int32_t const param_count; // Parameter count for a part of this type, e.g. 2: frequency, resonance.
+  char const* const* graph_names;
+  std::int32_t const graph_count;
 };
 
 } // namespace inf::base

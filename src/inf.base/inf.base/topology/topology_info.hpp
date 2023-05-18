@@ -97,6 +97,8 @@ struct topology_info
   param_value base_to_ui_value(std::int32_t param_index, param_value base_value) const;
   std::int32_t param_start(part_id id) const { return param_bounds[id.type][id.index]; }
   std::int32_t param_index(part_id id, std::int32_t param) const { return param_start(id) + param; }
+  part_info const& get_part_info(part_id id) const { return parts[part_bounds[id.type][id.index]]; }
+  part_descriptor const& get_part_descriptor(part_id id) const { return *get_part_info(id).descriptor; }
   std::int32_t param_id(part_id id, std::int32_t param) const { return param_index_to_id[param_index(id, param)]; }
   param_info const& get_param_info(part_id id, std::int32_t param) const { return params[param_index(id, param)]; }
   param_descriptor const& get_param_descriptor(part_id id, std::int32_t param) const { return *get_param_info(id, param).descriptor; }

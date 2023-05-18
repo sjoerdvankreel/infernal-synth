@@ -26,6 +26,7 @@ struct osc_param_t { enum value {
   dsf_parts, dsf_dist, dsf_decay, kps_filter, kps_feedback, kps_stretch,
   noise_seed, noise_color, noise_x, noise_y, count }; };
 typedef osc_param_t::value osc_param;
+inline char const* osc_graph_names[osc_graph::count] = { "Left", "Right", "Spectrum" };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_OSCILLATOR_TOPOLOGY_HPP

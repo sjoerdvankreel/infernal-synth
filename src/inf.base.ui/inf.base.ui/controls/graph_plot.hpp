@@ -28,7 +28,8 @@ public:
 };
 
 class inf_graph_plot : 
-public juce::Component
+public juce::Component,
+public juce::SettableTooltipClient
 {
   part_id const _part_id;
   std::int32_t const _graph_type;
