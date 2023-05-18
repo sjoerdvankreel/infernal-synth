@@ -247,16 +247,16 @@ param_edit_element::build_slider_core(LookAndFeel const& lnf)
   std::int32_t part_index = controller()->topology()->params[index].part_index;
   inf_slider* result = new inf_slider(&desc, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-  if(desc.data.type != param_type::real)
+  if(desc.data.type == param_type::real)
   {
-    result->setRange(desc.data.discrete.min, desc.data.discrete.effective_max(part_index), 1.0);
-    result->setValue(controller()->state()[index].discrete, dontSendNotification);
+    result->setNormalisableRange(real_bounds_range(desc.data.real.display)),
+    result->setValue(desc.data.real.display.to_range(controller()->state()[index].real), dontSendNotification);
     result->setDoubleClickReturnValue(true, default_value.real, ModifierKeys::noModifiers);
   }
   else
   {
-    result->setNormalisableRange(real_bounds_range(desc.data.real.display)),
-    result->setValue(desc.data.real.display.to_range(controller()->state()[index].real), dontSendNotification);
+    result->setRange(desc.data.discrete.min, desc.data.discrete.effective_max(part_index), 1.0);
+    result->setValue(controller()->state()[index].discrete, dontSendNotification);
     result->setDoubleClickReturnValue(true, default_value.discrete, ModifierKeys::noModifiers);
   }
   switch (_type)
