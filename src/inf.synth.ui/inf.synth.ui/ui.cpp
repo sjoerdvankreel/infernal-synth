@@ -199,21 +199,21 @@ create_env_adr_group(
 static std::unique_ptr<ui_element>
 create_env_delay_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto param = create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::delay_time, edit_type::vslider, label_type::label, false);
+  auto param = create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::delay_time, edit_type::vslider, label_type::value, true);
   return create_part_group_ui(controller, create_group_label_ui(controller, "D", false), std::move(param));
 }
 
 static std::unique_ptr<ui_element>
 create_env_hold_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto param = create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::hold_time, edit_type::vslider, label_type::label, false);
+  auto param = create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::hold_time, edit_type::vslider, label_type::value, true);
   return create_part_group_ui(controller, create_group_label_ui(controller, "H", false), std::move(param));
 }
 
 static std::unique_ptr<ui_element>
 create_env_sustain_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto param = create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::sustain_level, edit_type::vslider, label_type::label, false);
+  auto param = create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::sustain_level, edit_type::vslider, label_type::value, true);
   return create_part_group_ui(controller, create_group_label_ui(controller, "S", false), std::move(param));
 }
 
