@@ -179,20 +179,32 @@ create_oscillator_selector(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_env_main_group(plugin_controller* controller, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 5, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::dropdown, label_type::label, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::dropdown, label_type::label, false), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::synced, edit_type::toggle, label_type::label, false), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::bipolar, edit_type::toggle, label_type::label, false), 3, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::invert, edit_type::toggle, label_type::label, false), 4, 0);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_env_adr_group(
   plugin_controller* controller, std::int32_t part_index, char const* group_name,
   std::int32_t time1, std::int32_t time2, std::int32_t slope1, std::int32_t slope2, std::int32_t split)
 {
-  auto slider_grid = create_grid_ui(controller, 1, 3);
+  auto slider_grid = create_grid_ui(controller, 1, 2);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time1, edit_type::vslider, label_type::label, true), 0, 0);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 1);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time2, edit_type::vslider, label_type::label, true), 0, 2);
-  auto knob_grid = create_grid_ui(controller, 1, 2);
-  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope1, edit_type::knob, label_type::label, true), 0, 0);
-  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 1);
-  auto grid = create_grid_ui(controller, 4, 1);
-  grid->add_cell(std::move(slider_grid), 0, 0, 3, 1);
-  grid->add_cell(std::move(knob_grid), 3, 0, 1, 1);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time2, edit_type::vslider, label_type::label, true), 0, 1);
+  auto knob_grid = create_grid_ui(controller, 2, 2);
+  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::knob, label_type::label, true), 0, 0, 1, 2);
+  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope1, edit_type::knob, label_type::label, true), 1, 0);
+  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 1, 1);
+  auto grid = create_grid_ui(controller, 5, 1);
+  grid->add_cell(std::move(knob_grid), 0, 0, 2, 1);
+  grid->add_cell(std::move(slider_grid), 2, 0, 3, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, group_name, false), std::move(grid));
 }
 
@@ -220,16 +232,17 @@ create_env_sustain_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<ui_element>
 create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 1, 9);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_delay_group(controller, part_index)), 0, 0, 1, 1);
+  auto grid = create_grid_ui(controller, 1, 11);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_delay_group(controller, part_index)), 0, 2, 1, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "A", envelope_param::attack1_time, 
-    envelope_param::attack2_time, envelope_param::attack1_slope, envelope_param::attack2_slope, envelope_param::attack_split_level)), 0, 1, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_hold_group(controller, part_index)), 0, 3, 1, 1);
+    envelope_param::attack2_time, envelope_param::attack1_slope, envelope_param::attack2_slope, envelope_param::attack_split_level)), 0, 3, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_hold_group(controller, part_index)), 0, 5, 1, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "D", envelope_param::decay1_time,
-    envelope_param::decay2_time, envelope_param::decay1_slope, envelope_param::decay2_slope, envelope_param::decay_split_level)), 0, 4, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_sustain_group(controller, part_index)), 0, 6, 1, 1);
+    envelope_param::decay2_time, envelope_param::decay1_slope, envelope_param::decay2_slope, envelope_param::decay_split_level)), 0, 6, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_sustain_group(controller, part_index)), 0, 8, 1, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "R", envelope_param::release1_time,
-    envelope_param::release2_time, envelope_param::release1_slope, envelope_param::release2_slope, envelope_param::release_split_level)), 0, 7, 1, 2);
+    envelope_param::release2_time, envelope_param::release1_slope, envelope_param::release2_slope, envelope_param::release_split_level)), 0, 9, 1, 2);
   return grid;
 }
 

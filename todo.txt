@@ -57,3 +57,4 @@
 - shorter long descs
 - graph bg image
 - fix the context menu
+- check if combo items can be shortened or lengthened
