@@ -8,6 +8,7 @@
 
 namespace inf::synth {
 
+inline char const* env_graph_name = "Envelope";
 extern base::param_descriptor const envelope_params[];
 extern std::vector<float> const envelope_timesig_values;
 

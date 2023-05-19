@@ -232,17 +232,18 @@ create_env_sustain_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<ui_element>
 create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 1, 11);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_delay_group(controller, part_index)), 0, 2, 1, 1);
+  auto grid = create_grid_ui(controller, 5, 11);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 5, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_delay_group(controller, part_index)), 2, 2, 3, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "A", envelope_param::attack1_time, 
-    envelope_param::attack2_time, envelope_param::attack1_slope, envelope_param::attack2_slope, envelope_param::attack_split_level)), 0, 3, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_hold_group(controller, part_index)), 0, 5, 1, 1);
+    envelope_param::attack2_time, envelope_param::attack1_slope, envelope_param::attack2_slope, envelope_param::attack_split_level)), 2, 3, 3, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_hold_group(controller, part_index)), 2, 5, 3, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "D", envelope_param::decay1_time,
-    envelope_param::decay2_time, envelope_param::decay1_slope, envelope_param::decay2_slope, envelope_param::decay_split_level)), 0, 6, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_sustain_group(controller, part_index)), 0, 8, 1, 1);
+    envelope_param::decay2_time, envelope_param::decay1_slope, envelope_param::decay2_slope, envelope_param::decay_split_level)), 2, 6, 3, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_sustain_group(controller, part_index)), 2, 8, 3, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "R", envelope_param::release1_time,
-    envelope_param::release2_time, envelope_param::release1_slope, envelope_param::release2_slope, envelope_param::release_split_level)), 0, 9, 1, 2);
+    envelope_param::release2_time, envelope_param::release1_slope, envelope_param::release2_slope, envelope_param::release_split_level)), 2, 9, 3, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0)), 0, 2, 2, 9);
   return grid;
 }
 
