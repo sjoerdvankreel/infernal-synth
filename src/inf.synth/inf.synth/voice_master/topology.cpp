@@ -15,7 +15,7 @@ static std::vector<list_item> const master_port_modes = {
 static std::vector<list_item> const master_modes = {
   { "{CF05B74A-F96C-47DF-B908-39477BB6A14B}", "Poly" },
   { "{5EFD4121-52DC-43F2-A853-CC4DB9F8342F}", "Mono" }, 
-  { "{49996567-D045-488B-85D0-97EC55FE8CDB}", "Rlease" } };
+  { "{49996567-D045-488B-85D0-97EC55FE8CDB}", "Release" } };
 
 static std::vector<time_signature> const master_port_timesig = synced_timesig(false, { 4, 1 }, {
   { timesig_type::one_over, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 32, 64 } },

@@ -11,8 +11,8 @@ static std::vector<list_item> const env_modes = {
   { "{715E0B2B-DC05-4263-92C6-19D73CBC7508}", "Retrig" },
   { "{3070141F-252A-4BC5-815F-5C0329A67B4B}", "Multi" } };
 static std::vector<list_item> const env_types = {
-  { "{F5743634-859A-40A1-8F2E-1B5ED874840D}", "Sustn" },
-  { "{95846D91-B563-4AFE-ABFA-634C0A0FE27C}", "Rlease" },
+  { "{F5743634-859A-40A1-8F2E-1B5ED874840D}", "Sustain" },
+  { "{95846D91-B563-4AFE-ABFA-634C0A0FE27C}", "Release" },
   { "{51B32BBA-C18B-4811-8280-73E0F339F4BC}", "Follow" } }; 
 
 // 8/1 = 16 seconds at 120 bpm, 1/256 = 7 ms at 120 bpm.
