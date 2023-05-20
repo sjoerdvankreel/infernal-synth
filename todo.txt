@@ -64,3 +64,4 @@
 - env1 can be off or not ? -> depends on instr/fx
 - drop oscillator gain?
 - skip entire voice section for dsp in instrument mode
+- better envelope defaults show split & slope ?
