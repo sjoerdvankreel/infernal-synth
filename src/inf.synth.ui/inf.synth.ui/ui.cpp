@@ -26,9 +26,9 @@ icon_for_osc_basic_type(std::int32_t value)
 static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 2, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::on, edit_type::toggle, label_type::label, false), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kbd, edit_type::toggle, label_type::label, false), 1, 0);
+  auto grid = create_grid_ui(controller, 10, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::on, edit_type::toggle, label_type::label, false), 1, 0, 4, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kbd, edit_type::toggle, label_type::label, false), 5, 0, 4, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
@@ -188,7 +188,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 3, 5, std::move(oscillators));
+  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 2, 6, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
