@@ -195,7 +195,7 @@ static std::unique_ptr<ui_element>
 create_env_main_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 2, 2);
-  auto on = grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::on, edit_type::toggle, label_type::label, false), 0, 0);
+  auto on = grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::on, edit_type::toggle, label_type::label, false, part_index == 0), 0, 0);
   on->relevant_if({ part_type::venv, part_index }, envelope_param::on, false, [](std::int32_t part_index, std::int32_t val) { return part_index > 0; });
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::synced, edit_type::toggle, label_type::label, false), 0, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::invert, edit_type::toggle, label_type::label, false), 1, 0);
