@@ -214,7 +214,7 @@ inf_look_and_feel::drawToggleButton(
   float const fill_offset = (w - center_size) * 0.5f;
   Rectangle<float> fill_rect(x + fill_offset, y + fill_offset, center_size, center_size);
   fill_gradient_circle(g, b, fill_rect, colors::switch_gradient_fill_center_low, colors::switch_gradient_fill_center_high, !inf_toggle.force_on());
-  if(on) fill_gradient_circle(g, b, fill_rect, colors::switch_gradient_fill_low_on, colors::switch_gradient_fill_high_on, !inf_toggle.force_on());
+  if(on || inf_toggle.force_on()) fill_gradient_circle(g, b, fill_rect, colors::switch_gradient_fill_low_on, colors::switch_gradient_fill_high_on, !inf_toggle.force_on());
   fill_spot_circle(g, b, fill_rect, colors::switch_spot_fill_low, colors::switch_spot_fill_high, !inf_toggle.force_on());
 }
 
