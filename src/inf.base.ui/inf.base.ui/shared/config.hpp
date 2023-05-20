@@ -11,6 +11,7 @@ inline int const graph_grid_hcount = 9;
 inline float const container_radius = 8.0f;
 inline float const container_outline_size = 1.0f;
 
+inline juce::Point<int> container_part_padding = { 2, 2 };
 inline juce::Point<int> container_selector_padding = { 10, 8 };
 
 inline float const selector_min_height = 26.0f;

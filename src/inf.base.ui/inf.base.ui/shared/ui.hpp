@@ -77,7 +77,7 @@ public:
 
 inline std::unique_ptr<container_element>
 create_part_group_container_ui(
-  inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, juce::Point<std::int32_t> const& padding = {})
+  inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, juce::Point<std::int32_t> const& padding = container_part_padding)
 { return std::make_unique<container_element>(
   controller, std::move(content), container_component::flags::both, padding,
   inf_look_and_feel::colors::part_group_container_fill_low, inf_look_and_feel::colors::part_group_container_fill_high,
