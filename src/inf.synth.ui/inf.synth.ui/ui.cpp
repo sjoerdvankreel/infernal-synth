@@ -184,8 +184,8 @@ create_env_main_group(plugin_controller* controller, std::int32_t part_index)
   auto grid = create_grid_ui(controller, 4, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::on, edit_type::toggle, label_type::label, false), 0, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::synced, edit_type::toggle, label_type::label, false), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::bipolar, edit_type::toggle, label_type::label, false), 2, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::invert, edit_type::toggle, label_type::label, false), 3, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::invert, edit_type::toggle, label_type::label, false), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::bipolar, edit_type::toggle, label_type::label, false), 3, 0);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
@@ -248,7 +248,7 @@ create_envelope_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> envelopes;
   for (std::int32_t i = 0; i < venv_count; i++)
     envelopes.emplace_back(create_envelope_grid(controller, i));
-  return create_part_selector_ui(controller, part_type::active, active_param::venv, 1, 1, std::move(envelopes));
+  return create_part_selector_ui(controller, part_type::active, active_param::venv, 3, 4, std::move(envelopes));
 }
 
 static std::unique_ptr<ui_element>
