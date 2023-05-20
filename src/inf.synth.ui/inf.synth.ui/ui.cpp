@@ -225,9 +225,15 @@ create_env_adr_group(
   knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 1);
   auto slider_grid = create_grid_ui(controller, 1, 4);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 0);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time1, edit_type::vslider, label_type::label, true), 0, 1);
+  auto time1_param = slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time1, edit_type::vslider, label_type::label, true), 0, 1);
+  time1_param->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
+  auto tempo1_param = slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, tempo1, edit_type::vslider, label_type::value, true), 0, 1);
+  tempo1_param->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 2);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time2, edit_type::vslider, label_type::label, true), 0, 3);
+  auto time2_param = slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time2, edit_type::vslider, label_type::label, true), 0, 3);
+  time2_param->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
+  auto tempo2_param = slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, tempo2, edit_type::vslider, label_type::value, true), 0, 3);
+  tempo2_param->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   auto grid = create_grid_ui(controller, 3, 1);
   grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
   grid->add_cell(std::move(slider_grid), 1, 0, 2, 1);
