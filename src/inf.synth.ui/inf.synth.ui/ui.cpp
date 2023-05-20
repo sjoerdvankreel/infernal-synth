@@ -225,8 +225,8 @@ create_env_adr_group(
   knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 1);
   auto slider_grid = create_grid_ui(controller, 1, 4);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 0);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 1);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time1, edit_type::vslider, label_type::label, true), 0, 2);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time1, edit_type::vslider, label_type::label, true), 0, 1);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 2);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time2, edit_type::vslider, label_type::label, true), 0, 3);
   auto grid = create_grid_ui(controller, 3, 1);
   grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
