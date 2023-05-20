@@ -188,7 +188,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 2, 6, std::move(oscillators));
+  return create_part_selector_ui(controller, part_type::active, active_param::vosc, 3, 5, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
