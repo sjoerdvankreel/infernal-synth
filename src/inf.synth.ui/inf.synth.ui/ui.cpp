@@ -238,9 +238,9 @@ create_env_adr_group(
   knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 1);
   auto time_grid = create_env_adr_time_grid(controller, part_index, prestage, time1, time2, split);
   time_grid->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
-  auto grid = create_grid_ui(controller, 3, 1);
-  grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
-  grid->add_cell(std::move(time_grid), 1, 0, 2, 1);
+  auto grid = create_grid_ui(controller, 10, 1);
+  grid->add_cell(std::move(knob_grid), 0, 0, 3, 1);
+  grid->add_cell(std::move(time_grid), 3, 0, 7, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, group_name, false), std::move(grid));
 }
 
