@@ -58,3 +58,5 @@
 - graph bg image
 - fix the context menu
 - check if combo items can be shortened or lengthened
+- env1 can be off or not ?
+- drop oscillator gain?
