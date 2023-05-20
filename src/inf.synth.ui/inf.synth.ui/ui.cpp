@@ -215,6 +215,19 @@ create_env_type_group(plugin_controller* controller, std::int32_t part_index)
 }
 
 static std::unique_ptr<ui_element>
+create_env_adr_time_grid(
+  plugin_controller* controller, std::int32_t part_index, std::int32_t prestage, 
+  std::int32_t stage1, std::int32_t stage2, std::int32_t split)
+{
+  auto grid = create_grid_ui(controller, 1, 4);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::vslider, label_type::label, true), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::vslider, label_type::label, true), 0, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 3);
+  return grid;
+}
+
+static std::unique_ptr<ui_element>
 create_env_adr_group(
   plugin_controller* controller, std::int32_t part_index, char const* group_name, 
   std::int32_t prestage, std::int32_t time1, std::int32_t time2, std::int32_t tempo1, 
@@ -223,26 +236,11 @@ create_env_adr_group(
   auto knob_grid = create_grid_ui(controller, 1, 2);
   knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope1, edit_type::knob, label_type::label, true), 0, 0);
   knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 1);
-  auto slider_grid = create_grid_ui(controller, 1, 4);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 0);
-  auto time1_slider = slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time1, edit_type::vslider, label_type::label, true), 0, 1);
-  time1_slider->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
-  auto tempo1_grid = create_grid_ui(controller, 5, 1);
-  tempo1_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, tempo1, edit_type::vslider, false), 0, 0, 4, 1);
-  tempo1_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, tempo1, edit_type::dropdown, false), 4, 0, 1, 1);
-  tempo1_grid->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-  slider_grid->add_cell(std::move(tempo1_grid), 0, 1);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 2);
-  auto time2_slider = slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, time2, edit_type::vslider, label_type::label, true), 0, 3);
-  time2_slider->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
-  auto tempo2_grid = create_grid_ui(controller, 5, 1);
-  tempo2_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, tempo2, edit_type::vslider, false), 0, 0, 4, 1);
-  tempo2_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, tempo2, edit_type::dropdown, false), 4, 0, 1, 1);
-  tempo2_grid->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-  slider_grid->add_cell(std::move(tempo2_grid), 0, 3);
+  auto time_grid = create_env_adr_time_grid(controller, part_index, prestage, time1, time2, split);
+  time_grid->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
   auto grid = create_grid_ui(controller, 3, 1);
   grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
-  grid->add_cell(std::move(slider_grid), 1, 0, 2, 1);
+  grid->add_cell(std::move(time_grid), 1, 0, 2, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, group_name, false), std::move(grid));
 }
 
