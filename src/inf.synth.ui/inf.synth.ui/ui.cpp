@@ -236,22 +236,22 @@ create_env_adr_group(
 static std::unique_ptr<ui_element>
 create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 6, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 2, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_type_group(controller, part_index)), 2, 0, 4, 1);
+  auto grid = create_grid_ui(controller, 3, 7);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_type_group(controller, part_index)), 1, 0, 4, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "DA",
     envelope_param::delay_time, envelope_param::attack1_time, envelope_param::attack2_time, 
     envelope_param::attack1_sync, envelope_param::attack2_sync, envelope_param::attack1_slope, 
-    envelope_param::attack2_slope, envelope_param::attack_split_level)), 2, 1, 4, 2);
+    envelope_param::attack2_slope, envelope_param::attack_split_level)), 1, 1, 2, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "HD",
     envelope_param::hold_time, envelope_param::decay1_time, envelope_param::decay2_time,
     envelope_param::decay1_sync, envelope_param::decay2_sync, envelope_param::decay1_slope, 
-    envelope_param::decay2_slope, envelope_param::decay_split_level)), 2, 3, 4, 2);
+    envelope_param::decay2_slope, envelope_param::decay_split_level)), 1, 3, 2, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "SR",
     envelope_param::sustain_level, envelope_param::release1_time, envelope_param::release2_time,
     envelope_param::release1_sync, envelope_param::release2_sync, envelope_param::release1_slope, 
-    envelope_param::release2_slope, envelope_param::release_split_level)), 2, 5, 4, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0)), 0, 2, 2, 5);
+    envelope_param::release2_slope, envelope_param::release_split_level)), 1, 5, 2, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0)), 0, 2, 1, 5);
   return grid;
 }
 
@@ -261,7 +261,7 @@ create_envelope_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> envelopes;
   for (std::int32_t i = 0; i < venv_count; i++)
     envelopes.emplace_back(create_envelope_grid(controller, i));
-  return create_part_selector_ui(controller, part_type::active, active_param::venv, 3, 4, std::move(envelopes));
+  return create_part_selector_ui(controller, part_type::active, active_param::venv, 2, 5, std::move(envelopes));
 }
 
 static std::unique_ptr<ui_element>
