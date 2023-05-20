@@ -215,15 +215,13 @@ create_env_type_group(plugin_controller* controller, std::int32_t part_index)
 }
 
 static std::unique_ptr<ui_element>
-create_env_adr_time_grid(
-  plugin_controller* controller, std::int32_t part_index, std::int32_t prestage, 
-  std::int32_t stage1, std::int32_t stage2, std::int32_t split)
+create_env_adr_time_grid(plugin_controller* controller, std::int32_t part_index, 
+  std::int32_t prestage, std::int32_t stage1, std::int32_t stage2)
 {
-  auto grid = create_grid_ui(controller, 1, 4);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::vslider, label_type::label, true), 0, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::vslider, label_type::label, true), 0, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::vslider, label_type::label, true), 0, 3);
+  auto grid = create_grid_ui(controller, 1, 15);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 1, 1, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::vslider, label_type::label, true), 0, 6, 1, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::vslider, label_type::label, true), 0, 11, 1, 3);
   return grid;
 }
 
@@ -233,12 +231,13 @@ create_env_adr_group(
   std::int32_t prestage, std::int32_t time1, std::int32_t time2, std::int32_t tempo1, 
   std::int32_t tempo2, std::int32_t slope1, std::int32_t slope2, std::int32_t split)
 {
-  auto knob_grid = create_grid_ui(controller, 1, 2);
+  auto knob_grid = create_grid_ui(controller, 1, 3);
   knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope1, edit_type::knob, label_type::label, true), 0, 0);
-  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 1);
+  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::knob, label_type::label, true), 0, 1);
+  knob_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 2);
   auto grid = create_grid_ui(controller, 10, 1);
   grid->add_cell(std::move(knob_grid), 0, 0, 3, 1);
-  auto time_grid = grid->add_cell(create_env_adr_time_grid(controller, part_index, prestage, time1, time2, split), 3, 0, 7, 1);
+  auto time_grid = grid->add_cell(create_env_adr_time_grid(controller, part_index, prestage, time1, time2), 3, 0, 7, 1);
   time_grid->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
   //auto tempo_grid = grid->add_cell(create_env_adr_tempo_grid(controller, part_index, prestage, tempo1, tempo2, split), 3, 0, 7, 1);
   //tempo_grid->relevant_if({ part_type::venv, part_index }, envelope_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
