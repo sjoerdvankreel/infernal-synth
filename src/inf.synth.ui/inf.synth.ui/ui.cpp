@@ -206,9 +206,9 @@ static std::unique_ptr<ui_element>
 create_env_type_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 6, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::knob, false), 0, 0, 2, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::knob, label_type::label, false), 0, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::knob, false), 3, 0, 2, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::knob, label_type::label, false), 3, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::dropdown, false), 5, 0, 1, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Type", false), std::move(grid));
 }
