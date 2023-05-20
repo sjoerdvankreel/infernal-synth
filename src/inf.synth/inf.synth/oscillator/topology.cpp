@@ -46,7 +46,6 @@ osc_params[osc_param::count] =
   { "{FD0A2D20-FCCD-4939-B1CC-BD2EBD998A25}", { { "Cent", "Cent" }, "", param_kind::continuous, linear_bounds(-0.5f, 0.5f, 0.0f, -50.0f, 50.0f, 1) } },
   { "{10D13CC1-EE5C-488A-8F48-F8BA70855B5A}", { { "PM", "Phase modulation" }, "", param_kind::fixed, linear_bounds(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2) } },
   { "{3D379D24-CE2D-4AE2-92EF-3951C7CA608C}", { { "FM", "Frequency modulation" }, "", param_kind::continuous, percentage_m11_bounds(0.0f) } },
-  { "{09E50DA8-2467-462F-9822-7E9074A51B53}", { { "Gain", "Gain" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
   { "{AFA9850B-ACB0-4666-95C0-42D32D197EB2}", { { "Src", "R/AM source" }, "", param_kind::voice, param_type::knob_list, { &osc_ram_sources, 0, osc_max_ram_index } } },
   { "{4ED08060-260A-42EC-99E8-A2BEA628B652}", { { "Bal", "R/AM balance" }, "%", param_kind::continuous, percentage_m11_bounds(1.0f) } },
   { "{63C3C4F7-526A-4A1C-BD12-99548A765110}", { { "Mix", "R/AM mix" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) } },

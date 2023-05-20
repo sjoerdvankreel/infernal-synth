@@ -121,7 +121,6 @@ oscillator_processor::process(oscillator_input const& input,
 
   float const* pm = params[osc_param::pm];
   float const* fm = params[osc_param::fm];
-  float const* gain = params[osc_param::gain];
   float const* cent = params[osc_param::cent];
   float const* detune = params[osc_param::uni_dtn];
   float const* spread = params[osc_param::uni_sprd];
@@ -230,14 +229,14 @@ oscillator_processor::process(oscillator_input const& input,
         out[c][s] = sanity(out[c][s] + mono_pan_sqrt_3(c, voice_pan[s]) * voice_out[s] / voice_count);
   }
 
-  // Apply gain + ring mod/amp mod.
+  // Apply ring mod/amp mod.
   for (std::int32_t c = 0; c < stereo_channels; c++)
     for (std::int32_t s = 0; s < input.block->sample_count; s++)
     {
       float carrier = out[c][s];
       float balance = (ram_bal[s] + 1.0f) * 0.5f; // 0 = RM, 1 = AM.
       float modulator = (input.ram_in[_ram_src][c][s] + balance) / (1.0f + balance);
-      out[c][s] = gain[s] * ((1.0f - ram_mix[s]) * carrier + ram_mix[s] * carrier * modulator);
+      out[c][s] = ((1.0f - ram_mix[s]) * carrier + ram_mix[s] * carrier * modulator);
     }
 }
 

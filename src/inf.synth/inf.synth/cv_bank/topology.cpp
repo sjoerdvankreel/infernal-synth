@@ -81,8 +81,7 @@ static list_item const gcv_route_audio_bank_targets[vgcv_route_audio_bank_target
   { "{DFB56B42-17E3-4855-A6B4-7C3CC1F224D7}", "Bal6" } };
 static list_item const vcv_route_vosc_targets[vcv_route_vosc_target::count] = {
   { "{8F07B23B-8F7E-4388-BBA7-968A30957F40}", "PM" },
-  { "{987BE249-E672-4055-BFEA-BCDA828DB269}", "FM" }, 
-  { "{132246C1-5D8D-45BD-ABA8-407BEC927FFD}", "Gain" },
+  { "{987BE249-E672-4055-BFEA-BCDA828DB269}", "FM" },
   { "{7580316C-1C46-46B3-A230-E3F0BAA3634C}", "Cent" },
   { "{495D49A2-97F4-4B4D-A6B1-0BE194B09B68}", "Uni Dtn" }, 
   { "{0348A9C4-0414-418E-AC83-965C6F58487D}", "Uni Sprd" },

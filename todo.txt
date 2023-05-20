@@ -1,3 +1,6 @@
+* breaking changes
+- dropped osc gain
+
 * for each release 
 - v create version branch
 - x update hiir
