@@ -5,8 +5,9 @@
 
 namespace inf::base::ui {
 
+inline int const edit_margin = 2;
+inline int const container_margin = 2;
 inline int const graph_grid_hcount = 9;
-inline int const container_padding = 2;
 inline float const container_radius = 8.0f;
 inline float const container_outline_size = 1.0f;
 

@@ -10,7 +10,7 @@ void
 container_component::paint(Graphics& g)
 {
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
-  auto bounds = with_container_padding(getLocalBounds()).toFloat();
+  auto bounds = getLocalBounds().expanded(-container_margin, -container_margin).toFloat();
   if (_flags & flags::fill)
     lnf.fill_gradient_rounded_rectangle(
       g, *this, bounds, _fill_low_color_id, _fill_high_color_id, _radius, 0.5f); 

@@ -61,7 +61,7 @@ void
 inf_graph_plot::paint(juce::Graphics& g)
 {
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
-  auto bounds = with_container_padding(getLocalBounds()).toFloat();
+  auto bounds = getLocalBounds().expanded(-container_margin, -container_margin).toFloat();
   auto plot_bounds = Rectangle<float>(
     bounds.getX() + 1.0f,
     bounds.getY() + 1.0f,
