@@ -30,7 +30,8 @@ ui_element::build(LookAndFeel const& lnf)
   {
     std::int32_t index = controller()->topology()->param_index(_relevant_if_part, _relevant_if_param);
     assert(controller()->topology()->params[index].descriptor->data.type != param_type::real);
-    std::int32_t part_index = controller()->topology()->params[index].part_index;
+    std::int32_t rt_part_index = controller()->topology()->params[index].part_index;
+    std::int32_t part_index = _controller->topology()->parts[rt_part_index].type_index;
     param_value value = controller()->state()[index];
     if(_hide_if_irrelevant) _component->setVisible(_relevant_if_selector(part_index, value.discrete));
     else _component->setEnabled(_relevant_if_selector(part_index, value.discrete));
