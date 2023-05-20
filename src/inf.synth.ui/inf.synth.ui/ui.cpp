@@ -26,15 +26,19 @@ icon_for_osc_basic_type(std::int32_t value)
 static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 6, 1);
-  auto on_kbd_grid = create_grid_ui(controller, 1, 2);
-  on_kbd_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::on, edit_type::toggle, label_type::label, false), 0, 0);
-  on_kbd_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kbd, edit_type::toggle, label_type::label, false), 0, 1);
-  grid->add_cell(std::move(on_kbd_grid), 0, 0, 1, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::selector, label_type::label, false), 1, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::dropdown, false), 3, 0, 1, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::gain, edit_type::knob, label_type::label, true), 4, 0, 2, 1);
+  auto grid = create_grid_ui(controller, 2, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::on, edit_type::toggle, label_type::label, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kbd, edit_type::toggle, label_type::label, false), 1, 0);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_osc_type_group(plugin_controller* controller, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::selector, label_type::label, false), 0, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Type", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -149,23 +153,24 @@ create_osc_graph_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
 {
-  auto result = create_grid_ui(controller, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) }, std::vector<Grid::TrackInfo>(8, Grid::Fr(1)));
+  auto result = create_grid_ui(controller, 8, 8);
   result->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 1, 3, 2, 2);
-  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 3, 0, 1, 5);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_type_group(controller, part_index)), 3, 0, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 6, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 6, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 2, 2);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 2, 3, 4, 2);
+  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 6, 0, 2, 5);
   basic->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::basic; });
-  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 3, 0, 1, 5);
+  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 6, 0, 2, 5);
   mix->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::mix; });
-  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 3, 0, 1, 5);
+  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 6, 0, 2, 5);
   dsf->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::dsf; });
-  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 3, 0, 1, 5);
+  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 6, 0, 2, 5);
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::kps; });
-  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
+  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 6, 0, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::noise; });
-  result->add_cell(create_osc_graph_group(controller, part_index), 0, 5, 4, 3);
+  result->add_cell(create_osc_graph_group(controller, part_index), 0, 5, 8, 3);
   return result;
 }
 

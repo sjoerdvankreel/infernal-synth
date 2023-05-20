@@ -58,5 +58,5 @@
 - graph bg image
 - fix the context menu
 - check if combo items can be shortened or lengthened
-- env1 can be off or not ?
+- env1 can be off or not ? -> depends on instr/fx
 - drop oscillator gain?
