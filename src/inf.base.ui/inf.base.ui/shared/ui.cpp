@@ -233,7 +233,10 @@ param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
   inf_dropdown* result = new inf_dropdown(&desc);
   result->setJustificationType(Justification::centred);
   for(std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
-    result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
+    if(desc.data.discrete.items != nullptr)
+      result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
+    else
+      result->addItem((*desc.data.discrete.names)[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
   result->setSelectedItemIndex(controller()->state()[index].discrete, dontSendNotification);
   _dropdown_listener.reset(new dropdown_param_listener(controller(), result, index));
   result->addListener(_dropdown_listener.get());
