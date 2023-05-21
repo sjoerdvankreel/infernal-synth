@@ -205,14 +205,14 @@ create_env_main_group(plugin_controller* controller, std::int32_t part_index)
 }
 
 static std::unique_ptr<ui_element>
-create_env_type_group(plugin_controller* controller, std::int32_t part_index)
+create_env_env_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 6, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::selector, label_type::label, false), 0, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::selector, label_type::label, false), 3, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::dropdown, false), 5, 0, 1, 1);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Type", false), std::move(grid));
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Env", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -274,7 +274,7 @@ create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
   grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_type_group(controller, part_index)), 1, 0, 4, 1);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_env_group(controller, part_index)), 1, 0, 4, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "DA",
     envelope_param::delay_time, envelope_param::delay_sync, envelope_param::attack1_time, envelope_param::attack2_time, 
     envelope_param::attack1_sync, envelope_param::attack2_sync, envelope_param::attack1_slope, 
@@ -312,10 +312,22 @@ create_lfo_main_group(plugin_controller* controller, std::int32_t part_type, std
 }
 
 static std::unique_ptr<ui_element>
+create_lfo_lfo_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 6, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::type, edit_type::dropdown, label_type::label, false), 0, 0, 3, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::filter, edit_type::knob, label_type::label, true), 3, 0, 3, 1);
+  //grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, envelope_param::mode, edit_type::selector, label_type::label, false), 3, 0, 2, 1);
+  //grid->add_cell(create_param_edit_ui(controller, part_type, part_index, envelope_param::mode, edit_type::dropdown, false), 5, 0, 1, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "LFO", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
   grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 1, 0, 2, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0)), 0, 2, 1, 5);
   return grid;
 }
