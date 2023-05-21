@@ -127,6 +127,7 @@ tab_bar_element::build_core(LookAndFeel const& lnf)
   result->setMinimumTabScaleFactor(0.0f);
   for(std::size_t i = 0; i < _headers.size(); i++)
     result->addTab(_headers[i], Colours::black, static_cast<int>(i));
+  result->setCurrentTabIndex(controller()->state()[index].discrete, false);
   _listener.reset(new tab_param_listener(controller(), result, index));
   result->add_listener(_listener.get());
   if(_extra_listener) result->add_listener(_extra_listener.get());
