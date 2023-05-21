@@ -229,19 +229,12 @@ static std::unique_ptr<ui_element>
 create_env_adr_tempo_grid(plugin_controller* controller, std::int32_t part_index,
   std::int32_t prestage, bool prestage_is_synced, std::int32_t stage1, std::int32_t stage2)
 {
-  auto slider_grid = create_grid_ui(controller, 1, 15);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, !prestage_is_synced), 0, 1, 1, 3);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::vslider, label_type::label, false), 0, 6, 1, 3);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::vslider, label_type::label, false), 0, 11, 1, 3);
-  auto dropdown_grid = create_grid_ui(controller, 2, 4);
+  auto grid = create_grid_ui(controller, 3, 4);
   if(prestage_is_synced)
-    dropdown_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::dropdown, false), 1, 0, 1, 2);
-  dropdown_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, false), 0, 1, 1, 2);
-  dropdown_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage2, edit_type::dropdown, false), 1, 2, 1, 2);
-  auto outer_grid = create_grid_ui(controller, 4, 1);
-  outer_grid->add_cell(std::move(slider_grid), 0, 0, 2, 1);
-  outer_grid->add_cell(std::move(dropdown_grid), 2, 0, 2, 1);
-  return outer_grid;
+    grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::dropdown, label_type::label, false), 0, 1, 1, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, label_type::label, false), 1, 1, 1, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::dropdown, label_type::label, false), 2, 1, 1, 2);
+  return grid;
 }
 
 static std::unique_ptr<ui_element>
