@@ -195,23 +195,23 @@ create_oscillator_selector(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_env_main_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 2, 2);
+  auto grid = create_grid_ui(controller, 4, 1);
   auto on = grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::on, edit_type::toggle, label_type::label, false, part_index == 0), 0, 0);
   on->relevant_if({ part_type::venv, part_index }, envelope_param::on, false, [](std::int32_t part_index, std::int32_t val) { return part_index > 0; });
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::synced, edit_type::toggle, label_type::label, false), 0, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::invert, edit_type::toggle, label_type::label, false), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::bipolar, edit_type::toggle, label_type::label, false), 1, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::synced, edit_type::toggle, label_type::label, false), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::invert, edit_type::toggle, label_type::label, false), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::bipolar, edit_type::toggle, label_type::label, false), 3, 0);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
 create_env_env_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 6, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::selector, label_type::label, false), 0, 0, 2, 1);
+  auto grid = create_grid_ui(controller, 3, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::selector, false), 0, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::selector, label_type::label, false), 3, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::dropdown, false), 5, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::selector, false), 0, 1, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::dropdown, false), 2, 1, 1, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Env", false), std::move(grid));
 }
 
@@ -273,8 +273,8 @@ static std::unique_ptr<ui_element>
 create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 0, 0, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_env_group(controller, part_index)), 1, 0, 4, 1);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_env_group(controller, part_index)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 1, 0, 4, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "DA",
     envelope_param::delay_time, envelope_param::delay_sync, envelope_param::attack1_time, envelope_param::attack2_time, 
     envelope_param::attack1_sync, envelope_param::attack2_sync, envelope_param::attack1_slope, 
