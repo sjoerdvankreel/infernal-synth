@@ -409,7 +409,7 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
   if (label->vertical())
   {
     rows.push_back(Grid::TrackInfo(Grid::Fr(1)));
-    cols.push_back(Grid::TrackInfo(Grid::Px(label_height + group_label_vpad)));
+    cols.push_back(Grid::TrackInfo(Grid::Px(label_height)));
     cols.push_back(Grid::TrackInfo(Grid::Fr(1)));
   }
   else
