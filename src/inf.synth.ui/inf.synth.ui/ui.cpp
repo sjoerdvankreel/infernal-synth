@@ -237,8 +237,10 @@ create_env_adr_tempo_grid(plugin_controller* controller, std::int32_t part_index
   }
   else
   {
-    grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, false), 0, 0, 1, 1);
-    grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, true), 0, 1, 1, 5);
+    grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, false), 0, 1, 1, 1);
+    auto slider_grid = create_grid_ui(controller, 4, 1);
+    slider_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, true), 1, 0, 2, 1);
+    grid->add_cell(std::move(slider_grid), 0, 2, 1, 3);
   }
   grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage1, label_type::label, false), 1, 1, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, false), 1, 2, 1, 3);
