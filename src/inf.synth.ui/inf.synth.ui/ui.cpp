@@ -34,20 +34,20 @@ create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 }
 
 static std::unique_ptr<ui_element>
-create_osc_type_group(plugin_controller* controller, std::int32_t part_index)
+create_osc_osc_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::selector, false), 0, 0, 2, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Type", false), std::move(grid));
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Osc", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
-create_osc_main_type_grid(plugin_controller* controller, std::int32_t part_index)
+create_osc_main_osc_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 2, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_osc_type_group(controller, part_index)), 1, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_osc_osc_group(controller, part_index)), 1, 0);
   return grid;
 }
 
@@ -164,7 +164,7 @@ static std::unique_ptr<grid_element>
 create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 4, 8);
-  result->add_cell(create_osc_main_type_grid(controller, part_index), 0, 0, 3, 1);
+  result->add_cell(create_osc_main_osc_grid(controller, part_index), 0, 0, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
