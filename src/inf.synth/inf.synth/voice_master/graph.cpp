@@ -20,13 +20,6 @@ amp_bal_graph::sample_count(param_value const* state, float sample_rate) const
   return graph_length;
 }
 
-bool
-amp_bal_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
-{
-  plot = *input.dsp_output;
-  return true;
-}
-
 void
 amp_bal_graph::process_dsp_core(block_input const& input, float* output, float sample_rate)
 {

@@ -15,7 +15,14 @@ envelope_graph::needs_repaint(std::int32_t runtime_param) const
   return begin <= runtime_param && runtime_param < begin + envelope_param::count;
 }
 
-bool
+bool 
+envelope_graph::bipolar(base::param_value const* state) const
+{
+  automation_view automation(topology(), state, id());
+  return automation.block_discrete(envelope_param::bipolar) != 0;
+}
+
+void
 envelope_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   plot.resize(input.dsp_output->size());
@@ -23,7 +30,6 @@ envelope_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& p
   bool bipolar = automation.block_discrete(envelope_param::bipolar) != 0;
   for (std::size_t i = 0; i < input.dsp_output->size(); i++)
     plot[i] = bipolar ? ((*input.dsp_output)[i] + 1.0f) * 0.5f : (*input.dsp_output)[i];
-  return bipolar;
 }
 
 std::int32_t

@@ -16,13 +16,12 @@ oscillator_wave_graph::needs_repaint(
   return begin <= runtime_param && runtime_param < begin + osc_param::count;
 }
 
-bool 
+void 
 oscillator_wave_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   plot.resize(input.dsp_output->size());
   std::copy(input.dsp_output->begin(), input.dsp_output->end(), plot.begin());
   unipolar_untransform(plot.data(), false, true, static_cast<std::int32_t>(plot.size())); 
-  return true;
 }
 
 std::int32_t 

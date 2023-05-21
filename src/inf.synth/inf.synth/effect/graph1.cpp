@@ -62,14 +62,13 @@ effect_graph1::needs_repaint(std::int32_t runtime_param) const
   return begin <= runtime_param && runtime_param < begin + effect_param::count;
 }
 
-bool
+void
 effect_graph1::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   // For plot 1, output is already what we want for all fx types.
   // Just scale to unipolar.
   for (std::size_t s = 0; s < input.dsp_output->size(); s++)
     plot.push_back(std::clamp(((*input.dsp_output)[s] + 1.0f) * 0.5f, 0.0f, 1.0f));
-  return true;
 }
 
 void

@@ -63,11 +63,6 @@ inf_graph_plot::paint(juce::Graphics& g)
   float const plot_vpad = 3.0f;
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto bounds = getLocalBounds().expanded(-container_margin, -container_margin).toFloat();
-  auto plot_bounds = Rectangle<float>(
-    bounds.getX() + 1.0f,
-    bounds.getY() + plot_vpad,
-    bounds.getWidth() - 2.0f,
-    bounds.getHeight() - 2.0f * plot_vpad);
 
   // fill
   lnf.fill_gradient_rounded_rectangle(g, *this, bounds, 
@@ -86,14 +81,20 @@ inf_graph_plot::paint(juce::Graphics& g)
     g.fillRect(bounds.getX() + i * col_width, bounds.getY(), 1.0f, bounds.getHeight());
 
   // plot data
-  bool bipolar;
   param_value const* state = _controller->state();
+  bool bipolar = processor()->bipolar(state);
+  auto plot_bounds = Rectangle<float>(
+    bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
+    bounds.getWidth() - 2.0f, bounds.getHeight() - plot_vpad);
+  if(bipolar) plot_bounds = Rectangle<float>(
+    bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
+    bounds.getWidth() - 2.0f, bounds.getHeight() - 2.0f * plot_vpad);
+
   //float opacity = _processor->opacity(state);
   std::vector<graph_point> const& graph_data = processor()->plot(
     state, graph_sample_rate,
     static_cast<std::int32_t>(plot_bounds.getWidth()),
-    static_cast<std::int32_t>(plot_bounds.getHeight()),
-    bipolar);
+    static_cast<std::int32_t>(plot_bounds.getHeight()));
 
   if (graph_data.size() != 0)
   {

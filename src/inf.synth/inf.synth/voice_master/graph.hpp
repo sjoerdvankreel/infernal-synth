@@ -14,9 +14,10 @@ public:
 
 public:
   bool needs_repaint(std::int32_t runtime_param) const override;
-  bool dsp_to_plot(base::graph_plot_input const& input, std::vector<float>& plot) override;
+  bool bipolar(base::param_value const* state) const override { return true; }
   std::int32_t sample_count(base::param_value const* state, float sample_rate) const override;
   void process_dsp_core(base::block_input const& input, float* output, float sample_rate) override;
+  void dsp_to_plot(base::graph_plot_input const& input, std::vector<float>& plot) override { plot = *input.dsp_output; }
 };
 
 inline amp_bal_graph::

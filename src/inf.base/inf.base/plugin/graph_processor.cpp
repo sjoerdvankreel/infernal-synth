@@ -7,8 +7,8 @@
 namespace inf::base {
 
 std::vector<graph_point> const&
-graph_processor::plot(param_value const* state, float sample_rate, 
-  std::int32_t width, std::int32_t height, bool& bipolar)
+graph_processor::plot(param_value const* state, 
+  float sample_rate, std::int32_t width, std::int32_t height)
 {
   _plot_data.clear();
   _graph_data.clear();
@@ -19,7 +19,7 @@ graph_processor::plot(param_value const* state, float sample_rate,
   input.state = state;
   input.dsp_output = &_raw_data;
   input.sample_rate = sample_rate;
-  bipolar = dsp_to_plot(input, _plot_data);
+  dsp_to_plot(input, _plot_data);
   float transform = width / static_cast<float>(_plot_data.size());
   for (std::size_t i = 0; i < _plot_data.size(); i++)
     _graph_data.push_back({ static_cast<float>(i * transform), _plot_data[i] * height});

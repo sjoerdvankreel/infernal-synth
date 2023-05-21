@@ -16,12 +16,11 @@ static std::vector<std::tuple<std::int32_t, std::int32_t, std::int32_t>> const v
 static std::vector<std::tuple<std::int32_t, std::int32_t, std::int32_t>> const gtarget_table_out
 = zip_list_table_init_out(gcv_route_output_counts, gcv_route_output_target_counts, gcv_route_output::count);
 
-bool
+void
 cv_bank_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   plot.resize(input.dsp_output->size());
   std::copy(input.dsp_output->begin(), input.dsp_output->end(), plot.begin());
-  return false;
 }
 
 std::int32_t
