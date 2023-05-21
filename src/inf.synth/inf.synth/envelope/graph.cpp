@@ -35,11 +35,9 @@ envelope_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& p
 std::int32_t
 envelope_graph::sample_count(param_value const* state, float sample_rate) const
 {
-  // Plot some more so we can spot discontinuities at env end.
-  float const plot_length = 1.1f;
   automation_view automation(topology(), state, id());
   envelope_processor processor(topology(), id().index, cv_graph_rate, graph_bpm, automation);
-  return static_cast<std::int32_t>(processor.total_dahdr_samples(true) * plot_length);
+  return static_cast<std::int32_t>(processor.total_dahdr_samples(true));
 }
 
 void

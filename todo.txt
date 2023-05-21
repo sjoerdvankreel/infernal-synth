@@ -74,3 +74,4 @@
 - credit oddy
 - fix osc repaint / relevant_selector
 - enable avx in vbox
+- drop extra env plot
