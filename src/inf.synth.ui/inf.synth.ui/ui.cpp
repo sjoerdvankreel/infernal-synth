@@ -219,10 +219,10 @@ static std::unique_ptr<ui_element>
 create_env_adr_time_grid(plugin_controller* controller, std::int32_t part_index, 
   std::int32_t prestage, std::int32_t stage1, std::int32_t stage2)
 {
-  auto grid = create_grid_ui(controller, 1, 15);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 1, 1, 3);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::vslider, label_type::label, true), 0, 6, 1, 3);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::vslider, label_type::label, true), 0, 11, 1, 3);
+  auto grid = create_grid_ui(controller, 1, 24);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::vslider, label_type::label, true), 0, 1, 1, 6);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::vslider, label_type::label, true), 0, 9, 1, 6);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::vslider, label_type::label, true), 0, 17, 1, 6);
   return grid;
 }
 
