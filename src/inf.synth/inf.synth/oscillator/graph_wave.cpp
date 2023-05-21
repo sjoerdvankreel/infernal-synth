@@ -1,4 +1,3 @@
-#include <inf.synth/shared/config.hpp>
 #include <inf.synth/shared/support.hpp>
 #include <inf.synth/cv_bank/processor.hpp>
 #include <inf.synth/oscillator/processor.hpp>

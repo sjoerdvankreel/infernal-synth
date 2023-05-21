@@ -1,4 +1,5 @@
 #include <inf.synth.ui/ui.hpp>
+#include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
@@ -300,11 +301,41 @@ create_envelope_selector(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_lfo_main_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 2, 2); 
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::on, edit_type::toggle, label_type::label, false), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::synced, edit_type::toggle, label_type::label, false), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::invert, edit_type::toggle, label_type::label, false), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::bipolar, edit_type::toggle, label_type::label, false), 1, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 7);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0)), 0, 2, 1, 5);
+  return grid;
+}
+
+static std::unique_ptr<ui_element>
+create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, std::int32_t selector_param_index)
+{
+  std::vector<std::unique_ptr<ui_element>> lfos;
+  for (std::int32_t i = 0; i < part_count; i++)
+    lfos.emplace_back(create_lfo_grid(controller, part_type, i));
+  return create_part_selector_ui(controller, part_type::active, selector_param_index, 1, 1, std::move(lfos));
+}
+
+static std::unique_ptr<ui_element>
 create_voice_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 1, 2);
+  auto result = create_grid_ui(controller, 2, 2);
   result->add_cell(create_oscillator_selector(controller), 0, 0);
   result->add_cell(create_envelope_selector(controller), 0, 1);
+  result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 1, 1);
   return result;
 }
 

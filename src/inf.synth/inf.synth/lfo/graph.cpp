@@ -1,7 +1,7 @@
 #include <inf.synth/lfo/graph.hpp>
 #include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/lfo/processor.hpp>
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/shared/scratch_space.hpp>
 
 using namespace inf::base;
@@ -25,7 +25,7 @@ lfo_graph::sample_count(param_value const* state, float sample_rate) const
     float timesig = lfo_timesig_values[automation.block_discrete(lfo_param::tempo)];
     samples = timesig_to_samples(cv_graph_rate, graph_bpm, timesig);
   }
-  return static_cast<std::int32_t>(std::ceil(samples * cv_plot_cycles));
+  return static_cast<std::int32_t>(samples);
 }
 
 bool

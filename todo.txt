@@ -65,3 +65,6 @@
 - drop oscillator gain?
 - skip entire voice section for dsp in instrument mode
 - better envelope defaults show split & slope ?
+- container/outline for entire tabbed part
+- different bg color for audio/cv
+- rename lfo a/b

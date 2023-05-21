@@ -8,6 +8,7 @@
 
 namespace inf::synth {
 
+inline char const* lfo_graph_name = "Envelope";
 extern base::param_descriptor const vlfo_params[];
 extern base::param_descriptor const glfo_params[];
 extern std::vector<float> const lfo_timesig_values;

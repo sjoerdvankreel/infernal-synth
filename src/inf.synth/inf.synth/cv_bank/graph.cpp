@@ -1,4 +1,4 @@
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/cv_bank/graph.hpp>
 #include <inf.synth/cv_bank/topology.hpp>
 #include <inf.synth/cv_bank/processor.hpp>

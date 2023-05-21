@@ -1,5 +1,5 @@
 #include <inf.synth/shared/state.hpp>
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/envelope/graph.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/envelope/processor.hpp>

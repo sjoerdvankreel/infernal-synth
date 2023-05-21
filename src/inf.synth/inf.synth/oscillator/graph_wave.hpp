@@ -2,7 +2,6 @@
 #define INF_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
 
 #include <inf.synth/synth/config.hpp>
-#include <inf.synth/shared/config.hpp>
 #include <inf.synth/shared/support.hpp>
 
 #include <inf.base/shared/support.hpp>
