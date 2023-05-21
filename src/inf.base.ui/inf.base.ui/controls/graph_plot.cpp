@@ -60,13 +60,14 @@ inf_graph_plot::processor()
 void 
 inf_graph_plot::paint(juce::Graphics& g)
 {
+  float const plot_vpad = 3.0f;
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto bounds = getLocalBounds().expanded(-container_margin, -container_margin).toFloat();
   auto plot_bounds = Rectangle<float>(
     bounds.getX() + 1.0f,
-    bounds.getY() + 1.0f,
-    bounds.getWidth() - 1.0f,
-    bounds.getHeight() - 2.0f);
+    bounds.getY() + plot_vpad,
+    bounds.getWidth() - 2.0f,
+    bounds.getHeight() - 2.0f * plot_vpad);
 
   // fill
   lnf.fill_gradient_rounded_rectangle(g, *this, bounds, 
