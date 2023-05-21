@@ -26,6 +26,7 @@ inline float const dropdown_item_vpad_min = 6.0f;
 inline float const dropdown_item_vpad_max = 12.0f;
 inline float const dropdown_font_min_height = 10.0f;
 inline float const dropdown_font_max_height = 12.0f;
+inline int   const dropdown_max_column_items = 20;
 
 inline float const param_label_vpad = 4.0f;
 inline float const param_label_font_min_height = 10.0f;
