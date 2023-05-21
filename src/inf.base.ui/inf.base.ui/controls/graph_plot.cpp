@@ -85,11 +85,7 @@ inf_graph_plot::paint(juce::Graphics& g)
   bool bipolar = processor()->bipolar(state);
   auto plot_bounds = Rectangle<float>(
     bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
-    bounds.getWidth() - 2.0f, bounds.getHeight() - plot_vpad);
-  if(bipolar) plot_bounds = Rectangle<float>(
-    bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
-    bounds.getWidth() - 2.0f, bounds.getHeight() - 2.0f * plot_vpad);
-
+    bounds.getWidth() - 2.0f, bounds.getHeight() - (bipolar? 2.0f: 1.0f) * plot_vpad);
   //float opacity = _processor->opacity(state);
   std::vector<graph_point> const& graph_data = processor()->plot(
     state, graph_sample_rate,
