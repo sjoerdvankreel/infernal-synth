@@ -70,3 +70,4 @@
 - rename lfo a/b
 - drop as many visual stuff (labels etc) as possible
 - vertical padding in graphs (line touches borders)
+- drop graph opacity?
