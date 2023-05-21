@@ -72,3 +72,4 @@
 - vertical padding in graphs (line touches borders)
 - drop graph opacity?
 - credit oddy
+- fix osc repaint / relevant_selector
