@@ -230,21 +230,21 @@ static std::unique_ptr<ui_element>
 create_env_adr_tempo_grid(plugin_controller* controller, std::int32_t part_index,
   std::int32_t prestage, bool prestage_is_synced, std::int32_t stage1, std::int32_t stage2)
 {
-  auto grid = create_grid_ui(controller, 8, 6);
+  auto grid = create_grid_ui(controller, 8, 12);
   if(prestage_is_synced)
   { 
-   grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, Justification::centred), 1, 1, 2, 1);
-   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::dropdown, false), 1, 2, 2, 3);
+   grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, Justification::centred), 1, 2, 2, 2);
+   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::dropdown, false), 1, 4, 2, 6);
   }
   else
   {
-    grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, Justification::centred), 1, 0, 2, 1);
-    grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, true), 1, 1, 2, 5);
+    grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, Justification::centred), 1, 0, 2, 2);
+    grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, true), 1, 2, 2, 10);
   }
-  grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage1, label_type::label, Justification::centred), 3, 1, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, false), 3, 2, 2, 3);
-  grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage2, label_type::label, Justification::centred), 5, 1, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage2, edit_type::dropdown, false), 5, 2, 2, 3);
+  grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage1, label_type::label, Justification::centred), 3, 2, 2, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, false), 3, 4, 2, 6);
+  grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage2, label_type::label, Justification::centred), 5, 2, 2, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage2, edit_type::dropdown, false), 5, 4, 2, 6);
   return grid;
 }
 
