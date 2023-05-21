@@ -37,7 +37,7 @@ create_osc_type_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::selector, false), 0, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::type, edit_type::vdropdown, false), 2, 0, 1, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Type", false), std::move(grid));
 }
 
@@ -208,9 +208,9 @@ create_env_type_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 6, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::selector, label_type::label, false), 0, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::type, edit_type::vdropdown, false), 2, 0, 1, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::selector, label_type::label, false), 3, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::dropdown, false), 5, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, envelope_param::mode, edit_type::vdropdown, false), 5, 0, 1, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Type", false), std::move(grid));
 }
 
@@ -229,11 +229,13 @@ static std::unique_ptr<ui_element>
 create_env_adr_tempo_grid(plugin_controller* controller, std::int32_t part_index,
   std::int32_t prestage, bool prestage_is_synced, std::int32_t stage1, std::int32_t stage2)
 {
-  auto grid = create_grid_ui(controller, 3, 4);
+  auto grid = create_grid_ui(controller, 3, 1);
   if(prestage_is_synced)
-    grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::dropdown, label_type::label, false), 0, 1, 1, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, label_type::label, false), 1, 1, 1, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::dropdown, label_type::label, false), 2, 1, 1, 2);
+    grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::hdropdown, label_type::label, false), 0, 0);
+  else
+    grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, label_type::label, true), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage1, edit_type::hdropdown, label_type::label, false), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, stage2, edit_type::hdropdown, label_type::label, false), 2, 0);
   return grid;
 }
 

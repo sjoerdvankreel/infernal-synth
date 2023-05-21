@@ -13,7 +13,7 @@ namespace inf::base::ui {
 
 enum class label_type { label, value };
 enum class icon_type { sine, saw, tri, pulse };
-enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };
+enum class edit_type { knob, selector, hslider, vslider, toggle, vdropdown, hdropdown };
 
 float
 get_scaled_size(plugin_controller const* controller, float min_size, float max_size);
@@ -57,8 +57,8 @@ get_group_label_total_height(inf::base::plugin_controller const* controller)
 { return get_group_label_font_height(controller) + group_label_vpad; }
 
 inline float 
-get_param_label_hslider_width(inf::base::plugin_controller const* controller)
-{ return get_scaled_size(controller, param_label_hslider_min_width, param_label_hslider_max_width); }
+get_param_label_horizontal_width(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, param_label_horizontal_min_width, param_label_horizontal_max_width); }
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_SUPPORT_HPP

@@ -178,7 +178,7 @@ void
 param_edit_element::layout()
 {
   auto bounds = component()->getBounds().expanded(-edit_margin, -edit_margin);
-  if (_type == edit_type::dropdown)
+  if (_type == edit_type::vdropdown || _type == edit_type::hdropdown)
   {
     float total_height = get_dropdown_height(controller());
     float total_width = bounds.getWidth() - dropdown_hpad;
@@ -198,7 +198,8 @@ param_edit_element::build_core(juce::LookAndFeel const& lnf)
   switch (_type)
   {
   case edit_type::toggle: result = build_toggle_core(lnf); break;
-  case edit_type::dropdown: result = build_dropdown_core(lnf); break;
+  case edit_type::vdropdown: result = build_dropdown_core(lnf); break;
+  case edit_type::hdropdown: result = build_dropdown_core(lnf); break;
   default: result = build_slider_core(lnf); break;
   }
   if(_show_tooltip)
@@ -352,10 +353,10 @@ create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
   std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip, bool force_toggle_on)
 {
-  if (edit_type == edit_type::hslider)
+  if (edit_type == edit_type::hslider || edit_type == edit_type::hdropdown)
   {
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
-    auto fixed_label_width = Grid::TrackInfo(Grid::Px(get_param_label_hslider_width(controller)));
+    auto fixed_label_width = Grid::TrackInfo(Grid::Px(get_param_label_horizontal_width(controller)));
     auto result = create_grid_ui(controller, { auto_rest }, { fixed_label_width, auto_rest });
     result->add_cell(std::move(label_or_icon), 0, 0);
     result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, show_tooltip, force_toggle_on), 0, 1);
