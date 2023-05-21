@@ -68,3 +68,4 @@
 - container/outline for entire tabbed part
 - different bg color for audio/cv
 - rename lfo a/b
+- drop as many visual stuff (labels etc) as possible
