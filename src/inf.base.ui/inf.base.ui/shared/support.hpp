@@ -13,7 +13,7 @@ namespace inf::base::ui {
 
 enum class label_type { label, value };
 enum class icon_type { sine, saw, tri, pulse };
-enum class edit_type { knob, selector, hslider, vslider, toggle, vdropdown, hdropdown };
+enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };
 
 float
 get_scaled_size(plugin_controller const* controller, float min_size, float max_size);
