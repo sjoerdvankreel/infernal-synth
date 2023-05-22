@@ -75,3 +75,5 @@
 - fix osc repaint / relevant_selector
 - enable avx in vbox
 - drop extra env plot
+- check all long names
+- fix end-of-graph line for unipolar

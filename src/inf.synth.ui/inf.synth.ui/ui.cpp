@@ -24,6 +24,19 @@ icon_for_osc_basic_type(std::int32_t value)
   }
 }
 
+static icon_type
+icon_for_lfo_basic_type(std::int32_t value)
+{
+  switch (value)
+  {
+  case lfo_basic_type::saw: return icon_type::saw;
+  case lfo_basic_type::sine: return icon_type::sine;
+  case lfo_basic_type::pulse: return icon_type::pulse;
+  case lfo_basic_type::triangle: return icon_type::tri;
+  default: assert(false); return {};
+  }
+}
+
 static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
@@ -311,7 +324,7 @@ create_lfo_main_group(plugin_controller* controller, std::int32_t part_type, std
   return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
-std::unique_ptr<ui_element>
+static std::unique_ptr<ui_element>
 create_lfo_lfo_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 3);
@@ -331,12 +344,23 @@ create_lfo_lfo_group(plugin_controller* controller, std::int32_t part_type, std:
 }
 
 static std::unique_ptr<ui_element>
+create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 2, 6);
+  grid->add_cell(create_iconed_param_ui(controller, part_type, part_index, lfo_param::basic_type, edit_type::selector, icon_for_lfo_basic_type, false), 0, 0, 2, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true), 0, 1, 1, 5);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true), 1, 1, 1, 5);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
   grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 0, 0, 1, 3);
   grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 1, 0, 2, 1);
   grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0)), 0, 3, 1, 4);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
   return grid;
 }
 
