@@ -56,9 +56,5 @@ inline float
 get_group_label_total_height(inf::base::plugin_controller const* controller)
 { return get_group_label_font_height(controller) + group_label_vpad; }
 
-inline float 
-get_param_label_horizontal_width(inf::base::plugin_controller const* controller)
-{ return get_scaled_size(controller, param_label_horizontal_min_width, param_label_horizontal_max_width); }
-
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_SUPPORT_HPP

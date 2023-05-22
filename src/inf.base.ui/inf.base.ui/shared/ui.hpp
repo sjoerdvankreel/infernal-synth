@@ -317,7 +317,7 @@ create_part_group_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, label_type label_type, bool show_tooltip, bool force_toggle_on = false);
+  edit_type edit_type, label_type label_type, bool show_tooltip, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
@@ -329,7 +329,7 @@ create_iconed_param_ui(
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
-  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip, bool force_toggle_on = false);
+  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index, 

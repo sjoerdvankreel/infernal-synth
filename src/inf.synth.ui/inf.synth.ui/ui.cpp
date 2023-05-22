@@ -112,7 +112,7 @@ create_osc_basic_group(plugin_controller* controller, std::int32_t part_index)
   auto outer_grid = create_grid_ui(controller, 1, 5);
   outer_grid->add_cell(create_iconed_param_ui(controller, part_type::vosc, part_index, osc_param::basic_type, edit_type::selector, icon_for_osc_basic_type, false), 0, 0);
   auto inner_grid = create_grid_ui(controller, 3, 1);
-  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::basic_pw, edit_type::hslider, label_type::label, true), 1, 0, 1, 1);
+  auto pw = inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 1, 1);
   pw->relevant_if(part_id(part_type::vosc, part_index), osc_param::basic_type, false, [](std::int32_t part_index, std::int32_t val) { return val == osc_basic_type::pulse; });
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(outer_grid));
@@ -134,9 +134,9 @@ static std::unique_ptr<ui_element>
 create_osc_dsf_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::dsf_parts, edit_type::hslider, label_type::label, true), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::dsf_dist, edit_type::hslider, label_type::label, true), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::dsf_decay, edit_type::hslider, label_type::label, true), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::dsf_parts, edit_type::hslider, label_type::label, true, false, 5), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::dsf_dist, edit_type::hslider, label_type::label, true, false, 5), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::dsf_decay, edit_type::hslider, label_type::label, true, false, 5), 2, 0);
   return create_part_group_ui(controller, create_group_label_ui(controller, "DSF", true), std::move(grid));
 }
 
@@ -144,9 +144,9 @@ static std::unique_ptr<ui_element>
 create_osc_kps_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kps_filter, edit_type::hslider, label_type::label, true), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kps_feedback, edit_type::hslider, label_type::label, true), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kps_stretch, edit_type::hslider, label_type::label, true), 2, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kps_filter, edit_type::hslider, label_type::label, true, false, 5), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kps_feedback, edit_type::hslider, label_type::label, true, false, 5), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::kps_stretch, edit_type::hslider, label_type::label, true, false, 5), 2, 0);
   return create_part_group_ui(controller, create_group_label_ui(controller, "K+S", true), std::move(grid));
 }
 
@@ -156,9 +156,9 @@ create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
   auto outer_grid = create_grid_ui(controller, 1, 5);
   outer_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_seed, edit_type::knob, label_type::label, true), 0, 0);
   auto inner_grid = create_grid_ui(controller, 3, 1);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_color, edit_type::hslider, label_type::label, true), 0, 0);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_x, edit_type::hslider, label_type::label, true), 1, 0);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_y, edit_type::hslider, label_type::label, true), 2, 0);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_color, edit_type::hslider, label_type::label, true, false, 7), 0, 0);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_x, edit_type::hslider, label_type::label, true, false, 7), 1, 0);
+  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_y, edit_type::hslider, label_type::label, true, false, 7), 2, 0);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Noise", true), std::move(outer_grid));
 }
@@ -250,10 +250,7 @@ create_env_adr_tempo_grid(plugin_controller* controller, std::int32_t part_index
    grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::dropdown, false), 1, 4, 2, 6);
   }
   else
-  {
-    grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, prestage, label_type::label, Justification::centred), 1, 0, 2, 3);
-    grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, true), 1, 3, 2, 9);
-  }
+    grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, prestage, edit_type::hslider, label_type::label, true, false, 8), 1, 3, 2, 9);
   grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage1, label_type::label, Justification::centred), 3, 2, 2, 2);
   grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, stage1, edit_type::dropdown, false), 3, 4, 2, 6);
   grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, stage2, label_type::label, Justification::centred), 5, 2, 2, 2);
@@ -270,8 +267,7 @@ create_env_adr_group(
   auto upper_grid = create_grid_ui(controller, 4, 4);
   upper_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope1, edit_type::knob, label_type::label, true), 0, 0, 3, 2);
   upper_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, slope2, edit_type::knob, label_type::label, true), 0, 2, 3, 2);
-  upper_grid->add_cell(create_param_label_ui(controller, part_type::venv, part_index, split, label_type::label, Justification::centred), 3, 0, 1, 1);
-  upper_grid->add_cell(create_param_edit_ui(controller, part_type::venv, part_index, split, edit_type::hslider, true), 3, 1, 1, 3);
+  upper_grid->add_cell(create_labeled_param_ui(controller, part_type::venv, part_index, split, edit_type::hslider, label_type::label, true, false, 8), 3, 0, 1, 4);
   auto grid = create_grid_ui(controller, 2, 1);
   grid->add_cell(std::move(upper_grid), 0, 0);
   auto time_grid = grid->add_cell(create_env_adr_time_grid(controller, part_index, prestage_time, time1, time2), 1, 0);
@@ -349,8 +345,8 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
   auto outer_grid = create_grid_ui(controller, 4, 6);
   outer_grid->add_cell(create_iconed_param_ui(controller, part_type, part_index, lfo_param::basic_type, edit_type::selector, icon_for_lfo_basic_type, false), 1, 0, 2, 1);
   auto slider_grid = create_grid_ui(controller, 6, 1);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true), 1, 0, 2, 1);
-  auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true), 3, 0, 2, 1);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 2, 1);
+  auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 3, 0, 2, 1);
   pw->relevant_if(part_id(part_type, part_index), lfo_param::basic_type, false, [](std::int32_t part_index, std::int32_t val) { return val == lfo_basic_type::pulse; });
   outer_grid->add_cell(std::move(slider_grid), 1, 1, 2, 5);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", false), std::move(outer_grid));
@@ -362,8 +358,8 @@ create_lfo_custom_group(
   std::int32_t stage1, std::int32_t stage2, std::int32_t slope, char const* group_name)
 {
   auto grid = create_grid_ui(controller, 6, 5);
-  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage1, edit_type::hslider, label_type::label, true), 1, 0, 4, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage2, edit_type::hslider, label_type::label, true), 1, 2, 4, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage1, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 4, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage2, edit_type::hslider, label_type::label, true, false, 8), 1, 2, 4, 2);
   auto slope_grid = create_grid_ui(controller, 1, 4);
   slope_grid->add_cell(create_param_label_ui(controller, part_type, part_index, slope, label_type::label, Justification::centred), 0, 0);
   slope_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, slope, edit_type::selector, false), 0, 1, 1, 3);

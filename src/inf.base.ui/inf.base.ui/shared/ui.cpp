@@ -351,15 +351,15 @@ create_grid_ui(
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
-  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip, bool force_toggle_on)
+  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, bool show_tooltip, bool force_toggle_on, std::int32_t hslider_cols)
 {
   if (edit_type == edit_type::hslider)
   {
-    auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
-    auto fixed_label_width = Grid::TrackInfo(Grid::Px(get_param_label_horizontal_width(controller)));
-    auto result = create_grid_ui(controller, { auto_rest }, { fixed_label_width, auto_rest });
+    assert(hslider_cols != -1);
+    if(hslider_cols == -1) return {};
+    auto result = create_grid_ui(controller, 1, hslider_cols);
     result->add_cell(std::move(label_or_icon), 0, 0);
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, show_tooltip, force_toggle_on), 0, 1);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, show_tooltip, force_toggle_on), 0, 1, 1, hslider_cols - 1);
     return result;
   }
   else
@@ -376,11 +376,11 @@ create_param_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, label_type label_type, bool show_tooltip, bool force_toggle_on)
+  edit_type edit_type, label_type label_type, bool show_tooltip, bool force_toggle_on, std::int32_t hslider_cols)
 {
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
   auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
-  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, show_tooltip, force_toggle_on);
+  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, show_tooltip, force_toggle_on, hslider_cols);
 }
 
 std::unique_ptr<ui_element>
