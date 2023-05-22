@@ -357,27 +357,32 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
 }
 
 static std::unique_ptr<ui_element>
-create_lfo_custom_groups(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+create_lfo_custom_group(
+  plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
+  std::int32_t stage1, std::int32_t stage2, std::int32_t slope, char const* group_name)
 {
-  auto da_grid = create_grid_ui(controller, 6, 5);
-  da_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::custom_delay1, edit_type::hslider, label_type::label, true), 1, 0, 4, 2);
-  da_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::custom_rise1, edit_type::hslider, label_type::label, true), 1, 2, 4, 2);
-  auto da_slope_grid = create_grid_ui(controller, 1, 4);
-  da_slope_grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::custom_rise1_slope, label_type::label, Justification::centred), 0, 0);
-  da_slope_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::custom_rise1_slope, edit_type::selector, false), 0, 1, 1, 3);
-  da_grid->add_cell(std::move(da_slope_grid), 0, 4, 6, 1);
-  auto da_group = create_part_group_ui(controller, create_group_label_ui(controller, "DA", true), std::move(da_grid));
-  auto hd_grid = create_grid_ui(controller, 5, 1);
-  auto hd_group = create_part_group_ui(controller, create_group_label_ui(controller, "HD", true), std::move(hd_grid));
-  auto dd_grid = create_grid_ui(controller, 5, 1);
-  auto dd_group = create_part_group_ui(controller, create_group_label_ui(controller, "DD", true), std::move(dd_grid));
-  auto ha_grid = create_grid_ui(controller, 5, 1);
-  auto ha_group = create_part_group_ui(controller, create_group_label_ui(controller, "HA", true), std::move(ha_grid));
+  auto grid = create_grid_ui(controller, 6, 5);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage1, edit_type::hslider, label_type::label, true), 1, 0, 4, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage2, edit_type::hslider, label_type::label, true), 1, 2, 4, 2);
+  auto slope_grid = create_grid_ui(controller, 1, 4);
+  slope_grid->add_cell(create_param_label_ui(controller, part_type, part_index, slope, label_type::label, Justification::centred), 0, 0);
+  slope_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, slope, edit_type::selector, false), 0, 1, 1, 3);
+  grid->add_cell(std::move(slope_grid), 0, 4, 6, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, group_name, true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_lfo_custom_groups(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{ 
   auto grid = create_grid_ui(controller, 4, 1);
-  grid->add_cell(create_part_group_container_ui(controller, std::move(da_group)), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, std::move(hd_group)), 1, 0);
-  grid->add_cell(create_part_group_container_ui(controller, std::move(dd_group)), 2, 0);
-  grid->add_cell(create_part_group_container_ui(controller, std::move(ha_group)), 3, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
+    controller, part_type, part_index, lfo_param::custom_delay1, lfo_param::custom_rise1, lfo_param::custom_rise1_slope, "DA")), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
+    controller, part_type, part_index, lfo_param::custom_hold1, lfo_param::custom_fall1, lfo_param::custom_fall1_slope, "HD")), 1, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
+    controller, part_type, part_index, lfo_param::custom_delay2, lfo_param::custom_fall2, lfo_param::custom_fall2_slope, "DD")), 2, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
+    controller, part_type, part_index, lfo_param::custom_hold2, lfo_param::custom_rise2, lfo_param::custom_rise2_slope, "HA")), 3, 0);
   return grid;
 }
 
