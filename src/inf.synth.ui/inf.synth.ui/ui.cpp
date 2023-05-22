@@ -342,13 +342,13 @@ create_lfo_lfo_group(plugin_controller* controller, std::int32_t part_type, std:
 static std::unique_ptr<ui_element>
 create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto outer_grid = create_grid_ui(controller, 4, 6);
-  outer_grid->add_cell(create_iconed_param_ui(controller, part_type, part_index, lfo_param::basic_type, edit_type::selector, icon_for_lfo_basic_type, false), 1, 0, 2, 1);
+  auto outer_grid = create_grid_ui(controller, 2, 6);
+  outer_grid->add_cell(create_iconed_param_ui(controller, part_type, part_index, lfo_param::basic_type, edit_type::selector, icon_for_lfo_basic_type, false), 0, 0, 1, 1);
   auto slider_grid = create_grid_ui(controller, 6, 1);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 2, 1);
   auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 3, 0, 2, 1);
   pw->relevant_if(part_id(part_type, part_index), lfo_param::basic_type, false, [](std::int32_t part_index, std::int32_t val) { return val == lfo_basic_type::pulse; });
-  outer_grid->add_cell(std::move(slider_grid), 1, 1, 2, 5);
+  outer_grid->add_cell(std::move(slider_grid), 0, 1, 1, 5);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", false), std::move(outer_grid));
 }
 
