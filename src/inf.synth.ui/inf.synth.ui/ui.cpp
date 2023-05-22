@@ -353,6 +353,16 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
 }
 
 static std::unique_ptr<ui_element>
+create_lfo_random_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 8, 6);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_type, edit_type::selector, false), 1, 0, 3, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_type, edit_type::dropdown, false), 4, 0, 1, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, edit_type::toggle, label_type::label, false), 5, 0, 2, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Random", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_lfo_custom_group(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t stage1, std::int32_t stage2, std::int32_t slope, char const* group_name)
@@ -391,6 +401,8 @@ create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int3
   grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0)), 0, 3, 1, 4);
   auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
+  auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), 1, 1, 2, 6);
+  random->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::random; });
   auto custom = grid->add_cell(create_lfo_custom_groups(controller, part_type, part_index), 1, 1, 2, 6);
   custom->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::custom; });
   return grid;

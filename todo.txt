@@ -71,3 +71,4 @@
 - enable avx in vbox
 - check all long names
 - fix end-of-graph line for unipolar
+- drop the conversion code
