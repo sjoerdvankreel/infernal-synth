@@ -182,7 +182,7 @@ public:
   ui_element(controller), _value(value), _selector(selector), _part_id(part_id), _param_index(param_index) {}
 };
 
-inline std::unique_ptr<param_icon_element>
+std::unique_ptr<param_icon_element>
 create_param_icon_ui(
   inf::base::plugin_controller* controller, std::int32_t part_type, 
   std::int32_t part_index, std::int32_t param_index, icon_selector selector);

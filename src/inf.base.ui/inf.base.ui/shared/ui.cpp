@@ -169,7 +169,7 @@ std::unique_ptr<param_icon_element>
 create_param_icon_ui(
   inf::base::plugin_controller* controller, std::int32_t part_type, 
   std::int32_t part_index, std::int32_t param_index, icon_selector selector)
-{
+{ 
   std::int32_t index = controller->topology()->param_index({ part_type, part_index }, param_index);
   std::int32_t icon_value = controller->state()[index].discrete;
   return std::make_unique<param_icon_element>(controller, part_id(part_type, part_index), param_index, icon_value, selector);
