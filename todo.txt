@@ -77,3 +77,4 @@
 - drop extra env plot
 - check all long names
 - fix end-of-graph line for unipolar
+- fix lfo slope=0 bug
