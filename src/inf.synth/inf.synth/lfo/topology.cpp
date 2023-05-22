@@ -10,8 +10,8 @@ namespace inf::synth {
  
 static std::vector<list_item> const lfo_types = {
   { "{BA47C8D9-458A-4FE7-B4EC-E0A5BF6F0073}", "Basic" },
-  { "{86377625-0B20-45D0-8DB8-A92B5CD807D8}", "Rnd" },
-  { "{1B0F2B5B-FDC7-4F63-ADF1-621C18144739}", "Cust" } };
+  { "{86377625-0B20-45D0-8DB8-A92B5CD807D8}", "Random" },
+  { "{1B0F2B5B-FDC7-4F63-ADF1-621C18144739}", "Custom" } };
 static std::vector<list_item> const lfo_rand_types = {
   { "{188B114B-ACB1-495E-9811-E0B77D9EEE27}", "Slope" }, 
   { "{ADCF2659-BF48-4099-A552-084991CCE603}", "Level" },
