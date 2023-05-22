@@ -357,10 +357,22 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
 }
 
 static std::unique_ptr<ui_element>
-create_lfo_custom_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+create_lfo_custom_groups(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 4, 3);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Custom", true), std::move(grid));
+  auto da_grid = create_grid_ui(controller, 3, 1);
+  auto da_group = create_part_group_ui(controller, create_group_label_ui(controller, "DA", false), std::move(da_grid));
+  auto hd_grid = create_grid_ui(controller, 3, 1);
+  auto hd_group = create_part_group_ui(controller, create_group_label_ui(controller, "HD", false), std::move(hd_grid));
+  auto dd_grid = create_grid_ui(controller, 3, 1);
+  auto dd_group = create_part_group_ui(controller, create_group_label_ui(controller, "DD", false), std::move(dd_grid));
+  auto ha_grid = create_grid_ui(controller, 3, 1);
+  auto ha_group = create_part_group_ui(controller, create_group_label_ui(controller, "HA", false), std::move(ha_grid));
+  auto grid = create_grid_ui(controller, 1, 4);
+  grid->add_cell(create_part_group_container_ui(controller, std::move(da_group)), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, std::move(hd_group)), 0, 1);
+  grid->add_cell(create_part_group_container_ui(controller, std::move(dd_group)), 0, 2);
+  grid->add_cell(create_part_group_container_ui(controller, std::move(ha_group)), 0, 3);
+  return grid;
 }
 
 static std::unique_ptr<ui_element>
@@ -372,7 +384,7 @@ create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int3
   grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0)), 0, 3, 1, 4);
   auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
-  auto custom = grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(controller, part_type, part_index)), 1, 1, 2, 6);
+  auto custom = grid->add_cell(create_lfo_custom_groups(controller, part_type, part_index), 1, 1, 2, 6);
   custom->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::custom; });
   return grid;
 }
