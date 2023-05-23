@@ -170,7 +170,7 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   {
     set_ui_value(state, part_type::geffect, i, effect_param::on, "On");
     set_ui_value(state, part_type::geffect, i, effect_param::type, "Filter");
-    set_ui_value(state, part_type::geffect, i, effect_param::filter_type, "State Variable");
+    set_ui_value(state, part_type::geffect, i, effect_param::filter_type, "StateVariable");
     set_ui_value(state, part_type::geffect, i, effect_param::flt_stvar_type, "BLL");
     set_ui_value(state, part_type::geffect, i, effect_param::flt_stvar_shlf_gain, "24");
     set_ui_value(state, part_type::geffect, i, effect_param::flt_stvar_freq, "2000");
@@ -261,7 +261,7 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   // fx a2 state variable filter
   set_ui_value(state, part_type::veffect, 1, osc_param::on, "On");
   set_ui_value(state, part_type::veffect, 1, effect_param::type, "Filter");
-  set_ui_value(state, part_type::veffect, 1, effect_param::filter_type, "State Variable");
+  set_ui_value(state, part_type::veffect, 1, effect_param::filter_type, "StateVariable");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_kbd, "50");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_res, "50");
   set_ui_value(state, part_type::veffect, 1, effect_param::flt_stvar_freq, "7500");
@@ -269,7 +269,7 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   // fx b1 state variable filter
   set_ui_value(state, part_type::geffect, 0, osc_param::on, "On");
   set_ui_value(state, part_type::geffect, 0, effect_param::type, "Filter");
-  set_ui_value(state, part_type::geffect, 0, effect_param::filter_type, "State Variable");
+  set_ui_value(state, part_type::geffect, 0, effect_param::filter_type, "StateVariable");
   set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_freq, "7500");
   set_ui_value(state, part_type::geffect, 0, effect_param::flt_stvar_res, "50");
 
