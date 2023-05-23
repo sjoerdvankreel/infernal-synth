@@ -16,7 +16,7 @@ static std::vector<list_item> const effect_filter_types = {
   { "{DFF83170-5380-4CC0-B418-3BC2C5638D88}", "Comb" } };
 static std::vector<list_item> const effect_types = {
   { "{A9F10C03-1757-4759-B127-82CD86B61ED7}", "Filter" },
-  { "{E748B96C-B027-477D-A044-FD2ACBC10F6B}", "Shape" },
+  { "{E748B96C-B027-477D-A044-FD2ACBC10F6B}", "Shaper" },
   { "{2579F57B-4E61-4727-8EC5-766F4711FA2D}", "Delay" },
   { "{26C05CA1-6B5C-4B78-B2CB-662B43EF72AC}", "Reverb" } };
 static std::vector<list_item> const effect_shp_over_orders = {

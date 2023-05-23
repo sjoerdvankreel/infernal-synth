@@ -73,3 +73,4 @@
 - rename versioned->normal, generic->develop
 - test tracktion host
 - change fx graph tooltip depending on type
+- drop a/b suffixes
