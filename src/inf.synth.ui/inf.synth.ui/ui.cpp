@@ -347,10 +347,10 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
 {
   auto knob_grid = create_grid_ui(controller, 6, 1);
   knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::basic_type, edit_type::selector, false), 0, 0, 3, 1);
-  knob_grid->add_cell(create_param_icon_ui(controller, part_type, part_index, lfo_param::basic_type, icon_for_lfo_basic_type), 4, 0, 1, 1);
-  auto slider_grid = create_grid_ui(controller, 2, 1);
-  slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true, false, 8), 0, 0);
-  auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 1, 0);
+  knob_grid->add_cell(create_param_icon_ui(controller, part_type, part_index, lfo_param::basic_type, icon_for_lfo_basic_type), 3, 0, 1, 1);
+  auto slider_grid = create_grid_ui(controller, 8, 1);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 2, 1);
+  auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 4, 0, 2, 1);
   pw->relevant_if(part_id(part_type, part_index), lfo_param::basic_type, false, [](std::int32_t part_index, std::int32_t val) { return val == lfo_basic_type::pulse; });
   auto grid = create_grid_ui(controller, 6, 6);
   grid->add_cell(std::move(knob_grid), 1, 0, 4, 1);
