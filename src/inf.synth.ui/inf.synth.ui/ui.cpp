@@ -153,14 +153,17 @@ create_osc_kps_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<ui_element>
 create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto outer_grid = create_grid_ui(controller, 1, 5);
-  outer_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_seed, edit_type::knob, label_type::label, true), 0, 0);
-  auto inner_grid = create_grid_ui(controller, 3, 1);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_color, edit_type::hslider, label_type::label, true, false, 7), 0, 0);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_x, edit_type::hslider, label_type::label, true, false, 7), 1, 0);
-  inner_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_y, edit_type::hslider, label_type::label, true, false, 7), 2, 0);
-  outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 4);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Noise", true), std::move(outer_grid));
+  auto seed_grid = create_grid_ui(controller, 3, 1);
+  seed_grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::noise_seed, edit_type::knob, true), 0, 0, 2, 1);
+  seed_grid->add_cell(create_param_label_ui(controller, part_type::vosc, part_index, osc_param::noise_seed, label_type::label, Justification::centred), 2, 0, 1, 1);
+  auto slider_grid = create_grid_ui(controller, 3, 1);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_color, edit_type::hslider, label_type::label, true, false, 7), 0, 0);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_x, edit_type::hslider, label_type::label, true, false, 7), 1, 0);
+  slider_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_y, edit_type::hslider, label_type::label, true, false, 7), 2, 0);
+  auto grid = create_grid_ui(controller, 1, 5);
+  grid->add_cell(std::move(seed_grid), 0, 0, 1, 1);
+  grid->add_cell(std::move(slider_grid), 0, 1, 1, 4);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Noise", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
