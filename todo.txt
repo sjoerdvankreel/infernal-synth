@@ -72,3 +72,4 @@
 - check all long names
 - fix end-of-graph line for unipolar
 - drop the conversion code
+- rename versioned->normal, generic->develop
