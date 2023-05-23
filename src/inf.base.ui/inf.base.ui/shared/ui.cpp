@@ -233,11 +233,15 @@ param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   inf_dropdown* result = new inf_dropdown(&desc);
   result->setJustificationType(Justification::centred);
-  for(std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
-    if(desc.data.discrete.items != nullptr)
+  if (desc.data.discrete.items != nullptr)
+    for(std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
       result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
-    else
+  else if(desc.data.discrete.names != nullptr)
+    for (std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
       result->addItem((*desc.data.discrete.names)[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
+  else
+    for (std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
+      result->addItem(std::to_string(i), i);
   result->setSelectedItemIndex(controller()->state()[index].discrete, dontSendNotification);
   _dropdown_listener.reset(new dropdown_param_listener(controller(), result, index));
   result->addListener(_dropdown_listener.get());
