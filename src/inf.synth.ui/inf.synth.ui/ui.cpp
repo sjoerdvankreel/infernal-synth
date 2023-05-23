@@ -366,11 +366,11 @@ create_lfo_random_group(plugin_controller* controller, std::int32_t part_type, s
   other_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::rand_seedx, edit_type::hslider, label_type::label, true, false, 8), 2, 0);
   auto rand_steps_grid = create_grid_ui(controller, 1, 8);
   rand_steps_grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, label_type::label, false), 0, 0);
-  rand_steps_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, edit_type::toggle, false), 0, 1, 1, 7);
+  rand_steps_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, edit_type::toggle, false), 0, 1);
   other_grid->add_cell(std::move(rand_steps_grid), 3, 0);
-  auto grid = create_grid_ui(controller, 1, 4);
-  grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
-  grid->add_cell(std::move(other_grid), 0, 1, 1, 3);
+  auto grid = create_grid_ui(controller, 6, 4);
+  grid->add_cell(std::move(knob_grid), 1, 0, 4, 1);
+  grid->add_cell(std::move(other_grid), 1, 1, 4, 3);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Random", true), std::move(grid));
 }
 
