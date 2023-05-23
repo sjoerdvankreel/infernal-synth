@@ -347,7 +347,9 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
 {
   auto knob_grid = create_grid_ui(controller, 4, 1);
   knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::basic_type, edit_type::selector, false), 0, 0);
-  knob_grid->add_cell(create_param_icon_ui(controller, part_type, part_index, lfo_param::basic_type, icon_for_lfo_basic_type), 1, 0);
+  auto icon_grid = create_grid_ui(controller, 3, 3);
+  icon_grid->add_cell(create_param_icon_ui(controller, part_type, part_index, lfo_param::basic_type, icon_for_lfo_basic_type), 1, 1, 1, 1);
+  knob_grid->add_cell(std::move(icon_grid), 1, 0);
   auto slider_grid = create_grid_ui(controller, 24, 1);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 4, 1);
   auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 7, 0, 4, 1);
