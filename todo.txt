@@ -54,7 +54,6 @@
 - disable unison for noise?
 - fix paint problems
 - rewrite the manual
-- drop param long names
 - check graph opacity
 - shorter long descs
 - graph bg image
@@ -70,6 +69,5 @@
 - fix osc repaint / relevant_selector
 - enable avx in vbox
 - check all long names
-- fix end-of-graph line for unipolar
 - drop the conversion code
 - rename versioned->normal, generic->develop
