@@ -99,16 +99,21 @@ inf_graph_plot::paint(juce::Graphics& g)
     g.saveState();
     g.reduceClipRegion(clip);
 
-    Path path;
+    Path area_path;
     float base_y = bipolar? 0.5f: 1.0f;
-    path.startNewSubPath(plot_bounds.getX(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
+    area_path.startNewSubPath(plot_bounds.getX(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
     for (std::size_t i = 0; i < graph_data.size(); i++)
-      path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
-    path.lineTo(plot_bounds.getX() + plot_bounds.getWidth(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
+      area_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
+    area_path.lineTo(plot_bounds.getX() + plot_bounds.getWidth(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
     g.setColour(findColour(inf_look_and_feel::colors::part_graph_area));
-    g.fillPath(path);
+    g.fillPath(area_path);
+
+    Path line_path;
+    line_path.startNewSubPath(plot_bounds.getX() + graph_data[0].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[0].y);
+    for (std::size_t i = 1; i < graph_data.size(); i++)
+      line_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
     g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
-    g.strokePath(path, PathStrokeType(1.0f));
+    g.strokePath(line_path, PathStrokeType(1.0f));
     g.restoreState();
   }
 
