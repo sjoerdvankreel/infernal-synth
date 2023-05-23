@@ -352,10 +352,10 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, true, false, 8), 1, 0, 2, 1);
   auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, true, false, 8), 4, 0, 2, 1);
   pw->relevant_if(part_id(part_type, part_index), lfo_param::basic_type, false, [](std::int32_t part_index, std::int32_t val) { return val == lfo_basic_type::pulse; });
-  auto grid = create_grid_ui(controller, 4, 6);
-  grid->add_cell(std::move(knob_grid), 1, 0, 2, 1);
-  grid->add_cell(std::move(slider_grid), 1, 1, 2, 5);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", true), std::move(grid));
+  auto grid = create_grid_ui(controller, 2, 6);
+  grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
+  grid->add_cell(std::move(slider_grid), 0, 1, 1, 5);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -378,7 +378,7 @@ create_lfo_random_group(plugin_controller* controller, std::int32_t part_type, s
   auto grid = create_grid_ui(controller, 1, 4);
   grid->add_cell(std::move(knob_grid), 0, 0, 1, 1);
   grid->add_cell(std::move(other_grid), 0, 1, 1, 3);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Random", true), std::move(grid));
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Random", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
