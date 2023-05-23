@@ -369,7 +369,8 @@ create_lfo_random_group(plugin_controller* controller, std::int32_t part_type, s
   auto other_grid = create_grid_ui(controller, 4, 1);
   other_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::rand_amt, edit_type::hslider, label_type::label, true, false, 8), 0, 0);
   other_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::rand_seedy, edit_type::hslider, label_type::label, true, false, 8), 1, 0);
-  other_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::rand_seedx, edit_type::hslider, label_type::label, true, false, 8), 2, 0);
+  auto seedx = other_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::rand_seedx, edit_type::hslider, label_type::label, true, false, 8), 2, 0);
+  seedx->relevant_if(part_id(part_type, part_index), lfo_param::rand_rand_steps, false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   auto rand_steps_grid = create_grid_ui(controller, 1, 8);
   rand_steps_grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, label_type::label, false), 0, 0);
   rand_steps_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, edit_type::toggle, false), 0, 1);
