@@ -36,5 +36,7 @@ typedef effect_shaper_type_t::value effect_shaper_type;
 typedef effect_shp_over_order_t::value effect_shp_over_order;
 typedef effect_flt_stvar_type_t::value effect_flt_stvar_type;
 
+inline char const* effect_graph_names[effect_graph::count] = { "TODO FX GRAPH 1", "TODO FX GRAPH 2" };
+
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_TOPOLOGY_HPP

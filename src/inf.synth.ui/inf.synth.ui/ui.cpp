@@ -1,6 +1,7 @@
 #include <inf.synth.ui/ui.hpp>
 #include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/synth/topology.hpp>
+#include <inf.synth/effect/topology.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
@@ -206,6 +207,53 @@ create_oscillator_selector(plugin_controller* controller)
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
   return create_part_selector_ui(controller, part_type::active, active_param::vosc, 3, 5, std::move(oscillators));
+}
+
+static std::unique_ptr<ui_element>
+create_fx_main_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 1, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, effect_param::on, edit_type::toggle, label_type::label, false), 0, 0);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Main", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_fx_fx_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::selector, false), 0, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::selector, false), 0, 1, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::dropdown, false), 2, 1, 1, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "FX", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto result = create_grid_ui(controller, 1, 2);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1), 0, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2), 0, 1);
+  return result;
+}
+
+static std::unique_ptr<grid_element>
+create_fx_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto result = create_grid_ui(controller, 4, 4);
+  result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 0, 2, 4);
+  result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 2, 0, 1, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_fx_fx_group(controller, part_type, part_index)), 2, 1, 1, 3);
+  return result;
+}
+
+static std::unique_ptr<ui_element>
+create_fx_selector(plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, std::int32_t selector_param_index)
+{
+  std::vector<std::unique_ptr<ui_element>> fxs;
+  for (std::int32_t i = 0; i < part_count; i++)
+    fxs.emplace_back(create_fx_grid(controller, part_type, i));
+  return create_part_selector_ui(controller, part_type::active, selector_param_index, 1, 1, std::move(fxs));
 }
 
 static std::unique_ptr<ui_element>
@@ -443,6 +491,7 @@ create_voice_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 2, 2);
   result->add_cell(create_oscillator_selector(controller), 0, 0);
+  result->add_cell(create_fx_selector(controller, part_type::veffect, veffect_count, active_param::veffect), 1, 0);
   result->add_cell(create_envelope_selector(controller), 0, 1);
   result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 1, 1);
   return result;

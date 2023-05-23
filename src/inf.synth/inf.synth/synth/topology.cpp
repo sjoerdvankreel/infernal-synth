@@ -417,8 +417,8 @@ part_descriptor const
 part_descriptors[part_type::count] =                                             
 {                       
   { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, osc_graph_names, osc_graph::count },
-  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "FX A", "FX A" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, nullptr, 0 }, 
-  { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "FX B", "FX B" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, nullptr, 0 },
+  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "FX A", "FX A" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, effect_graph_names, effect_graph::count },
+  { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "FX B", "FX B" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, effect_graph_names, effect_graph::count },
   { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, audio_bank_param::count, nullptr, 0 },
   { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, audio_bank_param::count, nullptr, 0 },
   { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "Voice", "Voice" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count, nullptr, 0 },
