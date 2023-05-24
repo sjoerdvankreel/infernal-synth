@@ -171,9 +171,9 @@ static std::unique_ptr<ui_element>
 create_osc_graph_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 3, 1);
-  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::left), 0, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::spectrum), 1, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::right), 2, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::left, osc_param::on), 0, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::spectrum, osc_param::on), 1, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::right, osc_param::on), 2, 0);
   return result;
 }
 
@@ -305,8 +305,8 @@ static std::unique_ptr<ui_element>
 create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 1, 2);
-  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1), 0, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2), 0, 1);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1, effect_param::type), 0, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2, effect_param::type), 0, 1);
   return result;
 }
 
@@ -423,7 +423,7 @@ create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
     envelope_param::sustain_level, -1, envelope_param::release1_time, envelope_param::release2_time,
     envelope_param::release1_sync, envelope_param::release2_sync, envelope_param::release1_slope, 
     envelope_param::release2_slope, envelope_param::release_split_level)), 1, 5, 2, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0)), 0, 2, 1, 5);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0, envelope_param::on)), 0, 2, 1, 5);
   return grid;
 }
 
@@ -544,7 +544,7 @@ create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int3
   auto grid = create_grid_ui(controller, 3, 7);
   grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 0, 0, 1, 3);
   grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 1, 0, 2, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0)), 0, 3, 1, 4);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 3, 1, 4);
   auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
   auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), 1, 1, 2, 6);
