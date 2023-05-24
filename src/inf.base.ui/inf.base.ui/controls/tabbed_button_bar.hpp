@@ -25,6 +25,7 @@ private:
 public:
   inf_tabbed_button_bar(): 
   juce::TabbedButtonBar(juce::TabbedButtonBar::TabsAtTop) {}
+  void popupMenuClickOnTab(int index, juce::String const& name) override;
 
   void add_listener(listener* listener) 
   { _listeners.push_back(listener); }
