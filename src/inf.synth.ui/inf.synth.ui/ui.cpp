@@ -256,7 +256,7 @@ create_fx_filter_stvar_group(plugin_controller* controller, std::int32_t part_ty
 static std::unique_ptr<ui_element>
 create_fx_filter_comb_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 3, 5);
+  auto grid = create_grid_ui(controller, 3, 4);
   grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_comb_gain_plus, edit_type::knob, true), 0, 0, 2, 1);
   grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_comb_gain_plus, label_type::label, Justification::centred), 2, 0, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_comb_dly_plus, edit_type::knob, true), 0, 1, 2, 1);
