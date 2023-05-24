@@ -221,17 +221,34 @@ static std::unique_ptr<ui_element>
 create_fx_fx_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 8, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::selector, false), 0, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
-  auto filter_knob = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::selector, false), 3, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::selector, false), 2, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::dropdown, false), 4, 0, 1, 1);
+  auto filter_knob = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::selector, false), 5, 0, 2, 1);
   filter_knob->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
-  auto filter_dropdown = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::dropdown, false), 5, 0, 1, 1);
+  auto filter_dropdown = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::dropdown, false), 7, 0, 1, 1);
   filter_dropdown->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
-  auto shaper_knob = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shaper_type, edit_type::selector, false), 3, 0, 2, 1);
+  auto shaper_knob = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shaper_type, edit_type::selector, false), 5, 0, 2, 1);
   shaper_knob->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::shaper; });
-  auto shaper_dropdown = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shaper_type, edit_type::dropdown, false), 5, 0, 1, 1);
+  auto shaper_dropdown = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shaper_type, edit_type::dropdown, false), 7, 0, 1, 1);
   shaper_dropdown->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::shaper; });
   return create_part_group_ui(controller, create_group_label_ui(controller, "FX", false), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_fx_stvar_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 5);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_type, edit_type::selector, false), 0, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_type, edit_type::dropdown, false), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_freq, edit_type::knob, true), 0, 1, 2, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_stvar_freq, label_type::label, Justification::centred), 2, 1, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_res, edit_type::knob, true), 0, 2, 2, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_stvar_res, label_type::label, Justification::centred), 2, 2, 1, 1);
+  auto gain_knob = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_shlf_gain, edit_type::knob, true), 0, 3, 2, 1);
+  gain_knob->relevant_if(part_id(part_type, part_index), effect_param::flt_stvar_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_flt_stvar_type::lsh || val == effect_flt_stvar_type::hsh || val == effect_flt_stvar_type::bll; });
+  auto gain_label = grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_stvar_shlf_gain, label_type::label, Justification::centred), 2, 3, 1, 1);
+  gain_label->relevant_if(part_id(part_type, part_index), effect_param::flt_stvar_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_flt_stvar_type::lsh || val == effect_flt_stvar_type::hsh || val == effect_flt_stvar_type::bll; });
+  return create_part_group_ui(controller, create_group_label_ui(controller, "StVar", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -250,6 +267,7 @@ create_fx_grid(plugin_controller* controller, std::int32_t part_type, std::int32
   result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 1, 3, 7);
   result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 0, 0, 1, 1);
   result->add_cell(create_part_group_container_ui(controller, create_fx_fx_group(controller, part_type, part_index)), 1, 0, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_fx_stvar_group(controller, part_type, part_index)), 3, 1, 1, 7);
   return result;
 }
 
