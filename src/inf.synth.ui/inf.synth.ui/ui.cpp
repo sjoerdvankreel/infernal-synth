@@ -290,8 +290,8 @@ create_fx_shaper_group(plugin_controller* controller, std::int32_t part_type, st
   grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_mix, edit_type::knob, true), 0, 2, 2, 1);
   grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::shp_mix, label_type::label, Justification::centred), 2, 2, 1, 1);
   auto sheb_grid = create_grid_ui(controller, 3, 2);
-  sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_terms, edit_type::selector, false), 0, 0, 2, 1);
-  sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_terms, edit_type::dropdown, false), 2, 0, 1, 1);
+  sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_terms, edit_type::selector, true), 0, 0, 2, 1);
+  sheb_grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::shp_cheby_terms, label_type::label, Justification::centred), 2, 0, 1, 1);
   auto sheb_sum_knob = sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_sum_decay, edit_type::knob, true), 0, 1, 2, 1);
   sheb_sum_knob->relevant_if(part_id(part_type, part_index), effect_param::shaper_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_shaper_type::cheby_sum; });
   auto sheb_sum_label = sheb_grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::shp_cheby_sum_decay, label_type::label, Justification::centred), 2, 1, 1, 1);
@@ -518,7 +518,7 @@ create_lfo_custom_group(
   grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, stage2, edit_type::hslider, label_type::label, true, false, 8), 1, 2, 4, 2);
   auto slope_grid = create_grid_ui(controller, 1, 4);
   slope_grid->add_cell(create_param_label_ui(controller, part_type, part_index, slope, label_type::label, Justification::centred), 0, 0);
-  slope_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, slope, edit_type::selector, false), 0, 1, 1, 3);
+  slope_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, slope, edit_type::selector, true), 0, 1, 1, 3);
   grid->add_cell(std::move(slope_grid), 0, 4, 6, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, group_name, true), std::move(grid));
 }
