@@ -18,6 +18,7 @@ inf_tabbed_button_bar::popupMenuClickOnTab(
   for (std::int32_t i = 0; i < getNumTabs(); i++)
     swap.addItem(1 + getNumTabs() + i + 1, std::to_string(i + 1));
   menu.addSubMenu("Swap with", swap);
+  menu.setLookAndFeel(&getLookAndFeel());
   menu.show();
 }
 
