@@ -46,8 +46,8 @@ plugin_controller::clear_part(part_id id)
 void 
 plugin_controller::copy_or_swap_part(part_id source, std::int32_t target, bool swap)
 {
-  std::int32_t target_start = topology()->part_bounds[source.type][target];
-  std::int32_t source_start = topology()->part_bounds[source.type][source.index];
+  std::int32_t target_start = topology()->param_bounds[source.type][target];
+  std::int32_t source_start = topology()->param_bounds[source.type][source.index];
   std::int32_t param_count = topology()->static_parts[source.type].param_count;
   for (std::int32_t i = 0; i < param_count; i++)
   {
