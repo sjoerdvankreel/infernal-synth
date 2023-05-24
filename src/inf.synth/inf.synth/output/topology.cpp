@@ -13,10 +13,10 @@ static std::vector<list_item> const usage_sources = {
   { "{5A264DA4-D514-4BBD-9A88-46A2E099F319}", "CV B" }, 
   { "{BAE7A913-2C2B-4C13-A293-B240F25A0F1B}", "Env" },
   { "{33B6122E-633E-4A3F-9FC9-697268D84BD0}", "Osc" },
-  { "{739A0B4B-7111-4F30-8C09-94B474EB1C75}", "LFO A" },
-  { "{B7B01269-A8B2-4F34-A3F8-E66A5DC07B22}", "LFO B" },
-  { "{2579F57B-4E61-4727-8EC5-766F4711FA2D}", "FX A" },
-  { "{26C05CA1-6B5C-4B78-B2CB-662B43EF72AC}", "FX B" } };
+  { "{739A0B4B-7111-4F30-8C09-94B474EB1C75}", "VLFO" },
+  { "{B7B01269-A8B2-4F34-A3F8-E66A5DC07B22}", "GLFO" },
+  { "{2579F57B-4E61-4727-8EC5-766F4711FA2D}", "VFX" },
+  { "{26C05CA1-6B5C-4B78-B2CB-662B43EF72AC}", "GFX" } };
           
 param_descriptor const  
 output_params[output_param::count] =         
