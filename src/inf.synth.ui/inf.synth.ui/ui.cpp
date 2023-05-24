@@ -286,7 +286,7 @@ create_fx_filter_stvar_group(plugin_controller* controller, std::int32_t part_ty
 static std::unique_ptr<ui_element>
 create_fx_filter_comb_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 1, 1);
+  auto grid = create_grid_ui(controller, 3, 5);
   grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_comb_gain_plus, edit_type::knob, true), 0, 0, 2, 1);
   grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_comb_gain_plus, label_type::label, Justification::centred), 2, 0, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_comb_dly_plus, edit_type::knob, true), 0, 1, 2, 1);
@@ -301,10 +301,10 @@ create_fx_filter_comb_group(plugin_controller* controller, std::int32_t part_typ
 static std::unique_ptr<ui_element>
 create_fx_filter_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 3, 4);
-  auto state_var = grid->add_cell(create_fx_filter_stvar_group(controller, part_type, part_index), 0, 0);
+  auto grid = create_grid_ui(controller, 1, 1);
+  auto state_var = grid->add_cell(create_part_group_container_ui(controller, create_fx_filter_stvar_group(controller, part_type, part_index)), 0, 0);
   state_var->relevant_if(part_id(part_type, part_index), effect_param::filter_type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_filter_type::state_var; });
-  auto comb = grid->add_cell(create_fx_filter_comb_group(controller, part_type, part_index), 0, 0);
+  auto comb = grid->add_cell(create_part_group_container_ui(controller, create_fx_filter_comb_group(controller, part_type, part_index)), 0, 0);
   comb->relevant_if(part_id(part_type, part_index), effect_param::filter_type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_filter_type::comb; });
   return grid;
 }
