@@ -25,11 +25,23 @@ inf_selector_bar::popupMenuClickOnTab(
   part_id this_id = { _part_type, getCurrentTabIndex() };  
   int option = menu.show();
 
-  if(option == 0) return;
-  else if(option == 1) _controller->clear_part(this_id);
-  else if(option < 1 + getNumTabs()) _controller->copy_or_swap_part(this_id, option - 2, false);
-  else if(option < 1 + getNumTabs() * 2) _controller->copy_or_swap_part(this_id, option - 2 - getNumTabs(), true);
-  else assert(false);
+  if(option == 0) 
+    return;
+  option--;
+  if(option == 0)
+  {
+    _controller->clear_part(this_id);
+    return;
+  }
+  option--;
+  if(option < getNumTabs()) 
+  {
+    _controller->copy_or_swap_part(this_id, option, false);
+    return;
+  }
+  option -= getNumTabs();
+  assert(0 <= option && option < getNumTabs());
+  _controller->copy_or_swap_part(this_id, option, true);
 }
 
 } // namespace inf::base::ui
