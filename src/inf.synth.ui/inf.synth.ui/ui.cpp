@@ -280,6 +280,28 @@ create_fx_filter_grid(plugin_controller* controller, std::int32_t part_type, std
 }
 
 static std::unique_ptr<ui_element>
+create_fx_shaper_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 5);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_over_order, edit_type::selector, false), 0, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_over_order, edit_type::dropdown, false), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_gain, edit_type::knob, true), 0, 1, 2, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::shp_gain, label_type::label, Justification::centred), 2, 1, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_mix, edit_type::knob, true), 0, 2, 2, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::shp_mix, label_type::label, Justification::centred), 2, 2, 1, 1);
+  auto sheb_grid = create_grid_ui(controller, 3, 2);
+  sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_terms, edit_type::selector, false), 0, 0, 2, 1);
+  sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_terms, edit_type::dropdown, false), 2, 0, 1, 1);
+  auto sheb_sum_knob = sheb_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::shp_cheby_sum_decay, edit_type::knob, true), 0, 1, 2, 1);
+  sheb_sum_knob->relevant_if(part_id(part_type, part_index), effect_param::shaper_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_shaper_type::cheby_sum; });
+  auto sheb_sum_label = sheb_grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::shp_cheby_sum_decay, label_type::label, Justification::centred), 2, 1, 1, 1);
+  sheb_sum_label->relevant_if(part_id(part_type, part_index), effect_param::shaper_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_shaper_type::cheby_sum; });
+  sheb_grid->relevant_if(part_id(part_type, part_index), effect_param::shaper_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_shaper_type::cheby_one || val == effect_shaper_type::cheby_sum; });
+  grid->add_cell(std::move(sheb_grid), 0, 3, 3, 2);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Shape", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 1, 2);
@@ -297,6 +319,8 @@ create_fx_grid(plugin_controller* controller, std::int32_t part_type, std::int32
   result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 1, 2, 7);
   auto filter = result->add_cell(create_fx_filter_grid(controller, part_type, part_index), 2, 1, 1, 7);
   filter->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
+  auto shaper = result->add_cell(create_part_group_container_ui(controller, create_fx_shaper_group(controller, part_type, part_index)), 2, 1, 1, 7);
+  shaper->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::shaper; });
   return result;
 }
 

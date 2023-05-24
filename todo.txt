@@ -75,3 +75,4 @@
 - change fx graph tooltip depending on type
 - drop a/b suffixes
 - more right padding in selector
+- disable oversampling for graph

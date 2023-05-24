@@ -20,7 +20,7 @@ static std::vector<list_item> const effect_types = {
   { "{2579F57B-4E61-4727-8EC5-766F4711FA2D}", "Delay" },
   { "{26C05CA1-6B5C-4B78-B2CB-662B43EF72AC}", "Reverb" } };
 static std::vector<list_item> const effect_shp_over_orders = {
-  { "{5FC4A099-B447-420F-97A5-FEF5F8817829}", "None" },
+  { "{5FC4A099-B447-420F-97A5-FEF5F8817829}", "1X" },
   { "{A513F4DD-6D41-4B08-BC1F-8C1D02A72A48}", "2X" },
   { "{72E89613-58DE-4529-9DCD-7D95C57D977B}", "4X" },
   { "{D663C977-1DC3-4F7D-9CE5-D7CD209E43E0}", "8X" },
