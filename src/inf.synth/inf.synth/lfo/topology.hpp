@@ -2,16 +2,20 @@
 #define INF_SYNTH_LFO_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
 #include <cstdint>
 
 namespace inf::synth {
 
-inline char const* lfo_graph_name = "LFO";
 extern base::param_descriptor const vlfo_params[];
 extern base::param_descriptor const glfo_params[];
 extern std::vector<float> const lfo_timesig_values;
+
+inline char const* lfo_graph_name_selector(
+base::topology_info const*, base::param_value const*, std::int32_t, std::int32_t, std::int32_t)
+{ return "LFO"; }
 
 struct lfo_rand_type_t { enum value { slope, level, both }; };
 struct lfo_type_t { enum value { basic, random, custom, count }; };

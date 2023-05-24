@@ -2,6 +2,7 @@
 #define INF_SYNTH_EFFECT_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -11,6 +12,10 @@ namespace inf::synth {
 extern base::param_descriptor const veffect_params[];
 extern base::param_descriptor const geffect_params[];
 extern std::vector<float> const effect_dly_timesig_values;
+
+char const* effect_graph_name_selector(
+base::topology_info const* topology, base::param_value const* state,
+std::int32_t part_type, std::int32_t part_index, std::int32_t graph_type);
 
 struct effect_param_t { enum value {
   on, type, filter_type, flt_stvar_type, flt_stvar_freq, flt_stvar_res, flt_stvar_kbd, 
@@ -35,8 +40,6 @@ typedef effect_filter_type_t::value effect_filter_type;
 typedef effect_shaper_type_t::value effect_shaper_type;
 typedef effect_shp_over_order_t::value effect_shp_over_order;
 typedef effect_flt_stvar_type_t::value effect_flt_stvar_type;
-
-inline char const* effect_graph_names[effect_graph::count] = { "TODO FX GRAPH 1", "TODO FX GRAPH 2" };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_TOPOLOGY_HPP

@@ -7,11 +7,17 @@
 
 namespace inf::base {
 
+struct topology_info;
+
 struct part_id
 {
   std::int32_t type;
   std::int32_t index;
 };
+
+typedef char const* (*graph_name_selector)(
+topology_info const* topology, param_value const* state, 
+std::int32_t part_type, std::int32_t part_index, std::int32_t graph_type);
 
 // Input: (optionally automatable) input parts.
 // Selector: (optionally automatable) selector (in case of part types with more than 1 instance). At most one.
@@ -30,8 +36,7 @@ struct part_descriptor
   std::int32_t const part_count; // Part count of this type, e.g. 2 lfos.
   param_descriptor const* const params; // Pointer to parameter descriptor array.
   std::int32_t const param_count; // Parameter count for a part of this type, e.g. 2: frequency, resonance.
-  char const* const* graph_names;
-  std::int32_t const graph_count;
+  graph_name_selector name_selector; // Name may depend on part state.
 };
 
 } // namespace inf::base

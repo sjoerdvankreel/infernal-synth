@@ -33,6 +33,20 @@ generate_names(vosc_count, [](std::int32_t n)
 static std::vector<std::string> const osc_sync_sources =
 generate_names(vosc_count + 1, [](std::int32_t n) 
 { return n == 0 ? std::string("Off") : std::string("Osc ") + std::to_string(n); }); 
+
+char const* 
+osc_graph_name_selector(
+  base::topology_info const*, base::param_value const*,
+  std::int32_t, std::int32_t, std::int32_t graph_type)
+{
+  switch (graph_type)
+  {
+  case osc_graph::left: return "Left";
+  case osc_graph::right: return "Right";
+  case osc_graph::spectrum: return "Spectrum";
+  default: assert(false); return nullptr;
+  }
+}
      
 param_descriptor const     
 osc_params[osc_param::count] =               

@@ -58,6 +58,28 @@ static std::vector<list_item> const effect_global_types =
 std::vector<list_item>(effect_types.begin(), effect_types.end());
 static std::vector<list_item> const effect_voice_types =
 std::vector<list_item>(effect_types.begin(), effect_types.begin() + effect_type::delay);
+
+char const* 
+effect_graph_name_selector(
+  topology_info const* topology, param_value const* state, 
+  std::int32_t part_type, std::int32_t part_index, std::int32_t graph_type)
+{
+  std::int32_t type = state[topology->param_index({ part_type, part_index }, effect_param::type)].discrete;
+  switch (type)
+  {
+  case effect_type::filter:
+    switch (graph_type) {
+    case effect_graph::graph1: return "Impulse response";
+    case effect_graph::graph2: return "Frequency response";
+    default: assert(false); return nullptr; } break;
+  case effect_type::shaper:
+    switch (graph_type) {
+    case effect_graph::graph1: return "Shape";
+    case effect_graph::graph2: return "Spectrum";
+    default: assert(false); return nullptr; } break;
+  default: assert(false); return nullptr;
+  }
+}
  
 static param_descriptor_data const effect_on_data = { { "On", "Enabled" }, param_kind::voice, false }; 
 static param_descriptor_data const effect_voice_type_data = { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &effect_voice_types, effect_type::filter } };

@@ -2,15 +2,19 @@
 #define INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
 #include <cstdint>
 
 namespace inf::synth {
 
-inline char const* env_graph_name = "Envelope";
 extern base::param_descriptor const envelope_params[];
 extern std::vector<float> const envelope_timesig_values;
+
+inline char const* env_graph_name_selector(
+base::topology_info const*, base::param_value const*, std::int32_t, std::int32_t, std::int32_t)
+{ return "Envelope"; }
 
 struct envelope_param_t { enum value {
   on, type, mode, synced, bipolar, invert, delay_time, delay_sync, 
