@@ -221,8 +221,8 @@ static std::unique_ptr<ui_element>
 create_fx_fx_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 8, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::selector, false), 0, 0, 2, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::dropdown, false), 2, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::selector, false), 1, 0, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::type, edit_type::dropdown, false), 3, 0, 1, 1);
   auto filter_knob = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::selector, false), 5, 0, 2, 1);
   filter_knob->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
   auto filter_dropdown = grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::filter_type, edit_type::dropdown, false), 7, 0, 1, 1);
