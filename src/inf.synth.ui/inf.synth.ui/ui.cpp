@@ -229,9 +229,9 @@ create_fx_fx_group(plugin_controller* controller, std::int32_t part_type, std::i
 static std::unique_ptr<ui_element>
 create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto result = create_grid_ui(controller, 1, 2);
+  auto result = create_grid_ui(controller, 2, 1);
   result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1), 0, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2), 0, 1);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2), 1, 0);
   return result;
 }
 
