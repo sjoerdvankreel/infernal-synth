@@ -5,6 +5,7 @@
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
+#include <inf.synth/voice_master/topology.hpp>
 
 using namespace juce;
 using namespace inf::base;
@@ -566,8 +567,12 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
 static std::unique_ptr<ui_element>
 create_voice_amp_part(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 2);
-  return create_part_single_ui(controller, "Amp", std::move(grid));
+  auto grid = create_grid_ui(controller, 1, 6);
+  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, vgamp_param::gain, label_type::label, Justification::right), 0, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, vgamp_param::gain, edit_type::knob, tooltip_type::value), 0, 1, 1, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, vgamp_param::bal, edit_type::knob, tooltip_type::value), 0, 3, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, vgamp_param::bal, label_type::label, Justification::left), 0, 5, 1, 1);
+  return create_part_single_ui(controller, "Amp", create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
