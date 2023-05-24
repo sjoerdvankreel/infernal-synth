@@ -579,10 +579,10 @@ static std::unique_ptr<ui_element>
 create_voice_pitch_part(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 8);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::note, edit_type::dropdown, tooltip_type::off), 0, 0, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::note, label_type::value, Justification::right), 0, 1, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::note, edit_type::selector, tooltip_type::label), 0, 2, 1, 2);
   grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::selector, tooltip_type::label), 0, 4, 1, 2);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::dropdown, tooltip_type::off), 0, 6, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::oct, label_type::value, Justification::left), 0, 6, 1, 1);
   return create_part_single_ui(controller, "Pitch", create_part_group_container_ui(controller, std::move(grid)));
 }
 
