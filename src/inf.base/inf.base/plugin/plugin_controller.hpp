@@ -52,6 +52,9 @@ public:
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
 
+  void clear_part(part_id id);
+  void copy_or_swap_part(part_id source, std::int32_t target, bool swap);
+
   virtual void restart() = 0;
   virtual std::string preset_file_extension() = 0;
   virtual void save_preset(std::string const& path) = 0;
