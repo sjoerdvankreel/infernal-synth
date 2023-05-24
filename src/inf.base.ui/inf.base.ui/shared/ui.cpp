@@ -120,15 +120,15 @@ selector_label_element::build_core(LookAndFeel const& lnf)
 }
 
 Component* 
-tab_bar_element::build_core(LookAndFeel const& lnf)
+selector_bar_element::build_core(LookAndFeel const& lnf)
 {
-  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
-  inf_tabbed_button_bar* result = new inf_tabbed_button_bar();
+  std::int32_t index = controller()->topology()->param_index(_selector_part_id, _selector_param_index);
+  inf_selector_bar* result = new inf_selector_bar(controller(), _selected_part_type);
   result->setMinimumTabScaleFactor(0.0f);
   for(std::size_t i = 0; i < _headers.size(); i++)
     result->addTab(_headers[i], Colours::black, static_cast<int>(i));
   result->setCurrentTabIndex(controller()->state()[index].discrete, false);
-  _listener.reset(new tab_param_listener(controller(), result, index));
+  _listener.reset(new selector_listener(controller(), result, index));
   result->add_listener(_listener.get());
   if(_extra_listener) result->add_listener(_extra_listener.get());
   return result;
@@ -456,16 +456,16 @@ create_part_single_ui(
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
-  std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
+  std::int32_t selected_part_type, std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
 {
   inf::base::part_id selector_id = { selector_part_type, 0 };
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + label_columns);
   selector_grid->add_cell(create_selector_label_ui(controller, header), 0, 0, 1, label_columns);
-  auto tab_bar = create_tab_bar(controller, selector_id, selector_param_index);
-  auto tab_bar_ptr = tab_bar.get();
+  auto selector_bar = create_selector_bar(controller, selector_id, selector_param_index, selected_part_type);
+  auto selector_bar_ptr = selector_bar.get();
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
-    tab_bar->add_header(std::to_string(i + 1));
-  selector_grid->add_cell(std::move(tab_bar), 0, label_columns, 1, selector_columns);
+    selector_bar->add_header(std::to_string(i + 1));
+  selector_grid->add_cell(std::move(selector_bar), 0, label_columns, 1, selector_columns);
 
   std::vector<ui_element*> tabs;
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
@@ -480,8 +480,8 @@ create_part_selector_ui(
   std::int32_t selected_index = controller->state()[controller->topology()->param_index(selector_id, selector_param_index)].discrete;
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
     tabs[i]->initially_visible(i == selected_index);
-  tab_bar_ptr->set_extra_listener(std::make_unique<tab_button_listener>(
-    std::function<void(inf_tabbed_button_bar*)>([tabs](inf_tabbed_button_bar* bar) {
+  selector_bar_ptr->set_extra_listener(std::make_unique<selector_extra_listener>(
+    std::function<void(inf_selector_bar*)>([tabs](inf_selector_bar* bar) {
       for(std::int32_t i = 0; i < static_cast<std::int32_t>(tabs.size()); i++)
         tabs[i]->component()->setVisible(i == bar->getCurrentTabIndex()); })));
   return result;

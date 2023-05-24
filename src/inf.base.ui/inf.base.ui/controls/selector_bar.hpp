@@ -1,6 +1,7 @@
-#ifndef INF_BASE_UI_CONTROLS_TABBED_BUTTON_BAR_HPP
-#define INF_BASE_UI_CONTROLS_TABBED_BUTTON_BAR_HPP
+#ifndef INF_BASE_UI_CONTROLS_SELECTOR_BAR_HPP
+#define INF_BASE_UI_CONTROLS_SELECTOR_BAR_HPP
 
+#include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
 #include <vector>
@@ -8,7 +9,7 @@
 
 namespace inf::base::ui {
 
-class inf_tabbed_button_bar:
+class inf_selector_bar:
 public juce::TabbedButtonBar
 {
 public:
@@ -16,15 +17,17 @@ public:
   {
   public:
     virtual ~listener() = default;
-    virtual void tab_changed(inf_tabbed_button_bar* bar) = 0;
+    virtual void tab_changed(inf_selector_bar* bar) = 0;
   };
 
 private:
+  std::int32_t const _part_type;
   std::vector<listener*> _listeners = {};
+  inf::base::plugin_controller* const _controller;
 
 public:
-  inf_tabbed_button_bar(): 
-  juce::TabbedButtonBar(juce::TabbedButtonBar::TabsAtTop) {}
+  inf_selector_bar(inf::base::plugin_controller* controller, std::int32_t part_type):
+  juce::TabbedButtonBar(juce::TabbedButtonBar::TabsAtTop), _part_type(part_type), _controller(controller) {}
   void popupMenuClickOnTab(int index, juce::String const& name) override;
 
   void add_listener(listener* listener) 
@@ -34,4 +37,4 @@ public:
 };
 
 } // namespace inf::base::ui
-#endif // INF_BASE_UI_CONTROLS_TABBED_BUTTON_BAR_HPP
+#endif // INF_BASE_UI_CONTROLS_SELECTOR_BAR_HPP

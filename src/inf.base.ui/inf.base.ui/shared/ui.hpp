@@ -7,17 +7,17 @@
 #include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
-#include <inf.base.ui/controls/tabbed_button_bar.hpp>
+#include <inf.base.ui/controls/selector_bar.hpp>
 #include <inf.base.ui/listeners/graph_listener.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
+#include <inf.base.ui/listeners/selector_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
-#include <inf.base.ui/listeners/tab_param_listener.hpp>
-#include <inf.base.ui/listeners/tab_button_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
 #include <inf.base.ui/listeners/slider_param_listener.hpp>
 #include <inf.base.ui/listeners/dropdown_param_listener.hpp>
+#include <inf.base.ui/listeners/selector_extra_listener.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -117,28 +117,34 @@ inline std::unique_ptr<selector_label_element>
 create_selector_label_ui(inf::base::plugin_controller* controller, std::string const& text)
 { return std::make_unique<selector_label_element>(controller, text); }
 
-class tab_bar_element :
+class selector_bar_element :
 public ui_element
 {
 private:
-  base::part_id const _part_id;
-  std::int32_t const _param_index;
   std::vector<std::string> _headers = {};
-  std::unique_ptr<tab_param_listener> _listener = {};
-  std::unique_ptr<tab_button_listener> _extra_listener = {};
+  base::part_id const _selector_part_id;
+  std::int32_t const _selected_part_type;
+  std::int32_t const _selector_param_index;
+  std::unique_ptr<selector_listener> _listener = {};
+  std::unique_ptr<selector_extra_listener> _extra_listener = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
   void add_header(std::string const& header) { _headers.push_back(header); }
-  void set_extra_listener(std::unique_ptr<tab_button_listener>&& listener) { _extra_listener = std::move(listener); }
-  tab_bar_element(inf::base::plugin_controller* controller, base::part_id const& part_id, 
-    std::int32_t param_index): ui_element(controller), _part_id(part_id), _param_index(param_index) {}
+  void set_extra_listener(std::unique_ptr<selector_extra_listener>&& listener) { _extra_listener = std::move(listener); }
+  selector_bar_element(
+    inf::base::plugin_controller* controller, base::part_id const& selector_part_id,
+    std::int32_t selector_param_index, std::int32_t selected_part_type): 
+  ui_element(controller), _selector_part_id(selector_part_id), 
+  _selected_part_type(selected_part_type), _selector_param_index(selector_param_index) {}
 };
 
-inline std::unique_ptr<tab_bar_element>
-create_tab_bar(inf::base::plugin_controller* controller, base::part_id const& part_id, std::int32_t param_index)
-{ return std::make_unique<tab_bar_element>(controller, part_id, param_index); }
+inline std::unique_ptr<selector_bar_element>
+create_selector_bar(
+  inf::base::plugin_controller* controller, base::part_id const& selector_part_id, 
+  std::int32_t selector_param_index, std::int32_t selected_part_type)
+{ return std::make_unique<selector_bar_element>(controller, selector_part_id, selector_param_index, selected_part_type); }
 
 class param_label_element:
 public ui_element
@@ -317,7 +323,7 @@ create_part_single_ui(
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
-  std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
+  std::int32_t selected_part_type, std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
 std::unique_ptr<ui_element>
 create_part_group_ui(
