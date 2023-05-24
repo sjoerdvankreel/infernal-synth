@@ -278,7 +278,7 @@ create_fx_filter_stvar_group(plugin_controller* controller, std::int32_t part_ty
   gain_knob->relevant_if(part_id(part_type, part_index), effect_param::flt_stvar_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_flt_stvar_type::lsh || val == effect_flt_stvar_type::hsh || val == effect_flt_stvar_type::bll; });
   auto gain_label = grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_stvar_shlf_gain, label_type::label, Justification::centred), 2, 3, 1, 1);
   gain_label->relevant_if(part_id(part_type, part_index), effect_param::flt_stvar_type, false, [](std::int32_t part_index, std::int32_t val) { return val == effect_flt_stvar_type::lsh || val == effect_flt_stvar_type::hsh || val == effect_flt_stvar_type::bll; });
-  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_kbd, edit_type::toggle, false), 0, 4, 2, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, part_index, effect_param::flt_stvar_kbd, edit_type::knob, true), 0, 4, 2, 1);
   grid->add_cell(create_param_label_ui(controller, part_type, part_index, effect_param::flt_stvar_kbd, label_type::label, Justification::centred), 2, 4, 1, 1);
   return create_part_group_ui(controller, create_group_label_ui(controller, "StVar", true), std::move(grid));
 }
