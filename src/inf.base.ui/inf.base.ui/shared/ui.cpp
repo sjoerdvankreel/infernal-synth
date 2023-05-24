@@ -113,7 +113,7 @@ group_label_element::layout()
 Component*
 selector_label_element::build_core(LookAndFeel const& lnf)
 {
-  Label* result = new inf_selector_label();
+  Label* result = new inf_selector_label(controller(), _part_type, _part_count);
   result->setText(_text, dontSendNotification);
   result->setFont(juce::Font(get_selector_font_height(controller()), juce::Font::bold));
   return result;
@@ -442,10 +442,11 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
 
 std::unique_ptr<ui_element>
 create_part_single_ui(
-  plugin_controller* controller, std::string const& header, std::unique_ptr<ui_element>&& part)
+  plugin_controller* controller, std::string const& header, 
+  std::int32_t selected_part_type, std::int32_t selected_part_count, std::unique_ptr<ui_element>&& part)
 {
   auto selector_grid = create_grid_ui(controller, 1, 1);
-  selector_grid->add_cell(create_selector_label_ui(controller, header), 0, 0);
+  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, selected_part_count), 0, 0);
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
   auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
   result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
@@ -460,7 +461,7 @@ create_part_selector_ui(
 {
   inf::base::part_id selector_id = { selector_part_type, 0 };
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + label_columns);
-  selector_grid->add_cell(create_selector_label_ui(controller, header), 0, 0, 1, label_columns);
+  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, static_cast<std::int32_t>(selected_parts.size())), 0, 0, 1, label_columns);
   auto selector_bar = create_selector_bar(controller, selector_id, selector_param_index, selected_part_type);
   auto selector_bar_ptr = selector_bar.get();
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
