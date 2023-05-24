@@ -329,6 +329,20 @@ inf_look_and_feel::drawPopupMenuItem(
   g.setColour(with_enabled(dummy, ComboBox::ColourIds::textColourId));
   g.setFont(getPopupMenuFont());
   g.drawText(text, text_rect, Justification::centredLeft, false);
+  
+  // submenu indicator
+  if (has_sub_menu)
+  {
+    Path path;
+    auto r = area0.reduced(3);
+    auto arrow_h = 0.6f * getPopupMenuFont().getAscent();
+    auto x = static_cast<float>(r.removeFromRight(static_cast<int>(arrow_h)).getX());
+    auto half_h = static_cast<float> (r.getCentreY());
+    path.startNewSubPath(x, half_h - arrow_h * 0.5f);
+    path.lineTo(x + arrow_h * 0.6f, half_h);
+    path.lineTo(x, half_h + arrow_h * 0.5f);
+    g.strokePath(path, PathStrokeType(2.0f));
+  }
 }
 
 void 
