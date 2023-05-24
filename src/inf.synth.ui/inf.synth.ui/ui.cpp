@@ -564,10 +564,18 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
 }
 
 static std::unique_ptr<ui_element>
+create_voice_amp_part(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 2);
+  return create_part_single_ui(controller, "Amp", std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_voice_controls_fx_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 4, 2);
   result->add_cell(create_fx_selector(controller, part_type::veffect, veffect_count, active_param::veffect), 0, 0, 3, 2);
+  result->add_cell(create_voice_amp_part(controller), 3, 0, 1, 1);
   return result;
 }
 

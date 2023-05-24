@@ -312,6 +312,14 @@ create_root_ui(
 { return std::make_unique<root_element>(controller, std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
+create_part_single_ui(
+  plugin_controller* controller, std::string const& header, std::unique_ptr<ui_element>&& part);
+std::unique_ptr<ui_element>
+create_part_selector_ui(
+  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
+  std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
+
+std::unique_ptr<ui_element>
 create_part_group_ui(
   plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
   std::unique_ptr<ui_element>&& content);
@@ -331,10 +339,6 @@ std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
   std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
-std::unique_ptr<ui_element>
-create_part_selector_ui(
-  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index, 
-  std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_UI_HPP

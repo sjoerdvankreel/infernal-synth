@@ -438,6 +438,17 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
 }
 
 std::unique_ptr<ui_element>
+create_part_single_ui(
+  plugin_controller* controller, std::string const& header, std::unique_ptr<ui_element>&& part)
+{
+  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
+  auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
+  result->add_cell(create_part_group_container_ui(controller, create_selector_label_ui(controller, header), container_selector_padding), 0, 0);
+  result->add_cell(std::move(part), 1, 0);
+  return result;
+}
+
+std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
