@@ -15,7 +15,7 @@ extern std::vector<float> const effect_dly_timesig_values;
 
 char const* effect_graph_name_selector(
 base::topology_info const* topology, base::param_value const* state,
-std::int32_t part_type, std::int32_t part_index, std::int32_t graph_type);
+base::part_id id, std::int32_t graph_type);
 
 struct effect_param_t { enum value {
   on, type, filter_type, flt_stvar_type, flt_stvar_freq, flt_stvar_res, flt_stvar_kbd, 

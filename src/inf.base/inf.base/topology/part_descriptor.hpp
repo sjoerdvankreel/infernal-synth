@@ -16,8 +16,7 @@ struct part_id
 };
 
 typedef char const* (*graph_name_selector)(
-topology_info const* topology, param_value const* state, 
-std::int32_t part_type, std::int32_t part_index, std::int32_t graph_type);
+topology_info const* topology, param_value const* state, part_id id, std::int32_t graph_type);
 
 // Input: (optionally automatable) input parts.
 // Selector: (optionally automatable) selector (in case of part types with more than 1 instance). At most one.

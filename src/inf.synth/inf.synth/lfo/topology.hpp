@@ -14,7 +14,7 @@ extern base::param_descriptor const glfo_params[];
 extern std::vector<float> const lfo_timesig_values;
 
 inline char const* lfo_graph_name_selector(
-base::topology_info const*, base::param_value const*, std::int32_t, std::int32_t, std::int32_t)
+base::topology_info const*, base::param_value const*, base::part_id, std::int32_t)
 { return "LFO"; }
 
 struct lfo_rand_type_t { enum value { slope, level, both }; };

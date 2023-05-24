@@ -292,7 +292,8 @@ part_graph_element::build_core(juce::LookAndFeel const& lnf)
 { 
   inf_graph_plot* result = new inf_graph_plot(controller(), _part_id, _graph_type); 
   _listener.reset(new graph_listener(controller(), result));
-  result->setTooltip(controller()->topology()->get_part_descriptor(_part_id).graph_names[_graph_type]);
+  auto const& desc = controller()->topology()->get_part_descriptor(_part_id);
+  result->setTooltip(desc.name_selector(controller()->topology(), controller()->state(), _part_id, _graph_type));
   return result;
 }
 

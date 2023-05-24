@@ -36,8 +36,8 @@ generate_names(vosc_count + 1, [](std::int32_t n)
 
 char const* 
 osc_graph_name_selector(
-  base::topology_info const*, base::param_value const*,
-  std::int32_t, std::int32_t, std::int32_t graph_type)
+  topology_info const*, base::param_value const*,
+  part_id, std::int32_t graph_type)
 {
   switch (graph_type)
   {

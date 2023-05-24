@@ -11,7 +11,7 @@ namespace inf::synth {
 
 extern base::param_descriptor const osc_params[];
 char const* osc_graph_name_selector(
-base::topology_info const*, base::param_value const*, std::int32_t, std::int32_t, std::int32_t);
+base::topology_info const*, base::param_value const*, base::part_id, std::int32_t);
 
 struct osc_graph_t { enum value { left, right, spectrum, count }; };
 struct osc_type_t { enum value { basic, mix, dsf, kps, noise, count }; };

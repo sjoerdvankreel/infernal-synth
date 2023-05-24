@@ -13,7 +13,7 @@ extern base::param_descriptor const envelope_params[];
 extern std::vector<float> const envelope_timesig_values;
 
 inline char const* env_graph_name_selector(
-base::topology_info const*, base::param_value const*, std::int32_t, std::int32_t, std::int32_t)
+base::topology_info const*, base::param_value const*, base::part_id, std::int32_t)
 { return "Envelope"; }
 
 struct envelope_param_t { enum value {

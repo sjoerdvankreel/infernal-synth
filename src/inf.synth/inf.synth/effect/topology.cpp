@@ -62,9 +62,9 @@ std::vector<list_item>(effect_types.begin(), effect_types.begin() + effect_type:
 char const* 
 effect_graph_name_selector(
   topology_info const* topology, param_value const* state, 
-  std::int32_t part_type, std::int32_t part_index, std::int32_t graph_type)
+  part_id id, std::int32_t graph_type)
 {
-  std::int32_t type = state[topology->param_index({ part_type, part_index }, effect_param::type)].discrete;
+  std::int32_t type = state[topology->param_index(id, effect_param::type)].discrete;
   switch (type)
   {
   case effect_type::filter:
