@@ -5,7 +5,8 @@ namespace inf::base::ui {
 graph_listener::
 ~graph_listener() 
 {
-  _controller->remove_param_listener(_tooltip_param, this);
+  std::int32_t param_index = _controller->topology()->param_index(_part_id, _tooltip_param);
+  _controller->remove_param_listener(param_index, this);
   _controller->remove_any_param_listener(this); 
 }
 
@@ -13,8 +14,9 @@ graph_listener::
 graph_listener(plugin_controller* controller, inf_graph_plot* plot, part_id part_id, std::int32_t graph_type, std::int32_t tooltip_param) :
 _plot(plot), _part_id(part_id), _graph_type(graph_type), _tooltip_param(tooltip_param), _controller(controller)
 {
+  std::int32_t param_index = _controller->topology()->param_index(_part_id, _tooltip_param);
   _controller->add_any_param_listener(this);
-  _controller->add_param_listener(tooltip_param, this);
+  _controller->add_param_listener(param_index, this);
 }
 
 void 
