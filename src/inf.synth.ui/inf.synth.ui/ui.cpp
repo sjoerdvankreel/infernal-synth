@@ -212,8 +212,8 @@ create_oscillator_selector(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_fx_main_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 5, 5);
-  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, effect_param::on, edit_type::toggle, label_type::label, false), 1, 1, 3, 3);
+  auto grid = create_grid_ui(controller, 6, 6);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, effect_param::on, edit_type::toggle, label_type::label, false), 1, 1, 4, 4);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Main", false), std::move(grid));
 }
 
@@ -258,9 +258,9 @@ create_fx_select_group(plugin_controller* controller, std::int32_t part_type, st
 static std::unique_ptr<ui_element>
 create_fx_fx_select_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 2, 1);
+  auto grid = create_grid_ui(controller, 1, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_fx_fx_group(controller, part_type, part_index)), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_fx_select_group(controller, part_type, part_index)), 1, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_fx_select_group(controller, part_type, part_index)), 0, 1);
   return grid;
 }
 
@@ -312,20 +312,20 @@ create_fx_filter_grid(plugin_controller* controller, std::int32_t part_type, std
 static std::unique_ptr<ui_element>
 create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto result = create_grid_ui(controller, 2, 1);
+  auto result = create_grid_ui(controller, 1, 2);
   result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1), 0, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2), 1, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2), 0, 1);
   return result;
 }
 
 static std::unique_ptr<grid_element>
 create_fx_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto result = create_grid_ui(controller, 4, 8);
-  result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 1, 3, 7);
-  result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 0, 0, 1, 1);
-  result->add_cell(create_fx_fx_select_group(controller, part_type, part_index), 1, 0, 3, 1);
-  auto filter = result->add_cell(create_fx_filter_grid(controller, part_type, part_index), 3, 1, 1, 7);
+  auto result = create_grid_ui(controller, 3, 8);
+  result->add_cell(create_fx_fx_select_group(controller, part_type, part_index), 0, 0, 2, 2);
+  result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 2, 0, 1, 1);
+  result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 2, 2, 6);
+  auto filter = result->add_cell(create_fx_filter_grid(controller, part_type, part_index), 2, 1, 1, 7);
   filter->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
   return result;
 }
