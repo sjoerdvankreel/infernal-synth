@@ -291,7 +291,7 @@ juce::Component*
 part_graph_element::build_core(juce::LookAndFeel const& lnf)
 { 
   inf_graph_plot* result = new inf_graph_plot(controller(), _part_id, _graph_type); 
-  _listener.reset(new graph_listener(controller(), result));
+  _listener.reset(new graph_listener(controller(), result, _part_id, _graph_type, _tooltip_param));
   auto const& desc = controller()->topology()->get_part_descriptor(_part_id);
   result->setTooltip(desc.name_selector(controller()->topology(), controller()->state(), _part_id, _graph_type));
   return result;

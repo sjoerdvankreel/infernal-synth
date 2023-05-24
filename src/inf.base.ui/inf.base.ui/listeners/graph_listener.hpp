@@ -7,16 +7,21 @@
 namespace inf::base::ui {
 
 class graph_listener :
+public param_listener,
 public any_param_listener
 {
   inf_graph_plot* const _plot;
+  base::part_id const _part_id;
+  std::int32_t const _graph_type;
+  std::int32_t const _tooltip_param;
   plugin_controller* const _controller;
 
 public:
   void any_controller_param_changed(std::int32_t index) override;
-  ~graph_listener() { _controller->remove_any_param_listener(this); }
-  graph_listener(plugin_controller* controller, inf_graph_plot* plot):
-  _plot(plot), _controller(controller) { _controller->add_any_param_listener(this); }
+  void controller_param_changed(inf::base::param_value ui_value) override;
+
+  ~graph_listener();
+  graph_listener(plugin_controller* controller, inf_graph_plot* plot, base::part_id part_id, std::int32_t graph_type, std::int32_t tooltip_param);
 };
 
 } // namespace inf::base::ui

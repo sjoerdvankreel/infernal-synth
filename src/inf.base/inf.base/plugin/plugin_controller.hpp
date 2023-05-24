@@ -36,7 +36,6 @@ struct factory_preset
 class plugin_controller
 {
 protected:
-  // Separate copy of the parameter state used for graphs.
   std::vector<inf::base::param_value> _state;
   std::unique_ptr<inf::base::topology_info> _topology;
   std::set<any_param_listener*> _any_param_listeners = {};
