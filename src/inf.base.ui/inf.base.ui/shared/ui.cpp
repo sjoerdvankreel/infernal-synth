@@ -439,13 +439,12 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
 
 std::unique_ptr<ui_element>
 create_part_selector_ui(
-  plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index,
+  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
 {
   inf::base::part_id selector_id = { selector_part_type, 0 };
-  auto const& desc = controller->topology()->get_param_descriptor(selector_id, selector_param_index);
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + label_columns);
-  selector_grid->add_cell(create_selector_label_ui(controller, desc.data.static_name.short_), 0, 0, 1, label_columns);
+  selector_grid->add_cell(create_selector_label_ui(controller, header), 0, 0, 1, label_columns);
   auto tab_bar = create_tab_bar(controller, selector_id, selector_param_index);
   auto tab_bar_ptr = tab_bar.get();
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)

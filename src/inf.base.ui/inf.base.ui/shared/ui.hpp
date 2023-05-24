@@ -333,7 +333,7 @@ create_param_ui(
   std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
 std::unique_ptr<ui_element>
 create_part_selector_ui(
-  plugin_controller* controller, std::int32_t selector_part_type, std::int32_t selector_param_index, 
+  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index, 
   std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
 } // namespace inf::base::ui
