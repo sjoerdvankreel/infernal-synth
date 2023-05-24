@@ -81,42 +81,42 @@ effect_graph_name_selector(
   }
 }
  
-static param_descriptor_data const effect_on_data = { { "On", "Enabled" }, param_kind::voice, false }; 
+static param_descriptor_data const effect_on_data = { { "On", "On" }, param_kind::voice, false }; 
 static param_descriptor_data const effect_voice_type_data = { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &effect_voice_types, effect_type::filter } };
 static param_descriptor_data const effect_global_type_data = { { "Type", "Type" }, "", param_kind::block, param_type::list, { &effect_global_types, effect_type::filter } };
 static param_descriptor_data const effect_filter_type_data = { { "Flt", "Filter type" }, "", param_kind::voice, param_type::list, { &effect_filter_types, effect_filter_type::state_var } };
-static param_descriptor_data const effect_flt_stvar_type_data = { { "SV", "State variable filter type" }, "", param_kind::voice, param_type::list, { &effect_flt_stvar_types, effect_flt_stvar_type::lpf } };
-static param_descriptor_data const effect_flt_stvar_freq_data = { { "Freq", "State variable filter frequency" }, "Hz", param_kind::continuous, quad_bounds(effect_flt_stvar_min_freq, effect_flt_stvar_max_freq, "1000", 0) };
-static param_descriptor_data const effect_flt_stvar_res_data = { { "Res", "State variable filter resonance" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) };
-static param_descriptor_data const effect_flt_stvar_kbd_data = { { "Kbd", "State variable filter keyboard tracking" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) };
-static param_descriptor_data const effect_flt_stvar_shlf_gain_data = { { "Gain", "State variable filter shelf gain" }, "dB", param_kind::continuous, linear_bounds(-24.0f, 24.0f, 0.0f, 2) };
-static param_descriptor_data const effect_flt_comb_dly_plus_data = { { "Dly+", "Comb filter delay+" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2) };
-static param_descriptor_data const effect_flt_comb_gain_plus_data = { { "Gain+", "Comb filter gain+" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f) };
-static param_descriptor_data const effect_flt_comb_dly_min_data = { { "Dly-", "Comb filter delay-" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2) };
-static param_descriptor_data const effect_flt_comb_gain_min_data = { { "Gain-", "Comb filter gain-" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f) };
+static param_descriptor_data const effect_flt_stvar_type_data = { { "SV", "StVar type" }, "", param_kind::voice, param_type::list, { &effect_flt_stvar_types, effect_flt_stvar_type::lpf } };
+static param_descriptor_data const effect_flt_stvar_freq_data = { { "Freq", "StVar frequency" }, "Hz", param_kind::continuous, quad_bounds(effect_flt_stvar_min_freq, effect_flt_stvar_max_freq, "1000", 0) };
+static param_descriptor_data const effect_flt_stvar_res_data = { { "Res", "StVar resonance" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) };
+static param_descriptor_data const effect_flt_stvar_kbd_data = { { "Kbd", "StVar keytrack" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) };
+static param_descriptor_data const effect_flt_stvar_shlf_gain_data = { { "Gain", "StVar shelf gain" }, "dB", param_kind::continuous, linear_bounds(-24.0f, 24.0f, 0.0f, 2) };
+static param_descriptor_data const effect_flt_comb_dly_plus_data = { { "Dly+", "Comb delay+" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2) };
+static param_descriptor_data const effect_flt_comb_gain_plus_data = { { "Gain+", "Comb gain+" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f) };
+static param_descriptor_data const effect_flt_comb_dly_min_data = { { "Dly-", "Comb delay-" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2) };
+static param_descriptor_data const effect_flt_comb_gain_min_data = { { "Gain-", "Comb gain-" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f) };
 static param_descriptor_data const effect_shaper_type_data = { { "Shp", "Shaper type" }, "", param_kind::voice, param_type::list, { &effect_shaper_types, effect_shaper_type::tanh } };
 static param_descriptor_data const effect_shp_over_data = { { "Over", "Shaper oversampling" }, "", param_kind::voice, param_type::list, { &effect_shp_over_orders, effect_shp_over_order::over_4 } };
 static param_descriptor_data const effect_shp_mix_data = { { "Mix", "Shaper mix" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
 static param_descriptor_data const effect_shp_gain_data = { { "Gain", "Shaper gain" }, "", param_kind::continuous, quad_bounds(effect_shp_min_gain, effect_shp_max_gain, "1", 1) };
-static param_descriptor_data const effect_shp_cheby_terms_data = { { "Terms", "Chebyshev shaper terms" }, "", param_kind::voice, param_type::list_knob, { effect_shp_cheby_min_terms, effect_shp_cheby_max_terms, effect_shp_cheby_min_terms + 1 } };
-static param_descriptor_data const effect_shp_cheby_sum_decay_data = { { "Decay", "Chebyshev shaper sum decay" }, "", param_kind::continuous, percentage_01_bounds(1.0f) };
+static param_descriptor_data const effect_shp_cheby_terms_data = { { "Terms", "Shaper cheby terms" }, "", param_kind::voice, param_type::list_knob, { effect_shp_cheby_min_terms, effect_shp_cheby_max_terms, effect_shp_cheby_min_terms + 1 } };
+static param_descriptor_data const effect_shp_cheby_sum_decay_data = { { "Decay", "Shaper cheby decay" }, "", param_kind::continuous, percentage_01_bounds(1.0f) };
 static param_descriptor_data const effect_delay_type_data = { { "Dly", "Delay type" }, "", param_kind::voice, param_type::list, { &effect_delay_types, effect_delay_type::feedback } };
 static param_descriptor_data const effect_dly_synced_data = { { "Sync", "Delay tempo sync" }, param_kind::voice, false };  
 static param_descriptor_data const effect_dly_mix_data = { { "Mix", "Delay mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) }; 
 static param_descriptor_data const effect_dly_amt_data = { { "Amt", "Delay amount" }, "%", param_kind::continuous, percentage_01_bounds(0.25f) };
-static param_descriptor_data const effect_dly_fdbk_sprd_data = { { "Sprd", "Feedback delay stereo spread" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
-static param_descriptor_data const effect_dly_multi_sprd_data = { { "Sprd", "Multitap delay stereo spread" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) };
-static param_descriptor_data const effect_dly_fdbk_time_l_data = { { "L", "Feedback delay left time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
-static param_descriptor_data const effect_dly_fdbk_time_r_data = { { "R", "Feedback delay right time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
-static param_descriptor_data const effect_dly_fdbk_tempo_l_data = { { "L", "Feedback delay left tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
-static param_descriptor_data const effect_dly_fdbk_tempo_r_data = { { "R", "Feedback delay right tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
-static param_descriptor_data const effect_dly_multi_time_data = { { "Time", "Multitap delay time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
-static param_descriptor_data const effect_dly_multi_tempo_data = { { "Tempo", "Multitap delay tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
-static param_descriptor_data const effect_dly_multi_taps_data = { { "Taps", "Multitap delay tap count" }, "", param_kind::voice, param_type::list_knob, { 1, effect_dly_max_taps, effect_dly_max_taps / 2 } };
+static param_descriptor_data const effect_dly_fdbk_sprd_data = { { "Sprd", "Fbdk dly spread" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_dly_multi_sprd_data = { { "Sprd", "Multi dly sprd" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) };
+static param_descriptor_data const effect_dly_fdbk_time_l_data = { { "L", "Fbdk dly time L" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
+static param_descriptor_data const effect_dly_fdbk_time_r_data = { { "R", "Fbdk dly time R" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
+static param_descriptor_data const effect_dly_fdbk_tempo_l_data = { { "L", "Fbdk dly tempo L" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
+static param_descriptor_data const effect_dly_fdbk_tempo_r_data = { { "R", "Fbdk dly tempo R" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
+static param_descriptor_data const effect_dly_multi_time_data = { { "Time", "Multi dly time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
+static param_descriptor_data const effect_dly_multi_tempo_data = { { "Tempo", "Multi dly tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
+static param_descriptor_data const effect_dly_multi_taps_data = { { "Taps", "Multi dly taps" }, "", param_kind::voice, param_type::list_knob, { 1, effect_dly_max_taps, effect_dly_max_taps / 2 } };
 static param_descriptor_data const effect_reverb_mix_data = { { "Mix", "Reverb mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
-static param_descriptor_data const effect_reverb_size_data = { { "Size", "Reverb room size" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
-static param_descriptor_data const effect_reverb_spread_data = { { "Sprd", "Reverb stereo spread" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
-static param_descriptor_data const effect_reverb_damp_data = { { "Damp", "Reverb damping" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_reverb_size_data = { { "Size", "Reverb size" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_reverb_spread_data = { { "Sprd", "Reverb spread" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
+static param_descriptor_data const effect_reverb_damp_data = { { "Damp", "Reverb damp" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
 static param_descriptor_data const effect_reverb_apf_data = { { "APF", "Reverb APF" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
     
 param_descriptor const  

@@ -39,7 +39,7 @@ multi_list_items(gaudio_route_outputs, nullptr, gaudio_route_output_counts, gaud
 param_descriptor const 
 vaudio_bank_params[audio_bank_param::count] = 
 {  
-  { "{14096099-485D-4EB9-B055-E393DE2E993C}", { { "On", "Enabled" }, param_kind::voice, false } },
+  { "{14096099-485D-4EB9-B055-E393DE2E993C}", { { "On", "On" }, param_kind::voice, false } },
   { "{2E9F0478-B911-43DF-BB51-0C5836E4853F}", { { "In", "Input 1" }, "", param_kind::voice, param_type::list, { &vaudio_route_input_items, 0 } } },
   { "{A3A59082-CF73-4C28-A3FC-037729C9CB42}", { { "In", "Input 2" }, "", param_kind::voice, param_type::list, { &vaudio_route_input_items, 0 } } },
   { "{A8E6882A-8945-4F59-92B9-78004EAF5818}", { { "In", "Input 3" }, "", param_kind::voice, param_type::list, { &vaudio_route_input_items, 0 } } },
@@ -69,7 +69,7 @@ vaudio_bank_params[audio_bank_param::count] =
 param_descriptor const  
 gaudio_bank_params[audio_bank_param::count] = 
 {
-  { "{85A0A7FB-8319-436E-9979-0A7267F1F636}", { { "On", "Enabled" }, param_kind::block, false } },
+  { "{85A0A7FB-8319-436E-9979-0A7267F1F636}", { { "On", "On" }, param_kind::block, false } },
   { "{CD5CD403-259F-4B25-9C33-E246931E973B}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },
   { "{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },
   { "{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },

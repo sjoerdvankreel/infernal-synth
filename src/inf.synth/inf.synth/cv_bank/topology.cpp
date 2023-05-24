@@ -159,7 +159,7 @@ gcv_plot_params[cv_plot_param::count] =
 param_descriptor const   
 vcv_bank_params[vcv_bank_param::count] =            
 {        
-  { "{1F6DEE15-DEE7-443B-B9F8-E65BFF9C9C4A}", { { "On", "Enabled" }, param_kind::voice, false } },
+  { "{1F6DEE15-DEE7-443B-B9F8-E65BFF9C9C4A}", { { "On", "On" }, param_kind::voice, false } },
   { "{3B025C6A-0230-491A-A51F-7CF1C81B69C9}", { { "In", "Input 1" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 } } },
   { "{2833E378-210B-404F-A4CB-0D6204A72CF0}", { { "In", "Input 2" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 } } },
   { "{25041AB5-2A06-4305-8009-C26D56311D26}", { { "In", "Input 3" }, "", param_kind::voice, param_type::list, { &vcv_route_input_sources_list, 0 } } },
@@ -196,7 +196,7 @@ vcv_bank_params[vcv_bank_param::count] =
 param_descriptor const 
 gcv_bank_params[gcv_bank_param::count] = 
 { 
-  { "{C64A2AE2-E96D-487E-8373-3DA9DBB7B028}", { { "On", "Enabled" }, param_kind::block, false } },
+  { "{C64A2AE2-E96D-487E-8373-3DA9DBB7B028}", { { "On", "On" }, param_kind::block, false } },
   { "{84736ED7-FF72-4E69-AFFF-A8607B0F3041}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 } } },
   { "{36981D81-6FC1-42C1-A380-D0813C624D93}", { { "In", "Input 2" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 } } },
   { "{9517E1DC-8069-4F00-915C-A0686DD3FB26}", { { "In", "Input 3" }, "", param_kind::block, param_type::list, { &gcv_route_input_sources_list, 0 } } },
