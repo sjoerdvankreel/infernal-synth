@@ -12,7 +12,7 @@ static std::vector<list_item> const effect_delay_types = {
   { "{B130A459-A336-4AE6-93F5-AE8CF8D09F0E}", "Feedback" },
   { "{40083B26-3878-400F-991B-97254FDE8107}", "Multitap" } };
 static std::vector<list_item> const effect_filter_types = {
-  { "{4D124C3B-DC17-4241-AF3B-F9590CEC837B}", "StateVariable" },
+  { "{4D124C3B-DC17-4241-AF3B-F9590CEC837B}", "StVar" },
   { "{DFF83170-5380-4CC0-B418-3BC2C5638D88}", "Comb" } };
 static std::vector<list_item> const effect_types = {
   { "{A9F10C03-1757-4759-B127-82CD86B61ED7}", "Filter" },
@@ -30,8 +30,8 @@ static std::vector<list_item> const effect_shaper_types = {
   { "{99EF60E2-B366-4184-88B7-B4C9C5514A7D}", "Tanh" },
   { "{7B8F970B-3087-4097-8AF6-49260E57DBEC}", "Fold" },
   { "{254ECC12-1396-442F-93B8-40505171613E}", "Sine" },
-  { "{60285A7E-D1D3-45DB-BD58-98BA17349627}", "Chebyshev 1" }, 
-  { "{5749E885-1196-4E1B-B464-B95C8B0393B5}", "Chebyshev 2" } }; 
+  { "{60285A7E-D1D3-45DB-BD58-98BA17349627}", "Cheb1" }, 
+  { "{5749E885-1196-4E1B-B464-B95C8B0393B5}", "Cheb2" } }; 
 static std::vector<list_item> const effect_flt_stvar_types = {
   { "{DA174004-DDF9-4DA1-8414-AAC6C204690A}", "LPF" },
   { "{8F9774E2-990C-415A-8DB3-732D4091C7A6}", "HPF" },
