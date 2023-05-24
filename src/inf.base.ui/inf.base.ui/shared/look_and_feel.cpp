@@ -116,7 +116,7 @@ inf_look_and_feel::getTabButtonBestWidth(
 {
   int width = button.getTabbedButtonBar().getWidth();
   int count = button.getTabbedButtonBar().getNumTabs();
-  return width / count;
+  return width / count - 1;
 }
 
 void 
