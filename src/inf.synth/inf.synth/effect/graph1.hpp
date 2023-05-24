@@ -38,9 +38,5 @@ inline effect_graph1::
 effect_graph1(base::topology_info const* topology, base::part_id id) :
 effect_graph_base(topology, id) {}
 
-inline base::param_value
-effect_graph1::transform_param(std::int32_t rt_index, base::param_value value) const
-{ return graph_disable_modulation(topology(), rt_index, value); }
-
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_GRAPH1_HPP

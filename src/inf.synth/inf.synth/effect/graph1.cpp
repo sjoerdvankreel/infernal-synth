@@ -17,6 +17,15 @@ static inline float constexpr delay_reverb_graph_rate = 500.0f;
 static inline float constexpr delay_reverb_graph_input_freq = 100.0f;
 static inline std::int32_t constexpr shaper_sample_count = 500;
 
+base::param_value
+effect_graph1::transform_param(std::int32_t rt_index, param_value value) const
+{
+  std::int32_t oversampling_index = topology()->param_index(id(), effect_param::shp_over_order);
+  if(rt_index == oversampling_index) 
+    return param_value(effect_shp_over_order::over_none);
+  return graph_disable_modulation(topology(), rt_index, value);
+}
+
 float
 effect_graph1::prepare_input_filter(float sample_rate)
 {
