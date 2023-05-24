@@ -29,7 +29,7 @@ param_descriptor const
 voice_params[voice_param::count] =
 {
   { "{5A2DF5BA-7D6F-4053-983E-AA6DC5084373}", { { "Gain", "Gain" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
-  { "{86782F43-7079-47BE-9C7F-8BF6D12A0950}", { { "Bal", "Stereo balance" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
+  { "{86782F43-7079-47BE-9C7F-8BF6D12A0950}", { { "Bal", "Balance" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
   { "{5E6A8C53-AE49-4FDF-944D-57CF37FC2C0E}", { { "Oct", "Octave" }, "", param_kind::voice, param_type::list_knob, { 0, 9, 4 } } },
   { "{AE673674-1A16-4219-8EE5-048722BF52D1}", { { "Note", "Note" }, "", param_kind::voice, param_type::knob_list, { &note_names, "C" } } }
 };
@@ -38,7 +38,7 @@ param_descriptor const
 master_params[master_param::count] =       
 {
   { "{536EBE78-85C2-461F-A3E5-2F7ADA11577C}", { { "Gain", "Gain" }, "dB", param_kind::continuous, decibel_bounds(2.0f) } },
-  { "{7917BE01-867D-490B-BD72-3CCE267CE872}", { { "Bal", "Stereo balance" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
+  { "{7917BE01-867D-490B-BD72-3CCE267CE872}", { { "Bal", "Balance" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
   { "{F3DFD0D7-652D-4F80-9C97-38037BCF58A7}", { { "Mode", "Voice mode" }, "", param_kind::block, param_type::list, { &master_modes, master_mode::poly } } },
   { "{511EE6C3-8798-4B7A-940D-100B8680517F}", { { "Port", "Portamento mode" }, "", param_kind::block, param_type::list, { &master_port_modes, master_port_mode::off } } },
   { "{921B5AE6-37FD-4953-94C3-16062C0D23ED}", { { "Trig", "Portamento trigger" }, "", param_kind::block, param_type::list, { &master_port_trigs, master_port_trig::note } } },
