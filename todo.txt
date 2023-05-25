@@ -75,3 +75,4 @@
 - grid paints outside
 - set env1 on by default
 - routing indicators
+- duplicate guid check
