@@ -228,12 +228,13 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   topology_info::init_factory_preset(state);
 
 // TEMP TODO REVERT THIS - TESTING OSCS ONLY
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc All");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "Voice");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");  
   
-  return;
+  int x = 1;
+  if(x==1) return;
 
   // osc 1 detuned saw
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
@@ -280,7 +281,7 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::master, 0, master_param::gcv2_uni, "66");
 
   // audio a1 osc->fx1->fx2->voice
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc All");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "FX A 1");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in2, "FX A 1");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out2, "FX A 2");
