@@ -614,10 +614,13 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
   grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 3);
   for (std::int32_t i = 0; i < vaudio_bank_route_count; i++)
   {
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i,  audio_bank_param_type::in), edit_type::dropdown, tooltip_type::off, false, true), i + 1, 0);
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::off, false, true), i + 1, 1);
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::hslider, tooltip_type::value, false, true), i + 1, 2);
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::hslider, tooltip_type::value, false, true), i + 1, 3);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i,  audio_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), i + 1, 0);
+    auto out = grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), i + 1, 1);
+    out->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto amt = grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::hslider, tooltip_type::value, false, true), i + 1, 2);
+    amt->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto bal = grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::hslider, tooltip_type::value, false, true), i + 1, 3);
+    bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   }
   return create_part_single_ui(controller, "Audio", part_type, create_part_group_container_ui(controller, std::move(grid)));
 }
