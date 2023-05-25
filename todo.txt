@@ -75,3 +75,5 @@
 - fix names in the default factory preset
 - grid paints outside
 - set env1 on by default
+- re-enable the defaults
+- make buttons for factory/save/load/clear/init
