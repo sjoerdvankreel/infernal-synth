@@ -19,14 +19,31 @@ typedef audio_bank_param_type_t::value audio_bank_param_type;
 // ---- voice ----
 
 struct vaudio_bank_param_t { enum value { 
-  in1, in2, in3, in4, in5, in6, in7, in8, in9, in10, in11, in12, 
-  in13, in14, in15, in16, in17, in18, in19, in20, in21, in22, in23, in24,
-  out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12, 
-  out13, out14, out15, out16, out17, out18, out19, out20, out21, out22, out23, out24,
-  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, amt9, amt10, amt11, amt12,
-  amt13, amt14, amt15, amt16, amt17, amt18, amt19, amt20, amt21, amt22, amt23, amt24,
-  bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12,
-  bal13, bal14, bal15, bal16, bal17, bal18, bal19, bal20, bal21, bal22, bal23, bal24, count }; };
+  in1, out1, amt1, bal1,
+  in2, out2, amt2, bal2,
+  in3, out3, amt3, bal3,
+  in4, out4, amt4, bal4,
+  in5, out5, amt5, bal5,
+  in6, out6, amt6, bal6,
+  in7, out7, amt7, bal7,
+  in8, out8, amt8, bal8,
+  in9, out9, amt9, bal9,
+  in10, out10, amt10, bal10,
+  in11, out11, amt11, bal11,
+  in12, out12, amt12, bal12,
+  in13, out13, amt13, bal13,
+  in14, out14, amt14, bal14,
+  in15, out15, amt15, bal15,
+  in16, out16, amt16, bal16,
+  in17, out17, amt17, bal17,
+  in18, out18, amt18, bal18,
+  in19, out19, amt19, bal19,
+  in20, out20, amt20, bal20,
+  in21, out21, amt21, bal21,
+  in22, out22, amt22, bal22,
+  in23, out23, amt23, bal23,
+  in24, out24, amt24, bal24, 
+  count }; };
 typedef vaudio_bank_param_t::value vaudio_bank_param;
 
 extern base::param_descriptor const vaudio_bank_params[];
@@ -41,11 +58,27 @@ inline std::int32_t constexpr vaudio_route_output_total_count = std::accumulate(
 
 // ---- global ----
 
+// must be prefix of voice param list
 struct gaudio_bank_param_t { enum value { 
-  in1, in2, in3, in4, in5, in6, in7, in8, in9, in10, in11, in12, in13, in14, in15, in16, in17, in18,
-  out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12, out13, out14, out15, out16, out17, out18,
-  amt1, amt2, amt3, amt4, amt5, amt6, amt7, amt8, amt9, amt10, amt11, amt12, amt13, amt14, amt15, amt16, amt17, amt18,
-  bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12, bal13, bal14, bal15, bal16, bal17, bal18, count }; };
+  in1, out1, amt1, bal1,
+  in2, out2, amt2, bal2,
+  in3, out3, amt3, bal3,
+  in4, out4, amt4, bal4,
+  in5, out5, amt5, bal5,
+  in6, out6, amt6, bal6,
+  in7, out7, amt7, bal7,
+  in8, out8, amt8, bal8,
+  in9, out9, amt9, bal9,
+  in10, out10, amt10, bal10,
+  in11, out11, amt11, bal11,
+  in12, out12, amt12, bal12,
+  in13, out13, amt13, bal13,
+  in14, out14, amt14, bal14,
+  in15, out15, amt15, bal15,
+  in16, out16, amt16, bal16,
+  in17, out17, amt17, bal17,
+  in18, out18, amt18, bal18,
+  count }; };
 typedef gaudio_bank_param_t::value gaudio_bank_param;
 
 extern base::param_descriptor const gaudio_bank_params[];
