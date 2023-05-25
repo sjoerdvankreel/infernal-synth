@@ -376,8 +376,6 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 static std::vector<list_item> const active_vosc_items = list_items({ "{3B2713C0-6DFF-4257-9CB4-DF5FD0DA603C}", "Osc" }, vosc_count);
 static std::vector<list_item> const active_veffect_items = list_items({ "{33BB6F1B-3D4F-4D58-998D-417DA711D6C2}", "FX" }, veffect_count);
 static std::vector<list_item> const active_geffect_items = list_items({ "{1607D775-53C5-46BE-957A-F697831062CD}", "FX B" }, geffect_count);
-static std::vector<list_item> const active_vaudio_bank_items = list_items({ "{8AD2E3E5-0DCF-42E3-B9B6-33F775DF917F}", "Audio A" }, vaudio_bank_count);
-static std::vector<list_item> const active_gaudio_bank_items = list_items({ "{D14108D3-FC7A-49D5-A4CB-AB66BE6F1B1E}", "Audio B" }, gaudio_bank_count);
 static std::vector<list_item> const active_venv_items = list_items({ "{8545D490-B40D-4154-BFC2-FE86A6F26BB5}", "Env" }, venv_count);
 static std::vector<list_item> const active_vlfo_items = list_items({ "{5AADD04D-FC8B-4326-97B1-35326F645D09}", "LFO" }, vlfo_count);
 static std::vector<list_item> const active_glfo_items = list_items({ "{88E92673-4FA2-45C3-B1D0-71A2A63ECCF4}", "LFO B" }, glfo_count);
@@ -390,8 +388,6 @@ active_params[active_param::count] =
   { "{0EEADBD0-D37B-4B53-A2D5-F22E2154F2D8}", { { "Osc", "Oscillator" }, "", param_kind::block, param_type::list, { &active_vosc_items, 0 } } },
   { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "VFX", "Voice FX" }, "", param_kind::block, param_type::list, { &active_veffect_items, 0 } } },
   { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "GFX", "Global FX" }, "", param_kind::block, param_type::list, { &active_geffect_items, 0 } } },
-  { "{4C161E6D-7487-4D98-86DC-73B2B414A299}", { { "Audio A", "Audio Bank A" }, "", param_kind::block, param_type::list, { &active_vaudio_bank_items, 0 } } },
-  { "{2627D0E5-7522-4BE3-8659-AA526CF2186C}", { { "Audio B", "Audio Bank B" }, "", param_kind::block, param_type::list, { &active_gaudio_bank_items, 0 } } },
   { "{556BF692-55B0-48B4-BD6A-E2CEFA17B012}", { { "Env", "Envelope" }, "", param_kind::block, param_type::list, { &active_venv_items, 0 } } },
   { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "VLFO", "Voice LFO" }, "", param_kind::block, param_type::list, { &active_vlfo_items, 0 } } },
   { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "GLFO", "Global LFO" }, "", param_kind::block, param_type::list, { &active_glfo_items, 0 } } },

@@ -20,8 +20,8 @@ struct part_type_t { enum value {
 typedef part_type_t::value part_type;
 
 struct active_param_t { enum value { 
-  vosc, veffect, geffect, vaudio_bank, gaudio_bank, 
-  venv, vlfo, glfo, vcv_bank, gcv_bank, count }; };
+  vosc, veffect, geffect, venv, vlfo, 
+  glfo, vcv_bank, gcv_bank, count }; };
 typedef active_param_t::value active_param;
 
 // plugin entry
