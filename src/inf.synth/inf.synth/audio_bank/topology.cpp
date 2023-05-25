@@ -35,7 +35,7 @@ static std::vector<list_item> const gaudio_route_output_items =
 multi_list_items(gaudio_route_outputs, nullptr, gaudio_route_output_counts, gaudio_route_output::count, false);
 
 param_descriptor const 
-vaudio_bank_params[vaudio_bank_param::count] = 
+vaudio_bank_params[audio_bank_param::vaudio_count] = 
 {  
   { "{2E9F0478-B911-43DF-BB51-0C5836E4853F}", { { "In", "Input 1" }, "", param_kind::voice, param_type::list, { &vaudio_route_input_items, 0 } } },
   { "{295DC5F0-FB32-4D43-8799-D79F23FD3AA9}", { { "Out", "Output 1" }, "", param_kind::voice, param_type::list, { &vaudio_route_output_items, 0 } } },
@@ -136,7 +136,7 @@ vaudio_bank_params[vaudio_bank_param::count] =
 };
 
 param_descriptor const  
-gaudio_bank_params[gaudio_bank_param::count] = 
+gaudio_bank_params[audio_bank_param::gaudio_count] = 
 {
   { "{CD5CD403-259F-4B25-9C33-E246931E973B}", { { "In", "Input 1" }, "", param_kind::block, param_type::list, { &gaudio_route_input_items, 0 } } },
   { "{6AD76233-62A6-4F5A-ADCB-797786E00C54}", { { "Out", "Output 1" }, "", param_kind::block, param_type::list, { &gaudio_route_output_items, 0 } } },

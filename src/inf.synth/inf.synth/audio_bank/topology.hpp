@@ -16,9 +16,7 @@ inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; // On/off must b
 struct audio_bank_param_type_t { enum value { in, out, amt, bal, count }; };
 typedef audio_bank_param_type_t::value audio_bank_param_type;
 
-// ---- voice ----
-
-struct vaudio_bank_param_t { enum value { 
+struct audio_bank_param_t { enum value { 
   in1, out1, amt1, bal1,
   in2, out2, amt2, bal2,
   in3, out3, amt3, bal3,
@@ -37,14 +35,17 @@ struct vaudio_bank_param_t { enum value {
   in16, out16, amt16, bal16,
   in17, out17, amt17, bal17,
   in18, out18, amt18, bal18,
-  in19, out19, amt19, bal19,
+  gaudio_count,
+  in19 = gaudio_count + 1, out19, amt19, bal19,
   in20, out20, amt20, bal20,
   in21, out21, amt21, bal21,
   in22, out22, amt22, bal22,
   in23, out23, amt23, bal23,
   in24, out24, amt24, bal24, 
-  count }; };
-typedef vaudio_bank_param_t::value vaudio_bank_param;
+  vaudio_count }; };
+typedef audio_bank_param_t::value audio_bank_param;
+
+// ---- voice ----
 
 extern base::param_descriptor const vaudio_bank_params[];
 struct vaudio_route_output_t { enum value { off, veffect, voice, count }; }; // Off must be 0.
@@ -57,29 +58,6 @@ inline std::int32_t constexpr vaudio_route_output_counts[vaudio_route_output::co
 inline std::int32_t constexpr vaudio_route_output_total_count = std::accumulate(vaudio_route_output_counts, vaudio_route_output_counts + vaudio_route_output::count, 0);
 
 // ---- global ----
-
-// must be prefix of voice param list
-struct gaudio_bank_param_t { enum value { 
-  in1, out1, amt1, bal1,
-  in2, out2, amt2, bal2,
-  in3, out3, amt3, bal3,
-  in4, out4, amt4, bal4,
-  in5, out5, amt5, bal5,
-  in6, out6, amt6, bal6,
-  in7, out7, amt7, bal7,
-  in8, out8, amt8, bal8,
-  in9, out9, amt9, bal9,
-  in10, out10, amt10, bal10,
-  in11, out11, amt11, bal11,
-  in12, out12, amt12, bal12,
-  in13, out13, amt13, bal13,
-  in14, out14, amt14, bal14,
-  in15, out15, amt15, bal15,
-  in16, out16, amt16, bal16,
-  in17, out17, amt17, bal17,
-  in18, out18, amt18, bal18,
-  count }; };
-typedef gaudio_bank_param_t::value gaudio_bank_param;
 
 extern base::param_descriptor const gaudio_bank_params[];
 struct gaudio_route_output_t { enum value { off, geffect, master, count }; }; // Off must be 0.
