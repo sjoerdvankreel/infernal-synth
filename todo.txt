@@ -74,4 +74,4 @@
 - fix names in the default factory preset
 - grid paints outside
 - set env1 on by default
-- smaller default size
+- routing indicators
