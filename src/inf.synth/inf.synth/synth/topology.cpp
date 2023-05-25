@@ -116,11 +116,10 @@ synth_topology::init_fx_clear_patch(param_value* state) const
   // Bare minimum to have a basic delay line.
   set_ui_value(state, part_type::geffect, 0, effect_param::on, "On");
   set_ui_value(state, part_type::geffect, 0, effect_param::type, "Delay");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX B 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX B 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out1, "FX B 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in2, "FX B 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out2, "Master");
 }
 
 void
@@ -130,12 +129,10 @@ synth_topology::init_instrument_clear_patch(param_value* state) const
 
   // Bare minimum to have sound.
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc 1");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "Voice");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in1, "Osc 1");
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out1, "Master");
 }
 
 void 
@@ -175,22 +172,20 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   }
 
   // audio routing
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX B 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX B 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "FX B 2");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "FX B 2");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out3, "Master");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in4, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out4, "FX B 3");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in5, "FX B 3");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out5, "FX B 4");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in6, "FX B 4");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out6, "Master");
-  set_ui_value(state, part_type::gaudio_bank, 1, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::gaudio_bank, 1, audio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 1, audio_bank_param::out1, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out1, "FX B 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in2, "FX B 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out2, "FX B 2");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in3, "FX B 2");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out3, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in4, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out4, "FX B 3");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in5, "FX B 3");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out5, "FX B 4");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in6, "FX B 4");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out6, "Master");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::in1, "Ext");
+  set_ui_value(state, part_type::gaudio_bank, 1, gaudio_bank_param::out1, "Master");
 
   // master
   set_ui_value(state, part_type::master, 0, master_param::gain, "-18");
@@ -233,11 +228,10 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   topology_info::init_factory_preset(state);
 
 // TEMP TODO REVERT THIS - TESTING OSCS ONLY
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::on, "On");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc All");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "Voice");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Master");  
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::in1, "Osc All");
+  set_ui_value(state, part_type::vaudio_bank, 0, vaudio_bank_param::out1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::in1, "Voice");
+  set_ui_value(state, part_type::gaudio_bank, 0, gaudio_bank_param::out1, "Master");  
 
 #if 0
 
@@ -417,8 +411,8 @@ part_descriptors[part_type::count] =
   { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, osc_graph_name_selector },
   { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "VFX", "Voice FX" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, effect_graph_name_selector },
   { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "GFX", "Global FX" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, effect_graph_name_selector },
-  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, audio_bank_param::count, nullptr },
-  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, audio_bank_param::count, nullptr },
+  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "Audio A", "Audio Bank A" }, part_kind::input, part_type::vaudio_bank, vaudio_bank_count, vaudio_bank_params, vaudio_bank_param::count, nullptr },
+  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "Audio B", "Audio Bank B" }, part_kind::input, part_type::gaudio_bank, gaudio_bank_count, gaudio_bank_params, gaudio_bank_param::count, nullptr },
   { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "Voice", "Voice" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count, nullptr },
   { "{6DE3AAB2-6D43-41ED-9BBE-E281DB8F7B44}", { "Master", "Master" }, part_kind::input, part_type::master, 1, master_params, master_param::count, nullptr },
   { "{FC4885FE-431C-477A-B5B7-84863DB8C07D}", { "Env", "Envelope" }, part_kind::input, part_type::venv, venv_count, envelope_params, envelope_param::count, env_graph_name_selector },
