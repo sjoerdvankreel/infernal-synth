@@ -106,7 +106,7 @@ typedef vcv_route_output_t::value vcv_route_output;
 inline std::int32_t constexpr vcv_route_output_mapping[vcv_route_output_t::count] = {
   -1, part_type::vosc, part_type::veffect, part_type::vaudio_bank, part_type::voice };
 inline std::int32_t constexpr vcv_route_output_counts[vcv_route_output::count] = {
-  1 /* off */, vosc_count, veffect_count, vaudio_bank_count, 1 /* voice */ };
+  1 /* off */, vosc_count, veffect_count, 1 /* audio bank */, 1 /* voice */};
 inline std::int32_t constexpr vcv_route_output_total_count = std::accumulate(
   vcv_route_output_counts, vcv_route_output_counts + vcv_route_output::count, 0);
 
@@ -161,7 +161,7 @@ typedef gcv_route_output_t::value gcv_route_output;
 inline std::int32_t constexpr gcv_route_output_mapping[gcv_route_output::count] = {
   -1, part_type::geffect, part_type::gaudio_bank, part_type::master };
 inline std::int32_t constexpr gcv_route_output_counts[gcv_route_output::count] = {
-  1 /* off */, geffect_count, gaudio_bank_count, 1 /* master */ };
+  1 /* off */, geffect_count, 1 /* audio bank */, 1 /* master */};
 inline std::int32_t constexpr gcv_route_output_total_count = std::accumulate(
   gcv_route_output_counts, gcv_route_output_counts + gcv_route_output::count, 0);
 
