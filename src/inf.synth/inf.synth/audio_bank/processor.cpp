@@ -57,7 +57,7 @@ audio_bank_processor::update_block_params(block_input_data const& input)
   // For each route.
   for (std::int32_t r = 0; r < _data->route_count; r++)
   {
-    std::int32_t in_index = param_index(r, audio_bank_param_type::in);
+    std::int32_t in_index = audio_bank_param_index(r, audio_bank_param_type::in);
     std::int32_t input_id = bank_automation.block_discrete(in_index);
     if (input_id == audio_bank_vgaudio_inout_off) continue;
 
@@ -65,7 +65,7 @@ audio_bank_processor::update_block_params(block_input_data const& input)
     for (std::int32_t output_id = 0; output_id < _data->total_route_count; output_id++)
     {
       if (output_id == audio_bank_vgaudio_inout_off) continue;
-      std::int32_t out_index = param_index(r, audio_bank_param_type::out);
+      std::int32_t out_index = audio_bank_param_index(r, audio_bank_param_type::out);
       std::int32_t this_output_id = bank_automation.block_discrete(out_index);
       if (output_id != this_output_id) continue;
 
@@ -106,8 +106,8 @@ audio_bank_processor::process(block_input_data const& input, part_id id, cv_bank
 
     // Add audio to mixdown, taking amplitude and balance into account.
     float* const* out = _state->out.buffers();
-    float const* amt = params[param_index(indices.route_index, audio_bank_param_type::amt)];
-    float const* bal = params[param_index(indices.route_index, audio_bank_param_type::bal)];
+    float const* amt = params[audio_bank_param_index(indices.route_index, audio_bank_param_type::amt)];
+    float const* bal = params[audio_bank_param_index(indices.route_index, audio_bank_param_type::bal)];
     float const* const* in = input_buffer(indices.input_ids.first, indices.input_ids.second);
     for(std::int32_t c = 0; c < stereo_channels; c++)
       for (std::int32_t s = 0; s < input.sample_count; s++)

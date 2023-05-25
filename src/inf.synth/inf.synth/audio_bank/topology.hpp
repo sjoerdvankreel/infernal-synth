@@ -11,10 +11,14 @@
 namespace inf::synth {
 
 // ---- shared ----
-  
+
 inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; // On/off must be 0.
 struct audio_bank_param_type_t { enum value { in, out, amt, bal, count }; };
 typedef audio_bank_param_type_t::value audio_bank_param_type;
+
+inline std::int32_t
+audio_bank_param_index(std::int32_t route, audio_bank_param_type type)
+{ return route * audio_bank_param_type::count + type; }
 
 struct audio_bank_param_t { enum value { 
   in1, out1, amt1, bal1, in2, out2, amt2, bal2, in3, out3, amt3, bal3,
@@ -50,7 +54,7 @@ struct gaudio_route_input_t { enum value { off, voice, external, geffect, count 
 typedef gaudio_route_input_t::value gaudio_route_input;
 typedef gaudio_route_output_t::value gaudio_route_output;
 
-inline std::int32_t constexpr gaudio_bank_route_count = audio_bank_param::vaudio_count / static_cast<std::int32_t>(audio_bank_param_type::count);
+inline std::int32_t constexpr gaudio_bank_route_count = audio_bank_param::gaudio_count / static_cast<std::int32_t>(audio_bank_param_type::count);
 inline std::int32_t constexpr gaudio_route_output_counts[gaudio_route_output::count] = { 1 /* off */, geffect_count, 1 /* master */ };
 inline std::int32_t constexpr gaudio_route_input_counts[gaudio_route_input::count] = { 1 /* off */, 1 /* voice */, 1 /* external */, geffect_count };
 inline std::int32_t constexpr gaudio_route_output_total_count = std::accumulate(gaudio_route_output_counts, gaudio_route_output_counts + gaudio_route_output::count, 0);

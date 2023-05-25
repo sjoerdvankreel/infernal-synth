@@ -24,7 +24,6 @@ private:
   audio_bank_state* _state;
   audio_bank_data const* _data = nullptr;
 
-  std::int32_t param_index(std::int32_t route, audio_bank_param_type type);
   float const* const* input_buffer(std::int32_t input, std::int32_t index) const;
   float const* const* input_buffer_voice(std::int32_t input, std::int32_t index) const;
   float const* const* input_buffer_global(std::int32_t input, std::int32_t index) const;
@@ -38,10 +37,6 @@ private:
   std::array<std::int32_t, max_total_output_count> _relevant_indices_count;
   std::array<std::array<audio_route_indices, max_route_count>, max_total_output_count> _relevant_indices;
 };
-
-inline std::int32_t
-audio_bank_processor::param_index(std::int32_t route, audio_bank_param_type type)
-{ return route * audio_bank_param_type::count + type; }
 
 inline audio_bank_processor::
 audio_bank_processor::audio_bank_processor(audio_bank_state* state):

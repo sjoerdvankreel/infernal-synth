@@ -607,17 +607,17 @@ create_voice_part_fx_grid(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_audio_part(plugin_controller* controller, std::int32_t part_type)
 {
-  auto grid = create_grid_ui(controller, 25, 4);
+  auto grid = create_grid_ui(controller, vaudio_bank_route_count + 1, 4);
   grid->add_cell(create_label_ui(controller, "In", Justification::centred), 0, 0);
   grid->add_cell(create_label_ui(controller, "Out", Justification::centred), 0, 1);
   grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 2);
   grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 3);
-  for (std::int32_t i = 1; i < 25; i++)
+  for (std::int32_t i = 0; i < vaudio_bank_route_count; i++)
   {
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param::in1, edit_type::dropdown, tooltip_type::off), i, 0);
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param::out1, edit_type::dropdown, tooltip_type::off), i, 1);
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param::amt1, edit_type::hslider, tooltip_type::value), i, 2);
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param::bal1, edit_type::hslider, tooltip_type::value), i, 3);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i,  audio_bank_param_type::in), edit_type::dropdown, tooltip_type::off), i, 0);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::off), i, 1);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::hslider, tooltip_type::value), i, 2);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::hslider, tooltip_type::value), i, 3);
   }
   return create_part_single_ui(controller, "Audio", part_type, create_part_group_container_ui(controller, std::move(grid)));
 }
