@@ -94,11 +94,11 @@ class synth_vst_controller :
 public vst_controller
 {
 public:
-  float editor_aspect_ratio() const override { return 1.28f; }
-  std::int32_t editor_min_width() const override { return 768; }
+  float editor_aspect_ratio() const override { return 1.92f; }
+  std::int32_t editor_min_width() const override { return 1152; }
   std::int32_t editor_default_width() const override { return 1152; }
-  std::int32_t editor_font_scaling_min_width() const override { return 960; }
-  std::int32_t editor_font_scaling_max_width() const override { return 1344; }
+  std::int32_t editor_font_scaling_min_width() const override { return 1440; }
+  std::int32_t editor_font_scaling_max_width() const override { return 2016; }
 
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):

@@ -605,13 +605,21 @@ create_voice_part_fx_grid(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_audio_part(plugin_controller* controller, std::int32_t part_type)
+{
+  auto grid = create_grid_ui(controller, 1, 4);
+  return create_part_single_ui(controller, "Audio", part_type, create_part_group_container_ui(controller, std::move(grid)));
+}
+
+static std::unique_ptr<ui_element>
 create_voice_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 2, 2);
-  result->add_cell(create_oscillator_selector(controller), 0, 0);
-  result->add_cell(create_voice_part_fx_grid(controller), 1, 0);
-  result->add_cell(create_envelope_selector(controller), 0, 1);
-  result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 1, 1);
+  auto result = create_grid_ui(controller, 2, 6);
+  result->add_cell(create_audio_part(controller, part_type::vaudio_bank), 0, 0, 2, 1);
+  result->add_cell(create_oscillator_selector(controller), 0, 1, 1, 2);
+  result->add_cell(create_voice_part_fx_grid(controller), 1, 1, 1, 2);
+  result->add_cell(create_envelope_selector(controller), 0, 3, 1, 2);
+  result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 1, 3, 1, 2);
   return result;
 }
 

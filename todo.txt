@@ -45,7 +45,6 @@
 - scan vst_controller/editor for unneeded stuff
 - tabbed ui
 - global "edit menu" button
-- remove voice/master graphs
 - reduce the use of background images
 - filter out incompatible menu options (audio routing, ?)
 - reduce controller.uidesc to image names, image offsets and color scheme
@@ -75,5 +74,4 @@
 - fix names in the default factory preset
 - grid paints outside
 - set env1 on by default
-- re-enable the defaults
-- make buttons for factory/save/load/clear/init
+- smaller default size
