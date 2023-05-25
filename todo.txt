@@ -77,3 +77,4 @@
 - routing indicators
 - duplicate guid check
 - audio bank testing
+- extra dark disabled table mode
