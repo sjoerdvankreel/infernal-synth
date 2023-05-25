@@ -42,6 +42,19 @@ ui_element::build(LookAndFeel const& lnf)
 }
 
 Component* 
+label_element::build_core(juce::LookAndFeel const& lnf)
+{
+  Label* result = new inf_label(true);
+  result->setBorderSize(BorderSize<int>());
+  float font_height = get_param_label_font_height(controller());
+  result->setJustificationType(_justification);
+  result->setFont(juce::Font(font_height, juce::Font::bold));
+  result->setText(_text, dontSendNotification);
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::param_label));
+  return result;
+}
+
+Component* 
 root_element::build_core(LookAndFeel const& lnf)
 {
   container_component* result = new container_component(

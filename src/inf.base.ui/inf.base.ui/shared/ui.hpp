@@ -50,6 +50,23 @@ public:
   void relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector);
 };
 
+class label_element :
+public ui_element
+{
+  std::string const _text;
+  juce::Justification const _justification;
+protected:
+  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+public:
+  void layout() override {}
+  label_element(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification):
+  ui_element(controller), _text(text), _justification(justification) {}
+};
+
+inline std::unique_ptr<label_element>
+create_label_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification)
+{ return std::make_unique<label_element>(controller, text, justification); }
+
 class container_element:
 public ui_element
 {
