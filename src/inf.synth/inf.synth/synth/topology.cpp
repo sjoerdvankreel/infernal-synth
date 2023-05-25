@@ -10,7 +10,6 @@
 #include <inf.synth/output/topology.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/synth/processor.hpp>
-#include <inf.synth/voice_master/graph.hpp>
 #include <inf.synth/oscillator/graph_wave.hpp>
 #include <inf.synth/oscillator/graph_spectrum.hpp>
  
@@ -57,7 +56,6 @@ synth_topology::create_graph_processor(part_id id, std::int32_t graph_type) cons
   case part_type::venv: return std::make_unique<envelope_graph>(this, id);
   case part_type::vosc: return create_graph_processor_oscillator(id, graph_type);
   case part_type::vlfo: case part_type::glfo: return std::make_unique<lfo_graph>(this, id);
-  case part_type::voice: case part_type::master: return std::make_unique<amp_bal_graph>(this, id);
   case part_type::vcv_plot: case part_type::gcv_plot: return std::make_unique<cv_bank_graph>(this, id);
   case part_type::veffect: case part_type::geffect: return create_graph_processor_effect(id, graph_type);
   default: assert(false); return nullptr;
