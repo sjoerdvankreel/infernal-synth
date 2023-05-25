@@ -22,23 +22,14 @@ inf_selector_bar::popupMenuClickOnTab(
   menu.addSubMenu("Swap with", swap);
   menu.setLookAndFeel(&getLookAndFeel());
   
-  part_id this_id = { _part_type, getCurrentTabIndex() };  
+  part_id this_id = { _part_type, index };  
   int option = menu.show();
 
-  if(option == 0) 
-    return;
+  if(option == 0) return;
   option--;
-  if(option == 0)
-  {
-    _controller->clear_part(this_id);
-    return;
-  }
+  if(option == 0) return _controller->clear_part(this_id);
   option--;
-  if(option < getNumTabs()) 
-  {
-    _controller->copy_or_swap_part(this_id, option, false);
-    return;
-  }
+  if(option < getNumTabs()) return _controller->copy_or_swap_part(this_id, option, false);
   option -= getNumTabs();
   assert(0 <= option && option < getNumTabs());
   _controller->copy_or_swap_part(this_id, option, true);
