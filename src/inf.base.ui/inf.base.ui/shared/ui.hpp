@@ -322,7 +322,7 @@ create_root_ui(
 std::unique_ptr<ui_element>
 create_part_single_ui(
   plugin_controller* controller, std::string const& header, 
-  std::int32_t selected_part_type, std::int32_t selected_part_count, std::unique_ptr<ui_element>&& part);
+  std::int32_t selected_part_type, std::unique_ptr<ui_element>&& part);
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,

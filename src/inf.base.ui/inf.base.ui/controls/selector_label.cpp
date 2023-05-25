@@ -5,6 +5,12 @@ using namespace juce;
 
 namespace inf::base::ui {
 
+void 
+inf_selector_label::mouseDown(MouseEvent const& event)
+{
+  inf_label::mouseDown(event);
+}
+
 void
 inf_selector_label::paint(Graphics& g)
 {

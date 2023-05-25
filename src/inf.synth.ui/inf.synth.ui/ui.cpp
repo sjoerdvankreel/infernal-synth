@@ -565,34 +565,42 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
 }
 
 static std::unique_ptr<ui_element>
-create_voice_amp_part(plugin_controller* controller)
+create_voice_amp_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 8);
   grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, vgamp_param::gain, label_type::label, Justification::right), 0, 1, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, vgamp_param::gain, edit_type::knob, tooltip_type::value), 0, 2, 1, 2);
   grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, vgamp_param::bal, edit_type::knob, tooltip_type::value), 0, 4, 1, 2);
   grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, vgamp_param::bal, label_type::label, Justification::left), 0, 6, 1, 1);
-  return create_part_single_ui(controller, "Amp", create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Amp", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
-create_voice_pitch_part(plugin_controller* controller)
+create_voice_pitch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 8);
   grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::note, label_type::value, Justification::right), 0, 1, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::note, edit_type::selector, tooltip_type::label), 0, 2, 1, 2);
   grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::selector, tooltip_type::label), 0, 4, 1, 2);
   grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::oct, label_type::value, Justification::left), 0, 6, 1, 1);
-  return create_part_single_ui(controller, "Pitch", create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Pitch", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
-create_voice_controls_fx_grid(plugin_controller* controller)
+create_voice_part(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 4, 2);
-  result->add_cell(create_fx_selector(controller, part_type::veffect, veffect_count, active_param::veffect), 0, 0, 3, 2);
-  result->add_cell(create_voice_amp_part(controller), 3, 0, 1, 1);
-  result->add_cell(create_voice_pitch_part(controller), 3, 1, 1, 1);
+  auto grid = create_grid_ui(controller, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_voice_amp_group(controller)), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_voice_pitch_group(controller)), 0, 1);
+  return create_part_single_ui(controller, "Voice", part_type::voice, std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_voice_part_fx_grid(plugin_controller* controller)
+{
+  auto result = create_grid_ui(controller, 4, 1);
+  result->add_cell(create_fx_selector(controller, part_type::veffect, veffect_count, active_param::veffect), 0, 0, 3, 1);
+  result->add_cell(create_voice_part(controller), 3, 0, 1, 1);
   return result;
 }
 
@@ -601,7 +609,7 @@ create_voice_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 2, 2);
   result->add_cell(create_oscillator_selector(controller), 0, 0);
-  result->add_cell(create_voice_controls_fx_grid(controller), 1, 0);
+  result->add_cell(create_voice_part_fx_grid(controller), 1, 0);
   result->add_cell(create_envelope_selector(controller), 0, 1);
   result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 1, 1);
   return result;
