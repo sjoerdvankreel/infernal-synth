@@ -6,9 +6,16 @@ using namespace juce;
 namespace inf::base::ui {
 
 void 
-inf_selector_label::mouseDown(MouseEvent const& event)
+inf_selector_label::mouseUp(MouseEvent const& event)
 {
-  inf_label::mouseDown(event);
+  if(!event.mods.isRightButtonDown()) return;
+  PopupMenu menu;
+  menu.setLookAndFeel(&getLookAndFeel());
+  menu.addItem(1, _part_count == 1? "Clear": "Clear all");
+  int option = menu.show();
+  if (option == 0) return;
+  for(int i = 0; i < _part_count; i++)
+    _controller->clear_part({ _part_type, i });
 }
 
 void

@@ -74,3 +74,4 @@
 - make all colors inf_look_and_feel
 - fix names in the default factory preset
 - grid paints outside
+- set env1 on by default
