@@ -191,7 +191,8 @@ create_param_icon_ui(
 void 
 param_edit_element::layout()
 {
-  auto bounds = component()->getBounds().expanded(-edit_margin, -edit_margin);
+  auto margin = _in_table? edit_table_margin: edit_margin;
+  auto bounds = component()->getBounds().expanded(-margin, -margin);
   if (_type == edit_type::dropdown)
   {
     float total_height = get_dropdown_height(controller());

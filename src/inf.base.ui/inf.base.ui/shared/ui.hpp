@@ -218,6 +218,7 @@ create_param_icon_ui(inf::base::plugin_controller* controller, icon_type type)
 class param_edit_element :
 public ui_element
 {
+  bool const _in_table;
   edit_type const _type;
   bool const _force_toggle_on;
   base::part_id const _part_id;
@@ -236,15 +237,15 @@ public:
   void layout() override;
   param_edit_element(
     inf::base::plugin_controller* controller, 
-    base::part_id const& part_id, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on):
-  ui_element(controller), _type(type), _force_toggle_on(force_toggle_on), _part_id(part_id), _param_index(param_index), _tooltip_type(tooltip_type) {}
+    base::part_id const& part_id, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on, bool in_table):
+  ui_element(controller), _in_table(in_table), _type(type), _force_toggle_on(force_toggle_on), _part_id(part_id), _param_index(param_index), _tooltip_type(tooltip_type) {}
 };
 
 inline std::unique_ptr<param_edit_element>
 create_param_edit_ui(
   inf::base::plugin_controller* controller, std::int32_t part_type,
-  std::int32_t part_index, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on = false)
-{ return std::make_unique<param_edit_element>(controller, part_id(part_type, part_index), param_index, type, tooltip_type, force_toggle_on); }
+  std::int32_t part_index, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on = false, bool in_table = false)
+{ return std::make_unique<param_edit_element>(controller, part_id(part_type, part_index), param_index, type, tooltip_type, force_toggle_on, in_table); }
 
 class part_graph_element:
 public ui_element
