@@ -141,8 +141,10 @@ create_processor(std::int32_t is_instrument)
   return static_cast<IAudioProcessor*>(processor);
 }
 
+#if 0 // TODO
 static FUnknown* create_fx_processor(void* context) { return create_processor(0); }
 static FUnknown* create_fx_controller(void* context) { return create_controller(0); }
+#endif
 static FUnknown* create_instrument_processor(void* context) { return create_processor(1); }
 static FUnknown* create_instrument_controller(void* context) { return create_controller(1); }
 
