@@ -150,8 +150,9 @@ BEGIN_FACTORY_DEF(
   INF_SYNTH_VST_COMPANY_NAME,
   INF_SYNTH_VST_COMPANY_WEB,
   INF_SYNTH_VST_COMPANY_MAIL,
-  4)
+  /*4*/ 2)
 
+#if 0 // TODO restore fx mode in separate binary
   // fx
   DEF_CLASS(fx_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass, 
     INF_SYNTH_VST_FX_NAME, Steinberg::Vst::kDistributable, Steinberg::Vst::PlugType::kFx,
@@ -159,6 +160,7 @@ BEGIN_FACTORY_DEF(
   DEF_CLASS(fx_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
     INF_SYNTH_VST_FX_CONTROLLER_NAME, 0, "",
     INF_SYNTH_VST_VERSION, kVstVersionString, create_fx_controller, nullptr)
+#endif
 
   // instrument
   DEF_CLASS(instrument_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,

@@ -79,3 +79,4 @@
 - audio bank testing
 - extra dark disabled table mode
 - less padding and larger fonts for high pixel count
+- restore fx mode
