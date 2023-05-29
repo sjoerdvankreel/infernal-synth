@@ -127,11 +127,12 @@ vst_controller::initialize(FUnknown* context)
   if (result != kResultTrue) return result;
 
   // Add parts as units.
-  // TODO limit name to max unit name length.
-  //for (std::size_t p = 0; p < _topology->parts.size(); p++)
-    //addUnit(new Unit(
-      //to_vst_string(_topology->parts[p].runtime_name.c_str()).c_str(), 
-      //static_cast<Steinberg::int32>(p + 1), kRootUnitId));
+  addUnit(new Unit(STR("Root"), kRootUnitId, kNoParentUnitId));
+  for (std::size_t p = 0; p < _topology->parts.size(); p++)
+    addUnit(new Unit(
+      to_vst_string(_topology->parts[p].runtime_name.c_str()).c_str(), 
+      static_cast<Steinberg::int32>(p + 1), kRootUnitId));
+
   // Add all runtime parameters.
   for (std::int32_t p = 0; p < static_cast<std::int32_t>(_topology->params.size()); p++)
   {
