@@ -626,13 +626,20 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
     bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   }
   */
-  auto outer_grid = create_grid_ui(controller, 16, 1);
-  for (std::int32_t i = 0; i < 16; i++)
+  auto outer_grid = create_grid_ui(controller, vaudio_bank_route_count * 2 + 1, 1);
+  auto header_grid = create_grid_ui(controller, 1, 3);
+  header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 0);
+  header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 1);
+  header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 2);
+  outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0, 1, 1);
+  for (std::int32_t i = 0; i < vaudio_bank_route_count; i++)
   {
     auto inner_grid = create_grid_ui(controller, 2, 3);
     inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 0);
     inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), 1, 0);
-    outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i, 0);
+    inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::knob, tooltip_type::value, false, true), 0, 1, 2, 1);
+    inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::knob, tooltip_type::value, false, true), 0, 2, 2, 1);
+    outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
   return create_part_single_ui(controller, "Audio", part_type, std::move(outer_grid));
 }
