@@ -83,3 +83,4 @@
 - less padding and larger fonts for high pixel count
 - restore fx mode
 - strip release symbols?
+- max size for togglebuttons
