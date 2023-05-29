@@ -607,40 +607,21 @@ create_voice_part_fx_grid(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_audio_part(plugin_controller* controller, std::int32_t part_type)
 {
-  /*
-  assert(18 % 2 == 0);
-  auto grid = create_grid_ui(controller, 18 + 1, 3);
-  grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 0);
-  grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 1);
-  grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 2);
-  for (std::int32_t i = 0; i < 18; i ++)
-  {
-    auto route_grid = create_grid_ui(controller, 2, 3);
-
-    grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i,  audio_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), i + 1, 0, 1, 3);
-    auto out = grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), i + 1, 3, 1, 3);
-    out->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    auto amt = grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::knob, tooltip_type::value, false, true), i + 1, 6, 1, 4);
-    amt->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    auto bal = grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::knob, tooltip_type::value, false, true), i + 1, 10, 1, 4);
-    bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-  }
-  */
   auto outer_grid = create_grid_ui(controller, vaudio_bank_route_count * 2 + 1, 1);
-  auto header_grid = create_grid_ui(controller, 1, 3);
-  header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 0);
-  header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 1);
-  header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 2);
+  auto header_grid = create_grid_ui(controller, 1, 30);
+  header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 1, 1, 10);
+  header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 11, 1, 10);
+  header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 21, 1, 10);
   outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0, 1, 1);
   for (std::int32_t i = 0; i < vaudio_bank_route_count; i++)
   {
-    auto inner_grid = create_grid_ui(controller, 2, 3);
-    inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 0);
-    auto out = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), 1, 0);
+    auto inner_grid = create_grid_ui(controller, 2, 30);
+    inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 1, 1, 10);
+    auto out = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), 1, 1, 1, 10);
     out->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    auto gain = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::knob, tooltip_type::value, false, true), 0, 1, 2, 1);
+    auto gain = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::amt), edit_type::knob, tooltip_type::value, false, true), 0, 11, 2, 10);
     gain->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    auto bal = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::knob, tooltip_type::value, false, true), 0, 2, 2, 1);
+    auto bal = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::knob, tooltip_type::value, false, true), 0, 21, 2, 10);
     bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
