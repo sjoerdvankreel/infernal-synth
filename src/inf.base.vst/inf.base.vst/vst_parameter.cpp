@@ -70,7 +70,7 @@ vst_parameter(ParamID tag,
     param_default_to_vst_normalized(*info),
     param_step_count(*info),
     param_flags(info->descriptor),
-    info->part_index + 1,
+    0,
     to_vst_string(info->descriptor->data.static_name.short_).c_str()),
   _info(info)
 {    

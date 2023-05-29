@@ -70,7 +70,7 @@ vst_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
 tresult PLUGIN_API
 vst_controller::setParamNormalized(ParamID tag, ParamValue value)
 {
-  tresult result = EditControllerEx1::setParamNormalized(tag, value);
+  tresult result = EditController::setParamNormalized(tag, value);
   if(result != kResultOk) return result;
   update_state(tag);
   std::int32_t index = topology()->param_id_to_index.at(tag);
@@ -123,15 +123,8 @@ vst_controller::load_component_state(param_value* state, bool perform_edit)
 tresult PLUGIN_API
 vst_controller::initialize(FUnknown* context)
 {
-  tresult result = EditControllerEx1::initialize(context);
+  tresult result = EditController::initialize(context);
   if (result != kResultTrue) return result;
-
-  // Add parts as units.
-  addUnit(new Unit(STR("Root"), kRootUnitId, kNoParentUnitId));
-  for (std::size_t p = 0; p < _topology->parts.size(); p++)
-    addUnit(new Unit(
-      to_vst_string(_topology->parts[p].runtime_name.c_str()).c_str(), 
-      static_cast<Steinberg::int32>(p + 1), kRootUnitId));
 
   // Add all runtime parameters.
   for (std::int32_t p = 0; p < static_cast<std::int32_t>(_topology->params.size()); p++)

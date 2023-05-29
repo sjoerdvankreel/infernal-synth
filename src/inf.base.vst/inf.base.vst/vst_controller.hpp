@@ -16,7 +16,7 @@ class vst_editor;
 
 // Vst edit controller.
 class vst_controller: 
-public Steinberg::Vst::EditControllerEx1,
+public Steinberg::Vst::EditController,
 public inf::base::plugin_controller
 {
 protected:
