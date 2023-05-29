@@ -53,7 +53,7 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
 static list_item const vgcv_route_amp_targets[vgcv_route_amp_target::count] = { 
   { "{4FD8B71A-3ACF-4D82-9070-4C1B5843C8A7}", "Gain" },
   { "{A3956376-EE40-45F1-BDA5-FE7A41F9BD60}", "Bal" } };
-static list_item const vcv_route_audio_bank_targets[vgcv_route_audio_bank_target::vaudio_count] = {
+static list_item const vcv_route_audio_bank_targets[vgcv_route_audio_bank_target::count] = {
   { "{327E458F-4686-44BA-9F32-68C58C53EBFB}", "Amt1" },
   { "{B330BC3A-03AE-439E-A405-DE81D394F6CD}", "Bal1" },
   { "{0925FBB7-3F1B-428C-8A00-F22D359CDFE3}", "Amt2" },
@@ -83,26 +83,8 @@ static list_item const vcv_route_audio_bank_targets[vgcv_route_audio_bank_target
   { "{0B1DBF2D-7388-4F82-8D7F-E2AA33239618}", "Amt14" },
   { "{2931C673-222D-4E83-BCCB-4A3CE9B499B0}", "Bal14" },
   { "{315264AE-8EB9-4CBB-9441-EE849AE0F06C}", "Amt15" },
-  { "{35BB478F-578E-411B-A762-178D37F0C5D5}", "Bal15" },
-  { "{15BFD0CB-C029-4DA0-AD3E-58A5A5310F34}", "Amt16" },
-  { "{C8511F7F-F27C-4AE3-A37F-E65AD400876B}", "Bal16" },
-  { "{1B6132A4-68E9-4949-AD0C-A910E24C23FD}", "Amt17" },
-  { "{D3BC8E67-5288-4CFD-9EEB-4DBC24F1FB2B}", "Bal17" },
-  { "{287F6ABA-51C5-4CFA-91F2-FFED0BAA3C8A}", "Amt18" },
-  { "{96887DAF-FABC-4B6B-86E6-D0C14280249D}", "Bal18" },
-  { "{15A26AED-1F57-43DC-BF44-97755FC31A7B}", "Amt19" },
-  { "{4468283B-98D3-48DC-BF54-3C63EC6111E6}", "Bal19" },
-  { "{29D7E987-0937-4E04-9A26-279C231E1C3B}", "Amt20" },
-  { "{9141F4DC-C7D2-4D7E-B732-DF16C6930A42}", "Bal20" },
-  { "{1DF21879-BCC1-4497-BB3E-71ABA9D09AFC}", "Amt21" },
-  { "{A36A0CBC-3350-43EF-9C69-6F553817E8A9}", "Bal21" },
-  { "{1DFAE194-EA69-42DB-B15E-81594C90A240}", "Amt22" },
-  { "{C4E8ADB1-E726-4643-A01F-FB462503BED8}", "Bal22" },
-  { "{284F22A4-B13A-4A1F-A39F-A32C8D2DFD50}", "Amt23" },
-  { "{EA61774D-E130-4F1B-921B-E4616052335E}", "Bal23" },
-  { "{FF58892B-0097-4B60-9C3F-DFBF10B379DC}", "Amt24" },
-  { "{00BC00AB-7E09-4024-9087-C657B5F0158D}", "Bal24" } };
-static list_item const gcv_route_audio_bank_targets[vgcv_route_audio_bank_target::gaudio_count] = {
+  { "{35BB478F-578E-411B-A762-178D37F0C5D5}", "Bal15" } };
+static list_item const gcv_route_audio_bank_targets[vgcv_route_audio_bank_target::count] = {
   { "{AF20EA99-6827-4216-8CBA-5562F267F649}", "Amt1" },
   { "{5B761DB0-688C-4396-96C5-2EE97A5513D0}", "Bal1" },
   { "{44183897-5277-4A02-BED5-8D727E6C9C33}", "Amt2" },
@@ -132,13 +114,7 @@ static list_item const gcv_route_audio_bank_targets[vgcv_route_audio_bank_target
   { "{EF9A3831-0CAC-4F35-8F06-7B707CBD07EC}", "Amt14" },
   { "{FE1F7209-9794-497C-9286-E68141225D44}", "Bal14" },
   { "{644F1C21-473A-4E35-9667-83AE48D1556C}", "Amt15" },
-  { "{7CFE27C5-4CD5-4F25-93BD-17692639C007}", "Bal15" },
-  { "{6C661356-A9DB-4AF4-99C2-134BDA46E85D}", "Amt16" },
-  { "{23E9DEC2-CD08-4DCD-BBAD-3212BD37D762}", "Bal16" },
-  { "{BD843353-C812-4F9D-9BBD-637A0952E068}", "Amt17" },
-  { "{4C698759-B39E-4BC3-8964-BA1528454175}", "Bal17" },
-  { "{F90FD06E-15BE-463A-A035-0B3CAEC2B6DF}", "Amt18" },
-  { "{93FE3816-1B8E-4AC7-9900-CE6E6976C33A}", "Bal18" } };
+  { "{7CFE27C5-4CD5-4F25-93BD-17692639C007}", "Bal15" } };
 static list_item const vcv_route_vosc_targets[vcv_route_vosc_target::count] = {
   { "{8F07B23B-8F7E-4388-BBA7-968A30957F40}", "PM" },
   { "{987BE249-E672-4055-BFEA-BCDA828DB269}", "FM" },

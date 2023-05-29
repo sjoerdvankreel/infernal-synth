@@ -67,12 +67,11 @@ inline std::int32_t constexpr vgcv_route_effect_mapping[vgcv_route_effect_target
 
 // audio bank output routing and mapping
 struct vgcv_route_audio_bank_target_t { enum value { 
-  amt1, bal1, amt2, bal2, amt3, bal3, amt4, bal4, amt5, bal5, amt6, bal6,
-  amt7, bal7, amt8, bal8, amt9, bal9, amt10, bal10, amt11, bal11, amt12, bal12,
-  amt13, bal13, amt14, bal14, amt15, bal15, amt16, bal16, amt17, bal17, amt18, bal18, gaudio_count,
-  amt19 = gaudio_count, bal19, amt20, bal20, amt21, bal21, amt22, bal22, amt23, bal23, amt24, bal24, vaudio_count }; };
+  amt1, bal1, amt2, bal2, amt3, bal3, amt4, bal4, amt5, bal5, 
+  amt6, bal6, amt7, bal7, amt8, bal8, amt9, bal9, amt10, bal10, 
+  amt11, bal11, amt12, bal12, amt13, bal13, amt14, bal14, amt15, bal15, count }; };
 typedef vgcv_route_audio_bank_target_t::value vgcv_route_audio_bank_target;
-inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_bank_target::vaudio_count] = {
+inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_bank_target::count] = {
   audio_bank_param::amt1, audio_bank_param::bal1, audio_bank_param::amt2, audio_bank_param::bal2,
   audio_bank_param::amt3, audio_bank_param::bal3, audio_bank_param::amt4, audio_bank_param::bal4,
   audio_bank_param::amt5, audio_bank_param::bal5, audio_bank_param::amt6, audio_bank_param::bal6,
@@ -80,11 +79,7 @@ inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_ban
   audio_bank_param::amt9, audio_bank_param::bal9, audio_bank_param::amt10, audio_bank_param::bal10,
   audio_bank_param::amt11, audio_bank_param::bal11, audio_bank_param::amt12, audio_bank_param::bal12,
   audio_bank_param::amt13, audio_bank_param::bal13, audio_bank_param::amt14, audio_bank_param::bal14,
-  audio_bank_param::amt15, audio_bank_param::bal15, audio_bank_param::amt16, audio_bank_param::bal16,
-  audio_bank_param::amt17, audio_bank_param::bal17, audio_bank_param::amt18, audio_bank_param::bal18,
-  audio_bank_param::amt19, audio_bank_param::bal19, audio_bank_param::amt20, audio_bank_param::bal20,
-  audio_bank_param::amt21, audio_bank_param::bal21, audio_bank_param::amt22, audio_bank_param::bal22,
-  audio_bank_param::amt23, audio_bank_param::bal23, audio_bank_param::amt24, audio_bank_param::bal24 };
+  audio_bank_param::amt15, audio_bank_param::bal15 };
 
 // ---- voice ----
 
@@ -138,7 +133,7 @@ inline std::int32_t constexpr vcv_route_vosc_mapping[vcv_route_vosc_target::coun
 // output target mapping
 inline std::int32_t constexpr vcv_route_output_target_counts[vcv_route_output::count] = {
   0 /* off */, vcv_route_vosc_target::count, vgcv_route_effect_target::vfx_count,
-  vgcv_route_audio_bank_target::vaudio_count, vgcv_route_amp_target::count };
+  vgcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
 inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_output::count] = {
   nullptr, vcv_route_vosc_mapping, vgcv_route_effect_mapping, 
   vgcv_route_audio_bank_mapping, cv_route_amp_mapping };
@@ -179,7 +174,7 @@ inline std::int32_t constexpr gcv_route_output_total_count = std::accumulate(
 inline std::int32_t const* const gcv_route_output_target_mapping[gcv_route_output::count] = {
   nullptr, vgcv_route_effect_mapping, vgcv_route_audio_bank_mapping, cv_route_amp_mapping };
 inline std::int32_t constexpr gcv_route_output_target_counts[gcv_route_output::count] = {
-  0 /* off */, vgcv_route_effect_target::gfx_count, vgcv_route_audio_bank_target::gaudio_count, vgcv_route_amp_target::count };
+  0 /* off */, vgcv_route_effect_target::gfx_count, vgcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_CV_BANK_TOPOLOGY_HPP
