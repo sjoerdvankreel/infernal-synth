@@ -1,5 +1,6 @@
 #include <inf.synth/voice/state.hpp>
 #include <inf.synth/synth/processor.hpp>
+#include <inf.synth/voice/topology.hpp>
 #include <inf.base/shared/support.hpp>
 
 #include <cassert>
@@ -13,9 +14,9 @@ synth_processor::
 synth_processor(topology_info const* topology, param_value* state, 
   std::int32_t* changed, float sample_rate, std::int32_t max_sample_count):
 audio_processor(topology, sample_rate, max_sample_count, state, changed),
-_output(topology, sample_rate), _gamp_bal(topology, part_type::master, sample_rate), 
+_output(topology, sample_rate), _gamp_bal(topology, part_type::gamp, sample_rate), 
 _gcv_bank(topology, &_cv_state), _gaudio_bank(&_audio_state), _glfos(), _geffects(),
-_voices_drained(false), _last_voice_released(false), _master_mode(-1), _last_midi_note(-1),
+_voices_drained(false), _last_voice_released(false), _voice_mode(-1), _last_midi_note(-1),
 _active_voice_count(0), _last_voice_activated(-1), _voices(), _voice_states(), 
 _scratch(max_sample_count), _ones(max_sample_count), _port_state(max_sample_count),
 _automation_fixed(synth_polyphony), _automation_fixed_buffer(synth_polyphony * topology->input_param_count),
@@ -32,8 +33,8 @@ _global_effect_states(), _voice_effect_states(), _voice_oscillator_states()
   std::fill(_ones.begin(), _ones.end(), 1.0f);
 
   // Initial global voice mode.
-  automation_view master_automation(topology, state, { part_type::master, 0 });
-  _master_mode = master_automation.block_discrete(master_param::mode);
+  automation_view voice_automation(topology, state, { part_type::voice, 0 });
+  _voice_mode = voice_automation.block_discrete(voice_param::mode);
 
   // Don't need defaults for discrete valued automation, only contiguous.
   // So we end up with crap in discrete-valued parameters, but they're not used.
@@ -204,11 +205,11 @@ synth_processor::process_note_on(voice_setup_input const& input, base::note_even
   // Release monophonic: only if previous voice released, we start a new one.
   // True monophonic: only if there are no active voices (i.e. amp env ended), we start a new one.
   bool new_voice = _last_voice_activated == -1;
-  switch (input.master_mode)
+  switch (input.voice_mode)
   {
-  case master_mode::poly: setup_voice(input, note); break;
-  case master_mode::mono: if (new_voice) setup_voice(input, note); break;
-  case master_mode::release: if (new_voice || _last_voice_released) setup_voice(input, note); break;
+  case voice_mode::poly: setup_voice(input, note); break;
+  case voice_mode::mono: if (new_voice) setup_voice(input, note); break;
+  case voice_mode::release: if (new_voice || _last_voice_released) setup_voice(input, note); break;
   default: assert(false); break;
   }
 
@@ -246,7 +247,7 @@ synth_processor::process_note_off(voice_setup_input const& input, base::note_eve
   // Regular polyphonic mode: release note by pitch.
   // Monophonic modes: release on explicit note-off only.
   note_event event = note;
-  if(input.master_mode == master_mode::poly)
+  if(input.voice_mode == voice_mode::poly)
     setup_voice_release(event);
   else if(_last_voice_activated != -1 && !implicit_release)
   {
@@ -275,8 +276,8 @@ synth_processor::process_notes_current_block(voice_setup_input const& input)
   // and we were/are in monophonic mode, also drop all voices. This stuff should never be automated in mono 
   // mode, and it greatly improves the ui experience when manually editing the params of a running mono 
   // voice. (I.e., you don't have to stop/restart the track to get changes picked up).
-  bool should_release_all = input.master_mode != _master_mode;
-  bool is_or_was_mono = input.master_mode != master_mode::poly || _master_mode != master_mode::poly;
+  bool should_release_all = input.voice_mode != _voice_mode;
+  bool is_or_was_mono = input.voice_mode != voice_mode::poly || _voice_mode != voice_mode::poly;
   if (!should_release_all && is_or_was_mono)
     for (std::int32_t i = 0; i < topology()->input_param_count; i++)
       if (topology()->params[i].descriptor->data.kind == param_kind::voice && 
@@ -286,7 +287,7 @@ synth_processor::process_notes_current_block(voice_setup_input const& input)
         break;
       }
 
-  _master_mode = input.master_mode;
+  _voice_mode = input.voice_mode;
 
   voice_setup_output result;
   result.buffer_final_midi = -1;
@@ -297,7 +298,7 @@ synth_processor::process_notes_current_block(voice_setup_input const& input)
     if (input.block->notes[n].note_on)
     {
       // Need to remember these for mono/legato mode.
-      if (input.master_mode != master_mode::poly)
+      if (input.voice_mode != voice_mode::poly)
       {
         result.buffer_final_midi = input.block->notes[n].midi;
         result.buffer_final_midi_pos = input.block->notes[n].sample_index;
@@ -367,7 +368,7 @@ synth_processor::process_voice(voice_setup_input const& input,
   voice_in.new_midi_start_pos = -1;
   voice_in.port_mode = input.port_mode;
   voice_in.port_trig = input.port_trig;
-  voice_in.master_mode = input.master_mode;
+  voice_in.voice_mode = input.voice_mode;
   voice_in.port_samples = input.port_samples;
   voice_in.new_midi = output.buffer_final_midi;
   voice_in.release_sample = release_sample;
@@ -415,15 +416,18 @@ synth_processor::process(block_input const& input, block_output& output)
   }
 
   // Get per-block poly/mono and portamento settings.
+  part_id voice_id = { part_type::voice, 0 };
+  auto voice_automation = input.data.automation.rearrange_params(voice_id);
+
   voice_setup_input setup_input;
   setup_input.block = &input;
-  setup_input.master_mode = master_automation.block_discrete(master_param::mode);
-  setup_input.port_mode = master_automation.block_discrete(master_param::port_mode);
-  setup_input.port_trig = master_automation.block_discrete(master_param::port_trig);
-  float port_seconds = master_automation.block_real_transform(master_param::port_time);
-  std::int32_t port_sync = master_automation.block_discrete(master_param::port_sync);
-  std::int32_t port_tempo = master_automation.block_discrete(master_param::port_tempo);
-  float port_timesig = master_port_timesig_values[port_tempo];
+  setup_input.voice_mode = voice_automation.block_discrete(voice_param::mode);
+  setup_input.port_mode = voice_automation.block_discrete(voice_param::port_mode);
+  setup_input.port_trig = voice_automation.block_discrete(voice_param::port_trig);
+  float port_seconds = voice_automation.block_real_transform(voice_param::port_time);
+  std::int32_t port_sync = voice_automation.block_discrete(voice_param::port_sync);
+  std::int32_t port_tempo = voice_automation.block_discrete(voice_param::port_tempo);
+  float port_timesig = voice_port_timesig_values[port_tempo];
   if (port_sync == 0) setup_input.port_samples = static_cast<std::int32_t>(sample_rate() * port_seconds);
   else setup_input.port_samples = static_cast<std::int32_t>(timesig_to_samples(sample_rate(), input.data.bpm, port_timesig));
 
@@ -476,7 +480,7 @@ synth_processor::process(block_input const& input, block_output& output)
   amp_bal_in.audio_in = audio_mixdown.mixdown;
   audio_part_output amp_bal_out = _gamp_bal.process(amp_bal_in, output.audio, _gcv_bank);
   usage.gcv += amp_bal_out.cv_time;
-  usage.master += amp_bal_out.own_time;
+  usage.gamp += amp_bal_out.own_time;
   
   // Output round info.
   output_info info;

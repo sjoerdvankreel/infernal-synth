@@ -1,13 +1,13 @@
 #ifndef INF_SYNTH_VOICE_PROCESSOR_HPP
 #define INF_SYNTH_VOICE_PROCESSOR_HPP
 
+#include <inf.synth/amp/processor.hpp>
 #include <inf.synth/lfo/processor.hpp>
 #include <inf.synth/effect/processor.hpp>
 #include <inf.synth/cv_bank/processor.hpp>
 #include <inf.synth/envelope/processor.hpp>
 #include <inf.synth/oscillator/processor.hpp>
 #include <inf.synth/audio_bank/processor.hpp>
-#include <inf.synth/voice_master/processor.hpp>
 
 #include <array>
 #include <cstdint>

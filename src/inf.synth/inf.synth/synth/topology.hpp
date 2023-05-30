@@ -15,13 +15,18 @@ extern base::part_descriptor const part_descriptors[];
 // global topo
 struct part_type_t { enum value { 
   vosc, veffect, geffect, vaudio_bank, gaudio_bank, 
-  voice, master, venv, vlfo, glfo, vcv_bank, gcv_bank, 
-  vcv_plot, gcv_plot, active, output, count }; };
+  voice, master, vamp, gamp, venv, vlfo, glfo, vcv_bank, 
+  gcv_bank, vcv_plot, gcv_plot, active, output, count }; };
 typedef part_type_t::value part_type;
 
-struct active_param_t { enum value { 
-  vosc, veffect, geffect, venv, vlfo, 
-  glfo, vcv_bank, gcv_bank, count }; };
+inline std::int32_t constexpr master_gcv_count = 3;
+extern base::param_descriptor const master_params[];
+
+struct master_param_t { enum value {
+  gcv1_uni, gcv1_bi, gcv2_uni, gcv2_bi, gcv3_uni, gcv3_bi, count }; };
+typedef master_param_t::value master_param;
+
+struct active_param_t { enum value { vosc, veffect, geffect, venv, vlfo, glfo, count }; };
 typedef active_param_t::value active_param;
 
 // plugin entry

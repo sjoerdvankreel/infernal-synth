@@ -132,7 +132,7 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
   // Env 0 is hardwired to voice amp level (excluding invert and bipolar flags).
   if(id().type == part_type::gcv_plot) return;
   unipolar_untransform(cv_state.venv[0].buffer, input.data.sample_count);
-  if(cv_route_output_id == vcv_route_output::voice && cv_route_target == vgcv_route_amp_target::gain)
+  if(cv_route_output_id == vcv_route_output::vamp && cv_route_target == vgcv_route_amp_target::gain)
     for(std::int32_t i = 0; i < input.data.sample_count; i++)
       output[i] *= cv_state.venv[0].buffer.values[i];
 }

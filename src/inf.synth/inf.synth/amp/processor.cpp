@@ -1,7 +1,7 @@
 #include <inf.base/shared/support.hpp>
+#include <inf.synth/amp/processor.hpp>
 #include <inf.synth/shared/support.hpp>
 #include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/voice_master/processor.hpp>
 
 #include <cassert>
 
@@ -25,8 +25,8 @@ amp_bal_processor::process(amp_bal_input const& input, float* const* audio_out, 
 
   float const* env = input.amp_env;
   float const* const* in = input.audio_in;
-  float const* bal = params[vgamp_param::bal];
-  float const* gain = params[vgamp_param::gain];
+  float const* bal = params[amp_param::bal];
+  float const* gain = params[amp_param::gain];
 
   // Apply gain and balance.
   std::int64_t start_time = performance_counter();

@@ -1,11 +1,13 @@
 #include <inf.synth.ui/ui.hpp>
+#include <inf.synth/amp/topology.hpp>
 #include <inf.synth/lfo/topology.hpp>
+#include <inf.synth/voice/topology.hpp>
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/effect/topology.hpp>
+#include <inf.synth/cv_bank/topology.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
 #include <inf.synth/audio_bank/topology.hpp>
-#include <inf.synth/voice_master/topology.hpp>
 
 using namespace juce;
 using namespace inf::base;
@@ -61,8 +63,8 @@ static std::unique_ptr<ui_element>
 create_osc_osc_main_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 2, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_osc_osc_group(controller, part_index)), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 1, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_osc_osc_group(controller, part_index)), 1, 0);
   return grid;
 }
 
@@ -77,14 +79,14 @@ create_osc_pitch_group(plugin_controller* controller, std::int32_t part_index)
 }
 
 static std::unique_ptr<ui_element>
-create_osc_ram_group(plugin_controller* controller, std::int32_t part_index)
+create_osc_am_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 1);
-  auto ram = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::ram_src, edit_type::selector, label_type::value, tooltip_type::label), 0, 0);
-  ram->relevant_if(part_id(part_type::vosc, part_index), osc_param::on, false, [](std::int32_t part_index, std::int32_t val) { return part_index > 0; });
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::ram_bal, edit_type::knob, label_type::label, tooltip_type::value), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::ram_mix, edit_type::knob, label_type::label, tooltip_type::value), 2, 0);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "R/AM", false), std::move(grid));
+  auto am = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::am_src, edit_type::selector, label_type::value, tooltip_type::label), 0, 0);
+  am->relevant_if(part_id(part_type::vosc, part_index), osc_param::on, false, [](std::int32_t part_index, std::int32_t val) { return part_index > 0; });
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::am_ring, edit_type::knob, label_type::label, tooltip_type::value), 1, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::am_mix, edit_type::knob, label_type::label, tooltip_type::value), 2, 0);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "AM", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -184,7 +186,7 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   auto result = create_grid_ui(controller, 4, 8);
   result->add_cell(create_osc_osc_main_grid(controller, part_index), 0, 0, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_ram_group(controller, part_index)), 0, 2, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_osc_am_group(controller, part_index)), 0, 2, 3, 1);
   result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
   result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 1, 3, 2, 2);
   auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 3, 0, 1, 5);
@@ -315,8 +317,8 @@ static std::unique_ptr<grid_element>
 create_fx_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 3, 8);
-  result->add_cell(create_part_group_container_ui(controller, create_fx_fx_group(controller, part_type, part_index)), 0, 0, 2, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 2, 0, 1, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 0, 0, 1, 1);
+  result->add_cell(create_part_group_container_ui(controller, create_fx_fx_group(controller, part_type, part_index)), 1, 0, 2, 1);
   result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 1, 2, 7);
   auto filter = result->add_cell(create_fx_filter_grid(controller, part_type, part_index), 2, 1, 1, 7);
   filter->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
@@ -465,7 +467,7 @@ create_lfo_lfo_group(plugin_controller* controller, std::int32_t part_type, std:
   tempo_dropdown->relevant_if(part_id(part_type, part_index), lfo_param::synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::filter, edit_type::knob, tooltip_type::value), 0, 2, 2, 1);
   grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::filter, label_type::label, Justification::centred), 2, 2, 1, 1);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "LFO", false), std::move(grid));
+  return create_part_group_ui(controller, create_group_label_ui(controller, "LFO", true), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -480,20 +482,20 @@ create_lfo_basic_group(plugin_controller* controller, std::int32_t part_type, st
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_offset, edit_type::hslider, label_type::label, tooltip_type::value, false, 8), 1, 0, 4, 1);
   auto pw = slider_grid->add_cell(create_labeled_param_ui(controller, part_type, part_index, lfo_param::basic_pw, edit_type::hslider, label_type::label, tooltip_type::value, false, 8), 7, 0, 4, 1);
   pw->relevant_if(part_id(part_type, part_index), lfo_param::basic_type, false, [](std::int32_t part_index, std::int32_t val) { return val == lfo_basic_type::pulse; });
-  auto grid = create_grid_ui(controller, 4, 4);
-  grid->add_cell(std::move(knob_grid), 1, 0, 2, 1);
-  grid->add_cell(std::move(slider_grid), 1, 1, 2, 3);
+  auto grid = create_grid_ui(controller, 8, 4);
+  grid->add_cell(std::move(knob_grid), 1, 0, 6, 1);
+  grid->add_cell(std::move(slider_grid), 1, 1, 6, 3);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Basic", false), std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
 create_lfo_random_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto knob_grid = create_grid_ui(controller, 4, 1);
-  knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_type, edit_type::selector, tooltip_type::label), 0, 0);
-  knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_type, edit_type::dropdown, tooltip_type::off), 1, 0);
-  knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_steps, edit_type::selector, tooltip_type::value), 2, 0);
-  knob_grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::rand_steps, label_type::label, Justification::centred), 3, 0);
+  auto knob_grid = create_grid_ui(controller, 8, 1);
+  knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_type, edit_type::selector, tooltip_type::label), 0, 0, 3, 1);
+  knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_type, edit_type::dropdown, tooltip_type::off), 3, 0, 1, 1);
+  knob_grid->add_cell(create_param_edit_ui(controller, part_type, part_index, lfo_param::rand_steps, edit_type::selector, tooltip_type::value), 4, 0, 3, 1);
+  knob_grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::rand_steps, label_type::label, Justification::centred), 7, 0, 1, 1);
   auto other_grid = create_grid_ui(controller, 24, 1);
   auto rand_steps_grid = create_grid_ui(controller, 6, 8);
   rand_steps_grid->add_cell(create_param_label_ui(controller, part_type, part_index, lfo_param::rand_rand_steps, label_type::label, Justification::right), 0, 0, 6, 1);
@@ -510,7 +512,7 @@ create_lfo_random_group(plugin_controller* controller, std::int32_t part_type, s
 }
 
 static std::unique_ptr<ui_element>
-create_lfo_custom_group(
+create_lfo_free_group(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
   std::int32_t stage1, std::int32_t stage2, std::int32_t slope, char const* group_name)
 {
@@ -525,17 +527,17 @@ create_lfo_custom_group(
 }
 
 static std::unique_ptr<ui_element>
-create_lfo_custom_groups(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
+create_lfo_free_groups(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 { 
   auto grid = create_grid_ui(controller, 4, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
-    controller, part_type, part_index, lfo_param::custom_delay1, lfo_param::custom_rise1, lfo_param::custom_rise1_slope, "DA")), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
-    controller, part_type, part_index, lfo_param::custom_hold1, lfo_param::custom_fall1, lfo_param::custom_fall1_slope, "HD")), 1, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
-    controller, part_type, part_index, lfo_param::custom_delay2, lfo_param::custom_fall2, lfo_param::custom_fall2_slope, "DD")), 2, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_custom_group(
-    controller, part_type, part_index, lfo_param::custom_hold2, lfo_param::custom_rise2, lfo_param::custom_rise2_slope, "HA")), 3, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+    controller, part_type, part_index, lfo_param::free_delay1, lfo_param::free_rise1, lfo_param::free_rise1_slope, "DA")), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+    controller, part_type, part_index, lfo_param::free_hold1, lfo_param::free_fall1, lfo_param::free_fall1_slope, "HD")), 1, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+    controller, part_type, part_index, lfo_param::free_delay2, lfo_param::free_fall2, lfo_param::free_fall2_slope, "DD")), 2, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+    controller, part_type, part_index, lfo_param::free_hold2, lfo_param::free_rise2, lfo_param::free_rise2_slope, "HA")), 3, 0);
   return grid;
 }
 
@@ -543,15 +545,15 @@ static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 0, 0, 1, 3);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 1, 0, 2, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 3, 1, 4);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 0, 1, 1, 3);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 0, 0, 3, 1);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 4, 1, 3);
   auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
   auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), 1, 1, 2, 6);
   random->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::random; });
-  auto custom = grid->add_cell(create_lfo_custom_groups(controller, part_type, part_index), 1, 1, 2, 6);
-  custom->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::custom; });
+  auto free = grid->add_cell(create_lfo_free_groups(controller, part_type, part_index), 1, 1, 2, 6);
+  free->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::free; });
   return grid;
 }
 
@@ -565,34 +567,38 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
 }
 
 static std::unique_ptr<ui_element>
-create_voice_amp_group(plugin_controller* controller)
-{
-  auto grid = create_grid_ui(controller, 1, 8);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, vgamp_param::gain, label_type::label, Justification::right), 0, 1, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, vgamp_param::gain, edit_type::knob, tooltip_type::value), 0, 2, 1, 2);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, vgamp_param::bal, edit_type::knob, tooltip_type::value), 0, 4, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, vgamp_param::bal, label_type::label, Justification::left), 0, 6, 1, 1);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Amp", true), std::move(grid));
-}
-
-static std::unique_ptr<ui_element>
-create_voice_pitch_group(plugin_controller* controller)
-{
-  auto grid = create_grid_ui(controller, 1, 8);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::note, label_type::value, Justification::right), 0, 1, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::note, edit_type::selector, tooltip_type::label), 0, 2, 1, 2);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::selector, tooltip_type::label), 0, 4, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::oct, label_type::value, Justification::left), 0, 6, 1, 1);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Pitch", true), std::move(grid));
-}
-
-static std::unique_ptr<ui_element>
-create_voice_part(plugin_controller* controller)
+create_amp_group(plugin_controller* controller, part_type part_type)
 {
   auto grid = create_grid_ui(controller, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_voice_amp_group(controller)), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_voice_pitch_group(controller)), 0, 1);
-  return create_part_single_ui(controller, "Voice", part_type::voice, std::move(grid));
+  grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  return create_part_single_ui(controller, "Amp", part_type::vamp, true, create_part_group_container_ui(controller, std::move(grid)));
+}
+
+static std::unique_ptr<ui_element>
+create_voice_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 7);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::note, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::mode, edit_type::knob, label_type::label, tooltip_type::value), 0, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_mode, edit_type::knob, label_type::label, tooltip_type::value), 0, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_trig, edit_type::knob, label_type::label, tooltip_type::value), 0, 4);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_sync, edit_type::knob, label_type::label, tooltip_type::value), 0, 5);
+  auto time = grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_time, edit_type::knob, label_type::label, tooltip_type::value), 0, 6);
+  time->relevant_if(part_id(part_type::voice, 0), voice_param::port_sync, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
+  auto tempo = grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_tempo, edit_type::knob, label_type::label, tooltip_type::value), 0, 6);
+  tempo->relevant_if(part_id(part_type::voice, 0), voice_param::port_sync, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+  return create_part_single_ui(controller, "Voice", part_type::voice, true, create_part_group_container_ui(controller, std::move(grid)));
+}
+
+static std::unique_ptr<ui_element>
+create_voice_amp_grid(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 3);
+  grid->add_cell(create_amp_group(controller, part_type::vamp), 0, 0, 1, 1);
+  grid->add_cell(create_voice_group(controller), 0, 1, 1, 2);
+  return grid;
 }
 
 static std::unique_ptr<ui_element>
@@ -600,22 +606,30 @@ create_voice_part_fx_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 4, 1);
   result->add_cell(create_fx_selector(controller, part_type::veffect, veffect_count, active_param::veffect), 0, 0, 3, 1);
-  result->add_cell(create_voice_part(controller), 3, 0, 1, 1);
+  result->add_cell(create_voice_amp_grid(controller), 3, 0, 1, 1);
+  return result;
+}
+
+static std::unique_ptr<ui_element>
+create_cv_graph_lfo_grid(plugin_controller* controller)
+{
+  auto result = create_grid_ui(controller, 4, 1);
+  result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 0, 0, 3, 1);
   return result;
 }
 
 static std::unique_ptr<ui_element>
 create_audio_part(plugin_controller* controller, std::int32_t part_type)
 {
-  auto outer_grid = create_grid_ui(controller, vaudio_bank_route_count * 2 + 1, 1);
-  auto header_grid = create_grid_ui(controller, 1, 30);
+  auto outer_grid = create_grid_ui(controller, audio_bank_route_count * 2 + 1, 1);
+  auto header_grid = create_grid_ui(controller, 1, 32);
   header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 1, 1, 10);
   header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 11, 1, 10);
   header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 21, 1, 10);
   outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0, 1, 1);
-  for (std::int32_t i = 0; i < vaudio_bank_route_count; i++)
+  for (std::int32_t i = 0; i < audio_bank_route_count; i++)
   {
-    auto inner_grid = create_grid_ui(controller, 2, 30);
+    auto inner_grid = create_grid_ui(controller, 2, 32);
     inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 1, 1, 10);
     auto out = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), 1, 1, 1, 10);
     out->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
@@ -625,18 +639,46 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
     bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  return create_part_single_ui(controller, "Audio", part_type, std::move(outer_grid));
+  return create_part_single_ui(controller, "Audio", part_type, false, std::move(outer_grid));
+}
+
+static std::unique_ptr<ui_element>
+create_cv_part(plugin_controller* controller, std::int32_t part_type)
+{
+  auto outer_grid = create_grid_ui(controller, cv_bank_route_count * 2 + 1, 1);
+  auto header_grid = create_grid_ui(controller, 1, 42);
+  header_grid->add_cell(create_label_ui(controller, "In/Op/Amt", Justification::centred), 0, 1, 1, 20);
+  header_grid->add_cell(create_label_ui(controller, "Out/Scl/Offset", Justification::centred), 0, 21, 1, 20);
+  outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0);
+  for (std::int32_t i = 0; i < cv_bank_route_count; i++)
+  {
+    auto inner_grid = create_grid_ui(controller, 2, 42);
+    inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 1, 1, 20);
+    auto op = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::op), edit_type::dropdown, tooltip_type::label, false, true), 1, 1, 1, 10);
+    op->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto amt = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::amt), edit_type::hslider, tooltip_type::value, false, true), 1, 11, 1, 10);
+    amt->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto out = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), 0, 21, 1, 20);
+    out->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto scl = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::scale), edit_type::hslider, tooltip_type::value, false, true), 1, 21, 1, 10);
+    scl->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto off = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::off), edit_type::hslider, tooltip_type::value, false, true), 1, 31, 1, 10);
+    off->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
+  }
+  return create_part_single_ui(controller, "CV", part_type, false, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
 create_voice_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 2, 18);
+  auto result = create_grid_ui(controller, 2, 17);
   result->add_cell(create_audio_part(controller, part_type::vaudio_bank), 0, 0, 2, 2);
   result->add_cell(create_oscillator_selector(controller), 0, 2, 1, 6);
   result->add_cell(create_envelope_selector(controller), 0, 8, 1, 6);
   result->add_cell(create_voice_part_fx_grid(controller), 1, 2, 1, 6);
-  result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 1, 8, 1, 6);
+  result->add_cell(create_cv_graph_lfo_grid(controller), 1, 8, 1, 6);
+  result->add_cell(create_cv_part(controller, part_type::vcv_bank), 0, 14, 2, 3);
   return result;
 }
 

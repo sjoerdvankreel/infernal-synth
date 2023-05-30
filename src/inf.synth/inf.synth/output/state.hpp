@@ -14,8 +14,8 @@ struct cpu_usage
   std::int64_t gcv;
   std::int64_t vlfo;
   std::int64_t glfo;
-  std::int64_t voice;
-  std::int64_t master;
+  std::int64_t vamp;
+  std::int64_t gamp;
   std::int64_t vaudio;
   std::int64_t gaudio;
   std::int64_t veffect;

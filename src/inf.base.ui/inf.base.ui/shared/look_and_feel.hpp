@@ -181,14 +181,13 @@ public:
     juce::String const& text, juce::String const& shortcut_key_text,
     juce::Drawable const* icon, juce::Colour const*) override;
 
+  void getIdealPopupMenuItemSize(
+    juce::String const& text, bool is_separator,
+    int standard_menu_item_height, int& ideal_width, int& ideal_height) override;
   juce::Font getPopupMenuFont() override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
   juce::Font getComboBoxFont(juce::ComboBox& box) override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
-  void getIdealPopupMenuItemSize(
-    juce::String const& text, bool is_separator,
-    int standard_menu_item_height, int& ideal_width, int& ideal_height) override
-  { ideal_height = static_cast<int>(std::ceil(get_dropdown_item_height(_controller))); }
 };
 
 } // namespace inf::base::ui

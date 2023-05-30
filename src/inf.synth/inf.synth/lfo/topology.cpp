@@ -10,8 +10,8 @@ namespace inf::synth {
  
 static std::vector<list_item> const lfo_types = {
   { "{BA47C8D9-458A-4FE7-B4EC-E0A5BF6F0073}", "Basic" },
-  { "{86377625-0B20-45D0-8DB8-A92B5CD807D8}", "Random" },
-  { "{1B0F2B5B-FDC7-4F63-ADF1-621C18144739}", "Custom" } };
+  { "{86377625-0B20-45D0-8DB8-A92B5CD807D8}", "Rand" },
+  { "{1B0F2B5B-FDC7-4F63-ADF1-621C18144739}", "Free" } };
 static std::vector<list_item> const lfo_rand_types = {
   { "{188B114B-ACB1-495E-9811-E0B77D9EEE27}", "Slope" }, 
   { "{ADCF2659-BF48-4099-A552-084991CCE603}", "Level" },
@@ -48,18 +48,18 @@ static param_descriptor_data const lfo_rand_seedy_data = { { "SeedY", "Random se
 static param_descriptor_data const lfo_rand_rand_steps_data = { { "RandX", "Randomize X" }, param_kind::voice, false };
 static param_descriptor_data const lfo_rand_steps_data = { { "Steps", "Random steps" }, "", param_kind::voice, param_type::list_knob, { lfo_rand_min_steps, lfo_rand_max_steps, lfo_rand_default_steps } };
 static param_descriptor_data const lfo_rand_amt_data = { { "Amt", "Random amount" }, "%", param_kind::voice, percentage_01_bounds(1.0f) };
-static param_descriptor_data const lfo_custom_delay1_data = { { "Dly", "Custom delay 1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) }; 
-static param_descriptor_data const lfo_custom_rise1_data = { { "A1", "Custom A1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
-static param_descriptor_data const lfo_custom_rise1_slope_data = { { "S", "Custom A1 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
-static param_descriptor_data const lfo_custom_hold1_data = { { "Hld", "Custom hold 1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
-static param_descriptor_data const lfo_custom_fall1_data = { { "D1", "Custom D1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
-static param_descriptor_data const lfo_custom_fall1_slope_data = { { "S", "Custom D1 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
-static param_descriptor_data const lfo_custom_delay2_data = { { "Dly", "Custom delay 2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) }; 
-static param_descriptor_data const lfo_custom_fall2_data = { { "D2", "Custom D2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
-static param_descriptor_data const lfo_custom_fall2_slope_data = { { "S", "Custom D2 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
-static param_descriptor_data const lfo_custom_hold2_data = { { "Hld", "Custom hold 2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) }; 
-static param_descriptor_data const lfo_custom_rise2_data = { { "A2", "Custom A2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
-static param_descriptor_data const lfo_custom_rise2_slope_data = { { "S", "Custom A2 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
+static param_descriptor_data const lfo_free_delay1_data = { { "Dly", "Free delay 1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_rise1_data = { { "A1", "Free A1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_rise1_slope_data = { { "S", "Free A1 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
+static param_descriptor_data const lfo_free_hold1_data = { { "Hld", "Free hold 1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_fall1_data = { { "D1", "Free D1" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_fall1_slope_data = { { "S", "Free D1 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
+static param_descriptor_data const lfo_free_delay2_data = { { "Dly", "Free delay 2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_fall2_data = { { "D2", "Free D2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_fall2_slope_data = { { "S", "Free D2 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
+static param_descriptor_data const lfo_free_hold2_data = { { "Hld", "Free hold 2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_rise2_data = { { "A2", "Free A2" }, "%", param_kind::voice, percentage_01_bounds(0.5f) };
+static param_descriptor_data const lfo_free_rise2_slope_data = { { "S", "Free A2 slope" }, "", param_kind::voice, param_type::list_knob, discrete_2way_bounds(lfo_slope_range, 1) };
   
 param_descriptor const    
 vlfo_params[lfo_param::count] =  
@@ -82,18 +82,18 @@ vlfo_params[lfo_param::count] =
   { "{821E8CA4-3EE8-45CF-B526-10D46FC390CA}", lfo_rand_rand_steps_data },
   { "{DDA30530-DBCD-4DBD-861C-8C2D9F282397}", lfo_rand_steps_data },
   { "{80FD8720-8423-477B-8EA8-08F989FA302E}", lfo_rand_amt_data },
-  { "{A9DBEA7B-2FC2-4B15-A11C-719B9A1ABD38}", lfo_custom_delay1_data },
-  { "{D181F306-132F-4C1E-A7FD-72D1AD43E8B8}", lfo_custom_rise1_data },
-  { "{E9BFE976-4D66-4A9E-ACC6-869275AB0AB6}", lfo_custom_rise1_slope_data },
-  { "{8533C007-D714-415D-890F-C1CF66B181F6}", lfo_custom_hold1_data },
-  { "{FB0BF491-3AB4-4071-A8B3-88511992FA1C}", lfo_custom_fall1_data },
-  { "{42410A47-C6DC-472E-8C23-306D10456CEB}", lfo_custom_fall1_slope_data },
-  { "{CB4EA873-CFC1-45D6-B9EB-FF0B73F23ECF}", lfo_custom_delay2_data },
-  { "{D92339D4-0249-4CE8-B079-A0F65337FB6D}", lfo_custom_fall2_data },
-  { "{5A7CFDDF-EFD5-45BF-8599-5258A7450398}", lfo_custom_fall2_slope_data },
-  { "{EE4E2CBD-F6F2-407C-9F1C-C20778816F6C}", lfo_custom_hold2_data },
-  { "{95E2A5F2-D7EC-4077-98D6-D3AE00167BAE}", lfo_custom_rise2_data },
-  { "{FFC394AE-5BD5-40BD-BDF9-79DD9ED5D578}", lfo_custom_rise2_slope_data }
+  { "{A9DBEA7B-2FC2-4B15-A11C-719B9A1ABD38}", lfo_free_delay1_data },
+  { "{D181F306-132F-4C1E-A7FD-72D1AD43E8B8}", lfo_free_rise1_data },
+  { "{E9BFE976-4D66-4A9E-ACC6-869275AB0AB6}", lfo_free_rise1_slope_data },
+  { "{8533C007-D714-415D-890F-C1CF66B181F6}", lfo_free_hold1_data },
+  { "{FB0BF491-3AB4-4071-A8B3-88511992FA1C}", lfo_free_fall1_data },
+  { "{42410A47-C6DC-472E-8C23-306D10456CEB}", lfo_free_fall1_slope_data },
+  { "{CB4EA873-CFC1-45D6-B9EB-FF0B73F23ECF}", lfo_free_delay2_data },
+  { "{D92339D4-0249-4CE8-B079-A0F65337FB6D}", lfo_free_fall2_data },
+  { "{5A7CFDDF-EFD5-45BF-8599-5258A7450398}", lfo_free_fall2_slope_data },
+  { "{EE4E2CBD-F6F2-407C-9F1C-C20778816F6C}", lfo_free_hold2_data },
+  { "{95E2A5F2-D7EC-4077-98D6-D3AE00167BAE}", lfo_free_rise2_data },
+  { "{FFC394AE-5BD5-40BD-BDF9-79DD9ED5D578}", lfo_free_rise2_slope_data }
 };
  
 param_descriptor const
@@ -117,18 +117,18 @@ glfo_params[lfo_param::count] =
   { "{CA48F606-4CDD-468A-B6BE-00AEB08686C5}", lfo_rand_rand_steps_data }, 
   { "{7EC1653A-CC1A-4817-B01B-94967103FE0F}", lfo_rand_steps_data },
   { "{FAFEA501-D172-4C86-8243-3E6F8CBB364C}", lfo_rand_amt_data },
-  { "{61ED73C7-3330-46E5-9F61-22B409E9749E}", lfo_custom_delay1_data },
-  { "{47665BB3-9B18-46DE-94D7-2D45806F7631}", lfo_custom_rise1_data },
-  { "{B7F7000F-512D-4BBA-ADBE-BB6E4D61D96D}", lfo_custom_rise1_slope_data },
-  { "{EF442864-1EDA-4CB0-A79F-E924C076A1A7}", lfo_custom_hold1_data },
-  { "{91662BE5-C41E-4671-ABFA-19A2BD9B1997}", lfo_custom_fall1_data },
-  { "{564ADE6B-A3C9-41C8-86BC-21B29B00209B}", lfo_custom_fall1_slope_data },
-  { "{3A58B865-925D-48C9-881E-4E6C355C065C}", lfo_custom_delay2_data },
-  { "{C36BF7CA-AF6D-4E04-8007-6E794259D797}", lfo_custom_fall2_data },
-  { "{3D461FC4-647D-422F-810D-1D0AF155A930}", lfo_custom_fall2_slope_data },
-  { "{82C72D01-D46E-449C-A545-2096508CE9FB}", lfo_custom_hold2_data },
-  { "{A273D009-20D6-446E-A4AF-C52F69F547BC}", lfo_custom_rise2_data },
-  { "{75BE0782-4E29-4111-8BDD-A4E1208B12EE}", lfo_custom_rise2_slope_data }
+  { "{61ED73C7-3330-46E5-9F61-22B409E9749E}", lfo_free_delay1_data },
+  { "{47665BB3-9B18-46DE-94D7-2D45806F7631}", lfo_free_rise1_data },
+  { "{B7F7000F-512D-4BBA-ADBE-BB6E4D61D96D}", lfo_free_rise1_slope_data },
+  { "{EF442864-1EDA-4CB0-A79F-E924C076A1A7}", lfo_free_hold1_data },
+  { "{91662BE5-C41E-4671-ABFA-19A2BD9B1997}", lfo_free_fall1_data },
+  { "{564ADE6B-A3C9-41C8-86BC-21B29B00209B}", lfo_free_fall1_slope_data },
+  { "{3A58B865-925D-48C9-881E-4E6C355C065C}", lfo_free_delay2_data },
+  { "{C36BF7CA-AF6D-4E04-8007-6E794259D797}", lfo_free_fall2_data },
+  { "{3D461FC4-647D-422F-810D-1D0AF155A930}", lfo_free_fall2_slope_data },
+  { "{82C72D01-D46E-449C-A545-2096508CE9FB}", lfo_free_hold2_data },
+  { "{A273D009-20D6-446E-A4AF-C52F69F547BC}", lfo_free_rise2_data },
+  { "{75BE0782-4E29-4111-8BDD-A4E1208B12EE}", lfo_free_rise2_slope_data }
 };
 
 } // namespace inf::synth

@@ -76,7 +76,7 @@ oscillator_wave_graph::process_dsp_core(block_input const& input, float* output,
   osc_in.new_midi = midi_note_c4;
   osc_in.new_midi_start_pos = 0;
   osc_in.portamento = _port.data();
-  osc_in.ram_in = vosc_buffers;
+  osc_in.am_in = vosc_buffers;
   osc_in.sync_reset = vosc_reset_buffers;
   osc_in.sync_reset_pos = vosc_reset_pos_buffers;
 

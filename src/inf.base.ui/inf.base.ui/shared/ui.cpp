@@ -12,6 +12,57 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
+struct dropdown_tree
+{
+  std::string name;
+  std::vector<std::unique_ptr<dropdown_tree>> children;
+};
+
+static void 
+append_dropdown_tree(dropdown_tree* tree, std::string const* path, std::size_t path_size)
+{
+  dropdown_tree* child = nullptr;
+  for(std::size_t i = 0; i < tree->children.size(); i++)
+    if (tree->children[i]->name == *path)
+    {
+      child = tree->children[i].get();
+      break;
+    }
+  if (child == nullptr)
+  {
+    child = new dropdown_tree();
+    child->name = *path;
+    tree->children.push_back(std::unique_ptr<dropdown_tree>(child));
+  }
+  if(path_size > 1)
+    append_dropdown_tree(child, path + 1, path_size - 1);
+}
+
+static void
+fill_dropdown_menu(PopupMenu* menu, dropdown_tree const* tree, std::int32_t& counter)
+{
+  if (tree->children.size() == 0)
+  {
+    menu->addItem(dropdown_id_offset + counter++, tree->name);
+    return;
+  }
+  PopupMenu child;
+  for (std::size_t i = 0; i < tree->children.size(); i++)
+    fill_dropdown_menu(&child, tree->children[i].get(), counter);
+  menu->addSubMenu(tree->name, child);
+}
+
+static void 
+fill_dropdown_menu(PopupMenu* menu, std::vector<list_item> const& items)
+{
+  std::int32_t counter = 0;
+  auto tree = std::make_unique<dropdown_tree>();
+  for (auto const& item : items)
+    append_dropdown_tree(tree.get(), item.submenu_path.data(), item.submenu_path.size());
+  for(auto const& child: tree->children)
+    fill_dropdown_menu(menu, child.get(), counter);
+}
+
 void
 ui_element::relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector)
 {
@@ -126,7 +177,7 @@ group_label_element::layout()
 Component*
 selector_label_element::build_core(LookAndFeel const& lnf)
 {
-  Label* result = new inf_selector_label(controller(), _part_type, _part_count);
+  Label* result = new inf_selector_label(controller(), _part_type, _part_count, _vertical);
   result->setText(_text, dontSendNotification);
   result->setFont(juce::Font(get_selector_font_height(controller()), juce::Font::bold));
   return result;
@@ -250,8 +301,11 @@ param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
   inf_dropdown* result = new inf_dropdown(&desc);
   result->setJustificationType(Justification::centred);
   if (desc.data.discrete.items != nullptr)
-    for(std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
-      result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
+    if((*desc.data.discrete.items)[0].submenu_path.size() > 0)
+      fill_dropdown_menu(result->getRootMenu(), *desc.data.discrete.items);
+    else
+      for (std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
+        result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
   else if (desc.data.discrete.names != nullptr)
     for (std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
       result->addItem((*desc.data.discrete.names)[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
@@ -457,15 +511,24 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
 std::unique_ptr<ui_element>
 create_part_single_ui(
   plugin_controller* controller, std::string const& header, 
-  std::int32_t selected_part_type, std::unique_ptr<ui_element>&& part)
+  std::int32_t selected_part_type, bool vertical, std::unique_ptr<ui_element>&& part)
 {
   auto selector_grid = create_grid_ui(controller, 1, 1);
-  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, 1), 0, 0);
-  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
-  auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
-  result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
-  result->add_cell(std::move(part), 1, 0);
-  return result;
+  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, 1, vertical), 0, 0);
+  if(!vertical)
+  {
+    auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
+    auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
+    result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
+    result->add_cell(std::move(part), 1, 0);
+    return result;
+  } else {
+    auto selector_width = static_cast<std::int32_t>(std::ceil(get_selector_height(controller))) + selector_vlabel_pad;
+    auto result = create_grid_ui(controller, { Grid::Fr(1) }, { Grid::Px(selector_width), Grid::Fr(1) });
+    result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
+    result->add_cell(std::move(part), 0, 1);
+    return result;
+  }
 }
 
 std::unique_ptr<ui_element>
@@ -475,7 +538,7 @@ create_part_selector_ui(
 {
   inf::base::part_id selector_id = { selector_part_type, 0 };
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + label_columns);
-  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, static_cast<std::int32_t>(selected_parts.size())), 0, 0, 1, label_columns);
+  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, static_cast<std::int32_t>(selected_parts.size()), false), 0, 0, 1, label_columns);
   auto selector_bar = create_selector_bar(controller, selector_id, selector_param_index, selected_part_type);
   auto selector_bar_ptr = selector_bar.get();
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)

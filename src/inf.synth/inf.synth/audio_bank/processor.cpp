@@ -55,7 +55,7 @@ audio_bank_processor::update_block_params(block_input_data const& input)
   automation_view bank_automation = input.automation.rearrange_params(bank_id);
 
   // For each route.
-  for (std::int32_t r = 0; r < _data->route_count; r++)
+  for (std::int32_t r = 0; r < audio_bank_route_count; r++)
   {
     std::int32_t in_index = audio_bank_param_index(r, audio_bank_param_type::in);
     std::int32_t input_id = bank_automation.block_discrete(in_index);

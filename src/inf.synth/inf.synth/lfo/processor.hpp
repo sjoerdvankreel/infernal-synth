@@ -30,14 +30,14 @@ public part_processor
   float _end_sample;
   float _synced_frequency;
 
+  lfo_free_state _free;
   lfo_basic_state _basic;
   lfo_random_state _random;
-  lfo_custom_state _custom;
   basic_lp_filter _filter;
 
   void update_block_basic(base::automation_view const& automation);
   void update_block_random(base::automation_view const& automation);
-  void update_block_custom(base::automation_view const& automation);
+  void update_block_free(base::automation_view const& automation);
   void update_block_params(base::automation_view const& automation, float bpm);
 
   void init_random(base::automation_view const& automation);

@@ -1,7 +1,7 @@
 #include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/lfo/processor.hpp>
+#include <inf.synth/lfo/processor_free.hpp>
 #include <inf.synth/lfo/processor_basic.hpp>
-#include <inf.synth/lfo/processor_custom.hpp>
 #include <inf.synth/lfo/processor_random.hpp>
 #include <inf.synth/shared/scratch_space.hpp>
 
@@ -19,7 +19,7 @@ lfo_processor::
 lfo_processor(topology_info const* topology, part_id id, float sample_rate, float bpm, automation_view const& automation) :
 part_processor(topology, id, sample_rate), _ended(false), _started(false), _end_index(0), 
 _on(), _type(), _single(), _synced(), _bipolar(), _inverted(), _phase(0.0f), _max_freq(), 
-_filter_amt(), _end_sample(), _synced_frequency(), _basic(), _random(), _custom(), _filter()
+_filter_amt(), _end_sample(), _synced_frequency(), _basic(), _random(), _free(), _filter()
 { 
   automation_view lfo_automation = automation.rearrange_params(id);
   _type = lfo_automation.block_discrete(lfo_param::type);
@@ -52,9 +52,9 @@ lfo_processor::update_block_params(automation_view const& automation, float bpm)
 
   switch (_type)
   {
+  case lfo_type::free: update_block_free(automation); break;
   case lfo_type::basic: update_block_basic(automation); break;
   case lfo_type::random: update_block_random(automation); break;
-  case lfo_type::custom: update_block_custom(automation); break;
   default: assert(false); break;
   }
 }
@@ -97,7 +97,7 @@ lfo_processor::update_block_random(automation_view const& automation)
 }
 
 void 
-lfo_processor::update_block_custom(automation_view const& automation)
+lfo_processor::update_block_free(automation_view const& automation)
 {
   float total;
   float hold1, hold2;
@@ -105,28 +105,28 @@ lfo_processor::update_block_custom(automation_view const& automation)
   float rise1, rise2;
   float delay1, delay2;
 
-  hold1 = automation.block_real_transform(lfo_param::custom_hold1);
-  hold2 = automation.block_real_transform(lfo_param::custom_hold2);
-  fall1 = automation.block_real_transform(lfo_param::custom_fall1);
-  fall2 = automation.block_real_transform(lfo_param::custom_fall2);
-  rise1 = automation.block_real_transform(lfo_param::custom_rise1);
-  rise2 = automation.block_real_transform(lfo_param::custom_rise2);
-  delay1 = automation.block_real_transform(lfo_param::custom_delay1);
-  delay2 = automation.block_real_transform(lfo_param::custom_delay2);
+  hold1 = automation.block_real_transform(lfo_param::free_hold1);
+  hold2 = automation.block_real_transform(lfo_param::free_hold2);
+  fall1 = automation.block_real_transform(lfo_param::free_fall1);
+  fall2 = automation.block_real_transform(lfo_param::free_fall2);
+  rise1 = automation.block_real_transform(lfo_param::free_rise1);
+  rise2 = automation.block_real_transform(lfo_param::free_rise2);
+  delay1 = automation.block_real_transform(lfo_param::free_delay1);
+  delay2 = automation.block_real_transform(lfo_param::free_delay2);
   total = hold1 + hold2 + fall1 + fall2 + rise1 + rise2 + delay1 + delay2;
-  _custom.rise1.factor = rise1 / total;
-  _custom.rise2.factor = rise2 / total;
-  _custom.fall1.factor = fall1 / total;
-  _custom.fall2.factor = fall2 / total;
-  _custom.hold1_factor = hold1 / total;
-  _custom.hold2_factor = hold2 / total;
-  _custom.delay1_factor = delay1 / total;
-  _custom.delay2_factor = delay2 / total;
-  _custom.fall1.slope = automation.block_discrete(lfo_param::custom_fall1_slope);
-  _custom.fall2.slope = automation.block_discrete(lfo_param::custom_fall2_slope);
-  _custom.rise1.slope = automation.block_discrete(lfo_param::custom_rise1_slope);
-  _custom.rise2.slope = automation.block_discrete(lfo_param::custom_rise2_slope);
-  _custom.enabled = total >= 0.01;
+  _free.rise1.factor = rise1 / total;
+  _free.rise2.factor = rise2 / total;
+  _free.fall1.factor = fall1 / total;
+  _free.fall2.factor = fall2 / total;
+  _free.hold1_factor = hold1 / total;
+  _free.hold2_factor = hold2 / total;
+  _free.delay1_factor = delay1 / total;
+  _free.delay2_factor = delay2 / total;
+  _free.fall1.slope = automation.block_discrete(lfo_param::free_fall1_slope);
+  _free.fall2.slope = automation.block_discrete(lfo_param::free_fall2_slope);
+  _free.rise1.slope = automation.block_discrete(lfo_param::free_rise1_slope);
+  _free.rise2.slope = automation.block_discrete(lfo_param::free_rise2_slope);
+  _free.enabled = total >= 0.01;
 }
 
 // processor_type, please be inlined
@@ -235,8 +235,8 @@ lfo_processor::process_any(block_input_data const& input, cv_buffer& buffer, scr
   switch (_type)
   {
   case lfo_type::basic: process_basic(rate, buffer.values, input.sample_count); break;
+  case lfo_type::free: process(rate, buffer.values, input.sample_count, lfo_free_processor({ sample_rate(), &_free })); break;
   case lfo_type::random: process(rate, buffer.values, input.sample_count, lfo_random_processor({ sample_rate(), &_random})); break;
-  case lfo_type::custom: process(rate, buffer.values, input.sample_count, lfo_custom_processor({ sample_rate(), &_custom })); break;
   default: assert(false); break;
   }
 

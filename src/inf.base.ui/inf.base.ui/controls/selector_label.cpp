@@ -1,3 +1,4 @@
+#include <inf.base/shared/support.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
 #include <inf.base.ui/controls/selector_label.hpp>
 
@@ -24,7 +25,7 @@ inf_selector_label::paint(Graphics& g)
   // config
   int const vpad = 2;
   int const hpadl = 1;
-  int const hpadr = 3;
+  int const hpadr = _vertical? 1: 3;
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 1.0f;
 
@@ -50,7 +51,15 @@ inf_selector_label::paint(Graphics& g)
   // text
   g.setFont(getFont());
   g.setColour(findColour(inf_look_and_feel::colors::selector_label_text));
+  g.saveState();
+  if(_vertical) 
+  {
+    auto transform = AffineTransform().rotated(-pi32 / 2.0f, area.getWidth() / 2.0f, area.getHeight() / 2.0f);
+    g.addTransform(transform);
+    area = area.transformedBy(transform);
+  }
   g.drawText(getText(), area, Justification::centred, false);
+  g.restoreState();
 }
 
 } // namespace inf::base::ui

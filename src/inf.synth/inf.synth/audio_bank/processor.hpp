@@ -29,13 +29,11 @@ private:
   float const* const* input_buffer_global(std::int32_t input, std::int32_t index) const;
 
   // Precomputing all relevant routes for each target output.
-  static inline std::int32_t constexpr max_route_count = 
-  std::max(vaudio_bank_route_count, gaudio_bank_route_count);
   static inline std::int32_t constexpr max_total_output_count = 
   std::max(vaudio_route_output_total_count, gaudio_route_output_total_count);
 
   std::array<std::int32_t, max_total_output_count> _relevant_indices_count;
-  std::array<std::array<audio_route_indices, max_route_count>, max_total_output_count> _relevant_indices;
+  std::array<std::array<audio_route_indices, audio_bank_route_count>, max_total_output_count> _relevant_indices;
 };
 
 inline audio_bank_processor::

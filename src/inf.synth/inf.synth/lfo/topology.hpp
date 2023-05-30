@@ -18,7 +18,7 @@ base::topology_info const*, base::param_value const*, base::part_id, std::int32_
 { return "LFO"; }
 
 struct lfo_rand_type_t { enum value { slope, level, both }; };
-struct lfo_type_t { enum value { basic, random, custom, count }; };
+struct lfo_type_t { enum value { basic, random, free, count }; };
 struct lfo_basic_type_t { enum value { sine, saw, pulse, triangle, count }; };
 typedef lfo_type_t::value lfo_type;
 typedef lfo_rand_type_t::value lfo_rand_type;
@@ -27,8 +27,8 @@ typedef lfo_basic_type_t::value lfo_basic_type;
 struct lfo_param_t { enum value {
   on, type, bipolar, synced, invert, single, rate, tempo, filter,
   basic_type, basic_offset, basic_pw, rand_type, rand_seedx, rand_seedy, rand_rand_steps, rand_steps, rand_amt,
-  custom_delay1, custom_rise1, custom_rise1_slope, custom_hold1, custom_fall1, custom_fall1_slope,
-  custom_delay2, custom_fall2, custom_fall2_slope, custom_hold2, custom_rise2, custom_rise2_slope, count }; };
+  free_delay1, free_rise1, free_rise1_slope, free_hold1, free_fall1, free_fall1_slope,
+  free_delay2, free_fall2, free_fall2_slope, free_hold2, free_rise2, free_rise2_slope, count }; };
 typedef lfo_param_t::value lfo_param;
 
 } // namespace inf::synth

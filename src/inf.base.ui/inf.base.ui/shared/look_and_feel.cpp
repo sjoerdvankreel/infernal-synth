@@ -227,9 +227,22 @@ inf_look_and_feel::positionComboBoxText(
   l.setFont(getComboBoxFont(cb));
 }
 
+void 
+inf_look_and_feel::getIdealPopupMenuItemSize(
+  juce::String const& text, bool is_separator,
+  int standard_menu_item_height, int& ideal_width, int& ideal_height)
+{
+  ideal_width += edit_margin * 2;
+  ideal_height = static_cast<int>(std::ceil(get_dropdown_item_height(_controller)));
+}
+
 PopupMenu::Options 
 inf_look_and_feel::getOptionsForComboBoxPopupMenu(ComboBox& b, Label& l)
 {
+  PopupMenu::MenuItemIterator iter(*b.getRootMenu());
+  while(iter.next())
+    if(iter.getItem().subMenu.get())
+      return LookAndFeel_V4::getOptionsForComboBoxPopupMenu(b, l).withMaximumNumColumns(1);
   float items = static_cast<float>(b.getNumItems());
   float fcolumns = items / dropdown_max_column_items;
   int columns = static_cast<std::int32_t>(std::ceil(fcolumns));

@@ -10,7 +10,7 @@
 namespace inf::synth {
 
 struct usage_source_t { enum value { 
-  voice, master, vaudio, gaudio, vcv, gcv, 
+  vamp, gamp, vaudio, gaudio, vcv, gcv, 
   env, osc, vlfo, glfo, veffect, geffect, count }; };
 typedef usage_source_t::value usage_source;
 

@@ -30,8 +30,8 @@ output_processor::process(base::block_input const& input, output_info const& inf
   if (info.usage.gcv > highest_usage) highest_usage = info.usage.gcv, highest_use_mod = usage_source::gcv;
   if (info.usage.vlfo > highest_usage) highest_usage = info.usage.vlfo, highest_use_mod = usage_source::vlfo;
   if (info.usage.glfo > highest_usage) highest_usage = info.usage.glfo, highest_use_mod = usage_source::glfo;
-  if (info.usage.voice > highest_usage) highest_usage = info.usage.voice, highest_use_mod = usage_source::voice;
-  if (info.usage.master > highest_usage) highest_usage = info.usage.master, highest_use_mod = usage_source::master;
+  if (info.usage.vamp > highest_usage) highest_usage = info.usage.vamp, highest_use_mod = usage_source::vamp;
+  if (info.usage.gamp > highest_usage) highest_usage = info.usage.gamp, highest_use_mod = usage_source::gamp;
   if (info.usage.vaudio > highest_usage) highest_usage = info.usage.vaudio, highest_use_mod = usage_source::vaudio;
   if (info.usage.gaudio > highest_usage) highest_usage = info.usage.gaudio, highest_use_mod = usage_source::gaudio;
   if (info.usage.veffect > highest_usage) highest_usage = info.usage.veffect, highest_use_mod = usage_source::veffect;

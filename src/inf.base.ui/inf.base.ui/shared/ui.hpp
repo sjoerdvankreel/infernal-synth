@@ -121,6 +121,7 @@ create_group_label_ui(inf::base::plugin_controller* controller, std::string cons
 class selector_label_element:
 public ui_element
 {
+  bool const _vertical;
   std::string const _text;
   std::int32_t const _part_type;
   std::int32_t const _part_count;
@@ -128,13 +129,13 @@ protected:
   juce::Component* build_core(juce::LookAndFeel const& lnf) override;
 public:
   void layout() override {}
-  selector_label_element(inf::base::plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, std::string const& text):
-  ui_element(controller), _text(text), _part_type(part_type), _part_count(part_count) {}
+  selector_label_element(inf::base::plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, std::string const& text, bool vertical):
+  ui_element(controller), _vertical(vertical), _text(text), _part_type(part_type), _part_count(part_count) {}
 };
 
 inline std::unique_ptr<selector_label_element>
-create_selector_label_ui(inf::base::plugin_controller* controller, std::string const& text, std::int32_t part_type, std::int32_t part_count)
-{ return std::make_unique<selector_label_element>(controller, part_type, part_count, text); }
+create_selector_label_ui(inf::base::plugin_controller* controller, std::string const& text, std::int32_t part_type, std::int32_t part_count, bool vertical)
+{ return std::make_unique<selector_label_element>(controller, part_type, part_count, text, vertical); }
 
 class selector_bar_element :
 public ui_element
@@ -340,7 +341,7 @@ create_root_ui(
 std::unique_ptr<ui_element>
 create_part_single_ui(
   plugin_controller* controller, std::string const& header, 
-  std::int32_t selected_part_type, std::unique_ptr<ui_element>&& part);
+  std::int32_t selected_part_type, bool vertical, std::unique_ptr<ui_element>&& part);
 std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,

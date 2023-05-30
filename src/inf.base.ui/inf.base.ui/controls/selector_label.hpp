@@ -9,6 +9,7 @@ namespace inf::base::ui {
 class inf_selector_label:
 public inf_label
 {
+  bool const _vertical;
   std::int32_t const _part_type;
   std::int32_t const _part_count;
   inf::base::plugin_controller* const _controller;
@@ -16,8 +17,8 @@ public:
   void paint(juce::Graphics& g) override;
   void mouseUp(juce::MouseEvent const& event) override;
 
-  inf_selector_label(inf::base::plugin_controller* const controller, std::int32_t part_type, std::int32_t part_count):
-  inf_label(true), _part_type(part_type), _part_count(part_count), _controller(controller) {}
+  inf_selector_label(inf::base::plugin_controller* const controller, std::int32_t part_type, std::int32_t part_count, bool vertical):
+  inf_label(true), _vertical(vertical), _part_type(part_type), _part_count(part_count), _controller(controller) {}
 };
 
 } // namespace inf::base::ui

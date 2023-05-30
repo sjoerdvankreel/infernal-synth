@@ -28,7 +28,7 @@ oscillator_processor(
 topology_info const* topology, std::int32_t index, float sample_rate,
 block_input_data const& input, std::int32_t midi, std::int32_t midi_offset, oscillator_state* state):
 audio_part_processor(topology, { part_type::vosc, index }, sample_rate, vcv_route_output::vosc),
-_on(), _type(), _ram_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
+_on(), _type(), _am_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
 _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
 {
   assert(state != nullptr);
@@ -38,7 +38,7 @@ _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
   std::int32_t noise_seed = automation.block_discrete(osc_param::noise_seed);
   _on = automation.block_discrete(osc_param::on);
   _type = automation.block_discrete(osc_param::type);
-  _ram_src = automation.block_discrete(osc_param::ram_src);
+  _am_src = automation.block_discrete(osc_param::am_src);
   _sync_src = automation.block_discrete(osc_param::sync_src);
   _dsf_parts = automation.block_discrete(osc_param::dsf_parts);
   _basic_type = automation.block_discrete(osc_param::basic_type);
@@ -124,8 +124,8 @@ oscillator_processor::process(oscillator_input const& input,
   float const* cent = params[osc_param::cent];
   float const* detune = params[osc_param::uni_dtn];
   float const* spread = params[osc_param::uni_sprd];
-  float const* ram_bal = params[osc_param::ram_bal];
-  float const* ram_mix = params[osc_param::ram_mix];
+  float const* am_mix = params[osc_param::am_mix];
+  float const* am_ring = params[osc_param::am_ring];
 
   float voice_count = static_cast<float>(_uni_voices);
   float voice_apply = _uni_voices == 1? 0.0f: 1.0f;
@@ -234,9 +234,9 @@ oscillator_processor::process(oscillator_input const& input,
     for (std::int32_t s = 0; s < input.block->sample_count; s++)
     {
       float carrier = out[c][s];
-      float balance = (ram_bal[s] + 1.0f) * 0.5f; // 0 = RM, 1 = AM.
-      float modulator = (input.ram_in[_ram_src][c][s] + balance) / (1.0f + balance);
-      out[c][s] = ((1.0f - ram_mix[s]) * carrier + ram_mix[s] * carrier * modulator);
+      float balance = 1.0f - am_ring[s];
+      float modulator = (input.am_in[_am_src][c][s] + balance) / (1.0f + balance);
+      out[c][s] = ((1.0f - am_mix[s]) * carrier + am_mix[s] * carrier * modulator);
     }
 }
 

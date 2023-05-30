@@ -12,7 +12,8 @@ namespace inf::synth {
 
 // ---- shared ----
 
-inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; // On/off must be 0.
+// On/off must be 0.
+inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; 
 struct audio_bank_param_type_t { enum value { in, out, amt, bal, count }; };
 typedef audio_bank_param_type_t::value audio_bank_param_type;
 
@@ -28,6 +29,9 @@ struct audio_bank_param_t { enum value {
   in13, out13, amt13, bal13, in14, out14, amt14, bal14, in15, out15, amt15, bal15, count }; };
 typedef audio_bank_param_t::value audio_bank_param;
 
+inline std::int32_t constexpr audio_bank_route_count = 
+audio_bank_param::count / static_cast<std::int32_t>(audio_bank_param_type::count);
+
 // ---- voice ----
 
 extern base::param_descriptor const vaudio_bank_params[];
@@ -36,7 +40,6 @@ struct vaudio_route_input_t { enum value { off, vosc_all, vosc_any, veffect, cou
 typedef vaudio_route_input_t::value vaudio_route_input;
 typedef vaudio_route_output_t::value vaudio_route_output;
 
-inline std::int32_t constexpr vaudio_bank_route_count = audio_bank_param::count / static_cast<std::int32_t>(audio_bank_param_type::count);
 inline std::int32_t constexpr vaudio_route_input_counts[vaudio_route_input::count] = { 1 /* off */, 1 /* vosc all */, vosc_count, veffect_count };
 inline std::int32_t constexpr vaudio_route_output_counts[vaudio_route_output::count] = { 1 /* off */, veffect_count, 1 /* voice */ };
 inline std::int32_t constexpr vaudio_route_output_total_count = std::accumulate(vaudio_route_output_counts, vaudio_route_output_counts + vaudio_route_output::count, 0);
@@ -49,7 +52,6 @@ struct gaudio_route_input_t { enum value { off, voice, external, geffect, count 
 typedef gaudio_route_input_t::value gaudio_route_input;
 typedef gaudio_route_output_t::value gaudio_route_output;
 
-inline std::int32_t constexpr gaudio_bank_route_count = audio_bank_param::count / static_cast<std::int32_t>(audio_bank_param_type::count);
 inline std::int32_t constexpr gaudio_route_output_counts[gaudio_route_output::count] = { 1 /* off */, geffect_count, 1 /* master */ };
 inline std::int32_t constexpr gaudio_route_input_counts[gaudio_route_input::count] = { 1 /* off */, 1 /* voice */, 1 /* external */, geffect_count };
 inline std::int32_t constexpr gaudio_route_output_total_count = std::accumulate(gaudio_route_output_counts, gaudio_route_output_counts + gaudio_route_output::count, 0);
