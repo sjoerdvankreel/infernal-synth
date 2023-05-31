@@ -578,27 +578,17 @@ create_amp_group(plugin_controller* controller, part_type part_type)
 static std::unique_ptr<ui_element>
 create_voice_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 4, 4);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::mode, edit_type::selector, tooltip_type::label), 0, 0, 3, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::mode, edit_type::dropdown, tooltip_type::off), 3, 0, 1, 1);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::note, label_type::label, Justification::centred), 0, 1, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::note, edit_type::dropdown, tooltip_type::off), 1, 1, 1, 1);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::oct, label_type::label, Justification::centred), 2, 1, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::dropdown, tooltip_type::off), 3, 1, 1, 1);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::port_mode, label_type::label, Justification::centred), 0, 2, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::port_mode, edit_type::dropdown, tooltip_type::off), 1, 2, 1, 1);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::port_trig, label_type::label, Justification::centred), 2, 2, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::port_trig, edit_type::dropdown, tooltip_type::off), 3, 2, 1, 1);
-  grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::port_sync, label_type::label, Justification::centred), 0, 2, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::port_sync, edit_type::toggle, tooltip_type::off), 1, 2, 1, 1);
-  auto time = grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::port_time, label_type::label, Justification::centred), 2, 2, 1, 1);
+  auto grid = create_grid_ui(controller, 1, 7);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::oct, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::note, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::mode, edit_type::knob, label_type::label, tooltip_type::value), 0, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_mode, edit_type::knob, label_type::label, tooltip_type::value), 0, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_trig, edit_type::knob, label_type::label, tooltip_type::value), 0, 4);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_sync, edit_type::knob, label_type::label, tooltip_type::value), 0, 5);
+  auto time = grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_time, edit_type::knob, label_type::label, tooltip_type::value), 0, 6);
   time->relevant_if(part_id(part_type::voice, 0), voice_param::port_sync, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
-  auto time_label = grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::port_time, edit_type::dropdown, tooltip_type::off), 3, 2, 1, 1);
-  time_label->relevant_if(part_id(part_type::voice, 0), voice_param::port_sync, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
-  auto tempo = grid->add_cell(create_param_label_ui(controller, part_type::voice, 0, voice_param::port_tempo, label_type::label, Justification::centred), 2, 2, 1, 1);
+  auto tempo = grid->add_cell(create_labeled_param_ui(controller, part_type::voice, 0, voice_param::port_tempo, edit_type::knob, label_type::label, tooltip_type::value), 0, 6);
   tempo->relevant_if(part_id(part_type::voice, 0), voice_param::port_sync, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-  auto tempo_label = grid->add_cell(create_param_edit_ui(controller, part_type::voice, 0, voice_param::port_tempo, edit_type::dropdown, tooltip_type::off), 3, 2, 1, 1);
-  tempo_label->relevant_if(part_id(part_type::voice, 0), voice_param::port_sync, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   return create_part_single_ui(controller, "Voice", part_type::voice, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
