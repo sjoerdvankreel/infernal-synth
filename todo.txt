@@ -74,3 +74,4 @@
 - conversion code for breaking changes
 - dont expose all parameters
 - fix slow cv plot repaint
+- test with a maximum size
