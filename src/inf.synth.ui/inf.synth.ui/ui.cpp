@@ -631,10 +631,10 @@ static std::unique_ptr<ui_element>
 create_cv_plot_controls(plugin_controller* controller, std::int32_t part_type)
 {
   auto grid = create_grid_ui(controller, 4, 4);
-  grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::target, label_type::label, Justification::centred), 0, 0, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::target, edit_type::dropdown, tooltip_type::off), 0, 1, 1, 3);
-  grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::length, label_type::label, Justification::centred), 2, 0, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::length, edit_type::knob, tooltip_type::value), 1, 1, 3, 3);
+  grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::length, label_type::label, Justification::centred), 1, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::length, edit_type::knob, tooltip_type::value), 0, 1, 3, 3);
+  grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::target, label_type::label, Justification::centred), 3, 0, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::target, edit_type::dropdown, tooltip_type::off), 3, 1, 1, 3);
   return create_part_group_container_ui(controller, std::move(grid));
 }
 
