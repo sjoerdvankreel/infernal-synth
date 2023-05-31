@@ -60,6 +60,10 @@ cv_bank_param::count / static_cast<std::int32_t>(cv_bank_param_type::count);
 struct cv_plot_param_t { enum value { target, length, count }; };
 typedef cv_plot_param_t::value cv_plot_param;
 
+inline char const* cv_plot_graph_name_selector(
+base::topology_info const*, base::param_value const*, base::part_id, std::int32_t)
+{ return "CV"; }
+
 // vamp/gamp output routing and mapping
 struct vgcv_route_amp_target_t { enum value { gain, bal, count }; };
 typedef vgcv_route_amp_target_t::value vgcv_route_amp_target;

@@ -85,3 +85,4 @@
 - check all breaking changes
 - conversion code for breaking changes
 - dont expose all parameters
+- fix slow cv plot repaint

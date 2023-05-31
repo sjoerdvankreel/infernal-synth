@@ -423,8 +423,8 @@ part_descriptors[part_type::count] =
   { "{5BE4D402-BD27-478B-9C14-A570A4306FFA}", { "GLFO", "Global LFO" }, part_kind::input, part_type::glfo, glfo_count, glfo_params, lfo_param::count, lfo_graph_name_selector },
   { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "VCV", "Voice CV" }, part_kind::input, part_type::vcv_bank, 1, vcv_bank_params, cv_bank_param::count, nullptr },
   { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "GCV", "Global CV" }, part_kind::input, part_type::gcv_bank, 1, gcv_bank_params, cv_bank_param::count, nullptr },
-  { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "VCV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, nullptr },
-  { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "GCV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, nullptr },
+  { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "VCV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
+  { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "GCV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, nullptr },
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, nullptr }
 };         
