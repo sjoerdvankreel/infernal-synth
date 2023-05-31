@@ -63,6 +63,7 @@ public:
 
   virtual float editor_aspect_ratio() const = 0;
   virtual std::int32_t editor_min_width() const = 0;
+  virtual std::int32_t editor_max_width() const = 0;
   virtual std::int32_t editor_default_width() const = 0;
   virtual std::int32_t editor_current_width() const = 0;
   virtual std::int32_t editor_font_scaling_min_width() const = 0;

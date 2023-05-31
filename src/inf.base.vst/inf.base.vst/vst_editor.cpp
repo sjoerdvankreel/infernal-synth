@@ -103,6 +103,8 @@ vst_editor::checkSizeConstraint(ViewRect* new_size)
   if (!have_ui() || !new_size) return EditorView::checkSizeConstraint(new_size);
   if (new_size->getWidth() < _controller->editor_min_width())
     new_size->right = new_size->left + _controller->editor_min_width();
+  if (new_size->getWidth() > _controller->editor_max_width())
+    new_size->right = new_size->left + _controller->editor_max_width();
   double w = get_ui()->getWidth();
   double h = get_ui()->getHeight();
   new_size->bottom = new_size->top + static_cast<std::int32_t>(std::ceil(new_size->getWidth() * h / w));
