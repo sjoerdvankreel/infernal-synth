@@ -27,7 +27,7 @@ inline float const selector_font_max_height = 16.0f;
 
 inline float const dropdown_hpad = 4.0f;
 inline float const dropdown_vpad_min = 6.0f;
-inline float const dropdown_vpad_max = 28.0f;
+inline float const dropdown_vpad_max = 18.0f;
 inline float const dropdown_item_vpad_min = 6.0f;
 inline float const dropdown_item_vpad_max = 10.0f;
 inline float const dropdown_font_min_height = 10.0f;
