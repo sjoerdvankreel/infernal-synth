@@ -350,7 +350,7 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::Rectangle<float> text_rect(
     tick_rect.getX() + tick_rect.getWidth(), hl_rect.getY(),
     hl_rect.getWidth() - tick_rect.getWidth(), hl_rect.getHeight());
-  g.setColour(with_enabled(dummy, ComboBox::ColourIds::textColourId, true, true));
+  g.setColour(with_enabled(dummy, colors::dropdown_text, true, true));
   g.setFont(getPopupMenuFont());
   g.drawText(text, text_rect, Justification::centredLeft, false);
   
