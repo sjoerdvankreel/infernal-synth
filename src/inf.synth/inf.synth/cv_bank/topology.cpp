@@ -180,14 +180,14 @@ static std::vector<list_item> const gcv_route_input_sources_list = multi_list_it
 param_descriptor const
 vcv_plot_params[cv_plot_param::count] =
 {
-  { "{CE1DC1C7-72C5-4811-8C35-8485FFAFFABC}", { {"Tgt", "Target"}, "", param_kind::block, param_type::list, {&vcv_route_output_target_list, "Amp Gain" } } },
-  { "{41FB9033-220C-4DA7-836A-22808E17167F}", { { "Key", "Key hold" }, "Sec", param_kind::block, quad_bounds(0.01f, 70.0f, "0.5", 2) } }
+  { "{CE1DC1C7-72C5-4811-8C35-8485FFAFFABC}", { {"Target", "Target"}, "", param_kind::block, param_type::list, {&vcv_route_output_target_list, "Amp Gain" } } },
+  { "{41FB9033-220C-4DA7-836A-22808E17167F}", { { "Hold", "Key hold" }, "Sec", param_kind::block, quad_bounds(0.01f, 70.0f, "0.5", 2) } }
 };
 
 param_descriptor const
 gcv_plot_params[cv_plot_param::count] =
 {
-  { "{EBF618A3-D50D-439C-A2BA-95C06277276E}", { {"Tgt", "Target"}, "", param_kind::block, param_type::list, {&gcv_route_output_target_list, "Amp Gain" } } },
+  { "{EBF618A3-D50D-439C-A2BA-95C06277276E}", { {"Target", "Target"}, "", param_kind::block, param_type::list, {&gcv_route_output_target_list, "Amp Gain" } } },
   { "{60ED3115-0BD0-4870-9938-6D37759FE7D0}", { { "Length", "Length" }, "Sec", param_kind::block, quad_bounds(0.01f, 70.0f, "2", 2) } }
 };
 
