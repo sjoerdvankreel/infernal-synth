@@ -9,9 +9,11 @@ inline int const edit_margin = 2;
 inline int const edit_table_margin = 0;
 inline int const container_margin = 2;
 inline int const graph_grid_hcount = 9;
-inline float const toggle_max_size = 20.0f;
 inline float const container_radius = 8.0f;
 inline float const container_outline_size = 1.0f;
+
+inline float const toggle_max_size_min = 18.0f;
+inline float const toggle_max_size_max = 36.0f;
 
 inline juce::Point<int> container_part_padding = { 2, 2 };
 inline juce::Point<int> container_selector_padding = { 10, 8 };

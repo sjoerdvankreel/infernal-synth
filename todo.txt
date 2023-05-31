@@ -69,7 +69,6 @@
 - routing indicators
 - extra dark disabled table mode
 - restore fx mode
-- max size for togglebuttons
 - check the init/default patch
 - check all breaking changes
 - conversion code for breaking changes

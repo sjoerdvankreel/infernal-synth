@@ -177,6 +177,7 @@ inf_look_and_feel::drawToggleButton(
   float y = static_cast<float>(y0);
   float w = static_cast<float>(w0);
   float h = static_cast<float>(h0);
+  float max_size = get_toggle_max_size(_controller);
   bool const on = b.getToggleState();
   auto& inf_toggle = dynamic_cast<inf_toggle_button&>(b);
 
@@ -193,12 +194,12 @@ inf_look_and_feel::drawToggleButton(
   }
 
   // adjust for max size
-  if (minwh > toggle_max_size)
+  if (minwh > max_size)
   {
-    x += (w - toggle_max_size) / 2.0f;
-    y += (h - toggle_max_size) / 2.0f;
-    w = toggle_max_size;
-    h = toggle_max_size;
+    x += (w - max_size) / 2.0f;
+    y += (h - max_size) / 2.0f;
+    w = max_size;
+    h = max_size;
   }
 
   // precompute more stuff
