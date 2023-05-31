@@ -628,10 +628,30 @@ create_voice_part_fx_grid(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_cv_plot_controls(plugin_controller* controller, std::int32_t part_type)
+{
+  auto grid = create_grid_ui(controller, 4, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::target, edit_type::dropdown, tooltip_type::off), 0, 0);
+  grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::target, label_type::label, Justification::centred), 1, 0);
+  grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::length, edit_type::hslider, tooltip_type::value), 2, 0);
+  grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::length, label_type::label, Justification::centred), 3, 0);
+  return create_part_group_container_ui(controller, std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_cv_plot_part(plugin_controller* controller, std::int32_t part_type)
+{
+  auto grid = create_grid_ui(controller, 1, 2);
+  grid->add_cell(create_cv_plot_controls(controller, part_type), 0, 0);
+  return create_part_single_ui(controller, "CV Plot", part_type, true, std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_cv_graph_lfo_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 4, 1);
   result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 0, 0, 3, 1);
+  result->add_cell(create_cv_plot_part(controller, part_type::vcv_plot), 3, 0, 1, 1);
   return result;
 }
 
