@@ -192,6 +192,15 @@ inf_look_and_feel::drawToggleButton(
     h = minwh;
   }
 
+  // adjust for max size
+  if (minwh > toggle_max_size)
+  {
+    x += (w - toggle_max_size) / 2.0f;
+    y += (h - toggle_max_size) / 2.0f;
+    w = toggle_max_size;
+    h = toggle_max_size;
+  }
+
   // precompute more stuff
   x += margin_factor * w;
   y += margin_factor * h;

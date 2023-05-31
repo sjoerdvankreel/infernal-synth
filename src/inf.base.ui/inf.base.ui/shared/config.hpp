@@ -9,6 +9,7 @@ inline int const edit_margin = 2;
 inline int const edit_table_margin = 0;
 inline int const container_margin = 2;
 inline int const graph_grid_hcount = 9;
+inline float const toggle_max_size = 20.0f;
 inline float const container_radius = 8.0f;
 inline float const container_outline_size = 1.0f;
 
