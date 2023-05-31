@@ -9,7 +9,6 @@ inline int const edit_margin = 2;
 inline int const edit_table_margin = 0;
 inline int const container_margin = 2;
 inline int const graph_grid_hcount = 9;
-inline int const selector_vlabel_pad = 2;
 inline float const container_radius = 8.0f;
 inline float const container_outline_size = 1.0f;
 
@@ -18,6 +17,8 @@ inline juce::Point<int> container_selector_padding = { 10, 8 };
 
 inline float const selector_min_height = 26.0f;
 inline float const selector_max_height = 42.0f;
+inline float const selector_vlabel_pad_min = 2.0f;
+inline float const selector_vlabel_pad_max = 6.0f;
 inline float const selector_font_min_height = 11.0f;
 inline float const selector_font_max_height = 16.0f;
 

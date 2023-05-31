@@ -25,6 +25,9 @@ inline float
 get_selector_height(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, selector_min_height, selector_max_height); }
 inline float
+get_selector_vlabel_pad(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, selector_vlabel_pad_min, selector_vlabel_pad_max); }
+inline float
 get_selector_font_height(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, selector_font_min_height, selector_font_max_height); }
 

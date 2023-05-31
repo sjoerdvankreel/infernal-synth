@@ -523,7 +523,7 @@ create_part_single_ui(
     result->add_cell(std::move(part), 1, 0);
     return result;
   } else {
-    auto selector_width = static_cast<std::int32_t>(std::ceil(get_selector_height(controller))) + selector_vlabel_pad;
+    auto selector_width = static_cast<std::int32_t>(std::ceil(get_selector_height(controller))) + get_selector_vlabel_pad(controller);
     auto result = create_grid_ui(controller, { Grid::Fr(1) }, { Grid::Px(selector_width), Grid::Fr(1) });
     result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
     result->add_cell(std::move(part), 0, 1);
