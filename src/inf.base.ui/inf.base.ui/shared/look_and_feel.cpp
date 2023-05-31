@@ -15,7 +15,7 @@ inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id, boo
   std::uint8_t gray = static_cast<std::uint8_t>(
     std::round(result.getRed() * 0.299 + 
     result.getGreen() * 0.587 + 
-    result.getBlue() * 0.114) * (extra_dark? 2.0 / 3.0: 1.0));
+    result.getBlue() * 0.114) * (extra_dark? 3.0 / 4.0: 1.0));
   return Colour(gray, gray, gray, result.getAlpha());
 }
 
