@@ -58,8 +58,6 @@
 - graph bg image
 - fix the context menu
 - skip entire voice section for dsp in fx mode
-- better envelope defaults show split & slope ?
-- container/outline for entire tabbed part
 - different bg color for audio/cv
 - credit oddy
 - enable avx in vbox

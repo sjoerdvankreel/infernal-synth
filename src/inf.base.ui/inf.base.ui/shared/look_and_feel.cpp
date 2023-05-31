@@ -232,8 +232,9 @@ inf_look_and_feel::getIdealPopupMenuItemSize(
   juce::String const& text, bool is_separator,
   int standard_menu_item_height, int& ideal_width, int& ideal_height)
 {
+  LookAndFeel_V4::getIdealPopupMenuItemSize(text, is_separator, standard_menu_item_height, ideal_width, ideal_height);
   ideal_width += edit_margin * 2;
-  ideal_height = static_cast<int>(std::ceil(get_dropdown_item_height(_controller)));
+  ideal_height = std::max(ideal_height, static_cast<int>(std::ceil(get_dropdown_item_height(_controller))));
 }
 
 PopupMenu::Options 
