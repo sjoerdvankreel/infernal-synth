@@ -58,7 +58,6 @@
 - graph bg image
 - fix the context menu
 - skip entire voice section for dsp in fx mode
-- different bg color for audio/cv
 - credit oddy
 - enable avx in vbox
 - drop the conversion code?
