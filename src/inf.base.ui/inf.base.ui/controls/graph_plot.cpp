@@ -77,7 +77,7 @@ inf_graph_plot::paint(juce::Graphics& g)
   float col_count = bounds.getWidth() / row_height;
   std::int32_t grid_vcount = static_cast<std::int32_t>(std::round(col_count));
   float col_width = bounds.getWidth() / col_count;
-  for (int i = 1; i <= grid_vcount; i++)
+  for (int i = 1; i < grid_vcount; i++)
     g.fillRect(bounds.getX() + i * col_width, bounds.getY(), 1.0f, bounds.getHeight());
 
   // plot data
