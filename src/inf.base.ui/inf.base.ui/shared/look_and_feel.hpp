@@ -28,6 +28,7 @@ public:
     icon_stroke_color,
     icon_pw_stroke_color,
 
+    tooltip_text,
     tooltip_outline_low,
     tooltip_outline_high,
     tooltip_background_low,
@@ -52,6 +53,7 @@ public:
     part_group_container_outline_low,
     part_group_container_outline_high,
 
+    tab_button_text,
     tab_button_outline_low,
     tab_button_outline_high,
     tab_button_background_low,
@@ -79,6 +81,7 @@ public:
     slider_gradient_fill_low,
     slider_gradient_fill_high,
 
+    dropdown_text,
     dropdown_outline_low,
     dropdown_outline_high,
     dropdown_background_low,

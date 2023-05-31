@@ -299,6 +299,7 @@ param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
   std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   inf_dropdown* result = new inf_dropdown(&desc);
+  result->setColour(ComboBox::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::dropdown_text));
   result->setJustificationType(Justification::centred);
   if (desc.data.discrete.items != nullptr)
     if((*desc.data.discrete.items)[0].submenu_path.size() > 0)

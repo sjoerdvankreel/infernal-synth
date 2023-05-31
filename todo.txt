@@ -64,7 +64,6 @@
 - drop the conversion code?
 - rename versioned->normal, generic->develop
 - test tracktion host
-- make all colors inf_look_and_feel
 - fix names in the default factory preset
 - routing indicators
 - extra dark disabled table mode

@@ -105,7 +105,7 @@ inf_look_and_feel::drawTooltip(
     colors::tooltip_background_low, colors::tooltip_background_high, corner_size, 0.25f);
   stroke_gradient_rounded_rectangle(g, dummy, Rectangle<float>(0.0f, 0.0f, w, h),
     colors::tooltip_outline_low, colors::tooltip_outline_high, corner_size, 0.25f, 2.0f);
-  g.setColour(findColour(TooltipWindow::ColourIds::textColourId));
+  g.setColour(findColour(colors::tooltip_text));
   g.setFont(getPopupMenuFont());
   g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
 } 
@@ -154,7 +154,7 @@ inf_look_and_feel::drawTabButton(
 
   // text
   g.setFont(juce::Font(get_selector_font_height(_controller), juce::Font::bold));
-  g.setColour(findColour(TabbedButtonBar::ColourIds::tabTextColourId));
+  g.setColour(findColour(colors::tab_button_text));
   g.drawText(tbb.getName(), area, Justification::centred, false);
 }
 
