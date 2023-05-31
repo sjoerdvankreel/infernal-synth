@@ -8,24 +8,24 @@ using namespace juce;
 namespace inf::base::ui {
 
 juce::Colour
-inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id, bool check_enabled)
+inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id, bool check_enabled, bool extra_dark)
 {
   auto result = component.findColour(color_id);
   if(!check_enabled || component.isEnabled()) return result;
   std::uint8_t gray = static_cast<std::uint8_t>(
     std::round(result.getRed() * 0.299 + 
     result.getGreen() * 0.587 + 
-    result.getBlue() * 0.114));
+    result.getBlue() * 0.114) * (extra_dark? 2.0 / 3.0: 1.0));
   return Colour(gray, gray, gray, result.getAlpha());
 }
 
 juce::ColourGradient 
 inf_look_and_feel::gradient_fill(
   juce::Component& component, juce::Rectangle<float> rect, 
-  std::int32_t low_color_id, std::int32_t high_color_id, float mid_point, bool check_enabled)
+  std::int32_t low_color_id, std::int32_t high_color_id, float mid_point, bool check_enabled, bool extra_dark)
 {
-  auto low = with_enabled(component, low_color_id, check_enabled);
-  auto high = with_enabled(component, high_color_id, check_enabled);
+  auto low = with_enabled(component, low_color_id, check_enabled, extra_dark);
+  auto high = with_enabled(component, high_color_id, check_enabled, extra_dark);
   auto gradient = ColourGradient(high, rect.getTopLeft(), low, rect.getBottomRight(), false);
   gradient.addColour(mid_point, high.interpolatedWith(low, 0.5f));
   return gradient;
@@ -34,34 +34,34 @@ inf_look_and_feel::gradient_fill(
 void 
 inf_look_and_feel::fill_gradient_circle(
   Graphics& g, Component& component, juce::Rectangle<float> rect,
-  std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled)
+  std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled, bool extra_dark)
 {
-  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, 0.25f, check_enabled));
+  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, 0.25f, check_enabled, extra_dark));
   g.fillEllipse(rect);
 }
 
 void 
 inf_look_and_feel::fill_gradient_rounded_rectangle(
   juce::Graphics& g, Component& component, juce::Rectangle<float> rect, 
-  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point, bool check_enabled)
+  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point, bool check_enabled, bool extra_dark)
 {
-  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, mid_point, check_enabled));
+  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, mid_point, check_enabled, extra_dark));
   g.fillRoundedRectangle(rect, corner_size);
 }
 
 void
 inf_look_and_feel::stroke_gradient_rounded_rectangle(
   juce::Graphics& g, Component& component, juce::Rectangle<float> rect,
-  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point, float line_size, bool check_enabled)
+  std::int32_t low_color_id, std::int32_t high_color_id, float corner_size, float mid_point, float line_size, bool check_enabled, bool extra_dark)
 {
-  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, mid_point, check_enabled));
+  g.setGradientFill(gradient_fill(component, rect, low_color_id, high_color_id, mid_point, check_enabled, extra_dark));
   g.drawRoundedRectangle(rect, corner_size, line_size);
 }
 
 void
 inf_look_and_feel::fill_spot_circle(
   Graphics& g, Component& component, Rectangle<float> rect,
-  std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled)
+  std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled, bool extra_dark)
 {
   float const size_factor = 0.67f;
   float const size = size_factor * rect.getWidth();
@@ -70,8 +70,8 @@ inf_look_and_feel::fill_spot_circle(
   float const y = rect.getY() + offset * 0.5f;
   float const center_x = x + size * 0.5f;
   float const center_y = y + size * 0.5f;
-  auto low = with_enabled(component, low_color_id, check_enabled);
-  auto high = with_enabled(component, high_color_id, check_enabled);
+  auto low = with_enabled(component, low_color_id, check_enabled, extra_dark);
+  auto high = with_enabled(component, high_color_id, check_enabled, extra_dark);
   auto gradient = ColourGradient(
     high, center_x, center_y,
     low, rect.getX() + size, rect.getY() + size, true);
@@ -286,11 +286,11 @@ inf_look_and_feel::drawComboBox(
 
   fill_gradient_rounded_rectangle(
     g, cb, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, 
-    colors::dropdown_background_high, corner_size_fixed, 0.25f);
+    colors::dropdown_background_high, corner_size_fixed, 0.25f, true, true);
   
   // outline
-  auto outline_low = with_enabled(cb, colors::dropdown_outline_low);
-  auto outline_high = with_enabled(cb, colors::dropdown_outline_high);
+  auto outline_low = with_enabled(cb, colors::dropdown_outline_low, true, true);
+  auto outline_high = with_enabled(cb, colors::dropdown_outline_high, true, true);
   auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
   outline_gradient.addColour(0.25, outline_high.interpolatedWith(outline_low, 0.5f));
   g.setGradientFill(outline_gradient);
@@ -350,7 +350,7 @@ inf_look_and_feel::drawPopupMenuItem(
   juce::Rectangle<float> text_rect(
     tick_rect.getX() + tick_rect.getWidth(), hl_rect.getY(),
     hl_rect.getWidth() - tick_rect.getWidth(), hl_rect.getHeight());
-  g.setColour(with_enabled(dummy, ComboBox::ColourIds::textColourId));
+  g.setColour(with_enabled(dummy, ComboBox::ColourIds::textColourId, true, true));
   g.setFont(getPopupMenuFont());
   g.drawText(text, text_rect, Justification::centredLeft, false);
   

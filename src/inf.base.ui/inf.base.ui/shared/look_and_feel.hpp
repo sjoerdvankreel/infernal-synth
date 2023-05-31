@@ -14,10 +14,10 @@ public juce::LookAndFeel_V4
   inf::base::plugin_controller const* const _controller;
 
   juce::Colour 
-  with_enabled(juce::Component& component, std::int32_t color_id, bool check_enabled = true);
+  with_enabled(juce::Component& component, std::int32_t color_id, bool check_enabled = true, bool extra_dark = false);
   juce::ColourGradient gradient_fill(
     juce::Component& component, juce::Rectangle<float> rect, 
-    std::int32_t low_color_id, std::int32_t high_color_id, float mid_point, bool check_enabled = true);
+    std::int32_t low_color_id, std::int32_t high_color_id, float mid_point, bool check_enabled = true, bool extra_dark = false);
 
 public:
   enum colors {
@@ -120,16 +120,16 @@ public:
   // Shared paint routines.
   void fill_spot_circle(juce::Graphics& g,
     juce::Component& component, juce::Rectangle<float> rect,
-    std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled = true);
+    std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled = true, bool extra_dark = false);
   void fill_gradient_circle(juce::Graphics& g,
     juce::Component& component, juce::Rectangle<float> rect,
-    std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled = true);
+    std::int32_t low_color_id, std::int32_t high_color_id, bool check_enabled = true, bool extra_dark = false);
   void fill_gradient_rounded_rectangle(juce::Graphics& g,
     juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id,
-    std::int32_t high_color_id, float corner_size, float mid_point, bool check_enabled = true);
+    std::int32_t high_color_id, float corner_size, float mid_point, bool check_enabled = true, bool extra_dark = false);
   void stroke_gradient_rounded_rectangle(juce::Graphics& g,
     juce::Component& component, juce::Rectangle<float> rect, std::int32_t low_color_id,
-    std::int32_t high_color_id, float corner_size, float mid_point, float line_size, bool check_enabled = true);
+    std::int32_t high_color_id, float corner_size, float mid_point, float line_size, bool check_enabled = true, bool extra_dark = false);
 
   // Disables ellipses and fitting.
   void drawLabel(
