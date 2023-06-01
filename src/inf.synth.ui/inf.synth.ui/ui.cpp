@@ -760,10 +760,10 @@ create_synth_ui(plugin_controller* controller)
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_fill_high, Colour(0xFF444444));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_outline_low, Colour(0xFF444444));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_outline_high, Colour(0xFF555555));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_fill_low, Colour(0xFF333333));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_fill_high, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_outline_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_outline_high, Colour(0xFF555555));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_fill_low, Colour(0xFF3E1B0D));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_fill_high, Colour(0xFF5D2914));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_outline_low, Colour(0xFF5D2914));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_outline_high, Colour(0xFFAE4D25));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_fill_low, Colour(0xFF0D363E));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_fill_high, Colour(0xFF14525D));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_outline_low, Colour(0xFF14525D));
