@@ -647,7 +647,7 @@ create_cv_plot_part(plugin_controller* controller, std::int32_t part_type)
   auto grid = create_grid_ui(controller, 1, 10);
   grid->add_cell(create_cv_plot_controls(controller, part_type), 0, 0, 1, 3);
   grid->add_cell(create_part_graph_ui(controller, part_type, 0, 0, cv_plot_param::target), 0, 3, 1, 7);
-  return create_part_single_ui(controller, "CV Plot", part_type, true, part_group_cv, std::move(grid));
+  return create_part_single_ui(controller, "CV Plot", part_type, true, part_group_audio, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -707,7 +707,7 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
     off->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, part_group_cv, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  return create_part_single_ui(controller, "CV", part_type, false, part_group_cv, std::move(outer_grid));
+  return create_part_single_ui(controller, "CV", part_type, false, part_group_audio, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
