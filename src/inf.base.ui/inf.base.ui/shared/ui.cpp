@@ -151,44 +151,6 @@ container_element::layout()
   _content->layout();
 }
 
-std::unique_ptr<container_element>
-create_part_group_container_ui(
-  inf::base::plugin_controller* controller, std::int32_t group_index, 
-  std::unique_ptr<ui_element>&& content, juce::Point<std::int32_t> const& padding)
-{
-  std::int32_t fill_low = -1;
-  std::int32_t fill_high = -1;
-  std::int32_t outline_low = -1;
-  std::int32_t outline_high = -1;
-  switch (group_index)
-  {
-  case 0:
-    fill_low = inf_look_and_feel::colors::part_group_container1_fill_low;
-    fill_high = inf_look_and_feel::colors::part_group_container1_fill_high;
-    outline_low = inf_look_and_feel::colors::part_group_container1_outline_low;
-    outline_high = inf_look_and_feel::colors::part_group_container1_outline_high;
-    break;
-  case 1:
-    fill_low = inf_look_and_feel::colors::part_group_container2_fill_low;
-    fill_high = inf_look_and_feel::colors::part_group_container2_fill_high;
-    outline_low = inf_look_and_feel::colors::part_group_container2_outline_low;
-    outline_high = inf_look_and_feel::colors::part_group_container2_outline_high;
-    break;
-  case 2:
-    fill_low = inf_look_and_feel::colors::part_group_container3_fill_low;
-    fill_high = inf_look_and_feel::colors::part_group_container3_fill_high;
-    outline_low = inf_look_and_feel::colors::part_group_container3_outline_low;
-    outline_high = inf_look_and_feel::colors::part_group_container3_outline_high;
-    break;
-  default:
-    assert(false);
-    break;
-  }
-  return std::make_unique<container_element>(
-    controller, std::move(content), container_component::flags::both, 
-    padding, fill_low, fill_high, outline_low, outline_high);
-}
-
 Component*
 group_label_element::build_core(LookAndFeel const& lnf)
 {
@@ -550,7 +512,7 @@ create_part_group_ui(plugin_controller* controller, std::unique_ptr<group_label_
 std::unique_ptr<ui_element>
 create_part_single_ui(
   plugin_controller* controller, std::string const& header, 
-  std::int32_t selected_part_type, bool vertical, std::int32_t group_index, std::unique_ptr<ui_element>&& part)
+  std::int32_t selected_part_type, bool vertical, std::unique_ptr<ui_element>&& part)
 {
   auto selector_grid = create_grid_ui(controller, 1, 1);
   selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, 1, vertical), 0, 0);
@@ -558,13 +520,13 @@ create_part_single_ui(
   {
     auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
     auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
-    result->add_cell(create_part_group_container_ui(controller, group_index, std::move(selector_grid), container_selector_padding), 0, 0);
+    result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
     result->add_cell(std::move(part), 1, 0);
     return result;
   } else {
     auto selector_width = static_cast<std::int32_t>(std::ceil(get_selector_height(controller))) + get_selector_vlabel_pad(controller);
     auto result = create_grid_ui(controller, { Grid::Fr(1) }, { Grid::Px(selector_width), Grid::Fr(1) });
-    result->add_cell(create_part_group_container_ui(controller, group_index, std::move(selector_grid), container_selector_padding), 0, 0);
+    result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
     result->add_cell(std::move(part), 0, 1);
     return result;
   }
@@ -572,9 +534,8 @@ create_part_single_ui(
 
 std::unique_ptr<ui_element>
 create_part_selector_ui(
-  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, 
-  std::int32_t selector_param_index, std::int32_t selected_part_type, std::int32_t label_columns, 
-  std::int32_t selector_columns, std::int32_t group_index, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
+  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
+  std::int32_t selected_part_type, std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts)
 {
   inf::base::part_id selector_id = { selector_part_type, 0 };
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + label_columns);
@@ -588,7 +549,7 @@ create_part_selector_ui(
   std::vector<ui_element*> tabs;
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
   auto result = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1) });
-  result->add_cell(create_part_group_container_ui(controller, group_index, std::move(selector_grid), container_selector_padding), 0, 0);
+  result->add_cell(create_part_group_container_ui(controller, std::move(selector_grid), container_selector_padding), 0, 0);
   for(std::size_t i = 0; i < selected_parts.size(); i++)
   {
     tabs.push_back(selected_parts[i].get());

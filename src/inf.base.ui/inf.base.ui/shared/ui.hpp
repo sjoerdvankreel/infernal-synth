@@ -94,8 +94,11 @@ public:
 
 inline std::unique_ptr<container_element>
 create_part_group_container_ui(
-  inf::base::plugin_controller* controller, std::int32_t group_index, 
-  std::unique_ptr<ui_element>&& content, juce::Point<std::int32_t> const& padding = container_part_padding);
+  inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, juce::Point<std::int32_t> const& padding = container_part_padding)
+{ return std::make_unique<container_element>(
+  controller, std::move(content), container_component::flags::both, padding,
+  inf_look_and_feel::colors::part_group_container_fill_low, inf_look_and_feel::colors::part_group_container_fill_high,
+  inf_look_and_feel::colors::part_group_container_outline_low, inf_look_and_feel::colors::part_group_container_outline_high); }
 
 class group_label_element:
 public ui_element
@@ -337,13 +340,12 @@ create_root_ui(
 
 std::unique_ptr<ui_element>
 create_part_single_ui(
-  plugin_controller* controller, std::string const& header, std::int32_t selected_part_type, 
-  bool vertical, std::int32_t group_index, std::unique_ptr<ui_element>&& part);
+  plugin_controller* controller, std::string const& header, 
+  std::int32_t selected_part_type, bool vertical, std::unique_ptr<ui_element>&& part);
 std::unique_ptr<ui_element>
 create_part_selector_ui(
-  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, 
-  std::int32_t selector_param_index, std::int32_t selected_part_type, std::int32_t label_columns, 
-  std::int32_t selector_columns, std::int32_t group_index, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
+  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
+  std::int32_t selected_part_type, std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
 std::unique_ptr<ui_element>
 create_part_group_ui(
