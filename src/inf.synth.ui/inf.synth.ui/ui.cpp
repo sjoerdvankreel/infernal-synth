@@ -15,6 +15,10 @@ using namespace inf::base::ui;
 
 namespace inf::synth::ui {
 
+static std::int32_t part_group_master = 0;
+static std::int32_t part_group_audio = 1;
+static std::int32_t part_group_cv = 2;
+
 static icon_type
 icon_for_osc_basic_type(std::int32_t value)
 {
@@ -63,8 +67,8 @@ static std::unique_ptr<ui_element>
 create_osc_osc_main_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 2, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_osc_main_group(controller, part_index)), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_osc_osc_group(controller, part_index)), 1, 0);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_main_group(controller, part_index)), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_osc_group(controller, part_index)), 1, 0);
   return grid;
 }
 
@@ -185,19 +189,19 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 4, 8);
   result->add_cell(create_osc_osc_main_grid(controller, part_index), 0, 0, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_am_group(controller, part_index)), 0, 2, 3, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
-  result->add_cell(create_part_group_container_ui(controller, create_osc_unison_group(controller, part_index)), 1, 3, 2, 2);
-  auto basic = result->add_cell(create_part_group_container_ui(controller, create_osc_basic_group(controller, part_index)), 3, 0, 1, 5);
+  result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_pitch_group(controller, part_index)), 0, 1, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_am_group(controller, part_index)), 0, 2, 3, 1);
+  result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_sync_group(controller, part_index)), 0, 3, 1, 2);
+  result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_unison_group(controller, part_index)), 1, 3, 2, 2);
+  auto basic = result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_basic_group(controller, part_index)), 3, 0, 1, 5);
   basic->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::basic; });
-  auto mix = result->add_cell(create_part_group_container_ui(controller, create_osc_mix_group(controller, part_index)), 3, 0, 1, 5);
+  auto mix = result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_mix_group(controller, part_index)), 3, 0, 1, 5);
   mix->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::mix; });
-  auto dsf = result->add_cell(create_part_group_container_ui(controller, create_osc_dsf_group(controller, part_index)), 3, 0, 1, 5);
+  auto dsf = result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_dsf_group(controller, part_index)), 3, 0, 1, 5);
   dsf->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::dsf; });
-  auto kps = result->add_cell(create_part_group_container_ui(controller, create_osc_kps_group(controller, part_index)), 3, 0, 1, 5);
+  auto kps = result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_kps_group(controller, part_index)), 3, 0, 1, 5);
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::kps; });
-  auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
+  auto noise = result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_osc_noise_group(controller, part_index)), 3, 0, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::noise; });
   result->add_cell(create_osc_graph_group(controller, part_index), 0, 5, 4, 3);
   return result;
@@ -209,7 +213,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 3, 5, std::move(oscillators));
+  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 3, 5, part_group_audio, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
@@ -275,9 +279,9 @@ static std::unique_ptr<ui_element>
 create_fx_filter_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 1, 1);
-  auto state_var = grid->add_cell(create_part_group_container_ui(controller, create_fx_filter_stvar_group(controller, part_type, part_index)), 0, 0);
+  auto state_var = grid->add_cell(create_part_group_container_ui(controller, part_group_audio, create_fx_filter_stvar_group(controller, part_type, part_index)), 0, 0);
   state_var->relevant_if(part_id(part_type, part_index), effect_param::filter_type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_filter_type::state_var; });
-  auto comb = grid->add_cell(create_part_group_container_ui(controller, create_fx_filter_comb_group(controller, part_type, part_index)), 0, 0);
+  auto comb = grid->add_cell(create_part_group_container_ui(controller, part_group_audio, create_fx_filter_comb_group(controller, part_type, part_index)), 0, 0);
   comb->relevant_if(part_id(part_type, part_index), effect_param::filter_type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_filter_type::comb; });
   return grid;
 }
@@ -317,12 +321,12 @@ static std::unique_ptr<grid_element>
 create_fx_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 3, 8);
-  result->add_cell(create_part_group_container_ui(controller, create_fx_main_group(controller, part_type, part_index)), 0, 0, 1, 1);
-  result->add_cell(create_part_group_container_ui(controller, create_fx_fx_group(controller, part_type, part_index)), 1, 0, 2, 1);
+  result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_fx_main_group(controller, part_type, part_index)), 0, 0, 1, 1);
+  result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_fx_fx_group(controller, part_type, part_index)), 1, 0, 2, 1);
   result->add_cell(create_fx_graph_group(controller, part_type, part_index), 0, 1, 2, 7);
   auto filter = result->add_cell(create_fx_filter_grid(controller, part_type, part_index), 2, 1, 1, 7);
   filter->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
-  auto shaper = result->add_cell(create_part_group_container_ui(controller, create_fx_shaper_group(controller, part_type, part_index)), 2, 1, 1, 7);
+  auto shaper = result->add_cell(create_part_group_container_ui(controller, part_group_audio, create_fx_shaper_group(controller, part_type, part_index)), 2, 1, 1, 7);
   shaper->relevant_if(part_id(part_type, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::shaper; });
   return result;
 }
@@ -333,7 +337,7 @@ create_fx_selector(plugin_controller* controller, std::int32_t part_type, std::i
   std::vector<std::unique_ptr<ui_element>> fxs;
   for (std::int32_t i = 0; i < part_count; i++)
     fxs.emplace_back(create_fx_grid(controller, part_type, i));
-  return create_part_selector_ui(controller, "FX", part_type::active, selector_param_index, part_type, 1, 7, std::move(fxs));
+  return create_part_selector_ui(controller, "FX", part_type::active, selector_param_index, part_type, 1, 7, part_group_audio, std::move(fxs));
 }
 
 static std::unique_ptr<ui_element>
@@ -412,21 +416,21 @@ static std::unique_ptr<ui_element>
 create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_env_group(controller, part_index)), 0, 0, 1, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_main_group(controller, part_index)), 1, 0, 4, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "DA",
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_env_env_group(controller, part_index)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_env_main_group(controller, part_index)), 1, 0, 4, 1);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_env_adr_group(controller, part_index, "DA",
     envelope_param::delay_time, envelope_param::delay_sync, envelope_param::attack1_time, envelope_param::attack2_time, 
     envelope_param::attack1_sync, envelope_param::attack2_sync, envelope_param::attack1_slope, 
     envelope_param::attack2_slope, envelope_param::attack_split_level)), 1, 1, 2, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "HD",
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_env_adr_group(controller, part_index, "HD",
     envelope_param::hold_time, envelope_param::hold_sync, envelope_param::decay1_time, envelope_param::decay2_time,
     envelope_param::decay1_sync, envelope_param::decay2_sync, envelope_param::decay1_slope, 
     envelope_param::decay2_slope, envelope_param::decay_split_level)), 1, 3, 2, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_env_adr_group(controller, part_index, "SR",
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_env_adr_group(controller, part_index, "SR",
     envelope_param::sustain_level, -1, envelope_param::release1_time, envelope_param::release2_time,
     envelope_param::release1_sync, envelope_param::release2_sync, envelope_param::release1_slope, 
     envelope_param::release2_slope, envelope_param::release_split_level)), 1, 5, 2, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0, envelope_param::on)), 0, 2, 1, 5);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_part_graph_ui(controller, part_type::venv, part_index, 0, envelope_param::on)), 0, 2, 1, 5);
   return grid;
 }
 
@@ -436,7 +440,7 @@ create_envelope_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> envelopes;
   for (std::int32_t i = 0; i < venv_count; i++)
     envelopes.emplace_back(create_envelope_grid(controller, i));
-  return create_part_selector_ui(controller, "Env", part_type::active, active_param::venv, part_type::venv, 2, 5, std::move(envelopes));
+  return create_part_selector_ui(controller, "Env", part_type::active, active_param::venv, part_type::venv, 2, 5, part_group_cv, std::move(envelopes));
 }
 
 static std::unique_ptr<ui_element>
@@ -530,13 +534,13 @@ static std::unique_ptr<ui_element>
 create_lfo_free_groups(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 { 
   auto grid = create_grid_ui(controller, 4, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_free_group(
     controller, part_type, part_index, lfo_param::free_delay1, lfo_param::free_rise1, lfo_param::free_rise1_slope, "DA")), 0, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_free_group(
     controller, part_type, part_index, lfo_param::free_hold1, lfo_param::free_fall1, lfo_param::free_fall1_slope, "HD")), 1, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_free_group(
     controller, part_type, part_index, lfo_param::free_delay2, lfo_param::free_fall2, lfo_param::free_fall2_slope, "DD")), 2, 0);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_free_group(
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_free_group(
     controller, part_type, part_index, lfo_param::free_hold2, lfo_param::free_rise2, lfo_param::free_rise2_slope, "HA")), 3, 0);
   return grid;
 }
@@ -545,12 +549,12 @@ static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 3, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 0, 1, 1, 3);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 0, 0, 3, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 4, 1, 3);
-  auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_lfo_group(controller, part_type, part_index)), 0, 1, 1, 3);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_main_group(controller, part_type, part_index)), 0, 0, 3, 1);
+  grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 4, 1, 3);
+  auto basic = grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
-  auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), 1, 1, 2, 6);
+  auto random = grid->add_cell(create_part_group_container_ui(controller, part_group_cv, create_lfo_random_group(controller, part_type, part_index)), 1, 1, 2, 6);
   random->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::random; });
   auto free = grid->add_cell(create_lfo_free_groups(controller, part_type, part_index), 1, 1, 2, 6);
   free->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::free; });
@@ -563,7 +567,7 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
   std::vector<std::unique_ptr<ui_element>> lfos;
   for (std::int32_t i = 0; i < part_count; i++)
     lfos.emplace_back(create_lfo_grid(controller, part_type, i));
-  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 3, 4, std::move(lfos));
+  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 3, 4, part_group_cv, std::move(lfos));
 }
 
 static std::unique_ptr<ui_element>
@@ -572,7 +576,7 @@ create_amp_group(plugin_controller* controller, part_type part_type)
   auto grid = create_grid_ui(controller, 1, 2);
   grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
-  return create_part_single_ui(controller, "Amp", part_type::vamp, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Amp", part_type::vamp, true, part_group_audio, create_part_group_container_ui(controller, part_group_audio, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -606,7 +610,7 @@ create_voice_group(plugin_controller* controller)
   time_grid->relevant_if(part_id(part_type::voice, 0), voice_param::port_mode, false, [](std::int32_t part_index, std::int32_t val) { return val != voice_port_mode::off; });
   grid->add_cell(std::move(time_grid), 0, 3, 4, 1);
 
-  return create_part_single_ui(controller, "Voice", part_type::voice, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Voice", part_type::voice, true, part_group_audio, create_part_group_container_ui(controller, part_group_audio, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -634,7 +638,7 @@ create_cv_plot_controls(plugin_controller* controller, std::int32_t part_type)
   grid->add_cell(create_param_label_ui(controller, part_type, 0, cv_plot_param::length, label_type::label, Justification::centred), 1, 0, 1, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::length, edit_type::knob, tooltip_type::value), 0, 1, 3, 1);
   grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_plot_param::target, edit_type::dropdown, tooltip_type::off), 3, 0, 1, 4);
-  return create_part_group_container_ui(controller, std::move(grid));
+  return create_part_group_container_ui(controller, part_group_cv, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -643,7 +647,7 @@ create_cv_plot_part(plugin_controller* controller, std::int32_t part_type)
   auto grid = create_grid_ui(controller, 1, 10);
   grid->add_cell(create_cv_plot_controls(controller, part_type), 0, 0, 1, 3);
   grid->add_cell(create_part_graph_ui(controller, part_type, 0, 0, cv_plot_param::target), 0, 3, 1, 7);
-  return create_part_single_ui(controller, "CV Plot", part_type, true, std::move(grid));
+  return create_part_single_ui(controller, "CV Plot", part_type, true, part_group_audio, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -663,7 +667,7 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
   header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 1, 1, 10);
   header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 11, 1, 10);
   header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 21, 1, 10);
-  outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0, 1, 1);
+  outer_grid->add_cell(create_part_group_container_ui(controller, part_group_audio, std::move(header_grid)), 0, 0, 1, 1);
   for (std::int32_t i = 0; i < audio_bank_route_count; i++)
   {
     auto inner_grid = create_grid_ui(controller, 2, 32);
@@ -674,9 +678,9 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
     gain->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     auto bal = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, audio_bank_param_index(i, audio_bank_param_type::bal), edit_type::knob, tooltip_type::value, false, true), 0, 21, 2, 10);
     bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
+    outer_grid->add_cell(create_part_group_container_ui(controller, part_group_audio, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  return create_part_single_ui(controller, "Audio", part_type, false, std::move(outer_grid));
+  return create_part_single_ui(controller, "Audio", part_type, false, part_group_audio, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -686,7 +690,7 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
   auto header_grid = create_grid_ui(controller, 1, 42);
   header_grid->add_cell(create_label_ui(controller, "In/Op/Amt", Justification::centred), 0, 1, 1, 20);
   header_grid->add_cell(create_label_ui(controller, "Out/Scl/Offset", Justification::centred), 0, 21, 1, 20);
-  outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0);
+  outer_grid->add_cell(create_part_group_container_ui(controller, part_group_cv, std::move(header_grid)), 0, 0);
   for (std::int32_t i = 0; i < cv_bank_route_count; i++)
   {
     auto inner_grid = create_grid_ui(controller, 2, 42);
@@ -701,9 +705,9 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
     scl->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     auto off = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::off), edit_type::hslider, tooltip_type::value, false, true), 1, 31, 1, 10);
     off->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
+    outer_grid->add_cell(create_part_group_container_ui(controller, part_group_cv, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  return create_part_single_ui(controller, "CV", part_type, false, std::move(outer_grid));
+  return create_part_single_ui(controller, "CV", part_type, false, part_group_audio, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -752,10 +756,18 @@ create_synth_ui(plugin_controller* controller)
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_outline_low, Colour(0xFFDA6102));
   result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_outline_high, Colour(0xFFFD9A4D));
 
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF333333));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF555555));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_fill_low, Colour(0xFF333333));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_fill_high, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_outline_low, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container1_outline_high, Colour(0xFF555555));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_fill_low, Colour(0xFF333333));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_fill_high, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_outline_low, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container2_outline_high, Colour(0xFF555555));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_fill_low, Colour(0xFF333333));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_fill_high, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_outline_low, Colour(0xFF444444));
+  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container3_outline_high, Colour(0xFF555555));
 
   result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_text, Colour(0xFFA7BECB));
   result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_outline_low, Colour(0xFFDA6102));

@@ -48,10 +48,20 @@ public:
     part_graph_outline_low,
     part_graph_outline_high,
 
-    part_group_container_fill_low,
-    part_group_container_fill_high,
-    part_group_container_outline_low,
-    part_group_container_outline_high,
+    part_group_container1_fill_low,
+    part_group_container1_fill_high,
+    part_group_container1_outline_low,
+    part_group_container1_outline_high,
+
+    part_group_container2_fill_low,
+    part_group_container2_fill_high,
+    part_group_container2_outline_low,
+    part_group_container2_outline_high,
+
+    part_group_container3_fill_low,
+    part_group_container3_fill_high,
+    part_group_container3_outline_low,
+    part_group_container3_outline_high,
 
     tab_button_text,
     tab_button_outline_low,
