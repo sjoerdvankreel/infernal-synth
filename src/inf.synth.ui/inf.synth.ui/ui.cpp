@@ -142,6 +142,17 @@ create_cv_lnf(plugin_controller* controller)
   return result;
 }
 
+static std::unique_ptr<inf_look_and_feel>
+create_audio_lnf(plugin_controller* controller)
+{
+  auto result = create_root_lnf(controller);
+  result->setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF3E150D));
+  result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF5D1F14));
+  result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF5D1F14));
+  result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFFAE3925));
+  return result;
+}
+
 static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
@@ -811,9 +822,12 @@ static std::unique_ptr<ui_element>
 create_voice_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 2, 17);
-  result->add_cell(create_audio_part(controller, part_type::vaudio_bank), 0, 0, 2, 2);
-  result->add_cell(create_oscillator_selector(controller), 0, 2, 1, 6);
-  result->add_cell(create_voice_part_fx_grid(controller), 1, 2, 1, 6);
+  auto audio = result->add_cell(create_audio_part(controller, part_type::vaudio_bank), 0, 0, 2, 2);
+  audio->set_lnf(create_audio_lnf(controller));
+  auto osc = result->add_cell(create_oscillator_selector(controller), 0, 2, 1, 6);
+  osc->set_lnf(create_audio_lnf(controller));
+  auto voice_fx = result->add_cell(create_voice_part_fx_grid(controller), 1, 2, 1, 6);
+  voice_fx->set_lnf(create_audio_lnf(controller));
   auto env = result->add_cell(create_envelope_selector(controller), 0, 8, 1, 6);
   env->set_lnf(create_cv_lnf(controller));
   auto cv_graph_lfo = result->add_cell(create_cv_graph_lfo_grid(controller), 1, 8, 1, 6);
