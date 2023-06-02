@@ -34,19 +34,22 @@ class ui_element
   bool _initially_visible = true;
   bool _hide_if_irrelevant = false;
   std::int32_t _relevant_if_param = -1;
-  relevance_selector _relevant_if_selector = nullptr;
   inf::base::plugin_controller* const _controller;
+  relevance_selector _relevant_if_selector = nullptr;
+  std::unique_ptr<inf_look_and_feel> _lnf = {};
   std::unique_ptr<juce::Component> _component = {};
   std::unique_ptr<relevance_listener> _relevance_listener = {};
 protected:
-  virtual juce::Component* build_core(juce::LookAndFeel const& lnf) = 0;
+  virtual juce::Component* build_core(juce::LookAndFeel& lnf) = 0;
   ui_element(inf::base::plugin_controller* controller) : _controller(controller) {}
 public:
   virtual void layout() = 0;
-  juce::Component* build(juce::LookAndFeel const& lnf);
+  juce::Component* build(juce::LookAndFeel* lnf);
+  inf_look_and_feel* get_lnf() const { return _lnf.get(); }
   juce::Component* component() { return _component.get(); }
   void initially_visible(bool visible) { _initially_visible = visible; }
   inf::base::plugin_controller* controller() const { return _controller; }
+  void set_lnf(std::unique_ptr<inf_look_and_feel>&& lnf) { _lnf = std::move(lnf); }
   void relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrelevant, relevance_selector selector);
 };
 
@@ -56,7 +59,7 @@ public ui_element
   std::string const _text;
   juce::Justification const _justification;
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   label_element(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification):
@@ -78,7 +81,7 @@ public ui_element
   std::int32_t const _outline_high_color_id;
   std::unique_ptr<ui_element> _content = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
   container_element(
@@ -106,7 +109,7 @@ public ui_element
   bool const _vertical;
   std::string const _text;
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
   bool vertical() const { return _vertical; }
@@ -126,7 +129,7 @@ public ui_element
   std::int32_t const _part_type;
   std::int32_t const _part_count;
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   selector_label_element(inf::base::plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, std::string const& text, bool vertical):
@@ -148,7 +151,7 @@ private:
   std::unique_ptr<selector_listener> _listener = {};
   std::unique_ptr<selector_extra_listener> _extra_listener = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   void add_header(std::string const& header) { _headers.push_back(header); }
@@ -176,7 +179,7 @@ private:
   juce::Justification _justification;
   std::unique_ptr<label_param_listener> _listener = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   param_label_element(inf::base::plugin_controller* controller, base::part_id const& part_id, 
@@ -199,7 +202,7 @@ public ui_element
   std::int32_t const _param_index;
   std::unique_ptr<icon_param_listener> _listener = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   param_icon_element(
@@ -229,11 +232,11 @@ public ui_element
   std::unique_ptr<toggle_param_listener> _toggle_listener = {};
   std::unique_ptr<slider_param_listener> _slider_listener = {};
   std::unique_ptr<dropdown_param_listener> _dropdown_listener = {};
-  juce::Component* build_toggle_core(juce::LookAndFeel const& lnf);
-  juce::Component* build_slider_core(juce::LookAndFeel const& lnf);
-  juce::Component* build_dropdown_core(juce::LookAndFeel const& lnf);
+  juce::Component* build_toggle_core(juce::LookAndFeel& lnf);
+  juce::Component* build_slider_core(juce::LookAndFeel& lnf);
+  juce::Component* build_dropdown_core(juce::LookAndFeel& lnf);
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
   param_edit_element(
@@ -256,7 +259,7 @@ public ui_element
   std::int32_t const _tooltip_param;
   std::unique_ptr<graph_listener> _listener = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   part_graph_element(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type, std::int32_t tooltip_param):
@@ -278,7 +281,7 @@ public ui_element
   std::vector<juce::Rectangle<std::int32_t>> _cell_bounds = {};
 
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 
 public:
   void layout() override;
@@ -315,21 +318,19 @@ create_grid_ui(inf::base::plugin_controller* controller,
 class root_element:
 public ui_element
 {
-  inf_look_and_feel _lnf;
   juce::Colour const _fill;
   std::int32_t const _width; // Pixel size.
   std::unique_ptr<ui_element> _content = {};
   std::unique_ptr<juce::TooltipWindow> _tooltip = {};
 protected:
-  juce::Component* build_core(juce::LookAndFeel const& lnf) override;
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
-  inf_look_and_feel& look_and_feel() { return _lnf; }
-  juce::Component* build() { return ui_element::build(_lnf); }
+  juce::Component* build() { return ui_element::build(get_lnf()); }
 
   ~root_element() { component()->setLookAndFeel(nullptr); }
   root_element(inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, std::int32_t width, juce::Colour const& fill) :
-  ui_element(controller), _lnf(controller), _fill(fill), _width(width), _content(std::move(content)) {}
+  ui_element(controller), _fill(fill), _width(width), _content(std::move(content)) {}
 };
 
 inline std::unique_ptr<root_element>

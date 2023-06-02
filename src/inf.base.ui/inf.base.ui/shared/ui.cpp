@@ -73,9 +73,10 @@ ui_element::relevant_if(part_id id, std::int32_t param_index, bool hide_if_irrel
 }
 
 Component*
-ui_element::build(LookAndFeel const& lnf)
+ui_element::build(LookAndFeel* lnf)
 {
-  _component.reset(build_core(lnf));
+  LookAndFeel* this_lnf = get_lnf() != nullptr? get_lnf(): lnf;
+  _component.reset(build_core(*this_lnf));
   _component->setEnabled(true);
   _component->setVisible(_initially_visible);
   if (_relevant_if_selector != nullptr)
@@ -93,7 +94,7 @@ ui_element::build(LookAndFeel const& lnf)
 }
 
 Component* 
-label_element::build_core(juce::LookAndFeel const& lnf)
+label_element::build_core(juce::LookAndFeel& lnf)
 {
   Label* result = new inf_label(true);
   result->setBorderSize(BorderSize<int>());
@@ -106,14 +107,14 @@ label_element::build_core(juce::LookAndFeel const& lnf)
 }
 
 Component* 
-root_element::build_core(LookAndFeel const& lnf)
+root_element::build_core(LookAndFeel& lnf)
 {
   container_component* result = new container_component(
     container_component::flags::fill, 0.0f, 0.0f, 
     inf_look_and_feel::colors::root_background, inf_look_and_feel::colors::root_background, 0, 0);
-  result->addChildComponent(_content->build(lnf));
+  result->addChildComponent(_content->build(&lnf));
   result->setOpaque(true);
-  result->setLookAndFeel(&_lnf);
+  result->setLookAndFeel(&lnf);
   _tooltip.reset(new TooltipWindow(result));
   return result;
 }
@@ -129,12 +130,12 @@ root_element::layout()
 }
 
 Component*
-container_element::build_core(LookAndFeel const& lnf)
+container_element::build_core(LookAndFeel& lnf)
 {
   container_component* result = new container_component(
     _flags, container_radius, container_outline_size, _fill_low_color_id, 
     _fill_high_color_id, _outline_low_color_id, _outline_high_color_id);
-  result->addChildComponent(_content->build(lnf));
+  result->addChildComponent(_content->build(&lnf));
   return result;
 }
 
@@ -152,7 +153,7 @@ container_element::layout()
 }
 
 Component*
-group_label_element::build_core(LookAndFeel const& lnf)
+group_label_element::build_core(LookAndFeel& lnf)
 {
   Label* result = new inf_label(false);
   result->setText(_text, dontSendNotification);
@@ -175,7 +176,7 @@ group_label_element::layout()
 }
 
 Component*
-selector_label_element::build_core(LookAndFeel const& lnf)
+selector_label_element::build_core(LookAndFeel& lnf)
 {
   Label* result = new inf_selector_label(controller(), _part_type, _part_count, _vertical);
   result->setText(_text, dontSendNotification);
@@ -184,7 +185,7 @@ selector_label_element::build_core(LookAndFeel const& lnf)
 }
 
 Component* 
-selector_bar_element::build_core(LookAndFeel const& lnf)
+selector_bar_element::build_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_selector_part_id, _selector_param_index);
   inf_selector_bar* result = new inf_selector_bar(controller(), _selected_part_type);
@@ -199,7 +200,7 @@ selector_bar_element::build_core(LookAndFeel const& lnf)
 }
 
 Component*
-param_label_element::build_core(LookAndFeel const& lnf)
+param_label_element::build_core(LookAndFeel& lnf)
 {
   Label* result = new inf_label(true);
   result->setBorderSize(BorderSize<int>());
@@ -218,7 +219,7 @@ param_label_element::build_core(LookAndFeel const& lnf)
 }
 
 Component*
-param_icon_element::build_core(LookAndFeel const& lnf)
+param_icon_element::build_core(LookAndFeel& lnf)
 {
   inf_icon* result = new inf_icon(_value, _selector);
   if(_selector != nullptr)
@@ -258,7 +259,7 @@ param_edit_element::layout()
 }
 
 Component* 
-param_edit_element::build_core(juce::LookAndFeel const& lnf)
+param_edit_element::build_core(juce::LookAndFeel& lnf)
 {
   Component* result = nullptr;
   switch (_type)
@@ -282,7 +283,7 @@ param_edit_element::build_core(juce::LookAndFeel const& lnf)
 }
 
 Component*
-param_edit_element::build_toggle_core(LookAndFeel const& lnf)
+param_edit_element::build_toggle_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   ToggleButton* result = new inf_toggle_button(_force_toggle_on);
@@ -293,7 +294,7 @@ param_edit_element::build_toggle_core(LookAndFeel const& lnf)
 }
 
 Component*
-param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
+param_edit_element::build_dropdown_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   std::int32_t part_index = controller()->topology()->params[index].part_index;
@@ -320,7 +321,7 @@ param_edit_element::build_dropdown_core(LookAndFeel const& lnf)
 }
 
 Component*
-param_edit_element::build_slider_core(LookAndFeel const& lnf)
+param_edit_element::build_slider_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
@@ -362,7 +363,7 @@ param_edit_element::build_slider_core(LookAndFeel const& lnf)
 }
 
 juce::Component* 
-part_graph_element::build_core(juce::LookAndFeel const& lnf)
+part_graph_element::build_core(juce::LookAndFeel& lnf)
 { 
   inf_graph_plot* result = new inf_graph_plot(controller(), _part_id, _graph_type); 
   _listener.reset(new graph_listener(controller(), result, _part_id, _graph_type, _tooltip_param));
@@ -372,11 +373,11 @@ part_graph_element::build_core(juce::LookAndFeel const& lnf)
 }
 
 Component*
-grid_element::build_core(LookAndFeel const& lnf)
+grid_element::build_core(LookAndFeel& lnf)
 {
   Component* result = new Component;
   for (std::size_t i = 0; i < _cell_contents.size(); i++)
-    result->addChildComponent(_cell_contents[i]->build(lnf));
+    result->addChildComponent(_cell_contents[i]->build(&lnf));
   return result;
 }
 

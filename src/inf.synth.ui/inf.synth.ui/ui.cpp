@@ -41,6 +41,107 @@ icon_for_lfo_basic_type(std::int32_t value)
   }
 }
 
+static std::unique_ptr<inf_look_and_feel>
+create_root_lnf(plugin_controller* controller)
+{
+  auto result = std::make_unique<inf_look_and_feel>(controller);
+  result->setColour(PopupMenu::backgroundColourId, Colour(0x00000000));
+  result->setColour(TooltipWindow::backgroundColourId, Colour(0x00000000));
+  result->setColour(inf_look_and_feel::colors::param_label, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::part_group_label, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::root_background, Colour(0xFF222222));
+  result->setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::selector_label_text, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::selector_label_outline_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::selector_label_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::selector_label_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::selector_label_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::tooltip_text, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::tooltip_outline_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
+  result->setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0FD9A4D));
+  result->setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::part_graph_fill_low, Colour(0xFF111111));
+  result->setColour(inf_look_and_feel::colors::part_graph_fill_high, Colour(0xFF222222));
+  result->setColour(inf_look_and_feel::colors::part_graph_outline_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::part_graph_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF333333));
+  result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::tab_button_text, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::tab_button_outline_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::tab_button_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::tab_button_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::tab_button_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::tab_button_highlight_background_low, Colour(0xFF0D363E));
+  result->setColour(inf_look_and_feel::colors::tab_button_highlight_background_high, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::dropdown_text, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::dropdown_outline_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::dropdown_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::dropdown_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::dropdown_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_low, Colour(0xFF0D363E));
+  result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_high, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_spot_fill_low, Colour(0x00222222));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_spot_fill_high, Colour(0x80BBBBBB));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_high, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
+  result->setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
+  result->setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::knob_outline_inactive, Colour(0xFF666666));
+  result->setColour(inf_look_and_feel::colors::knob_cuts_inward_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::knob_cuts_outward_low, Colour(0x80DA6102));
+  result->setColour(inf_look_and_feel::colors::knob_cuts_inward_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::knob_cuts_outward_high, Colour(0x80FD9A4D));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80228A9C));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFF228A9C));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x802EB8D1));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::knob_center_stroke_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::knob_center_stroke_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::knob_spot_fill_low, Colour(0x00222222));
+  result->setColour(inf_look_and_feel::colors::knob_spot_fill_high, Colour(0x80BBBBBB));
+  result->setColour(inf_look_and_feel::colors::knob_gradient_fill_low, Colour(0xFF222222));
+  result->setColour(inf_look_and_feel::colors::knob_gradient_fill_high, Colour(0xFF999999));
+  result->setColour(inf_look_and_feel::colors::slider_center_fill, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::slider_track_inactive, Colour(0xFF222222));
+  result->setColour(inf_look_and_feel::colors::slider_highlight_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::slider_highlight_high, Colour(0xFFAAAAAA));
+  result->setColour(inf_look_and_feel::colors::slider_spot_fill_low, Colour(0x00222222));
+  result->setColour(inf_look_and_feel::colors::slider_spot_fill_high, Colour(0x80BBBBBB));
+  result->setColour(inf_look_and_feel::colors::slider_gradient_fill_low, Colour(0xE0DA6102));
+  result->setColour(inf_look_and_feel::colors::slider_gradient_fill_high, Colour(0xE0FD9A4D));
+  result->setColour(inf_look_and_feel::colors::switch_outline_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::switch_spot_fill_low, Colour(0x00222222));
+  result->setColour(inf_look_and_feel::colors::switch_spot_fill_high, Colour(0x80BBBBBB));
+  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_low_on, Colour(0xA0DA6102));
+  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_high_on, Colour(0xA0FD9A4D));
+  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_center_low, Colour(0xFF222222));
+  result->setColour(inf_look_and_feel::colors::switch_gradient_fill_center_high, Colour(0xFF999999));
+  return result;
+}
+
+static std::unique_ptr<inf_look_and_feel>
+create_cv_lnf(plugin_controller* controller)
+{
+  auto result = create_root_lnf(controller);
+  result->setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF0D363E));
+  result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF259AAE));
+  return result;
+}
+
 static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
@@ -712,10 +813,13 @@ create_voice_grid(plugin_controller* controller)
   auto result = create_grid_ui(controller, 2, 17);
   result->add_cell(create_audio_part(controller, part_type::vaudio_bank), 0, 0, 2, 2);
   result->add_cell(create_oscillator_selector(controller), 0, 2, 1, 6);
-  result->add_cell(create_envelope_selector(controller), 0, 8, 1, 6);
   result->add_cell(create_voice_part_fx_grid(controller), 1, 2, 1, 6);
-  result->add_cell(create_cv_graph_lfo_grid(controller), 1, 8, 1, 6);
-  result->add_cell(create_cv_part(controller, part_type::vcv_bank), 0, 14, 2, 3);
+  auto env = result->add_cell(create_envelope_selector(controller), 0, 8, 1, 6);
+  env->set_lnf(create_cv_lnf(controller));
+  auto cv_graph_lfo = result->add_cell(create_cv_graph_lfo_grid(controller), 1, 8, 1, 6);
+  cv_graph_lfo->set_lnf(create_cv_lnf(controller));
+  auto cv = result->add_cell(create_cv_part(controller, part_type::vcv_bank), 0, 14, 2, 3);
+  cv->set_lnf(create_cv_lnf(controller));
   return result;
 }
 
@@ -723,99 +827,7 @@ std::unique_ptr<root_element>
 create_synth_ui(plugin_controller* controller)
 {
   auto result = create_root_ui(controller, create_voice_grid(controller), controller->editor_current_width(), juce::Colours::black);
-  result->look_and_feel().setColour(PopupMenu::backgroundColourId, Colour(0x00000000));
-  result->look_and_feel().setColour(TooltipWindow::backgroundColourId, Colour(0x00000000));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::param_label, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_label, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::root_background, Colour(0xFF222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_text, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_outline_low, Colour(0xFFDA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_outline_high, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_background_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::selector_label_background_high, Colour(0xFF777777));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_text, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_outline_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF2EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0FD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_fill_low, Colour(0xFF111111));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_fill_high, Colour(0xFF222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_outline_low, Colour(0xFFDA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_graph_outline_high, Colour(0xFFFD9A4D));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF333333));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF555555));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_text, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_outline_low, Colour(0xFFDA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_outline_high, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_background_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_background_high, Colour(0xFF777777));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_highlight_background_low, Colour(0xFF0D363E));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::tab_button_highlight_background_high, Colour(0xFF14525D));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_text, Colour(0xFFA7BECB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_outline_low, Colour(0xFFDA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_outline_high, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_background_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_background_high, Colour(0xFF777777));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_highlight_background_low, Colour(0xFF0D363E));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_highlight_background_high, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_tick_spot_fill_low, Colour(0x00222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_tick_spot_fill_high, Colour(0x80BBBBBB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_high, Colour(0xFF2EB8D1));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_low, Colour(0xFF111111));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_highlight_high, Colour(0xFFAAAAAA));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFF2EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_outline_inactive, Colour(0xFF666666));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_low, Colour(0xFFDA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_low, Colour(0x80DA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_inward_high, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_cuts_outward_high, Colour(0x80FD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80228A9C));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFF228A9C));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x802EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFF2EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_center_stroke_low, Colour(0xFFDA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_center_stroke_high, Colour(0xFFFD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_low, Colour(0x00222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_spot_fill_high, Colour(0x80BBBBBB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_gradient_fill_low, Colour(0xFF222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::knob_gradient_fill_high, Colour(0xFF999999));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_center_fill, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFF2EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_track_inactive, Colour(0xFF222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_highlight_low, Colour(0xFF444444));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_highlight_high, Colour(0xFFAAAAAA));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_spot_fill_low, Colour(0x00222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_spot_fill_high, Colour(0x80BBBBBB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_low, Colour(0xE0DA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::slider_gradient_fill_high, Colour(0xE0FD9A4D));
-
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_low, Colour(0xFF14525D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFF2EB8D1));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_low, Colour(0x00222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_spot_fill_high, Colour(0x80BBBBBB));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_low_on, Colour(0xA0DA6102));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_high_on, Colour(0xA0FD9A4D));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_center_low, Colour(0xFF222222));
-  result->look_and_feel().setColour(inf_look_and_feel::colors::switch_gradient_fill_center_high, Colour(0xFF999999));
+  result->set_lnf(create_root_lnf(controller));
   return result;
 }
 
