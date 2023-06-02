@@ -148,11 +148,6 @@ create_audio_lnf(plugin_controller* controller)
   auto result = create_root_lnf(controller);
   result->setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFF5D1F14));
   result->setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFFD1472E));
-
-
-  result->setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF0D363E));
-  result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF14525D));
-
   result->setColour(inf_look_and_feel::colors::slider_gradient_fill_low, Colour(0xE0027BDA));
   result->setColour(inf_look_and_feel::colors::slider_gradient_fill_high, Colour(0xE04DB0FD));
   result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFF5D1F14));
