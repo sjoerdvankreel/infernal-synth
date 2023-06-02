@@ -77,6 +77,7 @@ ui_element::build(LookAndFeel* lnf)
 {
   LookAndFeel* this_lnf = get_lnf() != nullptr? get_lnf(): lnf;
   _component.reset(build_core(*this_lnf));
+  _component->setLookAndFeel(this_lnf);
   _component->setEnabled(true);
   _component->setVisible(_initially_visible);
   if (_relevant_if_selector != nullptr)
@@ -114,7 +115,6 @@ root_element::build_core(LookAndFeel& lnf)
     inf_look_and_feel::colors::root_background, inf_look_and_feel::colors::root_background, 0, 0);
   result->addChildComponent(_content->build(&lnf));
   result->setOpaque(true);
-  result->setLookAndFeel(&lnf);
   _tooltip.reset(new TooltipWindow(result));
   return result;
 }
