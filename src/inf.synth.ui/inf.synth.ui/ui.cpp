@@ -152,6 +152,10 @@ create_audio_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFFAE3925));
   result->setColour(inf_look_and_feel::colors::tab_button_highlight_background_low, Colour(0xFF3E150D));
   result->setColour(inf_look_and_feel::colors::tab_button_highlight_background_high, Colour(0xFF5D1F14));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFF5D1F14));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_high, Colour(0xFFD1472E));
+  result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_low, Colour(0xFF3E150D));
+  result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_high, Colour(0xFF5D1F14));
   return result;
 }
 
