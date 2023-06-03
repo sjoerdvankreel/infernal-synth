@@ -113,6 +113,7 @@ synth_topology::init_factory_preset(param_value* state) const
 void 
 synth_topology::init_fx_clear_patch(param_value* state) const
 {
+  assert(!"TODO");
   topology_info::init_clear_patch(state);
 
   // Bare minimum to have a basic delay line.
@@ -140,6 +141,7 @@ synth_topology::init_instrument_clear_patch(param_value* state) const
 void 
 synth_topology::init_fx_factory_preset(param_value* state) const
 {
+  assert(!"TODO");
   topology_info::init_factory_preset(state);
 
   // gfx 1 reverb
@@ -236,6 +238,8 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   
   int x = 1;
   if(x==1) return;
+
+  assert(!"TODO");
 
   // osc 1 detuned saw
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
