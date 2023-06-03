@@ -10,7 +10,7 @@ void
 inf_button::paint(juce::Graphics& g)
 {
   float const corner_size_fixed = 5.0f;
-  float const outline_size_fixed = 2.0f;
+  float const outline_size_fixed = 1.0f;
   auto const bounds = getLocalBounds().toFloat().expanded(-button_margin);
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
 

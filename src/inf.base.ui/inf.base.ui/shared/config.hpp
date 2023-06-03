@@ -6,7 +6,7 @@
 namespace inf::base::ui {
 
 inline int const edit_margin = 2;
-inline int const button_margin = 5;
+inline int const button_margin = 3;
 inline int const edit_table_margin = 0;
 inline int const container_margin = 2;
 inline int const graph_grid_hcount = 9;
