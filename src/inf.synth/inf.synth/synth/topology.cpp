@@ -214,7 +214,7 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in4, "CVB 2");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out4, "FX 4 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::op4, "Add");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in5, "GLFO 1");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in5, "G.LFO 1");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out5, "FX 2 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::amt5, "50");
 
@@ -338,7 +338,7 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in1, "Velocity");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out1, "Osc 1 Gain");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op2, "Add");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in2, "VLFO 1");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in2, "V.LFO 1");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out2, "Osc 1 Cent");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::amt2, "10");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in3, "Env 2");
@@ -350,7 +350,7 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op4, "Mul");
 
   // glfo 1 to filter freq & master cvs
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "GLFO 1");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "G.LFO 1");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out1, "FX 1 SV Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::op1, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::amt1, "66");
@@ -397,11 +397,11 @@ static param_descriptor const
 active_params[active_param::count] =     
 {
   { "{0EEADBD0-D37B-4B53-A2D5-F22E2154F2D8}", { { "Osc", "Oscillator" }, "", param_kind::block, param_type::list, { &active_vosc_items, 0 } } },
-  { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "VFX", "Voice FX" }, "", param_kind::block, param_type::list, { &active_veffect_items, 0 } } },
-  { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "GFX", "Global FX" }, "", param_kind::block, param_type::list, { &active_geffect_items, 0 } } },
+  { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "V.FX", "Voice FX" }, "", param_kind::block, param_type::list, { &active_veffect_items, 0 } } },
+  { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "G.FX", "Global FX" }, "", param_kind::block, param_type::list, { &active_geffect_items, 0 } } },
   { "{556BF692-55B0-48B4-BD6A-E2CEFA17B012}", { { "Env", "Envelope" }, "", param_kind::block, param_type::list, { &active_venv_items, 0 } } },
-  { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "VLFO", "Voice LFO" }, "", param_kind::block, param_type::list, { &active_vlfo_items, 0 } } },
-  { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "GLFO", "Global LFO" }, "", param_kind::block, param_type::list, { &active_glfo_items, 0 } } }
+  { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "V.LFO", "Voice LFO" }, "", param_kind::block, param_type::list, { &active_vlfo_items, 0 } } },
+  { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "G.LFO", "Global LFO" }, "", param_kind::block, param_type::list, { &active_glfo_items, 0 } } }
 };
 
 // ---- global topo ----
@@ -410,21 +410,21 @@ part_descriptor const
 part_descriptors[part_type::count] =                                             
 {                       
   { "{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}", { "Osc", "Oscillator" }, part_kind::input, part_type::vosc, vosc_count, osc_params, osc_param::count, osc_graph_name_selector },
-  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "VFX", "Voice FX" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, effect_graph_name_selector },
-  { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "GFX", "Global FX" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, effect_graph_name_selector },
-  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "VAudio", "Voice Audio" }, part_kind::input, part_type::vaudio_bank, 1, vaudio_bank_params, audio_bank_param::count, nullptr },
-  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "GAudio", "Global Audio" }, part_kind::input, part_type::gaudio_bank, 1, gaudio_bank_params, audio_bank_param::count, nullptr },
-  { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "VIn", "Voice In" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count, nullptr },
-  { "{6DE3AAB2-6D43-41ED-9BBE-E281DB8F7B44}", { "GIn", "Master In" }, part_kind::input, part_type::master, 1, master_params, master_param::count, nullptr },
-  { "{62318254-6650-428D-9BD4-53A11E86D5DE}", { "VOut", "Voice Out" }, part_kind::input, part_type::vamp, 1, vamp_params, amp_param::count, nullptr },
-  { "{083A0CA3-8C8B-4B6A-BB38-3E327239E469}", { "GOut", "Master Out" }, part_kind::input, part_type::gamp, 1, gamp_params, amp_param::count, nullptr },
+  { "{2C377544-C124-48F5-A4F4-1E301B108C58}", { "V.FX", "Voice FX" }, part_kind::input, part_type::veffect, veffect_count, veffect_params, effect_param::vfx_count, effect_graph_name_selector },
+  { "{E8F67736-5976-4FDE-939F-31C373B7F920}", { "G.FX", "Global FX" }, part_kind::input, part_type::geffect, geffect_count, geffect_params, effect_param::gfx_count, effect_graph_name_selector },
+  { "{7A77C027-FC8F-4425-9BF0-393267D92F0C}", { "V.Audio", "Voice Audio" }, part_kind::input, part_type::vaudio_bank, 1, vaudio_bank_params, audio_bank_param::count, nullptr },
+  { "{B5B4A442-13ED-43ED-B9E0-3B2894D03838}", { "G.Audio", "Global Audio" }, part_kind::input, part_type::gaudio_bank, 1, gaudio_bank_params, audio_bank_param::count, nullptr },
+  { "{E6344937-C1F7-4F2A-83E7-EA27D48DEC4E}", { "V.In", "Voice In" }, part_kind::input, part_type::voice, 1, voice_params, voice_param::count, nullptr },
+  { "{6DE3AAB2-6D43-41ED-9BBE-E281DB8F7B44}", { "M.In", "Master In" }, part_kind::input, part_type::master, 1, master_params, master_param::count, nullptr },
+  { "{62318254-6650-428D-9BD4-53A11E86D5DE}", { "V.Out", "Voice Out" }, part_kind::input, part_type::vamp, 1, vamp_params, amp_param::count, nullptr },
+  { "{083A0CA3-8C8B-4B6A-BB38-3E327239E469}", { "M.Out", "Master Out" }, part_kind::input, part_type::gamp, 1, gamp_params, amp_param::count, nullptr },
   { "{FC4885FE-431C-477A-B5B7-84863DB8C07D}", { "Env", "Envelope" }, part_kind::input, part_type::venv, venv_count, envelope_params, envelope_param::count, env_graph_name_selector },
-  { "{56DE75BB-BE73-4B27-B37F-77F6E408F986}", { "VLFO", "Voice LFO" }, part_kind::input, part_type::vlfo, vlfo_count, vlfo_params, lfo_param::count, lfo_graph_name_selector },
-  { "{5BE4D402-BD27-478B-9C14-A570A4306FFA}", { "GLFO", "Global LFO" }, part_kind::input, part_type::glfo, glfo_count, glfo_params, lfo_param::count, lfo_graph_name_selector },
-  { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "VCV", "Voice CV" }, part_kind::input, part_type::vcv_bank, 1, vcv_bank_params, cv_bank_param::count, nullptr },
-  { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "GCV", "Global CV" }, part_kind::input, part_type::gcv_bank, 1, gcv_bank_params, cv_bank_param::count, nullptr },
-  { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "VCV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
-  { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "GCV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
+  { "{56DE75BB-BE73-4B27-B37F-77F6E408F986}", { "V.LFO", "Voice LFO" }, part_kind::input, part_type::vlfo, vlfo_count, vlfo_params, lfo_param::count, lfo_graph_name_selector },
+  { "{5BE4D402-BD27-478B-9C14-A570A4306FFA}", { "G.LFO", "Global LFO" }, part_kind::input, part_type::glfo, glfo_count, glfo_params, lfo_param::count, lfo_graph_name_selector },
+  { "{E6814824-7F56-4A9C-92B6-F5EB001B9513}", { "V.CV", "Voice CV" }, part_kind::input, part_type::vcv_bank, 1, vcv_bank_params, cv_bank_param::count, nullptr },
+  { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "G.CV", "Global CV" }, part_kind::input, part_type::gcv_bank, 1, gcv_bank_params, cv_bank_param::count, nullptr },
+  { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "V.CV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
+  { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "G.CV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, nullptr },
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, nullptr }
 };         

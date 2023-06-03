@@ -45,9 +45,9 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{1209DAFC-6F0B-452E-B613-01097DB6249A}", "CVU" }, // Hold
   { "{C6F469EE-9A9A-4319-9825-ACDD75A14D6D}", "CVB" },
   { "{85D4AE4A-D83D-41AC-BB2B-81F7839126F5}", "CVB" }, // Hold
-  { "{3498B234-D9A4-4A71-822B-C4304C3D2A63}", "VLFO" },
-  { "{4D157622-02FA-4D9C-9B47-B999A7566D05}", "GLFO" },
-  { "{7262E745-9116-4071-ACA7-0D11464E1892}", "GLFO" } }; // Hold
+  { "{3498B234-D9A4-4A71-822B-C4304C3D2A63}", "V.LFO" },
+  { "{4D157622-02FA-4D9C-9B47-B999A7566D05}", "G.LFO" },
+  { "{7262E745-9116-4071-ACA7-0D11464E1892}", "G.LFO" } }; // Hold
 
 // target routing
 static list_item const vgcv_route_amp_targets[vgcv_route_amp_target::count] = { 
