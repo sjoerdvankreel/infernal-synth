@@ -2,6 +2,7 @@
 #include <inf.base.ui/shared/config.hpp>
 #include <inf.base.ui/shared/real_bounds_range.hpp>
 #include <inf.base.ui/controls/label.hpp>
+#include <inf.base.ui/controls/button.hpp>
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base.ui/controls/toggle_button.hpp>
 #include <inf.base.ui/controls/selector_label.hpp>
@@ -110,7 +111,8 @@ label_element::build_core(juce::LookAndFeel& lnf)
 Component*
 button_element::build_core(juce::LookAndFeel& lnf)
 {
-  TextButton* result = new TextButton(_text);
+  inf_button* result = new inf_button();
+  result->setButtonText(_text);
   _listener.reset(new button_listener(_callback));
   result->addListener(_listener.get());
   //float font_height = get_button_label_font_height(controller());

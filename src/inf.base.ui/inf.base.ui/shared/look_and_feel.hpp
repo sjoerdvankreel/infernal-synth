@@ -53,6 +53,16 @@ public:
     part_group_container_outline_low,
     part_group_container_outline_high,
 
+    button_text,
+    button_outline_low,
+    button_outline_high,
+    button_background_low,
+    button_background_high,
+    button_over_background_low,
+    button_over_background_high,
+    button_down_background_low,
+    button_down_background_high,
+
     tab_button_text,
     tab_button_outline_low,
     tab_button_outline_high,

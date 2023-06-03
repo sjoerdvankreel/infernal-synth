@@ -73,6 +73,15 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::button_text, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::button_outline_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::button_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::button_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::button_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::button_over_background_low, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::button_over_background_high, Colour(0xFF888888));
+  result->setColour(inf_look_and_feel::colors::button_down_background_low, Colour(0xFF666666));
+  result->setColour(inf_look_and_feel::colors::button_down_background_high, Colour(0xFF999999));
   result->setColour(inf_look_and_feel::colors::tab_button_text, Colour(0xFFA7BECB));
   result->setColour(inf_look_and_feel::colors::tab_button_outline_low, Colour(0xFFDA6102));
   result->setColour(inf_look_and_feel::colors::tab_button_outline_high, Colour(0xFFFD9A4D));
