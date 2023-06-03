@@ -146,16 +146,20 @@ static std::unique_ptr<inf_look_and_feel>
 create_audio_lnf(plugin_controller* controller)
 {
   auto result = create_root_lnf(controller);
-  result->setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFF5D1F14));
-  result->setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFFD1472E));
-  result->setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFF5D1F14));
-  result->setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFFD1472E));
-  result->setColour(inf_look_and_feel::colors::switch_outline_low, Colour(0xFF5D1F14));
-  result->setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFFD1472E));
-  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFF5D1F14));
-  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_high, Colour(0xFFD1472E));
+  result->setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFFAE3A25));
+  result->setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::switch_outline_low, Colour(0xFFAE3A25));
+  result->setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFFAE3A25));
+  result->setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80C3432B));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFFC3432B));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x80DC7562));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFFAE3A25));
+  result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_high, Colour(0xFFDC7562));
   result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_low, Colour(0xFF3E150D));
-  result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_high, Colour(0xFF5D1F14));
+  result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_high, Colour(0xFFAE3A25));
   result->setColour(inf_look_and_feel::colors::part_group_container_fill_low, Colour(0xFF3E150D));
   result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF5D1F14));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF5D1F14));
