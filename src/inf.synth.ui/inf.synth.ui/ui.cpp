@@ -861,10 +861,24 @@ create_voice_grid(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_master_in_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 6);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv1_uni, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv2_uni, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv3_uni, edit_type::knob, label_type::label, tooltip_type::value), 0, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv1_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv2_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 4);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv3_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 5);
+  return create_part_single_ui(controller, "Master In", part_type::master, true, create_part_group_container_ui(controller, std::move(grid)));
+}
+
+static std::unique_ptr<ui_element>
 create_synth_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 10, 17); 
   result->add_cell(create_amp_group(controller, part_type::gamp, "Master Out"), 0, 0, 1, 2);
+  result->add_cell(create_master_in_group(controller), 0, 2, 1, 6);
   result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;
 }
