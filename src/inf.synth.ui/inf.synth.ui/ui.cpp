@@ -741,14 +741,14 @@ create_voice_group(plugin_controller* controller)
   time_grid->relevant_if(part_id(part_type::voice, 0), voice_param::port_mode, false, [](std::int32_t part_index, std::int32_t val) { return val != voice_port_mode::off; });
   grid->add_cell(std::move(time_grid), 0, 3, 4, 1);
 
-  return create_part_single_ui(controller, "Voice", part_type::voice, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Voice In", part_type::voice, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
 create_voice_amp_grid(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 3);
-  grid->add_cell(create_amp_group(controller, part_type::vamp, "Voice Amp"), 0, 0, 1, 1);
+  grid->add_cell(create_amp_group(controller, part_type::vamp, "Voice Out"), 0, 0, 1, 1);
   grid->add_cell(create_voice_group(controller), 0, 1, 1, 2);
   return grid;
 }
@@ -863,8 +863,8 @@ create_voice_grid(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 10, 17);
-  result->add_cell(create_amp_group(controller, part_type::gamp, "Master Amp"), 0, 0, 1, 2);
+  auto result = create_grid_ui(controller, 10, 17); 
+  result->add_cell(create_amp_group(controller, part_type::gamp, "Master Out"), 0, 0, 1, 2);
   result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;
 }

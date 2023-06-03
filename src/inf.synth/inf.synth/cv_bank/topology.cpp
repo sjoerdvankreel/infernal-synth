@@ -22,12 +22,12 @@ static list_item const vcv_route_outputs[vcv_route_output::count] = {
   { "{0CD174A0-699B-401F-AE22-0B716C84A764}", "Osc" },
   { "{A04AB56A-6653-44B2-87CA-5AAA9E50249F}", "FX" },
   { "{0A94D3C0-B00D-452D-A7F1-D1D30CC644C2}", "Audio" },
-  { "{73DD8E5A-F210-4E55-8FDC-4A1052E71D7E}", "Amp" } };
+  { "{73DD8E5A-F210-4E55-8FDC-4A1052E71D7E}", "V.Out" } };
 static list_item const gcv_route_outputs[gcv_route_output::count] = {
   { "{C80A4D13-6AE6-4D54-A477-E42E185F2C28}", "Off" },
   { "{F0CE73FF-7973-43A5-AD9C-75E67C689AE3}", "FX" },
   { "{4BD18162-21CE-4B19-BAFA-05432C653EB0}", "Audio" },
-  { "{9E111E9D-8C9B-49B2-8D9D-A3A192E9DA4D}", "Amp" } };
+  { "{9E111E9D-8C9B-49B2-8D9D-A3A192E9DA4D}", "M.Out" } };
 
 // input routing
 static list_item const gcv_route_inputs[gcv_route_input::count] = {
@@ -180,14 +180,14 @@ static std::vector<list_item> const gcv_route_input_sources_list = multi_list_it
 param_descriptor const
 vcv_plot_params[cv_plot_param::count] =
 {
-  { "{CE1DC1C7-72C5-4811-8C35-8485FFAFFABC}", { {"Target", "Target"}, "", param_kind::block, param_type::list, {&vcv_route_output_target_list, "Amp Gain" } } },
+  { "{CE1DC1C7-72C5-4811-8C35-8485FFAFFABC}", { {"Target", "Target"}, "", param_kind::block, param_type::list, {&vcv_route_output_target_list, "V.Out Gain" } } },
   { "{41FB9033-220C-4DA7-836A-22808E17167F}", { { "Hold", "Key hold" }, "Sec", param_kind::block, quad_bounds(0.01f, 70.0f, "0.5", 2) } }
 };
 
 param_descriptor const
 gcv_plot_params[cv_plot_param::count] =
 {
-  { "{EBF618A3-D50D-439C-A2BA-95C06277276E}", { {"Target", "Target"}, "", param_kind::block, param_type::list, {&gcv_route_output_target_list, "Amp Gain" } } },
+  { "{EBF618A3-D50D-439C-A2BA-95C06277276E}", { {"Target", "Target"}, "", param_kind::block, param_type::list, {&gcv_route_output_target_list, "M.Out Gain" } } },
   { "{60ED3115-0BD0-4870-9938-6D37759FE7D0}", { { "Length", "Length" }, "Sec", param_kind::block, quad_bounds(0.01f, 70.0f, "2", 2) } }
 };
 
