@@ -899,11 +899,11 @@ create_master_in_group(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
-create_synth_preset_group(plugin_controller* controller)
+create_synth_patch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 2, 2);
   grid->add_cell(create_button_ui(controller, "Clear patch", Justification::centred, [controller]() { controller->clear_patch(); }), 0, 0);
-  return create_part_group_container_ui(controller, std::move(grid));
+  return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -920,7 +920,7 @@ create_synth_grid(plugin_controller* controller)
   result->add_cell(create_amp_group(controller, part_type::gamp, "Master Out"), 0, 0, 1, 2);
   result->add_cell(create_master_in_group(controller), 0, 2, 1, 6);
   result->add_cell(create_synth_edit_group(controller), 0, 8, 1, 6);
-  result->add_cell(create_synth_preset_group(controller), 0, 14, 1, 3);
+  result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
   result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;
 }

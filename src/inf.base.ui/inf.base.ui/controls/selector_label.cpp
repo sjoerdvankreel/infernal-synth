@@ -9,7 +9,7 @@ namespace inf::base::ui {
 void 
 inf_selector_label::mouseUp(MouseEvent const& event)
 {
-  if(!event.mods.isRightButtonDown()) return;
+  if(_part_type == -1 || !event.mods.isRightButtonDown()) return;
   PopupMenu menu;
   menu.setLookAndFeel(&getLookAndFeel());
   menu.addItem(1, _part_count == 1? "Clear": "Clear all");
@@ -24,6 +24,7 @@ inf_selector_label::paint(Graphics& g)
 {
   // config
   int const vpad = 2;
+  int const vhpad = 3;
   int const hpadl = 1;
   int const hpadr = _vertical? 1: 3;
   float const corner_size_fixed = 5.0f;
@@ -57,6 +58,7 @@ inf_selector_label::paint(Graphics& g)
     auto transform = AffineTransform().rotated(-pi32 / 2.0f, area.getWidth() / 2.0f, area.getHeight() / 2.0f);
     g.addTransform(transform);
     area = area.transformedBy(transform);
+    area = juce::Rectangle<int>(area.getX() - vhpad, area.getY() + vhpad, area.getWidth() + vhpad, area.getHeight() - vhpad);
   }
   g.drawText(getText(), area, Justification::centred, false);
   g.restoreState();
