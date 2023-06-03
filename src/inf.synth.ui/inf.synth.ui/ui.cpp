@@ -73,7 +73,7 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF555555));
-  result->setColour(inf_look_and_feel::colors::button_text, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::button_text, Colour(0xFFA7BECB));
   result->setColour(inf_look_and_feel::colors::button_outline_low, Colour(0xFF14525D));
   result->setColour(inf_look_and_feel::colors::button_outline_high, Colour(0xFF259AAE));
   result->setColour(inf_look_and_feel::colors::button_background_low, Colour(0xFF444444));
@@ -870,15 +870,31 @@ create_voice_grid(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
-create_master_in_group(plugin_controller* controller)
+create_master_unipolar_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 6);
+  auto grid = create_grid_ui(controller, 1, 3);
   grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv1_uni, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv2_uni, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
   grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv3_uni, edit_type::knob, label_type::label, tooltip_type::value), 0, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv1_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 3);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv2_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 4);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv3_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 5);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Unipolar", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_master_bipolar_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv1_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv2_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::master, 0, master_param::gcv3_bi, edit_type::knob, label_type::label, tooltip_type::value), 0, 2);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Bipolar", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_master_in_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_master_unipolar_group(controller)), 0, 0);
+  grid->add_cell(create_part_group_container_ui(controller, create_master_bipolar_group(controller)), 0, 1);
   return create_part_single_ui(controller, "Master In", part_type::master, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
