@@ -152,10 +152,10 @@ create_audio_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFFDC7562));
   result->setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFFAE3A25));
   result->setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFFDC7562));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80C3432B));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFFC3432B));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x80DC7562));
-  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80DC7562));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_low, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_inward_high, Colour(0x80E49789));
+  result->setColour(inf_look_and_feel::colors::knob_thumb_outward_high, Colour(0xFFE49789));
   result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_low, Colour(0xFFAE3A25));
   result->setColour(inf_look_and_feel::colors::dropdown_tick_gradient_fill_high, Colour(0xFFDC7562));
   result->setColour(inf_look_and_feel::colors::dropdown_highlight_background_low, Colour(0xFF3E150D));
