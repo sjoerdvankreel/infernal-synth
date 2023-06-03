@@ -98,8 +98,8 @@ public:
   std::int32_t editor_min_width() const override { return 1200; }
   std::int32_t editor_max_width() const override { return 2000; }
   std::int32_t editor_default_width() const override { return 1200; }
-  std::int32_t editor_font_scaling_min_width() const override { return 1500; }
-  std::int32_t editor_font_scaling_max_width() const override { return 2000; }
+  std::int32_t editor_font_scaling_min_width() const override { return 1360; }
+  std::int32_t editor_font_scaling_max_width() const override { return 1800; }
 
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
