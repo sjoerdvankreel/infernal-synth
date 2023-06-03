@@ -146,10 +146,17 @@ static std::unique_ptr<inf_look_and_feel>
 create_audio_lnf(plugin_controller* controller)
 {
   auto result = create_root_lnf(controller);
+
+
   result->setColour(inf_look_and_feel::colors::slider_track_low, Colour(0xFFAE3A25));
   result->setColour(inf_look_and_feel::colors::slider_track_high, Colour(0xFFDC7562));
   result->setColour(inf_look_and_feel::colors::switch_outline_low, Colour(0xFFAE3A25));
   result->setColour(inf_look_and_feel::colors::switch_outline_high, Colour(0xFFDC7562));
+  result->setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF5D1F14));
+  result->setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0228B9E));
+  result->setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFF228B9E));
+  result->setColour(inf_look_and_feel::colors::part_graph_outline_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::part_graph_outline_high, Colour(0xFF259AAE));
   result->setColour(inf_look_and_feel::colors::knob_outline_low, Colour(0xFFAE3A25));
   result->setColour(inf_look_and_feel::colors::knob_outline_high, Colour(0xFFDC7562));
   result->setColour(inf_look_and_feel::colors::knob_thumb_inward_low, Colour(0x80DC7562));
