@@ -74,3 +74,4 @@
 - theme selector
 - last tweaked
 - load factory preset
+- output section
