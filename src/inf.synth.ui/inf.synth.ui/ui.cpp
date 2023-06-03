@@ -73,9 +73,9 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::part_group_container_fill_high, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_low, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFF555555));
-  result->setColour(inf_look_and_feel::colors::button_text, Colour(0xFF2EB8D1));
-  result->setColour(inf_look_and_feel::colors::button_outline_low, Colour(0xFFDA6102));
-  result->setColour(inf_look_and_feel::colors::button_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::button_text, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::button_outline_low, Colour(0xFF14525D));
+  result->setColour(inf_look_and_feel::colors::button_outline_high, Colour(0xFF259AAE));
   result->setColour(inf_look_and_feel::colors::button_background_low, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::button_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::button_over_background_low, Colour(0xFF555555));

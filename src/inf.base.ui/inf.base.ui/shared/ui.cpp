@@ -111,15 +111,10 @@ label_element::build_core(juce::LookAndFeel& lnf)
 Component*
 button_element::build_core(juce::LookAndFeel& lnf)
 {
-  inf_button* result = new inf_button();
+  inf_button* result = new inf_button(controller());
   result->setButtonText(_text);
   _listener.reset(new button_listener(_callback));
   result->addListener(_listener.get());
-  //float font_height = get_button_label_font_height(controller());
-  //result->label- >setFont(juce::Font(font_height, juce::Font::bold));
-  //result->setJustificationType(_justification);
-  //result->setText(_text, dontSendNotification);
-  //result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::param_label));
   return result;
 }
 

@@ -71,3 +71,6 @@
 - conversion code for breaking changes
 - dont expose all parameters
 - fix slow cv plot repaint
+- theme selector
+- last tweaked
+- load factory preset
