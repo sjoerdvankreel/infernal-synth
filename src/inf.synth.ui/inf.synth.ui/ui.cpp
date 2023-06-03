@@ -863,9 +863,9 @@ create_voice_grid(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 8, 17);
+  auto result = create_grid_ui(controller, 10, 17);
   result->add_cell(create_amp_group(controller, part_type::gamp, "Master Amp"), 0, 0, 1, 2);
-  result->add_cell(create_voice_grid(controller), 1, 0, 7, 17);
+  result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;
 }
 
