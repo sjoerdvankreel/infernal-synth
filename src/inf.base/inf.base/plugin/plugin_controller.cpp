@@ -34,6 +34,14 @@ plugin_controller::controller_param_changed(std::int32_t tag, param_value base_v
     (*it)->any_controller_param_changed(index);
 }
 
+void
+plugin_controller::init_patch()
+{
+  std::vector<param_value> new_values(topology()->input_param_count, param_value());
+  topology()->init_factory_preset(new_values.data());
+  load_component_state(new_values.data(), true);
+}
+
 void 
 plugin_controller::clear_patch()
 {

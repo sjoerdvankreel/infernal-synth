@@ -75,3 +75,4 @@
 - last tweaked
 - load factory preset
 - output section
+- params dont flush after clear/init

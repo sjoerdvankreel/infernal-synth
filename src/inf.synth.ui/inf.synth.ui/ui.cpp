@@ -900,7 +900,7 @@ static std::unique_ptr<ui_element>
 create_synth_patch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 2);
-  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { controller->clear_patch(); }), 0, 0);
+  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { controller->init_patch(); }), 0, 0);
   grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller]() { controller->clear_patch(); }), 0, 1);
   grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 0);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
