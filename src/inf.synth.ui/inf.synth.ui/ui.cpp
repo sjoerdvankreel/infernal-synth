@@ -702,12 +702,12 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
 }
 
 static std::unique_ptr<ui_element>
-create_amp_group(plugin_controller* controller, part_type part_type)
+create_amp_group(plugin_controller* controller, part_type part_type, std::string const& header)
 {
   auto grid = create_grid_ui(controller, 1, 2);
   grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
-  return create_part_single_ui(controller, "Amp", part_type::vamp, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, header, part_type, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -748,7 +748,7 @@ static std::unique_ptr<ui_element>
 create_voice_amp_grid(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 3);
-  grid->add_cell(create_amp_group(controller, part_type::vamp), 0, 0, 1, 1);
+  grid->add_cell(create_amp_group(controller, part_type::vamp, "Voice Amp"), 0, 0, 1, 1);
   grid->add_cell(create_voice_group(controller), 0, 1, 1, 2);
   return grid;
 }
@@ -860,10 +860,19 @@ create_voice_grid(plugin_controller* controller)
   return result;
 }
 
+static std::unique_ptr<ui_element>
+create_synth_grid(plugin_controller* controller)
+{
+  auto result = create_grid_ui(controller, 8, 17);
+  result->add_cell(create_amp_group(controller, part_type::gamp, "Master Amp"), 0, 0, 1, 2);
+  result->add_cell(create_voice_grid(controller), 1, 0, 7, 17);
+  return result;
+}
+
 std::unique_ptr<root_element>
 create_synth_ui(plugin_controller* controller)
 {
-  auto result = create_root_ui(controller, create_voice_grid(controller), controller->editor_current_width(), juce::Colours::black);
+  auto result = create_root_ui(controller, create_synth_grid(controller), controller->editor_current_width(), juce::Colours::black);
   result->set_lnf(create_root_lnf(controller));
   return result;
 }
