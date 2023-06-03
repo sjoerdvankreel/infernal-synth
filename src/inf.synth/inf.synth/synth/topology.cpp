@@ -121,7 +121,7 @@ synth_topology::init_fx_clear_patch(param_value* state) const
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX 1");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "Amp");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "M.Out");
 }
 
 void
@@ -132,9 +132,9 @@ synth_topology::init_instrument_clear_patch(param_value* state) const
   // Bare minimum to have sound.
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc 1");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "Amp");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Voice");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "Amp");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "V.Out");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "V.Out");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "M.Out");
 }
 
 void 
