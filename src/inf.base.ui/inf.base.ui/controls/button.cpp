@@ -11,7 +11,7 @@ inf_button::paint(juce::Graphics& g)
 {
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 2.0f;
-  auto const bounds = getBounds().toFloat().expanded(-button_margin);
+  auto const bounds = getLocalBounds().toFloat().expanded(-button_margin);
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
 
   std::int32_t background_low = inf_look_and_feel::colors::button_background_low;
