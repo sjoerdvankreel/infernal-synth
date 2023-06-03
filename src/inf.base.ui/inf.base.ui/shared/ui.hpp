@@ -9,6 +9,7 @@
 #include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base.ui/controls/selector_bar.hpp>
 #include <inf.base.ui/listeners/graph_listener.hpp>
+#include <inf.base.ui/listeners/button_listener.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/selector_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
@@ -69,6 +70,26 @@ public:
 inline std::unique_ptr<label_element>
 create_label_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification)
 { return std::make_unique<label_element>(controller, text, justification); }
+
+class button_element :
+public ui_element
+{
+  std::string const _text;
+  std::function<void()> const _callback;
+  juce::Justification const _justification;
+  std::unique_ptr<button_listener> _listener = {};
+protected: 
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
+public:
+  void layout() override {}
+  button_element(inf::base::plugin_controller* controller, std::string const& text, 
+    juce::Justification justification, std::function<void()> const& callback):
+  ui_element(controller), _text(text), _callback(callback), _justification(justification) {}
+};
+
+inline std::unique_ptr<button_element>
+create_button_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification, std::function<void()> const& callback)
+{ return std::make_unique<button_element>(controller, text, justification, callback); }
 
 class container_element:
 public ui_element

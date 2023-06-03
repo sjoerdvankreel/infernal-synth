@@ -877,6 +877,7 @@ static std::unique_ptr<ui_element>
 create_synth_preset_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 2, 2);
+  grid->add_cell(create_button_ui(controller, "Clear patch", Justification::centred, [controller]() { controller->clear_patch(); }), 0, 0);
   return create_part_group_container_ui(controller, std::move(grid));
 }
 

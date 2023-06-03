@@ -38,6 +38,9 @@ inline float const param_label_vpad = 4.0f;
 inline float const param_label_font_min_height = 10.0f;
 inline float const param_label_font_max_height = 14.0f;
 
+inline float const button_label_font_min_height = 11.0f;
+inline float const button_label_font_max_height = 15.0f;
+
 inline float const group_label_vpad = 7.0f;
 inline float const group_label_font_min_height = 11.0f;
 inline float const group_label_font_max_height = 15.0f;

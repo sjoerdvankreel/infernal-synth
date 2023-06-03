@@ -52,6 +52,7 @@ public:
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
 
+  void clear_patch();
   void clear_part(part_id id);
   void copy_or_swap_part(part_id source, std::int32_t target, bool swap);
 

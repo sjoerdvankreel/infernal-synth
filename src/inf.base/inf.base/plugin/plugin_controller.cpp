@@ -1,4 +1,5 @@
 #include <inf.base/plugin/plugin_controller.hpp>
+#include <vector>
 
 namespace inf::base {
 
@@ -31,6 +32,14 @@ plugin_controller::controller_param_changed(std::int32_t tag, param_value base_v
   }
   for(auto it = _any_param_listeners.begin(); it != _any_param_listeners.end(); ++it)
     (*it)->any_controller_param_changed(index);
+}
+
+void 
+plugin_controller::clear_patch()
+{
+  std::vector<param_value> new_values(topology()->input_param_count, param_value());
+  topology()->init_clear_patch(new_values.data());
+  load_component_state(new_values.data(), true);
 }
 
 void 
