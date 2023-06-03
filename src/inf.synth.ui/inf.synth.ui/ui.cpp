@@ -58,9 +58,9 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::selector_label_background_low, Colour(0xFF444444));
   result->setColour(inf_look_and_feel::colors::selector_label_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::tooltip_text, Colour(0xFFA7BECB));
-  result->setColour(inf_look_and_feel::colors::tooltip_outline_low, Colour(0xFF14525D));
-  result->setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF2EB8D1));
-  result->setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::tooltip_outline_low, Colour(0xFF333333));
+  result->setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
   result->setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0FD9A4D));
