@@ -955,9 +955,9 @@ create_synth_output_cpu_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_output_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_synth_output_voice_group(controller)), 0, 0, 1, 3);
-  grid->add_cell(create_part_group_container_ui(controller, create_synth_output_cpu_group(controller)), 0, 3, 1, 4);
+  auto grid = create_grid_ui(controller, 1, 5);
+  grid->add_cell(create_part_group_container_ui(controller, create_synth_output_voice_group(controller)), 0, 0, 1, 2);
+  grid->add_cell(create_part_group_container_ui(controller, create_synth_output_cpu_group(controller)), 0, 2, 1, 3);
   return create_part_single_ui(controller, "Monitor", -1, true, std::move(grid));
 }
 
