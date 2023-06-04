@@ -927,17 +927,6 @@ create_master_in_group(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
-create_synth_patch_group(plugin_controller* controller)
-{
-  auto grid = create_grid_ui(controller, 3, 2);
-  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { if(confirm(controller, "Init patch")) controller->init_patch(); }), 0, 0);
-  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller]() { if(confirm(controller, "Clear patch")) controller->clear_patch(); }), 0, 1);
-  grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 0);
-  grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
-  return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
-}
-
-static std::unique_ptr<ui_element>
 create_synth_output_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 9);
@@ -953,7 +942,25 @@ create_synth_output_group(plugin_controller* controller)
   grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::value, Justification::left), 1, 7, 1, 2);
   grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::label, Justification::right), 2, 4, 1, 2);
   grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::value, Justification::left), 2, 7, 1, 2);
-  return create_part_single_ui(controller, "Output", part_type::output, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Output", -1, true, create_part_group_container_ui(controller, std::move(grid)));
+}
+
+static std::unique_ptr<ui_element>
+create_synth_edit_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 1, 1);
+  return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(grid)));
+}
+
+static std::unique_ptr<ui_element>
+create_synth_patch_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 2, 2);
+  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { if (confirm(controller, "Init patch")) controller->init_patch(); }), 0, 0);
+  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller]() { if (confirm(controller, "Clear patch")) controller->clear_patch(); }), 0, 1);
+  grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 0);
+  grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
+  return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -963,6 +970,7 @@ create_synth_grid(plugin_controller* controller)
   result->add_cell(create_amp_group(controller, part_type::gamp, "Master Out"), 0, 0, 1, 2);
   result->add_cell(create_master_in_group(controller), 0, 2, 1, 6);
   result->add_cell(create_synth_output_group(controller), 0, 8, 1, 3);
+  result->add_cell(create_synth_edit_group(controller), 0, 11, 1, 3);
   result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
   result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;
