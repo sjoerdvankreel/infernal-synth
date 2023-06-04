@@ -196,19 +196,18 @@ confirm(plugin_controller* controller, std::string const& header)
   std::int32_t const height = 90;
   auto lnf = create_root_lnf(controller);
   auto grid = create_grid_ui(controller, 3, 2);
+  AlertWindow window("", "", MessageBoxIconType::NoIcon);
   grid->add_cell(create_label_ui(controller, header, Justification::left, alertbox_font_header_height, inf_look_and_feel::colors::alertbox_text), 0, 0, 1, 2);
   grid->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, alertbox_font_height, inf_look_and_feel::colors::alertbox_text), 1, 0, 1, 2);
-  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 2, 0);
-  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 2, 1);
+  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [&window](){ window.exitModalState(1); }), 2, 0);
+  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [&window]() { window.exitModalState(0); }), 2, 1);
   grid->build(lnf.get());
   grid->component()->setBounds(0, 0, width, height);
   grid->layout();
-  AlertWindow window("", "", MessageBoxIconType::NoIcon);
   window.addCustomComponent(grid->component());
   window.setSize(width + 2 * margin, height + 2 * margin);
   grid->component()->setBounds(margin, margin, width, height);
-  window.runModalLoop();
-  return false;
+  return window.runModalLoop() != 0;
 }
 
 static std::unique_ptr<ui_element>
