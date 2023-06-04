@@ -191,6 +191,9 @@ create_audio_lnf(plugin_controller* controller)
 static bool
 confirm(plugin_controller* controller, std::string const& header)
 {
+  std::int32_t const margin = 5;
+  std::int32_t const width = 180;
+  std::int32_t const height = 90;
   auto lnf = create_root_lnf(controller);
   auto grid = create_grid_ui(controller, 3, 2);
   grid->add_cell(create_label_ui(controller, header, Justification::left, alertbox_font_header_height, inf_look_and_feel::colors::alertbox_text), 0, 0, 1, 2);
@@ -198,10 +201,12 @@ confirm(plugin_controller* controller, std::string const& header)
   grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 2, 0);
   grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 2, 1);
   grid->build(lnf.get());
-  grid->component()->setBounds(0, 0, 180, 90);
+  grid->component()->setBounds(0, 0, width, height);
   grid->layout();
   AlertWindow window("", "", MessageBoxIconType::NoIcon);
   window.addCustomComponent(grid->component());
+  window.setSize(width + 2 * margin, height + 2 * margin);
+  grid->component()->setBounds(margin, margin, width, height);
   window.runModalLoop();
   return false;
 }
