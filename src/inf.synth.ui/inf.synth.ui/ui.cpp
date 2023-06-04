@@ -4,6 +4,7 @@
 #include <inf.synth/voice/topology.hpp>
 #include <inf.synth/synth/topology.hpp>
 #include <inf.synth/effect/topology.hpp>
+#include <inf.synth/output/topology.hpp>
 #include <inf.synth/cv_bank/topology.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/oscillator/topology.hpp>
@@ -937,10 +938,16 @@ create_synth_patch_group(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
-create_synth_edit_group(plugin_controller* controller)
+create_synth_output_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 1);
-  return create_part_group_container_ui(controller, std::move(grid));
+  auto grid = create_grid_ui(controller, 3, 4);
+  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::clip, edit_type::toggle, tooltip_type::off), 0, 0);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::clip, label_type::label, Justification::left), 0, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::drain, edit_type::toggle, tooltip_type::off), 1, 0);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::drain, label_type::label, Justification::left), 1, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::value, Justification::centred), 2, 0);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::label, Justification::left), 2, 1);
+  return create_part_single_ui(controller, "Output", part_type::output, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -949,7 +956,7 @@ create_synth_grid(plugin_controller* controller)
   auto result = create_grid_ui(controller, 10, 17); 
   result->add_cell(create_amp_group(controller, part_type::gamp, "Master Out"), 0, 0, 1, 2);
   result->add_cell(create_master_in_group(controller), 0, 2, 1, 6);
-  result->add_cell(create_synth_edit_group(controller), 0, 8, 1, 6);
+  result->add_cell(create_synth_output_group(controller), 0, 8, 1, 6);
   result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
   result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;

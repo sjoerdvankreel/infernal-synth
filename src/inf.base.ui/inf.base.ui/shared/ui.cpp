@@ -283,6 +283,8 @@ param_edit_element::build_core(juce::LookAndFeel& lnf)
   auto const& desc = *controller()->topology()->params[index].descriptor;
   if (_tooltip_type == tooltip_type::label)
     client->setTooltip(desc.data.static_name.detail);
+  if(controller()->topology()->static_parts[_part_id.type].kind == part_kind::output)
+    result->setEnabled(false);
   else if(_tooltip_type == tooltip_type::value)
   {
     _tooltip_listener.reset(new tooltip_listener(controller(), client, index));

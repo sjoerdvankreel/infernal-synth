@@ -77,3 +77,4 @@
 - output section
 - params dont flush after clear/init
 - paint faster
+- make a factory preset parameter and a edit-voice/edit-global parameter and restore ui-only parameters
