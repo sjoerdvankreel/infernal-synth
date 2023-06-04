@@ -79,7 +79,6 @@ ui_element::build(LookAndFeel* lnf)
   LookAndFeel* this_lnf = get_lnf() != nullptr? get_lnf(): lnf;
   _component.reset(build_core(*this_lnf));
   _component->setLookAndFeel(this_lnf);
-  _component->setEnabled(true);
   _component->setVisible(_initially_visible);
   if (_relevant_if_selector != nullptr)
   {
