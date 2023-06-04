@@ -192,13 +192,13 @@ static bool
 confirm(plugin_controller* controller, std::string const& header)
 {
   auto lnf = create_root_lnf(controller);
-  auto grid = create_grid_ui(controller, 3, 3);
-  grid->add_cell(create_label_ui(controller, header, Justification::left, alertbox_font_header_height, inf_look_and_feel::colors::alertbox_text), 0, 0, 1, 3);
-  grid->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, alertbox_font_height, inf_look_and_feel::colors::alertbox_text), 1, 0, 1, 3);
-  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 2, 1);
-  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 2, 2);
+  auto grid = create_grid_ui(controller, 3, 2);
+  grid->add_cell(create_label_ui(controller, header, Justification::left, alertbox_font_header_height, inf_look_and_feel::colors::alertbox_text), 0, 0, 1, 2);
+  grid->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, alertbox_font_height, inf_look_and_feel::colors::alertbox_text), 1, 0, 1, 2);
+  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 2, 0);
+  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 2, 1);
   grid->build(lnf.get());
-  grid->component()->setBounds(0, 0, 120, 60);
+  grid->component()->setBounds(0, 0, 180, 90);
   grid->layout();
   AlertWindow window("", "", MessageBoxIconType::NoIcon);
   window.addCustomComponent(grid->component());
