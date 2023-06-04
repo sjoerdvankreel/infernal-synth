@@ -389,12 +389,12 @@ static std::vector<list_item> const active_glfo_items = list_items({ "{88E92673-
 static param_descriptor const 
 active_params[active_param::count] =     
 {
-  { "{0EEADBD0-D37B-4B53-A2D5-F22E2154F2D8}", { { "Osc", "Oscillator" }, "", param_kind::block, param_type::list, { &active_vosc_items, 0 } } },
-  { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "V.FX", "Voice FX" }, "", param_kind::block, param_type::list, { &active_veffect_items, 0 } } },
-  { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "G.FX", "Global FX" }, "", param_kind::block, param_type::list, { &active_geffect_items, 0 } } },
-  { "{556BF692-55B0-48B4-BD6A-E2CEFA17B012}", { { "Env", "Envelope" }, "", param_kind::block, param_type::list, { &active_venv_items, 0 } } },
-  { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "V.LFO", "Voice LFO" }, "", param_kind::block, param_type::list, { &active_vlfo_items, 0 } } },
-  { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "G.LFO", "Global LFO" }, "", param_kind::block, param_type::list, { &active_glfo_items, 0 } } }
+  { "{0EEADBD0-D37B-4B53-A2D5-F22E2154F2D8}", { { "Osc", "Oscillator" }, "", param_kind::ui, param_type::list, { &active_vosc_items, 0 } } },
+  { "{D5DD0DFC-AC9D-42E6-9D2B-924786382825}", { { "V.FX", "Voice FX" }, "", param_kind::ui, param_type::list, { &active_veffect_items, 0 } } },
+  { "{379A6E9F-C7DA-40CE-950B-C51D202F0060}", { { "G.FX", "Global FX" }, "", param_kind::ui, param_type::list, { &active_geffect_items, 0 } } },
+  { "{556BF692-55B0-48B4-BD6A-E2CEFA17B012}", { { "Env", "Envelope" }, "", param_kind::ui, param_type::list, { &active_venv_items, 0 } } },
+  { "{EEA97414-8C1C-4378-A68B-409692FFA920}", { { "V.LFO", "Voice LFO" }, "", param_kind::ui, param_type::list, { &active_vlfo_items, 0 } } },
+  { "{1618ADF6-BE07-44F2-8839-076028834199}", { { "G.LFO", "Global LFO" }, "", param_kind::ui, param_type::list, { &active_glfo_items, 0 } } }
 };
 
 // ---- global topo ----

@@ -48,18 +48,14 @@
 - scan vst_controller/editor for unneeded stuff
 - reduce the use of background images
 - reduce controller.uidesc to image names, image offsets and color scheme
-- move config to synth_editor ?
 - disable unison for noise?
 - rewrite the manual
 - check graph opacity
-- shorter long descs
 - graph bg image
-- fix the context menu
 - skip entire voice section for dsp in fx mode
 - credit oddy
 - enable avx in vbox
 - drop the conversion code?
-- rename versioned->normal, generic->develop
 - test tracktion host
 - fix names in the default factory preset
 - routing indicators
@@ -67,14 +63,8 @@
 - check the init/default patch
 - check all breaking changes
 - conversion code for breaking changes
-- dont expose all parameters
 - fix slow cv plot repaint
-- theme selector
-- last tweaked
-- output section
 - params dont flush after clear/init
 - paint faster
-- make a factory preset parameter and a edit-voice/edit-global parameter and restore ui-only parameters
-- load factory preset
-- exact editing - put active knob value in 1 single place
-- oscilloscope as filler ?
+- make a factory preset parameter and a edit-voice/edit-global parameter
+- theme selector + exact editing - put active knob value in 1 single place
