@@ -940,13 +940,19 @@ create_synth_patch_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_output_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 3, 4);
-  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::clip, edit_type::toggle, tooltip_type::off), 0, 0);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::clip, label_type::label, Justification::left), 0, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::drain, edit_type::toggle, tooltip_type::off), 1, 0);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::drain, label_type::label, Justification::left), 1, 1);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::value, Justification::centred), 2, 0);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::label, Justification::left), 2, 1);
+  auto grid = create_grid_ui(controller, 3, 7);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::clip, label_type::label, Justification::right), 0, 0, 1, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::clip, edit_type::toggle, tooltip_type::off), 0, 2, 1, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::drain, label_type::label, Justification::right), 1, 0, 1, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::drain, edit_type::toggle, tooltip_type::off), 1, 2, 1, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::label, Justification::right), 2, 0, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::value, Justification::centred), 2, 2, 1, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::label, Justification::right), 0, 3, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::value, Justification::left), 0, 5, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::label, Justification::right), 1, 3, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::value, Justification::left), 1, 5, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::label, Justification::right), 2, 3, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::value, Justification::left), 2, 5, 1, 2);
   return create_part_single_ui(controller, "Output", part_type::output, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
@@ -956,7 +962,7 @@ create_synth_grid(plugin_controller* controller)
   auto result = create_grid_ui(controller, 10, 17); 
   result->add_cell(create_amp_group(controller, part_type::gamp, "Master Out"), 0, 0, 1, 2);
   result->add_cell(create_master_in_group(controller), 0, 2, 1, 6);
-  result->add_cell(create_synth_output_group(controller), 0, 8, 1, 6);
+  result->add_cell(create_synth_output_group(controller), 0, 8, 1, 3);
   result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
   result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   return result;
