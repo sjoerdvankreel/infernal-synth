@@ -927,22 +927,38 @@ create_master_in_group(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_synth_output_voice_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 3, 3);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::clip, label_type::label, Justification::right), 0, 0, 1, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::clip, edit_type::toggle, tooltip_type::off), 0, 2, 1, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::drain, label_type::label, Justification::right), 1, 0, 1, 2);
+  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::drain, edit_type::toggle, tooltip_type::off), 1, 2, 1, 1);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::label, Justification::right), 2, 0, 1, 2);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::value, Justification::centred), 2, 2, 1, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Output", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_synth_output_cpu_group(plugin_controller* controller)
+{
+  auto grid = create_grid_ui(controller, 3, 11);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::label, Justification::right), 0, 0, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::value, Justification::left), 0, 6, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::label, Justification::right), 1, 0, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::value, Justification::left), 1, 6, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::label, Justification::right), 2, 0, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::value, Justification::left), 2, 6, 1, 5);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "CPU", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_synth_output_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 3, 9);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::clip, label_type::label, Justification::right), 0, 0, 1, 2);
-  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::clip, edit_type::toggle, tooltip_type::off), 0, 2, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::drain, label_type::label, Justification::right), 1, 0, 1, 2);
-  grid->add_cell(create_param_edit_ui(controller, part_type::output, 0, output_param::drain, edit_type::toggle, tooltip_type::off), 1, 2, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::label, Justification::right), 2, 0, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::voices, label_type::value, Justification::centred), 2, 2, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::label, Justification::right), 0, 4, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::value, Justification::left), 0, 7, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::label, Justification::right), 1, 4, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::value, Justification::left), 1, 7, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::label, Justification::right), 2, 4, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::value, Justification::left), 2, 7, 1, 2);
-  return create_part_single_ui(controller, "Output", -1, true, create_part_group_container_ui(controller, std::move(grid)));
+  auto grid = create_grid_ui(controller, 1, 7);
+  grid->add_cell(create_part_group_container_ui(controller, create_synth_output_voice_group(controller)), 0, 0, 1, 3);
+  grid->add_cell(create_part_group_container_ui(controller, create_synth_output_cpu_group(controller)), 0, 3, 1, 4);
+  return create_part_single_ui(controller, "Monitor", -1, true, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
