@@ -62,6 +62,11 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::alertbox_text, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::alertbox_outline_low, Colour(0xFF333333));
+  result->setColour(inf_look_and_feel::colors::alertbox_outline_high, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::alertbox_background_low, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::alertbox_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
   result->setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0FD9A4D));
   result->setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFFFD9A4D));
@@ -180,6 +185,16 @@ create_audio_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::part_group_container_outline_high, Colour(0xFFAE3925));
   result->setColour(inf_look_and_feel::colors::tab_button_highlight_background_low, Colour(0xFF3E150D));
   result->setColour(inf_look_and_feel::colors::tab_button_highlight_background_high, Colour(0xFF5D1F14));
+  return result;
+}
+
+static bool
+confirm(plugin_controller* controller, std::string const& header)
+{
+  auto lnf = create_root_lnf(controller);
+  LookAndFeel::setDefaultLookAndFeel(lnf.get());
+  bool result = AlertWindow::showOkCancelBox(MessageBoxIconType::QuestionIcon, header, "Are you sure?");
+  LookAndFeel::setDefaultLookAndFeel(nullptr);
   return result;
 }
 
@@ -900,8 +915,8 @@ static std::unique_ptr<ui_element>
 create_synth_patch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 2);
-  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { controller->init_patch(); }), 0, 0);
-  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller]() { controller->clear_patch(); }), 0, 1);
+  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { if(confirm(controller, "Init patch")) controller->init_patch(); }), 0, 0);
+  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller]() { if(confirm(controller, "Clear patch")) controller->clear_patch(); }), 0, 1);
   grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 0);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
   return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));

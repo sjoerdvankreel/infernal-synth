@@ -34,6 +34,12 @@ public:
     tooltip_background_low,
     tooltip_background_high,
 
+    alertbox_text,
+    alertbox_outline_low,
+    alertbox_outline_high,
+    alertbox_background_low,
+    alertbox_background_high,
+
     selector_label_text,
     selector_label_outline_low,
     selector_label_outline_high,
@@ -145,14 +151,12 @@ public:
   void drawLabel(
     juce::Graphics& g, juce::Label& label) override;
 
-  // Custom tabs.
+  // Tabs.
   int getTabButtonBestWidth(
     juce::TabBarButton& button, int tab_depth) override;
-
   void drawTabButton(
     juce::TabBarButton& tbb, juce::Graphics& g, 
     bool is_mouse_over, bool is_mouse_down) override;
-
   void drawTabAreaBehindFrontButton(
     juce::TabbedButtonBar& bar, juce::Graphics& g, 
     const int w, const int h) override {}
@@ -162,23 +166,19 @@ public:
     juce::Graphics& g, juce::String const& text, 
     int w0, int h0) override;
 
-  // Custom slider.
+  // Sliders/knobs.
   void drawLinearSlider(
     juce::Graphics& g, int x0, int y0, int w0, int h0,
     float pos0, float min0, float max0,
     juce::Slider::SliderStyle style, juce::Slider& s) override;
-
-  // Custom knob.
   void drawRotarySlider(
     juce::Graphics& g, int x0, int y0, int w0, int h0,
     float pos, float start, float end, juce::Slider& s) override;
-
-  // Custom on/off switch.
   void drawToggleButton(
     juce::Graphics& g, juce::ToggleButton& b,
     bool draw_as_highlighted, bool draw_as_down) override;
 
-  // Custom dropdown.
+  // Dropdown.
   void positionComboBoxText(
     juce::ComboBox& cb, juce::Label& l) override;
   juce::PopupMenu::Options getOptionsForComboBoxPopupMenu(
@@ -193,10 +193,10 @@ public:
     bool is_separator, bool is_active, bool is_highlighted, bool is_ticked, bool has_sub_menu,
     juce::String const& text, juce::String const& shortcut_key_text,
     juce::Drawable const* icon, juce::Colour const*) override;
-
   void getIdealPopupMenuItemSize(
     juce::String const& text, bool is_separator,
     int standard_menu_item_height, int& ideal_width, int& ideal_height) override;
+
   juce::Font getPopupMenuFont() override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
   juce::Font getComboBoxFont(juce::ComboBox& box) override
