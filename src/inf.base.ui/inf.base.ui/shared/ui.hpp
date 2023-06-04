@@ -58,18 +58,20 @@ class label_element :
 public ui_element
 {
   std::string const _text;
+  float const _font_height;
+  std::int32_t const _color;
   juce::Justification const _justification;
 protected:
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
-  label_element(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification):
-  ui_element(controller), _text(text), _justification(justification) {}
+  label_element(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification, float font_height, std::int32_t color):
+  ui_element(controller), _text(text), _font_height(font_height), _color(color), _justification(justification) {}
 };
 
 inline std::unique_ptr<label_element>
-create_label_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification)
-{ return std::make_unique<label_element>(controller, text, justification); }
+create_label_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification, float font_height, std::int32_t color)
+{ return std::make_unique<label_element>(controller, text, justification, font_height, color); }
 
 class button_element :
 public ui_element

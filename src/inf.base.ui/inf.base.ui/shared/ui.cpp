@@ -100,11 +100,10 @@ label_element::build_core(juce::LookAndFeel& lnf)
 {
   Label* result = new inf_label(true);
   result->setBorderSize(BorderSize<int>());
-  float font_height = get_param_label_font_height(controller());
   result->setJustificationType(_justification);
-  result->setFont(juce::Font(font_height, juce::Font::bold));
+  result->setFont(juce::Font(_font_height, juce::Font::bold));
   result->setText(_text, dontSendNotification);
-  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::param_label));
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(_color));
   return result;
 }
 

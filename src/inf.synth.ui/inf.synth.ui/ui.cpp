@@ -192,17 +192,17 @@ static bool
 confirm(plugin_controller* controller, std::string const& header)
 {
   auto lnf = create_root_lnf(controller);
-  LookAndFeel::setDefaultLookAndFeel(lnf.get());
-  auto grid = create_grid_ui(controller, 1, 2);
-  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 0, 0);
-  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 0, 1);
-  grid->build(nullptr);
-  grid->component()->setBounds(0, 0, 100, 30);
+  auto grid = create_grid_ui(controller, 3, 3);
+  grid->add_cell(create_label_ui(controller, header, Justification::left, alertbox_font_header_height, inf_look_and_feel::colors::alertbox_text), 0, 0, 1, 3);
+  grid->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, alertbox_font_height, inf_look_and_feel::colors::alertbox_text), 1, 0, 1, 3);
+  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 2, 1);
+  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 2, 2);
+  grid->build(lnf.get());
+  grid->component()->setBounds(0, 0, 120, 60);
   grid->layout();
-  AlertWindow window(header, "Are you sure?", MessageBoxIconType::NoIcon);
+  AlertWindow window("", "", MessageBoxIconType::NoIcon);
   window.addCustomComponent(grid->component());
   window.runModalLoop();
-  LookAndFeel::setDefaultLookAndFeel(nullptr);
   return false;
 }
 
@@ -823,11 +823,12 @@ create_cv_graph_lfo_grid(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_audio_part(plugin_controller* controller, std::int32_t part_type)
 {
+  auto font_height = get_param_label_font_height(controller);
   auto outer_grid = create_grid_ui(controller, audio_bank_route_count * 2 + 1, 1);
   auto header_grid = create_grid_ui(controller, 1, 32);
-  header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred), 0, 1, 1, 10);
-  header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred), 0, 11, 1, 10);
-  header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred), 0, 21, 1, 10);
+  header_grid->add_cell(create_label_ui(controller, "In/Out", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 1, 1, 10);
+  header_grid->add_cell(create_label_ui(controller, "Gain", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 11, 1, 10);
+  header_grid->add_cell(create_label_ui(controller, "Bal", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 21, 1, 10);
   outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0, 1, 1);
   for (std::int32_t i = 0; i < audio_bank_route_count; i++)
   {
@@ -847,10 +848,11 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
 static std::unique_ptr<ui_element>
 create_cv_part(plugin_controller* controller, std::int32_t part_type)
 {
+  auto font_height = get_param_label_font_height(controller);
   auto outer_grid = create_grid_ui(controller, cv_bank_route_count * 2 + 1, 1);
   auto header_grid = create_grid_ui(controller, 1, 42);
-  header_grid->add_cell(create_label_ui(controller, "In/Op/Amt", Justification::centred), 0, 1, 1, 20);
-  header_grid->add_cell(create_label_ui(controller, "Out/Scl/Offset", Justification::centred), 0, 21, 1, 20);
+  header_grid->add_cell(create_label_ui(controller, "In/Op/Amt", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 1, 1, 20);
+  header_grid->add_cell(create_label_ui(controller, "Out/Scl/Offset", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 21, 1, 20);
   outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0);
   for (std::int32_t i = 0; i < cv_bank_route_count; i++)
   {
