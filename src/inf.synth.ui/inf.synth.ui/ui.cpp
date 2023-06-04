@@ -193,9 +193,17 @@ confirm(plugin_controller* controller, std::string const& header)
 {
   auto lnf = create_root_lnf(controller);
   LookAndFeel::setDefaultLookAndFeel(lnf.get());
-  bool result = AlertWindow::showOkCancelBox(MessageBoxIconType::NoIcon, header, "Are you sure?");
+  auto grid = create_grid_ui(controller, 1, 2);
+  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [](){}), 0, 0);
+  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [](){}), 0, 1);
+  grid->build(nullptr);
+  grid->component()->setBounds(0, 0, 100, 30);
+  grid->layout();
+  AlertWindow window(header, "Are you sure?", MessageBoxIconType::NoIcon);
+  window.addCustomComponent(grid->component());
+  window.runModalLoop();
   LookAndFeel::setDefaultLookAndFeel(nullptr);
-  return result;
+  return false;
 }
 
 static std::unique_ptr<ui_element>

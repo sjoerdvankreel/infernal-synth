@@ -122,9 +122,9 @@ inf_look_and_feel::drawAlertBox(
     colors::alertbox_background_low, colors::alertbox_background_high, 0.0f, 0.25f);
   stroke_gradient_rounded_rectangle(g, dummy, bounds,
     colors::alertbox_outline_low, colors::alertbox_outline_high, 0.0f, 0.25f, 2.0f);
-  g.setColour(findColour(colors::alertbox_text));
-  juce::Rectangle<float> alert_bounds(bounds.getX(), 30.0f, bounds.getWidth(), bounds.getHeight() - getAlertWindowButtonHeight() - 20.0f);
-  l.draw(g, alert_bounds);
+  g.setColour(w.findColour(colors::alertbox_text));
+  g.setFont(juce::Font(alertbox_font_header_height, juce::Font::bold));
+  g.drawText(w.getTitle(), text_area, Justification::left, false);
 }
 
 int 
