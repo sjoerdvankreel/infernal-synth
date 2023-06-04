@@ -193,7 +193,7 @@ confirm(plugin_controller* controller, std::string const& header)
 {
   auto lnf = create_root_lnf(controller);
   LookAndFeel::setDefaultLookAndFeel(lnf.get());
-  bool result = AlertWindow::showOkCancelBox(MessageBoxIconType::QuestionIcon, header, "Are you sure?");
+  bool result = AlertWindow::showOkCancelBox(MessageBoxIconType::NoIcon, header, "Are you sure?");
   LookAndFeel::setDefaultLookAndFeel(nullptr);
   return result;
 }

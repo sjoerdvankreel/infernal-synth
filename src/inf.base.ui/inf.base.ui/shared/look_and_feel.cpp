@@ -110,6 +110,23 @@ inf_look_and_feel::drawTooltip(
   g.drawText(text, 0, 0, w0, h0, Justification::centred, false);
 } 
 
+void 
+inf_look_and_feel::drawAlertBox(
+  juce::Graphics& g, juce::AlertWindow& w,
+  juce::Rectangle<int> const& text_area, juce::TextLayout& l)
+{
+  juce::Component dummy;
+  dummy.setLookAndFeel(this);
+  auto bounds = w.getLocalBounds().toFloat();
+  fill_gradient_rounded_rectangle(g, dummy, bounds,
+    colors::alertbox_background_low, colors::alertbox_background_high, 0.0f, 0.25f);
+  stroke_gradient_rounded_rectangle(g, dummy, bounds,
+    colors::alertbox_outline_low, colors::alertbox_outline_high, 0.0f, 0.25f, 2.0f);
+  g.setColour(findColour(colors::alertbox_text));
+  juce::Rectangle<float> alert_bounds(bounds.getX(), 30.0f, bounds.getWidth(), bounds.getHeight() - getAlertWindowButtonHeight() - 20.0f);
+  l.draw(g, alert_bounds);
+}
+
 int 
 inf_look_and_feel::getTabButtonBestWidth(
   TabBarButton& button, int tab_depth)

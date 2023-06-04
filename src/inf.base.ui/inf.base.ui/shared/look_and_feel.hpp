@@ -165,6 +165,9 @@ public:
   void drawTooltip(
     juce::Graphics& g, juce::String const& text, 
     int w0, int h0) override;
+  void drawAlertBox(
+    juce::Graphics& g, juce::AlertWindow& w, 
+    juce::Rectangle<int> const& text_area, juce::TextLayout& l) override;
 
   // Sliders/knobs.
   void drawLinearSlider(
