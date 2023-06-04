@@ -923,7 +923,7 @@ create_master_in_group(plugin_controller* controller)
   auto grid = create_grid_ui(controller, 1, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_master_unipolar_group(controller)), 0, 0);
   grid->add_cell(create_part_group_container_ui(controller, create_master_bipolar_group(controller)), 0, 1);
-  return create_part_single_ui(controller, "Master In", part_type::master, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Master In", part_type::master, true, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
