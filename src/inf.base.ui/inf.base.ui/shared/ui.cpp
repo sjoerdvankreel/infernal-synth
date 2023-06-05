@@ -27,6 +27,15 @@ public dialog_box_state
   inf::base::plugin_controller* controller;
 };
 
+struct file_box_state
+{
+  std::unique_ptr<inf_look_and_feel> lnf;
+  inf::base::plugin_controller* controller;
+  std::unique_ptr<FileChooserDialogBox> box;
+  std::unique_ptr<WildcardFileFilter> filter;
+  std::unique_ptr<FileBrowserComponent> browser;
+};
+
 struct dropdown_tree
 {
   std::string name;
@@ -606,17 +615,6 @@ create_part_selector_ui(
 }
 
 void
-load_preset_file(
-  inf::base::plugin_controller* controller,
-  std::unique_ptr<inf_look_and_feel>&& lnf)
-{
-  FileChooser chooser("Load preset", juce::File(), std::string("*.") + controller->preset_file_extension(), false);
-  if(!chooser.browseForFileToOpen()) return;
-  if(controller->load_preset(chooser.getResult().getFullPathName().toStdString(), false)) return;
-  show_ok_box(controller, "Could not load preset file.", std::move(lnf));
-}
-
-void
 show_ok_box(
   inf::base::plugin_controller* controller,
   std::string const& header, std::unique_ptr<inf_look_and_feel>&& lnf)
@@ -654,6 +652,35 @@ show_confirm_box(
     state->window->exitModalState();
     delete state; }), 2, 1);
   run_dialog_box(state, 180, 90);
+}
+
+void
+load_preset_file(
+  inf::base::plugin_controller* controller,
+  lnf_factory lnf_factory)
+{  
+  auto state = new file_box_state;
+  auto filter_match = std::string("*.") + controller->preset_file_extension();
+  state->controller = controller;
+  state->lnf = lnf_factory(controller);
+  state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
+  state->browser = std::make_unique<FileBrowserComponent>(FileBrowserComponent::canSelectFiles, File(), state->filter.get(), nullptr);
+  state->box = std::make_unique<FileChooserDialogBox>("Load preset", String(), *state->browser, false, Colours::black);
+  state->box->setLookAndFeel(state->lnf.get());
+  state->browser->setLookAndFeel(state->lnf.get());
+  auto selected = [state, lnf_factory](int result)
+  {
+    if (result != 0)
+    {
+      auto selected = state->browser->getSelectedFile(0);
+      if (!state->controller->load_preset(selected.getFullPathName().toStdString(), false))
+        show_ok_box(state->controller, "Could not load preset file.", lnf_factory(state->controller));        
+    }
+    state->box->exitModalState();
+    delete state;
+  };
+  state->box->centreWithDefaultSize(nullptr);
+  state->box->enterModalState(true, ModalCallbackFunction::create(selected), false);
 }
 
 } // namespace inf::base::ui
