@@ -71,3 +71,4 @@
 - save last used folder path
 - drop "made with juce"
 - prettify the file choosers
+- drop juce's vst3 sdk

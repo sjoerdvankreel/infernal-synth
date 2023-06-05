@@ -57,16 +57,23 @@ run_dialog_box(dialog_box_state* state, std::int32_t w, std::int32_t h)
 
 static file_box_state*
 create_preset_file_box_state(
-  inf::base::plugin_controller* controller, lnf_factory lnf_factory, std::string const& title)
+  inf::base::plugin_controller* controller, lnf_factory lnf_factory, std::string const& title, int flags)
 {
   auto state = new file_box_state;
   auto filter_match = std::string("*.") + controller->preset_file_extension();
+  flags |= FileBrowserComponent::canSelectFiles;
   state->controller = controller;
   state->lnf = lnf_factory(controller);
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
-  state->browser = std::make_unique<FileBrowserComponent>(FileBrowserComponent::canSelectFiles, File(), state->filter.get(), nullptr);
+  state->browser = std::make_unique<FileBrowserComponent>(flags, File(), state->filter.get(), nullptr);
   state->box = std::make_unique<FileChooserDialogBox>(title, String(), *state->browser, false, Colours::black);
+  state->box->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, inf_look_and_feel::colors::file_box_title);
   state->box->setLookAndFeel(state->lnf.get());
+  state->browser->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_text));
+  state->browser->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_background));
+  state->browser->setColour(FileBrowserComponent::ColourIds::currentPathBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_path_text));
+  state->browser->setColour(FileBrowserComponent::ColourIds::currentPathBoxArrowColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_path_arrow));
+  state->browser->setColour(FileBrowserComponent::ColourIds::currentPathBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_path_background));
   state->browser->setLookAndFeel(state->lnf.get());
   return state;
 }
@@ -650,7 +657,7 @@ void
 save_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {
-  auto state = create_preset_file_box_state(controller, lnf_factory, "Save preset");
+  auto state = create_preset_file_box_state(controller, lnf_factory, "Save preset", FileBrowserComponent::saveMode);
   auto saved = [state, lnf_factory](int result)
   {
     if (result != 0)
@@ -670,7 +677,7 @@ void
 load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {  
-  auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset");
+  auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset", FileBrowserComponent::openMode | FileBrowserComponent::filenameBoxIsReadOnly);
   auto selected = [state, lnf_factory](int result)
   {
     if (result != 0)
