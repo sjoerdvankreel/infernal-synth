@@ -64,6 +64,7 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::dialog_text, Colour(0xFFD3DEE4));
+  result->setColour(inf_look_and_feel::colors::dialog_header_text, Colour(0xFFFD9A4D));
   result->setColour(inf_look_and_feel::colors::dialog_outline_low, Colour(0xFF333333));
   result->setColour(inf_look_and_feel::colors::dialog_outline_high, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::dialog_background_low, Colour(0xFF555555));

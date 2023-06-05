@@ -711,7 +711,7 @@ show_confirm_box(
   state->controller = controller;
   state->content = create_grid_ui(controller, 3, 2);
   state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
-  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
+  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_header_text), 0, 0, 1, 2);
   state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();

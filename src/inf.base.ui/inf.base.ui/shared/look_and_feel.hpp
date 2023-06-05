@@ -35,6 +35,7 @@ public:
     tooltip_background_high,
 
     dialog_text,
+    dialog_header_text,
     dialog_outline_low,
     dialog_outline_high,
     dialog_background_low,
