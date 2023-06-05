@@ -67,6 +67,10 @@ create_preset_file_box_state(
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
   state->browser = std::make_unique<FileBrowserComponent>(flags, File(), state->filter.get(), nullptr);
   state->box = std::make_unique<FileChooserDialogBox>(title, String(), *state->browser, false, state->lnf->findColour(inf_look_and_feel::colors::file_box_background));
+  state->lnf->setColour(TextButton::ColourIds::buttonColourId, Colours::red);
+  state->lnf->setColour(TextButton::ColourIds::buttonOnColourId, Colours::red);
+  state->lnf->setColour(TextButton::ColourIds::textColourOffId, Colours::blue);
+  state->lnf->setColour(TextButton::ColourIds::textColourOnId, Colours::blue);
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightColourId, Colours::brown);
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, Colours::palevioletred);
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, Colours::darkseagreen);
