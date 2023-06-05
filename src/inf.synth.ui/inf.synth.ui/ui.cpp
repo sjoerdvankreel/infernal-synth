@@ -189,28 +189,6 @@ create_audio_lnf(plugin_controller* controller)
   return result;
 }
 
-static bool
-confirm(plugin_controller* controller, std::string const& header)
-{
-  std::int32_t const margin = 5;
-  std::int32_t const width = 180;
-  std::int32_t const height = 90;
-  auto lnf = create_root_lnf(controller);
-  auto grid = create_grid_ui(controller, 3, 2);
-  AlertWindow window("", "", MessageBoxIconType::NoIcon);
-  grid->add_cell(create_label_ui(controller, header, Justification::left, alertbox_font_header_height, inf_look_and_feel::colors::alertbox_text), 0, 0, 1, 2);
-  grid->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, alertbox_font_height, inf_look_and_feel::colors::alertbox_text), 1, 0, 1, 2);
-  grid->add_cell(create_button_ui(controller, "OK", Justification::centred, [&window](){ window.exitModalState(1); }), 2, 0);
-  grid->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [&window]() { window.exitModalState(0); }), 2, 1);
-  grid->build(lnf.get());
-  grid->component()->setBounds(0, 0, width, height);
-  grid->layout();
-  window.addCustomComponent(grid->component());
-  window.setSize(width + 2 * margin, height + 2 * margin);
-  grid->component()->setBounds(margin, margin, width, height);
-  return window.runModalLoop() != 0;
-}
-
 static std::unique_ptr<ui_element>
 create_osc_main_group(plugin_controller* controller, std::int32_t part_index)
 {
@@ -972,8 +950,12 @@ static std::unique_ptr<ui_element>
 create_synth_patch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 2, 2);
-  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller]() { if (confirm(controller, "Init patch")) controller->init_patch(); }), 0, 0);
-  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller]() { if (confirm(controller, "Clear patch")) controller->clear_patch(); }), 0, 1);
+  auto confirmed_init = [](plugin_controller* c) { c->init_patch(); };
+  auto confirmed_clear = [](plugin_controller* c) { c->clear_patch(); };
+  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller, confirmed_init]() { 
+    show_confirm_box(controller, "Init patch", create_root_lnf(controller), confirmed_init); }), 0, 0);
+  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller, confirmed_clear]() {
+    show_confirm_box(controller, "Clear patch", create_root_lnf(controller), confirmed_clear); }), 0, 1);
   grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 0);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
   return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));

@@ -29,6 +29,14 @@
 
 namespace inf::base::ui {
 
+typedef void (*
+confirmed_callback)(inf::base::plugin_controller*);
+
+void
+show_confirm_box(
+  inf::base::plugin_controller* controller, std::string const& header,
+  std::unique_ptr<inf_look_and_feel>&& lnf, confirmed_callback confirmed);
+
 class ui_element
 {
   part_id _relevant_if_part = {};
