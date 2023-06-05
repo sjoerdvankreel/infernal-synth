@@ -13,6 +13,13 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
+struct ok_box_state
+{
+  std::unique_ptr<AlertWindow> window;
+  std::unique_ptr<grid_element> content;
+  std::unique_ptr<inf_look_and_feel> lnf;
+};
+
 struct confirm_box_state
 {
   confirmed_callback confirmed;
@@ -594,7 +601,33 @@ load_preset_file(
 {
   FileChooser chooser("Load preset", juce::File(), std::string("*.") + controller->preset_file_extension(), false);
   if(!chooser.browseForFileToOpen()) return;
-  controller->load_preset(chooser.getResult().getFullPathName().toStdString(), false);
+  if(controller->load_preset(chooser.getResult().getFullPathName().toStdString(), false)) return;
+  show_ok_box(controller, "Could not load preset file.", std::move(lnf));
+}
+
+void
+show_ok_box(
+  inf::base::plugin_controller* controller,
+  std::string const& header, std::unique_ptr<inf_look_and_feel>&& lnf)
+{
+  std::int32_t const margin = 5;
+  std::int32_t const width = 180;
+  std::int32_t const height = 60;
+  ok_box_state* state = new ok_box_state;
+  state->lnf = std::move(lnf);
+  state->content = create_grid_ui(controller, 2, 2);
+  state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
+  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
+  state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
+    state->window->exitModalState();
+    delete state; }), 1, 1);
+  state->content->build(state->lnf.get());
+  state->content->component()->setBounds(0, 0, width, height);
+  state->content->layout();
+  state->window->addCustomComponent(state->content->component());
+  state->window->setSize(width + 2 * margin, height + 2 * margin);
+  state->content->component()->setBounds(margin, margin, width, height);
+  return state->window->enterModalState();
 }
 
 void
@@ -627,7 +660,7 @@ show_confirm_box(
   state->window->addCustomComponent(state->content->component());
   state->window->setSize(width + 2 * margin, height + 2 * margin);
   state->content->component()->setBounds(margin, margin, width, height);
-  return state->window->enterModalState();
+  state->window->enterModalState();
 }
 
 } // namespace inf::base::ui
