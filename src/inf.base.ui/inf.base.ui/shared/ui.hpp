@@ -36,8 +36,10 @@ confirmed_callback)(inf::base::plugin_controller*);
 
 void
 load_preset_file(
-  inf::base::plugin_controller* controller,
-  lnf_factory lnf_factory);
+  inf::base::plugin_controller* controller, lnf_factory lnf_factory);
+void
+save_preset_file(
+  inf::base::plugin_controller* controller, lnf_factory lnf_factory);
 void
 show_ok_box(
   inf::base::plugin_controller* controller, 

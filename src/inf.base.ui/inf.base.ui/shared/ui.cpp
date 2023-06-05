@@ -55,6 +55,22 @@ run_dialog_box(dialog_box_state* state, std::int32_t w, std::int32_t h)
   state->window->enterModalState();
 }
 
+static file_box_state*
+create_preset_file_box_state(
+  inf::base::plugin_controller* controller, lnf_factory lnf_factory, std::string const& title)
+{
+  auto state = new file_box_state;
+  auto filter_match = std::string("*.") + controller->preset_file_extension();
+  state->controller = controller;
+  state->lnf = lnf_factory(controller);
+  state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
+  state->browser = std::make_unique<FileBrowserComponent>(FileBrowserComponent::canSelectFiles, File(), state->filter.get(), nullptr);
+  state->box = std::make_unique<FileChooserDialogBox>(title, String(), *state->browser, false, Colours::black);
+  state->box->setLookAndFeel(state->lnf.get());
+  state->browser->setLookAndFeel(state->lnf.get());
+  return state;
+}
+
 static void 
 append_dropdown_tree(dropdown_tree* tree, std::string const* path, std::size_t path_size)
 {
@@ -631,43 +647,30 @@ show_ok_box(
 }
 
 void
-show_confirm_box(
-  inf::base::plugin_controller* controller, std::string const& header,
-  std::unique_ptr<inf_look_and_feel>&& lnf,
-  void (*confirmed)(inf::base::plugin_controller*))
+save_preset_file(
+  inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {
-  confirm_box_state* state = new confirm_box_state;
-  state->lnf = std::move(lnf);
-  state->confirmed = confirmed;
-  state->controller = controller;
-  state->content = create_grid_ui(controller, 3, 2);
-  state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
-  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
-  state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
-  state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() { 
-    state->window->exitModalState(); 
-    state->confirmed(state->controller); 
-    delete state; }), 2, 0);
-  state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() { 
-    state->window->exitModalState();
-    delete state; }), 2, 1);
-  run_dialog_box(state, 180, 90);
+  auto state = create_preset_file_box_state(controller, lnf_factory, "Save preset");
+  auto saved = [state, lnf_factory](int result)
+  {
+    if (result != 0)
+    {
+      auto selected = state->browser->getSelectedFile(0);
+      state->controller->save_preset(selected.getFullPathName().toStdString());
+      show_ok_box(state->controller, "Preset file saved.", lnf_factory(state->controller));
+    }
+    state->box->exitModalState();
+    delete state;
+  };
+  state->box->centreWithDefaultSize(nullptr);
+  state->box->enterModalState(true, ModalCallbackFunction::create(saved), false);
 }
 
 void
 load_preset_file(
-  inf::base::plugin_controller* controller,
-  lnf_factory lnf_factory)
+  inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {  
-  auto state = new file_box_state;
-  auto filter_match = std::string("*.") + controller->preset_file_extension();
-  state->controller = controller;
-  state->lnf = lnf_factory(controller);
-  state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
-  state->browser = std::make_unique<FileBrowserComponent>(FileBrowserComponent::canSelectFiles, File(), state->filter.get(), nullptr);
-  state->box = std::make_unique<FileChooserDialogBox>("Load preset", String(), *state->browser, false, Colours::black);
-  state->box->setLookAndFeel(state->lnf.get());
-  state->browser->setLookAndFeel(state->lnf.get());
+  auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset");
   auto selected = [state, lnf_factory](int result)
   {
     if (result != 0)
@@ -681,6 +684,30 @@ load_preset_file(
   };
   state->box->centreWithDefaultSize(nullptr);
   state->box->enterModalState(true, ModalCallbackFunction::create(selected), false);
+}
+
+void
+show_confirm_box(
+  inf::base::plugin_controller* controller, std::string const& header,
+  std::unique_ptr<inf_look_and_feel>&& lnf,
+  void (*confirmed)(inf::base::plugin_controller*))
+{
+  confirm_box_state* state = new confirm_box_state;
+  state->lnf = std::move(lnf);
+  state->confirmed = confirmed;
+  state->controller = controller;
+  state->content = create_grid_ui(controller, 3, 2);
+  state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
+  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
+  state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
+  state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
+    state->window->exitModalState();
+  state->confirmed(state->controller);
+  delete state; }), 2, 0);
+  state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
+    state->window->exitModalState();
+  delete state; }), 2, 1);
+  run_dialog_box(state, 180, 90);
 }
 
 } // namespace inf::base::ui

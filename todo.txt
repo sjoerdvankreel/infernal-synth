@@ -70,3 +70,4 @@
 - theme selector + exact editing - put active knob value in 1 single place
 - save last used folder path
 - drop "made with juce"
+- prettify the file choosers

@@ -958,7 +958,8 @@ create_synth_patch_group(plugin_controller* controller)
     show_confirm_box(controller, "Clear patch", create_root_lnf(controller), confirmed_clear); }), 0, 1);
   grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { 
     load_preset_file(controller, create_root_lnf); }), 1, 0);
-  grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
+  grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() {
+    save_preset_file(controller, create_root_lnf); }), 1, 1);
   return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 
