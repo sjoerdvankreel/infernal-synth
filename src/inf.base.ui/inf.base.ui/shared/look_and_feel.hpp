@@ -42,9 +42,6 @@ public:
     
     file_box_title,
     file_box_background,
-    file_box_path_text,
-    file_box_path_arrow,
-    file_box_path_background,
     file_box_file_text,
     file_box_file_background,
 
