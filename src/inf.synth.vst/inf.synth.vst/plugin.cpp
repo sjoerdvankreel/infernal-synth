@@ -33,10 +33,10 @@ void* moduleHandle = nullptr;
 static std::int32_t _inf_module_counter = 0;
 
 #if INF_VERSIONED
-static const DECLARE_UID(fx_processor_id, 0x88B6D7ED, 0x1B3A4AAE, 0xA9612A67, 0x56F66197);
-static const DECLARE_UID(fx_controller_id, 0x5E5E1287, 0xDFA148FE, 0xA543CCEE, 0x286FF4DE);
-static const DECLARE_UID(instrument_processor_id, 0x6FC553EB, 0x790B4B19, 0xA0A9AB13, 0xFBB76E3E);
-static const DECLARE_UID(instrument_controller_id, 0x0EB1168B, 0x2DE04E62, 0xAA3AD518, 0x07CCA298);
+static const DECLARE_UID(fx_processor_id, 0xD1D38026, 0x92374AB7, 0xB6FC3A55, 0xA9AE3BCC);
+static const DECLARE_UID(fx_controller_id, 0x35695F63, 0x837242BE, 0x88FB88A4, 0xE4F2D1B8);
+static const DECLARE_UID(instrument_processor_id, 0x5626A8A2, 0x47C740E3, 0x895EF722, 0xE6C1D9C4);
+static const DECLARE_UID(instrument_controller_id, 0x612E5225, 0xD6A44771, 0xA581057D, 0x04034620);
 #elif !INF_VERSIONED
 static const DECLARE_UID(fx_processor_id, 0x00AE86BB, 0x62E6495B, 0xBB947F2F, 0x7D98CC1A);
 static const DECLARE_UID(fx_controller_id, 0x101EB406, 0x0A0F4361, 0xBBFF18B5, 0xF566FEBE);

@@ -119,9 +119,9 @@ inf_look_and_feel::drawAlertBox(
   dummy.setLookAndFeel(this);
   auto bounds = w.getLocalBounds().toFloat();
   fill_gradient_rounded_rectangle(g, dummy, bounds,
-    colors::alertbox_background_low, colors::alertbox_background_high, 0.0f, 0.25f);
+    colors::dialog_background_low, colors::dialog_background_high, 0.0f, 0.25f);
   stroke_gradient_rounded_rectangle(g, dummy, bounds,
-    colors::alertbox_outline_low, colors::alertbox_outline_high, 0.0f, 0.25f, 2.0f);
+    colors::dialog_outline_low, colors::dialog_outline_high, 0.0f, 0.25f, 2.0f);
 }
 
 int 

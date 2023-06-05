@@ -33,6 +33,10 @@ typedef void (*
 confirmed_callback)(inf::base::plugin_controller*);
 
 void
+load_preset_file(
+  inf::base::plugin_controller* controller,
+  std::unique_ptr<inf_look_and_feel>&& lnf);
+void
 show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
   std::unique_ptr<inf_look_and_feel>&& lnf, confirmed_callback confirmed);

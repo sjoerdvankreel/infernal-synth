@@ -34,11 +34,11 @@ public:
     tooltip_background_low,
     tooltip_background_high,
 
-    alertbox_text,
-    alertbox_outline_low,
-    alertbox_outline_high,
-    alertbox_background_low,
-    alertbox_background_high,
+    dialog_text,
+    dialog_outline_low,
+    dialog_outline_high,
+    dialog_background_low,
+    dialog_background_high,
 
     selector_label_text,
     selector_label_outline_low,

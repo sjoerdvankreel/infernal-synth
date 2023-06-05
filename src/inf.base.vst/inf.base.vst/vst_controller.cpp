@@ -138,21 +138,21 @@ vst_controller::initialize(FUnknown* context)
 
 // See PresetFile::loadPreset. We load processor (component) state
 // from stream into controller, then flush params to processor.
-void
+bool
 vst_controller::load_preset(std::string const& path, bool factory)
 {
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   std::streamsize size = file.tellg();
   file.seekg(0, std::ios::beg);
   std::vector<char> buffer = std::vector<char>(size);
-  if (!file.read(buffer.data(), size)) return;
+  if (!file.read(buffer.data(), size)) return false;
   MemoryStream memory(buffer.data(), buffer.size());
   PresetFile preset(&memory);
-  if (!preset.readChunkList()) return;
+  if (!preset.readChunkList()) return false;
   // Allow to share factory presets by versioned/unversioned.
-  if (!factory && preset.getClassID() != _processor_id) return;
-  if (!preset.seekToComponentState()) return;
-  set_component_state(&memory, true);
+  if (!factory && preset.getClassID() != _processor_id) return false;
+  if (!preset.seekToComponentState()) return false;
+  return set_component_state(&memory, true) == kResultOk;
 }
 
 // Save using full vstpreset headers. See PresetFile::savePreset. 

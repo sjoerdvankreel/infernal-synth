@@ -7,10 +7,10 @@
 * for each release 
 - v create version branch
 - x update hiir
-- x update vst3 sdk
-- x update version number in code
-- x update version number in cmake unless only bugfix release
-- x consider updating versioned guid
+- v update vst3 sdk
+- v update version number in code
+- v update version number in cmake unless only bugfix release
+- v consider updating versioned guid
 - x gcc build
 - x diff presets
 - x update history
@@ -68,4 +68,4 @@
 - paint faster
 - make a factory preset parameter and a edit-voice/edit-global parameter
 - theme selector + exact editing - put active knob value in 1 single place
-- drop my vst branches?
+- save last used folder path

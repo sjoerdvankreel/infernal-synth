@@ -63,11 +63,11 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::tooltip_outline_high, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::tooltip_background_low, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::tooltip_background_high, Colour(0xFF777777));
-  result->setColour(inf_look_and_feel::colors::alertbox_text, Colour(0xFFA7BECB));
-  result->setColour(inf_look_and_feel::colors::alertbox_outline_low, Colour(0xFF333333));
-  result->setColour(inf_look_and_feel::colors::alertbox_outline_high, Colour(0xFF555555));
-  result->setColour(inf_look_and_feel::colors::alertbox_background_low, Colour(0xFF555555));
-  result->setColour(inf_look_and_feel::colors::alertbox_background_high, Colour(0xFF777777));
+  result->setColour(inf_look_and_feel::colors::dialog_text, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::dialog_outline_low, Colour(0xFF333333));
+  result->setColour(inf_look_and_feel::colors::dialog_outline_high, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::dialog_background_low, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::dialog_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
   result->setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0FD9A4D));
   result->setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFFFD9A4D));
@@ -956,7 +956,8 @@ create_synth_patch_group(plugin_controller* controller)
     show_confirm_box(controller, "Init patch", create_root_lnf(controller), confirmed_init); }), 0, 0);
   grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller, confirmed_clear]() {
     show_confirm_box(controller, "Clear patch", create_root_lnf(controller), confirmed_clear); }), 0, 1);
-  grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 0);
+  grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { 
+    load_preset_file(controller, create_root_lnf(controller)); }), 1, 0);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() { controller->clear_patch(); }), 1, 1);
   return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
 }
