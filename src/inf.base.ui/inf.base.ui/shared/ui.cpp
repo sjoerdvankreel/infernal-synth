@@ -638,7 +638,6 @@ show_confirm_box(
   std::unique_ptr<inf_look_and_feel>&& lnf,
   void (*confirmed)(inf::base::plugin_controller*))
 {
-  std::int32_t const margin = 5;
   confirm_box_state* state = new confirm_box_state;
   state->lnf = std::move(lnf);
   state->confirmed = confirmed;
