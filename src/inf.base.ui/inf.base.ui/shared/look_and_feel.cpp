@@ -242,6 +242,19 @@ inf_look_and_feel::drawToggleButton(
   fill_spot_circle(g, b, fill_rect, colors::switch_spot_fill_low, colors::switch_spot_fill_high, !inf_toggle.force_on());
 }
 
+void 
+inf_look_and_feel::layoutFileBrowserComponent(
+  juce::FileBrowserComponent& browser_comp,
+  juce::DirectoryContentsDisplayComponent* file_list_component,
+  juce::FilePreviewComponent* preview_comp,
+  juce::ComboBox* current_path_box,
+  juce::TextEditor* filename_box,
+  juce::Button* go_up_button)
+{
+  LookAndFeel_V4::layoutFileBrowserComponent(browser_comp, file_list_component, preview_comp, current_path_box, filename_box, go_up_button);
+  current_path_box->setEditableText(false);
+}
+
 // Custom dropdown.
 void 
 inf_look_and_feel::positionComboBoxText(

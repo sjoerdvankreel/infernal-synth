@@ -194,6 +194,15 @@ public:
     juce::Graphics& g, juce::ToggleButton& b,
     bool draw_as_highlighted, bool draw_as_down) override;
 
+  // File dialog.
+  void layoutFileBrowserComponent(
+    juce::FileBrowserComponent& browser_comp,
+    juce::DirectoryContentsDisplayComponent* file_list_component,
+    juce::FilePreviewComponent* preview_comp,
+    juce::ComboBox* current_path_box,
+    juce::TextEditor* filename_box,
+    juce::Button* go_up_button);
+
   // Dropdown.
   void positionComboBoxText(
     juce::ComboBox& cb, juce::Label& l) override;
