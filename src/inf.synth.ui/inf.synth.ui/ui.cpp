@@ -72,6 +72,8 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::file_box_title, Colours::green);
   result->setColour(inf_look_and_feel::colors::file_box_file_text, Colours::red);
   result->setColour(inf_look_and_feel::colors::file_box_file_background, Colours::cyan);
+  result->setColour(inf_look_and_feel::colors::file_box_button_text, Colour(0xFFA7BECB));
+  result->setColour(inf_look_and_feel::colors::file_box_button_background, Colour(0xFF14525D));
   result->setColour(inf_look_and_feel::colors::part_graph_grid, Colour(0xFF0D363E));
   result->setColour(inf_look_and_feel::colors::part_graph_area, Colour(0xA0FD9A4D));
   result->setColour(inf_look_and_feel::colors::part_graph_line, Colour(0xFFFD9A4D));

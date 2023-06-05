@@ -41,8 +41,10 @@ public:
     dialog_background_high,
     
     file_box_title,
-    file_box_background,
     file_box_file_text,
+    file_box_background,
+    file_box_button_text,
+    file_box_button_background,
     file_box_file_background,
 
     selector_label_text,
