@@ -13,19 +13,17 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
-struct ok_box_state
+struct dialog_box_state
 {
   std::unique_ptr<AlertWindow> window;
   std::unique_ptr<grid_element> content;
   std::unique_ptr<inf_look_and_feel> lnf;
 };
 
-struct confirm_box_state
+struct confirm_box_state:
+public dialog_box_state
 {
   confirmed_callback confirmed;
-  std::unique_ptr<AlertWindow> window;
-  std::unique_ptr<grid_element> content;
-  std::unique_ptr<inf_look_and_feel> lnf;
   inf::base::plugin_controller* controller;
 };
 
@@ -34,6 +32,19 @@ struct dropdown_tree
   std::string name;
   std::vector<std::unique_ptr<dropdown_tree>> children;
 };
+
+static void
+run_dialog_box(dialog_box_state* state, std::int32_t w, std::int32_t h)
+{
+  std::int32_t const margin = 5;
+  state->content->build(state->lnf.get());
+  state->content->component()->setBounds(0, 0, w, h);
+  state->content->layout();
+  state->window->addCustomComponent(state->content->component());
+  state->window->setSize(w + 2 * margin, h + 2 * margin);
+  state->content->component()->setBounds(margin, margin, w, h);
+  state->window->enterModalState();
+}
 
 static void 
 append_dropdown_tree(dropdown_tree* tree, std::string const* path, std::size_t path_size)
@@ -610,10 +621,7 @@ show_ok_box(
   inf::base::plugin_controller* controller,
   std::string const& header, std::unique_ptr<inf_look_and_feel>&& lnf)
 {
-  std::int32_t const margin = 5;
-  std::int32_t const width = 180;
-  std::int32_t const height = 60;
-  ok_box_state* state = new ok_box_state;
+  dialog_box_state* state = new dialog_box_state;
   state->lnf = std::move(lnf);
   state->content = create_grid_ui(controller, 2, 2);
   state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
@@ -621,13 +629,7 @@ show_ok_box(
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
     delete state; }), 1, 1);
-  state->content->build(state->lnf.get());
-  state->content->component()->setBounds(0, 0, width, height);
-  state->content->layout();
-  state->window->addCustomComponent(state->content->component());
-  state->window->setSize(width + 2 * margin, height + 2 * margin);
-  state->content->component()->setBounds(margin, margin, width, height);
-  return state->window->enterModalState();
+  run_dialog_box(state, 180, 60);
 }
 
 void
@@ -637,8 +639,6 @@ show_confirm_box(
   void (*confirmed)(inf::base::plugin_controller*))
 {
   std::int32_t const margin = 5;
-  std::int32_t const width = 180;
-  std::int32_t const height = 90;
   confirm_box_state* state = new confirm_box_state;
   state->lnf = std::move(lnf);
   state->confirmed = confirmed;
@@ -654,13 +654,7 @@ show_confirm_box(
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() { 
     state->window->exitModalState();
     delete state; }), 2, 1);
-  state->content->build(state->lnf.get());
-  state->content->component()->setBounds(0, 0, width, height);
-  state->content->layout();
-  state->window->addCustomComponent(state->content->component());
-  state->window->setSize(width + 2 * margin, height + 2 * margin);
-  state->content->component()->setBounds(margin, margin, width, height);
-  state->window->enterModalState();
+  run_dialog_box(state, 180, 90);
 }
 
 } // namespace inf::base::ui
