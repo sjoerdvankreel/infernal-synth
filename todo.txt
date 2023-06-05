@@ -73,3 +73,5 @@
 - prettify the file choosers
 - drop juce's vst3 sdk
 - force extension on save file
+- disable modal loops in #define
+- custom FileChooserDialogBox
