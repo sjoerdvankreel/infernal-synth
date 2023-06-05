@@ -48,6 +48,9 @@ public:
     file_box_label_background,
     file_box_button_text,
     file_box_button_background,
+    file_box_selector_text,
+    file_box_selector_highlight,
+    file_box_selector_highlight_text,
 
     selector_label_text,
     selector_label_outline_low,
