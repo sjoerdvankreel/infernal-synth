@@ -44,7 +44,7 @@ endif()
 
 # Juce flags.
 add_definitions(-DJUCE_USE_CURL=0)
-add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=1)
+add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=0)
 add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 
 # VST3 flags.

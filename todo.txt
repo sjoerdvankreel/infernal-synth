@@ -21,21 +21,22 @@
 - x don't forget to tag
 - x run win32 & linux host demos
 
-* host bugs
+* 3th party bugs
 - renoise automation serialization is broken
+- juce alertbox don't accept a parent component
 
 * wishlist small
 - new menu option: clear all unused
-- make more presets + group by folder
 
 * wishlist big
 - CLAP support
 - osc types: feedback lead
 - filter types: formant, vowel
 - noise types: fractal, perlin
-- fx types: compressor, phaser/flanger/chorus
 - scale CV amount by global CV param
+- make more presets + group by folder
 - improve current noise generator (1/fs)
+- fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
@@ -70,5 +71,3 @@
 - theme selector + exact editing - put active knob value in 1 single place
 - drop "made with juce"
 - drop juce's vst3 sdk
-- disable modal loops in #define
-- WAIT FOR JUCE alertbox parent
