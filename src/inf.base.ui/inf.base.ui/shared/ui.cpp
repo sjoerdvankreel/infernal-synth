@@ -60,6 +60,7 @@ static file_box_state*
 create_preset_file_box_state(inf::base::plugin_controller* controller, 
   lnf_factory lnf_factory, std::string const& title, int flags)
 {
+  juce::File last_directory;
   auto state = new file_box_state;
   auto filter_match = std::string("*.") + controller->preset_file_extension();
   flags |= FileBrowserComponent::canSelectFiles;
@@ -77,8 +78,9 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_text));
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight));
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight_text));
+  if(!state->controller->get_last_directory().empty()) last_directory = juce::File(state->controller->get_last_directory());
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
-  state->browser = std::make_unique<FileBrowserComponent>(flags, File(), state->filter.get(), nullptr);
+  state->browser = std::make_unique<FileBrowserComponent>(flags, last_directory, state->filter.get(), nullptr);
   auto background = state->lnf->findColour(inf_look_and_feel::colors::file_box_background);
   auto editor = static_cast<juce::Component*>(controller->current_editor_window());
   state->box = std::make_unique<inf_file_chooser_dialog>(controller, title, *state->browser, background, editor);
@@ -675,6 +677,7 @@ save_preset_file(
       auto selected = state->browser->getSelectedFile(0);
       state->controller->save_preset(selected.getFullPathName().toStdString());
       show_ok_box(state->controller, "Preset file saved.", lnf_factory(state->controller));
+      state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
     state->box->exitModalState();
     delete state;
@@ -697,6 +700,7 @@ load_preset_file(
       auto selected = state->browser->getSelectedFile(0);
       if (!state->controller->load_preset(selected.getFullPathName().toStdString(), false))
         show_ok_box(state->controller, "Could not load preset file.", lnf_factory(state->controller));        
+      state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
     state->box->exitModalState();
     delete state;

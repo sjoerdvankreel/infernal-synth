@@ -36,6 +36,7 @@ struct factory_preset
 class plugin_controller
 {
 protected:
+  std::string _last_directory = {};
   std::vector<inf::base::param_value> _state;
   std::unique_ptr<inf::base::topology_info> _topology;
   std::set<any_param_listener*> _any_param_listeners = {};
@@ -79,6 +80,10 @@ public:
   virtual double base_to_plugin_param(std::int32_t index, param_value val) const = 0;
   virtual param_value plugin_to_base_param(std::int32_t index, double val) const = 0;
 
+  std::string const& get_last_directory() const
+  { return _last_directory; }
+  void set_last_directory(std::string const& last_directory)
+  { _last_directory = last_directory; };
   std::vector<inf::base::factory_preset>& factory_presets() 
   { return _factory_presets; }
   void add_any_param_listener(any_param_listener* listener)
