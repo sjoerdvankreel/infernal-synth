@@ -75,4 +75,4 @@
 - force extension on save file
 - disable modal loops in #define
 - custom FileChooserDialogBox
-- alertbox parent
+- WAIT FOR JUCE alertbox parent
