@@ -76,3 +76,4 @@
 - disable modal loops in #define
 - custom FileChooserDialogBox
 - WAIT FOR JUCE alertbox parent
+- redisplay on invalid file
