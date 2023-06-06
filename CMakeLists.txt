@@ -44,6 +44,7 @@ endif()
 
 # Juce flags.
 add_definitions(-DJUCE_USE_CURL=0)
+add_definitions(-DJUCE_DISPLAY_SPLASH_SCREEN=0)
 add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=0)
 add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 
