@@ -13,10 +13,12 @@ inf_selector_label::mouseUp(MouseEvent const& event)
   PopupMenu menu;
   menu.setLookAndFeel(&getLookAndFeel());
   menu.addItem(1, _part_count == 1? "Clear": "Clear all");
-  int option = menu.show();
-  if (option == 0) return;
-  for(int i = 0; i < _part_count; i++)
-    _controller->clear_part({ _part_type, i });
+  menu.showMenuAsync(PopupMenu::Options(), [this](int option)
+  {
+    if (option == 0) return;
+    for (int i = 0; i < _part_count; i++)
+      _controller->clear_part({ _part_type, i });
+  });
 }
 
 void

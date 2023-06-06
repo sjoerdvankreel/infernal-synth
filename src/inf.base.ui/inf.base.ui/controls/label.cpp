@@ -27,7 +27,7 @@ inf_label::check_bounds_warning()
   auto text_width = getFont().getStringWidth(getText());
   auto text_area = getBorderSize().subtractedFrom(getLocalBounds());
   if (text_area.getWidth() <= 0 || text_width < text_area.getWidth()) return;
-  juce::AlertWindow::showMessageBox(MessageBoxIconType::WarningIcon, "Label exceeds bounds", getText());
+  juce::AlertWindow::showMessageBoxAsync(MessageBoxIconType::WarningIcon, "Label exceeds bounds", getText());
   _bounds_warning_fired = true;
 #endif
 }

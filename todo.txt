@@ -58,7 +58,6 @@
 - enable avx in vbox
 - drop the conversion code?
 - test tracktion host
-- fix names in the default factory preset
 - routing indicators
 - restore fx mode
 - check the init/default patch
