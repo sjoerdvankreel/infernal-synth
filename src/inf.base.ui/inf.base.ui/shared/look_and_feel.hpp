@@ -202,6 +202,13 @@ public:
     juce::ComboBox* current_path_box,
     juce::TextEditor* filename_box,
     juce::Button* go_up_button);
+  void drawFileBrowserRow(
+    juce::Graphics& g, int width, int height,
+    juce::File const& file, juce::String const& file_name, juce::Image* icon,
+    juce::String const& file_size_description,
+    juce::String const& file_time_description,
+    bool is_directory, bool is_item_selected,
+    int item_index, juce::DirectoryContentsDisplayComponent& dcc);
 
   // Dropdown.
   void positionComboBoxText(

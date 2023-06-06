@@ -264,6 +264,23 @@ inf_look_and_feel::layoutFileBrowserComponent(
   current_path_box->setEditableText(false);
 }
 
+void 
+inf_look_and_feel::drawFileBrowserRow(
+  juce::Graphics& g, int width, int height,
+  juce::File const& file, juce::String const& file_name, Image* icon,
+  juce::String const& file_size_description,
+  juce::String const& file_time_description,
+  bool is_directory, bool is_item_selected,
+  int item_index, juce::DirectoryContentsDisplayComponent& dcc)
+{
+  g.saveState();
+  g.setFont(juce::Font(20, juce::Font::bold));
+  LookAndFeel_V4::drawFileBrowserRow(
+    g, width, height, file, file_name, icon, file_size_description, 
+    file_time_description, is_directory, is_item_selected, item_index, dcc);
+  g.restoreState();
+}
+
 // Custom dropdown.
 void 
 inf_look_and_feel::positionComboBoxText(
