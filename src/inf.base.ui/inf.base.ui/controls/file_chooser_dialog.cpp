@@ -1,3 +1,4 @@
+#include <inf.base.ui/controls/button.hpp>
 #include <inf.base.ui/controls/file_chooser_dialog.hpp>
 
 using namespace juce;
@@ -7,12 +8,14 @@ namespace inf::base::ui {
 class inf_file_chooser_dialog::ContentComponent  : public Component
 {
 public:
-    ContentComponent (const String& name, FileBrowserComponent& chooser)
+    ContentComponent (inf::base::plugin_controller* controller, const String& name, FileBrowserComponent& chooser)
         : Component (name),
           chooserComponent (chooser),
-          okButton (chooser.getActionVerb()),
-          cancelButton (TRANS ("Cancel"))
+          okButton (controller),
+          cancelButton (controller)
     {
+        okButton.setButtonText("OK");
+        cancelButton.setButtonText("Cancel");
         addAndMakeVisible (chooserComponent);
 
         addAndMakeVisible (okButton);
@@ -54,18 +57,19 @@ public:
     }
 
     FileBrowserComponent& chooserComponent;
-    TextButton okButton, cancelButton;
+    inf_button okButton, cancelButton;
     String instructions;
     TextLayout text;
 };
 
-inf_file_chooser_dialog::inf_file_chooser_dialog(const String& name,
+inf_file_chooser_dialog::inf_file_chooser_dialog(inf::base::plugin_controller* controller, const String& name,
                                             FileBrowserComponent& chooserComponent,
                                             juce::Colour backgroundColour,
                                             Component* parentComp)
-    : ResizableWindow (name, backgroundColour, parentComp == nullptr)
+    : ResizableWindow (name, backgroundColour, parentComp == nullptr),
+    _controller(controller)
 {
-    content = new ContentComponent (name, chooserComponent);
+    content = new ContentComponent (controller, name, chooserComponent);
     setContentOwned (content, false);
 
     setResizable (true, true);

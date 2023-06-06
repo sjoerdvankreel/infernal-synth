@@ -81,7 +81,7 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
   state->browser = std::make_unique<FileBrowserComponent>(flags, File(), state->filter.get(), nullptr);
   auto background = state->lnf->findColour(inf_look_and_feel::colors::file_box_background);
   auto editor = static_cast<juce::Component*>(controller->current_editor_window());
-  state->box = std::make_unique<inf_file_chooser_dialog>(title, *state->browser, background, editor);
+  state->box = std::make_unique<inf_file_chooser_dialog>(controller, title, *state->browser, background, editor);
   state->box->setLookAndFeel(state->lnf.get());
   state->browser->setLookAndFeel(state->lnf.get());
   return state;
