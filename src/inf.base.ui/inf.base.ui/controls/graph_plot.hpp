@@ -21,7 +21,7 @@ public juce::Timer
   juce::Component* _plot = nullptr;
   std::uint64_t _paint_request_time = 0;
 public:
-  static inline std::uint64_t const timeout_millis = 200UL;
+  static inline std::uint64_t const timeout_millis = 50UL;
   void timerCallback() override;
   void delayed_repaint_request();
   void plot(juce::Component* plot) { _plot = plot; }

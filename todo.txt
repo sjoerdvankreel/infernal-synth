@@ -65,7 +65,6 @@
 - conversion code for breaking changes
 - fix slow cv plot repaint
 - params dont flush after clear/init
-- paint faster
 - make a factory preset parameter and a edit-voice/edit-global parameter
 - theme selector + exact editing - put active knob value in 1 single place
 - drop "made with juce"
