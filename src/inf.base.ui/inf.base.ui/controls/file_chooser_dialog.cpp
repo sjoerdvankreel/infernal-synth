@@ -17,7 +17,6 @@ public:
         okButton.setButtonText("OK");
         cancelButton.setButtonText("Cancel");
         addAndMakeVisible (chooserComponent);
-
         addAndMakeVisible (okButton);
         okButton.addShortcut (KeyPress (KeyPress::returnKey));
 
@@ -72,8 +71,7 @@ inf_file_chooser_dialog::inf_file_chooser_dialog(inf::base::plugin_controller* c
     content = new ContentComponent (controller, name, chooserComponent);
     setContentOwned (content, false);
 
-    setResizable (true, true);
-    setResizeLimits (300, 300, 1200, 1000);
+    setResizable (false, false);
 
     content->okButton.onClick        = [this] { exitModalState(1); };
     content->cancelButton.onClick    = [this] { setVisible(false); };
