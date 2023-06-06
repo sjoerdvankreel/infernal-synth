@@ -274,7 +274,7 @@ inf_look_and_feel::drawFileBrowserRow(
   int item_index, juce::DirectoryContentsDisplayComponent& dcc)
 {
   g.saveState();
-  g.setFont(juce::Font(20, juce::Font::bold));
+  g.setFont(juce::Font(get_file_browser_font_height(_controller), juce::Font::bold));
   LookAndFeel_V4::drawFileBrowserRow(
     g, width, height, file, file_name, icon, file_size_description, 
     file_time_description, is_directory, is_item_selected, item_index, dcc);

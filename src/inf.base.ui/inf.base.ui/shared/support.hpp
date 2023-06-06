@@ -66,6 +66,9 @@ get_group_label_total_height(inf::base::plugin_controller const* controller)
 { return get_group_label_font_height(controller) + group_label_vpad; }
 
 inline float
+get_file_browser_font_height(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, file_browser_font_min_height, file_browser_font_max_height); }
+inline float
 get_button_label_font_height(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, button_label_font_min_height, button_label_font_max_height); }
 

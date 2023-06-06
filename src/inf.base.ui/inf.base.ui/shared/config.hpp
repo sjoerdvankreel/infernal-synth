@@ -49,5 +49,8 @@ inline float const group_label_vpad = 7.0f;
 inline float const group_label_font_min_height = 11.0f;
 inline float const group_label_font_max_height = 15.0f;
 
+inline float const file_browser_font_min_height = 11.0f;
+inline float const file_browser_font_max_height = 15.0f;
+
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_CONFIG_HPP
