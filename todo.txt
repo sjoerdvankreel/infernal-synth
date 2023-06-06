@@ -70,6 +70,5 @@
 - theme selector + exact editing - put active knob value in 1 single place
 - drop "made with juce"
 - drop juce's vst3 sdk
-- force extension on save file
 - disable modal loops in #define
 - WAIT FOR JUCE alertbox parent

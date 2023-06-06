@@ -674,8 +674,10 @@ save_preset_file(
   {
     if (result != 0)
     {
-      auto selected = state->browser->getSelectedFile(0);
-      state->controller->save_preset(selected.getFullPathName().toStdString());
+      std::string dot_extension = std::string(".") + state->controller->preset_file_extension();
+      auto selected = state->browser->getSelectedFile(0).getFullPathName().toStdString();
+      if (!selected.ends_with(dot_extension)) selected += dot_extension;
+      state->controller->save_preset(selected);
       show_ok_box(state->controller, "Preset file saved.", lnf_factory(state->controller));
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
