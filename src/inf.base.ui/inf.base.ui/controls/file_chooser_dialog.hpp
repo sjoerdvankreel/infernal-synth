@@ -10,30 +10,22 @@ class inf_file_chooser_dialog: public juce::ResizableWindow,
 {
 public:
   inf_file_chooser_dialog(const juce::String& title,
-                          const juce::String& instructions,
     juce::FileBrowserComponent& browserComponent,
-                          bool warnAboutOverwritingExistingFiles,
     juce::Colour backgroundColour,
-                          Component* parentComponent = nullptr);
+                          juce::Component* parentComponent);
 
     ~inf_file_chooser_dialog() override;
-    void centreWithDefaultSize (Component* componentToCentreAround = nullptr);
+    void centreWithDefaultSize (Component* componentToCentreAround) { centreAroundComponent(componentToCentreAround, 600, 500); }
     enum ColourIds { titleTextColourId      = 0x1000850, /**< The colour to use to draw the box's title. */
     };
 
 private:
     class ContentComponent;
     ContentComponent* content;
-    const bool warnAboutOverwritingExistingFiles;
-
-    void closeButtonPressed();
     void selectionChanged() override;
-    void fileClicked (const juce::File&, const juce::MouseEvent&) override;
+    void fileClicked (const juce::File&, const juce::MouseEvent&) override {}
     void fileDoubleClicked (const juce::File&) override;
-    void browserRootChanged (const juce::File&) override;
-    int getDefaultWidth() const;
-
-    void okButtonPressed();
+    void browserRootChanged (const juce::File&) override {}
 };
 
 } // namespace inf::base::ui

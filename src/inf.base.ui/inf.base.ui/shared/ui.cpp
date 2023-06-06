@@ -57,8 +57,8 @@ run_dialog_box(dialog_box_state* state, std::int32_t w, std::int32_t h)
 }
 
 static file_box_state*
-create_preset_file_box_state(
-  inf::base::plugin_controller* controller, lnf_factory lnf_factory, std::string const& title, int flags)
+create_preset_file_box_state(inf::base::plugin_controller* controller, 
+  lnf_factory lnf_factory, std::string const& title, int flags)
 {
   auto state = new file_box_state;
   auto filter_match = std::string("*.") + controller->preset_file_extension();
@@ -71,7 +71,7 @@ create_preset_file_box_state(
   state->lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
   state->lnf->setColour(TextButton::ColourIds::textColourOffId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
   state->lnf->setColour(TextButton::ColourIds::buttonColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
-  state->lnf->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_title));
+  state->lnf->setColour(inf_file_chooser_dialog::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_title));
   state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_text));
   state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_background));
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_text));
@@ -79,7 +79,9 @@ create_preset_file_box_state(
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight_text));
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
   state->browser = std::make_unique<FileBrowserComponent>(flags, File(), state->filter.get(), nullptr);
-  state->box = std::make_unique<inf_file_chooser_dialog>(title, String(), *state->browser, false, state->lnf->findColour(inf_look_and_feel::colors::file_box_background));
+  auto background = state->lnf->findColour(inf_look_and_feel::colors::file_box_background);
+  auto editor = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box = std::make_unique<inf_file_chooser_dialog>(title, *state->browser, background, editor);
   state->box->setLookAndFeel(state->lnf.get());
   state->browser->setLookAndFeel(state->lnf.get());
   return state;
@@ -664,7 +666,8 @@ void
 save_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {
-  auto state = create_preset_file_box_state(controller, lnf_factory, "Save preset", FileBrowserComponent::saveMode);
+  auto flags = FileBrowserComponent::saveMode;
+  auto state = create_preset_file_box_state(controller, lnf_factory, "Save preset", flags);
   auto saved = [state, lnf_factory](int result)
   {
     if (result != 0)
@@ -676,7 +679,8 @@ save_preset_file(
     state->box->exitModalState();
     delete state;
   };
-  state->box->centreWithDefaultSize(nullptr);
+  auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box->centreWithDefaultSize(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(saved), false);
 }
 
@@ -684,7 +688,8 @@ void
 load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {  
-  auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset", FileBrowserComponent::openMode | FileBrowserComponent::filenameBoxIsReadOnly);
+  auto flags = FileBrowserComponent::openMode | FileBrowserComponent::filenameBoxIsReadOnly;
+  auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset", flags);
   auto selected = [state, lnf_factory](int result)
   {
     if (result != 0)
@@ -696,15 +701,15 @@ load_preset_file(
     state->box->exitModalState();
     delete state;
   };
-  state->box->centreWithDefaultSize(nullptr);
+  auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box->centreWithDefaultSize(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(selected), false);
 }
 
 void
 show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
-  std::unique_ptr<inf_look_and_feel>&& lnf,
-  void (*confirmed)(inf::base::plugin_controller*))
+  std::unique_ptr<inf_look_and_feel>&& lnf, void (*confirmed)(inf::base::plugin_controller*))
 {
   confirm_box_state* state = new confirm_box_state;
   state->lnf = std::move(lnf);

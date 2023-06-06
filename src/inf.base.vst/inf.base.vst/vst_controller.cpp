@@ -33,13 +33,20 @@ vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id) :
 plugin_controller(std::move(topology)), _processor_id(processor_id) {}
 
+void* 
+vst_controller::current_editor_window() const
+{ 
+  if(_current_editor == nullptr) return nullptr;
+  return _current_editor->current_window(); 
+}
+
 IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  vst_editor* result = create_editor();
+  _current_editor = create_editor();
   setKnobMode(KnobModes::kLinearMode);
-  return result;
+  return _current_editor;
 }
 
 void

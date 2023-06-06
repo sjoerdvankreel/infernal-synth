@@ -34,18 +34,14 @@ lnf_factory)(inf::base::plugin_controller*);
 typedef void (*
 confirmed_callback)(inf::base::plugin_controller*);
 
-void
-load_preset_file(
+void load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory);
-void
-save_preset_file(
+void save_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory);
-void
-show_ok_box(
+void show_ok_box(
   inf::base::plugin_controller* controller, 
   std::string const& header, std::unique_ptr<inf_look_and_feel>&& lnf);
-void
-show_confirm_box(
+void show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
   std::unique_ptr<inf_look_and_feel>&& lnf, confirmed_callback confirmed);
 

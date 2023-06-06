@@ -30,6 +30,8 @@ protected:
 
   FUID const _processor_id;
   std::int32_t _editor_width = 0;
+  vst_editor* _current_editor = nullptr;
+
   void do_edit(std::int32_t tag, double normalized);
 
 protected:
@@ -42,6 +44,7 @@ public:
   std::int32_t editor_current_width() const override { return _editor_width; }
   void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
 
+  void* current_editor_window() const override;
   void save_preset(std::string const& path) override;
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
