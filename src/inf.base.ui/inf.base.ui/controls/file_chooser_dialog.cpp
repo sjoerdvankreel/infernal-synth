@@ -47,10 +47,7 @@ public:
         auto buttonArea = area.reduced (16, 10);
 
         okButton.changeWidthToFitText (buttonHeight);
-        okButton.setBounds (buttonArea.removeFromRight (okButton.getWidth() + 16));
-
-        buttonArea.removeFromRight (16);
-
+        okButton.setBounds (buttonArea.removeFromRight (okButton.getWidth()));
         cancelButton.changeWidthToFitText (buttonHeight);
         cancelButton.setBounds (buttonArea.removeFromRight (cancelButton.getWidth()));
     }

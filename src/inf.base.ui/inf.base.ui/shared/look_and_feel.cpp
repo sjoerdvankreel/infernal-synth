@@ -259,7 +259,6 @@ inf_look_and_feel::layoutFileBrowserComponent(
   current_path_box->setBounds(top_slice.removeFromLeft(top_slice.getWidth() - button_width));
   top_slice.removeFromLeft(6);
   go_up_button->setBounds(top_slice);
-  bottom_slice.removeFromLeft(20);
   filename_box->setBounds(bottom_slice);
   dynamic_cast<juce::Component*>(file_list_component)->setBounds(b.reduced(0, 10));
   current_path_box->setEditableText(false);
