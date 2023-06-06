@@ -41,8 +41,8 @@ public:
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
   tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
 
-  void* current_window() const { return _ui.get(); }
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultTrue; }
+  void* current_window() const { return _ui.get() == nullptr? nullptr: _ui.get()->component(); }
 };
 
 } // namespace inf::base::vst
