@@ -251,7 +251,17 @@ inf_look_and_feel::layoutFileBrowserComponent(
   juce::TextEditor* filename_box,
   juce::Button* go_up_button)
 {
-  LookAndFeel_V4::layoutFileBrowserComponent(browser_comp, file_list_component, preview_comp, current_path_box, filename_box, go_up_button);
+  auto button_width = 50;
+  auto section_height = 22;
+  auto b = browser_comp.getLocalBounds();
+  auto top_slice = b.removeFromTop(section_height);
+  auto bottom_slice = b.removeFromBottom(section_height);
+  current_path_box->setBounds(top_slice.removeFromLeft(top_slice.getWidth() - button_width));
+  top_slice.removeFromLeft(6);
+  go_up_button->setBounds(top_slice);
+  bottom_slice.removeFromLeft(20);
+  filename_box->setBounds(bottom_slice);
+  dynamic_cast<juce::Component*>(file_list_component)->setBounds(b.reduced(0, 10));
   current_path_box->setEditableText(false);
 }
 
