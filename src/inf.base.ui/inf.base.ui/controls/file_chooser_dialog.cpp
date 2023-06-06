@@ -34,7 +34,7 @@ public:
 
     void resized() override
     {
-        const int buttonHeight = 26;
+        const int buttonHeight = 20;
 
         auto area = getLocalBounds();
 
@@ -44,12 +44,10 @@ public:
         area.removeFromTop (roundToInt (text.getHeight()) + 10);
 
         chooserComponent.setBounds (area.removeFromTop (area.getHeight() - buttonHeight - 20));
-        auto buttonArea = area.reduced (16, 10);
-
-        okButton.changeWidthToFitText (buttonHeight);
-        okButton.setBounds (buttonArea.removeFromRight (okButton.getWidth()));
         cancelButton.changeWidthToFitText (buttonHeight);
-        cancelButton.setBounds (buttonArea.removeFromRight (cancelButton.getWidth()));
+        cancelButton.setBounds (area.removeFromRight (cancelButton.getWidth()));
+        okButton.changeWidthToFitText(buttonHeight);
+        okButton.setBounds(area.removeFromRight(okButton.getWidth()));
     }
 
     FileBrowserComponent& chooserComponent;
