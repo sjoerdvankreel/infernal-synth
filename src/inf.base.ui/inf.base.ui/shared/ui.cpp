@@ -6,6 +6,7 @@
 #include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base.ui/controls/toggle_button.hpp>
 #include <inf.base.ui/controls/selector_label.hpp>
+#include <inf.base.ui/controls/file_chooser_dialog.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -31,8 +32,8 @@ struct file_box_state
 {
   std::unique_ptr<inf_look_and_feel> lnf;
   inf::base::plugin_controller* controller;
-  std::unique_ptr<FileChooserDialogBox> box;
   std::unique_ptr<WildcardFileFilter> filter;
+  std::unique_ptr<inf_file_chooser_dialog> box;
   std::unique_ptr<FileBrowserComponent> browser;
 };
 
@@ -78,7 +79,7 @@ create_preset_file_box_state(
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight_text));
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
   state->browser = std::make_unique<FileBrowserComponent>(flags, File(), state->filter.get(), nullptr);
-  state->box = std::make_unique<FileChooserDialogBox>(title, String(), *state->browser, false, state->lnf->findColour(inf_look_and_feel::colors::file_box_background));
+  state->box = std::make_unique<inf_file_chooser_dialog>(title, String(), *state->browser, false, state->lnf->findColour(inf_look_and_feel::colors::file_box_background));
   state->box->setLookAndFeel(state->lnf.get());
   state->browser->setLookAndFeel(state->lnf.get());
   return state;
