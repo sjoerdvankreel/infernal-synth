@@ -6,8 +6,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-namespace inf::base::ui
-{
+namespace inf::base::ui {
 
 class label_param_listener :
 public param_listener

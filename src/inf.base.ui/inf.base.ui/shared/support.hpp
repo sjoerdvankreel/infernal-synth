@@ -16,6 +16,8 @@ enum class tooltip_type { off, label, value };
 enum class icon_type { sine, saw, tri, pulse };
 enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };
 
+std::string
+format_label_short(plugin_controller const* controller, std::int32_t param_index);
 float
 get_scaled_size(plugin_controller const* controller, float min_size, float max_size);
 std::string

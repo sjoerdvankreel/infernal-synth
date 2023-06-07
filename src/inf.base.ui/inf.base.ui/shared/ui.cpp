@@ -174,6 +174,19 @@ label_element::build_core(juce::LookAndFeel& lnf)
   result->setText(_text, dontSendNotification);
   result->setColour(Label::ColourIds::textColourId, lnf.findColour(_color));
   return result;
+}  
+
+Component* 
+last_edit_label_element::build_core(juce::LookAndFeel& lnf)
+{
+  Label* result = new inf_label(false);
+  result->setBorderSize(BorderSize<int>());
+  result->setJustificationType(_justification);
+  result->setText(format_label_short(controller(), 0), dontSendNotification);
+  result->setFont(juce::Font(get_param_label_font_height(controller()), juce::Font::bold));
+  result->setColour(Label::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::param_label));
+  _listener.reset(new last_edit_label_param_listener(controller(), result));
+  return result;
 }
 
 Component*
@@ -715,7 +728,7 @@ load_preset_file(
 void
 show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
-  std::unique_ptr<inf_look_and_feel>&& lnf, void (*confirmed)(inf::base::plugin_controller*))
+  std::unique_ptr<inf_look_and_feel>&& lnf, confirmed_callback confirmed)
 {
   confirm_box_state* state = new confirm_box_state;
   state->lnf = std::move(lnf);

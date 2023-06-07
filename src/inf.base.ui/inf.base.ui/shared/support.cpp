@@ -4,8 +4,17 @@
 
 using namespace inf::base;
 
-namespace inf::base::ui 
+namespace inf::base::ui {
+
+std::string
+format_label_short(plugin_controller const* controller, std::int32_t param_index)
 {
+  auto const& param_info = controller->topology()->params[param_index];
+  auto const& part_info = controller->topology()->parts[param_info.part_index];
+  auto result = std::string(part_info.descriptor->static_name.short_);
+  if(part_info.descriptor->part_count > 1) result += std::string(" ") + std::to_string(part_info.type_index + 1);
+  return result + std::string(" ") + param_info.descriptor->data.static_name.short_;
+}
 
 std::string
 get_label_text(param_descriptor const* descriptor, label_type type, param_value value)

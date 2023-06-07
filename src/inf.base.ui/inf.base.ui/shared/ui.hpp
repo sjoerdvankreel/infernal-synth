@@ -19,6 +19,8 @@
 #include <inf.base.ui/listeners/slider_param_listener.hpp>
 #include <inf.base.ui/listeners/dropdown_param_listener.hpp>
 #include <inf.base.ui/listeners/selector_extra_listener.hpp>
+#include <inf.base.ui/listeners/last_edit_label_param_listener.hpp>
+
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -88,6 +90,23 @@ public:
 inline std::unique_ptr<label_element>
 create_label_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification, float font_height, std::int32_t color)
 { return std::make_unique<label_element>(controller, text, justification, font_height, color); }
+
+class last_edit_label_element:
+public ui_element
+{
+  juce::Justification const _justification;
+  std::unique_ptr<last_edit_label_param_listener> _listener = {};
+protected:
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
+public:
+  void layout() override {}
+  last_edit_label_element(inf::base::plugin_controller* controller, juce::Justification justification):
+  ui_element(controller), _justification(justification) {}
+};
+
+inline std::unique_ptr<last_edit_label_element>
+create_last_edit_label_ui(inf::base::plugin_controller* controller, juce::Justification justification)
+{ return std::make_unique<last_edit_label_element>(controller, justification); }
 
 class button_element :
 public ui_element

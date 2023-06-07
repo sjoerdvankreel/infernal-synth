@@ -18,10 +18,10 @@ public param_listener
 public:
   void controller_param_changed(inf::base::param_value ui_value) override
   { _button->setToggleState(ui_value.discrete != 0, juce::dontSendNotification); }
-  void buttonStateChanged(juce::Button* button) override
+  void buttonClicked(juce::Button* button) override
   { _controller->editor_param_changed(_param_index, param_value(button->getToggleState() ? 1 : 0)); }
-
-  void buttonClicked(juce::Button*) override {}
+  
+  void buttonStateChanged(juce::Button*) override {}
   ~toggle_param_listener() { _controller->remove_param_listener(_param_index, this); }
   toggle_param_listener(plugin_controller* controller, juce::Button* button, std::int32_t param_index):
   _button(button), _param_index(param_index), _controller(controller) { _controller->add_param_listener(param_index, this); }
