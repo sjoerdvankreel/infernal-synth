@@ -974,18 +974,18 @@ static std::unique_ptr<ui_element>
 create_synth_patch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 4);
-  auto confirmed_init = [](plugin_controller* c) { c->init_patch(); };
-  auto confirmed_clear = [](plugin_controller* c) { c->clear_patch(); };
+  auto confirmed_init = [](plugin_controller* c, std::int32_t) { c->init_patch(); };
+  auto confirmed_clear = [](plugin_controller* c, std::int32_t) { c->clear_patch(); };
   grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller, confirmed_init]() { 
-    show_confirm_box(controller, "Init patch", create_root_lnf(controller), confirmed_init); }), 0, 0, 1, 2);
+    show_confirm_box(controller, "Init patch", create_root_lnf, confirmed_init); }), 0, 0, 1, 2);
   grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller, confirmed_clear]() {
-    show_confirm_box(controller, "Clear patch", create_root_lnf(controller), confirmed_clear); }), 0, 2, 1, 2);
+    show_confirm_box(controller, "Clear patch", create_root_lnf, confirmed_clear); }), 0, 2, 1, 2);
   grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { 
     load_preset_file(controller, create_root_lnf); }), 1, 0, 1, 2);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() {
     save_preset_file(controller, create_root_lnf); }), 1, 2, 1, 2);
   grid->add_cell(create_label_ui(controller, "Factory", Justification::centred, get_param_label_font_height(controller), inf_look_and_feel::colors::param_label), 2, 0, 1, 1);
-  grid->add_cell(create_factory_preset_ui(controller), 2, 1, 1, 3);
+  grid->add_cell(create_factory_preset_ui(controller, create_root_lnf), 2, 1, 1, 3);
   return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
 }
 

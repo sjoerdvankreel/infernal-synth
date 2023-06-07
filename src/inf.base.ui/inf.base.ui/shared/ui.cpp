@@ -705,14 +705,18 @@ create_part_selector_ui(
 
 std::unique_ptr<ui_element>
 create_factory_preset_ui(
-  plugin_controller* controller)
+  plugin_controller* controller, lnf_factory lnf_factory)
 {
   std::vector<std::string> items;
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto presets = controller->factory_presets(file.getFullPathName().toStdString());
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
-  return create_dropdown_ui(controller, items, [](int){});
+  return create_dropdown_ui(controller, items, [controller, presets, lnf_factory](std::int32_t index) {
+    show_confirm_box(controller, "Load factory preset", lnf_factory, [](plugin_controller* controller, std::int32_t index) {
+      File file(File::getSpecialLocation(File::currentExecutableFile));
+      auto presets = controller->factory_presets(file.getFullPathName().toStdString());
+      controller->load_preset(presets[index].path, true); }); });
 }
 
 void
@@ -782,19 +786,19 @@ load_preset_file(
 void
 show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
-  std::unique_ptr<inf_look_and_feel>&& lnf, confirmed_callback confirmed)
+  lnf_factory lnf_factory, confirmed_callback confirmed)
 {
   confirm_box_state* state = new confirm_box_state;
-  state->lnf = std::move(lnf);
   state->confirmed = confirmed;
   state->controller = controller;
+  state->lnf = lnf_factory(controller);
   state->content = create_grid_ui(controller, 3, 2);
   state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
   state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_header_text), 0, 0, 1, 2);
   state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
-  state->confirmed(state->controller);
+  state->confirmed(state->controller, 0);
   delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
     state->window->exitModalState();

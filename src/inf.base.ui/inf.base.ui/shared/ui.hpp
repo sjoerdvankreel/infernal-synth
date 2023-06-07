@@ -37,7 +37,7 @@ namespace inf::base::ui {
 typedef std::unique_ptr<inf_look_and_feel> (*
 lnf_factory)(inf::base::plugin_controller*);
 typedef void (*
-confirmed_callback)(inf::base::plugin_controller*);
+confirmed_callback)(inf::base::plugin_controller*, std::int32_t);
 
 void load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory);
@@ -48,7 +48,7 @@ void show_ok_box(
   std::string const& header, std::unique_ptr<inf_look_and_feel>&& lnf);
 void show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
-  std::unique_ptr<inf_look_and_feel>&& lnf, confirmed_callback confirmed);
+  lnf_factory lnf_factory, confirmed_callback confirmed);
 
 class ui_element
 {
@@ -439,7 +439,7 @@ create_root_ui(
 
 std::unique_ptr<ui_element>
 create_factory_preset_ui(
-  plugin_controller* controller);
+  plugin_controller* controller, lnf_factory lnf_factory);
 std::unique_ptr<ui_element>
 create_part_group_ui(
   plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
