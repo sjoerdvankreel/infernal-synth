@@ -62,7 +62,6 @@
 - check the init/default patch
 - check all breaking changes
 - conversion code for breaking changes
-- params dont flush after clear/init
 - theme selector
 - paint it right (last pixel missing in graphs)
 - check todos
