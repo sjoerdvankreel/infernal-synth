@@ -21,12 +21,19 @@ public juce::LookAndFeel_V4
 
 public:
   enum colors {
+
     param_label,
     part_group_label,
     root_background,
     
     icon_stroke_color,
     icon_pw_stroke_color,
+
+    text_edit_text,
+    text_edit_outline_low,
+    text_edit_outline_high,
+    text_edit_background_low,
+    text_edit_background_high,
 
     tooltip_text,
     tooltip_outline_low,
@@ -174,13 +181,21 @@ public:
     juce::TabbedButtonBar& bar, juce::Graphics& g, 
     const int w, const int h) override {}
 
-  // Custom tooltip.
+  // Tooltip.
   void drawTooltip(
     juce::Graphics& g, juce::String const& text, 
     int w0, int h0) override;
+
+  // Dialog.
   void drawAlertBox(
     juce::Graphics& g, juce::AlertWindow& w, 
     juce::Rectangle<int> const& text_area, juce::TextLayout& l) override;
+
+  // Textbox.
+  void fillTextEditorBackground(
+    juce::Graphics&, int width, int height, juce::TextEditor&) override;
+  void drawTextEditorOutline(
+    juce::Graphics&, int width, int height, juce::TextEditor&) override;
 
   // Sliders/knobs.
   void drawLinearSlider(

@@ -5,6 +5,9 @@
 
 namespace inf::base::ui {
 
+inline juce::Point<int> container_part_padding = { 2, 2 };
+inline juce::Point<int> container_selector_padding = { 10, 8 };
+
 inline int const edit_margin = 2;
 inline int const button_margin = 3;
 inline int const edit_table_margin = 0;
@@ -19,8 +22,8 @@ inline float const dialog_font_header_height = 15.0f;
 inline float const toggle_max_size_min = 18.0f;
 inline float const toggle_max_size_max = 34.0f;
 
-inline juce::Point<int> container_part_padding = { 2, 2 };
-inline juce::Point<int> container_selector_padding = { 10, 8 };
+inline float const text_edit_font_min_height = 10.0f;
+inline float const text_edit_font_max_height = 14.0f;
 
 inline float const selector_min_height = 26.0f;
 inline float const selector_max_height = 40.0f;

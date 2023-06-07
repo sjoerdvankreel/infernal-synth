@@ -53,6 +53,11 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::root_background, Colour(0xFF222222));
   result->setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFD3DEE4));
   result->setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
+  result->setColour(inf_look_and_feel::colors::text_edit_text, Colour(0xFFD3DEE4));
+  result->setColour(inf_look_and_feel::colors::text_edit_outline_low, Colour(0xFFDA6102));
+  result->setColour(inf_look_and_feel::colors::text_edit_outline_high, Colour(0xFFFD9A4D));
+  result->setColour(inf_look_and_feel::colors::text_edit_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::text_edit_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::selector_label_text, Colour(0xFFFD9A4D));
   result->setColour(inf_look_and_feel::colors::selector_label_outline_low, Colour(0xFFDA6102));
   result->setColour(inf_look_and_feel::colors::selector_label_outline_high, Colour(0xFFFD9A4D));

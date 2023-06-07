@@ -92,6 +92,35 @@ inf_look_and_feel::drawLabel(Graphics& g, Label& label)
 }
 
 void 
+inf_look_and_feel::fillTextEditorBackground(
+  juce::Graphics& g, int width, int height, juce::TextEditor& e)
+{
+  float padding_fixed = 2.0f;
+  float corner_size_fixed = 2.0f;
+  auto rect = Rectangle<float>(
+    padding_fixed, padding_fixed, width - 2.0f * padding_fixed, 
+    height - 2.0f * padding_fixed);
+  fill_gradient_rounded_rectangle(
+    g, e, rect, colors::text_background_low, 
+    colors::text_background_high, corner_size_fixed, 0.25f);
+}
+
+void 
+inf_look_and_feel::drawTextEditorOutline(
+  juce::Graphics& g, int width, int height, juce::TextEditor& e)
+{
+  float line_size = 1.0f;
+  float padding_fixed = 2.0f;
+  float corner_size_fixed = 2.0f;
+  auto rect = Rectangle<float>(
+    padding_fixed, padding_fixed, width - 2.0f * padding_fixed,
+    height - 2.0f * padding_fixed);
+  stroke_gradient_rounded_rectangle(
+    g, e, rect, colors::text_outline_low,
+    colors::text_outline_high, corner_size_fixed, 0.25f, line_size);
+}
+
+void 
 inf_look_and_feel::drawTooltip(
   juce::Graphics& g, juce::String const& text, int w0, int h0)
 {
