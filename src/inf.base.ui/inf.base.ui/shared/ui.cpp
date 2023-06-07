@@ -218,6 +218,7 @@ Component*
 dropdown_element::build_core(juce::LookAndFeel& lnf)
 {
   ComboBox* result = new ComboBox;
+  result->setTextWhenNothingSelected("Select");
   for(std::size_t i = 0; i < _items.size(); i++)
     result->addItem(_items[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
   _listener.reset(new dropdown_listener(_callback));
