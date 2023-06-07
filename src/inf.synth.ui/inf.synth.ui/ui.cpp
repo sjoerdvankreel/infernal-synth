@@ -937,13 +937,13 @@ create_synth_output_voice_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_output_cpu_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 3, 11);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::label, Justification::right), 0, 0, 1, 5);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::value, Justification::left), 0, 6, 1, 5);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::label, Justification::right), 1, 0, 1, 5);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::value, Justification::left), 1, 6, 1, 5);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::label, Justification::right), 2, 0, 1, 5);
-  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::value, Justification::left), 2, 6, 1, 5);
+  auto grid = create_grid_ui(controller, 3, 12);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::label, Justification::right), 0, 0, 1, 6);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::prev_cpu, label_type::value, Justification::left), 0, 7, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::label, Justification::right), 1, 0, 1, 6);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high, label_type::value, Justification::left), 1, 7, 1, 5);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::label, Justification::right), 2, 0, 1, 6);
+  grid->add_cell(create_param_label_ui(controller, part_type::output, 0, output_param::high_cpu, label_type::value, Justification::left), 2, 7, 1, 5);
   return create_part_group_ui(controller, create_group_label_ui(controller, "CPU", true), std::move(grid));
 }
 
