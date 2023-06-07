@@ -3,10 +3,11 @@
 #include <inf.base.ui/shared/real_bounds_range.hpp>
 #include <inf.base.ui/controls/label.hpp>
 #include <inf.base.ui/controls/button.hpp>
-#include <inf.base.ui/controls/dropdown.hpp>
 #include <inf.base.ui/controls/toggle_button.hpp>
+#include <inf.base.ui/controls/param_dropdown.hpp>
 #include <inf.base.ui/controls/selector_label.hpp>
 #include <inf.base.ui/controls/file_chooser_dialog.hpp>
+#include <inf.base.ui/listeners/dropdown_listener.hpp>
 #include <inf.base/shared/support.hpp>
 
 using namespace juce;
@@ -209,6 +210,17 @@ button_element::build_core(juce::LookAndFeel& lnf)
   inf_button* result = new inf_button(controller());
   result->setButtonText(_text);
   _listener.reset(new button_listener(_callback));
+  result->addListener(_listener.get());
+  return result;
+}
+
+Component*
+dropdown_element::build_core(juce::LookAndFeel& lnf)
+{
+  ComboBox* result = new ComboBox;
+  for(std::size_t i = 0; i < _items.size(); i++)
+    result->addItem(_items[i], static_cast<std::int32_t>(i));
+  _listener.reset(new dropdown_listener(_callback));
   result->addListener(_listener.get());
   return result;
 }
@@ -422,7 +434,7 @@ param_edit_element::build_dropdown_core(LookAndFeel& lnf)
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
-  inf_dropdown* result = new inf_dropdown(&desc);
+  inf_param_dropdown* result = new inf_param_dropdown(&desc);
   result->setColour(ComboBox::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::dropdown_text));
   result->setJustificationType(Justification::centred);
   if (desc.data.discrete.items != nullptr)
@@ -450,7 +462,7 @@ param_edit_element::build_slider_core(LookAndFeel& lnf)
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   auto default_value = controller()->topology()->base_to_ui_value(index, desc.data.default_value());
   std::int32_t part_index = controller()->topology()->params[index].part_index;
-  inf_slider* result = new inf_slider(&desc, _type);
+  inf_param_slider* result = new inf_param_slider(&desc, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   if(desc.data.type == param_type::real)
   {

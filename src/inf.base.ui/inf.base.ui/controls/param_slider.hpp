@@ -1,5 +1,5 @@
-#ifndef INF_BASE_UI_CONTROLS_DROPDOWN_HPP
-#define INF_BASE_UI_CONTROLS_DROPDOWN_HPP
+#ifndef INF_BASE_UI_CONTROLS_PARAM_SLIDER_HPP
+#define INF_BASE_UI_CONTROLS_PARAM_SLIDER_HPP
 
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
@@ -7,19 +7,19 @@
 #include <cstdint>
 
 namespace inf::base::ui {
-
-inline std::int32_t constexpr dropdown_id_offset = 1000;
   
-class inf_dropdown:
-public juce::ComboBox
+class inf_param_slider:
+public juce::Slider
 {
 private:
+  edit_type _type;
   base::param_descriptor const* _descriptor;
 public:
+  edit_type type() const { return _type; }
   base::param_descriptor const* descriptor() const { return _descriptor; }
-  inf_dropdown(base::param_descriptor const* descriptor):
-  _descriptor(descriptor) {}
+  inf_param_slider(base::param_descriptor const* descriptor, edit_type type):
+  _type(type), _descriptor(descriptor) {}
 };
 
 } // namespace inf::base::ui
-#endif // INF_BASE_UI_CONTROLS_DROPDOWN_HPP
+#endif // INF_BASE_UI_CONTROLS_PARAM_SLIDER_HPP

@@ -4,14 +4,15 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
 #include <inf.base.ui/controls/icon.hpp>
-#include <inf.base.ui/controls/slider.hpp>
 #include <inf.base.ui/controls/container.hpp>
 #include <inf.base.ui/controls/graph_plot.hpp>
 #include <inf.base.ui/controls/selector_bar.hpp>
+#include <inf.base.ui/controls/param_slider.hpp>
 #include <inf.base.ui/listeners/graph_listener.hpp>
 #include <inf.base.ui/listeners/button_listener.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/selector_listener.hpp>
+#include <inf.base.ui/listeners/dropdown_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
@@ -145,6 +146,25 @@ public:
 inline std::unique_ptr<button_element>
 create_button_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification, std::function<void()> const& callback)
 { return std::make_unique<button_element>(controller, text, justification, callback); }
+
+class dropdown_element :
+public ui_element
+{
+  std::vector<std::string> _items;
+  std::function<void(std::int32_t)> const _callback;
+  std::unique_ptr<dropdown_listener> _listener = {};
+protected: 
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
+public:
+  void layout() override {}
+  dropdown_element(inf::base::plugin_controller* controller, 
+    std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback):
+  ui_element(controller), _items(items), _callback(callback) {}
+};
+
+inline std::unique_ptr<dropdown_element>
+create_dropdown_ui(inf::base::plugin_controller* controller, std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback)
+{ return std::make_unique<dropdown_element>(controller, items, callback); }
 
 class container_element:
 public ui_element
