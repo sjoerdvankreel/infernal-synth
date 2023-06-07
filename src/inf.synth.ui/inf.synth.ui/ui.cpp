@@ -959,10 +959,12 @@ create_synth_output_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_edit_group(plugin_controller* controller)
 {
-  auto inner_grid = create_grid_ui(controller, 3, 11);
-  inner_grid->add_cell(create_last_edit_label_ui(controller, Justification::right), 0, 0, 1, 5);
-  inner_grid->add_cell(create_last_edit_value_ui(controller), 0, 6, 1, 5);
-  inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 1, 0, 1, 11);
+  auto inner_grid = create_grid_ui(controller, 3, 2);
+  auto last_edit_label_grid = create_grid_ui(controller, 1, 10);
+  last_edit_label_grid->add_cell(create_last_edit_label_ui(controller, Justification::right), 0, 0, 1, 9);
+  inner_grid->add_cell(std::move(last_edit_label_grid), 0, 0, 1, 1);
+  inner_grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
+  inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 2, 0, 1, 2);
   auto outer_grid = create_grid_ui(controller, 1, 40);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 38);
   return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(outer_grid)));
@@ -994,7 +996,8 @@ create_synth_grid(plugin_controller* controller)
   result->add_cell(create_synth_output_group(controller), 0, 8, 1, 3);
   result->add_cell(create_synth_edit_group(controller), 0, 11, 1, 3);
   result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
-  result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
+  auto voice = result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
+  voice->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_voice; });
   return result;
 }
 
