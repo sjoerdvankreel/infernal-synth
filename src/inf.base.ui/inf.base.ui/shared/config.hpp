@@ -22,8 +22,8 @@ inline float const dialog_font_header_height = 15.0f;
 inline float const toggle_max_size_min = 18.0f;
 inline float const toggle_max_size_max = 34.0f;
 
-inline float const text_edit_font_min_height = 10.0f;
-inline float const text_edit_font_max_height = 14.0f;
+inline float const text_edit_font_min_height = 11.0f;
+inline float const text_edit_font_max_height = 15.0f;
 
 inline float const selector_min_height = 26.0f;
 inline float const selector_max_height = 40.0f;

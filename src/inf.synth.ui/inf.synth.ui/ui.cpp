@@ -54,9 +54,9 @@ create_root_lnf(plugin_controller* controller)
   result->setColour(inf_look_and_feel::colors::icon_stroke_color, Colour(0xFFD3DEE4));
   result->setColour(inf_look_and_feel::colors::icon_pw_stroke_color, Colour(0xFF2EB8D1));
   result->setColour(inf_look_and_feel::colors::text_edit_text, Colour(0xFFD3DEE4));
-  result->setColour(inf_look_and_feel::colors::text_edit_outline_low, Colour(0xFFDA6102));
-  result->setColour(inf_look_and_feel::colors::text_edit_outline_high, Colour(0xFFFD9A4D));
-  result->setColour(inf_look_and_feel::colors::text_edit_background_low, Colour(0xFF444444));
+  result->setColour(inf_look_and_feel::colors::text_edit_outline_low, Colour(0xFF333333));
+  result->setColour(inf_look_and_feel::colors::text_edit_outline_high, Colour(0xFF555555));
+  result->setColour(inf_look_and_feel::colors::text_edit_background_low, Colour(0xFF555555));
   result->setColour(inf_look_and_feel::colors::text_edit_background_high, Colour(0xFF777777));
   result->setColour(inf_look_and_feel::colors::selector_label_text, Colour(0xFFFD9A4D));
   result->setColour(inf_look_and_feel::colors::selector_label_outline_low, Colour(0xFFDA6102));
@@ -959,10 +959,12 @@ create_synth_output_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_synth_edit_group(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 3, 2);
-  grid->add_cell(create_last_edit_label_ui(controller, Justification::left), 0, 0, 1, 1);
-  grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
-  return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(grid)));
+  auto inner_grid = create_grid_ui(controller, 3, 2);
+  inner_grid->add_cell(create_last_edit_label_ui(controller, Justification::left), 0, 0, 1, 1);
+  inner_grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
+  auto outer_grid = create_grid_ui(controller, 1, 20);
+  outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 18);
+  return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(outer_grid)));
 }
 
 static std::unique_ptr<ui_element>

@@ -18,6 +18,7 @@ last_edit_value_param_listener::textEditorTextChanged(juce::TextEditor&)
 void 
 last_edit_value_param_listener::any_controller_param_changed(std::int32_t index)
 {
+  if(_last_param_index == index) return;
   auto value = _controller->ui_value_at_index(index);
   auto const& param_info = _controller->topology()->params[index];
   auto const& part_desc = *_controller->topology()->parts[param_info.part_index].descriptor;
