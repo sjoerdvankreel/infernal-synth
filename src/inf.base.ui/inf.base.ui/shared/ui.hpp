@@ -36,8 +36,8 @@ namespace inf::base::ui {
 
 typedef std::unique_ptr<inf_look_and_feel> (*
 lnf_factory)(inf::base::plugin_controller*);
-typedef void (*
-confirmed_callback)(inf::base::plugin_controller*, std::int32_t);
+typedef std::function<void(inf::base::plugin_controller*)>
+confirmed_callback;
 
 void load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory);

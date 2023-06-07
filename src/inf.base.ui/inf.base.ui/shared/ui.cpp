@@ -713,9 +713,7 @@ create_factory_preset_ui(
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
   return create_dropdown_ui(controller, items, [controller, presets, lnf_factory](std::int32_t index) {
-    show_confirm_box(controller, "Load factory preset", lnf_factory, [](plugin_controller* controller, std::int32_t index) {
-      File file(File::getSpecialLocation(File::currentExecutableFile));
-      auto presets = controller->factory_presets(file.getFullPathName().toStdString());
+    show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, index](plugin_controller* controller) {
       controller->load_preset(presets[index].path, true); }); });
 }
 
@@ -798,7 +796,7 @@ show_confirm_box(
   state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
-  state->confirmed(state->controller, 0);
+  state->confirmed(state->controller);
   delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
     state->window->exitModalState();
