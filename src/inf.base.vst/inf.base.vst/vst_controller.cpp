@@ -22,6 +22,7 @@
 #include <cstring>
 #include <cstdint>
 #include <fstream>
+#include <filesystem>
 
 using namespace inf::base;
 using namespace Steinberg;
@@ -88,7 +89,17 @@ vst_controller::setParamNormalized(ParamID tag, ParamValue value)
 std::vector<inf::base::external_resource> 
 vst_controller::factory_presets(std::string const& plugin_file) const
 {
+  std::string dot_extension = ".vstpreset";
   std::vector<inf::base::external_resource> result;
+  std::string path = plugin_file + std::string("/Presets/") + (topology()->is_instrument() ? "Instrument" : "Fx");
+  for (auto const& entry: std::filesystem::directory_iterator(path))
+  {
+    if (entry.path().extension().string() != dot_extension) continue;
+    external_resource preset;
+    preset.path = entry.path().string();
+    preset.name = entry.path().stem().string();
+    result.push_back(preset);
+  }
   return result;
 }
 
