@@ -3,6 +3,7 @@
 #include <inf.base.ui/controls/param_slider.hpp>
 #include <inf.base.ui/controls/selector_bar.hpp>
 #include <inf.base.ui/controls/toggle_button.hpp>
+#include <inf.base.ui/controls/param_dropdown.hpp>
 
 using namespace juce;
 
@@ -365,14 +366,20 @@ inf_look_and_feel::drawComboBox(
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
 {
   // config
+  float margin = 0.0f;
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 1.0f;
+  if(dynamic_cast<inf_param_dropdown*>(&cb) == nullptr) margin = 2.0f;
 
   // precompute stuff
-  float const x = static_cast<float>(0);
-  float const y = static_cast<float>(0);
-  float const w = static_cast<float>(w0);
-  float const h = static_cast<float>(h0);
+  float x = static_cast<float>(0);
+  float y = static_cast<float>(0);
+  float w = static_cast<float>(w0);
+  float h = static_cast<float>(h0);
+  x += margin;
+  y += margin;
+  w -= 2.0f * margin;
+  h -= 2.0f * margin;
 
   fill_gradient_rounded_rectangle(
     g, cb, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, 
