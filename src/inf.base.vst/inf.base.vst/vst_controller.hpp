@@ -37,7 +37,7 @@ protected:
 protected:
   void update_state(ParamID tag);
   virtual vst_editor* create_editor() = 0;
-  tresult set_component_state(IBStream* state, bool perform_edit);
+  tresult set_component_state(IBStream* state);
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:
@@ -49,15 +49,15 @@ public:
   tresult PLUGIN_API initialize(FUnknown* context) override;
   IPlugView* PLUGIN_API createView(char const* name) override;
   bool load_preset(std::string const& path, bool factory) override;
+  void load_component_state(inf::base::param_value* state) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
   tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
-  void load_component_state(inf::base::param_value* state, bool perform_edit) override;
   std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
 
   std::string preset_file_extension() override { return "vstpreset"; }
   double get_plugin_param(std::int32_t tag) override { return getParamNormalized(tag); }
-  tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state, false); }
+  tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state); }
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override { do_edit(target_tag, getParamNormalized(source_tag)); }
   void restart() override { if (componentHandler != nullptr) componentHandler->restartComponent(Steinberg::Vst::kParamValuesChanged); }
   double base_to_plugin_param(std::int32_t index, param_value val) const override { return base_to_vst_normalized(topology(), index, val); }

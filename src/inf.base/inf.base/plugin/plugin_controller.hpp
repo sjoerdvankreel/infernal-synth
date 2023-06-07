@@ -59,9 +59,9 @@ public:
 
   virtual void restart() = 0;
   virtual std::string preset_file_extension() = 0;
+  virtual void load_component_state(param_value* state) = 0;
   virtual void save_preset(std::string const& path) = 0;
   virtual bool load_preset(std::string const& path, bool factory) = 0;
-  virtual void load_component_state(param_value* state, bool perform_edit) = 0;
 
   virtual float editor_aspect_ratio() const = 0;
   virtual void* current_editor_window() const = 0;

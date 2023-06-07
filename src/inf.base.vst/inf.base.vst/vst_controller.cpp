@@ -106,7 +106,7 @@ vst_controller::factory_presets(std::string const& plugin_file) const
 }
 
 tresult
-vst_controller::set_component_state(IBStream* state, bool perform_edit)
+vst_controller::set_component_state(IBStream* state)
 {
   if (state == nullptr) return kResultFalse;
 
@@ -115,7 +115,7 @@ vst_controller::set_component_state(IBStream* state, bool perform_edit)
   vst_io_stream stream(&streamer);
   std::vector<param_value> values(_topology->input_param_count, param_value());
   if (!stream.load(*_topology, values.data())) return kResultFalse;
-  load_component_state(values.data(), perform_edit);
+  load_component_state(values.data());
   return kResultOk;
 }
 
@@ -130,20 +130,16 @@ vst_controller::update_state(ParamID tag)
 }
 
 void 
-vst_controller::load_component_state(param_value* state, bool perform_edit)
+vst_controller::load_component_state(param_value* state)
 {
   // SetParamNormalized() each value.
   for (std::int32_t p = 0; p < _topology->input_param_count; p++)
   {
     ParamID tag = _topology->param_index_to_id[p];
     ParamValue value = base_to_vst_normalized(_topology.get(), p, state[p]);
-    if (!perform_edit)
-      setParamNormalized(tag, value);
-    else
-      do_edit(tag, value);
+    do_edit(tag, value);
     update_state(tag);
   }
-
   restart();
 }
 
@@ -179,7 +175,7 @@ vst_controller::load_preset(std::string const& path, bool factory)
   // Allow to share factory presets by versioned/unversioned.
   if (!factory && preset.getClassID() != _processor_id) return false;
   if (!preset.seekToComponentState()) return false;
-  return set_component_state(&memory, true) == kResultOk;
+  return set_component_state(&memory) == kResultOk;
 }
 
 // Save using full vstpreset headers. See PresetFile::savePreset. 

@@ -67,3 +67,4 @@
 - paint it right (last pixel missing in graphs)
 - check todos
 - gcc build + linux test
+- update all the preset files

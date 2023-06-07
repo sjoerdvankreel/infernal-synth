@@ -39,7 +39,7 @@ plugin_controller::init_patch()
 {
   std::vector<param_value> new_values(topology()->input_param_count, param_value());
   topology()->init_factory_preset(new_values.data());
-  load_component_state(new_values.data(), true);
+  load_component_state(new_values.data());
 }
 
 void 
@@ -47,7 +47,7 @@ plugin_controller::clear_patch()
 {
   std::vector<param_value> new_values(topology()->input_param_count, param_value());
   topology()->init_clear_patch(new_values.data());
-  load_component_state(new_values.data(), true);
+  load_component_state(new_values.data());
 }
 
 void 
@@ -57,7 +57,7 @@ plugin_controller::clear_part(part_id id)
   std::int32_t param_count = topology()->static_parts[id.type].param_count;
   std::vector<param_value> new_values(state(), state() + topology()->params.size());
   topology()->init_param_defaults(new_values.data(), param_start, param_start + param_count);
-  load_component_state(new_values.data(), true);
+  load_component_state(new_values.data());
 }
 
 void 
