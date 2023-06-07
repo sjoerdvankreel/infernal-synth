@@ -707,8 +707,10 @@ create_factory_preset_ui(
   plugin_controller* controller)
 {
   std::vector<std::string> items;
-  for(std::size_t i = 0; i < controller->factory_presets().size(); i++)
-    items.push_back(controller->factory_presets()[i].name);
+  File file(File::getSpecialLocation(File::currentExecutableFile));
+  auto presets = controller->factory_presets(file.getFullPathName().toStdString());
+  for(std::size_t i = 0; i < presets.size(); i++)
+    items.push_back(presets[i].name);
   return create_dropdown_ui(controller, items, [](int){});
 }
 
