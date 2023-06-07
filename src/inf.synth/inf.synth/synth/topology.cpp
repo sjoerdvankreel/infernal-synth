@@ -366,6 +366,10 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 
 // ---- params ----
 
+static std::vector<list_item> const edit_selector_types = {
+{ "{73A12F62-82E3-4FCF-B507-2DF2BB00521C}", "Edit Voice" },
+{ "{F1C6C636-BDCB-48C8-8BBC-AAD2ECF5AD0D}", "Edit Global" } };
+
 param_descriptor const
 master_params[master_param::count] =
 {
@@ -375,6 +379,12 @@ master_params[master_param::count] =
   { "{580FF8F1-4C06-4562-B4A0-702355B6E152}", { { "CVB 2", "CVB 2" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{DD9A20AD-563A-4855-BAEF-2C53E6B94815}", { { "CVU 3", "CVU 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
   { "{B3B033A3-B615-4AD2-81AB-5CB769891BB0}", { { "CVB 3", "CVB 3" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } }
+};
+
+param_descriptor const
+edit_selector_params[edit_selector_param::count] =
+{
+  { "{5B22861B-88F6-446C-AA92-BA6B39712342}", { { "Edit", "Edit" }, "", param_kind::ui, param_type::list, { &edit_selector_types, edit_selector_type::edit_voice } } }
 };
 
 // ---- part selector ----
@@ -418,6 +428,7 @@ part_descriptors[part_type::count] =
   { "{3F416415-4C1E-49B3-A59F-0C4472C11B69}", { "G.CV", "Global CV" }, part_kind::input, part_type::gcv_bank, 1, gcv_bank_params, cv_bank_param::count, nullptr },
   { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "V.CV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "G.CV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
+  { "{52786612-2524-4F95-93F5-9D0228C96732}", { "Edit", "Edit" }, part_kind::input, part_type::edit_selector, 1, edit_selector_params, edit_selector_param::count, nullptr },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, nullptr },
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, nullptr }
 };         

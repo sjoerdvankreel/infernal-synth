@@ -10,24 +10,31 @@
 
 namespace inf::synth {
 
+inline std::int32_t constexpr master_gcv_count = 3;
+extern base::param_descriptor const master_params[];
 extern base::part_descriptor const part_descriptors[];
-  
+extern base::param_descriptor const edit_selector_params[];
+
 // global topo
 struct part_type_t { enum value { 
   vosc, veffect, geffect, vaudio_bank, gaudio_bank, 
   voice, master, vamp, gamp, venv, vlfo, glfo, vcv_bank, 
-  gcv_bank, vcv_plot, gcv_plot, active, output, count }; };
+  gcv_bank, vcv_plot, gcv_plot, edit_selector, active, output, count }; };
 typedef part_type_t::value part_type;
 
-inline std::int32_t constexpr master_gcv_count = 3;
-extern base::param_descriptor const master_params[];
-
+struct edit_selector_type_t { enum value {
+  edit_voice, edit_global, count }; };
+struct edit_selector_param_t { enum value {
+  edit_type, count }; };
+struct active_param_t { enum value { 
+  vosc, veffect, geffect, venv, vlfo, glfo, count }; };
 struct master_param_t { enum value {
   gcv1_uni, gcv1_bi, gcv2_uni, gcv2_bi, gcv3_uni, gcv3_bi, count }; };
-typedef master_param_t::value master_param;
 
-struct active_param_t { enum value { vosc, veffect, geffect, venv, vlfo, glfo, count }; };
 typedef active_param_t::value active_param;
+typedef master_param_t::value master_param;
+typedef edit_selector_type_t::value edit_selector_type;
+typedef edit_selector_param_t::value edit_selector_param;
 
 // plugin entry
 struct synth_topology : 
