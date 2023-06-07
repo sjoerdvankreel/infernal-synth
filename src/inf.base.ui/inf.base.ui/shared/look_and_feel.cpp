@@ -1,6 +1,7 @@
 #include <inf.base/shared/support.hpp>
 #include <inf.base.ui/shared/look_and_feel.hpp>
 #include <inf.base.ui/controls/slider.hpp>
+#include <inf.base.ui/controls/selector_bar.hpp>
 #include <inf.base.ui/controls/toggle_button.hpp>
 
 using namespace juce;
@@ -157,9 +158,16 @@ int
 inf_look_and_feel::getTabButtonBestWidth(
   TabBarButton& button, int tab_depth)
 {
-  int width = button.getTabbedButtonBar().getWidth();
-  int count = button.getTabbedButtonBar().getNumTabs();
-  return width / count - 1;
+  if (dynamic_cast<inf_selector_bar*>(&button.getTabbedButtonBar()))
+  {
+    int width = button.getTabbedButtonBar().getWidth();
+    int count = button.getTabbedButtonBar().getNumTabs();
+    return width / count - 1;
+  } else {
+    float width = static_cast<float>(button.getTabbedButtonBar().getWidth());
+    float count = static_cast<float>(button.getTabbedButtonBar().getNumTabs());
+    return static_cast<int>(std::ceil(width / count));
+  }
 }
 
 void 
