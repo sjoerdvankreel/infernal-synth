@@ -19,7 +19,7 @@ lfo_processor::
 lfo_processor(topology_info const* topology, part_id id, float sample_rate, float bpm, automation_view const& automation) :
 part_processor(topology, id, sample_rate), _ended(false), _started(false), _end_index(0), 
 _on(), _type(), _single(), _synced(), _bipolar(), _inverted(), _phase(0.0f), _max_freq(), 
-_filter_amt(), _end_sample(), _synced_frequency(), _basic(), _random(), _free(), _filter()
+_filter_amt(), _end_sample(), _synced_frequency(), _free(), _basic(), _random(), _filter()
 { 
   automation_view lfo_automation = automation.rearrange_params(id);
   _type = lfo_automation.block_discrete(lfo_param::type);

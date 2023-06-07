@@ -11,7 +11,7 @@ public Component
 public:
   inf_button ok;
   inf_button cancel;
-  TextLayout text;
+  TextLayout text = {};
   FileBrowserComponent& chooser_component;
 
   content_component(
@@ -27,7 +27,7 @@ inf_file_chooser_dialog::content_component::
 content_component(
   inf::base::plugin_controller* controller,
   String const& name, FileBrowserComponent& chooser) :
-  Component(name), chooser_component(chooser), ok(controller), cancel(controller)
+  Component(name), ok(controller), cancel(controller), chooser_component(chooser)
 {
   ok.setButtonText("OK");
   cancel.setButtonText("Cancel");

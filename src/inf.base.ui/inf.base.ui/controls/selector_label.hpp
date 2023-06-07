@@ -18,7 +18,7 @@ public:
   void mouseUp(juce::MouseEvent const& event) override;
 
   inf_selector_label(inf::base::plugin_controller* const controller, std::int32_t part_type, std::int32_t part_count, bool vertical):
-  inf_label(!_vertical), _vertical(vertical), _part_type(part_type), _part_count(part_count), _controller(controller) {}
+  inf_label(!vertical), _vertical(vertical), _part_type(part_type), _part_count(part_count), _controller(controller) {}
 };
 
 } // namespace inf::base::ui
