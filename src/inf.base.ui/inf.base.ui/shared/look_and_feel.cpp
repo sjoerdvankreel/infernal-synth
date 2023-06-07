@@ -408,17 +408,18 @@ inf_look_and_feel::drawPopupMenuItem(
   dummy.setLookAndFeel(this);
   
   // config
-  float const padding_fixed = 2.0f;
+  float const padding_vfixed = 2.0f;
+  float const padding_hfixed = 8.0f;
   float const text_hpad_fixed = 8.0f;
   float const tick_size_factor = 0.9f;
   float const corner_size_fixed = 5.0f;
 
   auto farea = area0.toFloat();
   juce::Rectangle<float> hl_rect(
-    farea.getX() + padding_fixed / 2.0f,
-    farea.getY() + padding_fixed / 2.0f,
-    farea.getWidth() - padding_fixed,
-    farea.getHeight() - padding_fixed);
+    farea.getX() + padding_hfixed / 2.0f,
+    farea.getY() + padding_vfixed / 2.0f,
+    farea.getWidth() - padding_hfixed,
+    farea.getHeight() - padding_vfixed);
 
   // hover bg
   if(is_highlighted)
