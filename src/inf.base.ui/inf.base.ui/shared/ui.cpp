@@ -196,6 +196,7 @@ last_edit_value_element::build_core(juce::LookAndFeel& lnf)
   auto value = controller()->ui_value_at_index(0);
   result->setText(controller()->topology()->params[0].descriptor->data.format(false, value));
   _listener.reset(new last_edit_value_param_listener(controller(), result));
+  result->addListener(_listener.get());
   return result;
 }
 
