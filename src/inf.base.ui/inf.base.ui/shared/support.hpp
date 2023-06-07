@@ -14,7 +14,7 @@ namespace inf::base::ui {
 enum class label_type { label, value };
 enum class tooltip_type { off, label, value };
 enum class icon_type { sine, saw, tri, pulse };
-enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown };
+enum class edit_type { knob, selector, hslider, vslider, toggle, dropdown, tab_bar };
 
 std::string
 format_label_short(plugin_controller const* controller, std::int32_t param_index);

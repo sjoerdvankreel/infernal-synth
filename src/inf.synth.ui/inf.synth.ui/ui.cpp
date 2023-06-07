@@ -962,6 +962,7 @@ create_synth_edit_group(plugin_controller* controller)
   auto inner_grid = create_grid_ui(controller, 3, 2);
   inner_grid->add_cell(create_last_edit_label_ui(controller, Justification::left), 0, 0, 1, 1);
   inner_grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
+  inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 1, 0, 1, 2);
   auto outer_grid = create_grid_ui(controller, 1, 40);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 38);
   return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(outer_grid)));

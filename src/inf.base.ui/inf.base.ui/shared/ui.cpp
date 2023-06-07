@@ -371,6 +371,7 @@ param_edit_element::build_core(juce::LookAndFeel& lnf)
   switch (_type)
   {
   case edit_type::toggle: result = build_toggle_core(lnf); break;
+  case edit_type::tab_bar: result = build_tab_bar_core(lnf); break;
   case edit_type::dropdown: result = build_dropdown_core(lnf); break;
   default: result = build_slider_core(lnf); break;
   }
@@ -398,6 +399,20 @@ param_edit_element::build_toggle_core(LookAndFeel& lnf)
   _toggle_listener.reset(new toggle_param_listener(controller(), result, index));
   result->setToggleState(controller()->state()[index].discrete != 0, dontSendNotification);
   result->addListener(_toggle_listener.get());
+  return result;
+}
+
+Component*
+param_edit_element::build_tab_bar_core(LookAndFeel& lnf)
+{
+  TabbedButtonBar* result = new TabbedButtonBar(TabbedButtonBar::TabsAtTop);
+  auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
+  std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
+  for(std::size_t i = 0; i < desc.data.discrete.items->size(); i++)
+    result->addTab((*desc.data.discrete.items)[i].name, Colours::black, static_cast<int>(i));
+  result->setCurrentTabIndex(controller()->state()[index].discrete, dontSendNotification);
+  _tab_bar_listener.reset(new tab_bar_param_listener(controller(), result, index));
+  result->addChangeListener(_tab_bar_listener.get());
   return result;
 }
 
