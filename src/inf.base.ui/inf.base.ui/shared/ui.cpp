@@ -72,7 +72,7 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
   state->lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
   state->lnf->setColour(TextButton::ColourIds::textColourOffId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
   state->lnf->setColour(TextButton::ColourIds::buttonColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
-  state->lnf->setColour(inf_file_chooser_dialog::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_title));
+  state->lnf->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_title));
   state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_text));
   state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_background));
   state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_text));
@@ -685,7 +685,7 @@ save_preset_file(
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
-  state->box->centreWithDefaultSize(current_window);
+  state->box->center_around(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(saved), false);
 }
 
@@ -708,7 +708,7 @@ load_preset_file(
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
-  state->box->centreWithDefaultSize(current_window);
+  state->box->center_around(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(selected), false);
 }
 
