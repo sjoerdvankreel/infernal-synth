@@ -194,7 +194,7 @@ last_edit_value_element::build_core(juce::LookAndFeel& lnf)
 {
   TextEditor* result = new TextEditor;
   auto value = controller()->ui_value_at_index(0);
-  result->setJustification(juce::Justification::centredRight);
+  result->setJustification(juce::Justification::topRight);
   result->setFont(juce::Font(get_text_edit_font_height(controller()), juce::Font::bold));
   result->setText(controller()->topology()->params[0].descriptor->data.format(false, value));
   result->setColour(TextEditor::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::text_edit_text));
