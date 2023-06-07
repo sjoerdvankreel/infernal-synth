@@ -47,7 +47,6 @@
 - double check controller/editor/processor methods, what is still needed
 - fix linux renoise resizing
 - scan vst_controller/editor for unneeded stuff
-- reduce the use of background images
 - reduce controller.uidesc to image names, image offsets and color scheme
 - disable unison for noise?
 - rewrite the manual
