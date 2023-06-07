@@ -190,6 +190,16 @@ last_edit_label_element::build_core(juce::LookAndFeel& lnf)
 }
 
 Component*
+last_edit_value_element::build_core(juce::LookAndFeel& lnf)
+{
+  TextEditor* result = new TextEditor;
+  auto value = controller()->ui_value_at_index(0);
+  result->setText(controller()->topology()->params[0].descriptor->data.format(false, value));
+  _listener.reset(new last_edit_value_param_listener(controller(), result));
+  return result;
+}
+
+Component*
 button_element::build_core(juce::LookAndFeel& lnf)
 {
   inf_button* result = new inf_button(controller());
