@@ -101,8 +101,8 @@ inf_look_and_feel::fillTextEditorBackground(
     padding_fixed, padding_fixed, width - 2.0f * padding_fixed, 
     height - 2.0f * padding_fixed);
   fill_gradient_rounded_rectangle(
-    g, e, rect, colors::text_background_low, 
-    colors::text_background_high, corner_size_fixed, 0.25f);
+    g, e, rect, colors::text_edit_background_low,
+    colors::text_edit_background_high, corner_size_fixed, 0.25f);
 }
 
 void 
@@ -116,8 +116,8 @@ inf_look_and_feel::drawTextEditorOutline(
     padding_fixed, padding_fixed, width - 2.0f * padding_fixed,
     height - 2.0f * padding_fixed);
   stroke_gradient_rounded_rectangle(
-    g, e, rect, colors::text_outline_low,
-    colors::text_outline_high, corner_size_fixed, 0.25f, line_size);
+    g, e, rect, colors::text_edit_outline_low,
+    colors::text_edit_outline_high, corner_size_fixed, 0.25f, line_size);
 }
 
 void 
