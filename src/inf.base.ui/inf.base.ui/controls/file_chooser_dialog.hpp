@@ -6,28 +6,27 @@
 
 namespace inf::base::ui {
 
-class inf_file_chooser_dialog: public juce::ResizableWindow,
-                                       private juce::FileBrowserListener
+class inf_file_chooser_dialog: 
+public juce::ResizableWindow,
+private juce::FileBrowserListener
 {
-public:
-  inf_file_chooser_dialog(inf::base::plugin_controller* controller, const juce::String& title,
-    juce::FileBrowserComponent& browserComponent,
-    juce::Colour backgroundColour,
-                          juce::Component* parentComponent);
-
-    ~inf_file_chooser_dialog() override;
-    void centreWithDefaultSize (Component* componentToCentreAround) { centreAroundComponent(componentToCentreAround, 600, 500); }
-    enum ColourIds { titleTextColourId      = 0x1000850, /**< The colour to use to draw the box's title. */
-    };
-
 private:
-    inf::base::plugin_controller* _controller;
-    class ContentComponent;
-    ContentComponent* content;
-    void selectionChanged() override;
-    void fileClicked (const juce::File&, const juce::MouseEvent&) override {}
-    void fileDoubleClicked (const juce::File&) override;
-    void browserRootChanged (const juce::File&) override {}
+  class content_component;
+  content_component* content;
+  inf::base::plugin_controller* _controller;
+
+  void selectionChanged() override;
+  void fileDoubleClicked(juce::File const&) override;
+  void browserRootChanged(juce::File const&) override {}
+  void fileClicked(juce::File const&, juce::MouseEvent const&) override {}
+
+public:
+  ~inf_file_chooser_dialog() override;
+  inf_file_chooser_dialog(
+    inf::base::plugin_controller* controller, juce::String const& title,
+    juce::FileBrowserComponent& browser_component,
+    juce::Colour background_colour, juce::Component* parent_component);
+  void center_around(juce::Component* component) { centreAroundComponent(component, 600, 500); }
 };
 
 } // namespace inf::base::ui
