@@ -53,6 +53,7 @@ public:
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
   tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
   void load_component_state(inf::base::param_value* state, bool perform_edit) override;
+  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
 
   std::string preset_file_extension() override { return "vstpreset"; }
   double get_plugin_param(std::int32_t tag) override { return getParamNormalized(tag); }

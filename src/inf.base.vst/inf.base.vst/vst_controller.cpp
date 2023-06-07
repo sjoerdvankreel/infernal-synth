@@ -85,6 +85,13 @@ vst_controller::setParamNormalized(ParamID tag, ParamValue value)
   return kResultOk;
 }
 
+std::vector<inf::base::external_resource> 
+vst_controller::factory_presets(std::string const& plugin_file) const
+{
+  std::vector<inf::base::external_resource> result;
+  return result;
+}
+
 tresult
 vst_controller::set_component_state(IBStream* state, bool perform_edit)
 {
