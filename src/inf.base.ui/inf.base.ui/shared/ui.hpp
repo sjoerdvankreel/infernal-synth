@@ -20,6 +20,7 @@
 #include <inf.base.ui/listeners/dropdown_param_listener.hpp>
 #include <inf.base.ui/listeners/selector_extra_listener.hpp>
 #include <inf.base.ui/listeners/last_edit_label_param_listener.hpp>
+#include <inf.base.ui/listeners/last_edit_value_param_listener.hpp>
 
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -107,6 +108,22 @@ public:
 inline std::unique_ptr<last_edit_label_element>
 create_last_edit_label_ui(inf::base::plugin_controller* controller, juce::Justification justification)
 { return std::make_unique<last_edit_label_element>(controller, justification); }
+
+class last_edit_value_element:
+public ui_element
+{
+  std::unique_ptr<last_edit_value_param_listener> _listener = {};
+protected:
+  juce::Component* build_core(juce::LookAndFeel& lnf) override;
+public:
+  void layout() override {}
+  last_edit_value_element(inf::base::plugin_controller* controller):
+  ui_element(controller) {}
+};
+
+inline std::unique_ptr<last_edit_value_element>
+create_last_edit_value_ui(inf::base::plugin_controller* controller)
+{ return std::make_unique<last_edit_value_element>(controller); }
 
 class button_element :
 public ui_element
