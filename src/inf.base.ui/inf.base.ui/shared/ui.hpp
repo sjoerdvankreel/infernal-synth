@@ -438,6 +438,13 @@ create_root_ui(
 { return std::make_unique<root_element>(controller, std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
+create_factory_preset_ui(
+  plugin_controller* controller);
+std::unique_ptr<ui_element>
+create_part_group_ui(
+  plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
+  std::unique_ptr<ui_element>&& content);
+std::unique_ptr<ui_element>
 create_part_single_ui(
   plugin_controller* controller, std::string const& header, 
   std::int32_t selected_part_type, bool vertical, std::unique_ptr<ui_element>&& part);
@@ -446,10 +453,6 @@ create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
   std::int32_t selected_part_type, std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
-std::unique_ptr<ui_element>
-create_part_group_ui(
-  plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
-  std::unique_ptr<ui_element>&& content);
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 

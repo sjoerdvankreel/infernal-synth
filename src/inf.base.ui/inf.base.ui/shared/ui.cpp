@@ -702,6 +702,16 @@ create_part_selector_ui(
   return result;
 }
 
+std::unique_ptr<ui_element>
+create_factory_preset_ui(
+  plugin_controller* controller)
+{
+  std::vector<std::string> items;
+  for(std::size_t i = 0; i < controller->factory_presets().size(); i++)
+    items.push_back(controller->factory_presets()[i].name);
+  return create_dropdown_ui(controller, items, [](int){});
+}
+
 void
 show_ok_box(
   inf::base::plugin_controller* controller,
