@@ -955,7 +955,7 @@ static std::unique_ptr<ui_element>
 create_synth_edit_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 2);
-  grid->add_cell(create_last_edit_label_ui(controller, Justification::right), 0, 0, 1, 1);
+  grid->add_cell(create_last_edit_label_ui(controller, Justification::left), 0, 0, 1, 1);
   grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
   return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(grid)));
 }
