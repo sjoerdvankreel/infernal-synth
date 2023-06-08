@@ -964,8 +964,6 @@ create_synth_edit_group(plugin_controller* controller)
   last_edit_label_grid->add_cell(create_last_edit_label_ui(controller, Justification::right), 0, 0, 1, 9);
   inner_grid->add_cell(std::move(last_edit_label_grid), 0, 0, 1, 1);
   inner_grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
-  inner_grid->add_cell(create_label_ui(controller, "Theme", Justification::right, get_param_label_font_height(controller), inf_look_and_feel::colors::param_label), 1, 0, 1, 1);
-  inner_grid->add_cell(create_theme_selector_ui(controller, create_root_lnf), 1, 1, 1, 1);
   inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 2, 0, 1, 2);
   auto outer_grid = create_grid_ui(controller, 1, 40);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 38);
