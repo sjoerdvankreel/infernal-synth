@@ -53,6 +53,8 @@ public:
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
   tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
+  virtual std::string default_theme_path(std::string const& plugin_file) const override;
+  virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const override;
   std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
 
   std::string preset_file_extension() override { return "vstpreset"; }
