@@ -717,6 +717,20 @@ create_factory_preset_ui(
       controller->load_preset(presets[index].path, true); }); });
 }
 
+std::unique_ptr<ui_element>
+create_theme_selector_ui(
+  plugin_controller* controller, lnf_factory lnf_factory)
+{
+  std::vector<std::string> items;
+  File file(File::getSpecialLocation(File::currentExecutableFile));
+  auto themes = controller->themes(file.getFullPathName().toStdString());
+  for (std::size_t i = 0; i < themes.size(); i++)
+    items.push_back(themes[i].name);
+  return create_dropdown_ui(controller, items, [controller, themes, lnf_factory](std::int32_t index) {
+    
+  });
+}
+
 void
 show_ok_box(
   inf::base::plugin_controller* controller,
