@@ -67,3 +67,4 @@
 - check todos
 - gcc build + linux test
 - update all the preset files
+- restore 10 fx ?
