@@ -168,9 +168,9 @@ set_target_properties(infernal.synth.vst.generic PROPERTIES RUNTIME_OUTPUT_DIREC
 add_custom_target(copy-themes-synth-generic ALL DEPENDS infernal.synth.vst.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes "${PROJECT_SOURCE_DIR}/dist/win32/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynthGeneric.vst3/Contents/Resources/Themes")
 add_custom_target(copy-presets-synth-generic ALL DEPENDS infernal.synth.vst.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets "${PROJECT_SOURCE_DIR}/dist/win32/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynthGeneric.vst3/Contents/Resources/Presets")
 else()
-set_target_properties(infernal.synth.vst.generic PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynthGeneric.vst3/Contents/x86_64-linux")
-add_custom_target(copy-themes-synth-generic ALL DEPENDS infernal.synth.vst.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynthGeneric.vst3/Contents/Resources/Themes")
-add_custom_target(copy-presets-synth-generic ALL DEPENDS infernal.synth.vst.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynthGeneric.vst3/Contents/Resources/Presets")
+set_target_properties(infernal.synth.vst.generic PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynthGeneric.vst3/Contents/x86_64-linux")
+add_custom_target(copy-themes-synth-generic ALL DEPENDS infernal.synth.vst.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynthGeneric.vst3/Contents/Resources/Themes")
+add_custom_target(copy-presets-synth-generic ALL DEPENDS infernal.synth.vst.generic COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynthGeneric.vst3/Contents/Resources/Presets")
 endif()
 
 # Inf synth vst versioned.
