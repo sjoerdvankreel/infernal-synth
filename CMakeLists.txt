@@ -39,7 +39,7 @@ add_compile_options(-ffast-math)
 add_compile_options(-march=native)
 add_definitions(-DJUCE_LINUX=1 -DJUCE_GUI_BASICS_INCLUDE_XHEADERS=1)
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,--no-undefined -fvisibility=hidden -fvisibility-inlines-hidden -ldl -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,--no-undefined -fvisibility=hidden -fvisibility-inlines-hidden -pthread -ldl")
 endif()
 
 # Juce flags.
