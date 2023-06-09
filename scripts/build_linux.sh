@@ -1,22 +1,22 @@
 #!/bin/bash
 set -e
 
-if [ "$#" -ne 5 ]
+if [ "$#" -ne 6 ]
 then
-  echo "Usage: $0 <path-to-hiir-src> <path-to-juce-src> <path-to-vst3sdk-src> <path-to-vst3sdk-debug-binaries> <path-to-vst3sdk-release-binaries>"
+  echo "Usage: $0 <path-to-hiir-src> <path-to-juce-src> <path-to-vst3sdk-src> <path-to-vst3sdk-debug-binaries> <path-to-vst3sdk-release-binaries> <linux-distro-name>"
   exit 1
 fi
 
 cd ..
-mkdir -p build/linux/debug
-cd build/linux/debug
-cmake -DCMAKE_BUILD_TYPE=Debug -DHIIR_140_SRC_DIR="$1" -DJUCE_705_SRC_DIR="$2" -DVST3_SDK_378_SRC_DIR="$3" -DVST3_SDK_378_BUILD_DEBUG_DIR="$4" -DVST3_SDK_378_BUILD_RELEASE_DIR="$5" ../../..
+mkdir -p build/linux_"$6"/debug
+cd build/linux_"$6"/debug
+cmake -DCMAKE_BUILD_TYPE=Debug -DINFERNAL_LINUX_DISTRO="$6" -DHIIR_140_SRC_DIR="$1" -DJUCE_705_SRC_DIR="$2" -DVST3_SDK_378_SRC_DIR="$3" -DVST3_SDK_378_BUILD_DEBUG_DIR="$4" -DVST3_SDK_378_BUILD_RELEASE_DIR="$5" ../../..
 make
 
 cd ..
 mkdir -p release
 cd release
-cmake -DCMAKE_BUILD_TYPE=Release -DHIIR_140_SRC_DIR="$1" -DJUCE_705_SRC_DIR="$2" -DVST3_SDK_378_SRC_DIR="$3" -DVST3_SDK_378_BUILD_DEBUG_DIR="$4" -DVST3_SDK_378_BUILD_RELEASE_DIR="$5" ../../..
+cmake -DCMAKE_BUILD_TYPE=Release -DINFERNAL_LINUX_DISTRO="$6" -DHIIR_140_SRC_DIR="$1" -DJUCE_705_SRC_DIR="$2" -DVST3_SDK_378_SRC_DIR="$3" -DVST3_SDK_378_BUILD_DEBUG_DIR="$4" -DVST3_SDK_378_BUILD_RELEASE_DIR="$5" ../../..
 make
 
 cd ../../../scripts
