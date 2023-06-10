@@ -561,7 +561,12 @@ create_fx_global_delay_grid(plugin_controller* controller, std::int32_t part_ind
 static std::unique_ptr<ui_element>
 create_fx_global_reverb_group(plugin_controller* controller, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 1, 1);
+  auto grid = create_grid_ui(controller, 1, 5);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::geffect, part_index, effect_param::reverb_apf, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::geffect, part_index, effect_param::reverb_damp, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::geffect, part_index, effect_param::reverb_mix, edit_type::knob, label_type::label, tooltip_type::value), 0, 2);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::geffect, part_index, effect_param::reverb_size, edit_type::knob, label_type::label, tooltip_type::value), 0, 3);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::geffect, part_index, effect_param::reverb_spread, edit_type::knob, label_type::label, tooltip_type::value), 0, 4);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Reverb", true), std::move(grid));
 }
 
