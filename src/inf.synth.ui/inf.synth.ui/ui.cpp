@@ -709,18 +709,22 @@ create_lfo_free_groups(plugin_controller* controller, std::int32_t part_type, st
 static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
+  std::int32_t const lfo_cols = part_type == part_type::vlfo ? 3: 6;
   std::int32_t const row_count = part_type == part_type::vlfo? 3: 5;
-  std::int32_t const row_offset = part_type == part_type::vlfo ? 0 : 2;
+  std::int32_t const row_offset = part_type == part_type::vlfo ? 0: 2;
   auto grid = create_grid_ui(controller, row_count, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), row_offset + 0, 1, 1, 3);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), row_offset + 0, 1, 1, lfo_cols);
   grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), row_offset + 0, 0, 3, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), row_offset + 0, 4, 1, 3);
   auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), row_offset + 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
   auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), row_offset + 1, 1, 2, 6);
   random->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::random; });
   auto free = grid->add_cell(create_lfo_free_groups(controller, part_type, part_index), row_offset + 1, 1, 2, 6);
   free->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::free; });
+  if(part_type == part_type::vlfo)
+    grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), row_offset + 0, 4, 1, 3);
+  else
+    grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 0, 2, 7);
   return grid;
 }
 
