@@ -491,10 +491,28 @@ create_fx_shaper_group(plugin_controller* controller, std::int32_t part_type, st
 }
 
 static std::unique_ptr<ui_element>
-create_fx_global_delay_group(plugin_controller* controller, std::int32_t part_index)
+create_fx_global_delay_feedback_group(plugin_controller* controller, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 5);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Feedback", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_fx_global_delay_multitap_group(plugin_controller* controller, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 3, 4);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Multitap", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
+create_fx_global_delay_grid(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 1, 1);
-  return create_part_group_ui(controller, create_group_label_ui(controller, "Delay", true), std::move(grid));
+  auto feedback = grid->add_cell(create_part_group_container_ui(controller, create_fx_global_delay_feedback_group(controller, part_index)), 0, 0);
+  feedback->relevant_if(part_id(part_type::geffect, part_index), effect_param::delay_type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_delay_type::feedback; });
+  auto multitap = grid->add_cell(create_part_group_container_ui(controller, create_fx_global_delay_multitap_group(controller, part_index)), 0, 0);
+  multitap->relevant_if(part_id(part_type::geffect, part_index), effect_param::delay_type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_delay_type::multi; });
+  return grid;
 }
 
 static std::unique_ptr<ui_element>
@@ -541,7 +559,7 @@ create_global_fx_grid(plugin_controller* controller, std::int32_t part_index)
   filter->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::filter; });
   auto shaper = result->add_cell(create_part_group_container_ui(controller, create_fx_shaper_group(controller, part_type::geffect, part_index)), 1, 0, 1, 8);
   shaper->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::shaper; });
-  auto delay = result->add_cell(create_part_group_container_ui(controller, create_fx_global_delay_group(controller, part_index)), 1, 0, 1, 8);
+  auto delay = result->add_cell(create_part_group_container_ui(controller, create_fx_global_delay_grid(controller, part_index)), 1, 0, 1, 8);
   delay->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::delay; });
   auto reverb = result->add_cell(create_part_group_container_ui(controller, create_fx_global_reverb_group(controller, part_index)), 1, 0, 1, 8);
   reverb->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::reverb; });
