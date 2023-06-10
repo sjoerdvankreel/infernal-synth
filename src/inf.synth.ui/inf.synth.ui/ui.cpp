@@ -374,7 +374,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 3, 5, std::move(oscillators));
+  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 1, 7, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
@@ -709,15 +709,17 @@ create_lfo_free_groups(plugin_controller* controller, std::int32_t part_type, st
 static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
-  auto grid = create_grid_ui(controller, 3, 7);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), 0, 1, 1, 3);
-  grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), 0, 0, 3, 1);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 4, 1, 3);
-  auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), 1, 1, 2, 6);
+  std::int32_t const row_count = part_type == part_type::vlfo? 3: 5;
+  std::int32_t const row_offset = part_type == part_type::vlfo ? 0 : 2;
+  auto grid = create_grid_ui(controller, row_count, 7);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_lfo_group(controller, part_type, part_index)), row_offset + 0, 1, 1, 3);
+  grid->add_cell(create_part_group_container_ui(controller, create_lfo_main_group(controller, part_type, part_index)), row_offset + 0, 0, 3, 1);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), row_offset + 0, 4, 1, 3);
+  auto basic = grid->add_cell(create_part_group_container_ui(controller, create_lfo_basic_group(controller, part_type, part_index)), row_offset + 1, 1, 2, 6);
   basic->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::basic; });
-  auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), 1, 1, 2, 6);
+  auto random = grid->add_cell(create_part_group_container_ui(controller, create_lfo_random_group(controller, part_type, part_index)), row_offset + 1, 1, 2, 6);
   random->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::random; });
-  auto free = grid->add_cell(create_lfo_free_groups(controller, part_type, part_index), 1, 1, 2, 6);
+  auto free = grid->add_cell(create_lfo_free_groups(controller, part_type, part_index), row_offset + 1, 1, 2, 6);
   free->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::free; });
   return grid;
 }
@@ -728,7 +730,7 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
   std::vector<std::unique_ptr<ui_element>> lfos;
   for (std::int32_t i = 0; i < part_count; i++)
     lfos.emplace_back(create_lfo_grid(controller, part_type, i));
-  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 3, 4, std::move(lfos));
+  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 1, 6, std::move(lfos));
 }
 
 static std::unique_ptr<ui_element>
@@ -895,10 +897,12 @@ create_voice_grid(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_global_grid(plugin_controller* controller)
 {
-  auto result = create_grid_ui(controller, 2, 17);
-  auto audio = result->add_cell(create_audio_part(controller, part_type::gaudio_bank), 0, 0, 2, 2);
+  auto result = create_grid_ui(controller, 8, 17);
+  auto audio = result->add_cell(create_audio_part(controller, part_type::gaudio_bank), 0, 0, 8, 2);
   audio->set_lnf(create_audio_lnf(controller));
-  auto cv = result->add_cell(create_cv_part(controller, part_type::gcv_bank), 0, 14, 2, 3);
+  auto lfo = result->add_cell(create_lfo_selector(controller, part_type::glfo, glfo_count, active_param::glfo), 0, 8, 5, 6);
+  lfo->set_lnf(create_cv_lnf(controller));
+  auto cv = result->add_cell(create_cv_part(controller, part_type::gcv_bank), 0, 14, 8, 3);
   cv->set_lnf(create_cv_lnf(controller));
   return result;
 }
