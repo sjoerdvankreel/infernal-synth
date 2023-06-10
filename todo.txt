@@ -72,3 +72,4 @@
 - fix dropdown submenu indicator
 - reset/clear/load preset still not flushing
 - swap red/blue for voice/global?
+- fix fx graph tooltips
