@@ -893,6 +893,17 @@ create_voice_grid(plugin_controller* controller)
 }
 
 static std::unique_ptr<ui_element>
+create_global_grid(plugin_controller* controller)
+{
+  auto result = create_grid_ui(controller, 2, 17);
+  auto audio = result->add_cell(create_audio_part(controller, part_type::gaudio_bank), 0, 0, 2, 2);
+  audio->set_lnf(create_audio_lnf(controller));
+  auto cv = result->add_cell(create_cv_part(controller, part_type::gcv_bank), 0, 14, 2, 3);
+  cv->set_lnf(create_cv_lnf(controller));
+  return result;
+}
+
+static std::unique_ptr<ui_element>
 create_master_unipolar_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 3);
@@ -1004,6 +1015,8 @@ create_synth_grid(plugin_controller* controller)
   result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
   auto voice = result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
   voice->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_voice; });
+  auto global = result->add_cell(create_global_grid(controller), 1, 0, 9, 17);
+  global->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_global; });
   return result;
 }
 

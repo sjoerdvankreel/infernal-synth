@@ -69,3 +69,4 @@
 - update all the preset files
 - restore 10 fx ?
 - restore resizing
+- fix dropdown submenu indicator
