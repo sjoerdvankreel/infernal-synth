@@ -812,7 +812,7 @@ create_cv_plot_part(plugin_controller* controller, std::int32_t part_type)
 }
 
 static std::unique_ptr<ui_element>
-create_cv_graph_lfo_grid(plugin_controller* controller)
+create_voice_cv_graph_lfo_grid(plugin_controller* controller)
 {
   auto result = create_grid_ui(controller, 4, 1);
   result->add_cell(create_lfo_selector(controller, part_type::vlfo, vlfo_count, active_param::vlfo), 0, 0, 3, 1);
@@ -885,7 +885,7 @@ create_voice_grid(plugin_controller* controller)
   voice_fx->set_lnf(create_audio_lnf(controller));
   auto env = result->add_cell(create_envelope_selector(controller), 0, 8, 1, 6);
   env->set_lnf(create_cv_lnf(controller));
-  auto cv_graph_lfo = result->add_cell(create_cv_graph_lfo_grid(controller), 1, 8, 1, 6);
+  auto cv_graph_lfo = result->add_cell(create_voice_cv_graph_lfo_grid(controller), 1, 8, 1, 6);
   cv_graph_lfo->set_lnf(create_cv_lnf(controller));
   auto cv = result->add_cell(create_cv_part(controller, part_type::vcv_bank), 0, 14, 2, 3);
   cv->set_lnf(create_cv_lnf(controller));
