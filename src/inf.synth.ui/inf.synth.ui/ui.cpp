@@ -536,10 +536,10 @@ create_fx_global_delay_multitap_group(plugin_controller* controller, std::int32_
   time->relevant_if(part_id(part_type::geffect, part_index), effect_param::dly_synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
   auto time_label = grid->add_cell(create_param_label_ui(controller, part_type::geffect, part_index, effect_param::dly_multi_time, label_type::label, Justification::centred), 2, 1, 1, 1);
   time_label->relevant_if(part_id(part_type::geffect, part_index), effect_param::dly_synced, true, [](std::int32_t part_index, std::int32_t val) { return val == 0; });
-  auto tempo = grid->add_cell(create_param_edit_ui(controller, part_type::geffect, part_index, effect_param::dly_multi_tempo, edit_type::knob, tooltip_type::label), 0, 1, 2, 1);
+  auto tempo = grid->add_cell(create_param_edit_ui(controller, part_type::geffect, part_index, effect_param::dly_multi_tempo, edit_type::dropdown, tooltip_type::off), 0, 1, 2, 1);
   tempo->relevant_if(part_id(part_type::geffect, part_index), effect_param::dly_synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-  auto tempo_dropdown = grid->add_cell(create_param_edit_ui(controller, part_type::geffect, part_index, effect_param::dly_multi_tempo, edit_type::dropdown, tooltip_type::off), 2, 1, 1, 1);
-  tempo_dropdown->relevant_if(part_id(part_type::geffect, part_index), effect_param::dly_synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+  auto tempo_label = grid->add_cell(create_param_label_ui(controller, part_type::geffect, part_index, effect_param::dly_multi_tempo, label_type::label, Justification::centred), 2, 1, 1, 1);
+  tempo_label->relevant_if(part_id(part_type::geffect, part_index), effect_param::dly_synced, true, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
   return create_part_group_ui(controller, create_group_label_ui(controller, "Multitap", true), std::move(grid));
 }
 
