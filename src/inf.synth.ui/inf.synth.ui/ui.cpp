@@ -402,7 +402,6 @@ create_fx_fx_voice_group(plugin_controller* controller, std::int32_t part_index)
   return create_part_group_ui(controller, create_group_label_ui(controller, "FX", false), std::move(grid));
 }
 
-
 static std::unique_ptr<ui_element>
 create_fx_fx_global_group(plugin_controller* controller, std::int32_t part_index)
 {
@@ -499,6 +498,13 @@ create_fx_global_delay_group(plugin_controller* controller, std::int32_t part_in
 }
 
 static std::unique_ptr<ui_element>
+create_fx_global_reverb_group(plugin_controller* controller, std::int32_t part_index)
+{
+  auto grid = create_grid_ui(controller, 1, 1);
+  return create_part_group_ui(controller, create_group_label_ui(controller, "Reverb", true), std::move(grid));
+}
+
+static std::unique_ptr<ui_element>
 create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
   std::int32_t rows = part_type == part_type::veffect ? 1: 2;
@@ -537,6 +543,8 @@ create_global_fx_grid(plugin_controller* controller, std::int32_t part_index)
   shaper->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::shaper; });
   auto delay = result->add_cell(create_part_group_container_ui(controller, create_fx_global_delay_group(controller, part_index)), 1, 0, 1, 8);
   delay->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::delay; });
+  auto reverb = result->add_cell(create_part_group_container_ui(controller, create_fx_global_reverb_group(controller, part_index)), 1, 0, 1, 8);
+  reverb->relevant_if(part_id(part_type::geffect, part_index), effect_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == effect_type::reverb; });
   result->add_cell(create_fx_graph_group(controller, part_type::geffect, part_index), 2, 0, 6, 8);
   return result;
 }
