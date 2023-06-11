@@ -77,6 +77,12 @@ effect_graph_name_selector(
     case effect_graph::graph1: return "Shape";
     case effect_graph::graph2: return "Spectrum";
     default: assert(false); return nullptr; } break;
+  case effect_type::delay:
+  case effect_type::reverb:
+    switch (graph_type) {
+    case effect_graph::graph1: return "Left";
+    case effect_graph::graph2: return "Right";
+    default: assert(false); return nullptr; } break;
   default: assert(false); return nullptr;
   }
 }
