@@ -76,4 +76,3 @@
 - manual + automation test all controls
 - multitap time 0 crashes
 - multitap tapcount 1 not working
-- speed up the debug build
