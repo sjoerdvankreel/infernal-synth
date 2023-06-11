@@ -72,7 +72,6 @@
 - fix dropdown submenu indicator
 - reset/clear/load preset still not flushing
 - swap red/blue for voice/global?
-- fix fx graph tooltips
 - manual + automation test all controls
 - multitap time 0 crashes
 - multitap tapcount 1 not working
