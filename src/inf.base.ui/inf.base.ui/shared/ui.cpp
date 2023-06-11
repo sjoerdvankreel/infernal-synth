@@ -726,9 +726,7 @@ create_theme_selector_ui(
   auto themes = controller->themes(file.getFullPathName().toStdString());
   for (std::size_t i = 0; i < themes.size(); i++)
     items.push_back(themes[i].name);
-  return create_dropdown_ui(controller, items, [controller, themes, lnf_factory](std::int32_t index) {
-    
-  });
+  return create_dropdown_ui(controller, items, [controller, themes, lnf_factory](std::int32_t index) {});
 }
 
 void
