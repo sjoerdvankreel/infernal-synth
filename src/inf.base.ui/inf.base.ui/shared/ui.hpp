@@ -425,8 +425,6 @@ protected:
 public:
   void layout() override;
   juce::Component* build() { return ui_element::build(get_lnf()); }
-
-  ~root_element() { component()->setLookAndFeel(nullptr); }
   root_element(inf::base::plugin_controller* controller, std::unique_ptr<ui_element>&& content, std::int32_t width, juce::Colour const& fill) :
   ui_element(controller), _fill(fill), _width(width), _content(std::move(content)) {}
 };

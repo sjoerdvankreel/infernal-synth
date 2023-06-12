@@ -73,5 +73,4 @@
 - reset/clear/load preset still not flushing
 - swap red/blue for voice/global?
 - manual + automation test all controls
-- multitap time 0 crashes
 - multitap graph not rendering correctly
