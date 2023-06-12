@@ -44,9 +44,7 @@
 - drop param_type?
 - fix leaks
 - fix menu host integration
-- double check controller/editor/processor methods, what is still needed
 - fix linux renoise resizing
-- scan vst_controller/editor for unneeded stuff
 - reduce controller.uidesc to image names, image offsets and color scheme
 - disable unison for noise?
 - rewrite the manual
@@ -54,7 +52,6 @@
 - graph bg image
 - skip entire voice section for dsp in fx mode
 - credit oddy
-- enable avx in vbox
 - drop the conversion code?
 - test tracktion host
 - routing indicators

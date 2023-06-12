@@ -75,10 +75,7 @@ public:
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
 
-  virtual double get_plugin_param(std::int32_t tag) = 0;
   virtual std::string default_theme_path(std::string const& plugin_file) const = 0;
-  virtual double base_to_plugin_param(std::int32_t index, param_value val) const = 0;
-  virtual param_value plugin_to_base_param(std::int32_t index, double val) const = 0;
   virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
   virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
 
