@@ -86,7 +86,6 @@ inf_graph_plot::paint(juce::Graphics& g)
   auto plot_bounds = Rectangle<float>(
     bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
     bounds.getWidth() - 2.0f, bounds.getHeight() - (bipolar? 2.0f: 1.0f) * plot_vpad);
-  //float opacity = _processor->opacity(state);
 #ifdef NDEBUG // too slow for debug
   std::vector<graph_point> const& graph_data = processor()->plot(
     state, graph_sample_rate,
@@ -102,6 +101,7 @@ inf_graph_plot::paint(juce::Graphics& g)
     clip.addRoundedRectangle(bounds, 8.0f);
     g.saveState();
     g.reduceClipRegion(clip);
+    float opacity = _processor->opacity(state);
 
     Path area_path;
     float base_y = bipolar? 0.5f: 1.0f;
@@ -109,14 +109,14 @@ inf_graph_plot::paint(juce::Graphics& g)
     for (std::size_t i = 0; i < graph_data.size(); i++)
       area_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
     area_path.lineTo(plot_bounds.getX() + plot_bounds.getWidth(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
-    g.setColour(findColour(inf_look_and_feel::colors::part_graph_area));
+    g.setColour(findColour(inf_look_and_feel::colors::part_graph_area).withMultipliedAlpha(opacity));
     g.fillPath(area_path);
 
     Path line_path;
     line_path.startNewSubPath(plot_bounds.getX() + graph_data[0].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[0].y);
     for (std::size_t i = 1; i < graph_data.size(); i++)
       line_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
-    g.setColour(findColour(inf_look_and_feel::colors::part_graph_line));
+    g.setColour(findColour(inf_look_and_feel::colors::part_graph_line).withMultipliedAlpha(opacity));
     g.strokePath(line_path, PathStrokeType(1.0f));
     g.restoreState();
   }
