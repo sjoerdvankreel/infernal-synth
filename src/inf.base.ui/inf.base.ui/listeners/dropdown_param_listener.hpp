@@ -17,9 +17,9 @@ public param_listener
 
 public:
   void controller_param_changed(inf::base::param_value ui_value) override
-  { _dropdown->setSelectedItemIndex(ui_value.discrete, juce::dontSendNotification); }
+  { _dropdown->setSelectedId(ui_value.discrete + dropdown_id_offset, juce::dontSendNotification); }
   void comboBoxChanged(juce::ComboBox* dropdown) override
-  { _controller->editor_param_changed(_param_index, param_value(dropdown->getSelectedItemIndex())); }
+  { _controller->editor_param_changed(_param_index, param_value(dropdown->getSelectedId() - dropdown_id_offset)); }
 
   ~dropdown_param_listener() { _controller->remove_param_listener(_param_index, this); }
   dropdown_param_listener(plugin_controller* controller, inf_param_dropdown* dropdown, std::int32_t param_index):

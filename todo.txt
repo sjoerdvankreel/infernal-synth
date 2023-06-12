@@ -74,4 +74,4 @@
 - swap red/blue for voice/global?
 - manual + automation test all controls
 - multitap time 0 crashes
-- multitap tapcount 1 not working
+- multitap graph not rendering correctly

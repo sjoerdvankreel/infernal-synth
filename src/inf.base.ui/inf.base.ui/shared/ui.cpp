@@ -450,7 +450,7 @@ param_edit_element::build_dropdown_core(LookAndFeel& lnf)
   else
     for (std::int32_t i = desc.data.discrete.min; i <= desc.data.discrete.effective_max(part_index); i++)
       result->addItem(std::to_string(i), static_cast<std::int32_t>(i) + dropdown_id_offset);
-  result->setSelectedItemIndex(controller()->state()[index].discrete, dontSendNotification);
+  result->setSelectedId(controller()->state()[index].discrete + dropdown_id_offset, dontSendNotification);
   _dropdown_listener.reset(new dropdown_param_listener(controller(), result, index));
   result->addListener(_dropdown_listener.get());
   return result;
