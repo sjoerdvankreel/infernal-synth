@@ -973,8 +973,7 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
     bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  std::string header = part_type == part_type::vaudio_bank ? std::string("Voice Audio"): std::string("Global Audio");
-  return create_part_single_ui(controller, header, part_type, false, std::move(outer_grid));
+  return create_part_single_ui(controller, "Audio", part_type, false, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -1002,8 +1001,7 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
     off->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  std::string header = part_type == part_type::vcv_bank? std::string("Voice CV"): std::string("Global CV");
-  return create_part_single_ui(controller, header, part_type, false, std::move(outer_grid));
+  return create_part_single_ui(controller, "CV", part_type, false, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
