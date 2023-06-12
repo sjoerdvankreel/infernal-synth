@@ -408,6 +408,7 @@ inf_look_and_feel::drawPopupMenuItem(
   dummy.setLookAndFeel(this);
   
   // config
+  float const arrow_margin = 5.0f;
   float const padding_vfixed = 2.0f;
   float const padding_hfixed = 8.0f;
   float const text_hpad_fixed = 8.0f;
@@ -458,7 +459,7 @@ inf_look_and_feel::drawPopupMenuItem(
     Path path;
     auto r = area0.reduced(3);
     auto arrow_h = 0.6f * getPopupMenuFont().getAscent();
-    auto x = static_cast<float>(r.removeFromRight(static_cast<int>(arrow_h)).getX());
+    auto x = static_cast<float>(r.removeFromRight(static_cast<int>(arrow_h)).getX()) - arrow_margin;
     auto half_h = static_cast<float> (r.getCentreY());
     path.startNewSubPath(x, half_h - arrow_h * 0.5f);
     path.lineTo(x + arrow_h * 0.6f, half_h);

@@ -65,6 +65,5 @@
 - update all the preset files
 - restore 10 fx ?
 - restore resizing
-- fix dropdown submenu indicator
 - reset/clear/load preset still not flushing
 - manual + automation test all controls
