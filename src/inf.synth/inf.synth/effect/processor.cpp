@@ -19,7 +19,7 @@ delay_sample_count(automation_view const& automation, float rate, float bpm, eff
   else
     result = static_cast<std::int32_t>(automation.block_real_transform(time) * rate);
   // Cut off rather then wraparound when buffer size is exceeded (e.g. when synced against low BPM).
-  return std::min(result, static_cast<std::int32_t>(std::ceil(rate * effect_dly_max_time_sec - 1.0f)));
+  return std::max(1, std::min(result, static_cast<std::int32_t>(std::ceil(rate * effect_dly_max_time_sec - 1.0f))));
 }
 
 effect_processor::
