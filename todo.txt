@@ -59,7 +59,6 @@
 - check all breaking changes
 - conversion code for breaking changes
 - theme selector
-- paint it right (last pixel missing in graphs)
 - check todos
 - gcc build + linux test
 - update all the preset files
@@ -67,3 +66,4 @@
 - restore resizing
 - reset/clear/load preset still not flushing
 - manual + automation test all controls
+- fix white color dropdown background
