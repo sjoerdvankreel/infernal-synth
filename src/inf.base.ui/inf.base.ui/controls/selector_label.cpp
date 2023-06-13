@@ -34,10 +34,10 @@ inf_selector_label::paint(Graphics& g)
 
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto area = Rectangle<int>(
-    getBounds().getX() + hpadl,
-    getBounds().getY() + vpad / 2,
-    getBounds().getWidth() - hpadl - hpadr,
-    getBounds().getHeight() - vpad);
+    getLocalBounds().getX() + hpadl,
+    getLocalBounds().getY() + vpad / 2,
+    getLocalBounds().getWidth() - hpadl - hpadr,
+    getLocalBounds().getHeight() - vpad);
 
   // fill
   std::int32_t background_low = inf_look_and_feel::colors::selector_label_background_low;
