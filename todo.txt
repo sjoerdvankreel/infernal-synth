@@ -69,4 +69,5 @@
 - fix white color dropdown background
 - go with juce's cmake
 - go with juce's vst sdk 
+- or just clone all dependencies
 - fixed width graph grid

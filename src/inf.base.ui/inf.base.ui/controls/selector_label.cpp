@@ -83,6 +83,8 @@ inf_selector_label::paint(Graphics& g)
     g.drawArrow(juce::Line<float>(router_left, router_y, router_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::left_bidirectional:
+    g.drawArrow(juce::Line<float>(router_left, router_y, router_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
+    g.drawArrow(juce::Line<float>(router_right + router_width, router_y, router_left + router_width, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::right_toleft:
     break;
