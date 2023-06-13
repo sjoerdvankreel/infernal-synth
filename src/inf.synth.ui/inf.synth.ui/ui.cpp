@@ -949,9 +949,11 @@ static std::unique_ptr<ui_element>
 create_voice_cv_plot_part(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 10);
-  grid->add_cell(create_voice_cv_plot_controls(controller), 0, 0, 1, 3);
-  grid->add_cell(create_part_graph_ui(controller, part_type::vcv_plot, 0, 0, cv_plot_param::target), 0, 3, 1, 7);
-  return create_part_single_ui(controller, "CV Plot", part_type::vcv_plot, true, std::move(grid));
+  grid->add_cell(create_part_graph_ui(controller, part_type::vcv_plot, 0, 0, cv_plot_param::target), 0, 0, 1, 7);
+  auto plot_controls = create_voice_cv_plot_controls(controller);
+  auto part_ui = create_part_single_ui(controller, "CV Plot", part_type::vcv_plot, false, std::move(plot_controls));
+  grid->add_cell(std::move(part_ui), 0, 7, 1, 3);
+  return grid;
 }
 
 static std::unique_ptr<ui_element>
