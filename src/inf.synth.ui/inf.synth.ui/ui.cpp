@@ -1041,9 +1041,9 @@ static std::unique_ptr<ui_element>
 create_global_cv_plot_controls(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 8);
-  grid->add_cell(create_param_edit_ui(controller, part_type::gcv_plot, 0, cv_plot_param::target, edit_type::dropdown, tooltip_type::off), 0, 0, 1, 2);
-  grid->add_cell(create_param_label_ui(controller, part_type::gcv_plot, 0, cv_plot_param::length, label_type::label, Justification::right), 0, 2, 1, 1);
-  grid->add_cell(create_param_edit_ui(controller, part_type::gcv_plot, 0, cv_plot_param::length, edit_type::hslider, tooltip_type::value), 0, 3, 1, 5);
+  grid->add_cell(create_param_edit_ui(controller, part_type::gcv_plot, 0, cv_plot_param::target, edit_type::dropdown, tooltip_type::off), 0, 0, 1, 3);
+  grid->add_cell(create_param_label_ui(controller, part_type::gcv_plot, 0, cv_plot_param::length, label_type::label, Justification::right), 0, 3, 1, 1);
+  grid->add_cell(create_param_edit_ui(controller, part_type::gcv_plot, 0, cv_plot_param::length, edit_type::hslider, tooltip_type::value), 0, 4, 1, 4);
   return create_part_group_container_ui(controller, std::move(grid));
 }
 
