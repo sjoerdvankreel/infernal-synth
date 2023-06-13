@@ -63,6 +63,7 @@ inf_selector_label::paint(Graphics& g)
     area = juce::Rectangle<int>(area.getX() - vhpad, area.getY() + vhpad, area.getWidth() + vhpad, area.getHeight() - vhpad);
   }
   g.drawText(getText(), area, Justification::centred, false);
+  g.drawArrow(Line<float>(0.0f, 10.0f, 10.0f, 10.0f), 1, 5, 5);
   g.restoreState();
 }
 

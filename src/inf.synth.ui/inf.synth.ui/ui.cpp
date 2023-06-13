@@ -374,7 +374,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 2, 6, false, std::move(oscillators));
+  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 2, 6, false, selector_routing_dir::left_toleft, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
@@ -624,7 +624,7 @@ create_fx_selector(plugin_controller* controller, std::int32_t part_type, std::i
       fxs.emplace_back(create_voice_fx_grid(controller, i));
     else
       fxs.emplace_back(create_global_fx_grid(controller, i));
-  return create_part_selector_ui(controller, "FX", part_type::active, selector_param_index, part_type, 2, 6, false, std::move(fxs));
+  return create_part_selector_ui(controller, "FX", part_type::active, selector_param_index, part_type, 2, 6, false, selector_routing_dir::left_bidirectional, std::move(fxs));
 }
 
 static std::unique_ptr<ui_element>
@@ -727,7 +727,7 @@ create_envelope_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> envelopes;
   for (std::int32_t i = 0; i < venv_count; i++)
     envelopes.emplace_back(create_envelope_grid(controller, i));
-  return create_part_selector_ui(controller, "Env", part_type::active, active_param::venv, part_type::venv, 2, 5, true, std::move(envelopes));
+  return create_part_selector_ui(controller, "Env", part_type::active, active_param::venv, part_type::venv, 2, 5, true, selector_routing_dir::right_toright, std::move(envelopes));
 }
 
 static std::unique_ptr<ui_element>
@@ -859,7 +859,7 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
   std::vector<std::unique_ptr<ui_element>> lfos;
   for (std::int32_t i = 0; i < part_count; i++)
     lfos.emplace_back(create_lfo_grid(controller, part_type, i));
-  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 2, 5, true, std::move(lfos));
+  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 2, 5, true, selector_routing_dir::right_toright, std::move(lfos));
 }
 
 static std::unique_ptr<ui_element>
@@ -870,7 +870,7 @@ create_amp_group(plugin_controller* controller, part_type part_type, std::string
     auto grid = create_grid_ui(controller, 1, 2);
     grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
     grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
-    return create_part_single_ui(controller, header, part_type, true, create_part_group_container_ui(controller, std::move(grid)));
+    return create_part_single_ui(controller, header, part_type, true, selector_routing_dir::none, create_part_group_container_ui(controller, std::move(grid)));
   }
   else
   {
@@ -879,7 +879,7 @@ create_amp_group(plugin_controller* controller, part_type part_type, std::string
     grid->add_cell(create_param_edit_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, tooltip_type::value), 0, 1, 1, 2);
     grid->add_cell(create_param_label_ui(controller, part_type, 0, amp_param::bal, label_type::label, Justification::centred), 0, 3, 1, 1);
     grid->add_cell(create_param_edit_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, tooltip_type::value), 0, 4, 1, 2);
-    return create_part_single_ui(controller, header, part_type, false, create_part_group_container_ui(controller, std::move(grid)));
+    return create_part_single_ui(controller, header, part_type, false, selector_routing_dir::left_toright, create_part_group_container_ui(controller, std::move(grid)));
   }
 }
 
@@ -914,7 +914,7 @@ create_voice_group(plugin_controller* controller)
   time_grid->relevant_if(part_id(part_type::voice, 0), voice_param::port_mode, false, [](std::int32_t part_index, std::int32_t val) { return val != voice_port_mode::off; });
   grid->add_cell(std::move(time_grid), 0, 3, 4, 1);
 
-  return create_part_single_ui(controller, "Voice In", part_type::voice, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Voice In", part_type::voice, true, selector_routing_dir::none, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -951,7 +951,7 @@ create_voice_cv_plot_part(plugin_controller* controller)
   auto grid = create_grid_ui(controller, 1, 5);
   grid->add_cell(create_part_graph_ui(controller, part_type::vcv_plot, 0, 0, cv_plot_param::target), 0, 0, 1, 3);
   auto plot_controls = create_voice_cv_plot_controls(controller);
-  auto part_ui = create_part_single_ui(controller, "CV Plot", part_type::vcv_plot, false, std::move(plot_controls));
+  auto part_ui = create_part_single_ui(controller, "CV Plot", part_type::vcv_plot, false, selector_routing_dir::right_toleft, std::move(plot_controls));
   grid->add_cell(std::move(part_ui), 0, 3, 1, 2);
   return grid;
 }
@@ -987,7 +987,7 @@ create_audio_part(plugin_controller* controller, std::int32_t part_type)
     bal->relevant_if(part_id(part_type, 0), audio_bank_param_index(i, audio_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  return create_part_single_ui(controller, "Audio", part_type, false, std::move(outer_grid));
+  return create_part_single_ui(controller, "Audio", part_type, false, selector_routing_dir::none, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -1015,7 +1015,7 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
     off->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
-  return create_part_single_ui(controller, "CV", part_type, false, std::move(outer_grid));
+  return create_part_single_ui(controller, "CV", part_type, false, selector_routing_dir::none, std::move(outer_grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -1053,7 +1053,7 @@ create_global_cv_plot_part(plugin_controller* controller)
   auto grid = create_grid_ui(controller, 6, 1);
   grid->add_cell(create_global_cv_plot_controls(controller), 0, 0, 1, 1);
   grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, cv_plot_param::target), 1, 0, 5, 1);
-  return create_part_single_ui(controller, "CV Plot", part_type::gcv_plot, false, std::move(grid));
+  return create_part_single_ui(controller, "CV Plot", part_type::gcv_plot, false, selector_routing_dir::right_toleft, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -1099,7 +1099,7 @@ create_master_in_group(plugin_controller* controller)
   auto grid = create_grid_ui(controller, 1, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_master_unipolar_group(controller)), 0, 0);
   grid->add_cell(create_part_group_container_ui(controller, create_master_bipolar_group(controller)), 0, 1);
-  return create_part_single_ui(controller, "Master In", part_type::master, true, std::move(grid));
+  return create_part_single_ui(controller, "Master In", part_type::master, true, selector_routing_dir::none, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -1134,7 +1134,7 @@ create_synth_output_group(plugin_controller* controller)
   auto grid = create_grid_ui(controller, 1, 5);
   grid->add_cell(create_part_group_container_ui(controller, create_synth_output_voice_group(controller)), 0, 0, 1, 2);
   grid->add_cell(create_part_group_container_ui(controller, create_synth_output_cpu_group(controller)), 0, 2, 1, 3);
-  return create_part_single_ui(controller, "Monitor", -1, true, std::move(grid));
+  return create_part_single_ui(controller, "Monitor", -1, true, selector_routing_dir::none, std::move(grid));
 }
 
 static std::unique_ptr<ui_element>
@@ -1152,7 +1152,7 @@ create_synth_edit_group(plugin_controller* controller)
   inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 2, 0, 1, 2);
   auto outer_grid = create_grid_ui(controller, 1, 40);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 38);
-  return create_part_single_ui(controller, "Edit", -1, true, create_part_group_container_ui(controller, std::move(outer_grid)));
+  return create_part_single_ui(controller, "Edit", -1, true, selector_routing_dir::none, create_part_group_container_ui(controller, std::move(outer_grid)));
 }
 
 static std::unique_ptr<ui_element>
@@ -1171,7 +1171,7 @@ create_synth_patch_group(plugin_controller* controller)
     save_preset_file(controller, create_root_lnf); }), 1, 2, 1, 2);
   grid->add_cell(create_label_ui(controller, "Factory", Justification::centred, get_param_label_font_height(controller), inf_look_and_feel::colors::param_label), 2, 0, 1, 1);
   grid->add_cell(create_factory_preset_ui(controller, create_root_lnf), 2, 1, 1, 3);
-  return create_part_single_ui(controller, "Patch", -1, true, create_part_group_container_ui(controller, std::move(grid)));
+  return create_part_single_ui(controller, "Patch", -1, true, selector_routing_dir::none, create_part_group_container_ui(controller, std::move(grid)));
 }
 
 static std::unique_ptr<ui_element>
