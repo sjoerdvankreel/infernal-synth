@@ -68,18 +68,19 @@ inf_selector_label::paint(Graphics& g)
     area = juce::Rectangle<int>(area.getX() - vhpad, area.getY() + vhpad, area.getWidth() + vhpad, area.getHeight() - vhpad);
   }
   g.drawText(getText(), area, Justification::centred, false);
+
+  float router_left = router_hmargin;
+  float router_right = router_hmargin + router_width;
+  float router_y = area.getHeight() / 2.0f + router_vmargin;
   switch (_routing_dir)
   {
   case selector_routing_dir::none:
     break;
   case selector_routing_dir::left_toleft:
-    g.drawArrow(
-      juce::Line<float>(
-        router_hmargin + router_width, area.getHeight() / 2.0f + router_vmargin, 
-        router_hmargin, area.getHeight() / 2.0f + router_vmargin),
-        router_line_size, router_arrow_size, router_arrow_size);
+    g.drawArrow(juce::Line<float>(router_right, router_y, router_left, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::left_toright:
+    g.drawArrow(juce::Line<float>(router_left, router_y, router_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::left_bidirectional:
     break;
