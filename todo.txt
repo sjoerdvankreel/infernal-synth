@@ -67,3 +67,5 @@
 - reset/clear/load preset still not flushing
 - manual + automation test all controls
 - fix white color dropdown background
+- go with juce's cmake
+- go with juce's vst sdk
