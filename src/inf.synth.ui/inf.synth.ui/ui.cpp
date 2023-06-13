@@ -1050,10 +1050,12 @@ create_global_cv_plot_controls(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_global_cv_plot_part(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 6, 1);
-  grid->add_cell(create_global_cv_plot_controls(controller), 0, 0, 1, 1);
-  grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, cv_plot_param::target), 1, 0, 5, 1);
-  return create_part_single_ui(controller, "CV Plot", part_type::gcv_plot, false, selector_routing_dir::right_toleft, std::move(grid));
+  auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
+  auto grid = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) });
+  grid->add_cell(create_global_cv_plot_controls(controller), 0, 0, 1, 3);
+  grid->add_cell(create_selector_label_ui(controller, "CV Plot", part_type::gcv_plot, 1, false, selector_routing_dir::right_toleft), 0, 3, 1, 1);
+  grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, cv_plot_param::target), 1, 0, 1, 4);
+  return grid;
 }
 
 static std::unique_ptr<ui_element>
