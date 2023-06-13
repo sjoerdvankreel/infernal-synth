@@ -69,26 +69,30 @@ inf_selector_label::paint(Graphics& g)
   }
   g.drawText(getText(), area, Justification::centred, false);
 
-  float router_left = router_hmargin;
-  float router_right = router_hmargin + router_width;
+  float router_l_left = router_hmargin;
+  float router_l_right = router_hmargin + router_width;
+  float router_r_right = area.getWidth() - router_hmargin;
+  float router_r_left = area.getWidth() - router_hmargin - router_width;
   float router_y = area.getHeight() / 2.0f + router_vmargin;
   switch (_routing_dir)
   {
   case selector_routing_dir::none:
     break;
   case selector_routing_dir::left_toleft:
-    g.drawArrow(juce::Line<float>(router_right, router_y, router_left, router_y), router_line_size, router_arrow_size, router_arrow_size);
+    g.drawArrow(juce::Line<float>(router_l_right, router_y, router_l_left, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::left_toright:
-    g.drawArrow(juce::Line<float>(router_left, router_y, router_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
+    g.drawArrow(juce::Line<float>(router_l_left, router_y, router_l_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::left_bidirectional:
-    g.drawArrow(juce::Line<float>(router_left, router_y, router_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
-    g.drawArrow(juce::Line<float>(router_right + router_width, router_y, router_left + router_width, router_y), router_line_size, router_arrow_size, router_arrow_size);
+    g.drawArrow(juce::Line<float>(router_l_left, router_y, router_l_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
+    g.drawArrow(juce::Line<float>(router_l_right + router_width, router_y, router_l_left + router_width, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::right_toleft:
+    g.drawArrow(juce::Line<float>(router_r_right, router_y, router_r_left, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   case selector_routing_dir::right_toright:
+    g.drawArrow(juce::Line<float>(router_r_left, router_y, router_r_right, router_y), router_line_size, router_arrow_size, router_arrow_size);
     break;
   default:
     assert(false);
