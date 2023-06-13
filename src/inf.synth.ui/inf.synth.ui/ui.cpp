@@ -374,7 +374,7 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 1, 7, false, std::move(oscillators));
+  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 2, 6, false, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
@@ -624,7 +624,7 @@ create_fx_selector(plugin_controller* controller, std::int32_t part_type, std::i
       fxs.emplace_back(create_voice_fx_grid(controller, i));
     else
       fxs.emplace_back(create_global_fx_grid(controller, i));
-  return create_part_selector_ui(controller, "FX", part_type::active, selector_param_index, part_type, 1, 7, false, std::move(fxs));
+  return create_part_selector_ui(controller, "FX", part_type::active, selector_param_index, part_type, 2, 6, false, std::move(fxs));
 }
 
 static std::unique_ptr<ui_element>
@@ -859,7 +859,7 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
   std::vector<std::unique_ptr<ui_element>> lfos;
   for (std::int32_t i = 0; i < part_count; i++)
     lfos.emplace_back(create_lfo_grid(controller, part_type, i));
-  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 1, 6, true, std::move(lfos));
+  return create_part_selector_ui(controller, "LFO", part_type::active, selector_param_index, part_type, 2, 5, true, std::move(lfos));
 }
 
 static std::unique_ptr<ui_element>
