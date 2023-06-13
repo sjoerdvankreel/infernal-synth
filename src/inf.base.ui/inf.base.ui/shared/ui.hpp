@@ -451,8 +451,9 @@ create_part_single_ui(
   std::int32_t selected_part_type, bool vertical, std::unique_ptr<ui_element>&& part);
 std::unique_ptr<ui_element>
 create_part_selector_ui(
-  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, std::int32_t selector_param_index,
-  std::int32_t selected_part_type, std::int32_t label_columns, std::int32_t selector_columns, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
+  plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, 
+  std::int32_t selector_param_index, std::int32_t selected_part_type, std::int32_t label_columns, 
+  std::int32_t selector_columns, bool label_right, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
