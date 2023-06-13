@@ -14,6 +14,13 @@ inline int const edit_table_margin = 0;
 inline int const container_margin = 2;
 inline int const graph_grid_hcount = 9;
 
+inline float const router_width_min = 16.0f;
+inline float const router_width_max = 24.0f;
+inline float const router_line_size_min = 4.0f;
+inline float const router_line_size_max = 6.0f;
+inline float const router_arrow_size_min = 8.0f;
+inline float const router_arrow_size_max = 12.0f;
+
 inline float const container_radius = 8.0f;
 inline float const container_outline_size = 1.0f;
 inline float const dialog_font_height = 13.0f;

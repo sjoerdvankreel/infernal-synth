@@ -31,6 +31,11 @@ inf_selector_label::paint(Graphics& g)
   int const hpadr = _vertical? 1: 3;
   float const corner_size_fixed = 5.0f;
   float const outline_size_fixed = 1.0f;
+  float const router_hmargin = 4.0f;
+  float const router_vmargin = 1.0f;
+  float const router_width = get_router_width(_controller);
+  float const router_line_size = get_router_line_size(_controller);
+  float const router_arrow_size = get_router_arrow_size(_controller);
 
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto area = Rectangle<int>(
@@ -63,7 +68,29 @@ inf_selector_label::paint(Graphics& g)
     area = juce::Rectangle<int>(area.getX() - vhpad, area.getY() + vhpad, area.getWidth() + vhpad, area.getHeight() - vhpad);
   }
   g.drawText(getText(), area, Justification::centred, false);
-  g.drawArrow(Line<float>(0.0f, 10.0f, 10.0f, 10.0f), 1, 5, 5);
+  switch (_routing_dir)
+  {
+  case selector_routing_dir::none:
+    break;
+  case selector_routing_dir::left_toleft:
+    g.drawArrow(
+      juce::Line<float>(
+        router_hmargin + router_width, area.getHeight() / 2.0f + router_vmargin, 
+        router_hmargin, area.getHeight() / 2.0f + router_vmargin),
+        router_line_size, router_arrow_size, router_arrow_size);
+    break;
+  case selector_routing_dir::left_toright:
+    break;
+  case selector_routing_dir::left_bidirectional:
+    break;
+  case selector_routing_dir::right_toleft:
+    break;
+  case selector_routing_dir::right_toright:
+    break;
+  default:
+    assert(false);
+    break;
+  }
   g.restoreState();
 }
 

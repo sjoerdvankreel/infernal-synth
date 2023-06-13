@@ -24,6 +24,16 @@ std::string
 get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);
 
 inline float
+get_router_width(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, router_width_min, router_width_max); }
+inline float
+get_router_line_size(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, router_line_size_min, router_line_size_max); }
+inline float
+get_router_arrow_size(inf::base::plugin_controller const* controller)
+{ return get_scaled_size(controller, router_arrow_size_min, router_arrow_size_max); }
+
+inline float
 get_toggle_max_size(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, toggle_max_size_min, toggle_max_size_max); }
 inline float
