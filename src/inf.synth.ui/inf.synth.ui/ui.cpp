@@ -865,10 +865,22 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
 static std::unique_ptr<ui_element>
 create_amp_group(plugin_controller* controller, part_type part_type, std::string const& header)
 {
-  auto grid = create_grid_ui(controller, 1, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
-  return create_part_single_ui(controller, header, part_type, true, create_part_group_container_ui(controller, std::move(grid)));
+  if(part_type == part_type::gamp)
+  {
+    auto grid = create_grid_ui(controller, 1, 2);
+    grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, label_type::label, tooltip_type::value), 0, 0);
+    grid->add_cell(create_labeled_param_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+    return create_part_single_ui(controller, header, part_type, true, create_part_group_container_ui(controller, std::move(grid)));
+  }
+  else
+  {
+    auto grid = create_grid_ui(controller, 1, 6);
+    grid->add_cell(create_param_label_ui(controller, part_type, 0, amp_param::gain, label_type::label, Justification::centred), 0, 0, 1, 1);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, amp_param::gain, edit_type::knob, tooltip_type::value), 0, 1, 1, 2);
+    grid->add_cell(create_param_label_ui(controller, part_type, 0, amp_param::bal, label_type::label, Justification::centred), 0, 3, 1, 1);
+    grid->add_cell(create_param_edit_ui(controller, part_type, 0, amp_param::bal, edit_type::knob, tooltip_type::value), 0, 4, 1, 2);
+    return create_part_single_ui(controller, header, part_type, false, create_part_group_container_ui(controller, std::move(grid)));
+  }
 }
 
 static std::unique_ptr<ui_element>
@@ -908,9 +920,9 @@ create_voice_group(plugin_controller* controller)
 static std::unique_ptr<ui_element>
 create_voice_amp_grid(plugin_controller* controller)
 {
-  auto grid = create_grid_ui(controller, 1, 3);
-  grid->add_cell(create_amp_group(controller, part_type::vamp, "Voice Out"), 0, 0, 1, 1);
-  grid->add_cell(create_voice_group(controller), 0, 1, 1, 2);
+  auto grid = create_grid_ui(controller, 1, 8);
+  grid->add_cell(create_amp_group(controller, part_type::vamp, "Voice Out"), 0, 0, 1, 3);
+  grid->add_cell(create_voice_group(controller), 0, 3, 1, 5);
   return grid;
 }
 
