@@ -746,7 +746,7 @@ create_ui_size_ui(
   return create_action_dropdown_ui(controller, "UI Size", size_names, [controller, sizes_count](std::int32_t index) {
     float min_width = static_cast<float>(controller->editor_min_width());
     float max_width = static_cast<float>(controller->editor_max_width());
-    float factor = static_cast<float>(index / sizes_count - 1);
+    float factor = static_cast<float>(index / (sizes_count - 1));
     controller->set_editor_width(static_cast<std::int32_t>(min_width + factor * (max_width - min_width)));
   });
 }

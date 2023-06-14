@@ -101,10 +101,11 @@ void
 vst_editor::set_width(std::int32_t width)
 {
   if (!plugFrame) return;
-  rect.right = rect.left + width;
-  rect.bottom = rect.top + static_cast<std::int32_t>(width / _controller->editor_aspect_ratio());
-  plugFrame->resizeView(this, &rect);
-  onSize(&rect);
+  auto new_rect = rect;
+  new_rect.right = rect.left + width;
+  new_rect.bottom = rect.top + static_cast<std::int32_t>(width / _controller->editor_aspect_ratio());
+  plugFrame->resizeView(this, &new_rect);
+  onSize(&new_rect);
   _controller->editor_current_width(width);
 }
 
