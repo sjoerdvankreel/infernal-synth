@@ -23,8 +23,10 @@ public Steinberg::Vst::EditorView
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
-
   std::unique_ptr<inf::base::ui::root_element> _ui = {};
+
+  void detach();
+  void attach_with_width(void* parent, std::int32_t width);
   juce::Component* get_ui() const { return _ui.get()->component(); }
   bool have_ui() const { return _ui && _ui.get() && _ui.get()->component(); }
 
