@@ -59,5 +59,3 @@
 - reset/clear/load preset still not flushing
 - hold stage for delay
 - manual + automation test all controls
-- fix white color dropdown background
-- fixed width graph grid

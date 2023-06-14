@@ -88,19 +88,13 @@ inf_look_and_feel::draw_popup_base(
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb, float corner_size)
 {
   // config
-  float margin = 0.0f;
   float const outline_size_fixed = 1.0f;
-  if (dynamic_cast<inf_param_dropdown*>(&cb) == nullptr) margin = 2.0f;
 
   // precompute stuff
   float x = static_cast<float>(0);
   float y = static_cast<float>(0);
   float w = static_cast<float>(w0);
   float h = static_cast<float>(h0);
-  x += margin;
-  y += margin;
-  w -= 2.0f * margin;
-  h -= 2.0f * margin;
 
   fill_gradient_rounded_rectangle(
     g, cb, Rectangle<float>(x, y, w, h), colors::dropdown_background_low,
