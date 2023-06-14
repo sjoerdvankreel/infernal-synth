@@ -35,9 +35,10 @@ EditorView(controller), _controller(controller)
 tresult PLUGIN_API
 vst_editor::removed()
 {
+#if WIN32
   if (_wrapper_ui) _wrapper_ui->removeFromDesktop();
+#endif
   _plugin_ui.reset();
-  _wrapper_ui.reset();
 #if __linux__
   _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
@@ -64,13 +65,20 @@ vst_editor::attached(void* parent, FIDString type)
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
   _controller->editor_current_width(_controller->editor_min_width());
+  if(_wrapper_ui) _wrapper_ui->removeAllChildren();
   _plugin_ui = create_ui();
   _plugin_ui->build();
   _plugin_ui->layout();
-  _wrapper_ui.reset(new Component);
-  _wrapper_ui->setOpaque(true);
-  _wrapper_ui->addToDesktop(0, (void*)parent);
-  _wrapper_ui->setVisible(true);
+  if(!_wrapper_ui)
+  {
+#if __linux__
+    juce::MessageManagerLock mm_lock;
+#endif // __linux__
+    _wrapper_ui.reset(new Component);
+    _wrapper_ui->setOpaque(true);
+    _wrapper_ui->addToDesktop(0, (void*)parent);
+    _wrapper_ui->setVisible(true);
+  }
   _wrapper_ui->setSize(_plugin_ui->component()->getWidth(), _plugin_ui->component()->getHeight());
   _wrapper_ui->addChildComponent(*_plugin_ui->component());
   ViewRect vr(0, 0, _wrapper_ui->getWidth(), _wrapper_ui->getHeight());
