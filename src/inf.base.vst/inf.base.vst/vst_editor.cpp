@@ -35,7 +35,11 @@ EditorView(controller), _controller(controller)
 tresult PLUGIN_API
 vst_editor::removed()
 {
-  detach();
+  if (have_ui()) get_ui()->removeFromDesktop();
+  _ui.reset();
+#if __linux__
+  _impl->event_handler->unregisterHandlerForFrame(plugFrame);
+#endif // __linux__
   return EditorView::removed();
 }
 
@@ -54,7 +58,20 @@ tresult PLUGIN_API
 vst_editor::attached(void* parent, FIDString type)
 {
   if (!plugFrame) return EditorView::attached(parent, type);
-  attach_with_width(parent, _controller->editor_min_width());
+  MessageManager::getInstance();
+#if __linux__
+  _impl->event_handler->registerHandlerForFrame(plugFrame);
+#endif // __linux__
+  _controller->editor_current_width(_controller->editor_min_width());
+  _ui = create_ui();
+  _ui->build();
+  _ui->layout();
+  get_ui()->setOpaque(true);
+  get_ui()->addToDesktop(0, (void*)parent);
+  get_ui()->setVisible(true);
+  ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
+  setRect(vr);
+  plugFrame->resizeView(this, &vr);
   return EditorView::attached(parent, type);
 }
 
@@ -65,8 +82,6 @@ vst_editor::onSize(ViewRect* new_size)
     || (new_size->left == rect.left && new_size->right == rect.right 
     && new_size->top == rect.top && new_size->bottom == rect.bottom))
     return EditorView::onSize(new_size);
-  detach();
-  attach_with_width(systemWindow, new_size->getWidth());
   return EditorView::onSize(new_size);
 }
 
@@ -88,35 +103,6 @@ vst_editor::set_width(std::int32_t width)
   plugFrame->resizeView(this, &new_rect);
   onSize(&new_rect);
   _controller->editor_current_width(width);
-}
-
-void
-vst_editor::detach()
-{
-  if (have_ui()) get_ui()->removeFromDesktop();
-  _ui.reset();
-#if __linux__
-  _impl->event_handler->unregisterHandlerForFrame(plugFrame);
-#endif // __linux__
-}
-
-void
-vst_editor::attach_with_width(void* parent, std::int32_t width)
-{
-  MessageManager::getInstance();
-#if __linux__
-  _impl->event_handler->registerHandlerForFrame(plugFrame);
-#endif // __linux__
-  _controller->editor_current_width(width);
-  _ui = create_ui();
-  _ui->build();
-  _ui->layout();
-  get_ui()->setOpaque(true);
-  get_ui()->addToDesktop(0, (void*)parent);
-  get_ui()->setVisible(true);
-  ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
-  setRect(vr);
-  plugFrame->resizeView(this, &vr);
 }
 
 } // namespace inf::base::vst
