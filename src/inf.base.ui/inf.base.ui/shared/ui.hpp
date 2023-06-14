@@ -13,7 +13,6 @@
 #include <inf.base.ui/listeners/button_listener.hpp>
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/selector_listener.hpp>
-#include <inf.base.ui/listeners/dropdown_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
@@ -22,6 +21,7 @@
 #include <inf.base.ui/listeners/tab_bar_param_listener.hpp>
 #include <inf.base.ui/listeners/dropdown_param_listener.hpp>
 #include <inf.base.ui/listeners/selector_extra_listener.hpp>
+#include <inf.base.ui/listeners/action_dropdown_listener.hpp>
 #include <inf.base.ui/listeners/last_edit_label_param_listener.hpp>
 #include <inf.base.ui/listeners/last_edit_value_param_listener.hpp>
 
@@ -148,27 +148,27 @@ inline std::unique_ptr<button_element>
 create_button_ui(inf::base::plugin_controller* controller, std::string const& text, juce::Justification justification, std::function<void()> const& callback)
 { return std::make_unique<button_element>(controller, text, justification, callback); }
 
-class dropdown_element :
+class action_dropdown_element :
 public ui_element
 {
   std::string const _default_text;
   std::vector<std::string> _items;
   std::function<void(std::int32_t)> const _callback;
-  std::unique_ptr<dropdown_listener> _listener = {};
+  std::unique_ptr<action_dropdown_listener> _listener = {};
 protected: 
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
-  dropdown_element(inf::base::plugin_controller* controller, std::string const& default_text,
+  action_dropdown_element(inf::base::plugin_controller* controller, std::string const& default_text,
     std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback):
   ui_element(controller), _default_text(default_text), _items(items), _callback(callback) {}
 };
 
-inline std::unique_ptr<dropdown_element>
-create_dropdown_ui(
+inline std::unique_ptr<action_dropdown_element>
+create_action_dropdown_ui(
   inf::base::plugin_controller* controller, std::string const& default_text, 
   std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback)
-{ return std::make_unique<dropdown_element>(controller, default_text, items, callback); }
+{ return std::make_unique<action_dropdown_element>(controller, default_text, items, callback); }
 
 class container_element:
 public ui_element
