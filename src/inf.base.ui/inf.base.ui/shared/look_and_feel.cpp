@@ -82,6 +82,42 @@ inf_look_and_feel::fill_spot_circle(
   g.fillEllipse(x, y, size, size);
 }
 
+void
+inf_look_and_feel::draw_popup_base(
+  Graphics& g, int w0, int h0, bool isButtonDown,
+  int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb, float corner_size)
+{
+  // config
+  float margin = 0.0f;
+  float const outline_size_fixed = 1.0f;
+  if (dynamic_cast<inf_param_dropdown*>(&cb) == nullptr) margin = 2.0f;
+
+  // precompute stuff
+  float x = static_cast<float>(0);
+  float y = static_cast<float>(0);
+  float w = static_cast<float>(w0);
+  float h = static_cast<float>(h0);
+  x += margin;
+  y += margin;
+  w -= 2.0f * margin;
+  h -= 2.0f * margin;
+
+  fill_gradient_rounded_rectangle(
+    g, cb, Rectangle<float>(x, y, w, h), colors::dropdown_background_low,
+    colors::dropdown_background_high, corner_size, 0.25f, true, true);
+
+  // outline
+  auto outline_low = with_enabled(cb, colors::dropdown_outline_low, true, true);
+  auto outline_high = with_enabled(cb, colors::dropdown_outline_high, true, true);
+  auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
+  outline_gradient.addColour(0.25, outline_high.interpolatedWith(outline_low, 0.5f));
+  g.setGradientFill(outline_gradient);
+  g.drawRoundedRectangle(
+    x + outline_size_fixed / 2.0f, y + outline_size_fixed / 2.0f,
+    w - outline_size_fixed, h - outline_size_fixed,
+    corner_size, outline_size_fixed);
+}
+
 void 
 inf_look_and_feel::drawLabel(Graphics& g, Label& label)
 {
@@ -357,7 +393,7 @@ inf_look_and_feel::drawPopupMenuBackground(
 {
   juce::ComboBox dummy;
   dummy.setLookAndFeel(this);
-  drawComboBox(g, width, height, false, 0, 0, 0, 0, dummy);
+  draw_popup_base(g, width, height, false, 0, 0, 0, 0, dummy, 0.0f);
 }
 
 void 
@@ -365,36 +401,8 @@ inf_look_and_feel::drawComboBox(
   Graphics& g, int w0, int h0, bool isButtonDown,
   int button_x0, int button_y0, int button_w0, int button_h0, ComboBox& cb)
 {
-  // config
-  float margin = 0.0f;
   float const corner_size_fixed = 5.0f;
-  float const outline_size_fixed = 1.0f;
-  if(dynamic_cast<inf_param_dropdown*>(&cb) == nullptr) margin = 2.0f;
-
-  // precompute stuff
-  float x = static_cast<float>(0);
-  float y = static_cast<float>(0);
-  float w = static_cast<float>(w0);
-  float h = static_cast<float>(h0);
-  x += margin;
-  y += margin;
-  w -= 2.0f * margin;
-  h -= 2.0f * margin;
-
-  fill_gradient_rounded_rectangle(
-    g, cb, Rectangle<float>(x, y, w, h), colors::dropdown_background_low, 
-    colors::dropdown_background_high, corner_size_fixed, 0.25f, true, true);
-  
-  // outline
-  auto outline_low = with_enabled(cb, colors::dropdown_outline_low, true, true);
-  auto outline_high = with_enabled(cb, colors::dropdown_outline_high, true, true);
-  auto outline_gradient = ColourGradient(outline_high, x, y, outline_low, x + w, y + h, false);
-  outline_gradient.addColour(0.25, outline_high.interpolatedWith(outline_low, 0.5f));
-  g.setGradientFill(outline_gradient);
-  g.drawRoundedRectangle(
-    x + outline_size_fixed / 2.0f, y + outline_size_fixed / 2.0f,
-    w - outline_size_fixed, h - outline_size_fixed, 
-    corner_size_fixed, outline_size_fixed);
+  draw_popup_base(g, w0, h0, isButtonDown, button_x0, button_y0, button_w0, button_h0, cb, corner_size_fixed);
 }
 
 void 
