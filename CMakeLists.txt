@@ -84,6 +84,8 @@ add_library(lib.vst3sdk STATIC ${VST3_BASE_SOURCE} ${VST3_BASE_THREAD_SOURCE} ${
 target_include_directories(lib.vst3sdk SYSTEM PRIVATE ${VST3_SDK_SRC_DIR})
 if (MSVC)
 target_compile_options(lib.vst3sdk PRIVATE /wd4245)
+else ()
+target_compile_options(lib.vst3sdk PRIVATE -w)
 endif ()
 
 # Juce binary.
