@@ -6,8 +6,6 @@
 
 * for each release 
 - v create version branch
-- x update hiir
-- v update vst3 sdk
 - v update version number in code
 - v update version number in cmake unless only bugfix release
 - v consider updating versioned guid
@@ -24,9 +22,6 @@
 * 3th party bugs
 - renoise automation serialization is broken
 - juce alertbox don't accept a parent component
-
-* wishlist small
-- new menu option: clear all unused
 
 * wishlist big
 - CLAP support
@@ -65,5 +60,4 @@
 - hold stage for delay
 - manual + automation test all controls
 - fix white color dropdown background
-- go with juce's oversampler
 - fixed width graph grid
