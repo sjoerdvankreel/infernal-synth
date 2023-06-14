@@ -86,13 +86,15 @@ vst_editor::onSize(ViewRect* new_size)
     || (new_size->left == rect.left && new_size->right == rect.right 
     && new_size->top == rect.top && new_size->bottom == rect.bottom))
     return EditorView::onSize(new_size);
+  std::int32_t w = new_size->getWidth();
+  std::int32_t h = static_cast<std::int32_t>(w / _controller->editor_aspect_ratio());
   _wrapper_ui->removeAllChildren();
-  _wrapper_ui->setSize(rect.getWidth(), rect.getHeight());
   _controller->editor_current_width(new_size->getWidth());
   _plugin_ui = create_ui();
   _plugin_ui->build();
   _plugin_ui->layout();
   _wrapper_ui->addChildComponent(*_plugin_ui->component());
+  _wrapper_ui->setSize(w, h);
   return EditorView::onSize(new_size);
 }
 
