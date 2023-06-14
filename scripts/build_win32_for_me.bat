@@ -1,1 +1,1 @@
-call build_win32 c:\repos\hiir_1.40 C:\repos\vst3sdk_3.7.8\vst3sdk C:\repos\vst3sdk_3.7.8\win32\lib\Debug C:\repos\vst3sdk_3.7.8\win32\lib\Release
+call build_win32 c:\repos\hiir_1.40 C:\repos\juce_7.0.5\JUCE C:\repos\vst3sdk_3.7.8\vst3sdk C:\repos\vst3sdk_3.7.8\win32\lib\Debug C:\repos\vst3sdk_3.7.8\win32\lib\Release
