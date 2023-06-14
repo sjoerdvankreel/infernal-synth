@@ -35,8 +35,9 @@ EditorView(controller), _controller(controller)
 tresult PLUGIN_API
 vst_editor::removed()
 {
-  if (have_ui()) get_ui()->removeFromDesktop();
-  _ui.reset();
+  if (_wrapper_ui) _wrapper_ui->removeFromDesktop();
+  _plugin_ui.reset();
+  _wrapper_ui.reset();
 #if __linux__
   _impl->event_handler->unregisterHandlerForFrame(plugFrame);
 #endif // __linux__
@@ -46,11 +47,11 @@ vst_editor::removed()
 tresult PLUGIN_API
 vst_editor::getSize(ViewRect* new_size)
 {
-  if(!have_ui()) return EditorView::getSize(new_size);
+  if(!_wrapper_ui) return EditorView::getSize(new_size);
   new_size->top = rect.top;
   new_size->left = rect.left;
-  new_size->right = rect.left + get_ui()->getWidth();
-  new_size->bottom = rect.top + get_ui()->getHeight();
+  new_size->right = rect.left + _wrapper_ui->getWidth();
+  new_size->bottom = rect.top + _wrapper_ui->getHeight();
   return kResultTrue;
 }
 
@@ -63,13 +64,16 @@ vst_editor::attached(void* parent, FIDString type)
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
   _controller->editor_current_width(_controller->editor_min_width());
-  _ui = create_ui();
-  _ui->build();
-  _ui->layout();
-  get_ui()->setOpaque(true);
-  get_ui()->addToDesktop(0, (void*)parent);
-  get_ui()->setVisible(true);
-  ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
+  _plugin_ui = create_ui();
+  _plugin_ui->build();
+  _plugin_ui->layout();
+  _wrapper_ui.reset(new Component);
+  _wrapper_ui->setOpaque(true);
+  _wrapper_ui->addToDesktop(0, (void*)parent);
+  _wrapper_ui->setVisible(true);
+  _wrapper_ui->setSize(_plugin_ui->component()->getWidth(), _plugin_ui->component()->getHeight());
+  _wrapper_ui->addChildComponent(*_plugin_ui->component());
+  ViewRect vr(0, 0, _wrapper_ui->getWidth(), _wrapper_ui->getHeight());
   setRect(vr);
   plugFrame->resizeView(this, &vr);
   return EditorView::attached(parent, type);
@@ -78,10 +82,17 @@ vst_editor::attached(void* parent, FIDString type)
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
-  if (!have_ui() || !new_size
+  if (!_wrapper_ui || !new_size
     || (new_size->left == rect.left && new_size->right == rect.right 
     && new_size->top == rect.top && new_size->bottom == rect.bottom))
     return EditorView::onSize(new_size);
+  _wrapper_ui->removeAllChildren();
+  _wrapper_ui->setSize(rect.getWidth(), rect.getHeight());
+  _controller->editor_current_width(new_size->getWidth());
+  _plugin_ui = create_ui();
+  _plugin_ui->build();
+  _plugin_ui->layout();
+  _wrapper_ui->addChildComponent(*_plugin_ui->component());
   return EditorView::onSize(new_size);
 }
 

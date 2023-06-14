@@ -23,10 +23,8 @@ public Steinberg::Vst::EditorView
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
-  std::unique_ptr<inf::base::ui::root_element> _ui = {};
-
-  juce::Component* get_ui() const { return _ui.get()->component(); }
-  bool have_ui() const { return _ui && _ui.get() && _ui.get()->component(); }
+  std::unique_ptr<juce::Component> _wrapper_ui = {};
+  std::unique_ptr<inf::base::ui::root_element> _plugin_ui = {};
 
 protected:
   explicit vst_editor(vst_controller* controller);
@@ -42,7 +40,7 @@ public:
 
   void set_width(std::int32_t width);
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
-  void* current_window() const { return _ui.get() == nullptr? nullptr: _ui.get()->component(); }
+  void* current_window() const { return _wrapper_ui.get() == nullptr? nullptr: _wrapper_ui.get(); }
 };
 
 } // namespace inf::base::vst
