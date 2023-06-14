@@ -58,9 +58,9 @@ find_package(Freetype REQUIRED)
 endif()
 
 # Dependency versions.
-set(HIIR_SRC_DIR ${HIIR_140_SRC_DIR})
-set(JUCE_SRC_DIR ${JUCE_705_SRC_DIR})
-set(VST3_SDK_SRC_DIR ${VST3_SDK_378_SRC_DIR})
+set(HIIR_SRC_DIR "lib/hiir_1.40")
+set(JUCE_SRC_DIR "lib/JUCE_7.0.5")
+set(VST3_SDK_SRC_DIR "lib/vst3sdk_3.7.8")
 set(VST3_SDK_BUILD_DEBUG_DIR ${VST3_SDK_378_BUILD_DEBUG_DIR})
 set(VST3_SDK_BUILD_RELEASE_DIR ${VST3_SDK_378_BUILD_RELEASE_DIR})
 
