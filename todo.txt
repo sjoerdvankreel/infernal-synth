@@ -64,6 +64,7 @@
 - restore 10 fx
 - restore resizing
 - reset/clear/load preset still not flushing
+- hold stage for delay
 - manual + automation test all controls
 - fix white color dropdown background
 - go with juce's oversampler
