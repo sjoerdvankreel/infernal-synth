@@ -738,6 +738,19 @@ create_theme_selector_ui(
   return create_action_dropdown_ui(controller, "Theme", items, [controller, themes, lnf_factory](std::int32_t index) {});
 }
 
+std::unique_ptr<ui_element>
+create_ui_size_ui(
+  plugin_controller* controller, lnf_factory lnf_factory, std::vector<std::string> const& size_names)
+{
+  std::int32_t sizes_count = static_cast<std::int32_t>(size_names.size());
+  return create_action_dropdown_ui(controller, "UI Size", size_names, [controller, sizes_count](std::int32_t index) {
+    float min_width = static_cast<float>(controller->editor_min_width());
+    float max_width = static_cast<float>(controller->editor_max_width());
+    float factor = static_cast<float>(index / sizes_count - 1);
+    controller->set_editor_width(static_cast<std::int32_t>(min_width + factor * (max_width - min_width)));
+  });
+}
+
 void
 show_ok_box(
   inf::base::plugin_controller* controller,

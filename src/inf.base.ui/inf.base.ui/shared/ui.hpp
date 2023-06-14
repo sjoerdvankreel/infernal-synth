@@ -451,6 +451,10 @@ std::unique_ptr<ui_element>
 create_theme_selector_ui(
   plugin_controller* controller, lnf_factory lnf_factory);
 std::unique_ptr<ui_element>
+create_ui_size_ui(
+  plugin_controller* controller, lnf_factory lnf_factory, std::vector<std::string> const& size_names);
+
+std::unique_ptr<ui_element>
 create_part_group_ui(
   plugin_controller* controller, std::unique_ptr<group_label_element>&& label,
   std::unique_ptr<ui_element>&& content);

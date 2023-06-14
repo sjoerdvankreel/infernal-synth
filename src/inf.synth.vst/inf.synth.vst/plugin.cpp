@@ -97,7 +97,6 @@ public:
   float editor_aspect_ratio() const override { return 1.629f; }
   std::int32_t editor_min_width() const override { return 1200; }
   std::int32_t editor_max_width() const override { return 2000; }
-  std::int32_t editor_default_width() const override { return 1200; }
   std::int32_t editor_font_scaling_min_width() const override { return 1360; }
   std::int32_t editor_font_scaling_max_width() const override { return 1800; }
 

@@ -75,7 +75,7 @@ vst_editor::attached(void* parent, FIDString type)
 {
   if(!plugFrame) return EditorView::attached(parent, type);
   MessageManager::getInstance();
-  _controller->editor_current_width(_controller->editor_default_width());
+  _controller->editor_current_width(_controller->editor_min_width());
   _ui = create_ui();
   _ui->build();
   _ui->layout();
@@ -97,18 +97,15 @@ vst_editor::isPlatformTypeSupported(FIDString type)
   return kResultFalse;
 }
 
-tresult PLUGIN_API
-vst_editor::checkSizeConstraint(ViewRect* new_size)
+void
+vst_editor::set_width(std::int32_t width)
 {
-  if (!have_ui() || !new_size) return EditorView::checkSizeConstraint(new_size);
-  if (new_size->getWidth() < _controller->editor_min_width())
-    new_size->right = new_size->left + _controller->editor_min_width();
-  if (new_size->getWidth() > _controller->editor_max_width())
-    new_size->right = new_size->left + _controller->editor_max_width();
-  double w = get_ui()->getWidth();
-  double h = get_ui()->getHeight();
-  new_size->bottom = new_size->top + static_cast<std::int32_t>(std::ceil(new_size->getWidth() * h / w));
-  return kResultTrue;
+  if (!plugFrame) return;
+  rect.right = rect.left + width;
+  rect.bottom = rect.top + static_cast<std::int32_t>(width / _controller->editor_aspect_ratio());
+  plugFrame->resizeView(this, &rect);
+  onSize(&rect);
+  _controller->editor_current_width(width);
 }
 
 } // namespace inf::base::vst

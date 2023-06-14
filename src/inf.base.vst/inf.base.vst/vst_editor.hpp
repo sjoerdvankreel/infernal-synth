@@ -39,8 +39,8 @@ public:
   tresult PLUGIN_API getSize(ViewRect* new_size) override;
   tresult PLUGIN_API attached(void* parent, FIDString type) override;
   tresult PLUGIN_API isPlatformTypeSupported(FIDString type) override;
-  tresult PLUGIN_API checkSizeConstraint(ViewRect* view_rect) override;
 
+  void set_width(std::int32_t width);
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
   void* current_window() const { return _ui.get() == nullptr? nullptr: _ui.get()->component(); }
 };

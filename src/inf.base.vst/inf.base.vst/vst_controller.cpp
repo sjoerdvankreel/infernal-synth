@@ -41,6 +41,13 @@ vst_controller::current_editor_window() const
   return _current_editor->current_window(); 
 }
 
+void
+vst_controller::set_editor_width(std::int32_t width)
+{
+  if (_current_editor == nullptr) return;
+  _current_editor->set_width(width);
+}
+
 IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {
