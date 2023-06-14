@@ -58,3 +58,4 @@
 - reset/clear/load preset still not flushing
 - hold stage for delay
 - manual + automation test all controls
+- remember ui size/theme/factory across controller lifetime
