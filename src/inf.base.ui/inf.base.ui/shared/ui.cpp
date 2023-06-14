@@ -217,7 +217,7 @@ Component*
 dropdown_element::build_core(juce::LookAndFeel& lnf)
 {
   ComboBox* result = new ComboBox;
-  result->setTextWhenNothingSelected("Select");
+  result->setTextWhenNothingSelected(_default_text);
   for(std::size_t i = 0; i < _items.size(); i++)
     result->addItem(_items[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
   _listener.reset(new dropdown_listener(_callback));
@@ -715,7 +715,7 @@ create_factory_preset_ui(
   auto presets = controller->factory_presets(file.getFullPathName().toStdString());
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
-  return create_dropdown_ui(controller, items, [controller, presets, lnf_factory](std::int32_t index) {
+  return create_dropdown_ui(controller, "Select factory preset", items, [controller, presets, lnf_factory](std::int32_t index) {
     show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, index](plugin_controller* controller) {
       controller->load_preset(presets[index].path, true); }); });
 }
@@ -729,7 +729,7 @@ create_theme_selector_ui(
   auto themes = controller->themes(file.getFullPathName().toStdString());
   for (std::size_t i = 0; i < themes.size(); i++)
     items.push_back(themes[i].name);
-  return create_dropdown_ui(controller, items, [controller, themes, lnf_factory](std::int32_t index) {});
+  return create_dropdown_ui(controller, "Select theme", items, [controller, themes, lnf_factory](std::int32_t index) {});
 }
 
 void
