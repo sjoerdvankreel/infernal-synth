@@ -104,14 +104,16 @@ void
 vst_editor::attach_with_width(void* parent, std::int32_t width)
 {
   MessageManager::getInstance();
+#if __linux__
+  _impl->event_handler->registerHandlerForFrame(plugFrame);
+#endif // __linux__
   _controller->editor_current_width(width);
   _ui = create_ui();
   _ui->build();
   _ui->layout();
-#if __linux__
-  _impl->event_handler->registerHandlerForFrame(plugFrame);
-#endif // __linux__
+  get_ui()->setOpaque(true);
   get_ui()->addToDesktop(0, (void*)parent);
+  get_ui()->setVisible(true);
   ViewRect vr(0, 0, get_ui()->getWidth(), get_ui()->getHeight());
   setRect(vr);
   plugFrame->resizeView(this, &vr);
