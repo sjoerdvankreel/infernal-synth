@@ -158,7 +158,7 @@ public ui_element
 protected: 
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
-  void layout() override {}
+  void layout() override;
   dropdown_element(inf::base::plugin_controller* controller, std::string const& default_text,
     std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback):
   ui_element(controller), _default_text(default_text), _items(items), _callback(callback) {}

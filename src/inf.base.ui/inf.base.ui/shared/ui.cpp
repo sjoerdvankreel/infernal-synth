@@ -225,6 +225,13 @@ dropdown_element::build_core(juce::LookAndFeel& lnf)
   return result;
 }
 
+void
+dropdown_element::layout()
+{
+  auto bounds = component()->getBounds().expanded(-dropdown_margin);
+  component()->setBounds(bounds);
+}
+
 Component* 
 root_element::build_core(LookAndFeel& lnf)
 {

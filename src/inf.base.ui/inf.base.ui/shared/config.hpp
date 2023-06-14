@@ -10,8 +10,9 @@ inline juce::Point<int> container_selector_padding = { 10, 8 };
 
 inline int const edit_margin = 2;
 inline int const button_margin = 3;
-inline int const edit_table_margin = 0;
+inline int const dropdown_margin = 2;
 inline int const container_margin = 2;
+inline int const edit_table_margin = 0;
 inline int const graph_grid_hcount = 9;
 
 inline float const router_width_min = 16.0f;
