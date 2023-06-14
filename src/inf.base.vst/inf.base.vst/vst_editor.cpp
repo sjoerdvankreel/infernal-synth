@@ -77,8 +77,8 @@ vst_editor::attached(void* parent, FIDString type)
     _wrapper_ui.reset(new Component);
     _wrapper_ui->setOpaque(true);
     _wrapper_ui->addToDesktop(0, (void*)parent);
-    _wrapper_ui->setVisible(true);
   }
+  _wrapper_ui->setVisible(true);
   _wrapper_ui->setSize(_plugin_ui->component()->getWidth(), _plugin_ui->component()->getHeight());
   _wrapper_ui->addChildComponent(*_plugin_ui->component());
   ViewRect vr(0, 0, _wrapper_ui->getWidth(), _wrapper_ui->getHeight());
