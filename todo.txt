@@ -54,7 +54,6 @@
 - check todos
 - gcc build + linux test
 - update all the preset files
-- restore 10 fx
 - restore resizing
 - reset/clear/load preset still not flushing
 - hold stage for delay
