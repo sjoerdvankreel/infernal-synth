@@ -10,6 +10,14 @@ namespace inf::base::vst {
 
 class vst_controller;
 
+// Just for visual debugging.
+class wrapper_component :
+public juce::Component
+{
+public:
+  void paint(juce::Graphics& g) override { g.fillAll(juce::Colours::red); }
+};
+
 class vst_editor: 
 public Steinberg::Vst::EditorView
 {
@@ -23,7 +31,7 @@ public Steinberg::Vst::EditorView
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
-  std::unique_ptr<juce::Component> _wrapper_ui = {};
+  std::unique_ptr<wrapper_component> _wrapper_ui = {};
   std::unique_ptr<inf::base::ui::root_element> _plugin_ui = {};
 
 protected:

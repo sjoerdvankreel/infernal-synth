@@ -74,7 +74,7 @@ vst_editor::attached(void* parent, FIDString type)
 #if __linux__
     juce::MessageManagerLock mm_lock;
 #endif // __linux__
-    _wrapper_ui.reset(new Component);
+    _wrapper_ui.reset(new wrapper_component);
     _wrapper_ui->setOpaque(true);
     _wrapper_ui->addToDesktop(0, (void*)parent);
   }
