@@ -19,7 +19,7 @@
 - x don't forget to tag
 - x run win32 & linux host demos
 
-* 3th party bugs
+* 3th party
 - renoise automation serialization is broken
 - juce alertbox don't accept a parent component
 
@@ -59,3 +59,4 @@
 - hold stage for delay
 - manual + automation test all controls
 - remember ui size/theme/factory across controller lifetime
+- drop juce vst3 sdk
