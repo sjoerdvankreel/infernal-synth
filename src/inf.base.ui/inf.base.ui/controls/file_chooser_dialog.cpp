@@ -71,8 +71,6 @@ ResizableWindow (title, background_colour, false), _controller(controller)
   parent_component->addAndMakeVisible (this);
 }
 
-inf_file_chooser_dialog::~inf_file_chooser_dialog()
-{ content->chooser_component.removeListener(this); }
 void inf_file_chooser_dialog::selectionChanged()
 { content->ok.setEnabled(content->chooser_component.currentFileIsValid()); }
 

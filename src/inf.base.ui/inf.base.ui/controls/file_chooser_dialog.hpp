@@ -21,7 +21,6 @@ private:
   void fileClicked(juce::File const&, juce::MouseEvent const&) override {}
 
 public:
-  ~inf_file_chooser_dialog() override;
   inf_file_chooser_dialog(
     inf::base::plugin_controller* controller, juce::String const& title,
     juce::FileBrowserComponent& browser_component,
