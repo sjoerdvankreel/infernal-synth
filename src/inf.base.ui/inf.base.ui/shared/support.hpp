@@ -22,6 +22,8 @@ float
 get_scaled_size(plugin_controller const* controller, float min_size, float max_size);
 std::string
 get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);
+std::int32_t
+plugin_editor_width(plugin_controller const* controller, std::int32_t ui_size_part_type, std::int32_t ui_size_param_index, std::int32_t selected_size_index);
 
 inline float
 get_router_width(inf::base::plugin_controller const* controller)

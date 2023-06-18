@@ -748,15 +748,11 @@ create_ui_size_ui(
   std::int32_t initial_index = controller->ui_value_at({ part_type, 0 }, param_index).discrete;
   for(std::size_t i = 0; i < desc.data.discrete.items->size(); i++)
     size_names.push_back((*desc.data.discrete.items)[i].name);
-  std::size_t sizes_count = size_names.size();
-  return create_action_dropdown_ui(controller, "UI Size", size_names, initial_index, [controller, sizes_count, part_type, param_index](std::int32_t selected_index) {
-    float min_width = static_cast<float>(controller->editor_min_width());
-    float max_width = static_cast<float>(controller->editor_max_width());
-    float factor = static_cast<float>(selected_index) / static_cast<float>(sizes_count - 1);
+  return create_action_dropdown_ui(controller, "UI Size", size_names, initial_index, [controller, part_type, param_index](std::int32_t selected_index) {
     std::int32_t rt_param_index = controller->topology()->param_index({ part_type, 0 }, param_index);
     controller->editor_param_changed(rt_param_index, param_value(selected_index));
-    controller->set_editor_width(static_cast<std::int32_t>(min_width + factor * (max_width - min_width)));
-    });
+    controller->set_editor_width(plugin_editor_width(controller, part_type, param_index, selected_index));
+  });
 }
 
 void

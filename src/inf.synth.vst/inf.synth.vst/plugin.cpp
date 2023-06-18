@@ -7,6 +7,7 @@
 
 #include <inf.synth.ui/ui.hpp>
 #include <inf.synth.vst/plugin.hpp>
+#include <inf.base.ui/shared/support.hpp>
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_processor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
@@ -94,6 +95,7 @@ class synth_vst_controller :
 public vst_controller
 {
 public:
+  std::int32_t editor_initial_width() const override;
   float editor_aspect_ratio() const override { return 1.629f; }
   std::int32_t editor_min_width() const override { return 1200; }
   std::int32_t editor_max_width() const override { return 2000; }
@@ -104,6 +106,13 @@ public:
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
+
+std::int32_t 
+synth_vst_controller::editor_initial_width() const
+{
+  std::int32_t ui_size_index = ui_value_at({ part_type::edit_selector, 0 }, edit_selector_param::ui_size).discrete;
+  return plugin_editor_width(this, part_type::edit_selector, edit_selector_param::ui_size, ui_size_index);
+}
 
 class synth_vst_topology :
 public synth_topology
