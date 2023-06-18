@@ -19,9 +19,11 @@ extern base::param_descriptor const edit_selector_params[];
 struct part_type_t { enum value { 
   vosc, veffect, geffect, vaudio_bank, gaudio_bank, 
   voice, master, vamp, gamp, venv, vlfo, glfo, vcv_bank, 
-  gcv_bank, vcv_plot, gcv_plot, edit_selector, active, output, count }; };
+  gcv_bank, vcv_plot, gcv_plot, edit_selector, patch, active, output, count }; };
 typedef part_type_t::value part_type;
 
+struct patch_param_t { enum value { 
+  factory_preset, count }; };
 struct edit_selector_type_t { enum value {
   edit_voice, edit_global, count }; };
 struct edit_ui_size_type_t { enum value {
@@ -33,6 +35,7 @@ struct active_param_t { enum value {
 struct master_param_t { enum value {
   gcv1_uni, gcv1_bi, gcv2_uni, gcv2_bi, gcv3_uni, gcv3_bi, count }; };
 
+typedef patch_param_t::value patch_param;
 typedef active_param_t::value active_param;
 typedef master_param_t::value master_param;
 typedef edit_ui_size_type_t::value edit_ui_size_type;

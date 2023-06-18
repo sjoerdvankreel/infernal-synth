@@ -446,11 +446,11 @@ create_root_ui(
 { return std::make_unique<root_element>(controller, std::move(content), width, fill); }
 
 std::unique_ptr<ui_element>
-create_factory_preset_ui(
-  plugin_controller* controller, lnf_factory lnf_factory);
-std::unique_ptr<ui_element>
 create_theme_selector_ui(
   plugin_controller* controller, lnf_factory lnf_factory);
+std::unique_ptr<ui_element>
+create_factory_preset_ui(
+  plugin_controller* controller, std::int32_t part_type, std::int32_t param_index, lnf_factory lnf_factory);
 std::unique_ptr<ui_element>
 create_ui_size_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t param_index, lnf_factory lnf_factory);

@@ -1169,7 +1169,7 @@ create_synth_patch_group(plugin_controller* controller)
     load_preset_file(controller, create_root_lnf); }), 1, 0, 1, 1);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() {
     save_preset_file(controller, create_root_lnf); }), 1, 1, 1, 1);
-  //grid->add_cell(create_factory_preset_ui(controller, create_root_lnf), 2, 0, 1, 2);
+  grid->add_cell(create_factory_preset_ui(controller, part_type::patch, patch_param::factory_preset, create_root_lnf), 2, 0, 1, 2);
   return create_part_single_ui(controller, "Patch", -1, true, selector_routing_dir::none, create_part_group_container_ui(controller, std::move(grid)));
 }
 

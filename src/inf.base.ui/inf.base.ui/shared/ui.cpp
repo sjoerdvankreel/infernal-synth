@@ -715,11 +715,12 @@ create_part_selector_ui(
 
 std::unique_ptr<ui_element>
 create_factory_preset_ui(
-  plugin_controller* controller, lnf_factory lnf_factory)
+  plugin_controller* controller, std::int32_t part_type, std::int32_t param_index, lnf_factory lnf_factory)
 {
   std::vector<std::string> items;
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto presets = controller->factory_presets(file.getFullPathName().toStdString());
+  float current_val = controller->ui_value_at()
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
   return create_action_dropdown_ui(controller, "Factory preset", items, 0, [controller, presets, lnf_factory](std::int32_t index) {
