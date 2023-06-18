@@ -369,6 +369,12 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 static std::vector<list_item> const edit_selector_types = {
 { "{73A12F62-82E3-4FCF-B507-2DF2BB00521C}", "Edit Voice" },
 { "{F1C6C636-BDCB-48C8-8BBC-AAD2ECF5AD0D}", "Edit Global" } };
+static std::vector<list_item> const edit_ui_size_types = {
+{ "{A1D66F6B-5B65-45C1-9DED-15D354E12CC4}", "XS UI" },
+{ "{54E5A984-7274-4600-B553-BF19C405FA2F}", "Small UI" },
+{ "{0B11E0C4-D075-4FD0-9BCC-28C9F9FF08D1}", "Medium UI" },
+{ "{202B0244-1283-4ED5-A11A-238B8F7C5F84}", "Large UI" },
+{ "{997F1746-CEA8-4736-ABA2-67C2C502B69D}", "XL UI" } };
 
 param_descriptor const
 master_params[master_param::count] =
@@ -384,7 +390,8 @@ master_params[master_param::count] =
 param_descriptor const
 edit_selector_params[edit_selector_param::count] =
 {
-  { "{5B22861B-88F6-446C-AA92-BA6B39712342}", { { "Edit", "Edit" }, "", param_kind::ui, param_type::list, { &edit_selector_types, edit_selector_type::edit_voice } } }
+  { "{5B22861B-88F6-446C-AA92-BA6B39712342}", { { "Edit", "Edit" }, "", param_kind::ui, param_type::list, { &edit_selector_types, edit_selector_type::edit_voice } } },
+  { "{15190018-F886-42EB-BE04-21AE783F43B0}", { { "UI Size", "UI Size" }, "", param_kind::ui, param_type::list, { &edit_ui_size_types, edit_ui_size_type::xs_ui } } }
 };
 
 // ---- part selector ----

@@ -24,8 +24,10 @@ typedef part_type_t::value part_type;
 
 struct edit_selector_type_t { enum value {
   edit_voice, edit_global, count }; };
+struct edit_ui_size_type_t { enum value {
+  xs_ui, small_ui, medium_ui, large_ui, xl_ui }; };
 struct edit_selector_param_t { enum value {
-  edit_type, count }; };
+  edit_type, ui_size, count }; };
 struct active_param_t { enum value { 
   vosc, veffect, geffect, venv, vlfo, glfo, count }; };
 struct master_param_t { enum value {
@@ -33,6 +35,7 @@ struct master_param_t { enum value {
 
 typedef active_param_t::value active_param;
 typedef master_param_t::value master_param;
+typedef edit_ui_size_type_t::value edit_ui_size_type;
 typedef edit_selector_type_t::value edit_selector_type;
 typedef edit_selector_param_t::value edit_selector_param;
 

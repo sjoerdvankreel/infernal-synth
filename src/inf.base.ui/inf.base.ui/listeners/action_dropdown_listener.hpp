@@ -12,8 +12,8 @@ public juce::ComboBox::Listener
 {
   std::function<void(std::int32_t)> const _callback;
 public:
-  void comboBoxChanged(juce::ComboBox* dropdown) override;
   action_dropdown_listener(std::function<void(std::int32_t)> const& callback) : _callback(callback) {}
+  void comboBoxChanged(juce::ComboBox* dropdown) override { _callback(dropdown->getSelectedItemIndex()); }
 };
 
 } // namespace inf::base::ui

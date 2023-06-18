@@ -153,6 +153,7 @@ public ui_element
 {
   std::string const _default_text;
   std::vector<std::string> _items;
+  std::int32_t const _initial_index;
   std::function<void(std::int32_t)> const _callback;
   std::unique_ptr<action_dropdown_listener> _listener = {};
 protected: 
@@ -160,15 +161,15 @@ protected:
 public:
   void layout() override;
   action_dropdown_element(inf::base::plugin_controller* controller, std::string const& default_text,
-    std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback):
-  ui_element(controller), _default_text(default_text), _items(items), _callback(callback) {}
+    std::vector<std::string> const& items, std::int32_t initial_index, std::function<void(std::int32_t)> const& callback):
+  ui_element(controller), _default_text(default_text), _items(items), _initial_index(initial_index), _callback(callback) {}
 };
 
 inline std::unique_ptr<action_dropdown_element>
 create_action_dropdown_ui(
   inf::base::plugin_controller* controller, std::string const& default_text, 
-  std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback)
-{ return std::make_unique<action_dropdown_element>(controller, default_text, items, callback); }
+  std::vector<std::string> const& items, std::int32_t initial_index, std::function<void(std::int32_t)> const& callback)
+{ return std::make_unique<action_dropdown_element>(controller, default_text, items, initial_index, callback); }
 
 class container_element:
 public ui_element
@@ -452,7 +453,7 @@ create_theme_selector_ui(
   plugin_controller* controller, lnf_factory lnf_factory);
 std::unique_ptr<ui_element>
 create_ui_size_ui(
-  plugin_controller* controller, lnf_factory lnf_factory, std::vector<std::string> const& size_names);
+  plugin_controller* controller, std::int32_t part_type, std::int32_t param_index, lnf_factory lnf_factory);
 
 std::unique_ptr<ui_element>
 create_part_group_ui(
