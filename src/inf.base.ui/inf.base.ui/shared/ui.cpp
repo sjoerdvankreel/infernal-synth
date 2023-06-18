@@ -728,7 +728,6 @@ create_factory_preset_ui(
     show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, part_type, param_index, selected_index](plugin_controller* controller) {
       std::int32_t rt_param_index = controller->topology()->param_index({ part_type, 0 }, param_index); 
       float new_val = static_cast<float>(selected_index / static_cast<float>(presets.size() - 1));
-      // Load preset first, set param after.
       controller->load_preset(presets[selected_index].path, true); 
       controller->editor_param_changed(rt_param_index, param_value(new_val)); }); });
 }
@@ -756,9 +755,10 @@ create_ui_size_ui(
     size_names.push_back((*desc.data.discrete.items)[i].name);
   return create_action_dropdown_ui(controller, "UI Size", size_names, initial_index, [controller, part_type, param_index](std::int32_t selected_index) {
     std::int32_t rt_param_index = controller->topology()->param_index({ part_type, 0 }, param_index);
-    // Change param first, set width after.
+    // Need to param_changed twice.     
     controller->editor_param_changed(rt_param_index, param_value(selected_index));
     controller->set_editor_width(plugin_editor_width(controller, part_type, param_index, selected_index));
+    controller->editor_param_changed(rt_param_index, param_value(selected_index));
   });
 }
 

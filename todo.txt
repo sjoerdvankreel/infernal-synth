@@ -59,4 +59,4 @@
 - hold stage for delay
 - manual + automation test all controls
 - remember ui size/theme/factory across controller lifetime
-- drop juce vst3 sdk
+- dont load ui size from preset files
