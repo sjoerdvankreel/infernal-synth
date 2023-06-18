@@ -397,7 +397,7 @@ edit_selector_params[edit_selector_param::count] =
 param_descriptor const
 patch_params[patch_param::count] =
 {
-  { "{75A5B509-3C0C-42BC-BD3B-272D21C3DB17}", { { "Preset", "Factory preset" }, "", param_kind::ui, percentage_01_bounds(0.0f) } }
+  { "{75A5B509-3C0C-42BC-BD3B-272D21C3DB17}", { { "Preset", "Factory preset" }, "", param_kind::ui, linear_bounds(0.0f, 1.0f, 0.0f, 8) } }
 };
 
 // ---- part selector ----
@@ -442,7 +442,7 @@ part_descriptors[part_type::count] =
   { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "V.CV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "G.CV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{52786612-2524-4F95-93F5-9D0228C96732}", { "Edit", "Edit" }, part_kind::input, part_type::edit_selector, 1, edit_selector_params, edit_selector_param::count, nullptr },
-  { "{4EE0F930-E05E-4404-9805-D8C0347F8BB4}", { "Patch", "Patch" }, part_kind::input, part_type::patch, 1, patch_params, edit_selector_param::count, nullptr },
+  { "{4EE0F930-E05E-4404-9805-D8C0347F8BB4}", { "Patch", "Patch" }, part_kind::input, part_type::patch, 1, patch_params, patch_param::count, nullptr },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, nullptr },
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, nullptr }
 };         
