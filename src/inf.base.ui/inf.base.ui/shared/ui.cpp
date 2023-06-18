@@ -720,12 +720,16 @@ create_factory_preset_ui(
   std::vector<std::string> items;
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto presets = controller->factory_presets(file.getFullPathName().toStdString());
-  float current_val = controller->ui_value_at()
+  float current_val = controller->ui_value_at({ part_type, 0 }, param_index).real;
+  std::int32_t current_index = static_cast<std::int32_t>(current_val * presets.size());
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
-  return create_action_dropdown_ui(controller, "Factory preset", items, 0, [controller, presets, lnf_factory](std::int32_t index) {
-    show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, index](plugin_controller* controller) {
-      controller->load_preset(presets[index].path, true); }); });
+  return create_action_dropdown_ui(controller, "Factory preset", items, current_index, [controller, presets, part_type, param_index, lnf_factory](std::int32_t selected_index) {
+    show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, part_type, param_index, selected_index](plugin_controller* controller) {
+      std::int32_t rt_param_index = controller->topology()->param_index({ part_type, 0 }, param_index); 
+      float new_val = static_cast<float>(selected_index / presets.size());
+      controller->editor_param_changed(rt_param_index, param_value(new_val));
+      controller->load_preset(presets[selected_index].path, true); }); });
 }
 
 std::unique_ptr<ui_element>
