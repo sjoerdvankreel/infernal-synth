@@ -1,7 +1,6 @@
 * breaking changes 
 - dropped osc gain
 - changed r/am ring
-- dropped vfx/gfx 9 and 10
 - dropped down vaudio/gaudio route count to 15 TODO less gaudio
 
 * for each release 

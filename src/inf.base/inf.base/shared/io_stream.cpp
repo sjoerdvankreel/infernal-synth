@@ -1,7 +1,9 @@
 #include <inf.base/shared/io_stream.hpp>
 
+#include <set>
 #include <vector>
 #include <cassert>
+#include <iostream>
 #include <algorithm>
 
 namespace inf::base {
@@ -78,30 +80,81 @@ io_stream::load(topology_info const& topology, param_value* state)
   assert(state != nullptr);
   std::uint32_t raw_version = to_file_version(topology.version_major(), topology.version_minor());
 
-  if(!read_string(file_magic) || file_magic != magic) return false;
-  if(!read_uint32(raw_file_version) || raw_file_version > raw_version) return false;
-  if(!read_int32(param_count) || param_count <= 0) return false;
+  if(!read_string(file_magic) || file_magic != magic)
+  {
+    std::cout << "InfernalSynth: not a patch file." << std::endl;
+    return false;
+  }
+  if(!read_uint32(raw_file_version) || raw_file_version > raw_version)
+  {
+    std::cout << "InfernalSynth: incompatible file format." << std::endl;
+    return false;
+  }
+  if(!read_int32(param_count) || param_count <= 0) 
+  {
+    std::cout << "InfernalSynth: wrong parameter count." << std::endl;
+    return false;
+  }
 
   // Set defaults in case some params are missing or invalid.
   topology.init_all_param_defaults(state);
   from_file_version(raw_file_version, old_major, old_minor);
 
+  std::set<std::int32_t> matched_parameter_indices;
   for (std::int32_t sp = 0; sp < param_count; sp++)
   {
-    if(!read_string(part_guid)) return false;
-    if(!read_int32(type_index)) return false;
-    if(!read_string(param_guid)) return false;
-    if(!read_int32(io_type)) return false;
-    if(io_type < 0 || io_type >= param_io::count) return false;
+    if(!read_string(part_guid))
+    {
+      std::cout << "InfernalSynth: failed to read part guid." << std::endl;
+      return false;
+    }
+    if(!read_int32(type_index))
+    {
+      std::cout << "InfernalSynth: failed to read part index." << std::endl;
+      return false;
+    }
+    if(!read_string(param_guid))
+    {
+      std::cout << "InfernalSynth: failed to read parameter guid." << std::endl;
+      return false;
+    }
+    if(!read_int32(io_type))
+    {
+      std::cout << "InfernalSynth: failed to read parameter io type." << std::endl;
+      return false;
+    }
+    if(io_type < 0 || io_type >= param_io::count)
+    {
+      std::cout << "InfernalSynth: invalid parameter io type." << std::endl;
+      return false;
+    }
 
     str_value.clear();
     value = param_value();
 
     switch (io_type)
     {
-    case param_io::real: if(!read_float(value.real)) return false; break;
-    case param_io::text: if(!read_string(str_value)) return false; break;
-    case param_io::discrete: if(!read_int32(value.discrete)) return false; break;
+    case param_io::real: 
+      if (!read_float(value.real))
+      {
+        std::cout << "InfernalSynth: failed to read real parameter value." << std::endl;
+        return false;
+      }
+      break;
+    case param_io::text:
+      if(!read_string(str_value)) 
+      {
+        std::cout << "InfernalSynth: failed to read text parameter value." << std::endl;
+        return false;
+      }
+      break;
+    case param_io::discrete: 
+      if(!read_int32(value.discrete)) 
+      {
+        std::cout << "InfernalSynth: failed to read int parameter value." << std::endl;
+        return false;
+      }
+      break;
     default: assert(false); break;
     }
 
@@ -114,6 +167,9 @@ io_stream::load(topology_info const& topology, param_value* state)
       if(type_index != part.type_index) continue;
       if(param_guid != param->guid) continue;
       if(io_type != param->data.io_type()) continue;
+
+      // Matched this one.
+      matched_parameter_indices.insert(rp);
 
       // Read old stuff.
       switch (io_type)
@@ -139,6 +195,14 @@ io_stream::load(topology_info const& topology, param_value* state)
       break;
     }
   }
+
+  // Report not-found parameters.
+  for (std::int32_t rp = 0; rp < topology.input_param_count; rp++)
+    if (matched_parameter_indices.find(rp) == matched_parameter_indices.end())
+    {
+      auto const& desc = topology.params[rp].descriptor;
+      std::cout << "Missing value for " << desc->guid << " " << "(" << desc->data.static_name.short_ << ")" << std::endl;
+    }
 
   topology.state_check(state);
   return true;
