@@ -274,8 +274,8 @@ synth_topology::try_move_stored_param(
       if (std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid
         || std::string("{810B55DF-6230-45C7-B478-7A3569DC9127}") == id.param_guid
         || std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid
+        || std::string("{51E69AB1-37F7-4361-84B9-2F1727F66C4A}") == id.param_guid
         || std::string("{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}") == id.param_guid
-        || std::string("{80FF4399-33CE-4A65-9A2C-C48271EAACDD}") == id.param_guid
         || std::string("{782750CE-319E-4ED2-906B-106C72A9A85C}") == id.param_guid)
       {
         can_be_ignored = old_value.real == 0.5f;
