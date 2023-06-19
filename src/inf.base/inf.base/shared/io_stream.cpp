@@ -146,13 +146,11 @@ io_stream::load(topology_info const& topology, param_value* state)
     old_id.param_guid = param_guid;
     old_id.part_index = type_index;
     old_parameters.insert(old_id);
-    auto new_id_iter = new_params.find(old_id);
-    if (new_id_iter == new_params.end())
-      continue;
 
     str_value.clear();
     value = param_value();
 
+    // Be sure to read old values even if paramid not matched.
     switch (io_type)
     {
     case param_io::real: 
@@ -169,6 +167,10 @@ io_stream::load(topology_info const& topology, param_value* state)
       break;
     default: assert(false); break;
     }
+
+    auto new_id_iter = new_params.find(old_id);
+    if (new_id_iter == new_params.end())
+      continue;
 
     old_parameters.erase(new_id_iter->first);
     std::int32_t rp = new_id_iter->second;
