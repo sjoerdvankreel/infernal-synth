@@ -17,6 +17,17 @@ namespace inf::base {
 class audio_processor;
 class graph_processor;
 
+// To allow conversions.
+struct stored_param_id
+{
+  std::int32_t io_type;
+  std::string part_guid;
+  std::string param_guid;
+  std::int32_t part_index;
+};
+
+bool operator<(stored_param_id const& l, stored_param_id const& r);
+
 // Runtime param info (e.g. lfo 2 rate).
 struct param_info
 {
@@ -71,6 +82,10 @@ struct topology_info
   virtual char const* plugin_name() const = 0;
   virtual std::uint16_t version_major() const = 0;
   virtual std::uint16_t version_minor() const = 0;
+
+  // Returns new target index for old stuff, or -1 if N/A.
+  virtual std::int32_t try_move_stored_param(stored_param_id const& id) const { return -1; }
+  // To allow adjusting bounds etc.
   virtual param_value convert_param(
     std::int32_t index, param_value old_value, std::string const& old_text,
     std::uint16_t old_major, std::uint16_t old_minor) const { return old_value; }

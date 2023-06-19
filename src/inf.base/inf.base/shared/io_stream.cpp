@@ -9,27 +9,6 @@
 
 namespace inf::base {
 
-struct stored_param_id
-{
-  std::int32_t io_type;
-  std::string part_guid;
-  std::string param_guid;
-  std::int32_t part_index;
-};
-
-bool operator<(stored_param_id const& l, stored_param_id const& r)
-{ 
-  if(l.io_type < r.io_type) return true;
-  if(l.io_type > r.io_type) return false;
-  if(l.part_index < r.part_index) return true;
-  if(l.part_index > r.part_index) return false;
-  if(l.part_guid < r.part_guid) return true;
-  if(l.part_guid > r.part_guid) return false;
-  if(l.param_guid < r.param_guid) return true;
-  if(l.param_guid > r.param_guid) return false;
-  return false;
-}
-
 static std::string const magic = "{17026466-059D-4C8C-A13E-510250D72F46}";
 
 static std::uint32_t
@@ -168,12 +147,20 @@ io_stream::load(topology_info const& topology, param_value* state)
     default: assert(false); break;
     }
 
+    std::int32_t rp = -1;
     auto new_id_iter = new_params.find(old_id);
     if (new_id_iter == new_params.end())
-      continue;
+    {
+      rp = topology.try_move_stored_param(old_id);
+      if(rp == -1) continue;
+      old_parameters.erase(old_id);
+    }
+    else 
+    {
+      old_parameters.erase(new_id_iter->first);
+      rp = new_id_iter->second;
+    }
 
-    old_parameters.erase(new_id_iter->first);
-    std::int32_t rp = new_id_iter->second;
     std::int32_t part_index = topology.params[rp].part_index;
     auto const& param = topology.params[rp].descriptor;
 

@@ -19,6 +19,20 @@ stable_hash(char const* str)
   return std::abs(static_cast<std::int32_t>(h + (h >> 5)));
 }
 
+bool 
+operator<(stored_param_id const& l, stored_param_id const& r)
+{
+  if (l.io_type < r.io_type) return true;
+  if (l.io_type > r.io_type) return false;
+  if (l.part_index < r.part_index) return true;
+  if (l.part_index > r.part_index) return false;
+  if (l.part_guid < r.part_guid) return true;
+  if (l.part_guid > r.part_guid) return false;
+  if (l.param_guid < r.param_guid) return true;
+  if (l.param_guid > r.param_guid) return false;
+  return false;
+}
+
 void 
 topology_info::set_ui_value(
   param_value* state, std::int32_t part_type, 
