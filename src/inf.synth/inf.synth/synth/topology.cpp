@@ -101,19 +101,54 @@ synth_topology::try_move_stored_param(
 {
   can_be_ignored = false;
   if (old_major < 1 || (old_major == 1 && old_minor < 2))
+    // Oscillator gain.
+    if (std::string("{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}") == id.part_guid
+      && std::string("{09E50DA8-2467-462F-9822-7E9074A51B53}") == id.param_guid)
+    {
+      can_be_ignored = old_value.real == 0.5f;
+      return -1;
+    }
     // Audio A enabled.
-    if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
+    else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
       && std::string("{14096099-485D-4EB9-B055-E393DE2E993C}") == id.param_guid)
     {
       can_be_ignored = true;
       return -1;
     }
-    // Oscillator gain.
-    else if (std::string("{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}") == id.part_guid
-      && std::string("{09E50DA8-2467-462F-9822-7E9074A51B53}") == id.param_guid)
+    // Audio A moved from 4x6 to 1x15.
+    else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid)
     {
-      can_be_ignored = old_value.real == 0.0f;
-      return -1;
+      // Input 1.
+      if (id.part_index == 0 && std::string("{2E9F0478-B911-43DF-BB51-0C5836E4853F}") == id.param_guid) 
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in1);
+      if (id.part_index == 0 && std::string("{A3A59082-CF73-4C28-A3FC-037729C9CB42}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in2);
+      if (id.part_index == 0 && std::string("{A8E6882A-8945-4F59-92B9-78004EAF5818}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in3);
+      if (id.part_index == 0 && std::string("{7DFD9AF0-7419-4B06-B875-F18D9C344D42}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in4);
+      if (id.part_index == 0 && std::string("{2A252D70-9750-4385-8405-AE1EAF5E8018}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in5);
+      if (id.part_index == 0 && std::string("{34E1B446-EF1B-4715-9993-64A177769033}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in6);
+      if (id.part_index == 1 && std::string("{2E9F0478-B911-43DF-BB51-0C5836E4853F}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in7);
+      if (id.part_index == 1 && std::string("{A3A59082-CF73-4C28-A3FC-037729C9CB42}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in8);
+      if (id.part_index == 1 && std::string("{A8E6882A-8945-4F59-92B9-78004EAF5818}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in9);
+      if (id.part_index == 1 && std::string("{7DFD9AF0-7419-4B06-B875-F18D9C344D42}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in10);
+      if (id.part_index == 1 && std::string("{2A252D70-9750-4385-8405-AE1EAF5E8018}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in11);
+      if (id.part_index == 1 && std::string("{34E1B446-EF1B-4715-9993-64A177769033}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in12);
+      if (id.part_index == 2 && std::string("{2E9F0478-B911-43DF-BB51-0C5836E4853F}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in13);
+      if (id.part_index == 2 && std::string("{A3A59082-CF73-4C28-A3FC-037729C9CB42}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in14);
+      if (id.part_index == 2 && std::string("{A8E6882A-8945-4F59-92B9-78004EAF5818}") == id.param_guid)
+        return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in15);
     }
   return -1;
 }
