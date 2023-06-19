@@ -86,8 +86,9 @@ struct topology_info
   // To allow adjusting bounds etc.
   // Returns new target index for old stuff, or -1 if N/A.
   virtual std::int32_t try_move_stored_param(
-    stored_param_id const& id, std::uint16_t old_major, 
-    std::uint16_t old_minor, bool& can_be_ignored) const 
+    base::stored_param_id const& id, base::param_value old_value, 
+    std::string const& old_text, std::uint16_t old_major, 
+    std::uint16_t old_minor, bool& can_be_ignored) const
     { can_be_ignored = false; return -1; }
   virtual param_value convert_param(
     std::int32_t index, param_value old_value, std::string const& old_text,

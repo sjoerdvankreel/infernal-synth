@@ -96,18 +96,25 @@ synth_topology::convert_param(
 
 std::int32_t 
 synth_topology::try_move_stored_param(
-  stored_param_id const& id, std::uint16_t old_major,
-  std::uint16_t old_minor, bool& can_be_ignored) const
+  base::stored_param_id const& id, base::param_value old_value, std::string const& old_text,
+  std::uint16_t old_major, std::uint16_t old_minor, bool& can_be_ignored) const
 {
   can_be_ignored = false;
-  if(old_major == 1 || old_minor < 2) return -1;
-  // Audio A enabled.
-  if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
-    && std::string("{14096099-485D-4EB9-B055-E393DE2E993C}") == id.param_guid)
-  {
-    can_be_ignored = true;
-    return -1;
-  }
+  if (old_major < 1 || (old_major == 1 && old_minor < 2))
+    // Audio A enabled.
+    if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
+      && std::string("{14096099-485D-4EB9-B055-E393DE2E993C}") == id.param_guid)
+    {
+      can_be_ignored = true;
+      return -1;
+    }
+    // Oscillator gain.
+    else if (std::string("{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}") == id.part_guid
+      && std::string("{09E50DA8-2467-462F-9822-7E9074A51B53}") == id.param_guid)
+    {
+      can_be_ignored = old_value.real == 0.0f;
+      return -1;
+    }
   return -1;
 }
 
