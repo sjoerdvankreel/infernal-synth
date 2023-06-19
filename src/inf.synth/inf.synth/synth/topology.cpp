@@ -115,6 +115,13 @@ synth_topology::try_move_stored_param(
       can_be_ignored = true;
       return -1;
     }
+    // Audio B enabled.
+    else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid
+      && std::string("{85A0A7FB-8319-436E-9979-0A7267F1F636}") == id.param_guid)
+    {
+      can_be_ignored = true;
+      return -1;
+    }
     // Audio A moved from 4x6 to 1x15.
     else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid)
     {
