@@ -94,6 +94,14 @@ synth_topology::convert_param(
   return old_value;
 }
 
+std::int32_t 
+synth_topology::try_move_stored_param(
+  stored_param_id const& id, bool& can_be_ignored) const
+{
+  can_be_ignored = false;
+  return -1;
+}
+
 // ---- clear / init patch ----
 
 void 
