@@ -69,7 +69,8 @@ public:
   std::unique_ptr<base::graph_processor>
   create_graph_processor(base::part_id id, std::int32_t graph_type) const override;
   std::int32_t try_move_stored_param(
-    base::stored_param_id const& id, bool& can_be_ignored) const override;
+    base::stored_param_id const& id, std::uint16_t old_major,
+    std::uint16_t old_minor, bool& can_be_ignored) const override;
   base::param_value convert_param(
     std::int32_t index, base::param_value old_value,
     std::string const& old_text, std::uint16_t old_major, std::uint16_t old_minor) const override;

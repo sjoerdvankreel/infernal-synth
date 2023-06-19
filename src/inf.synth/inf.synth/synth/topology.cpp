@@ -96,9 +96,18 @@ synth_topology::convert_param(
 
 std::int32_t 
 synth_topology::try_move_stored_param(
-  stored_param_id const& id, bool& can_be_ignored) const
+  stored_param_id const& id, std::uint16_t old_major,
+  std::uint16_t old_minor, bool& can_be_ignored) const
 {
   can_be_ignored = false;
+  if(old_major == 1 || old_minor < 2) return -1;
+  // Audio A enabled.
+  if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
+    && std::string("{14096099-485D-4EB9-B055-E393DE2E993C}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
   return -1;
 }
 
