@@ -149,6 +149,7 @@ synth_topology::try_move_stored_param(
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in14);
       if (id.part_index == 2 && std::string("{A8E6882A-8945-4F59-92B9-78004EAF5818}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::in15);
+
       // Output.
       if (id.part_index == 0 && std::string("{295DC5F0-FB32-4D43-8799-D79F23FD3AA9}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::out1);
@@ -180,6 +181,7 @@ synth_topology::try_move_stored_param(
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::out14);
       if (id.part_index == 2 && std::string("{D2E34E63-DE9E-4620-924D-1897614BF983}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::out15);
+
       // Amt.
       if (id.part_index == 0 && std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::amt1);
@@ -211,6 +213,7 @@ synth_topology::try_move_stored_param(
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::amt14);
       if (id.part_index == 2 && std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::amt15);
+
       // Balance.
       if (id.part_index == 0 && std::string("{91996C1F-4510-4BC1-97BA-135C9881263F}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::bal1);
@@ -242,6 +245,54 @@ synth_topology::try_move_stored_param(
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::bal14);
       if (id.part_index == 2 && std::string("{64C90CE2-2AC0-4675-8F99-B88E807F712A}") == id.param_guid)
         return param_index({ part_type::vaudio_bank, 0 }, audio_bank_param::bal15);
+
+      // Input unused.
+      if (std::string("{2E9F0478-B911-43DF-BB51-0C5836E4853F}") == id.param_guid
+        || std::string("{A3A59082-CF73-4C28-A3FC-037729C9CB42}") == id.param_guid
+        || std::string("{A8E6882A-8945-4F59-92B9-78004EAF5818}") == id.param_guid
+        || std::string("{7DFD9AF0-7419-4B06-B875-F18D9C344D42}") == id.param_guid
+        || std::string("{2A252D70-9750-4385-8405-AE1EAF5E8018}") == id.param_guid
+        || std::string("{34E1B446-EF1B-4715-9993-64A177769033}") == id.param_guid)
+      {
+        can_be_ignored = old_value.discrete == 0;
+        return -1;
+      }
+
+      // Output unused.
+      if (std::string("{295DC5F0-FB32-4D43-8799-D79F23FD3AA9}") == id.param_guid
+        || std::string("{843EB41C-199F-4FAC-ACC4-841B3663248D}") == id.param_guid
+        || std::string("{D2E34E63-DE9E-4620-924D-1897614BF983}") == id.param_guid
+        || std::string("{C2C5B9BC-81B6-4D3E-947E-E0B900447BDF}") == id.param_guid
+        || std::string("{80FF4399-33CE-4A65-9A2C-C48271EAACDD}") == id.param_guid
+        || std::string("{DAA1F891-5A2A-47A7-B923-61932694B951}") == id.param_guid)
+      {
+        can_be_ignored = old_value.discrete == 0;
+        return -1;
+      }
+
+      // Amt unused.
+      if (std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid
+        || std::string("{810B55DF-6230-45C7-B478-7A3569DC9127}") == id.param_guid
+        || std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid
+        || std::string("{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}") == id.param_guid
+        || std::string("{80FF4399-33CE-4A65-9A2C-C48271EAACDD}") == id.param_guid
+        || std::string("{782750CE-319E-4ED2-906B-106C72A9A85C}") == id.param_guid)
+      {
+        can_be_ignored = old_value.real == 0.5f;
+        return -1;
+      }
+
+      // Bal unused.
+      if (std::string("{91996C1F-4510-4BC1-97BA-135C9881263F}") == id.param_guid
+        || std::string("{265269F4-F6DF-474E-A696-44EE01681C65}") == id.param_guid
+        || std::string("{64C90CE2-2AC0-4675-8F99-B88E807F712A}") == id.param_guid
+        || std::string("{01B6309E-B045-48A7-9BC1-8E828A528A3F}") == id.param_guid
+        || std::string("{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}") == id.param_guid
+        || std::string("{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}") == id.param_guid)
+      {
+        can_be_ignored = old_value.real == 0.5f;
+        return -1;
+      }
     }
   return -1;
 }
