@@ -141,6 +141,9 @@ io_stream::load(topology_info const& topology, param_value* state)
     old_id.param_guid = param_guid;
     old_id.part_index = type_index;
     old_parameters.insert(old_id);
+    auto new_id_iter = new_params.find(old_id);
+    if (new_id_iter == new_params.end())
+      continue;
 
     str_value.clear();
     value = param_value();
@@ -159,9 +162,6 @@ io_stream::load(topology_info const& topology, param_value* state)
     default: assert(false); break;
     }
 
-    auto new_id_iter = new_params.find(old_id);
-    if(new_id_iter == new_params.end()) 
-      continue;
     old_parameters.erase(new_id_iter->first);
     std::int32_t rp = new_id_iter->second;
     std::int32_t part_index = topology.params[rp].part_index;
@@ -187,8 +187,6 @@ io_stream::load(topology_info const& topology, param_value* state)
       state[rp].discrete, param->data.discrete.min, 
       param->data.discrete.effective_max(part_index)); break;
     }
-
-    break;
   }
 
   // Report what's unused by new.
