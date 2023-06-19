@@ -151,8 +151,14 @@ io_stream::load(topology_info const& topology, param_value* state)
     auto new_id_iter = new_params.find(old_id);
     if (new_id_iter == new_params.end())
     {
-      rp = topology.try_move_stored_param(old_id);
-      if(rp == -1) continue;
+      bool can_be_ignored = false;
+      rp = topology.try_move_stored_param(old_id, can_be_ignored);
+      if(rp == -1)
+      {
+        if(can_be_ignored)
+          old_parameters.erase(old_id);
+        continue;
+      }
       old_parameters.erase(old_id);
     }
     else 

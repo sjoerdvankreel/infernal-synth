@@ -83,12 +83,12 @@ struct topology_info
   virtual std::uint16_t version_major() const = 0;
   virtual std::uint16_t version_minor() const = 0;
 
-  // Returns new target index for old stuff, or -1 if N/A.
-  virtual std::int32_t try_move_stored_param(stored_param_id const& id) const { return -1; }
   // To allow adjusting bounds etc.
   virtual param_value convert_param(
     std::int32_t index, param_value old_value, std::string const& old_text,
     std::uint16_t old_major, std::uint16_t old_minor) const { return old_value; }
+  // Returns new target index for old stuff, or -1 if N/A.
+  virtual std::int32_t try_move_stored_param(stored_param_id const& id, bool& can_be_ignored) const { can_be_ignored = false; return -1; }
 
   // Sanity check.
   void state_check(param_value const* state) const;
