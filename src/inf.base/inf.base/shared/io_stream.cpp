@@ -128,11 +128,16 @@ io_stream::load(topology_info const& topology, param_value* state)
   std::set<stored_param_id> old_parameters;
   for (std::int32_t sp = 0; sp < param_count; sp++)
   {
-    if(!read_string(part_guid)) return false;
-    if(!read_int32(type_index)) return false;
-    if(!read_string(param_guid)) return false;
-    if(!read_int32(io_type)) return false;
-    if(io_type < 0 || io_type >= param_io::count) return false;
+    if(!read_string(part_guid)) 
+      return false;
+    if(!read_int32(type_index)) 
+      return false;
+    if(!read_string(param_guid)) 
+      return false;
+    if(!read_int32(io_type)) 
+      return false;
+    if(io_type < 0 || io_type >= param_io::count) 
+      return false;
 
     // Store old identifier. We'll remove it once matched.
     stored_param_id old_id;
@@ -151,13 +156,16 @@ io_stream::load(topology_info const& topology, param_value* state)
     switch (io_type)
     {
     case param_io::real: 
-      if (!read_float(value.real)) return false;
+      if (!read_float(value.real)) 
+        return false;
       break;
     case param_io::text:
-      if(!read_string(str_value)) return false;
+      if(!read_string(str_value))
+        return false;
       break;
     case param_io::discrete: 
-      if(!read_int32(value.discrete)) return false;
+      if(!read_int32(value.discrete)) 
+        return false;
       break;
     default: assert(false); break;
     }

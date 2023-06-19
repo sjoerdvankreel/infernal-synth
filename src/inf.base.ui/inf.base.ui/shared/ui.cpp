@@ -774,6 +774,7 @@ show_ok_box(
   state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
+    state->window->setLookAndFeel(nullptr);
     delete state; }), 1, 1);
   run_dialog_box(state, 180, 60);
 }
@@ -796,6 +797,7 @@ save_preset_file(
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
     state->box->exitModalState();
+    state->box->setLookAndFeel(nullptr);
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
@@ -819,6 +821,7 @@ load_preset_file(
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
     state->box->exitModalState();
+    state->box->setLookAndFeel(nullptr);
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
@@ -841,11 +844,13 @@ show_confirm_box(
   state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
-  state->confirmed(state->controller);
-  delete state; }), 2, 0);
+    state->confirmed(state->controller);
+    state->window->setLookAndFeel(nullptr);
+    delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
     state->window->exitModalState();
-  delete state; }), 2, 1);
+    state->window->setLookAndFeel(nullptr);
+    delete state; }), 2, 1);
   run_dialog_box(state, 180, 90);
 }
 
