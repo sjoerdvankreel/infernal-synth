@@ -149,6 +149,20 @@ synth_topology::try_move_stored_param(
     can_be_ignored = true;
     return -1;
   }
+  // CV A enabled dropped.
+  else if (std::string("{E6814824-7F56-4A9C-92B6-F5EB001B9513}") == id.part_guid
+    && std::string("{1F6DEE15-DEE7-443B-B9F8-E65BFF9C9C4A}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
+  // CV B enabled dropped.
+  else if (std::string("{3F416415-4C1E-49B3-A59F-0C4472C11B69}") == id.part_guid
+    && std::string("{C64A2AE2-E96D-487E-8373-3DA9DBB7B028}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
   // Audio A moved from 4x6 to 1x15.
   else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid)
   {
