@@ -273,6 +273,75 @@ synth_topology::try_move_stored_param(
         return param_index({ part_type::gaudio_bank, 0 }, new_route_index);
       }
   }
+  // CV A moved from 4x5 to 1x15.
+  else if (std::string("{E6814824-7F56-4A9C-92B6-F5EB001B9513}") == id.part_guid)
+  {
+    std::int32_t const old_route_count = 5;
+    std::int32_t const new_route_count = 15;
+    char const* old_in[old_route_count] = {
+      "{3B025C6A-0230-491A-A51F-7CF1C81B69C9}",
+      "{2833E378-210B-404F-A4CB-0D6204A72CF0}",
+      "{25041AB5-2A06-4305-8009-C26D56311D26}",
+      "{B4C3E2E0-106D-4377-93F6-711561D5F1DA}",
+      "{DE53604C-CC85-40EA-B0AC-6CB00050EB4C}" };
+    char const* old_out[old_route_count] = {
+      "{5FDD8C86-8F2D-4613-BB98-BB673F502412}",
+      "{D0B28D9E-8888-42EB-8D3C-177FB4585E42}",
+      "{37420523-6A9D-4125-BAAB-24A28B9E0992}",
+      "{32C5980E-F41A-441C-85A8-3AC90A4AAD0A}",
+      "{055B8D75-97ED-47E1-9A81-4FA5A3072E30}" };
+    char const* old_op[old_route_count] = {
+      "{18EBC834-CF60-4A68-BAF2-C57BC0BAE55E}",
+      "{CD10C60A-C25E-46A5-879E-C692E50AE36B}",
+      "{C6D7FDD5-102A-4972-B0B2-77F3977C9046}",
+      "{927B6CF5-D576-42F9-80BA-4C83437F9041}",
+      "{EDA84031-7061-448F-BCEB-6D941D772EFF}" };
+    char const* old_amt[old_route_count] = {
+      "{469D130F-2E4A-4960-871D-032B6F588313}",
+      "{58AFE21F-7945-4919-BB67-60CE8892A8AF}",
+      "{9C1F6472-6D48-42E6-B79E-3A00F33F70F5}",
+      "{D04F0B81-2E96-42D7-895C-DFC47BA36B4C}",
+      "{C0E8DD3E-DCAD-48FA-9C4E-BB0FDDFC2554}" };
+    char const* old_off[old_route_count] = {
+      "{0C1E5C81-01EE-4AE6-A05C-199210B904CC}",
+      "{20F28A5F-2956-412E-BD97-9220836C22A3}",
+      "{BFFA2360-5A5F-4575-A0E4-32B8B74977BD}",
+      "{B46AC7BD-982C-4A9D-B74B-AE27C25BE811}",
+      "{542280B8-942D-4FAA-AB26-5A39CE3FFF71}" };
+    char const* old_scl[old_route_count] = {
+      "{20ACF437-2158-4900-8DC4-D36767442BF1}",
+      "{23EFCBDF-7744-4527-B82D-A69E56C7338B}",
+      "{87087F9C-62A2-4804-9292-CD9089F025B7}",
+      "{D58E30EB-8F46-4EB7-84F2-37AA48F81721}",
+      "{62A7448C-3245-4B33-AF4E-42D98D3AD547}" };
+
+    // Don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_op[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.real == 1.0f
+        || id.param_guid == old_off[i] && old_value.real == 0.0f
+        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+
+    // Can we map to the new matrix ?
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i]
+        || id.param_guid == old_out[i]
+        || id.param_guid == old_op[i]
+        || id.param_guid == old_amt[i]
+        || id.param_guid == old_off[i]
+        || id.param_guid == old_scl[i])
+      {
+        std::int32_t new_route_index = id.part_index * old_route_count + i;
+        if (new_route_index >= new_route_count) return -1;
+        return param_index({ part_type::vcv_bank, 0 }, new_route_index);
+      }
+  }
   return -1;
 }
 
