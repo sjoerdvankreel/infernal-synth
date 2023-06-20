@@ -115,6 +115,15 @@ synth_topology::try_move_stored_param(
     can_be_ignored = true;
     return -1;
   }
+  // Active Audio/CV A/B selectors.
+  else if (std::string("{4C161E6D-7487-4D98-86DC-73B2B414A299}") == id.param_guid
+    || std::string("{2627D0E5-7522-4BE3-8659-AA526CF2186C}") == id.param_guid
+    || std::string("{BFCAD318-CB76-4AF7-9B43-3F1776144813}") == id.param_guid
+    || std::string("{A6203077-A2A1-4509-8F99-86A29BC2EE9B}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
   // Voice/global amp/bal param moved to voice/global amp section.
   else if (std::string("{5A2DF5BA-7D6F-4053-983E-AA6DC5084373}") == id.param_guid)
     return param_index({ part_type::vamp, 0 }, amp_param::gain);
