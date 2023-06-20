@@ -62,3 +62,4 @@
 - fix the open hat preset
 - fix action ui selection when not changed
 - flush...
+- bitwig not play automation when ui is opened
