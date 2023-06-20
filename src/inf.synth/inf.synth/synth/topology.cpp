@@ -100,144 +100,165 @@ synth_topology::try_move_stored_param(
   std::uint16_t old_major, std::uint16_t old_minor, bool& can_be_ignored) const
 {
   can_be_ignored = false;
-  if (old_major < 1 || (old_major == 1 && old_minor < 2))
-    // Oscillator gain.
-    if (std::string("{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}") == id.part_guid
-      && std::string("{09E50DA8-2467-462F-9822-7E9074A51B53}") == id.param_guid)
-    {
-      can_be_ignored = old_value.real == 0.5f;
-      return -1;
-    }
-    // Audio A enabled.
-    else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
-      && std::string("{14096099-485D-4EB9-B055-E393DE2E993C}") == id.param_guid)
-    {
-      can_be_ignored = true;
-      return -1;
-    }
-    // Audio B enabled.
-    else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid
-      && std::string("{85A0A7FB-8319-436E-9979-0A7267F1F636}") == id.param_guid)
-    {
-      can_be_ignored = true;
-      return -1;
-    }
-    // Audio A moved from 4x6 to 1x15.
-    else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid)
-    {
-      std::int32_t const old_route_count = 6;
-      std::int32_t const new_route_count = 15;
+  if (!(old_major < 1 || (old_major == 1 && old_minor < 2))) return -1;
 
-      char const* old_in[old_route_count] = {
-        "{2E9F0478-B911-43DF-BB51-0C5836E4853F}",
-        "{A3A59082-CF73-4C28-A3FC-037729C9CB42}",
-        "{A8E6882A-8945-4F59-92B9-78004EAF5818}",
-        "{7DFD9AF0-7419-4B06-B875-F18D9C344D42}",
-        "{2A252D70-9750-4385-8405-AE1EAF5E8018}",
-        "{34E1B446-EF1B-4715-9993-64A177769033}" };
-      char const* old_out[old_route_count] = {
-        "{295DC5F0-FB32-4D43-8799-D79F23FD3AA9}",
-        "{843EB41C-199F-4FAC-ACC4-841B3663248D}",
-        "{D2E34E63-DE9E-4620-924D-1897614BF983}",
-        "{C2C5B9BC-81B6-4D3E-947E-E0B900447BDF}",
-        "{80FF4399-33CE-4A65-9A2C-C48271EAACDD}",
-        "{DAA1F891-5A2A-47A7-B923-61932694B951}" };
-      char const* old_amt[old_route_count] = {
-        "{A3B15FE9-56DB-493B-A4E1-31A004F3C937}",
-        "{810B55DF-6230-45C7-B478-7A3569DC9127}",
-        "{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}",
-        "{51E69AB1-37F7-4361-84B9-2F1727F66C4A}",
-        "{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}",
-        "{782750CE-319E-4ED2-906B-106C72A9A85C}" };
-      char const* old_bal[old_route_count] = {
-        "{91996C1F-4510-4BC1-97BA-135C9881263F}",
-        "{265269F4-F6DF-474E-A696-44EE01681C65}",
-        "{64C90CE2-2AC0-4675-8F99-B88E807F712A}",
-        "{01B6309E-B045-48A7-9BC1-8E828A528A3F}",
-        "{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}",
-        "{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}" };
-
-      // Don't bother with defaults.
-      for (std::int32_t i = 0; i < old_route_count; i++)
-        if (id.param_guid == old_in[i] && old_value.discrete == 0
-          || id.param_guid == old_out[i] && old_value.discrete == 0
-          || id.param_guid == old_amt[i] && old_value.real == 0.5f
-          || id.param_guid == old_bal[i] && old_value.real == 0.5f)
-        {
-          can_be_ignored = true;
-          return -1;
-        }
-
-      // Can we map to the new matrix ?
-      for (std::int32_t i = 0; i < old_route_count; i++)
-        if (id.param_guid == old_in[i]
-          || id.param_guid == old_out[i]
-          || id.param_guid == old_amt[i]
-          || id.param_guid == old_bal[i])
-        {
-          std::int32_t new_route_index = id.part_index * old_route_count + i;
-          if(new_route_index >= new_route_count) return -1;
-          return param_index({ part_type::vaudio_bank, 0 }, new_route_index);
-        }
-    }
-    // Audio B moved from 3x6 to 1x15.
-    else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid)
-    {
-      std::int32_t const old_route_count = 6;
-      std::int32_t const new_route_count = 15;
-
-      char const* old_in[old_route_count] = {
-        "{CD5CD403-259F-4B25-9C33-E246931E973B}", 
-        "{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}", 
-        "{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}", 
-        "{3F1E4A05-2C73-418D-B490-841106011784}", 
-        "{2D03FFCF-FD1D-42F7-B95B-BE3262A2900F}", 
-        "{47517379-6D53-48C7-BFD0-A2D582C7971F}" };
-      char const* old_out[old_route_count] = {
-        "{6AD76233-62A6-4F5A-ADCB-797786E00C54}", 
-        "{8BEAB138-D485-480C-B2BE-146354C5A2F9}", 
-        "{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}", 
-        "{9F28A209-5A25-4665-BB73-557BE1F3CC05}", 
-        "{5452CCEE-C962-4239-9F5C-015445598B72}", 
-        "{E6B0B447-2412-43D1-9BED-66BC67620272}" };
-      char const* old_amt[old_route_count] = {
-        "{E444E539-65EF-449F-8407-EB128C6082B8}", 
-        "{FBCCD63D-1D9A-444C-A622-D9D3E8A771C7}", 
-        "{C147FB0B-25A9-44F9-88E2-77CA415F83BB}", 
-        "{E394ACC9-DA07-43DF-9BF7-02A57BF3F758}", 
-        "{8A1B591B-62AD-4E53-9256-7C4BFB15525F}", 
-        "{2D1B1704-9B20-44EE-AC48-E8B09FBA9488}" };
-      char const* old_bal[old_route_count] = {
-        "{3E7BA2FC-2984-4B2F-9936-754BEE44CFCE}", 
-        "{D2672F61-8811-420C-A4CA-1ED78D49AC55}", 
-        "{10073537-70C6-40FB-8F53-0ABB2C594944}", 
-        "{EBBBAC9E-3D8F-482A-A41B-32CB47324647}", 
-        "{80D09377-31F5-4162-A785-D0B841FCDBA6}", 
-        "{7E72F00C-2C26-4BAD-98E5-ADC7168852F7}" };
-
-      // Don't bother with defaults.
-      for (std::int32_t i = 0; i < old_route_count; i++)
-        if (id.param_guid == old_in[i] && old_value.discrete == 0
-          || id.param_guid == old_out[i] && old_value.discrete == 0
-          || id.param_guid == old_amt[i] && old_value.real == 0.5f
-          || id.param_guid == old_bal[i] && old_value.real == 0.5f)
-        {
-          can_be_ignored = true;
-          return -1;
-        }
-
-      // Can we map to the new matrix ?
-      for (std::int32_t i = 0; i < old_route_count; i++)
-        if (id.param_guid == old_in[i]
-          || id.param_guid == old_out[i]
-          || id.param_guid == old_amt[i]
-          || id.param_guid == old_bal[i])
-        {
-          std::int32_t new_route_index = id.part_index * old_route_count + i;
-          if (new_route_index >= new_route_count) return -1;
-          return param_index({ part_type::gaudio_bank, 0 }, new_route_index);
-        }
-    }
+  // Oscillator gain dropped.
+  if (std::string("{5C9D2CD3-2D4C-4205-893E-6B5DE9D62ADE}") == id.part_guid
+    && std::string("{09E50DA8-2467-462F-9822-7E9074A51B53}") == id.param_guid)
+  {
+    can_be_ignored = old_value.real == 0.5f;
+    return -1;
+  }
+  // Voice/global amp/bal param moved to voice/global amp section.
+  else if (std::string("{5A2DF5BA-7D6F-4053-983E-AA6DC5084373}") == id.param_guid)
+    return param_index({ part_type::vamp, 0 }, amp_param::gain);
+  else if (std::string("{86782F43-7079-47BE-9C7F-8BF6D12A0950}") == id.param_guid)
+    return param_index({ part_type::vamp, 0 }, amp_param::bal);
+  else if (std::string("{536EBE78-85C2-461F-A3E5-2F7ADA11577C}") == id.param_guid)
+    return param_index({ part_type::gamp, 0 }, amp_param::gain);
+  else if (std::string("{7917BE01-867D-490B-BD72-3CCE267CE872}") == id.param_guid)
+    return param_index({ part_type::gamp, 0 }, amp_param::bal);
+  // Voice related stuff moved from master to new voice section.
+  else if (std::string("{5E6A8C53-AE49-4FDF-944D-57CF37FC2C0E}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::oct);
+  else if (std::string("{AE673674-1A16-4219-8EE5-048722BF52D1}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::note);
+  else if (std::string("{F3DFD0D7-652D-4F80-9C97-38037BCF58A7}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::mode);
+  else if (std::string("{511EE6C3-8798-4B7A-940D-100B8680517F}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::port_mode);
+  else if (std::string("{921B5AE6-37FD-4953-94C3-16062C0D23ED}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::port_trig);
+  else if (std::string("{09243EDB-2DBE-450F-800F-C37BF8A3C44B}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::port_sync);
+  else if (std::string("{E27DEC2E-BA49-454C-8C28-F7532F6985DC}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::port_time);
+  else if (std::string("{1DD53257-2104-4C66-BA00-2B73E9F6BA63}") == id.param_guid)
+    return param_index({ part_type::voice, 0 }, voice_param::port_tempo);
+  // Audio A enabled dropped.
+  else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid 
+    && std::string("{14096099-485D-4EB9-B055-E393DE2E993C}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
+  // Audio B enabled dropped.
+  else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid
+    && std::string("{85A0A7FB-8319-436E-9979-0A7267F1F636}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
+  // Audio A moved from 4x6 to 1x15.
+  else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid)
+  {
+    std::int32_t const old_route_count = 6;
+    std::int32_t const new_route_count = 15;
+    char const* old_in[old_route_count] = {
+      "{2E9F0478-B911-43DF-BB51-0C5836E4853F}",
+      "{A3A59082-CF73-4C28-A3FC-037729C9CB42}",
+      "{A8E6882A-8945-4F59-92B9-78004EAF5818}",
+      "{7DFD9AF0-7419-4B06-B875-F18D9C344D42}",
+      "{2A252D70-9750-4385-8405-AE1EAF5E8018}",
+      "{34E1B446-EF1B-4715-9993-64A177769033}" };
+    char const* old_out[old_route_count] = {
+      "{295DC5F0-FB32-4D43-8799-D79F23FD3AA9}",
+      "{843EB41C-199F-4FAC-ACC4-841B3663248D}",
+      "{D2E34E63-DE9E-4620-924D-1897614BF983}",
+      "{C2C5B9BC-81B6-4D3E-947E-E0B900447BDF}",
+      "{80FF4399-33CE-4A65-9A2C-C48271EAACDD}",
+      "{DAA1F891-5A2A-47A7-B923-61932694B951}" };
+    char const* old_amt[old_route_count] = {
+      "{A3B15FE9-56DB-493B-A4E1-31A004F3C937}",
+      "{810B55DF-6230-45C7-B478-7A3569DC9127}",
+      "{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}",
+      "{51E69AB1-37F7-4361-84B9-2F1727F66C4A}",
+      "{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}",
+      "{782750CE-319E-4ED2-906B-106C72A9A85C}" };
+    char const* old_bal[old_route_count] = {
+      "{91996C1F-4510-4BC1-97BA-135C9881263F}",
+      "{265269F4-F6DF-474E-A696-44EE01681C65}",
+      "{64C90CE2-2AC0-4675-8F99-B88E807F712A}",
+      "{01B6309E-B045-48A7-9BC1-8E828A528A3F}",
+      "{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}",
+      "{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}" };
+    // Don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.real == 0.5f
+        || id.param_guid == old_bal[i] && old_value.real == 0.5f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+    // Can we map to the new matrix ?
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i]
+        || id.param_guid == old_out[i]
+        || id.param_guid == old_amt[i]
+        || id.param_guid == old_bal[i])
+      {
+        std::int32_t new_route_index = id.part_index * old_route_count + i;
+        if(new_route_index >= new_route_count) return -1;
+        return param_index({ part_type::vaudio_bank, 0 }, new_route_index);
+      }
+  }
+  // Audio B moved from 3x6 to 1x15.
+  else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid)
+  {
+    std::int32_t const old_route_count = 6;
+    std::int32_t const new_route_count = 15;
+    char const* old_in[old_route_count] = {
+      "{CD5CD403-259F-4B25-9C33-E246931E973B}", 
+      "{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}", 
+      "{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}", 
+      "{3F1E4A05-2C73-418D-B490-841106011784}", 
+      "{2D03FFCF-FD1D-42F7-B95B-BE3262A2900F}", 
+      "{47517379-6D53-48C7-BFD0-A2D582C7971F}" };
+    char const* old_out[old_route_count] = {
+      "{6AD76233-62A6-4F5A-ADCB-797786E00C54}", 
+      "{8BEAB138-D485-480C-B2BE-146354C5A2F9}", 
+      "{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}", 
+      "{9F28A209-5A25-4665-BB73-557BE1F3CC05}", 
+      "{5452CCEE-C962-4239-9F5C-015445598B72}", 
+      "{E6B0B447-2412-43D1-9BED-66BC67620272}" };
+    char const* old_amt[old_route_count] = {
+      "{E444E539-65EF-449F-8407-EB128C6082B8}", 
+      "{FBCCD63D-1D9A-444C-A622-D9D3E8A771C7}", 
+      "{C147FB0B-25A9-44F9-88E2-77CA415F83BB}", 
+      "{E394ACC9-DA07-43DF-9BF7-02A57BF3F758}", 
+      "{8A1B591B-62AD-4E53-9256-7C4BFB15525F}", 
+      "{2D1B1704-9B20-44EE-AC48-E8B09FBA9488}" };
+    char const* old_bal[old_route_count] = {
+      "{3E7BA2FC-2984-4B2F-9936-754BEE44CFCE}", 
+      "{D2672F61-8811-420C-A4CA-1ED78D49AC55}", 
+      "{10073537-70C6-40FB-8F53-0ABB2C594944}", 
+      "{EBBBAC9E-3D8F-482A-A41B-32CB47324647}", 
+      "{80D09377-31F5-4162-A785-D0B841FCDBA6}", 
+      "{7E72F00C-2C26-4BAD-98E5-ADC7168852F7}" };
+    // Don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.real == 0.5f
+        || id.param_guid == old_bal[i] && old_value.real == 0.5f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+    // Can we map to the new matrix ?
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i]
+        || id.param_guid == old_out[i]
+        || id.param_guid == old_amt[i]
+        || id.param_guid == old_bal[i])
+      {
+        std::int32_t new_route_index = id.part_index * old_route_count + i;
+        if (new_route_index >= new_route_count) return -1;
+        return param_index({ part_type::gaudio_bank, 0 }, new_route_index);
+      }
+  }
   return -1;
 }
 
