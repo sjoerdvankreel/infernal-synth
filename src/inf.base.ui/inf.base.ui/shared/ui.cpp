@@ -774,6 +774,7 @@ show_ok_box(
   state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
+    state->content->component()->setLookAndFeel(nullptr);
     state->window->setLookAndFeel(nullptr);
     delete state; }), 1, 1);
   run_dialog_box(state, 180, 60);
@@ -845,6 +846,7 @@ show_confirm_box(
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
     state->confirmed(state->controller);
+    state->content->component()->setLookAndFeel(nullptr);
     state->window->setLookAndFeel(nullptr);
     delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {

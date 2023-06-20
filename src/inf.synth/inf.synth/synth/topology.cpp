@@ -109,12 +109,6 @@ synth_topology::try_move_stored_param(
     can_be_ignored = old_value.real == 0.5f;
     return -1;
   }
-  // Some old gfx params dropped, but should be ok.
-  else if (std::string("{E8F67736-5976-4FDE-939F-31C373B7F920}") == id.part_guid)
-  {
-    can_be_ignored = true;
-    return -1;
-  }
   // Active Audio/CV A/B selectors.
   else if (std::string("{4C161E6D-7487-4D98-86DC-73B2B414A299}") == id.param_guid
     || std::string("{2627D0E5-7522-4BE3-8659-AA526CF2186C}") == id.param_guid
