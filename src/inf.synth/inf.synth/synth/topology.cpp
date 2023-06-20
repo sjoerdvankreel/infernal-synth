@@ -301,6 +301,185 @@ synth_topology::try_move_stored_param(
         return -1;
       }
     }
+    // Audio B moved from 3x6 to 1x15.
+    else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid)
+    {
+      // Input.
+      if (id.part_index == 0 && std::string("{CD5CD403-259F-4B25-9C33-E246931E973B}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in1);
+      if (id.part_index == 0 && std::string("{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in2);
+      if (id.part_index == 0 && std::string("{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in3);
+      if (id.part_index == 0 && std::string("{3F1E4A05-2C73-418D-B490-841106011784}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in4);
+      if (id.part_index == 0 && std::string("{2D03FFCF-FD1D-42F7-B95B-BE3262A2900F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in5);
+      if (id.part_index == 0 && std::string("{47517379-6D53-48C7-BFD0-A2D582C7971F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in6);
+      if (id.part_index == 1 && std::string("{CD5CD403-259F-4B25-9C33-E246931E973B}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in7);
+      if (id.part_index == 1 && std::string("{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in8);
+      if (id.part_index == 1 && std::string("{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in9);
+      if (id.part_index == 1 && std::string("{3F1E4A05-2C73-418D-B490-841106011784}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in10);
+      if (id.part_index == 1 && std::string("{2D03FFCF-FD1D-42F7-B95B-BE3262A2900F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in11);
+      if (id.part_index == 1 && std::string("{47517379-6D53-48C7-BFD0-A2D582C7971F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in12);
+      if (id.part_index == 2 && std::string("{CD5CD403-259F-4B25-9C33-E246931E973B}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in13);
+      if (id.part_index == 2 && std::string("{E83D6E12-47C4-4738-8CFA-A18CC8B86C67}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in14);
+      if (id.part_index == 2 && std::string("{EF89DAE6-59F6-4B5E-BA7F-F9F9F4FA64C0}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::in15);
+
+      // Output.
+      if (id.part_index == 0 && std::string("{6AD76233-62A6-4F5A-ADCB-797786E00C54}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out1);
+      if (id.part_index == 0 && std::string("{8BEAB138-D485-480C-B2BE-146354C5A2F9}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out2);
+      if (id.part_index == 0 && std::string("{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out3);
+      if (id.part_index == 0 && std::string("{9F28A209-5A25-4665-BB73-557BE1F3CC05}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out4);
+      if (id.part_index == 0 && std::string("{5452CCEE-C962-4239-9F5C-015445598B72}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out5);
+      if (id.part_index == 0 && std::string("{E6B0B447-2412-43D1-9BED-66BC67620272}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out6);
+      if (id.part_index == 1 && std::string("{6AD76233-62A6-4F5A-ADCB-797786E00C54}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out7);
+      if (id.part_index == 1 && std::string("{8BEAB138-D485-480C-B2BE-146354C5A2F9}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out8);
+      if (id.part_index == 1 && std::string("{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out9);
+      if (id.part_index == 1 && std::string("{9F28A209-5A25-4665-BB73-557BE1F3CC05}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out10);
+      if (id.part_index == 1 && std::string("{5452CCEE-C962-4239-9F5C-015445598B72}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out11);
+      if (id.part_index == 1 && std::string("{E6B0B447-2412-43D1-9BED-66BC67620272}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out12);
+      if (id.part_index == 2 && std::string("{6AD76233-62A6-4F5A-ADCB-797786E00C54}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out13);
+      if (id.part_index == 2 && std::string("{8BEAB138-D485-480C-B2BE-146354C5A2F9}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out14);
+      if (id.part_index == 2 && std::string("{33E9FBE4-4654-4B92-AD03-5EF2EC3FEEF2}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::out15);
+
+      // Amt.
+      if (id.part_index == 0 && std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt1);
+      if (id.part_index == 0 && std::string("{810B55DF-6230-45C7-B478-7A3569DC9127}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt2);
+      if (id.part_index == 0 && std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt3);
+      if (id.part_index == 0 && std::string("{51E69AB1-37F7-4361-84B9-2F1727F66C4A}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt4);
+      if (id.part_index == 0 && std::string("{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt5);
+      if (id.part_index == 0 && std::string("{782750CE-319E-4ED2-906B-106C72A9A85C}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt6);
+      if (id.part_index == 1 && std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt7);
+      if (id.part_index == 1 && std::string("{810B55DF-6230-45C7-B478-7A3569DC9127}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt8);
+      if (id.part_index == 1 && std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt9);
+      if (id.part_index == 1 && std::string("{51E69AB1-37F7-4361-84B9-2F1727F66C4A}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt10);
+      if (id.part_index == 1 && std::string("{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt11);
+      if (id.part_index == 1 && std::string("{782750CE-319E-4ED2-906B-106C72A9A85C}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt12);
+      if (id.part_index == 2 && std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt13);
+      if (id.part_index == 2 && std::string("{810B55DF-6230-45C7-B478-7A3569DC9127}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt14);
+      if (id.part_index == 2 && std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::amt15);
+
+      // Balance.
+      if (id.part_index == 0 && std::string("{91996C1F-4510-4BC1-97BA-135C9881263F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal1);
+      if (id.part_index == 0 && std::string("{265269F4-F6DF-474E-A696-44EE01681C65}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal2);
+      if (id.part_index == 0 && std::string("{64C90CE2-2AC0-4675-8F99-B88E807F712A}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal3);
+      if (id.part_index == 0 && std::string("{01B6309E-B045-48A7-9BC1-8E828A528A3F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal4);
+      if (id.part_index == 0 && std::string("{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal5);
+      if (id.part_index == 0 && std::string("{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal6);
+      if (id.part_index == 1 && std::string("{91996C1F-4510-4BC1-97BA-135C9881263F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal7);
+      if (id.part_index == 1 && std::string("{265269F4-F6DF-474E-A696-44EE01681C65}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal8);
+      if (id.part_index == 1 && std::string("{64C90CE2-2AC0-4675-8F99-B88E807F712A}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal9);
+      if (id.part_index == 1 && std::string("{01B6309E-B045-48A7-9BC1-8E828A528A3F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal10);
+      if (id.part_index == 1 && std::string("{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal11);
+      if (id.part_index == 1 && std::string("{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal12);
+      if (id.part_index == 2 && std::string("{91996C1F-4510-4BC1-97BA-135C9881263F}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal13);
+      if (id.part_index == 2 && std::string("{265269F4-F6DF-474E-A696-44EE01681C65}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal14);
+      if (id.part_index == 2 && std::string("{64C90CE2-2AC0-4675-8F99-B88E807F712A}") == id.param_guid)
+        return param_index({ part_type::gaudio_bank, 0 }, audio_bank_param::bal15);
+
+      // Input unused.
+      if (std::string("{2E9F0478-B911-43DF-BB51-0C5836E4853F}") == id.param_guid
+        || std::string("{A3A59082-CF73-4C28-A3FC-037729C9CB42}") == id.param_guid
+        || std::string("{A8E6882A-8945-4F59-92B9-78004EAF5818}") == id.param_guid
+        || std::string("{7DFD9AF0-7419-4B06-B875-F18D9C344D42}") == id.param_guid
+        || std::string("{2A252D70-9750-4385-8405-AE1EAF5E8018}") == id.param_guid
+        || std::string("{34E1B446-EF1B-4715-9993-64A177769033}") == id.param_guid)
+      {
+        can_be_ignored = old_value.discrete == 0;
+        return -1;
+      }
+
+      // Output unused.
+      if (std::string("{295DC5F0-FB32-4D43-8799-D79F23FD3AA9}") == id.param_guid
+        || std::string("{843EB41C-199F-4FAC-ACC4-841B3663248D}") == id.param_guid
+        || std::string("{D2E34E63-DE9E-4620-924D-1897614BF983}") == id.param_guid
+        || std::string("{C2C5B9BC-81B6-4D3E-947E-E0B900447BDF}") == id.param_guid
+        || std::string("{80FF4399-33CE-4A65-9A2C-C48271EAACDD}") == id.param_guid
+        || std::string("{DAA1F891-5A2A-47A7-B923-61932694B951}") == id.param_guid)
+      {
+        can_be_ignored = old_value.discrete == 0;
+        return -1;
+      }
+
+      // Amt unused.
+      if (std::string("{A3B15FE9-56DB-493B-A4E1-31A004F3C937}") == id.param_guid
+        || std::string("{810B55DF-6230-45C7-B478-7A3569DC9127}") == id.param_guid
+        || std::string("{6721B1EC-9688-48A3-B5B8-0ADD0A9CF16B}") == id.param_guid
+        || std::string("{51E69AB1-37F7-4361-84B9-2F1727F66C4A}") == id.param_guid
+        || std::string("{88EACE54-DAFA-4EEF-A7A0-65464C54A66E}") == id.param_guid
+        || std::string("{782750CE-319E-4ED2-906B-106C72A9A85C}") == id.param_guid)
+      {
+        can_be_ignored = old_value.real == 0.5f;
+        return -1;
+      }
+
+      // Bal unused.
+      if (std::string("{91996C1F-4510-4BC1-97BA-135C9881263F}") == id.param_guid
+        || std::string("{265269F4-F6DF-474E-A696-44EE01681C65}") == id.param_guid
+        || std::string("{64C90CE2-2AC0-4675-8F99-B88E807F712A}") == id.param_guid
+        || std::string("{01B6309E-B045-48A7-9BC1-8E828A528A3F}") == id.param_guid
+        || std::string("{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}") == id.param_guid
+        || std::string("{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}") == id.param_guid)
+      {
+        can_be_ignored = old_value.real == 0.5f;
+        return -1;
+      }
+    }
   return -1;
 }
 
