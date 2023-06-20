@@ -59,3 +59,4 @@
 - manual + automation test all controls
 - remember ui size/theme/factory across controller lifetime
 - dont load ui size from preset files
+- fix the open hat preset
