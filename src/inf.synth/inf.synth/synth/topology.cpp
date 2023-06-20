@@ -226,6 +226,7 @@ synth_topology::try_move_stored_param(
         if(new_route_index >= new_route_count) return -1;
         return param_index({ part_type::vaudio_bank, 0 }, new_route_index);
       }
+    return -1;
   }
   // Audio B moved from 3x6 to 1x15.
   else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid)
@@ -281,6 +282,7 @@ synth_topology::try_move_stored_param(
         if (new_route_index >= new_route_count) return -1;
         return param_index({ part_type::gaudio_bank, 0 }, new_route_index);
       }
+    return -1;
   }
   // CV A moved from 4x5 to 1x15.
   else if (std::string("{E6814824-7F56-4A9C-92B6-F5EB001B9513}") == id.part_guid)
@@ -350,6 +352,7 @@ synth_topology::try_move_stored_param(
         if (new_route_index >= new_route_count) return -1;
         return param_index({ part_type::vcv_bank, 0 }, new_route_index);
       }
+    return -1;
   }
   // CV B moved from 2x8 to 1x15.
   else if (std::string("{3F416415-4C1E-49B3-A59F-0C4472C11B69}") == id.part_guid)
@@ -438,6 +441,14 @@ synth_topology::try_move_stored_param(
         if (new_route_index >= new_route_count) return -1;
         return param_index({ part_type::gcv_bank, 0 }, new_route_index);
       }
+    return -1;
+  }
+  // These are not in 1.1.3. No idea what they are. Just hope for the best.
+  else if (std::string("{D316B9BA-4107-49B1-AAC1-864DE2B5A209}") == id.param_guid
+    || std::string("{48F1B532-4837-4D52-A95D-3A1641F4E761}") == id.param_guid)
+  {
+    can_be_ignored = true;
+    return -1;
   }
   return -1;
 }
