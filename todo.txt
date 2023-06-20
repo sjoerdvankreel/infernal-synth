@@ -60,3 +60,4 @@
 - remember ui size/theme/factory across controller lifetime
 - dont load ui size from preset files
 - fix the open hat preset
+- fix action ui selection when not changed
