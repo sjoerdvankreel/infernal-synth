@@ -241,6 +241,7 @@ synth_topology::try_move_stored_param(
   // Audio B moved from 3x6 to 1x15.
   else if (std::string("{B5B4A442-13ED-43ED-B9E0-3B2894D03838}") == id.part_guid)
   {
+    std::int32_t const param_count = 4;
     std::int32_t const old_route_count = 6;
     std::int32_t const new_route_count = 15;
     char const* old_in[old_route_count] = {
@@ -271,7 +272,26 @@ synth_topology::try_move_stored_param(
       "{EBBBAC9E-3D8F-482A-A41B-32CB47324647}", 
       "{80D09377-31F5-4162-A785-D0B841FCDBA6}", 
       "{7E72F00C-2C26-4BAD-98E5-ADC7168852F7}" };
-    // Don't bother with defaults.
+
+    // Can we map to the new matrix ?
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i]
+        || id.param_guid == old_out[i]
+        || id.param_guid == old_amt[i]
+        || id.param_guid == old_bal[i])
+      {
+        std::int32_t new_route_index = id.part_index * old_route_count + i;
+        if (new_route_index >= new_route_count)
+          return -1;
+        std::int32_t new_param_index = new_route_index * param_count;
+        if (id.param_guid == old_in[i]) new_param_index += 0;
+        if (id.param_guid == old_out[i]) new_param_index += 1;
+        if (id.param_guid == old_amt[i]) new_param_index += 2;
+        if (id.param_guid == old_bal[i]) new_param_index += 3;
+        return param_index({ part_type::vaudio_bank, 0 }, new_param_index);
+      }
+
+    // If not, don't bother with defaults.
     for (std::int32_t i = 0; i < old_route_count; i++)
       if (id.param_guid == old_in[i] && old_value.discrete == 0
         || id.param_guid == old_out[i] && old_value.discrete == 0
@@ -281,23 +301,13 @@ synth_topology::try_move_stored_param(
         can_be_ignored = true;
         return -1;
       }
-    // Can we map to the new matrix ?
-    for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i]
-        || id.param_guid == old_out[i]
-        || id.param_guid == old_amt[i]
-        || id.param_guid == old_bal[i])
-      {
-        std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if (new_route_index >= new_route_count) 
-          return -1;
-        return param_index({ part_type::gaudio_bank, 0 }, new_route_index);
-      }
+
     return -1;
   }
   // CV A moved from 4x5 to 1x15.
   else if (std::string("{E6814824-7F56-4A9C-92B6-F5EB001B9513}") == id.part_guid)
   {
+    std::int32_t const param_count = 6;
     std::int32_t const old_route_count = 5;
     std::int32_t const new_route_count = 15;
     char const* old_in[old_route_count] = {
@@ -337,19 +347,6 @@ synth_topology::try_move_stored_param(
       "{D58E30EB-8F46-4EB7-84F2-37AA48F81721}",
       "{62A7448C-3245-4B33-AF4E-42D98D3AD547}" };
 
-    // Don't bother with defaults.
-    for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_op[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.real == 1.0f
-        || id.param_guid == old_off[i] && old_value.real == 0.0f
-        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
-      {
-        can_be_ignored = true;
-        return -1;
-      }
-
     // Can we map to the new matrix ?
     for (std::int32_t i = 0; i < old_route_count; i++)
       if (id.param_guid == old_in[i]
@@ -360,15 +357,37 @@ synth_topology::try_move_stored_param(
         || id.param_guid == old_scl[i])
       {
         std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if (new_route_index >= new_route_count) 
+        if (new_route_index >= new_route_count)
           return -1;
-        return param_index({ part_type::vcv_bank, 0 }, new_route_index);
+        std::int32_t new_param_index = new_route_index * param_count;
+        if (id.param_guid == old_in[i]) new_param_index += 0;
+        if (id.param_guid == old_out[i]) new_param_index += 1;
+        if (id.param_guid == old_op[i]) new_param_index += 2;
+        if (id.param_guid == old_amt[i]) new_param_index += 3;
+        if (id.param_guid == old_off[i]) new_param_index += 4;
+        if (id.param_guid == old_scl[i]) new_param_index += 5;
+        return param_index({ part_type::vcv_bank, 0 }, new_param_index);
       }
+
+    // If not, don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_op[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.discrete == 1.0f
+        || id.param_guid == old_off[i] && old_value.real == 0.0f
+        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+
     return -1;
   }
   // CV B moved from 2x8 to 1x15.
   else if (std::string("{3F416415-4C1E-49B3-A59F-0C4472C11B69}") == id.part_guid)
   {
+    std::int32_t const param_count = 6;
     std::int32_t const old_route_count = 8;
     std::int32_t const new_route_count = 15;
 
@@ -427,19 +446,6 @@ synth_topology::try_move_stored_param(
       "{DF70143D-441E-4C77-BCF5-6535B4316B64}", 
       "{12EE4A5C-1BA4-4DC5-80B7-0FEF76EA5A59}" };
 
-    // Don't bother with defaults.
-    for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_op[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.real == 1.0f
-        || id.param_guid == old_off[i] && old_value.real == 0.0f
-        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
-      {
-        can_be_ignored = true;
-        return -1;
-      }
-
     // Can we map to the new matrix ?
     for (std::int32_t i = 0; i < old_route_count; i++)
       if (id.param_guid == old_in[i]
@@ -450,10 +456,31 @@ synth_topology::try_move_stored_param(
         || id.param_guid == old_scl[i])
       {
         std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if (new_route_index >= new_route_count) 
+        if (new_route_index >= new_route_count)
           return -1;
-        return param_index({ part_type::gcv_bank, 0 }, new_route_index);
+        std::int32_t new_param_index = new_route_index * param_count;
+        if (id.param_guid == old_in[i]) new_param_index += 0;
+        if (id.param_guid == old_out[i]) new_param_index += 1;
+        if (id.param_guid == old_op[i]) new_param_index += 2;
+        if (id.param_guid == old_amt[i]) new_param_index += 3;
+        if (id.param_guid == old_off[i]) new_param_index += 4;
+        if (id.param_guid == old_scl[i]) new_param_index += 5;
+        return param_index({ part_type::gcv_bank, 0 }, new_param_index);
       }
+
+    // If not, don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_op[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.discrete == 1.0f
+        || id.param_guid == old_off[i] && old_value.real == 0.0f
+        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+
     return -1;
   }
   // These are not in 1.1.3. No idea what they are. Just hope for the best.
