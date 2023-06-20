@@ -445,7 +445,10 @@ synth_topology::try_move_stored_param(
   }
   // These are not in 1.1.3. No idea what they are. Just hope for the best.
   else if (std::string("{D316B9BA-4107-49B1-AAC1-864DE2B5A209}") == id.param_guid
-    || std::string("{48F1B532-4837-4D52-A95D-3A1641F4E761}") == id.param_guid)
+    || std::string("{48F1B532-4837-4D52-A95D-3A1641F4E761}") == id.param_guid
+    || std::string("{78C0C624-B34B-41AE-8294-5D99895753CB}") == id.param_guid
+    || std::string("{07E509BE-891C-48A8-9076-81D9DE8B6845}") == id.param_guid
+    || std::string("{06826D77-66A2-44F0-9AE8-DFA7035C95D8}") == id.param_guid)
   {
     can_be_ignored = true;
     return -1;
