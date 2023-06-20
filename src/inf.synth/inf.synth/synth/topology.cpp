@@ -172,9 +172,10 @@ synth_topology::try_move_stored_param(
     can_be_ignored = true;
     return -1;
   }
-  // Audio A moved from 4x6 to 1x15.
+  // Audio A moved from 4x6 to 1x15 and transposed.
   else if (std::string("{7A77C027-FC8F-4425-9BF0-393267D92F0C}") == id.part_guid)
   {
+    std::int32_t const param_count = 4;
     std::int32_t const old_route_count = 6;
     std::int32_t const new_route_count = 15;
     char const* old_in[old_route_count] = {
@@ -223,8 +224,14 @@ synth_topology::try_move_stored_param(
         || id.param_guid == old_bal[i])
       {
         std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if(new_route_index >= new_route_count) return -1;
-        return param_index({ part_type::vaudio_bank, 0 }, new_route_index);
+        if(new_route_index >= new_route_count) 
+          return -1;
+        std::int32_t new_param_index = new_route_index * param_count;
+        if(id.param_guid == old_in[i]) new_param_index += 0;
+        if (id.param_guid == old_out[i]) new_param_index += 1;
+        if (id.param_guid == old_amt[i]) new_param_index += 2;
+        if (id.param_guid == old_bal[i]) new_param_index += 3;
+        return param_index({ part_type::vaudio_bank, 0 }, new_param_index);
       }
     return -1;
   }
@@ -279,7 +286,8 @@ synth_topology::try_move_stored_param(
         || id.param_guid == old_bal[i])
       {
         std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if (new_route_index >= new_route_count) return -1;
+        if (new_route_index >= new_route_count) 
+          return -1;
         return param_index({ part_type::gaudio_bank, 0 }, new_route_index);
       }
     return -1;
@@ -349,7 +357,8 @@ synth_topology::try_move_stored_param(
         || id.param_guid == old_scl[i])
       {
         std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if (new_route_index >= new_route_count) return -1;
+        if (new_route_index >= new_route_count) 
+          return -1;
         return param_index({ part_type::vcv_bank, 0 }, new_route_index);
       }
     return -1;
@@ -438,7 +447,8 @@ synth_topology::try_move_stored_param(
         || id.param_guid == old_scl[i])
       {
         std::int32_t new_route_index = id.part_index * old_route_count + i;
-        if (new_route_index >= new_route_count) return -1;
+        if (new_route_index >= new_route_count) 
+          return -1;
         return param_index({ part_type::gcv_bank, 0 }, new_route_index);
       }
     return -1;
