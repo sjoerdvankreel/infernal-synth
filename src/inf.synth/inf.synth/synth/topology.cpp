@@ -109,6 +109,12 @@ synth_topology::try_move_stored_param(
     can_be_ignored = old_value.real == 0.5f;
     return -1;
   }
+  // Some old gfx params dropped, but should be ok.
+  else if (std::string("{E8F67736-5976-4FDE-939F-31C373B7F920}") == id.part_guid)
+  {
+    can_be_ignored = true;
+    return -1;
+  }
   // Voice/global amp/bal param moved to voice/global amp section.
   else if (std::string("{5A2DF5BA-7D6F-4053-983E-AA6DC5084373}") == id.param_guid)
     return param_index({ part_type::vamp, 0 }, amp_param::gain);
@@ -340,6 +346,94 @@ synth_topology::try_move_stored_param(
         std::int32_t new_route_index = id.part_index * old_route_count + i;
         if (new_route_index >= new_route_count) return -1;
         return param_index({ part_type::vcv_bank, 0 }, new_route_index);
+      }
+  }
+  // CV B moved from 2x8 to 1x15.
+  else if (std::string("{3F416415-4C1E-49B3-A59F-0C4472C11B69}") == id.part_guid)
+  {
+    std::int32_t const old_route_count = 8;
+    std::int32_t const new_route_count = 15;
+
+    char const* old_in[old_route_count] = {
+      "{84736ED7-FF72-4E69-AFFF-A8607B0F3041}", 
+      "{36981D81-6FC1-42C1-A380-D0813C624D93}", 
+      "{9517E1DC-8069-4F00-915C-A0686DD3FB26}", 
+      "{EB0A819C-174B-41B8-B8E8-E91377441D66}", 
+      "{460C97B9-5DA2-40D9-B553-B59784A972B7}", 
+      "{C26316CE-3855-44C4-8C0D-0AD3A06443CD}", 
+      "{5D4EB303-0B5C-48A3-BC62-79571DD51387}", 
+      "{FA7C27DD-3EFB-48A1-96FD-89BD7F195C62}" };
+    char const* old_out[old_route_count] = {
+      "{4548DE68-1D70-4307-BBD2-09838CAC4701}", 
+      "{A5857037-CB45-4F83-AF2F-2C4083628E63}", 
+      "{DC95DEF0-DD36-493A-B97A-E580DEB8BEBD}", 
+      "{86D57462-7C08-4DD6-8FAC-EEC7BD0ABE34}", 
+      "{CF0921FB-E525-4217-A249-CBEDFDB58B72}", 
+      "{326AEE47-2AFC-4140-8AD3-A8B1AE1FD1DF}", 
+      "{C7A5A80A-5B69-4F42-BD92-57A0FA606DFE}", 
+      "{02FE5916-CD9C-4AB9-8D47-25198095090F}" };
+    char const* old_op[old_route_count] = {
+      "{A526F21F-4C41-4925-90FD-D6BA442225E7}", 
+      "{FDFF29BB-E361-4350-9958-8266013A3124}", 
+      "{53EE242B-B967-499B-821B-4BF5419E08E5}", 
+      "{CD0E58CA-C183-4B59-9F45-2F0805379A1D}", 
+      "{2D718791-CF63-4A17-A1E3-EBB1DD675F38}", 
+      "{9D3027D8-5146-45A6-BAF7-036DBF3D2345}", 
+      "{DF3A60E1-42E1-4E13-AA33-F8C56C877A92}", 
+      "{1E668318-1135-4325-A10A-7EC6F0A73D24}" };
+    char const* old_amt[old_route_count] = {
+      "{A927E108-FB33-4AFC-A46A-726705004F78}", 
+      "{98AF1BBD-D01A-41EF-82DC-FD852FD7154B}", 
+      "{48F63E35-4D42-4EC1-AC9A-8E0CF2278095}", 
+      "{2EC4D924-1912-4111-8AC1-B24D84384618}", 
+      "{E8B33588-CF41-44B4-A2CB-A12E520A8A84}", 
+      "{9806BBDC-23A5-4038-B4D0-1B541238E915}", 
+      "{7BC87BF9-DBFC-4092-A03F-E93292DA7963}", 
+      "{B59683B5-2031-46CC-8C95-B5B291320601}" };
+    char const* old_off[old_route_count] = {
+      "{41F96374-D208-4A29-911E-18CF7C27A6A0}", 
+      "{4CBAC51D-9597-48BF-9210-D9CA33E8DCD1}", 
+      "{D2EF64CE-1737-4776-AD8D-F28D5E359960}", 
+      "{44061640-FDE6-4E81-BDE0-6145A6EBD494}", 
+      "{31E160CE-5424-42B6-858E-07FC00C5B502}", 
+      "{72E153D2-4614-4F91-B348-DF7AE0453927}", 
+      "{31D9A605-F16B-47AB-B5F4-C03B285D7EDA}", 
+      "{9A949AC3-CFF8-49CC-81BC-78B59B2E4F8A}" };
+    char const* old_scl[old_route_count] = {
+      "{5ACBDB05-BFCF-4A85-809B-D81DB8E835DE}", 
+      "{2E03B188-2616-457B-ACC2-F1B735370420}", 
+      "{45AE23A8-8EC6-4901-BECE-CB631FDFAA4D}", 
+      "{D2937D43-3DEE-4657-A9E0-BD2B1323FA3A}", 
+      "{9B15F803-4776-459D-98D8-B5563F217159}", 
+      "{87F14A8F-2462-4CAE-9E8F-A87F95A20369}", 
+      "{DF70143D-441E-4C77-BCF5-6535B4316B64}", 
+      "{12EE4A5C-1BA4-4DC5-80B7-0FEF76EA5A59}" };
+
+    // Don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_op[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.real == 1.0f
+        || id.param_guid == old_off[i] && old_value.real == 0.0f
+        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+
+    // Can we map to the new matrix ?
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i]
+        || id.param_guid == old_out[i]
+        || id.param_guid == old_op[i]
+        || id.param_guid == old_amt[i]
+        || id.param_guid == old_off[i]
+        || id.param_guid == old_scl[i])
+      {
+        std::int32_t new_route_index = id.part_index * old_route_count + i;
+        if (new_route_index >= new_route_count) return -1;
+        return param_index({ part_type::gcv_bank, 0 }, new_route_index);
       }
   }
   return -1;
