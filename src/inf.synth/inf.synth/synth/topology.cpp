@@ -206,16 +206,7 @@ synth_topology::try_move_stored_param(
       "{01B6309E-B045-48A7-9BC1-8E828A528A3F}",
       "{77F5DF0C-B9E8-4059-AE8B-75B9D6E3E0CE}",
       "{EF2AD9AF-0A3C-4DD7-8650-5DD6974C4625}" };
-    // Don't bother with defaults.
-    for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.real == 0.5f
-        || id.param_guid == old_bal[i] && old_value.real == 0.5f)
-      {
-        can_be_ignored = true;
-        return -1;
-      }
+
     // Can we map to the new matrix ?
     for (std::int32_t i = 0; i < old_route_count; i++)
       if (id.param_guid == old_in[i]
@@ -233,6 +224,18 @@ synth_topology::try_move_stored_param(
         if (id.param_guid == old_bal[i]) new_param_index += 3;
         return param_index({ part_type::vaudio_bank, 0 }, new_param_index);
       }
+
+    // If not, don't bother with defaults.
+    for (std::int32_t i = 0; i < old_route_count; i++)
+      if (id.param_guid == old_in[i] && old_value.discrete == 0
+        || id.param_guid == old_out[i] && old_value.discrete == 0
+        || id.param_guid == old_amt[i] && old_value.real == 0.5f
+        || id.param_guid == old_bal[i] && old_value.real == 0.5f)
+      {
+        can_be_ignored = true;
+        return -1;
+      }
+
     return -1;
   }
   // Audio B moved from 3x6 to 1x15.
