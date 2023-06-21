@@ -208,7 +208,6 @@ io_stream::load(topology_info const& topology, param_value* state, std::map<std:
   topology.state_check(state);
 
   // Without metadata.
-  meta_data.clear();
   if(file_magic == magic_v1) return true;
 
   // Read metadata.
