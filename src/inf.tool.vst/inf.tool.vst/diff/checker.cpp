@@ -10,6 +10,7 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <set>
+#include <map>
 #include <locale>
 #include <codecvt>
 #include <string>
@@ -111,7 +112,8 @@ load_preset(topology_info const* topo, param_value* state, char const* path)
   if (!preset.seekToComponentState()) return false;
   IBStreamer streamer(&memory, kLittleEndian);
   vst_io_stream stream(&streamer);
-  return stream.load(*topo, state);
+  std::map<std::string, std::string> meta;
+  return stream.load(*topo, state, meta);
 }
 
 namespace inf::tool::vst::diff {
