@@ -788,8 +788,8 @@ create_ui_size_ui(
   }
   return create_action_dropdown_ui(controller, initial_index, "UI Size", size_names, 
     [controller, size_names](juce::ComboBox* dropdown) {
-      controller->set_editor_width(plugin_editor_width(controller, dropdown->getSelectedItemIndex()));
       controller->set_ui_size(size_names[dropdown->getSelectedItemIndex()]);
+      controller->set_editor_width(plugin_editor_width(controller, dropdown->getSelectedItemIndex()));
     }, 
     [size_names, controller](juce::ComboBox* combo){
       std::string ui_size = controller->get_ui_size();
