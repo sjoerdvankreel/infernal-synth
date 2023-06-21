@@ -14,6 +14,7 @@
 #include <inf.base.ui/listeners/tooltip_listener.hpp>
 #include <inf.base.ui/listeners/selector_listener.hpp>
 #include <inf.base.ui/listeners/relevance_listener.hpp>
+#include <inf.base.ui/listeners/any_reload_listener.hpp>
 #include <inf.base.ui/listeners/icon_param_listener.hpp>
 #include <inf.base.ui/listeners/label_param_listener.hpp>
 #include <inf.base.ui/listeners/toggle_param_listener.hpp>
@@ -156,22 +157,24 @@ public ui_element
   std::int32_t _initial_index;
   std::string const _default_text;
   std::vector<std::string> _items;
+  std::function<void()> _reload_callback;
   std::function<void(juce::ComboBox*)> const _callback;
   std::unique_ptr<action_dropdown_listener> _listener = {};
+  std::unique_ptr<any_reload_listener> _reload_listener = {};
 protected: 
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
   action_dropdown_element(inf::base::plugin_controller* controller, std::int32_t initial_index, std::string const& default_text,
-    std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback):
-  ui_element(controller), _initial_index(initial_index), _default_text(default_text), _items(items), _callback(callback) {}
+    std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback, std::function<void()> reload_callback):
+  ui_element(controller), _initial_index(initial_index), _default_text(default_text), _items(items), _reload_callback(reload_callback), _callback(callback) {}
 };
 
 inline std::unique_ptr<action_dropdown_element>
 create_action_dropdown_ui(
   inf::base::plugin_controller* controller, std::int32_t initial_index, std::string const& default_text, 
-  std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback)
-{ return std::make_unique<action_dropdown_element>(controller, initial_index, default_text, items, callback); }
+  std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback, std::function<void()> reload_callback)
+{ return std::make_unique<action_dropdown_element>(controller, initial_index, default_text, items, callback, reload_callback); }
 
 class container_element:
 public ui_element

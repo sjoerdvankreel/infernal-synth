@@ -221,6 +221,7 @@ action_dropdown_element::build_core(juce::LookAndFeel& lnf)
   for(std::size_t i = 0; i < _items.size(); i++)
     result->addItem(_items[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
   _listener.reset(new action_dropdown_listener(_callback));
+  _reload_listener.reset(new any_reload_listener(controller(), _reload_callback));
   result->addListener(_listener.get());
   result->setSelectedItemIndex(_initial_index, dontSendNotification);
   return result;
