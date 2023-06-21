@@ -221,7 +221,6 @@ action_dropdown_element::build_core(juce::LookAndFeel& lnf)
     result->addItem(_items[i], static_cast<std::int32_t>(i) + dropdown_id_offset);
   _listener.reset(new action_dropdown_listener(_callback));
   result->addListener(_listener.get());
-  result->setSelectedItemIndex(_initial_index, dontSendNotification);
   return result;
 }
 
@@ -715,21 +714,16 @@ create_part_selector_ui(
 
 std::unique_ptr<ui_element>
 create_factory_preset_ui(
-  plugin_controller* controller, std::int32_t part_type, std::int32_t param_index, lnf_factory lnf_factory)
+  plugin_controller* controller, lnf_factory lnf_factory)
 {
   std::vector<std::string> items;
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto presets = controller->factory_presets(file.getFullPathName().toStdString());
-  float current_val = controller->ui_value_at({ part_type, 0 }, param_index).real;
-  std::int32_t current_index = static_cast<std::int32_t>(current_val * presets.size());
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
-  return create_action_dropdown_ui(controller, "Factory preset", items, current_index, [controller, presets, part_type, param_index, lnf_factory](std::int32_t selected_index) {
-    show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, part_type, param_index, selected_index](plugin_controller* controller) {
-      std::int32_t rt_param_index = controller->topology()->param_index({ part_type, 0 }, param_index); 
-      float new_val = static_cast<float>(selected_index / static_cast<float>(presets.size() - 1));
-      controller->load_preset(presets[selected_index].path, true); 
-      controller->editor_param_changed(rt_param_index, param_value(new_val)); }); });
+  return create_action_dropdown_ui(controller, "Factory preset", items, [controller, presets, lnf_factory](std::int32_t selected_index) {
+    show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, selected_index](plugin_controller* controller) {
+      controller->load_preset(presets[selected_index].path, true); }); });
 }
 
 std::unique_ptr<ui_element>
@@ -741,24 +735,18 @@ create_theme_selector_ui(
   auto themes = controller->themes(file.getFullPathName().toStdString());
   for (std::size_t i = 0; i < themes.size(); i++)
     items.push_back(themes[i].name);
-  return create_action_dropdown_ui(controller, "Theme", items, 0, [controller, themes, lnf_factory](std::int32_t index) {});
+  return create_action_dropdown_ui(controller, "Theme", items, [controller, themes, lnf_factory](std::int32_t index) {});
 }
 
 std::unique_ptr<ui_element>
 create_ui_size_ui(
-  plugin_controller* controller, std::int32_t part_type, std::int32_t param_index, lnf_factory lnf_factory)
+  plugin_controller* controller, lnf_factory lnf_factory)
 {
   std::vector<std::string> size_names;
-  auto const& desc = controller->topology()->get_param_descriptor({ part_type, 0}, param_index);
-  std::int32_t initial_index = controller->ui_value_at({ part_type, 0 }, param_index).discrete;
-  for(std::size_t i = 0; i < desc.data.discrete.items->size(); i++)
-    size_names.push_back((*desc.data.discrete.items)[i].name);
-  return create_action_dropdown_ui(controller, "UI Size", size_names, initial_index, [controller, part_type, param_index](std::int32_t selected_index) {
-    std::int32_t rt_param_index = controller->topology()->param_index({ part_type, 0 }, param_index);
-    // Need to param_changed twice.     
-    controller->editor_param_changed(rt_param_index, param_value(selected_index));
-    controller->set_editor_width(plugin_editor_width(controller, part_type, param_index, selected_index));
-    controller->editor_param_changed(rt_param_index, param_value(selected_index));
+  for(std::size_t i = 0; i < controller->ui_size_names().size(); i++)
+    size_names.push_back(controller->ui_size_names()[i]);
+  return create_action_dropdown_ui(controller, "UI Size", size_names, [controller](std::int32_t selected_index) {
+    controller->set_editor_width(plugin_editor_width(controller, selected_index));
   });
 }
 

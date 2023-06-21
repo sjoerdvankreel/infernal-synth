@@ -771,12 +771,6 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 static std::vector<list_item> const edit_selector_types = {
 { "{73A12F62-82E3-4FCF-B507-2DF2BB00521C}", "Edit Voice" },
 { "{F1C6C636-BDCB-48C8-8BBC-AAD2ECF5AD0D}", "Edit Global" } };
-static std::vector<list_item> const edit_ui_size_types = {
-{ "{A1D66F6B-5B65-45C1-9DED-15D354E12CC4}", "XS UI" },
-{ "{54E5A984-7274-4600-B553-BF19C405FA2F}", "Small UI" },
-{ "{0B11E0C4-D075-4FD0-9BCC-28C9F9FF08D1}", "Medium UI" },
-{ "{202B0244-1283-4ED5-A11A-238B8F7C5F84}", "Large UI" },
-{ "{997F1746-CEA8-4736-ABA2-67C2C502B69D}", "XL UI" } };
 
 param_descriptor const
 master_params[master_param::count] =
@@ -792,14 +786,7 @@ master_params[master_param::count] =
 param_descriptor const
 edit_selector_params[edit_selector_param::count] =
 {
-  { "{5B22861B-88F6-446C-AA92-BA6B39712342}", { { "Edit", "Edit" }, "", param_kind::ui, param_type::list, { &edit_selector_types, edit_selector_type::edit_voice } } },
-  { "{15190018-F886-42EB-BE04-21AE783F43B0}", { { "UI Size", "UI Size" }, "", param_kind::ui, param_type::list, { &edit_ui_size_types, edit_ui_size_type::xs_ui } } }
-};
-
-param_descriptor const
-patch_params[patch_param::count] =
-{
-  { "{75A5B509-3C0C-42BC-BD3B-272D21C3DB17}", { { "Preset", "Factory preset" }, "", param_kind::ui, linear_bounds(0.0f, 1.0f, 0.0f, 8) } }
+  { "{5B22861B-88F6-446C-AA92-BA6B39712342}", { { "Edit", "Edit" }, "", param_kind::ui, param_type::list, { &edit_selector_types, edit_selector_type::edit_voice } } }
 };
 
 // ---- part selector ----
@@ -844,7 +831,6 @@ part_descriptors[part_type::count] =
   { "{B13B3846-DDDE-4CAE-9641-7C8AEAAA9C01}", { "V.CV Plot", "Voice CV Plot" }, part_kind::input, part_type::vcv_plot, 1, vcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{30B485EC-0EDC-4792-9ED1-8AE5A3349096}", { "G.CV Plot", "Global CV Plot" }, part_kind::input, part_type::gcv_plot, 1, gcv_plot_params, cv_plot_param::count, cv_plot_graph_name_selector },
   { "{52786612-2524-4F95-93F5-9D0228C96732}", { "Edit", "Edit" }, part_kind::input, part_type::edit_selector, 1, edit_selector_params, edit_selector_param::count, nullptr },
-  { "{4EE0F930-E05E-4404-9805-D8C0347F8BB4}", { "Patch", "Patch" }, part_kind::input, part_type::patch, 1, patch_params, patch_param::count, nullptr },
   { "{C972E264-1739-4DB6-B1DB-5D31057BD218}", { "Active", "Active" }, part_kind::selector, part_type::active, 1, active_params, active_param::count, nullptr },
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, nullptr }
 };         

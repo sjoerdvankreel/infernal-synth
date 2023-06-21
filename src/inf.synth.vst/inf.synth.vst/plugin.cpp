@@ -95,24 +95,17 @@ class synth_vst_controller :
 public vst_controller
 {
 public:
-  std::int32_t editor_initial_width() const override;
   float editor_aspect_ratio() const override { return 1.629f; }
   std::int32_t editor_min_width() const override { return 1200; }
   std::int32_t editor_max_width() const override { return 2000; }
   std::int32_t editor_font_scaling_min_width() const override { return 1360; }
   std::int32_t editor_font_scaling_max_width() const override { return 1800; }
+  std::vector<char const*> ui_size_names() const override { return { "XS UI", "Small UI", "Medium UI", "Large UI", "XL UI" }; }
 
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
-
-std::int32_t 
-synth_vst_controller::editor_initial_width() const
-{
-  std::int32_t ui_size_index = ui_value_at({ part_type::edit_selector, 0 }, edit_selector_param::ui_size).discrete;
-  return plugin_editor_width(this, part_type::edit_selector, edit_selector_param::ui_size, ui_size_index);
-}
 
 class synth_vst_topology :
 public synth_topology

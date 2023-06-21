@@ -24,6 +24,7 @@
 
 * wishlist big
 - CLAP support
+- Linux support
 - osc types: feedback lead
 - filter types: formant, vowel
 - noise types: fractal, perlin
@@ -62,3 +63,4 @@
 - fix action ui selection when not changed
 - flush...
 - bitwig not play automation when ui is opened
+- drop partial linux support

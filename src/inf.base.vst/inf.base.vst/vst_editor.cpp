@@ -64,7 +64,7 @@ vst_editor::attached(void* parent, FIDString type)
 #if __linux__
   _impl->event_handler->registerHandlerForFrame(plugFrame);
 #endif // __linux__
-  _controller->editor_current_width(_controller->editor_initial_width());
+  _controller->editor_current_width(_controller->editor_min_width());
   if(_wrapper_ui) _wrapper_ui->removeAllChildren();
   _plugin_ui = create_ui();
   _plugin_ui->build();
