@@ -9,7 +9,9 @@
 
 namespace inf::base {
 
-static std::string const magic = "{17026466-059D-4C8C-A13E-510250D72F46}";
+static std::string const magic_v1 = "{17026466-059D-4C8C-A13E-510250D72F46}"; // Without metadata.
+static std::string const magic_v2 = "{89E30145-9211-432C-A2FD-757A40D49079}"; // With metadata.
+static std::string const magic_current = magic_v2;
 
 static std::uint32_t
 to_file_version(std::uint16_t major, std::uint16_t minor)
@@ -32,7 +34,7 @@ io_stream::save(topology_info const& topology, param_value const* state, std::ma
   topology.state_check(state);
   std::uint32_t file_version = to_file_version(topology.version_major(), topology.version_minor());
 
-  if(!write_string(magic)) return false;
+  if(!write_string(magic_current)) return false;
   if(!write_int32(file_version)) return false;
   if(!write_int32(topology.input_param_count)) return false;
 
@@ -59,6 +61,14 @@ io_stream::save(topology_info const& topology, param_value const* state, std::ma
     default: assert(false); break;
     }
   }
+
+  if(!write_int32(static_cast<std::int32_t>(meta_data.size()))) return false;
+  for (auto iter = meta_data.begin(); iter != meta_data.end(); ++iter)
+  {
+    if (!write_string(iter->first)) return false;
+    if (!write_string(iter->second)) return false;
+  }
+
   return true;
 }
 
@@ -81,7 +91,7 @@ io_stream::load(topology_info const& topology, param_value* state, std::map<std:
   assert(state != nullptr);
   std::uint32_t raw_version = to_file_version(topology.version_major(), topology.version_minor());
 
-  if(!read_string(file_magic) || file_magic != magic) return false;
+  if(!read_string(file_magic) || file_magic != magic_v1 && file_magic != magic_v2) return false;
   if(!read_uint32(raw_file_version) || raw_file_version > raw_version) return false;
   if(!read_int32(param_count) || param_count <= 0) return false;
 
@@ -196,6 +206,23 @@ io_stream::load(topology_info const& topology, param_value* state, std::map<std:
   for (auto it = old_parameters.begin(); it != old_parameters.end(); ++it)
     std::cout << "Unused value for " << it->part_guid << " " << it->part_index << ": " << it->param_guid << std::endl;
   topology.state_check(state);
+
+  // Without metadata.
+  meta_data.clear();
+  if(file_magic == magic_v1) return true;
+
+  // Read metadata.
+  std::int32_t meta_count = 0;
+  if(!read_int32(meta_count)) return false;
+  for (std::int32_t i = 0; i < meta_count; i++)
+  {
+    std::string key;
+    std::string val;
+    if(!read_string(key)) return false;
+    if(!read_string(val)) return false;
+    meta_data[key] = val;
+  }
+
   return true;
 }
   
