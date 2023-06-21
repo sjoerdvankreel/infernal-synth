@@ -43,7 +43,6 @@
 - graph bg image
 - skip entire voice section for dsp in fx mode
 - credit oddy
-- drop the conversion code?
 - test tracktion host
 - restore fx mode
 - check the init/default patch
