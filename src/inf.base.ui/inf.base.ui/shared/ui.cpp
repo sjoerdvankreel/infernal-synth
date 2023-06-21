@@ -740,7 +740,7 @@ create_factory_preset_ui(
       [controller, presets](juce::ComboBox* combo){
         for (std::size_t i = 0; i < presets.size(); i++)
           if (presets[i].name == controller->get_factory_preset())
-            combo->setSelectedItemIndex(static_cast<std::int32_t>(i));
+            combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
       });
 }
 
