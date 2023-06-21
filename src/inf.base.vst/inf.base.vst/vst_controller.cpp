@@ -146,6 +146,7 @@ vst_controller::set_component_state(IBStream* state)
   std::vector<param_value> values(_topology->input_param_count, param_value());
   if (!stream.load(*_topology, values.data(), meta_data())) return kResultFalse;
   load_component_state(values.data());
+  reloaded();
   return kResultOk;
 }
 

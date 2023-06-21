@@ -4,6 +4,13 @@
 namespace inf::base {
 
 void
+plugin_controller::reloaded()
+{
+  for(auto iter = _reload_listeners.begin(); iter != _reload_listeners.end(); ++iter)
+    (*iter)->plugin_reloaded();
+}
+
+void
 plugin_controller::add_param_listener(std::int32_t param_index, param_listener* listener)
 {
   auto iter = _param_listeners.find(param_index);

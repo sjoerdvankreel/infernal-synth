@@ -60,6 +60,7 @@ protected:
   _state(topology->params.size()), _topology(std::move(topology))
   { _topology->init_factory_preset(_state.data()); }
 
+  void reloaded();
   void controller_param_changed(std::int32_t tag, param_value base_value);
 
 public:
