@@ -39,6 +39,8 @@ typedef std::unique_ptr<inf_look_and_feel> (*
 lnf_factory)(inf::base::plugin_controller*);
 typedef std::function<void(inf::base::plugin_controller*)>
 confirmed_callback;
+typedef std::function<void()>
+cancelled_callback;
 
 void load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory);
@@ -49,7 +51,7 @@ void show_ok_box(
   std::string const& header, std::unique_ptr<inf_look_and_feel>&& lnf);
 void show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
-  lnf_factory lnf_factory, confirmed_callback confirmed);
+  lnf_factory lnf_factory, confirmed_callback confirmed, cancelled_callback cancelled);
 
 class ui_element
 {
@@ -153,21 +155,21 @@ public ui_element
 {
   std::string const _default_text;
   std::vector<std::string> _items;
-  std::function<void(std::int32_t)> const _callback;
+  std::function<void(juce::ComboBox*)> const _callback;
   std::unique_ptr<action_dropdown_listener> _listener = {};
 protected: 
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
   action_dropdown_element(inf::base::plugin_controller* controller, std::string const& default_text,
-    std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback):
+    std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback):
   ui_element(controller), _default_text(default_text), _items(items), _callback(callback) {}
 };
 
 inline std::unique_ptr<action_dropdown_element>
 create_action_dropdown_ui(
   inf::base::plugin_controller* controller, std::string const& default_text, 
-  std::vector<std::string> const& items, std::function<void(std::int32_t)> const& callback)
+  std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback)
 { return std::make_unique<action_dropdown_element>(controller, default_text, items, callback); }
 
 class container_element:

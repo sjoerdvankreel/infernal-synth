@@ -1159,12 +1159,13 @@ static std::unique_ptr<ui_element>
 create_synth_patch_group(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 3, 2);
+  auto cancelled = [](){};
   auto confirmed_init = [](plugin_controller* c) { c->init_patch(); };
   auto confirmed_clear = [](plugin_controller* c) { c->clear_patch(); };
-  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller, confirmed_init]() { 
-    show_confirm_box(controller, "Init patch", create_root_lnf, confirmed_init); }), 0, 0, 1, 1);
-  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller, confirmed_clear]() {
-    show_confirm_box(controller, "Clear patch", create_root_lnf, confirmed_clear); }), 0, 1, 1, 1);
+  grid->add_cell(create_button_ui(controller, "Init", Justification::centred, [controller, confirmed_init, cancelled]() {
+    show_confirm_box(controller, "Init patch", create_root_lnf, confirmed_init, cancelled); }), 0, 0, 1, 1);
+  grid->add_cell(create_button_ui(controller, "Clear", Justification::centred, [controller, confirmed_clear, cancelled]() {
+    show_confirm_box(controller, "Clear patch", create_root_lnf, confirmed_clear, cancelled); }), 0, 1, 1, 1);
   grid->add_cell(create_button_ui(controller, "Load", Justification::centred, [controller]() { 
     load_preset_file(controller, create_root_lnf); }), 1, 0, 1, 1);
   grid->add_cell(create_button_ui(controller, "Save", Justification::centred, [controller]() {

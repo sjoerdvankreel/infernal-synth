@@ -10,10 +10,10 @@ namespace inf::base::ui {
 class action_dropdown_listener :
 public juce::ComboBox::Listener
 {
-  std::function<void(std::int32_t)> const _callback;
+  std::function<void(juce::ComboBox*)> const _callback;
 public:
-  action_dropdown_listener(std::function<void(std::int32_t)> const& callback) : _callback(callback) {}
-  void comboBoxChanged(juce::ComboBox* dropdown) override { _callback(dropdown->getSelectedItemIndex()); }
+  action_dropdown_listener(std::function<void(juce::ComboBox*)> const& callback) : _callback(callback) {}
+  void comboBoxChanged(juce::ComboBox* dropdown) override { _callback(dropdown); }
 };
 
 } // namespace inf::base::ui

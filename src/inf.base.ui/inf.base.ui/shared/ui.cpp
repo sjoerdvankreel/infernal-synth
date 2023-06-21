@@ -24,6 +24,7 @@ struct confirm_box_state:
 public dialog_box_state
 {
   confirmed_callback confirmed;
+  cancelled_callback cancelled;
   inf::base::plugin_controller* controller;
 };
 
@@ -721,9 +722,10 @@ create_factory_preset_ui(
   auto presets = controller->factory_presets(file.getFullPathName().toStdString());
   for(std::size_t i = 0; i < presets.size(); i++)
     items.push_back(presets[i].name);
-  return create_action_dropdown_ui(controller, "Factory preset", items, [controller, presets, lnf_factory](std::int32_t selected_index) {
-    show_confirm_box(controller, "Load factory preset", lnf_factory, [presets, selected_index](plugin_controller* controller) {
-      controller->load_preset(presets[selected_index].path, true); }); });
+  return create_action_dropdown_ui(controller, "Factory preset", items, [controller, presets, lnf_factory](juce::ComboBox* dropdown) {
+    show_confirm_box(controller, "Load factory preset", lnf_factory, 
+      [presets, dropdown](plugin_controller* controller) { controller->load_preset(presets[dropdown->getSelectedItemIndex()].path, true); },
+      [dropdown](){ dropdown->setSelectedId(0, dontSendNotification); }); });
 }
 
 std::unique_ptr<ui_element>
@@ -735,7 +737,7 @@ create_theme_selector_ui(
   auto themes = controller->themes(file.getFullPathName().toStdString());
   for (std::size_t i = 0; i < themes.size(); i++)
     items.push_back(themes[i].name);
-  return create_action_dropdown_ui(controller, "Theme", items, [controller, themes, lnf_factory](std::int32_t index) {});
+  return create_action_dropdown_ui(controller, "Theme", items, [controller, themes, lnf_factory](juce::ComboBox* dropdown) {});
 }
 
 std::unique_ptr<ui_element>
@@ -745,8 +747,8 @@ create_ui_size_ui(
   std::vector<std::string> size_names;
   for(std::size_t i = 0; i < controller->ui_size_names().size(); i++)
     size_names.push_back(controller->ui_size_names()[i]);
-  return create_action_dropdown_ui(controller, "UI Size", size_names, [controller](std::int32_t selected_index) {
-    controller->set_editor_width(plugin_editor_width(controller, selected_index));
+  return create_action_dropdown_ui(controller, "UI Size", size_names, [controller](juce::ComboBox* dropdown) {
+    controller->set_editor_width(plugin_editor_width(controller, dropdown->getSelectedItemIndex()));
   });
 }
 
@@ -821,10 +823,11 @@ load_preset_file(
 void
 show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
-  lnf_factory lnf_factory, confirmed_callback confirmed)
+  lnf_factory lnf_factory, confirmed_callback confirmed, cancelled_callback cancelled)
 {
   confirm_box_state* state = new confirm_box_state;
   state->confirmed = confirmed;
+  state->cancelled = cancelled;
   state->controller = controller;
   state->lnf = lnf_factory(controller);
   state->content = create_grid_ui(controller, 3, 2);
@@ -839,6 +842,7 @@ show_confirm_box(
     delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
     state->window->exitModalState();
+    state->cancelled();
     state->window->setLookAndFeel(nullptr);
     delete state; }), 2, 1);
   run_dialog_box(state, 180, 90);
