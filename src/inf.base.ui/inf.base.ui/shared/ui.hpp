@@ -153,6 +153,7 @@ create_button_ui(inf::base::plugin_controller* controller, std::string const& te
 class action_dropdown_element :
 public ui_element
 {
+  std::int32_t _initial_index;
   std::string const _default_text;
   std::vector<std::string> _items;
   std::function<void(juce::ComboBox*)> const _callback;
@@ -161,16 +162,16 @@ protected:
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override;
-  action_dropdown_element(inf::base::plugin_controller* controller, std::string const& default_text,
+  action_dropdown_element(inf::base::plugin_controller* controller, std::int32_t initial_index, std::string const& default_text,
     std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback):
-  ui_element(controller), _default_text(default_text), _items(items), _callback(callback) {}
+  ui_element(controller), _initial_index(initial_index), _default_text(default_text), _items(items), _callback(callback) {}
 };
 
 inline std::unique_ptr<action_dropdown_element>
 create_action_dropdown_ui(
-  inf::base::plugin_controller* controller, std::string const& default_text, 
+  inf::base::plugin_controller* controller, std::int32_t initial_index, std::string const& default_text, 
   std::vector<std::string> const& items, std::function<void(juce::ComboBox*)> const& callback)
-{ return std::make_unique<action_dropdown_element>(controller, default_text, items, callback); }
+{ return std::make_unique<action_dropdown_element>(controller, initial_index, default_text, items, callback); }
 
 class container_element:
 public ui_element

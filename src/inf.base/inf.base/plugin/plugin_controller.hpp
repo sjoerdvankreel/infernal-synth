@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <cstdint>
+#include <functional>
 
 namespace inf::base {
 
@@ -23,6 +24,13 @@ class any_param_listener
 {
 public:
   virtual void any_controller_param_changed(std::int32_t index) = 0;
+};
+
+// On load/load preset.
+class reload_listener
+{
+public:
+  virtual void plugin_reloaded() = 0;
 };
   
 // For factory presets and themes.
@@ -44,6 +52,7 @@ protected:
   std::vector<inf::base::param_value> _state;
   std::map<std::string, std::string> _meta_data;
   std::unique_ptr<inf::base::topology_info> _topology;
+  std::set<reload_listener*> _reload_listeners = {};
   std::set<any_param_listener*> _any_param_listeners = {};
   std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
 
@@ -96,6 +105,10 @@ public:
   std::string get_last_directory() { return _meta_data[last_directory_key]; }
   void set_last_directory(std::string const& last_directory) { _meta_data[last_directory_key] = last_directory; }
 
+  void add_reload_listener(reload_listener* listener)
+  { _reload_listeners.insert(listener); }
+  void remove_reload_param_listener(reload_listener* listener)
+  { _reload_listeners.erase(listener); }
   void add_any_param_listener(any_param_listener* listener)
   { _any_param_listeners.insert(listener); }
   void remove_any_param_listener(any_param_listener* listener)
