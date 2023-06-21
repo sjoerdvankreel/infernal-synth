@@ -729,18 +729,20 @@ create_factory_preset_ui(
     if(presets[i].name == controller->get_factory_preset()) 
       initial_index = static_cast<std::int32_t>(i);
   }
-  return create_action_dropdown_ui(controller, initial_index, "Factory preset", items, [controller, presets, lnf_factory](juce::ComboBox* dropdown) {
-    show_confirm_box(controller, "Load factory preset", lnf_factory, 
-      [presets, dropdown](plugin_controller* controller) { 
-        controller->load_preset(presets[dropdown->getSelectedItemIndex()].path, true);
-        controller->set_factory_preset(presets[dropdown->getSelectedItemIndex()].name);
-      },
-      [dropdown](){ dropdown->setSelectedId(0, dontSendNotification); }
-      ); }, 
-      [controller, presets](juce::ComboBox* combo){
-        for (std::size_t i = 0; i < presets.size(); i++)
-          if (presets[i].name == controller->get_factory_preset())
-            combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
+  return create_action_dropdown_ui(controller, initial_index, "Factory preset", items, 
+    [controller, presets, lnf_factory](juce::ComboBox* dropdown) {
+      show_confirm_box(controller, "Load factory preset", lnf_factory, 
+        [presets, dropdown](plugin_controller* controller) { 
+          controller->load_preset(presets[dropdown->getSelectedItemIndex()].path, true);
+          controller->set_factory_preset(presets[dropdown->getSelectedItemIndex()].name);
+        },
+        [dropdown](){ dropdown->setSelectedId(0, dontSendNotification); }
+        );
+      }, 
+    [controller, presets](juce::ComboBox* combo) {
+      for (std::size_t i = 0; i < presets.size(); i++)
+        if (presets[i].name == controller->get_factory_preset())
+          combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
       });
 }
 
@@ -749,23 +751,48 @@ create_theme_selector_ui(
   plugin_controller* controller, lnf_factory lnf_factory)
 {
   std::vector<std::string> items;
+  std::int32_t initial_index = -1;
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto themes = controller->themes(file.getFullPathName().toStdString());
   for (std::size_t i = 0; i < themes.size(); i++)
+  {
     items.push_back(themes[i].name);
-  return create_action_dropdown_ui(controller, -1, "Theme", items, [controller, themes, lnf_factory](juce::ComboBox* dropdown) {}, [](juce::ComboBox*){});
+    if (themes[i].name == controller->get_theme())
+      initial_index = static_cast<std::int32_t>(i);
+  }
+  return create_action_dropdown_ui(controller, initial_index, "Theme", items,
+    [controller, themes, lnf_factory](juce::ComboBox* dropdown) {
+      controller->set_theme(themes[dropdown->getSelectedItemIndex()].name);
+    }, 
+    [controller, themes](juce::ComboBox* combo) {
+      for (std::size_t i = 0; i < themes.size(); i++)
+        if (themes[i].name == controller->get_theme())
+          combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
+    });
 }
 
 std::unique_ptr<ui_element>
 create_ui_size_ui(
   plugin_controller* controller, lnf_factory lnf_factory)
 {
+  std::int32_t initial_index = -1;
   std::vector<std::string> size_names;
   for(std::size_t i = 0; i < controller->ui_size_names().size(); i++)
+  {
     size_names.push_back(controller->ui_size_names()[i]);
-  return create_action_dropdown_ui(controller, -1, "UI Size", size_names, [controller](juce::ComboBox* dropdown) {
-    controller->set_editor_width(plugin_editor_width(controller, dropdown->getSelectedItemIndex()));
-  }, [](juce::ComboBox*){});
+    if (size_names[i] == controller->get_ui_size())
+      initial_index = static_cast<std::int32_t>(i);
+  }
+  return create_action_dropdown_ui(controller, initial_index, "UI Size", size_names, 
+    [controller, size_names](juce::ComboBox* dropdown) {
+      controller->set_editor_width(plugin_editor_width(controller, dropdown->getSelectedItemIndex()));
+      controller->set_ui_size(size_names[dropdown->getSelectedItemIndex()]);
+    }, 
+    [size_names, controller](juce::ComboBox* combo){
+      for (std::size_t i = 0; i < size_names.size(); i++)
+        if (size_names[i] == controller->get_ui_size())
+          combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
+    });
 }
 
 void
