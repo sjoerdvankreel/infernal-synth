@@ -64,3 +64,4 @@
 - flush...
 - bitwig not play automation when ui is opened
 - drop partial linux support
+- do gcc build nonetheless
