@@ -4,6 +4,7 @@
 #include <inf.base/shared/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
+#include <map>
 #include <string>
 #include <cstdint>
 
@@ -26,8 +27,8 @@ public:
   virtual bool write_string(std::string const& val) = 0;
 
   // Reads/writes arrays of param_value according to topology.
-  bool load(topology_info const& topology, param_value* state);
-  bool save(topology_info const& topology, param_value const* state);
+  bool load(topology_info const& topology, param_value* state, std::map<std::string, std::string>& meta_data);
+  bool save(topology_info const& topology, param_value const* state, std::map<std::string, std::string> const& meta_data);
 };
 
 } // namespace inf::base

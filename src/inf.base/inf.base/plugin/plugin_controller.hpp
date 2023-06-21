@@ -35,9 +35,14 @@ struct external_resource
 // Controller base interface.
 class plugin_controller
 {
+  static inline std::string const theme_key = "theme";
+  static inline std::string const ui_size_key = "ui_size";
+  static inline std::string const factory_preset_key = "factory_preset";
+  static inline std::string const last_directory_key = "last_directory";
+
 protected:
-  std::string _last_directory = {};
   std::vector<inf::base::param_value> _state;
+  std::map<std::string, std::string> _meta_data;
   std::unique_ptr<inf::base::topology_info> _topology;
   std::set<any_param_listener*> _any_param_listeners = {};
   std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
@@ -51,6 +56,8 @@ protected:
 public:
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
+  std::map<std::string, std::string>& meta_data() { return _meta_data; }
+  std::map<std::string, std::string> const& meta_data() const { return _meta_data; }
 
   void init_patch();
   void clear_patch();
@@ -80,10 +87,15 @@ public:
   virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
   virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
 
-  std::string const& get_last_directory() const
-  { return _last_directory; }
-  void set_last_directory(std::string const& last_directory)
-  { _last_directory = last_directory; };
+  std::string get_theme() { return _meta_data[theme_key]; }
+  void set_theme(std::string const& theme) { _meta_data[theme_key] = theme; }
+  std::string get_ui_size() { return _meta_data[ui_size_key]; }
+  void set_ui_size(std::string const& ui_size) { _meta_data[ui_size_key] = ui_size; }
+  std::string get_factory_preset() { return _meta_data[factory_preset_key]; }
+  void set_factory_preset(std::string const& factory_preset) { _meta_data[factory_preset_key] = factory_preset; }
+  std::string get_last_directory() { return _meta_data[last_directory_key]; }
+  void set_last_directory(std::string const& last_directory) { _meta_data[last_directory_key] = last_directory; }
+
   void add_any_param_listener(any_param_listener* listener)
   { _any_param_listeners.insert(listener); }
   void remove_any_param_listener(any_param_listener* listener)

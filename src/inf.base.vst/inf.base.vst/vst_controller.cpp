@@ -144,7 +144,7 @@ vst_controller::set_component_state(IBStream* state)
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
   std::vector<param_value> values(_topology->input_param_count, param_value());
-  if (!stream.load(*_topology, values.data())) return kResultFalse;
+  if (!stream.load(*_topology, values.data(), meta_data())) return kResultFalse;
   load_component_state(values.data());
   return kResultOk;
 }
@@ -217,7 +217,7 @@ vst_controller::save_preset(std::string const& path)
   MemoryStream processor_state;
   IBStreamer streamer(&processor_state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  if (!stream.save(*_topology, _state.data())) return;
+  if (!stream.save(*_topology, _state.data(), meta_data())) return;
   if (processor_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
   if (!PresetFile::savePreset(&preset_state, _processor_id, &processor_state)) return;
   if (preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;

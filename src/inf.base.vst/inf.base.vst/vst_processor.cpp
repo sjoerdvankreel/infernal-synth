@@ -11,6 +11,8 @@
 #include <pluginterfaces/vst/ivstparameterchanges.h>
 #include <public.sdk/source/vst/utility/processdataslicer.h>
 
+#include <map>
+#include <string>
 #include <cassert>
 #include <cstdint>
 
@@ -60,9 +62,10 @@ tresult PLUGIN_API
 vst_processor::getState(IBStream* state)
 {
   if(state == nullptr) return kResultFalse;
+  std::map<std::string, std::string> meta;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  if(!stream.save(*_topology, _state.data())) return kResultFalse;
+  if(!stream.save(*_topology, _state.data(), meta)) return kResultFalse;
   return kResultOk;
 }
 
@@ -73,7 +76,8 @@ vst_processor::setState(IBStream* state)
   if (state == nullptr) return kResultFalse;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  if(!stream.load(*_topology, _state.data())) return kResultFalse;
+  std::map<std::string, std::string> meta;
+  if(!stream.load(*_topology, _state.data(), meta)) return kResultFalse;
   return kResultOk;
 }
 

@@ -23,7 +23,7 @@ from_file_version(std::uint32_t version, std::uint16_t& major, std::uint16_t& mi
 }
 
 bool
-io_stream::save(topology_info const& topology, param_value const* state)
+io_stream::save(topology_info const& topology, param_value const* state, std::map<std::string, std::string> const& meta_data)
 {
   std::size_t chars;
   std::vector<char> str;
@@ -63,7 +63,7 @@ io_stream::save(topology_info const& topology, param_value const* state)
 }
 
 bool
-io_stream::load(topology_info const& topology, param_value* state)
+io_stream::load(topology_info const& topology, param_value* state, std::map<std::string, std::string>& meta_data)
 {
   param_value value;
   std::int32_t io_type;
