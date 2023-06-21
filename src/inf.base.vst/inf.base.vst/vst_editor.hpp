@@ -21,16 +21,11 @@ public:
 class vst_editor: 
 public Steinberg::Vst::EditorView
 {
-  vst_controller* const _controller;
-
-#if __linux__
-  struct impl;
-  std::unique_ptr<impl> _impl;
-#endif // __linux__
-
   using tresult = Steinberg::tresult;
   using ViewRect = Steinberg::ViewRect;
   using FIDString = Steinberg::FIDString;
+
+  vst_controller* const _controller;
   std::unique_ptr<wrapper_component> _wrapper_ui = {};
   std::unique_ptr<inf::base::ui::root_element> _plugin_ui = {};
 

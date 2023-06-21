@@ -1,8 +1,3 @@
-#if __linux__
-#define INF_INCLUDE_JUCE_VST3_WRAPPER 1
-#include "juce_VST3_Wrapper_modified.cpp"
-#endif // __linux__
-
 #include <inf.base.vst/vst_editor.hpp>
 #include <inf.base.vst/vst_controller.hpp>
 #include <cstring>
@@ -13,35 +8,19 @@ using namespace Steinberg;
 
 namespace inf::base::vst {
 
-#if __linux__
-struct vst_editor::impl
-{
-  juce::SharedResourcePointer<juce::EventHandler> event_handler;
-  juce::SharedResourcePointer<juce::MessageThread> message_thread;
-};
-#endif // __linux__
-
 vst_editor::
 ~vst_editor() {}
 
 vst_editor::
 vst_editor(vst_controller* controller):
 EditorView(controller), _controller(controller)
-#if __linux__
-, _impl(std::make_unique<impl>())
-#endif // __linux__
 { assert(controller != nullptr); }
 
 tresult PLUGIN_API
 vst_editor::removed()
 {
-#if WIN32
   if (_wrapper_ui) _wrapper_ui->removeFromDesktop();
-#endif
   _plugin_ui.reset();
-#if __linux__
-  _impl->event_handler->unregisterHandlerForFrame(plugFrame);
-#endif // __linux__
   return EditorView::removed();
 }
 
@@ -61,19 +40,18 @@ vst_editor::attached(void* parent, FIDString type)
 {
   if (!plugFrame) return EditorView::attached(parent, type);
   MessageManager::getInstance();
-#if __linux__
-  _impl->event_handler->registerHandlerForFrame(plugFrame);
-#endif // __linux__
-  _controller->editor_current_width(_controller->editor_min_width());
+  auto ui_size_names = _controller->ui_size_names();
+  auto found = std::find(ui_size_names.begin(), ui_size_names.end(), _controller->get_ui_size());
+  if(found == ui_size_names.end())
+    _controller->editor_current_width(_controller->editor_min_width());
+  else
+    _controller->editor_current_width(plugin_editor_width(_controller, static_cast<std::int32_t>(found - ui_size_names.begin())));
   if(_wrapper_ui) _wrapper_ui->removeAllChildren();
   _plugin_ui = create_ui();
   _plugin_ui->build();
   _plugin_ui->layout();
   if(!_wrapper_ui)
   {
-#if __linux__
-    juce::MessageManagerLock mm_lock;
-#endif // __linux__
     _wrapper_ui.reset(new wrapper_component);
     _wrapper_ui->setOpaque(true);
     _wrapper_ui->addToDesktop(0, (void*)parent);

@@ -754,10 +754,11 @@ create_theme_selector_ui(
   std::int32_t initial_index = -1;
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto themes = controller->themes(file.getFullPathName().toStdString());
+  std::string theme = controller->get_theme();
   for (std::size_t i = 0; i < themes.size(); i++)
   {
     items.push_back(themes[i].name);
-    if (themes[i].name == controller->get_theme())
+    if (themes[i].name == theme)
       initial_index = static_cast<std::int32_t>(i);
   }
   return create_action_dropdown_ui(controller, initial_index, "Theme", items,
@@ -765,8 +766,9 @@ create_theme_selector_ui(
       controller->set_theme(themes[dropdown->getSelectedItemIndex()].name);
     }, 
     [controller, themes](juce::ComboBox* combo) {
+      std::string theme = controller->get_theme();
       for (std::size_t i = 0; i < themes.size(); i++)
-        if (themes[i].name == controller->get_theme())
+        if (themes[i].name == theme)
           combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
     });
 }
@@ -777,10 +779,11 @@ create_ui_size_ui(
 {
   std::int32_t initial_index = -1;
   std::vector<std::string> size_names;
+  std::string ui_size = controller->get_ui_size();
   for(std::size_t i = 0; i < controller->ui_size_names().size(); i++)
   {
     size_names.push_back(controller->ui_size_names()[i]);
-    if (size_names[i] == controller->get_ui_size())
+    if (size_names[i] == ui_size)
       initial_index = static_cast<std::int32_t>(i);
   }
   return create_action_dropdown_ui(controller, initial_index, "UI Size", size_names, 
@@ -789,8 +792,9 @@ create_ui_size_ui(
       controller->set_ui_size(size_names[dropdown->getSelectedItemIndex()]);
     }, 
     [size_names, controller](juce::ComboBox* combo){
+      std::string ui_size = controller->get_ui_size();
       for (std::size_t i = 0; i < size_names.size(); i++)
-        if (size_names[i] == controller->get_ui_size())
+        if (size_names[i] == ui_size)
           combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
     });
 }

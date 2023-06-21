@@ -43,6 +43,7 @@ get_scaled_size(plugin_controller const* controller, float min_size, float max_s
 std::int32_t
 plugin_editor_width(plugin_controller const* controller, std::int32_t selected_size_index)
 {
+  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(controller->ui_size_names().size() - 1));
   float min_width = static_cast<float>(controller->editor_min_width());
   float max_width = static_cast<float>(controller->editor_max_width());
   float factor = static_cast<float>(selected_size_index) / static_cast<float>(controller->ui_size_names().size() - 1);
