@@ -37,7 +37,7 @@ io_stream::save(topology_info const& topology, param_value const* state, std::ma
   if(!write_string(magic_current)) return false;
   if(!write_int32(file_version)) return false;
   if(!write_int32(topology.input_param_count)) return false;
-   
+    
   for (std::int32_t p = 0; p < topology.input_param_count; p++)
   {
     auto const& param = *topology.params[p].descriptor;
@@ -220,7 +220,7 @@ io_stream::load(topology_info const& topology, param_value* state, std::map<std:
     std::string val;
     if(!read_string(key)) return false;
     if(!read_string(val)) return false;
-    meta_data[key] = val;
+    meta_data[key] = val;         
   }
 
   return true;
