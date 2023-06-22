@@ -742,8 +742,11 @@ create_factory_preset_ui(
     [controller, presets](juce::ComboBox* combo) {
       for (std::size_t i = 0; i < presets.size(); i++)
         if (presets[i].name == controller->get_factory_preset())
+        {
           combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
-      });
+          return;
+        }
+      combo->setSelectedId(0); });
 }
 
 std::unique_ptr<ui_element>
@@ -769,7 +772,11 @@ create_theme_selector_ui(
       std::string theme = controller->get_theme();
       for (std::size_t i = 0; i < themes.size(); i++)
         if (themes[i].name == theme)
+        {
           combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
+          return;
+        }
+      combo->setSelectedId(0);
     });
 }
 
@@ -795,7 +802,11 @@ create_ui_size_ui(
       std::string ui_size = controller->get_ui_size();
       for (std::size_t i = 0; i < size_names.size(); i++)
         if (size_names[i] == ui_size)
+        {
           combo->setSelectedItemIndex(static_cast<std::int32_t>(i), dontSendNotification);
+          return;
+        }
+      combo->setSelectedId(0);
     });
 }
 
