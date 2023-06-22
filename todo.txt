@@ -1,7 +1,7 @@
 * breaking changes 
 - dropped osc gain
 - changed r/am ring
-- dropped down vaudio/gaudio route count to 15 TODO less gaudio
+- dropped down vaudio/gaudio route count to 15
 
 * for each release 
 - v create version branch
