@@ -211,6 +211,7 @@ io_stream::load(topology_info const& topology, param_value* state, std::map<std:
   if(file_magic == magic_v1) return true;
 
   // Read metadata.
+  meta_data.clear();
   std::int32_t meta_count = 0;
   if(!read_int32(meta_count)) return false;
   for (std::int32_t i = 0; i < meta_count; i++)
