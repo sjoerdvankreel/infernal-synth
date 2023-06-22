@@ -64,3 +64,4 @@
 - flush...
 - bitwig not play automation when ui is opened
 - do gcc build nonetheless
+- fix fx presets
