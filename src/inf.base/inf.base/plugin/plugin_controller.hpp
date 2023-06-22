@@ -64,10 +64,9 @@ protected:
   void controller_param_changed(std::int32_t tag, param_value base_value);
 
 public:
+  std::map<std::string, std::string>& meta_data();
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
-  std::map<std::string, std::string>& meta_data() { return _meta_data; }
-  std::map<std::string, std::string> const& meta_data() const { return _meta_data; }
 
   void init_patch();
   void clear_patch();

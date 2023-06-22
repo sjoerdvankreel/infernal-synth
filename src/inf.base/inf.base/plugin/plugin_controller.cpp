@@ -3,6 +3,23 @@
 
 namespace inf::base {
 
+std::map<std::string, std::string>& 
+plugin_controller::meta_data()
+{
+  std::vector<std::string> unknown_keys;
+  std::vector<std::string> known_keys;
+  known_keys.push_back(theme_key);
+  known_keys.push_back(ui_size_key);
+  known_keys.push_back(factory_preset_key);
+  known_keys.push_back(last_directory_key);
+  for(auto iter = _meta_data.begin(); iter != _meta_data.end(); ++iter)
+    if(std::find(known_keys.begin(), known_keys.end(), iter->first) == known_keys.end())
+      unknown_keys.push_back(iter->first);
+  for(std::size_t i = 0; i < unknown_keys.size(); i++)
+    _meta_data.erase(unknown_keys[i]);
+  return _meta_data;
+}
+
 void
 plugin_controller::reloaded()
 {
