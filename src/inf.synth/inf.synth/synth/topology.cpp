@@ -515,7 +515,6 @@ synth_topology::init_factory_preset(param_value* state) const
 void 
 synth_topology::init_fx_clear_patch(param_value* state) const
 {
-  assert(!"TODO");
   topology_info::init_clear_patch(state);
 
   // Bare minimum to have a basic delay line.
@@ -543,7 +542,6 @@ synth_topology::init_instrument_clear_patch(param_value* state) const
 void 
 synth_topology::init_fx_factory_preset(param_value* state) const
 {
-  assert(!"TODO");
   topology_info::init_factory_preset(state);
 
   // gfx 1 reverb

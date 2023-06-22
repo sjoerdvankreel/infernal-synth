@@ -143,10 +143,8 @@ create_processor(std::int32_t is_instrument)
   return static_cast<IAudioProcessor*>(processor);
 }
 
-#if 0 // TODO
 static FUnknown* create_fx_processor(void* context) { return create_processor(0); }
 static FUnknown* create_fx_controller(void* context) { return create_controller(0); }
-#endif
 static FUnknown* create_instrument_processor(void* context) { return create_processor(1); }
 static FUnknown* create_instrument_controller(void* context) { return create_controller(1); }
 
@@ -154,9 +152,8 @@ BEGIN_FACTORY_DEF(
   INF_SYNTH_VST_COMPANY_NAME,
   INF_SYNTH_VST_COMPANY_WEB,
   INF_SYNTH_VST_COMPANY_MAIL,
-  /*4*/ 2)
+  4)
 
-#if 0 // TODO restore fx mode in separate binary
   // fx
   DEF_CLASS(fx_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass, 
     INF_SYNTH_VST_FX_NAME, Steinberg::Vst::kDistributable, Steinberg::Vst::PlugType::kFx,
@@ -164,7 +161,6 @@ BEGIN_FACTORY_DEF(
   DEF_CLASS(fx_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
     INF_SYNTH_VST_FX_CONTROLLER_NAME, 0, "",
     INF_SYNTH_VST_VERSION, kVstVersionString, create_fx_controller, nullptr)
-#endif
 
   // instrument
   DEF_CLASS(instrument_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
