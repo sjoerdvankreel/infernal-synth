@@ -23,8 +23,8 @@ effect_processor::graph_min_delay_samples() const
   assert(_state != nullptr);
   switch (_delay_type)
   {
-  case effect_delay_type::multi: return _dly_multi_length;
-  case effect_delay_type::feedback: return std::min(_state->dly_fdbk_length[0], _state->dly_fdbk_length[1]);
+  case effect_delay_type::multi: return _dly_multi_length + _dly_hold_length;
+  case effect_delay_type::feedback: return std::min(_state->dly_fdbk_length[0], _state->dly_fdbk_length[1]) + _dly_hold_length;
   default: assert(false); return 0;
   }
 }
