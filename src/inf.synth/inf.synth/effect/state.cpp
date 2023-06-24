@@ -6,7 +6,7 @@ namespace inf::synth {
 effect_state::
 effect_state(bool global, float sample_rate, std::int32_t max_sample_count):
 global(global), oversampler(base::stereo_channels, max_sample_count), 
-flt_stvar_kbd_track_base(), flt_stvar_ic1eq(), flt_stvar_ic2eq(),
+flt_stvar_kbd_track_base(), flt_stvar_ic1eq(), flt_stvar_ic2eq(), 
 dly_fdbk_length(), comb_input(), comb_output(), delay_buffer(), reverb_comb_filter(), 
 reverb_comb_pos(), reverb_comb(), reverb_allpass_pos(), reverb_allpass()
 {
@@ -23,11 +23,9 @@ reverb_comb_pos(), reverb_comb(), reverb_allpass_pos(), reverb_allpass()
     return;
   }
   float fmax_delay_length = std::ceil(sample_rate * effect_dly_max_time_sec);
-  float fmax_delay_hold_length = std::ceil(sample_rate * effect_dly_hold_max_time_sec);
   std::int32_t max_delay_length = static_cast<std::int32_t>(fmax_delay_length);
-  std::int32_t max_delay_hold_length = static_cast<std::int32_t>(fmax_delay_hold_length);
-  delay_buffer[0] = base::ring_buffer<float>(max_delay_length + max_delay_hold_length);
-  delay_buffer[1] = base::ring_buffer<float>(max_delay_length + max_delay_hold_length);
+  delay_buffer[0] = base::ring_buffer<float>(max_delay_length);
+  delay_buffer[1] = base::ring_buffer<float>(max_delay_length);
   for (std::int32_t i = 0; i < effect_reverb_comb_count; i++)
   {
     float comb_length_l = effect_reverb_comb_length[i] * sample_rate;
