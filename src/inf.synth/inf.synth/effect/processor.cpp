@@ -10,10 +10,10 @@ using namespace inf::base;
 namespace inf::synth {
 
 static std::int32_t 
-delay_sample_count(automation_view const& automation, float rate, float bpm, effect_param time, effect_param tempo)
+delay_sample_count(automation_view const& automation, std::vector<float> const& timesig_values, float rate, float bpm, effect_param time, effect_param tempo)
 {
   std::int32_t result;
-  float timesig = effect_dly_timesig_values[automation.block_discrete(tempo)];
+  float timesig = timesig_values[automation.block_discrete(tempo)];
   if (automation.block_discrete(effect_param::dly_synced) == 1)
     result = static_cast<std::int32_t>(timesig_to_samples(rate, bpm, timesig));
   else
@@ -54,11 +54,11 @@ effect_processor::update_block_params(automation_view const& automation, std::in
   std::int32_t delay_max_samples = static_cast<std::int32_t>(std::ceil(sample_rate() * effect_dly_max_time_sec));
   _delay_type = eff_automation.block_discrete(effect_param::delay_type);
   _dly_multi_taps = eff_automation.block_discrete(effect_param::dly_multi_taps);
-  _dly_hold_length = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_hold_time, effect_param::dly_hold_tempo);
-  _dly_multi_length = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_multi_time, effect_param::dly_multi_tempo);
+  _dly_hold_length = delay_sample_count(eff_automation, effect_dly_hold_timesig_values, sample_rate(), bpm, effect_param::dly_hold_time, effect_param::dly_hold_tempo);
+  _dly_multi_length = delay_sample_count(eff_automation, effect_dly_timesig_values, sample_rate(), bpm, effect_param::dly_multi_time, effect_param::dly_multi_tempo);
   _dly_multi_taps = std::min(_dly_multi_taps, (delay_max_samples - 1) / _dly_multi_length);
-  _state->dly_fdbk_length[0] = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_fdbk_time_l, effect_param::dly_fdbk_tempo_l);
-  _state->dly_fdbk_length[1] = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_fdbk_time_r, effect_param::dly_fdbk_tempo_r);
+  _state->dly_fdbk_length[0] = delay_sample_count(eff_automation, effect_dly_timesig_values, sample_rate(), bpm, effect_param::dly_fdbk_time_l, effect_param::dly_fdbk_tempo_l);
+  _state->dly_fdbk_length[1] = delay_sample_count(eff_automation, effect_dly_timesig_values, sample_rate(), bpm, effect_param::dly_fdbk_time_r, effect_param::dly_fdbk_tempo_r);
 }
 
 audio_part_output
