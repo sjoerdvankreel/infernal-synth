@@ -1,6 +1,7 @@
 * breaking changes 
 - dropped osc gain
 - changed r/am ring
+- added delay hold stage
 - dropped down vaudio/gaudio route count to 15
 
 * for each release 
