@@ -415,37 +415,40 @@ synth_processor::process(block_input const& input, block_output& output)
     master_automation.continuous_real_transform(master_param::gcv1_uni + i * 2 + 1, _cv_state.gcv_bi[i].buffer.values, input.data.sample_count);
   }
 
-  // Get per-block poly/mono and portamento settings.
-  part_id voice_id = { part_type::voice, 0 };
-  auto voice_automation = input.data.automation.rearrange_params(voice_id);
-
-  voice_setup_input setup_input;
-  setup_input.block = &input;
-  setup_input.voice_mode = voice_automation.block_discrete(voice_param::mode);
-  setup_input.port_mode = voice_automation.block_discrete(voice_param::port_mode);
-  setup_input.port_trig = voice_automation.block_discrete(voice_param::port_trig);
-  float port_seconds = voice_automation.block_real_transform(voice_param::port_time);
-  std::int32_t port_sync = voice_automation.block_discrete(voice_param::port_sync);
-  std::int32_t port_tempo = voice_automation.block_discrete(voice_param::port_tempo);
-  float port_timesig = voice_port_timesig_values[port_tempo];
-  if (port_sync == 0) setup_input.port_samples = static_cast<std::int32_t>(sample_rate() * port_seconds);
-  else setup_input.port_samples = static_cast<std::int32_t>(timesig_to_samples(sample_rate(), input.data.bpm, port_timesig));
-
-  // Handle note on/off events, this will arrange the per-voice state as necessary.
-  voice_setup_output setup_output = process_notes_current_block(setup_input);
-
   // Clear output.
   for (std::int32_t c = 0; c < stereo_channels; c++)
     std::memset(output.audio[c], 0, input.data.sample_count * sizeof(float));
 
-  // Mix in voices that are active anywhere in this buffer.
   std::int32_t voice_count = 0;
-  for(std::int32_t v = 0; v < synth_polyphony; v++)
-    if (_voice_states[v].in_use)
-    {
-      process_voice(setup_input, setup_output, v, usage);
-      voice_count++;
-    }
+  if(topology()->is_instrument())
+  {
+    // Get per-block poly/mono and portamento settings.
+    part_id voice_id = { part_type::voice, 0 };
+    auto voice_automation = input.data.automation.rearrange_params(voice_id);
+
+    voice_setup_input setup_input;
+    setup_input.block = &input;
+    setup_input.voice_mode = voice_automation.block_discrete(voice_param::mode);
+    setup_input.port_mode = voice_automation.block_discrete(voice_param::port_mode);
+    setup_input.port_trig = voice_automation.block_discrete(voice_param::port_trig);
+    float port_seconds = voice_automation.block_real_transform(voice_param::port_time);
+    std::int32_t port_sync = voice_automation.block_discrete(voice_param::port_sync);
+    std::int32_t port_tempo = voice_automation.block_discrete(voice_param::port_tempo);
+    float port_timesig = voice_port_timesig_values[port_tempo];
+    if (port_sync == 0) setup_input.port_samples = static_cast<std::int32_t>(sample_rate() * port_seconds);
+    else setup_input.port_samples = static_cast<std::int32_t>(timesig_to_samples(sample_rate(), input.data.bpm, port_timesig));
+
+    // Handle note on/off events, this will arrange the per-voice state as necessary.
+    voice_setup_output setup_output = process_notes_current_block(setup_input);
+
+    // Mix in voices that are active anywhere in this buffer.
+    for(std::int32_t v = 0; v < synth_polyphony; v++)
+      if (_voice_states[v].in_use)
+      {
+        process_voice(setup_input, setup_output, v, usage);
+        voice_count++;
+      }
+  }
 
   // Clear fx output in case user selected weird routing (i.e. fx 3 to fx 2).
   for (std::int32_t i = 0; i < geffect_count; i++)

@@ -42,7 +42,6 @@
 - disable unison for noise?
 - rewrite the manual
 - graph bg image
-- skip entire voice section for dsp in fx mode
 - credit oddy
 - test tracktion host
 - theme selector
@@ -54,4 +53,3 @@
 - do gcc build nonetheless
 - fix fx presets
 - check all presets in all hosts
-- drop edit voice for fx
