@@ -77,7 +77,7 @@ effect_processor::process_dly_multi(effect_process_input const& input, float* co
         std::int32_t lr = (t + c) % 2;
         std::int32_t tap_length = (t + 1) * _dly_multi_length;
         float tap_bal = stereo_balance(lr, sprd[s]);
-        float buffer_sample = _state->delay_buffer[c].get(tap_length + _dly_hold_length);
+        float buffer_sample = _state->delay_buffer[c].get(tap_length + _dly_multi_hold_length);
         wet += tap_bal * tap_amt * buffer_sample;
         tap_amt *= tap_amt;
       }
