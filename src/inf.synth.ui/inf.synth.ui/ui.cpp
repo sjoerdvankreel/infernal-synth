@@ -1149,7 +1149,9 @@ create_synth_edit_group(plugin_controller* controller)
   inner_grid->add_cell(create_last_edit_value_ui(controller), 0, 1, 1, 1);
   inner_grid->add_cell(create_ui_size_ui(controller, create_root_lnf), 1, 0, 1, 1);
   inner_grid->add_cell(create_theme_selector_ui(controller, create_root_lnf), 1, 1, 1, 1);
-  inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 2, 0, 1, 2);
+  auto edit_selector = inner_grid->add_cell(create_param_edit_ui(controller, part_type::edit_selector, 0, edit_selector_param::edit_type, edit_type::tab_bar, tooltip_type::off), 2, 0, 1, 2);
+  if(!controller->topology()->is_instrument())
+    edit_selector->relevant_if({ part_type::edit_selector, 0 }, edit_selector_param::edit_type, false, [](std::int32_t part_index, std::int32_t val) { return false; });
   auto outer_grid = create_grid_ui(controller, 1, 40);
   outer_grid->add_cell(std::move(inner_grid), 0, 1, 1, 38);
   return create_part_single_ui(controller, "Edit", -1, true, selector_routing_dir::none, create_part_group_container_ui(controller, std::move(outer_grid)));
@@ -1183,10 +1185,14 @@ create_synth_grid(plugin_controller* controller)
   result->add_cell(create_synth_output_group(controller), 0, 8, 1, 3);
   result->add_cell(create_synth_edit_group(controller), 0, 11, 1, 3);
   result->add_cell(create_synth_patch_group(controller), 0, 14, 1, 3);
-  auto voice = result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
-  voice->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_voice; });
+  if(controller->topology()->is_instrument())
+  {
+    auto voice = result->add_cell(create_voice_grid(controller), 1, 0, 9, 17);
+    voice->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_voice; });
+  }
   auto global = result->add_cell(create_global_grid(controller), 1, 0, 9, 17);
-  global->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_global; });
+  if(controller->topology()->is_instrument())
+    global->relevant_if(part_id(part_type::edit_selector, 0), edit_selector_param::edit_type, true, [](std::int32_t part_index, std::int32_t val) { return val == edit_selector_type::edit_global; });
   return result;
 }
 
