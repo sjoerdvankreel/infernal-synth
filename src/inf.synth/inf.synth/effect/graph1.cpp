@@ -108,6 +108,7 @@ effect_graph1::sample_count_filter(param_value const* state, float sample_rate) 
 std::int32_t
 effect_graph1::sample_count_delay(param_value const* state, float sample_rate) const
 {
+#if 0
   assert(id().type == part_type::geffect);
   automation_view automation(topology(), state, id());
   auto fx_state = std::make_unique<effect_state>(true, sample_rate, 1);
@@ -122,6 +123,8 @@ effect_graph1::sample_count_delay(param_value const* state, float sample_rate) c
   case effect_delay_type::multi: return (tap_count + 1) * processor->graph_min_delay_samples();
   default: assert(false); return -1;
   }
+#endif
+  return (int)(13* delay_reverb_graph_rate);
 }
 
 std::int32_t

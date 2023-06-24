@@ -56,7 +56,7 @@ effect_processor::update_block_params(automation_view const& automation, std::in
   _dly_multi_taps = eff_automation.block_discrete(effect_param::dly_multi_taps);
   _dly_hold_length = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_hold_time, effect_param::dly_hold_tempo);
   _dly_multi_length = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_multi_time, effect_param::dly_multi_tempo);
-  _dly_multi_taps = std::min(_dly_multi_taps, (delay_max_samples - 1 - _dly_hold_length) / _dly_multi_length);
+  _dly_multi_taps = std::min(_dly_multi_taps, (delay_max_samples - 1) / _dly_multi_length);
   _state->dly_fdbk_length[0] = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_fdbk_time_l, effect_param::dly_fdbk_tempo_l);
   _state->dly_fdbk_length[1] = delay_sample_count(eff_automation, sample_rate(), bpm, effect_param::dly_fdbk_time_r, effect_param::dly_fdbk_tempo_r);
 }
