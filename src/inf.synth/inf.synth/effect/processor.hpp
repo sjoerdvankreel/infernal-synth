@@ -61,6 +61,7 @@ public:
     std::int32_t midi, effect_state* state, base::automation_view const& automation);
 
   std::int32_t graph_min_delay_samples() const;
+  std::int32_t graph_hold_samples() const { return _dly_hold_length; }
   audio_part_output process_any(effect_input const& input, float* const* out, cv_bank_processor& cv, scratch_space& scratch);
   audio_part_output process_global(effect_input const& input, float* const* out, cv_bank_processor& cv, scratch_space& scratch);
 };

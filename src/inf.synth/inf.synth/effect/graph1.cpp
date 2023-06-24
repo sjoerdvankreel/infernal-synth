@@ -118,8 +118,8 @@ effect_graph1::sample_count_delay(param_value const* state, float sample_rate) c
     delay_reverb_graph_rate, graph_bpm, midi_note_c4, fx_state.get(), automation);
   switch (delay_type)
   {
-  case effect_delay_type::feedback: return static_cast<std::int32_t>(ffeedback_count);
-  case effect_delay_type::multi: return (tap_count + 1) * processor->graph_min_delay_samples();
+  case effect_delay_type::feedback: return static_cast<std::int32_t>(ffeedback_count) + processor->graph_hold_samples();
+  case effect_delay_type::multi: return (tap_count + 1) * processor->graph_min_delay_samples() + processor->graph_hold_samples();
   default: assert(false); return -1;
   }
 }
