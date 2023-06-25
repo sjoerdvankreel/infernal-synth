@@ -204,17 +204,3 @@ set_target_properties(infernal.synth.vst.versioned PROPERTIES LIBRARY_OUTPUT_DIR
 add_custom_target(copy-themes-synth-versioned ALL DEPENDS infernal.synth.vst.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
 add_custom_target(copy-presets-synth-versioned ALL DEPENDS infernal.synth.vst.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
 endif()
-
-# Inf vst preset diff tool.
-set(INF_TOOL_VST_SRC_DIR "src/inf.tool.vst")
-file(GLOB_RECURSE INF_TOOL_VST_SRC "${INF_TOOL_VST_SRC_DIR}/*.*")
-add_executable(infernal.tool.vst ${INF_TOOL_VST_SRC})
-target_include_directories(infernal.tool.vst PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_VST_SRC_DIR} ${INF_TOOL_VST_SRC_DIR})
-target_include_directories(infernal.tool.vst SYSTEM PRIVATE ${VST3_SDK_SRC_DIR})
-target_link_libraries(infernal.tool.vst infernal.base infernal.base.vst lib.vst3sdk)
-if (MSVC)
-source_group(TREE "../../${INF_TOOL_VST_SRC_DIR}" FILES ${INF_TOOL_VST_SRC})
-target_compile_options(infernal.tool.vst PRIVATE "SHELL:/external:I ${VST3_SDK_SRC_DIR}")
-else ()
-target_link_libraries(infernal.tool.vst dl)
-endif()
