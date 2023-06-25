@@ -46,8 +46,6 @@
 - credit oddy
 - test tracktion host
 - theme selector
-- reset/clear/load preset still not flushing
 - manual + automation test all controls
-- bitwig not play automation when ui is opened
 - do gcc build nonetheless
 - check all presets in all hosts
