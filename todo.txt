@@ -44,7 +44,6 @@
 - rewrite the manual
 - graph bg image
 - credit oddy
-- test tracktion host
 - theme selector
 - manual + automation test all controls
 - do gcc build nonetheless
