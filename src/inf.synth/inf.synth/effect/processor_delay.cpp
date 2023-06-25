@@ -45,8 +45,8 @@ effect_processor::process_dly_feedback(effect_process_input const& input, float*
   { 
     std::int32_t fdbk_length_l = _state->dly_fdbk_length[0];
     std::int32_t fdbk_length_r = _state->dly_fdbk_length[1];
-    float buffer_sample_l = _state->delay_buffer[0].get(fdbk_length_l);
-    float buffer_sample_r = _state->delay_buffer[1].get(fdbk_length_r);
+    float buffer_sample_l = _state->delay_buffer[0].get(fdbk_length_l + _dly_hold_length);
+    float buffer_sample_r = _state->delay_buffer[1].get(fdbk_length_r + _dly_hold_length);
     float wet_l_base = amt[s] * max_feedback * buffer_sample_l;
     float wet_r_base = amt[s] * max_feedback * buffer_sample_r;
     float wet_l = wet_l_base + (1.0f - sprd[s]) * wet_r_base;

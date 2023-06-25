@@ -27,7 +27,7 @@ effect_processor(topology_info const* topology, part_id id, float sample_rate,
 float bpm, std::int32_t midi, effect_state* state, automation_view const& automation):
 audio_part_processor(topology, id, sample_rate, modulation_type(id.type)),
 _midi(midi), _state(state), _on(), _type(), _delay_type(), _filter_type(), _shaper_type(), 
-_flt_stvar_type(), _shp_over_order(), _shp_cheby_terms(), _dly_multi_taps(), _dly_multi_length()
+_flt_stvar_type(), _shp_over_order(), _shp_cheby_terms(), _dly_multi_taps(), _dly_hold_length(), _dly_multi_length()
 {
    assert(state != nullptr);
    assert((id.type == part_type::geffect) == (state->global));
