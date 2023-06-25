@@ -585,6 +585,7 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   set_ui_value(state, part_type::geffect, 0, effect_param::dly_hold_tempo, "0");
   set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_taps, "6");
   set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_tempo, "3/16");
+  set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_sprd, "33");
 
   set_ui_value(state, part_type::geffect, 1, effect_param::on, "On");
   set_ui_value(state, part_type::geffect, 1, effect_param::type, "Filter");
@@ -602,6 +603,7 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   set_ui_value(state, part_type::geffect, 2, effect_param::dly_hold_tempo, "1/16");
   set_ui_value(state, part_type::geffect, 2, effect_param::dly_multi_taps, "6");
   set_ui_value(state, part_type::geffect, 2, effect_param::dly_multi_tempo, "3/16");
+  set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_sprd, "0");
 
   set_ui_value(state, part_type::geffect, 3, effect_param::on, "On");
   set_ui_value(state, part_type::geffect, 3, effect_param::type, "Filter");
@@ -616,9 +618,10 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   set_ui_value(state, part_type::geffect, 4, effect_param::dly_amt, "50");
   set_ui_value(state, part_type::geffect, 4, effect_param::dly_mix, "100");
   set_ui_value(state, part_type::geffect, 4, effect_param::dly_synced, "On");
-  set_ui_value(state, part_type::geffect, 4, effect_param::dly_hold_tempo, "1/8");
+  set_ui_value(state, part_type::geffect, 4, effect_param::dly_hold_tempo, "1/8");  
   set_ui_value(state, part_type::geffect, 4, effect_param::dly_multi_taps, "6");
   set_ui_value(state, part_type::geffect, 4, effect_param::dly_multi_tempo, "3/16");
+  set_ui_value(state, part_type::geffect, 0, effect_param::dly_multi_sprd, "-33");
 
   set_ui_value(state, part_type::geffect, 5, effect_param::on, "On");
   set_ui_value(state, part_type::geffect, 5, effect_param::type, "Filter");

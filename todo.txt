@@ -50,5 +50,4 @@
 - manual + automation test all controls
 - bitwig not play automation when ui is opened
 - do gcc build nonetheless
-- fix fx presets
 - check all presets in all hosts
