@@ -50,3 +50,4 @@
 - check all presets in all hosts
 - fix the renoise demos automation data
 - fix renoise repaint blackscreen
+- add the fx demo to website
