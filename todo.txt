@@ -52,4 +52,3 @@
 - do gcc build nonetheless
 - fix fx presets
 - check all presets in all hosts
-- fix memory usage
