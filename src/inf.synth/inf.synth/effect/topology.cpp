@@ -52,9 +52,9 @@ static std::vector<std::pair<timesig_type, std::vector<std::int32_t>>> const eff
 static std::vector<time_signature> const effect_dly_timesig = synced_timesig(false, { 2, 1 }, effect_dly_timesig_series);
 std::vector<float> const effect_dly_timesig_values = synced_timesig_values(effect_dly_timesig);
 static std::vector<std::string> const effect_dly_timesig_names = synced_timesig_names(effect_dly_timesig);
-static std::vector<time_signature> const effect_dly_multi_hold_timesig = synced_timesig(true, { 2, 1 }, effect_dly_timesig_series);
-std::vector<float> const effect_dly_multi_hold_timesig_values = synced_timesig_values(effect_dly_multi_hold_timesig);
-static std::vector<std::string> const effect_dly_multi_hold_timesig_names = synced_timesig_names(effect_dly_multi_hold_timesig);
+static std::vector<time_signature> const effect_dly_hold_timesig = synced_timesig(true, { 2, 1 }, effect_dly_timesig_series);
+std::vector<float> const effect_dly_hold_timesig_values = synced_timesig_values(effect_dly_hold_timesig);
+static std::vector<std::string> const effect_dly_hold_timesig_names = synced_timesig_names(effect_dly_hold_timesig);
 
 static std::vector<list_item> const effect_global_types =
 std::vector<list_item>(effect_types.begin(), effect_types.end());
@@ -112,8 +112,8 @@ static param_descriptor_data const effect_delay_type_data = { { "Dly", "Delay ty
 static param_descriptor_data const effect_dly_synced_data = { { "Sync", "Delay tempo sync" }, param_kind::voice, false };  
 static param_descriptor_data const effect_dly_mix_data = { { "Mix", "Delay mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) }; 
 static param_descriptor_data const effect_dly_amt_data = { { "Amt", "Delay amount" }, "%", param_kind::continuous, percentage_01_bounds(0.25f) };
-static param_descriptor_data const effect_dly_multi_hold_time_data = { { "Hold", "Multi dly hold time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_multi_hold_min_time_sec, effect_dly_multi_hold_max_time_sec, "0", 3) };
-static param_descriptor_data const effect_dly_multi_hold_tempo_data = { { "Hold", "Multi dly hold tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_multi_hold_timesig_names, "0" } };
+static param_descriptor_data const effect_dly_hold_time_data = { { "Hold", "Delay hold time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_hold_min_time_sec, effect_dly_hold_max_time_sec, "0", 3) };
+static param_descriptor_data const effect_dly_hold_tempo_data = { { "Hold", "Delay hold tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_hold_timesig_names, "0" } };
 static param_descriptor_data const effect_dly_fdbk_sprd_data = { { "Sprd", "Fbdk dly spread" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
 static param_descriptor_data const effect_dly_multi_sprd_data = { { "Sprd", "Multi dly sprd" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) };
 static param_descriptor_data const effect_dly_fdbk_time_l_data = { { "L", "Fbdk dly time L" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
@@ -177,8 +177,8 @@ geffect_params[effect_param::gfx_count] =
   { "{02064D73-819F-4F19-B048-477C3AE810EE}", effect_dly_synced_data },
   { "{4B7E75E7-152D-4646-806C-8DA3587458EF}", effect_dly_mix_data },
   { "{681460BC-F34E-4D26-9A5F-DE36D78B0EC1}", effect_dly_amt_data },
-  { "{CAEA463C-F990-41D8-B9B6-3097D2A20CE1}", effect_dly_multi_hold_time_data },
-  { "{B8302415-EB6C-42D8-AA0B-9838E02CB6A2}", effect_dly_multi_hold_tempo_data },
+  { "{CAEA463C-F990-41D8-B9B6-3097D2A20CE1}", effect_dly_hold_time_data },
+  { "{B8302415-EB6C-42D8-AA0B-9838E02CB6A2}", effect_dly_hold_tempo_data },
   { "{A4CBA645-C23D-4372-90CA-8E9419601485}", effect_dly_fdbk_sprd_data },
   { "{983FB1AE-E7F3-4FD5-B904-C383E68402E3}", effect_dly_multi_sprd_data },
   { "{979FCE21-44D4-4CE3-88F6-04A27D14D19A}", effect_dly_fdbk_time_l_data },
