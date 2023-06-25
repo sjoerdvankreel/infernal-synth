@@ -49,3 +49,4 @@
 - do gcc build nonetheless
 - check all presets in all hosts
 - fix the renoise demos automation data
+- fix renoise repaint blackscreen
