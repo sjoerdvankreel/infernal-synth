@@ -21,7 +21,7 @@ public effect_graph_base
   void process_shaper_spectrum(base::block_input const& input, float* output, float sample_rate);
 
 public:
-  effect_graph2(base::topology_info const* topology, base::part_id id);
+  effect_graph2(base::topology_info const* topology, base::part_id id, std::vector<float>* raw_data_storage);
 
   bool bipolar(base::param_value const* state) const override;
   float opacity(base::param_value const* state) const override;
@@ -45,8 +45,8 @@ effect_graph2::transform_param(std::int32_t rt_index, base::param_value value) c
 { return _graph1.transform_param(rt_index, value); }
 
 inline effect_graph2::
-effect_graph2(base::topology_info const* topology, base::part_id id) :
-effect_graph_base(topology, id), _fft(), _graph1(topology, id), _analyzer() {}
+effect_graph2(base::topology_info const* topology, base::part_id id, std::vector<float>* raw_data_storage) :
+effect_graph_base(topology, id, raw_data_storage), _fft(), _graph1(topology, id, raw_data_storage), _analyzer() {}
 
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_GRAPH2_HPP

@@ -53,7 +53,7 @@ graph_processor*
 inf_graph_plot::processor()
 {
   if (_processor) return _processor.get();
-  _processor = _controller->topology()->create_graph_processor(_part_id, _graph_type);
+  _processor = _controller->topology()->create_graph_processor(_part_id, _graph_type, _controller->raw_graph_storage());
   return _processor.get();
 }
 

@@ -28,38 +28,38 @@ synth_topology::create_audio_processor(
 { return std::make_unique<synth_processor>(this, state, changed, sample_rate, max_sample_count); }
 
 std::unique_ptr<base::graph_processor>
-synth_topology::create_graph_processor_effect(base::part_id id, std::int32_t graph_type) const
+synth_topology::create_graph_processor_effect(base::part_id id, std::int32_t graph_type, std::vector<float>* raw_graph_storage) const
 {
   switch (graph_type)
   {
-  case effect_graph::graph1: return std::make_unique<effect_graph1>(this, id);
-  case effect_graph::graph2: return std::make_unique<effect_graph2>(this, id);
+  case effect_graph::graph1: return std::make_unique<effect_graph1>(this, id, raw_graph_storage);
+  case effect_graph::graph2: return std::make_unique<effect_graph2>(this, id, raw_graph_storage);
   default: assert(false); return nullptr;
   }
 }
 
 std::unique_ptr<base::graph_processor>
-synth_topology::create_graph_processor_oscillator(base::part_id id, std::int32_t graph_type) const
+synth_topology::create_graph_processor_oscillator(base::part_id id, std::int32_t graph_type, std::vector<float>* raw_graph_storage) const
 {
   switch (graph_type)
   {
-  case osc_graph::left: return std::make_unique<oscillator_wave_graph>(this, id, false);
-  case osc_graph::right: return std::make_unique<oscillator_wave_graph>(this, id, true);
-  case osc_graph::spectrum: return std::make_unique<oscillator_spectrum_graph>(this, id);
+  case osc_graph::left: return std::make_unique<oscillator_wave_graph>(this, id, false, raw_graph_storage);
+  case osc_graph::right: return std::make_unique<oscillator_wave_graph>(this, id, true, raw_graph_storage);
+  case osc_graph::spectrum: return std::make_unique<oscillator_spectrum_graph>(this, id, raw_graph_storage);
   default: assert(false); return nullptr;
   }
 }
  
 std::unique_ptr<graph_processor>
-synth_topology::create_graph_processor(part_id id, std::int32_t graph_type) const
+synth_topology::create_graph_processor(part_id id, std::int32_t graph_type, std::vector<float>* raw_graph_storage) const
 { 
   switch (id.type)
   {
-  case part_type::venv: return std::make_unique<envelope_graph>(this, id);
-  case part_type::vosc: return create_graph_processor_oscillator(id, graph_type);
-  case part_type::vlfo: case part_type::glfo: return std::make_unique<lfo_graph>(this, id);
-  case part_type::vcv_plot: case part_type::gcv_plot: return std::make_unique<cv_bank_graph>(this, id);
-  case part_type::veffect: case part_type::geffect: return create_graph_processor_effect(id, graph_type);
+  case part_type::venv: return std::make_unique<envelope_graph>(this, id, raw_graph_storage);
+  case part_type::vosc: return create_graph_processor_oscillator(id, graph_type, raw_graph_storage);
+  case part_type::vlfo: case part_type::glfo: return std::make_unique<lfo_graph>(this, id, raw_graph_storage);
+  case part_type::vcv_plot: case part_type::gcv_plot: return std::make_unique<cv_bank_graph>(this, id, raw_graph_storage);
+  case part_type::veffect: case part_type::geffect: return create_graph_processor_effect(id, graph_type, raw_graph_storage);
   default: assert(false); return nullptr;
   }
 }

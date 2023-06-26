@@ -13,12 +13,12 @@ graph_processor::plot(param_value const* state,
   _plot_data.clear();
   _graph_data.clear();
   process_dsp(state, sample_rate);
-  if(_raw_data.size() == 0) return _graph_data;
+  if(_raw_data_storage->size() == 0) return _graph_data;
   
   graph_plot_input input;
   input.state = state;
-  input.dsp_output = &_raw_data;
   input.sample_rate = sample_rate;
+  input.dsp_output = _raw_data_storage;
   dsp_to_plot(input, _plot_data);
   float transform = width / static_cast<float>(_plot_data.size());
   for (std::size_t i = 0; i < _plot_data.size(); i++)
@@ -30,11 +30,11 @@ graph_processor::plot(param_value const* state,
 std::vector<float> const&
 graph_processor::process_dsp(param_value const* state, float sample_rate)
 {
-  _raw_data.clear();
+  _raw_data_storage->clear();
   _continuous_automation_buffer.clear();
   std::int32_t samples = sample_count(state, sample_rate);
-  _raw_data.resize(samples);
-  if (samples == 0) return _raw_data;
+  _raw_data_storage->resize(samples);
+  if (samples == 0) return *_raw_data_storage;
     
   _continuous_automation_buffer.reserve(samples * topology()->continuous_param_count);
   for (std::int32_t p = 0; p < topology()->input_param_count; p++)
@@ -69,9 +69,9 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
 
   // This produces the graph specific dsp data.
   std::uint64_t denormal_state = disable_denormals();
-  process_dsp_core(input, _raw_data.data(), sample_rate);
+  process_dsp_core(input, _raw_data_storage->data(), sample_rate);
   restore_denormals(denormal_state);
-  return _raw_data;
+  return *_raw_data_storage;
 }
 
 } // namespace inf::base

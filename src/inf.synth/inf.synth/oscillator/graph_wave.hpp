@@ -24,20 +24,18 @@ public inf::base::graph_processor
   std::array<std::vector<float>, inf::base::stereo_channels> _audio_out;
 
 public:
-  oscillator_wave_graph(base::topology_info const* topology, base::part_id id, bool right);
-
-public:
   bool needs_repaint(std::int32_t runtime_param) const override;
   bool bipolar(base::param_value const* state) const override { return true; }
   void dsp_to_plot(base::graph_plot_input const& input, std::vector<float>& plot) override;
   std::int32_t sample_count(base::param_value const* state, float sample_rate) const override;
   void process_dsp_core(base::block_input const& input, float* output, float sample_rate) override;
   base::param_value transform_param(std::int32_t rt_index, base::param_value value) const override;
+  oscillator_wave_graph(base::topology_info const* topology, base::part_id id, bool right, std::vector<float>* raw_data_storage);
 };
 
 inline oscillator_wave_graph::
-oscillator_wave_graph(base::topology_info const* topology, base::part_id id, bool right) :
-graph_processor(topology, id), _right(right), 
+oscillator_wave_graph(base::topology_info const* topology, base::part_id id, bool right, std::vector<float>* raw_data_storage) :
+graph_processor(topology, id, raw_data_storage), _right(right),
 _port(), _vosc_out(), _vosc_reset_pos(), _vosc_reset(), _audio_out() {}
 
 inline base::param_value oscillator_wave_graph::
