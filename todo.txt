@@ -49,4 +49,3 @@
 - do gcc build nonetheless
 - check all presets in all hosts
 - add the fx demo to website
-- reduce memory usage

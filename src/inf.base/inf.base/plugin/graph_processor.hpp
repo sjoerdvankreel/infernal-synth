@@ -20,12 +20,6 @@ class graph_processor
   std::vector<graph_point> _graph_data;
   std::vector<base::param_value> _state_copy;
 
-  // Of size parameter count (so nullptr at block parameter indices).
-  std::vector<float*> _continuous_automation;
-  // Of size continuous parameter count * max sample count, 
-  // so does NOT align with total parameter count.
-  std::vector<float> _continuous_automation_buffer;
-
   // Do the full dsp stuff without transforming to plot.
   std::vector<float> const& process_dsp(param_value const* state, float sample_rate);
 
@@ -63,8 +57,7 @@ public:
 inline graph_processor::
 graph_processor(topology_info const* topology, part_id id):
 _id(id), _topology(topology), _raw_data(), _plot_data(),
-_graph_data(), _state_copy(topology->params.size()), 
-_continuous_automation(topology->input_param_count), _continuous_automation_buffer() {}
+_graph_data(), _state_copy(topology->params.size()) {}
 
 } // namespace inf::base
 #endif // INF_BASE_PLUGIN_GRAPH_PROCESSOR_HPP
