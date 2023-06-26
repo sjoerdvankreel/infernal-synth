@@ -36,6 +36,7 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
   _raw_data.resize(samples);
   if (samples == 0) return _raw_data;
     
+#ifdef NDEBUG // too slow for debug
   _continuous_automation_buffer.reserve(samples * topology()->continuous_param_count);
   for (std::int32_t p = 0; p < topology()->input_param_count; p++)
   {
@@ -48,6 +49,9 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
       for (std::int32_t s = 0; s < samples; s++)
         _continuous_automation_buffer.push_back(transform_param(p, state[p]).real);
   }
+#else
+  _continuous_automation_buffer.resize(samples * topology()->continuous_param_count);
+#endif
 
   std::int32_t continuous = 0;
   for (std::int32_t p = 0; p < topology()->input_param_count; p++)
@@ -69,7 +73,9 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
 
   // This produces the graph specific dsp data.
   std::uint64_t denormal_state = disable_denormals();
+#ifdef NDEBUG // too slow for debug
   process_dsp_core(input, _raw_data.data(), sample_rate);
+#endif // NDEBUG
   restore_denormals(denormal_state);
   return _raw_data;
 }
