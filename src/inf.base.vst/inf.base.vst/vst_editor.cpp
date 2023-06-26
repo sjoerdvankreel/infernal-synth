@@ -19,7 +19,7 @@ EditorView(controller), _controller(controller)
 tresult PLUGIN_API
 vst_editor::removed()
 {
-  if (_wrapper_ui) _wrapper_ui->removeFromDesktop();
+  if(_plugin_ui && _plugin_ui->component()) _plugin_ui->component()->removeFromDesktop();
   _plugin_ui.reset();
   return EditorView::removed();
 }
@@ -27,11 +27,11 @@ vst_editor::removed()
 tresult PLUGIN_API
 vst_editor::getSize(ViewRect* new_size)
 {
-  if(!_wrapper_ui) return EditorView::getSize(new_size);
+  if(!_plugin_ui || !_plugin_ui->component()) return EditorView::getSize(new_size);
   new_size->top = rect.top;
   new_size->left = rect.left;
-  new_size->right = rect.left + _wrapper_ui->getWidth();
-  new_size->bottom = rect.top + _wrapper_ui->getHeight();
+  new_size->right = rect.left + _plugin_ui->component()->getWidth();
+  new_size->bottom = rect.top + _plugin_ui->component()->getHeight();
   return kResultTrue;
 }
 
@@ -43,23 +43,10 @@ vst_editor::attached(void* parent, FIDString type)
   auto ui_size_names = _controller->ui_size_names();
   auto found = std::find(ui_size_names.begin(), ui_size_names.end(), _controller->get_ui_size());
   if(found == ui_size_names.end())
-    _controller->editor_current_width(_controller->editor_min_width());
+    recreate_ui(_controller->editor_min_width(), parent);
   else
-    _controller->editor_current_width(plugin_editor_width(_controller, static_cast<std::int32_t>(found - ui_size_names.begin())));
-  if(_wrapper_ui) _wrapper_ui->removeAllChildren();
-  _plugin_ui = create_ui();
-  _plugin_ui->build();
-  _plugin_ui->layout();
-  if(!_wrapper_ui)
-  {
-    _wrapper_ui.reset(new wrapper_component);
-    _wrapper_ui->setOpaque(true);
-    _wrapper_ui->addToDesktop(0, (void*)parent);
-  }
-  _wrapper_ui->setVisible(true);
-  _wrapper_ui->setSize(_plugin_ui->component()->getWidth(), _plugin_ui->component()->getHeight());
-  _wrapper_ui->addChildComponent(*_plugin_ui->component());
-  ViewRect vr(0, 0, _wrapper_ui->getWidth(), _wrapper_ui->getHeight());
+    recreate_ui(plugin_editor_width(_controller, static_cast<std::int32_t>(found - ui_size_names.begin())), parent);
+  ViewRect vr(0, 0, _plugin_ui->component()->getWidth(), _plugin_ui->component()->getHeight());
   setRect(vr);
   plugFrame->resizeView(this, &vr);
   return EditorView::attached(parent, type);
@@ -68,20 +55,26 @@ vst_editor::attached(void* parent, FIDString type)
 tresult PLUGIN_API
 vst_editor::onSize(ViewRect* new_size)
 {
-  if (!_wrapper_ui || !new_size
+  if (!_plugin_ui || !_plugin_ui->component() || !new_size
     || (new_size->left == rect.left && new_size->right == rect.right 
     && new_size->top == rect.top && new_size->bottom == rect.bottom))
     return EditorView::onSize(new_size);
-  std::int32_t w = new_size->getWidth();
-  std::int32_t h = static_cast<std::int32_t>(w / _controller->editor_aspect_ratio());
-  _wrapper_ui->removeAllChildren();
-  _controller->editor_current_width(new_size->getWidth());
+  recreate_ui(new_size->getWidth(), systemWindow);
+  return EditorView::onSize(new_size);
+}
+
+void 
+vst_editor::recreate_ui(std::int32_t width, void* parent)
+{
+  if(_plugin_ui && _plugin_ui->component())
+    _plugin_ui->component()->removeFromDesktop();
+  _controller->editor_current_width(width);
   _plugin_ui = create_ui();
   _plugin_ui->build();
   _plugin_ui->layout();
-  _wrapper_ui->addChildComponent(*_plugin_ui->component());
-  _wrapper_ui->setSize(w, h);
-  return EditorView::onSize(new_size);
+  _plugin_ui->component()->setOpaque(true);
+  _plugin_ui->component()->addToDesktop(0, parent);
+  _plugin_ui->component()->setVisible(true);
 }
 
 tresult PLUGIN_API

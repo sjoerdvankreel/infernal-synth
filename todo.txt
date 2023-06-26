@@ -48,5 +48,5 @@
 - manual + automation test all controls
 - do gcc build nonetheless
 - check all presets in all hosts
-- fix renoise repaint blackscreen
 - add the fx demo to website
+- reduce memory usage

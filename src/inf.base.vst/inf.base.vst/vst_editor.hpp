@@ -10,14 +10,6 @@ namespace inf::base::vst {
 
 class vst_controller;
 
-// Just for visual debugging.
-class wrapper_component :
-public juce::Component
-{
-public:
-  void paint(juce::Graphics& g) override { g.fillAll(juce::Colours::red); }
-};
-
 class vst_editor: 
 public Steinberg::Vst::EditorView
 {
@@ -26,8 +18,9 @@ public Steinberg::Vst::EditorView
   using FIDString = Steinberg::FIDString;
 
   vst_controller* const _controller;
-  std::unique_ptr<wrapper_component> _wrapper_ui = {};
   std::unique_ptr<inf::base::ui::root_element> _plugin_ui = {};
+
+  void recreate_ui(std::int32_t width, void* parent);
 
 protected:
   explicit vst_editor(vst_controller* controller);
@@ -43,7 +36,7 @@ public:
 
   void set_width(std::int32_t width);
   Steinberg::tresult PLUGIN_API canResize() override { return Steinberg::kResultFalse; }
-  void* current_window() const { return _wrapper_ui.get() == nullptr? nullptr: _wrapper_ui.get(); }
+  void* current_window() const { return _plugin_ui? _plugin_ui->component(): nullptr ; }
 };
 
 } // namespace inf::base::vst
