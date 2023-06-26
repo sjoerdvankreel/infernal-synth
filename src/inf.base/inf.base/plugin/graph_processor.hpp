@@ -15,10 +15,10 @@ class graph_processor
   base::part_id const _id;
   topology_info const* const _topology;
 
+  std::vector<float> _raw_data;
   std::vector<float> _plot_data;
   std::vector<graph_point> _graph_data;
   std::vector<base::param_value> _state_copy;
-  std::vector<float>* const _raw_data_storage;
 
   // Of size parameter count (so nullptr at block parameter indices).
   std::vector<float*> _continuous_automation;
@@ -30,7 +30,7 @@ class graph_processor
   std::vector<float> const& process_dsp(param_value const* state, float sample_rate);
 
 protected:
-  graph_processor(topology_info const* topology, part_id id, std::vector<float>* raw_data_storage);
+  graph_processor(topology_info const* topology, part_id id);
 
 public:
   virtual ~graph_processor() {}
@@ -61,9 +61,9 @@ public:
 };
 
 inline graph_processor::
-graph_processor(topology_info const* topology, part_id id, std::vector<float>* raw_data_storage):
-_id(id), _topology(topology), _plot_data(),
-_graph_data(), _state_copy(topology->params.size()), _raw_data_storage(raw_data_storage),
+graph_processor(topology_info const* topology, part_id id):
+_id(id), _topology(topology), _raw_data(), _plot_data(),
+_graph_data(), _state_copy(topology->params.size()), 
 _continuous_automation(topology->input_param_count), _continuous_automation_buffer() {}
 
 } // namespace inf::base

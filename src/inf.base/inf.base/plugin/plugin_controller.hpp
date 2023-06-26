@@ -49,7 +49,6 @@ class plugin_controller
   static inline std::string const last_directory_key = "last_directory";
 
 protected:
-  std::vector<float> _raw_graph_storage;
   std::vector<inf::base::param_value> _state;
   std::map<std::string, std::string> _meta_data;
   std::unique_ptr<inf::base::topology_info> _topology;
@@ -66,7 +65,6 @@ protected:
 
 public:
   std::map<std::string, std::string>& meta_data();
-  std::vector<float>* raw_graph_storage() { return &_raw_graph_storage; }
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
 

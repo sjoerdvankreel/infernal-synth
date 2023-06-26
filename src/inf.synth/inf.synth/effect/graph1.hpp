@@ -22,8 +22,8 @@ public effect_graph_base
   std::int32_t sample_count_filter(base::param_value const* state, float sample_rate) const;
 
 public:
+  effect_graph1(base::topology_info const* topology, base::part_id id);
   void process_dsp_lr(base::block_input const& input, float sample_rate, float* output_lr[2]);
-  effect_graph1(base::topology_info const* topology, base::part_id id, std::vector<float>* raw_data_storage);
 
   float opacity(base::param_value const* state) const override;
   bool needs_repaint(std::int32_t runtime_param) const override;
@@ -35,8 +35,8 @@ public:
 };
 
 inline effect_graph1::
-effect_graph1(base::topology_info const* topology, base::part_id id, std::vector<float>* raw_data_storage) :
-effect_graph_base(topology, id, raw_data_storage) {}
+effect_graph1(base::topology_info const* topology, base::part_id id) :
+effect_graph_base(topology, id) {}
 
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_GRAPH1_HPP

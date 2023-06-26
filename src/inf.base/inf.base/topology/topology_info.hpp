@@ -107,9 +107,10 @@ struct topology_info
   virtual bool is_instrument() const = 0;
 
   virtual std::unique_ptr<graph_processor>
-  create_graph_processor(part_id id, std::int32_t graph_type, std::vector<float>* raw_graph_storage) const = 0;
+  create_graph_processor(part_id id, std::int32_t graph_type) const = 0;
   virtual std::unique_ptr<audio_processor>
-  create_audio_processor(param_value* state, std::int32_t* changed, float sample_rate, std::int32_t max_sample_count) const = 0;
+    create_audio_processor(param_value* state, std::int32_t* changed,
+      float sample_rate, std::int32_t max_sample_count) const = 0;
 
   param_value ui_to_base_value(std::int32_t param_index, param_value ui_value) const;
   param_value base_to_ui_value(std::int32_t param_index, param_value base_value) const;
