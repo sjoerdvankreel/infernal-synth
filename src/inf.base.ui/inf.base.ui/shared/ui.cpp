@@ -837,6 +837,9 @@ show_ok_box(
     state->window->exitModalState();
     state->content->component()->setLookAndFeel(nullptr);
     state->window->setLookAndFeel(nullptr);
+    // Need to reset before deleting the LNF.
+    state->content.reset();
+    state->window.reset();
     delete state; }), 1, 1);
   run_dialog_box(state, 180, 60);
 }
@@ -860,6 +863,8 @@ save_preset_file(
     }
     state->box->exitModalState();
     state->box->setLookAndFeel(nullptr);
+    // Need to reset before deleting the LNF.
+    state->box.reset();
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
@@ -884,6 +889,8 @@ load_preset_file(
     }
     state->box->exitModalState();
     state->box->setLookAndFeel(nullptr);
+    // Need to reset before deleting the LNF.
+    state->box.reset();
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
@@ -910,11 +917,17 @@ show_confirm_box(
     state->confirmed(state->controller);
     state->content->component()->setLookAndFeel(nullptr);
     state->window->setLookAndFeel(nullptr);
+    // Need to reset before deleting the LNF.
+    state->content.reset();
+    state->window.reset();
     delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
     state->window->exitModalState();
     state->cancelled();
     state->window->setLookAndFeel(nullptr);
+    // Need to reset before deleting the LNF.
+    state->content.reset();
+    state->window.reset();
     delete state; }), 2, 1);
   run_dialog_box(state, 180, 90);
 }
