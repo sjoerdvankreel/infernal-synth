@@ -15,9 +15,17 @@ namespace inf::base::ui {
 
 struct dialog_box_state
 {
-  std::unique_ptr<AlertWindow> window;
-  std::unique_ptr<grid_element> content;
+  // mind order of destruction
   std::unique_ptr<inf_look_and_feel> lnf;
+  std::unique_ptr<grid_element> content;
+  std::unique_ptr<AlertWindow> window;
+  
+  virtual ~dialog_box_state() 
+  {
+    if(content) content->set_lnf(nullptr);
+    if(content->component()) content->component()->setLookAndFeel(nullptr);
+    if (window) window->setLookAndFeel(nullptr);
+  }
 };
 
 struct confirm_box_state:
@@ -30,11 +38,13 @@ public dialog_box_state
 
 struct file_box_state
 {
-  std::unique_ptr<inf_look_and_feel> lnf;
+  // mind order of destruction
   inf::base::plugin_controller* controller;
-  std::unique_ptr<WildcardFileFilter> filter;
+  std::unique_ptr<inf_look_and_feel> lnf;
   std::unique_ptr<inf_file_chooser_dialog> box;
+  std::unique_ptr<WildcardFileFilter> filter;
   std::unique_ptr<FileBrowserComponent> browser;
+  virtual ~file_box_state() { if (box) box->setLookAndFeel(nullptr); }
 };
 
 struct dropdown_tree
@@ -835,11 +845,6 @@ show_ok_box(
   state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
-    state->content->component()->setLookAndFeel(nullptr);
-    state->window->setLookAndFeel(nullptr);
-    // Need to reset before deleting the LNF.
-    state->content.reset();
-    state->window.reset();
     delete state; }), 1, 1);
   run_dialog_box(state, 180, 60);
 }
@@ -862,9 +867,6 @@ save_preset_file(
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
     state->box->exitModalState();
-    state->box->setLookAndFeel(nullptr);
-    // Need to reset before deleting the LNF.
-    state->box.reset();
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
@@ -888,9 +890,6 @@ load_preset_file(
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
     state->box->exitModalState();
-    state->box->setLookAndFeel(nullptr);
-    // Need to reset before deleting the LNF.
-    state->box.reset();
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
@@ -915,19 +914,10 @@ show_confirm_box(
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
     state->confirmed(state->controller);
-    state->content->component()->setLookAndFeel(nullptr);
-    state->window->setLookAndFeel(nullptr);
-    // Need to reset before deleting the LNF.
-    state->content.reset();
-    state->window.reset();
     delete state; }), 2, 0);
   state->content->add_cell(create_button_ui(controller, "Cancel", Justification::centred, [state]() {
     state->window->exitModalState();
     state->cancelled();
-    state->window->setLookAndFeel(nullptr);
-    // Need to reset before deleting the LNF.
-    state->content.reset();
-    state->window.reset();
     delete state; }), 2, 1);
   run_dialog_box(state, 180, 90);
 }
