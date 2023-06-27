@@ -481,7 +481,10 @@ param_edit_element::build_slider_core(LookAndFeel& lnf)
   }
   else
   {
-    result->setRange(desc.data.discrete.min, desc.data.discrete.effective_max(part_index), 1.0);
+    // Juce freaks out if min==max. Just set to full range on the assumption that the slider will be disabled anyway.
+    std::int32_t effective_max = desc.data.discrete.effective_max(part_index);
+    std::int32_t max = effective_max == desc.data.discrete.min? desc.data.discrete.max: effective_max;
+    result->setRange(desc.data.discrete.min, max, 1.0);
     result->setValue(controller()->state()[index].discrete, dontSendNotification);
     result->setDoubleClickReturnValue(true, default_value.discrete, ModifierKeys::noModifiers);
   }
