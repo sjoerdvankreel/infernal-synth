@@ -70,6 +70,8 @@ protected:
   ui_element(inf::base::plugin_controller* controller) : _controller(controller) {}
 public:
   virtual void layout() = 0;
+  virtual ~ui_element() { if(_component) _component->setLookAndFeel(nullptr); }
+
   juce::Component* build(juce::LookAndFeel* lnf);
   inf_look_and_feel* get_lnf() const { return _lnf.get(); }
   juce::Component* component() { return _component.get(); }

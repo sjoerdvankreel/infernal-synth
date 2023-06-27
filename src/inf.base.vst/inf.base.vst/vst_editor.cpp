@@ -67,7 +67,11 @@ void
 vst_editor::recreate_ui(std::int32_t width, void* parent)
 {
   if(_plugin_ui && _plugin_ui->component())
+  {
+    _plugin_ui->component()->setLookAndFeel(nullptr);
     _plugin_ui->component()->removeFromDesktop();
+    _plugin_ui.reset();
+  }
   _controller->editor_current_width(width);
   _plugin_ui = create_ui();
   _plugin_ui->build();
