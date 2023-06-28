@@ -16,6 +16,7 @@ public juce::ToggleButton
 public:
   bool force_on() const { return _force_on; }
   void mouseUp(juce::MouseEvent const& e) override;
+  void mouseDown(juce::MouseEvent const& e) override;
 
   inf_toggle_button(base::plugin_controller* controller, std::int32_t param_index, bool force_on):
   juce::ToggleButton(), _force_on(force_on), _param_index(param_index), _controller(controller) {}

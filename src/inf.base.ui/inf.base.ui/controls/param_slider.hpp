@@ -17,9 +17,11 @@ private:
   std::int32_t const _param_index;
   base::plugin_controller* const _controller;
 public:
+  void mouseUp(juce::MouseEvent const& e) override;
+  void mouseDown(juce::MouseEvent const& e) override;
+
   edit_type type() const { return _type; }
   std::int32_t param_index() const { return _param_index; }
-  void mouseUp(juce::MouseEvent const& e) override;
 
   inf_param_slider(base::plugin_controller* controller, std::int32_t param_index, edit_type type):
   _type(type), _param_index(param_index), _controller(controller) {}
