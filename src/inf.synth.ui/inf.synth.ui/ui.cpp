@@ -714,7 +714,7 @@ create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int3
   else
     grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, graph_id, lfo_param::on)), 3, 0, 2, 7);
   return grid;
-}        
+}         
 
 static std::unique_ptr<ui_element>
 create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, std::int32_t selector_param_index)
