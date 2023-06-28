@@ -47,7 +47,7 @@ public:
   virtual ~host_context_menu() = 0 {};
   virtual std::int32_t item_count() const = 0;
   virtual void item_clicked(std::int32_t index) = 0;
-  virtual std::string item_name(std::int32_t index) const = 0;
+  virtual void get_item(std::int32_t index, std::string& name, bool& enabled, bool& checked) const = 0;
 };
 
 // Controller base interface.

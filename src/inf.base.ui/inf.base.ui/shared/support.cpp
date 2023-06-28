@@ -16,7 +16,13 @@ show_host_menu_for_param(base::plugin_controller* controller, std::int32_t param
   menu.setLookAndFeel(lnf);
   auto host_menu = controller->host_menu_for_param_index(param_index);
   for (std::int32_t i = 0; i < host_menu->item_count(); i++)
-    menu.addItem(i + 1, host_menu->item_name(i));
+  {
+    bool enabled;
+    bool checked;
+    std::string name;
+    host_menu->get_item(i, name, enabled, checked);
+    menu.addItem(i + 1, name, enabled, checked);
+  }
   menu.showMenuAsync(PopupMenu::Options(), [host_menu = host_menu.release()](int option) {
     if (option != 0) host_menu->item_clicked(option - 1);
     delete host_menu;
