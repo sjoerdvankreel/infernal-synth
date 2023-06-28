@@ -11,10 +11,17 @@ namespace inf::base::ui {
 
 inf_look_and_feel::
 inf_look_and_feel(
-  inf::base::plugin_controller const* controller, 
+  inf::base::plugin_controller* controller, 
   std::vector<std::string> theme_color_sections):
 _controller(controller)
 {
+  File file(File::getSpecialLocation(File::currentExecutableFile));
+  auto current_theme = controller->get_theme();
+  auto themes = controller->themes(file.getFullPathName().toStdString());
+  auto current_path = controller->default_theme_path(file.getFullPathName().toStdString());
+  for(std::size_t i = 0; i < themes.size(); i++)
+    if(themes[i].name == current_theme)
+      current_path = themes[i].path;
 }
 
 juce::Colour

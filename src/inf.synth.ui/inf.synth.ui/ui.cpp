@@ -18,15 +18,15 @@ namespace inf::synth::ui {
 
 static std::unique_ptr<inf_look_and_feel>
 create_root_lnf(plugin_controller* controller)
-{ return std::make_unique<inf_look_and_feel>(controller, { std::string("root") }); }
+{ return std::make_unique<inf_look_and_feel>(controller, std::vector<std::string>({ std::string("root") })); }
 
 static std::unique_ptr<inf_look_and_feel>
 create_cv_lnf(plugin_controller* controller)
-{ return std::make_unique<inf_look_and_feel>(controller, { std::string("root"), std::string("cv") }); }
+{ return std::make_unique<inf_look_and_feel>(controller, std::vector<std::string>({ std::string("root"), std::string("cv") })); }
 
 static std::unique_ptr<inf_look_and_feel>
 create_audio_lnf(plugin_controller* controller)
-{ return std::make_unique<inf_look_and_feel>(controller, { std::string("root"), std::string("audio") }); }
+{ return std::make_unique<inf_look_and_feel>(controller, std::vector<std::string>({ std::string("root"), std::string("audio") })); }
 
 static icon_type
 icon_for_osc_basic_type(std::int32_t value)

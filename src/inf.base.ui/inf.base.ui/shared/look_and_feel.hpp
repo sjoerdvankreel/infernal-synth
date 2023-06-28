@@ -12,7 +12,7 @@ namespace inf::base::ui {
 class inf_look_and_feel:
 public juce::LookAndFeel_V4
 {
-  inf::base::plugin_controller const* const _controller;
+  inf::base::plugin_controller* const _controller;
 
   void draw_popup_base(
     juce::Graphics& g, int w0, int h0, bool isButtonDown,
@@ -157,7 +157,7 @@ public:
   };
 
   inf_look_and_feel(
-    inf::base::plugin_controller const* controller, 
+    inf::base::plugin_controller* controller, 
     std::vector<std::string> theme_color_sections);
 
   // Shared paint routines.
