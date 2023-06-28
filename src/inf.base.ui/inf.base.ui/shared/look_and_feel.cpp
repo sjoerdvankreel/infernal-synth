@@ -171,8 +171,9 @@ _controller(controller)
 void
 inf_look_and_feel::try_load_theme_color(std::int32_t color, juce::var const& colors, char const* name)
 {  
-//  std::string text = value.toString().toStdString();
-  //return juce::Colour(static_cast<std::uint32_t>(std::stoul(text, nullptr, 16)));
+  if(!colors.hasProperty(name)) return;
+  std::string text = colors[name].toString().toStdString();
+  setColour(color, juce::Colour(static_cast<std::uint32_t>(std::stoul(text, nullptr, 16))));
 }
 
 juce::Colour
