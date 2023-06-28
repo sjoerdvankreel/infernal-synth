@@ -131,7 +131,7 @@ std::string
 vst_controller::default_theme_path(std::string const& plugin_file) const
 {
   auto path = std::filesystem::path(plugin_file);
-  return (path.parent_path().parent_path() / "Resources" / "Themes" / "Default").string();
+  return (path.parent_path().parent_path() / "Resources" / "Themes" / "Default Theme").string();
 }
 
 std::vector<inf::base::external_resource> 
