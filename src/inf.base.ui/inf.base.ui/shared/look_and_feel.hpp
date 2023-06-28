@@ -167,8 +167,8 @@ public:
     inf::base::plugin_controller* controller, 
     std::vector<std::string> theme_color_sections);
 
-  juce::Image
-  get_graph_bg_image(std::string const& image_id) { return juce::ImageCache::getFromFile(juce::File(_graph_bg_images[image_id])); }
+  std::string
+  get_graph_bg_image_path(std::string const& image_id) { return _graph_bg_images[image_id]; }
 
   // Shared paint routines.
   void fill_spot_circle(juce::Graphics& g,
