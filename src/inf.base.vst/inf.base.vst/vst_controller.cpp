@@ -270,10 +270,8 @@ vst_controller::host_menu_for_param_index(std::int32_t param_index) const
   if (handler == nullptr) return {};
   if (!_current_editor) return {};
 
-  ParamID tag = 0;
-  ParamID* tag_ptr = &tag;
-  if(param_index >= 0) tag = topology()->param_index_to_id[param_index];
-  Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu(handler->createContextMenu(_current_editor, tag_ptr));
+  ParamID tag = topology()->param_index_to_id[param_index];
+  Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu(handler->createContextMenu(_current_editor, &tag));
   return std::make_unique<vst_host_context_menu>(menu, tag);
 }
 
