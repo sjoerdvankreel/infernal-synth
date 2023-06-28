@@ -522,7 +522,7 @@ param_edit_element::build_slider_core(LookAndFeel& lnf)
 juce::Component* 
 part_graph_element::build_core(juce::LookAndFeel& lnf)
 { 
-  inf_graph_plot* result = new inf_graph_plot(controller(), _part_id, _graph_type); 
+  inf_graph_plot* result = new inf_graph_plot(controller(), _part_id, _graph_type, "C:\\repos\\infernal-synth\\themes\\Infernal Theme\\osc_left.png");
   _listener.reset(new graph_listener(controller(), result, _part_id, _graph_type, _tooltip_param));
   auto const& desc = controller()->topology()->get_part_descriptor(_part_id);
   result->setTooltip(desc.name_selector(controller()->topology(), controller()->state(), _part_id, _graph_type));

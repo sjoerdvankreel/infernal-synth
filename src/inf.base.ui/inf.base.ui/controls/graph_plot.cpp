@@ -42,8 +42,8 @@ inf_graph_plot::
 }
 
 inf_graph_plot::
-inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type) :
-  juce::Component(), _part_id(part_id), _graph_type(graph_type), _controller(controller)
+inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type, std::string const& background_image_path) :
+  juce::Component(), _part_id(part_id), _graph_type(graph_type), _background_image_path(background_image_path), _controller(controller)
 {
   _repaint_timer.plot(this);
   _repaint_timer.startTimer(inf_graph_plot_timer::timeout_millis);
@@ -68,6 +68,17 @@ inf_graph_plot::paint(juce::Graphics& g)
   lnf.fill_gradient_rounded_rectangle(g, *this, bounds, 
     inf_look_and_feel::colors::part_graph_fill_low, 
     inf_look_and_feel::colors::part_graph_fill_high, container_radius, 0.5f);
+
+  // background
+  if (!_background_image_path.empty())
+  {
+    Path clip;
+    clip.addRoundedRectangle(bounds, container_radius);
+    g.saveState();
+    g.reduceClipRegion(clip);
+    g.drawImage(ImageCache::getFromFile(juce::File(_background_image_path)), bounds, RectanglePlacement::fillDestination);
+    g.restoreState();
+  }
 
   // grid
   g.setColour(findColour(inf_look_and_feel::colors::part_graph_grid));

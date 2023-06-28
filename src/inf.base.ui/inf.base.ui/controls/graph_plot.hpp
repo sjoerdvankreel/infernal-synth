@@ -35,8 +35,10 @@ class inf_graph_plot :
 public juce::Component,
 public juce::SettableTooltipClient
 {
+  juce::Image _bg_image;
   part_id const _part_id;
   std::int32_t const _graph_type;
+  std::string const _background_image_path;
   inf_graph_plot_timer _repaint_timer = {};
   inf::base::plugin_controller* const _controller;
   std::unique_ptr<graph_processor> _processor = {};
@@ -47,7 +49,7 @@ public:
   void delayed_repaint_request() { _repaint_timer.delayed_repaint_request(); }
 
   ~inf_graph_plot();
-  inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type);
+  inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type, std::string const& background_image_path);
 };
 
 } // namespace inf::base::ui

@@ -1,4 +1,7 @@
 {
+  "images": {
+    "osc_left": "osc_left.png"
+  },
   "colors": {
     "root": {
       "param_label": "FFD3DEE4",
@@ -114,7 +117,7 @@
       "switch_gradient_fill_center_low": "FF222222",
       "switch_gradient_fill_center_high": "FF999999"
     },
-    "cv": {
+    "audio": {
       "slider_track_low": "FFAE3A25",
       "slider_track_high": "FFDC7562",
       "switch_outline_low": "FFAE3A25",
@@ -141,7 +144,7 @@
       "tab_button_highlight_background_low": "FF3E150D",
       "tab_button_highlight_background_high": "FF5D1F14"
     },
-    "audio": {
+    "cv": {
       "part_group_container_fill_low": "FF0D363E",
       "part_group_container_fill_high": "FF14525D",
       "part_group_container_outline_low": "FF14525D",
