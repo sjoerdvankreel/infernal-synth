@@ -268,10 +268,14 @@ static std::unique_ptr<ui_element>
 create_osc_unison_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto grid = create_grid_ui(controller, 2, 2);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_voices, edit_type::selector, label_type::value, tooltip_type::label), 0, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_dtn, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_sprd, edit_type::knob, label_type::label, tooltip_type::value), 1, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_offset, edit_type::knob, label_type::label, tooltip_type::value), 1, 1);
+  auto voices = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_voices, edit_type::selector, label_type::value, tooltip_type::label), 0, 0);
+  voices->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, false, [](std::int32_t part_index, std::int32_t val) { return val != osc_type::noise; });
+  auto detune = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_dtn, edit_type::knob, label_type::label, tooltip_type::value), 0, 1);
+  detune->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, false, [](std::int32_t part_index, std::int32_t val) { return val != osc_type::noise; });
+  auto spread = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_sprd, edit_type::knob, label_type::label, tooltip_type::value), 1, 0);
+  spread->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, false, [](std::int32_t part_index, std::int32_t val) { return val != osc_type::noise; });
+  auto offset = grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::uni_offset, edit_type::knob, label_type::label, tooltip_type::value), 1, 1);
+  offset->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, false, [](std::int32_t part_index, std::int32_t val) { return val != osc_type::noise; });
   return create_part_group_ui(controller, create_group_label_ui(controller, "Unison", false), std::move(grid));
 }
 
