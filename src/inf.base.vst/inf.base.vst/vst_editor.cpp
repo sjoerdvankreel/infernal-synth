@@ -100,7 +100,10 @@ vst_editor::set_width(std::int32_t width)
     new_rect.bottom = rect.top + static_cast<std::int32_t>(width / _controller->editor_aspect_ratio());
   }
   plugFrame->resizeView(this, &new_rect);
-  onSize(&new_rect);
+  if(width == -1)
+    recreate_ui(new_rect.getWidth(), systemWindow);
+  else 
+    onSize(&new_rect);
   if(width > 0) _controller->editor_current_width(width);
 }
 
