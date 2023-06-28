@@ -4,6 +4,7 @@
 #include <inf.base.ui/controls/selector_bar.hpp>
 #include <inf.base.ui/controls/toggle_button.hpp>
 #include <inf.base.ui/controls/param_dropdown.hpp>
+#include <filesystem>
 
 using namespace juce;
 
@@ -22,6 +23,156 @@ _controller(controller)
   for(std::size_t i = 0; i < themes.size(); i++)
     if(themes[i].name == current_theme)
       current_path = themes[i].path;
+  
+  std::filesystem::path theme_path(current_path);
+  File theme_file((theme_path / std::filesystem::path("theme.json")).c_str());
+  if(!theme_file.exists()) return;  
+  
+  juce::var root;
+  FileInputStream stream(theme_file);
+  String contents(stream.readEntireStreamAsString());
+  Result result(JSON::parse(contents, root));
+  if(!result.wasOk()) return;
+
+  for (std::size_t i = 0; i < theme_color_sections.size(); i++)
+  {
+    juce::var colors = root["colors"][theme_color_sections[i].c_str()];
+
+    try_load_theme_color(colors::param_label, colors, "param_label");
+    try_load_theme_color(colors::part_group_label, colors, "part_group_label");
+    try_load_theme_color(colors::root_background, colors, "root_background");
+
+    try_load_theme_color(colors::icon_stroke_color, colors, "icon_stroke_color");
+    try_load_theme_color(colors::icon_pw_stroke_color, colors, "icon_pw_stroke_color");
+
+    try_load_theme_color(colors::text_edit_text, colors, "text_edit_text");
+    try_load_theme_color(colors::text_edit_outline_low, colors, "text_edit_outline_low");
+    try_load_theme_color(colors::text_edit_outline_high, colors, "text_edit_outline_high");
+    try_load_theme_color(colors::text_edit_background_low, colors, "text_edit_background_low");
+    try_load_theme_color(colors::text_edit_background_high, colors, "text_edit_background_high");
+
+    try_load_theme_color(colors::tooltip_text, colors, "tooltip_text");
+    try_load_theme_color(colors::tooltip_outline_low, colors, "tooltip_outline_low");
+    try_load_theme_color(colors::tooltip_outline_high, colors, "tooltip_outline_high");
+    try_load_theme_color(colors::tooltip_background_low, colors, "tooltip_background_low");
+    try_load_theme_color(colors::tooltip_background_high, colors, "tooltip_background_high");
+
+    try_load_theme_color(colors::dialog_text, colors, "dialog_text");
+    try_load_theme_color(colors::dialog_header_text, colors, "dialog_header_text");
+    try_load_theme_color(colors::dialog_outline_low, colors, "dialog_outline_low");
+    try_load_theme_color(colors::dialog_outline_high, colors, "dialog_outline_high");
+    try_load_theme_color(colors::dialog_background_low, colors, "dialog_background_low");
+    try_load_theme_color(colors::dialog_background_high, colors, "dialog_background_high");
+
+    try_load_theme_color(colors::file_box_title, colors, "file_box_title");
+    try_load_theme_color(colors::file_box_file_text, colors, "file_box_file_text");
+    try_load_theme_color(colors::file_box_background, colors, "file_box_background");
+    try_load_theme_color(colors::file_box_file_background, colors, "file_box_file_background");
+    try_load_theme_color(colors::file_box_label_text, colors, "file_box_label_text");
+    try_load_theme_color(colors::file_box_label_background, colors, "file_box_label_background");
+    try_load_theme_color(colors::file_box_button_text, colors, "file_box_button_text");
+    try_load_theme_color(colors::file_box_button_background, colors, "file_box_button_background");
+    try_load_theme_color(colors::file_box_selector_text, colors, "file_box_selector_text");
+    try_load_theme_color(colors::file_box_selector_highlight, colors, "file_box_selector_highlight");
+    try_load_theme_color(colors::file_box_selector_highlight_text, colors, "file_box_selector_highlight_text");
+
+    try_load_theme_color(colors::selector_label_text, colors, "selector_label_text");
+    try_load_theme_color(colors::selector_label_outline_low, colors, "selector_label_outline_low");
+    try_load_theme_color(colors::selector_label_outline_high, colors, "selector_label_outline_high");
+    try_load_theme_color(colors::selector_label_background_low, colors, "selector_label_background_low");
+    try_load_theme_color(colors::selector_label_background_high, colors, "selector_label_background_high");
+
+    try_load_theme_color(colors::part_graph_grid, colors, "part_graph_grid");
+    try_load_theme_color(colors::part_graph_area, colors, "part_graph_area");
+    try_load_theme_color(colors::part_graph_line, colors, "part_graph_line");
+    try_load_theme_color(colors::part_graph_fill_low, colors, "part_graph_fill_low");
+    try_load_theme_color(colors::part_graph_fill_high, colors, "part_graph_fill_high");
+    try_load_theme_color(colors::part_graph_outline_low, colors, "part_graph_outline_low");
+    try_load_theme_color(colors::part_graph_outline_high, colors, "part_graph_outline_high");
+
+    try_load_theme_color(colors::part_group_container_fill_low, colors, "part_group_container_fill_low");
+    try_load_theme_color(colors::part_group_container_fill_high, colors, "part_group_container_fill_high");
+    try_load_theme_color(colors::part_group_container_outline_low, colors, "part_group_container_outline_low");
+    try_load_theme_color(colors::part_group_container_outline_high, colors, "part_group_container_outline_high");
+
+    try_load_theme_color(colors::button_text, colors, "button_text");
+    try_load_theme_color(colors::button_outline_low, colors, "button_outline_low");
+    try_load_theme_color(colors::button_outline_high, colors, "button_outline_high");
+    try_load_theme_color(colors::button_background_low, colors, "button_background_low");
+    try_load_theme_color(colors::button_background_high, colors, "button_background_high");
+    try_load_theme_color(colors::button_over_background_low, colors, "button_over_background_low");
+    try_load_theme_color(colors::button_over_background_high, colors, "button_over_background_high");
+    try_load_theme_color(colors::button_down_background_low, colors, "button_down_background_low");
+    try_load_theme_color(colors::button_down_background_high, colors, "button_down_background_high");
+
+    try_load_theme_color(colors::tab_button_text, colors, "tab_button_text");
+    try_load_theme_color(colors::tab_button_outline_low, colors, "tab_button_outline_low");
+    try_load_theme_color(colors::tab_button_outline_high, colors, "tab_button_outline_high");
+    try_load_theme_color(colors::tab_button_background_low, colors, "tab_button_background_low");
+    try_load_theme_color(colors::tab_button_background_high, colors, "tab_button_background_high");
+    try_load_theme_color(colors::tab_button_highlight_background_low, colors, "tab_button_highlight_background_low");
+    try_load_theme_color(colors::tab_button_highlight_background_high, colors, "tab_button_highlight_background_high");
+
+    try_load_theme_color(colors::switch_outline_low, colors, "switch_outline_low");
+    try_load_theme_color(colors::switch_outline_high, colors, "switch_outline_high");
+    try_load_theme_color(colors::switch_spot_fill_low, colors, "switch_spot_fill_low");
+    try_load_theme_color(colors::switch_spot_fill_high, colors, "switch_spot_fill_high");
+    try_load_theme_color(colors::switch_gradient_fill_low_on, colors, "switch_gradient_fill_low_on");
+    try_load_theme_color(colors::switch_gradient_fill_center_low, colors, "switch_gradient_fill_center_low");
+    try_load_theme_color(colors::switch_gradient_fill_high_on, colors, "switch_gradient_fill_high_on");
+    try_load_theme_color(colors::switch_gradient_fill_center_high, colors, "switch_gradient_fill_center_high");
+
+    try_load_theme_color(colors::slider_center_fill, colors, "slider_center_fill");
+    try_load_theme_color(colors::slider_track_low, colors, "slider_track_low");
+    try_load_theme_color(colors::slider_track_high, colors, "slider_track_high");
+    try_load_theme_color(colors::slider_track_inactive, colors, "slider_track_inactive");
+    try_load_theme_color(colors::slider_highlight_low, colors, "slider_highlight_low");
+    try_load_theme_color(colors::slider_highlight_high, colors, "slider_highlight_high");
+    try_load_theme_color(colors::slider_spot_fill_low, colors, "slider_spot_fill_low");
+    try_load_theme_color(colors::slider_spot_fill_high, colors, "slider_spot_fill_high");
+    try_load_theme_color(colors::slider_gradient_fill_low, colors, "slider_gradient_fill_low");
+    try_load_theme_color(colors::slider_gradient_fill_high, colors, "slider_gradient_fill_high");
+
+    try_load_theme_color(colors::dropdown_text, colors, "dropdown_text");
+    try_load_theme_color(colors::dropdown_outline_low, colors, "dropdown_outline_low");
+    try_load_theme_color(colors::dropdown_outline_high, colors, "dropdown_outline_high");
+    try_load_theme_color(colors::dropdown_background_low, colors, "dropdown_background_low");
+    try_load_theme_color(colors::dropdown_background_high, colors, "dropdown_background_high");
+    try_load_theme_color(colors::dropdown_tick_spot_fill_low, colors, "dropdown_tick_spot_fill_low");
+    try_load_theme_color(colors::dropdown_tick_spot_fill_high, colors, "dropdown_tick_spot_fill_high");
+    try_load_theme_color(colors::dropdown_tick_gradient_fill_low, colors, "dropdown_tick_gradient_fill_low");
+    try_load_theme_color(colors::dropdown_tick_gradient_fill_high, colors, "dropdown_tick_gradient_fill_high");
+    try_load_theme_color(colors::dropdown_highlight_background_low, colors, "dropdown_highlight_background_low");
+    try_load_theme_color(colors::dropdown_highlight_background_high, colors, "dropdown_highlight_background_high");
+
+    try_load_theme_color(colors::knob_highlight_low, colors, "knob_highlight_low");
+    try_load_theme_color(colors::knob_highlight_high, colors, "knob_highlight_high");
+    try_load_theme_color(colors::knob_outline_low, colors, "knob_outline_low");
+    try_load_theme_color(colors::knob_outline_high, colors, "knob_outline_high");
+    try_load_theme_color(colors::knob_outline_inactive, colors, "knob_outline_inactive");
+    try_load_theme_color(colors::knob_cuts_inward_low, colors, "knob_cuts_inward_low");
+    try_load_theme_color(colors::knob_cuts_outward_low, colors, "knob_cuts_outward_low");
+    try_load_theme_color(colors::knob_cuts_inward_high, colors, "knob_cuts_inward_high");
+    try_load_theme_color(colors::knob_cuts_outward_high, colors, "knob_cuts_outward_high");
+    try_load_theme_color(colors::knob_thumb_inward_low, colors, "knob_thumb_inward_low");
+    try_load_theme_color(colors::knob_thumb_outward_low, colors, "knob_thumb_outward_low");
+
+    try_load_theme_color(colors::knob_thumb_inward_high, colors, "knob_thumb_inward_high");
+    try_load_theme_color(colors::knob_thumb_outward_high, colors, "knob_thumb_outward_high");
+    try_load_theme_color(colors::knob_center_stroke_low, colors, "knob_center_stroke_low");
+    try_load_theme_color(colors::knob_center_stroke_high, colors, "knob_center_stroke_high");
+    try_load_theme_color(colors::knob_spot_fill_low, colors, "knob_spot_fill_low");
+    try_load_theme_color(colors::knob_spot_fill_high, colors, "knob_spot_fill_high");
+    try_load_theme_color(colors::knob_gradient_fill_low, colors, "knob_gradient_fill_low");
+    try_load_theme_color(colors::knob_gradient_fill_high, colors, "knob_gradient_fill_high");
+  }
+}
+
+void
+inf_look_and_feel::try_load_theme_color(std::int32_t color, juce::var const& colors, char const* name)
+{  
+//  std::string text = value.toString().toStdString();
+  //return juce::Colour(static_cast<std::uint32_t>(std::stoul(text, nullptr, 16)));
 }
 
 juce::Colour

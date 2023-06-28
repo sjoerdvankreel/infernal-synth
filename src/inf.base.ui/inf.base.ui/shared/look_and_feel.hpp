@@ -14,10 +14,14 @@ public juce::LookAndFeel_V4
 {
   inf::base::plugin_controller* const _controller;
 
-  void draw_popup_base(
+  void
+  try_load_theme_color(std::int32_t color, juce::var const& colors, char const* name);
+
+  void 
+  draw_popup_base(
     juce::Graphics& g, int w0, int h0, bool isButtonDown,
     int button_x0, int button_y0, int button_w0, int button_h0, juce::ComboBox& cb, float corner_size);
-
+  
   juce::Colour
   with_enabled(juce::Component& component, std::int32_t color_id, bool check_enabled = true, bool extra_dark = false);
 
@@ -26,6 +30,8 @@ public juce::LookAndFeel_V4
     std::int32_t low_color_id, std::int32_t high_color_id, float mid_point, bool check_enabled = true, bool extra_dark = false);
 
 public:
+
+  // Be sure to keep in sync with theme files and theme loading in constructor.
   enum colors {
 
     param_label,
