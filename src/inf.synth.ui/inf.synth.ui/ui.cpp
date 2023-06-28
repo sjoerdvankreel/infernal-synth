@@ -191,9 +191,9 @@ static std::unique_ptr<ui_element>
 create_osc_graph_group(plugin_controller* controller, std::int32_t part_index)
 {
   auto result = create_grid_ui(controller, 3, 1);
-  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::left, osc_param::on), 0, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::spectrum, osc_param::on), 1, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::right, osc_param::on), 2, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::left, "osc_left", osc_param::on), 0, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::spectrum, "osc_spectrum", osc_param::on), 1, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type::vosc, part_index, osc_graph::right, "osc_right", osc_param::on), 2, 0);
   return result;
 }
 
@@ -433,13 +433,15 @@ create_fx_global_reverb_group(plugin_controller* controller, std::int32_t part_i
 static std::unique_ptr<ui_element>
 create_fx_graph_group(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
+  std::string graph1_id = part_type == part_type::veffect ? "veffect_1": "geffect_1";
+  std::string graph2_id = part_type == part_type::veffect ? "veffect_2" : "geffect_2";
   std::int32_t rows = part_type == part_type::veffect ? 1: 2;
   std::int32_t cols = part_type == part_type::veffect ? 2 : 1;
   std::int32_t second_row = part_type == part_type::veffect? 0: 1;
   std::int32_t second_col = part_type == part_type::veffect ? 1 : 0;
   auto result = create_grid_ui(controller, rows, cols);
-  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1, effect_param::type), 0, 0);
-  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2, effect_param::type), second_row, second_col);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph1, graph1_id, effect_param::type), 0, 0);
+  result->add_cell(create_part_graph_ui(controller, part_type, part_index, effect_graph::graph2, graph2_id, effect_param::type), second_row, second_col);
   return result;
 }
 
@@ -577,7 +579,7 @@ create_envelope_grid(plugin_controller* controller, std::int32_t part_index)
     envelope_param::sustain_level, -1, envelope_param::release1_time, envelope_param::release2_time,
     envelope_param::release1_sync, envelope_param::release2_sync, envelope_param::release1_slope, 
     envelope_param::release2_slope, envelope_param::release_split_level)), 1, 5, 2, 2);
-  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0, envelope_param::on)), 0, 2, 1, 5);
+  grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type::venv, part_index, 0, "env", envelope_param::on)), 0, 2, 1, 5);
   return grid;
 }
 
@@ -695,6 +697,7 @@ create_lfo_free_groups(plugin_controller* controller, std::int32_t part_type, st
 static std::unique_ptr<ui_element>
 create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int32_t part_index)
 {
+  std::string graph_id = part_type == part_type::vlfo? "vlfo": "glfo";
   std::int32_t const lfo_cols = part_type == part_type::vlfo ? 3: 6;
   std::int32_t const row_count = part_type == part_type::vlfo? 3: 5;
   auto grid = create_grid_ui(controller, row_count, 7);
@@ -707,9 +710,9 @@ create_lfo_grid(plugin_controller* controller, std::int32_t part_type, std::int3
   auto free = grid->add_cell(create_lfo_free_groups(controller, part_type, part_index), 1, 1, 2, 6);
   free->relevant_if(part_id(part_type, part_index), lfo_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == lfo_type::free; });
   if(part_type == part_type::vlfo)
-    grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 0, 4, 1, 3);
+    grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, graph_id, lfo_param::on)), 0, 4, 1, 3);
   else
-    grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, lfo_param::on)), 3, 0, 2, 7);
+    grid->add_cell(create_part_group_container_ui(controller, create_part_graph_ui(controller, part_type, part_index, 0, graph_id, lfo_param::on)), 3, 0, 2, 7);
   return grid;
 }
 
@@ -809,7 +812,7 @@ static std::unique_ptr<ui_element>
 create_voice_cv_plot_part(plugin_controller* controller)
 {
   auto grid = create_grid_ui(controller, 1, 5);
-  grid->add_cell(create_part_graph_ui(controller, part_type::vcv_plot, 0, 0, cv_plot_param::target), 0, 0, 1, 3);
+  grid->add_cell(create_part_graph_ui(controller, part_type::vcv_plot, 0, 0, "vcv_plot", cv_plot_param::target), 0, 0, 1, 3);
   auto plot_controls = create_voice_cv_plot_controls(controller);
   auto part_ui = create_part_single_ui(controller, "CV Plot", part_type::vcv_plot, false, selector_routing_dir::right_toleft, std::move(plot_controls));
   grid->add_cell(std::move(part_ui), 0, 3, 1, 2);
@@ -914,7 +917,7 @@ create_global_cv_plot_part(plugin_controller* controller)
   auto grid = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) });
   grid->add_cell(create_global_cv_plot_controls(controller), 0, 0, 1, 3);
   grid->add_cell(create_selector_label_ui(controller, "CV Plot", part_type::gcv_plot, 1, false, selector_routing_dir::right_toleft), 0, 3, 1, 1);
-  grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, cv_plot_param::target), 1, 0, 1, 4);
+  grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, "gcv_plot", cv_plot_param::target), 1, 0, 1, 4);
   return grid;
 }
 

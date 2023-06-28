@@ -371,21 +371,22 @@ public ui_element
 {
   base::part_id const _part_id;
   std::int32_t const _graph_type;
+  std::string const _background_id;
   std::int32_t const _tooltip_param;
   std::unique_ptr<graph_listener> _listener = {};
 protected:
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
-  part_graph_element(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type, std::int32_t tooltip_param):
-  ui_element(controller), _part_id(part_id), _graph_type(graph_type), _tooltip_param(tooltip_param) {}
+  part_graph_element(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type, std::string const& background_id, std::int32_t tooltip_param):
+  ui_element(controller), _part_id(part_id), _graph_type(graph_type), _background_id(background_id), _tooltip_param(tooltip_param) {}
 };
 
 inline std::unique_ptr<part_graph_element>
 create_part_graph_ui(
-  inf::base::plugin_controller* controller, std::int32_t part_type,
-  std::int32_t part_index, std::int32_t graph_type, std::int32_t tooltip_param)
-{ return std::make_unique<part_graph_element>(controller, part_id(part_type, part_index), graph_type, tooltip_param); }
+  inf::base::plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, 
+  std::int32_t graph_type, std::string const& background_id, std::int32_t tooltip_param)
+{ return std::make_unique<part_graph_element>(controller, part_id(part_type, part_index), graph_type, background_id, tooltip_param); }
 
 class grid_element:
 public ui_element
