@@ -37,12 +37,14 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
-- reduce controller.uidesc to image names, image offsets and color scheme
-- rewrite the manual
 - graph bg image
-- credit oddy
 - theme selector
-- manual + automation test all controls
+- reduce controller.uidesc to image names, image offsets and color scheme
+
+- credit oddy
+- rewrite the manual
+- add the fx demo to website
+
 - do gcc build nonetheless
 - check all presets in all hosts
-- add the fx demo to website
+- manual + automation test all controls
