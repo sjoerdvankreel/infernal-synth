@@ -1,6 +1,17 @@
 {
   "images": {
-    "osc_left": "osc_left.png"
+    "osc_left": "osc_left.png",
+    "osc_spectrum": "osc_spectrum.png",
+    "osc_right": "osc_right.png",
+    "veffect_1": "veffect_1.png",
+    "veffect_2": "veffect_2.png",
+    "geffect_1": "geffect_1.png",
+    "geffect_2": "geffect_2.png",
+    "env": "env.png",
+    "vlfo": "vlfo.png",
+    "glfo": "glfo.png",
+    "vcv_plot": "vcv_plot.png",
+    "gcv_plot": "gcv_plot.png"
   },
   "colors": {
     "root": {

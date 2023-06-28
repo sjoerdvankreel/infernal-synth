@@ -13,6 +13,7 @@ class inf_look_and_feel:
 public juce::LookAndFeel_V4
 {
   inf::base::plugin_controller* const _controller;
+  std::map<std::string, std::string> _graph_bg_images = {};
 
   void
   try_load_theme_color(std::int32_t color, juce::var const& colors, char const* name);
@@ -165,6 +166,9 @@ public:
   inf_look_and_feel(
     inf::base::plugin_controller* controller, 
     std::vector<std::string> theme_color_sections);
+
+  juce::Image
+  get_graph_bg_image(std::string const& image_id) { return juce::ImageCache::getFromFile(juce::File(_graph_bg_images[image_id])); }
 
   // Shared paint routines.
   void fill_spot_circle(juce::Graphics& g,

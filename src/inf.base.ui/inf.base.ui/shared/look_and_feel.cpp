@@ -34,6 +34,15 @@ _controller(controller)
   Result result(JSON::parse(contents, root));
   if(!result.wasOk()) return;
 
+  juce::var images = root["images"];
+  auto const& properties = images.getDynamicObject()->getProperties();
+  for (auto iter = properties.begin(); iter != properties.end(); ++iter)
+  {
+    auto id = iter->name.toString().toStdString();
+    auto path = theme_path / iter->value.toString().toStdString();
+    _graph_bg_images[id] = path.string();
+  }
+
   for (std::size_t i = 0; i < theme_color_sections.size(); i++)
   {
     juce::var colors = root["colors"][theme_color_sections[i].c_str()];
