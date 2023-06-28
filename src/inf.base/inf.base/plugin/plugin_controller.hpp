@@ -85,7 +85,7 @@ public:
 
   virtual void restart() = 0;
   virtual std::string preset_file_extension() = 0;
-  virtual void set_editor_width(std::int32_t width) = 0;
+  virtual void reload_editor(std::int32_t width) = 0;
   virtual void load_component_state(param_value* state) = 0;
   virtual void save_preset(std::string const& path) = 0;
   virtual bool load_preset(std::string const& path, bool factory) = 0;

@@ -785,7 +785,10 @@ create_theme_selector_ui(
     [controller, themes, lnf_factory](juce::ComboBox* dropdown) {
       std::int32_t selected_index = dropdown->getSelectedItemIndex();
       if (0 <= selected_index && selected_index < static_cast<std::int32_t>(themes.size()))
+      {
         controller->set_theme(themes[selected_index].name);
+        controller->reload_editor(-1);
+      }
     }, 
     [controller, themes](juce::ComboBox* combo) {
       std::string theme = controller->get_theme();
@@ -818,7 +821,7 @@ create_ui_size_ui(
       if (0 <= selected_index && selected_index < static_cast<std::int32_t>(size_names.size()))
       {
         controller->set_ui_size(size_names[selected_index]);
-        controller->set_editor_width(plugin_editor_width(controller, selected_index));
+        controller->reload_editor(plugin_editor_width(controller, selected_index));
       }
     }, 
     [size_names, controller](juce::ComboBox* combo){
