@@ -174,7 +174,7 @@ inf_look_and_feel::try_load_theme_color(std::int32_t color, juce::var const& col
   if(!colors.hasProperty(name)) return;
   std::string text = colors[name].toString().toStdString();
   setColour(color, juce::Colour(static_cast<std::uint32_t>(std::stoul(text, nullptr, 16))));
-}
+} 
 
 juce::Colour
 inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id, bool check_enabled, bool extra_dark)
