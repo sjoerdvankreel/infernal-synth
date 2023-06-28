@@ -426,7 +426,7 @@ Component*
 param_edit_element::build_toggle_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
-  ToggleButton* result = new inf_toggle_button(_force_toggle_on);
+  ToggleButton* result = new inf_toggle_button(controller(), index, _force_toggle_on);
   _toggle_listener.reset(new toggle_param_listener(controller(), result, index));
   result->setToggleState(controller()->state()[index].discrete != 0, dontSendNotification);
   result->addListener(_toggle_listener.get());
@@ -453,7 +453,7 @@ param_edit_element::build_dropdown_core(LookAndFeel& lnf)
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
-  inf_param_dropdown* result = new inf_param_dropdown(&desc);
+  inf_param_dropdown* result = new inf_param_dropdown(controller(), index);
   result->setColour(ComboBox::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::dropdown_text));
   result->setJustificationType(Justification::centred);
   if (desc.data.discrete.items != nullptr)
@@ -481,7 +481,7 @@ param_edit_element::build_slider_core(LookAndFeel& lnf)
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   auto default_value = controller()->topology()->base_to_ui_value(index, desc.data.default_value());
   std::int32_t part_index = controller()->topology()->params[index].part_index;
-  inf_param_slider* result = new inf_param_slider(&desc, _type);
+  inf_param_slider* result = new inf_param_slider(controller(), index, _type);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   if(desc.data.type == param_type::real)
   {

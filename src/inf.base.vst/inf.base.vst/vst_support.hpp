@@ -10,6 +10,16 @@
 
 namespace inf::base::vst {
 
+inline std::string
+from_vst_string(Steinberg::Vst::TChar const* str)
+{
+  std::vector<char> result;
+  while(*str != '\0' && *str < 256)
+    result.push_back(*str++);
+  result.push_back('\0');
+  return std::string(result.data());
+}
+
 inline std::basic_string<Steinberg::Vst::TChar>
 to_vst_string(char const* str)
 {

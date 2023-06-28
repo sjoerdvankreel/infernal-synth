@@ -40,6 +40,16 @@ struct external_resource
   std::string path;
 };
 
+// VST3 context menu feature.
+class host_context_menu
+{
+public:
+  virtual ~host_context_menu() = 0 {};
+  virtual std::int32_t item_count() const = 0;
+  virtual void item_clicked(std::int32_t index) = 0;
+  virtual std::string item_name(std::int32_t index) const = 0;
+};
+
 // Controller base interface.
 class plugin_controller
 {
@@ -95,6 +105,7 @@ public:
   virtual std::string default_theme_path(std::string const& plugin_file) const = 0;
   virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
   virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
+  virtual std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const = 0;
 
   std::string get_theme() { return _meta_data[theme_key]; }
   void set_theme(std::string const& theme) { _meta_data[theme_key] = theme; }

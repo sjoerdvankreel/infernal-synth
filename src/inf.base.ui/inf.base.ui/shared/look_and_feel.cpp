@@ -483,7 +483,7 @@ inf_look_and_feel::drawLinearSlider(
   float const track_size_factor = 0.25f;
   float const track_inner_size_factor = 0.8f;
   bool const vertical = style == Slider::SliderStyle::LinearVertical;
-  auto const& desc = dynamic_cast<inf_param_slider const&>(s).descriptor();
+  auto const desc = _controller->topology()->params[dynamic_cast<inf_param_slider const&>(s).param_index()].descriptor;
   bool const bipolar = desc->data.type == param_type::real ? desc->data.real.display.min < 0.0f : desc->data.discrete.min < 0;
 
   // precompute stuff
@@ -593,7 +593,7 @@ inf_look_and_feel::drawRotarySlider(
   std::int32_t const cut_count = 10;
   std::int32_t const fake_conic_gradient_count = 1024;
   auto const& is = dynamic_cast<inf_param_slider const&>(s);
-  auto const descriptor = is.descriptor();
+  auto const descriptor = _controller->topology()->params[dynamic_cast<inf_param_slider const&>(s).param_index()].descriptor;
   bool const outline_gradient = is.type() == edit_type::knob;
   bool const bipolar = descriptor->data.type == param_type::real ? descriptor->data.real.display.min < 0.0f : descriptor->data.discrete.min < 0;
   if(is.type() == edit_type::selector)

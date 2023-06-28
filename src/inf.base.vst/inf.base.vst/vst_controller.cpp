@@ -4,6 +4,7 @@
 #include <base/source/fstring.h>
 #include <base/source/fstreamer.h>
 #include <pluginterfaces/base/ibstream.h>
+#include <pluginterfaces/vst/ivstcontextmenu.h>
 #include <public.sdk/source/vst/vstpresetfile.h>
 
 // Why? Is it missing from vst's cmake?
@@ -29,6 +30,38 @@ using namespace Steinberg;
 using namespace Steinberg::Vst;                  
 
 namespace inf::base::vst {
+
+class vst_host_context_menu:
+public host_context_menu
+{
+  std::int32_t const _param_tag;
+  Steinberg::IPtr<Steinberg::Vst::IContextMenu> _menu;
+public:
+  void item_clicked(std::int32_t index) override;
+  std::string item_name(std::int32_t index) const override;
+  std::int32_t item_count() const override { return _menu->getItemCount(); }
+  vst_host_context_menu(Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu, std::int32_t param_tag): 
+  _param_tag(param_tag), _menu(menu) {}
+};
+
+void 
+vst_host_context_menu::item_clicked(std::int32_t index)
+{
+  IContextMenu::Item item;
+  IContextMenuTarget* target;
+  _menu->getItem(index, item, &target);
+  if(target == nullptr) return;
+  target->executeMenuItem(_param_tag);
+}
+
+std::string
+vst_host_context_menu::item_name(std::int32_t index) const
+{
+  IContextMenu::Item item;
+  IContextMenuTarget* target;
+  _menu->getItem(index, item, &target);
+  return from_vst_string(item.name);
+}
 
 vst_controller::
 vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id) :
@@ -228,6 +261,20 @@ vst_controller::save_preset(std::string const& path)
   if (file.bad()) return;
   file.write(contents.data(), preset_state.getSize());
   file.close();
+}
+
+std::unique_ptr<host_context_menu>
+vst_controller::host_menu_for_param_index(std::int32_t param_index) const
+{
+  Steinberg::FUnknownPtr<Steinberg::Vst::IComponentHandler3> handler(componentHandler);
+  if (handler == nullptr) return {};
+  if (!_current_editor) return {};
+
+  ParamID tag = 0;
+  ParamID* tag_ptr = &tag;
+  if(param_index >= 0) tag = topology()->param_index_to_id[param_index];
+  Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu(handler->createContextMenu(_current_editor, tag_ptr));
+  return std::make_unique<vst_host_context_menu>(menu, tag);
 }
 
 } // namespace inf::base::vst

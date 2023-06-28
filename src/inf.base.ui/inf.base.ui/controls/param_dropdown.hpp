@@ -14,11 +14,14 @@ class inf_param_dropdown:
 public juce::ComboBox
 {
 private:
-  base::param_descriptor const* _descriptor;
+  std::int32_t const _param_index;
+  base::plugin_controller* const _controller;
 public:
-  base::param_descriptor const* descriptor() const { return _descriptor; }
-  inf_param_dropdown(base::param_descriptor const* descriptor):
-  _descriptor(descriptor) {}
+  void mouseUp(juce::MouseEvent const& e) override;
+  std::int32_t param_index() const { return _param_index; }
+
+  inf_param_dropdown(base::plugin_controller* controller, std::int32_t param_index):
+  _param_index(param_index), _controller(controller) {}
 };
 
 } // namespace inf::base::ui

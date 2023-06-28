@@ -1,10 +1,27 @@
 #include <inf.base.ui/shared/support.hpp>
+#include <juce_gui_basics/juce_gui_basics.h>
+
 #include <cassert>
 #include <algorithm>
 
+using namespace juce;
 using namespace inf::base;
 
 namespace inf::base::ui {
+
+void
+show_host_menu_for_param(base::plugin_controller* controller, std::int32_t param_index, juce::LookAndFeel* lnf)
+{
+  PopupMenu menu;
+  menu.setLookAndFeel(lnf);
+  auto host_menu = controller->host_menu_for_param_index(param_index);
+  for (std::int32_t i = 0; i < host_menu->item_count(); i++)
+    menu.addItem(i + 1, host_menu->item_name(i));
+  menu.showMenuAsync(PopupMenu::Options(), [host_menu = host_menu.release()](int option) {
+    if (option != 0) host_menu->item_clicked(option - 1);
+    delete host_menu;
+  });
+}
 
 std::string
 format_label_short(plugin_controller const* controller, std::int32_t param_index)
