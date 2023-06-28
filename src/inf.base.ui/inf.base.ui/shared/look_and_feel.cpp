@@ -9,6 +9,14 @@ using namespace juce;
 
 namespace inf::base::ui {
 
+inf_look_and_feel::
+inf_look_and_feel(
+  inf::base::plugin_controller const* controller, 
+  std::vector<std::string> theme_color_sections):
+_controller(controller)
+{
+}
+
 juce::Colour
 inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id, bool check_enabled, bool extra_dark)
 {

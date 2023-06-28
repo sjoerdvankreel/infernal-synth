@@ -5,6 +5,7 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <inf.base/plugin/plugin_controller.hpp>
+#include <vector>
 
 namespace inf::base::ui {
 
@@ -155,8 +156,9 @@ public:
     knob_gradient_fill_high,
   };
 
-  inf_look_and_feel(inf::base::plugin_controller const* controller):
-  _controller(controller) {}
+  inf_look_and_feel(
+    inf::base::plugin_controller const* controller, 
+    std::vector<std::string> theme_color_sections);
 
   // Shared paint routines.
   void fill_spot_circle(juce::Graphics& g,
