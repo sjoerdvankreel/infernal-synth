@@ -884,8 +884,10 @@ load_preset_file(
 {  
   auto flags = FileBrowserComponent::openMode | FileBrowserComponent::filenameBoxIsReadOnly;
   auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset", flags);
-  auto selected = [state, lnf_factory](int result)
+  auto selected = [state, controller, lnf_factory](int result)
   {
+    std::string old_theme = state->controller->get_theme();
+    std::string old_size = state->controller->get_ui_size();
     if (result != 0)
     {
       auto selected = state->browser->getSelectedFile(0);
@@ -895,6 +897,15 @@ load_preset_file(
     }
     state->box->exitModalState();
     delete state;
+    if (result != 0 && (controller->get_theme() != old_theme || controller->get_ui_size() != old_size))
+    {
+      std::size_t size_index = 0;
+      auto size_names = controller->ui_size_names();
+      for(std::size_t i = 0; i < size_names.size(); i++)
+        if(size_names[i] == controller->get_ui_size())
+          size_index = i;
+      controller->reload_editor(plugin_editor_width(controller, static_cast<std::int32_t>(size_index)));
+    }
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
   state->box->center_around(current_window);

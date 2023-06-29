@@ -42,6 +42,4 @@
 - add the fx demo to website
 - do gcc build nonetheless
 - check all presets in all hosts
-- manual + automation test all controls
-- fix the ui reloading
-- make a great kick demo
+- manual + automation test everything
