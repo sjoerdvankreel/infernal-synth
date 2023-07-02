@@ -262,8 +262,10 @@ vst_controller::load_preset(std::string const& path, bool factory)
   // Allow to share factory presets by versioned/unversioned.
   if (!factory && preset.getClassID() != _processor_id) return false;
 
-  // Load controller and processor state. Controller state is optional, older file format versions dont have it.
-  if(preset.seekToControllerState())
+  // Load controller and processor state. 
+  // Controller state is optional, older file format versions dont have it.
+  // Dont mess with the ui settings for factory presets.
+  if(!factory && preset.seekToControllerState())
     if(setState(&memory) != kResultOk) return false;
   if (!preset.seekToComponentState()) return false;
   return set_component_state(&memory) == kResultOk;

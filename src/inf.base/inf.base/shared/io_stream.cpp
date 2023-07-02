@@ -25,7 +25,7 @@ from_file_version(std::uint32_t version, std::uint16_t& major, std::uint16_t& mi
   major = (version & 0xFFFF0000) >> 16;
 }
 
-bool
+bool 
 io_stream::save_controller(topology_info const& topology, std::map<std::string, std::string> const& meta_data)
 {
   std::uint32_t file_version = to_file_version(topology.version_major(), topology.version_minor());
