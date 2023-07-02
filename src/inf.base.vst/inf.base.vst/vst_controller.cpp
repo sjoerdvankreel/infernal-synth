@@ -176,6 +176,7 @@ vst_controller::setState(IBStream* state)
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
   stream.load_controller(*topology(), meta_data());
+  reloaded();
   return kResultOk;
 }
 
@@ -225,7 +226,6 @@ vst_controller::load_component_state(param_value* state)
     update_state(tag);
   }
   restart();
-  reloaded();
 }
 
 tresult PLUGIN_API
@@ -256,7 +256,7 @@ vst_controller::load_preset(std::string const& path, bool factory)
   std::vector<char> buffer = std::vector<char>(size);
   if (!file.read(buffer.data(), size)) return false;
   MemoryStream memory(buffer.data(), buffer.size());
-  PresetFile preset(&memory);
+  PresetFile preset(&memory);  
   if (!preset.readChunkList()) return false;
 
   // Allow to share factory presets by versioned/unversioned.

@@ -15,7 +15,7 @@ public inf::base::reload_listener
   inf::base::plugin_controller* const _controller;
 public:
   void plugin_reloaded() override { _callback(_dropdown); }
-  ~combo_reload_listener() { _controller->remove_reload_param_listener(this); }
+  ~combo_reload_listener() { _controller->remove_reload_listener(this); }
   combo_reload_listener(plugin_controller* controller, juce::ComboBox* dropdown, std::function<void(juce::ComboBox*)> const& callback):
   _controller(controller), _dropdown(dropdown), _callback(callback) { _controller->add_reload_listener(this); }
 };

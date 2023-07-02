@@ -118,7 +118,7 @@ public:
 
   void add_reload_listener(reload_listener* listener)
   { _reload_listeners.insert(listener); }
-  void remove_reload_param_listener(reload_listener* listener)
+  void remove_reload_listener(reload_listener* listener)
   { _reload_listeners.erase(listener); }
   void add_any_param_listener(any_param_listener* listener)
   { _any_param_listeners.insert(listener); }
