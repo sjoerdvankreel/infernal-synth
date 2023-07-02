@@ -43,3 +43,4 @@
 - do gcc build nonetheless
 - check all presets in all hosts -- fix waveform
 - manual + automation test everything
+- credit reaper and bitwig for setting me up with flawless software AND giving out nfrs
