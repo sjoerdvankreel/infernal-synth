@@ -62,10 +62,9 @@ tresult PLUGIN_API
 vst_processor::getState(IBStream* state)
 {
   if(state == nullptr) return kResultFalse;
-  std::map<std::string, std::string> meta;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  if(!stream.save(*_topology, _state.data(), meta)) return kResultFalse;
+  if(!stream.save_processor(*_topology, _state.data())) return kResultFalse;
   return kResultOk;
 }
 
@@ -76,8 +75,7 @@ vst_processor::setState(IBStream* state)
   if (state == nullptr) return kResultFalse;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  std::map<std::string, std::string> meta;
-  if(!stream.load(*_topology, _state.data(), meta)) return kResultFalse;
+  if(!stream.load_processor(*_topology, _state.data())) return kResultFalse;
   return kResultOk;
 }
 

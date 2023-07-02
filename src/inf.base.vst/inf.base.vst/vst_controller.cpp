@@ -169,6 +169,26 @@ vst_controller::factory_presets(std::string const& plugin_file) const
   return result;
 }
 
+tresult 
+vst_controller::setState(IBStream* state)
+{
+  if(state == nullptr) return kResultFalse;
+  IBStreamer streamer(state, kLittleEndian);
+  vst_io_stream stream(&streamer);
+  stream.load_controller(*topology(), meta_data());
+  return kResultOk;
+}
+
+tresult 
+vst_controller::getState(IBStream* state)
+{
+  if (state == nullptr) return kResultFalse;
+  IBStreamer streamer(state, kLittleEndian);
+  vst_io_stream stream(&streamer);
+  stream.save_controller(*topology(), meta_data());
+  return kResultOk;
+}
+
 tresult
 vst_controller::set_component_state(IBStream* state)
 {
@@ -178,7 +198,7 @@ vst_controller::set_component_state(IBStream* state)
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
   std::vector<param_value> values(_topology->input_param_count, param_value());
-  if (!stream.load(*_topology, values.data(), meta_data())) return kResultFalse;
+  if (!stream.load_processor(*_topology, values.data())) return kResultFalse;
   load_component_state(values.data());
   return kResultOk;
 }
@@ -229,6 +249,7 @@ vst_controller::initialize(FUnknown* context)
 bool
 vst_controller::load_preset(std::string const& path, bool factory)
 {
+  // Load preset format from disk and parse.
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   std::streamsize size = file.tellg();
   file.seekg(0, std::ios::beg);
@@ -237,8 +258,13 @@ vst_controller::load_preset(std::string const& path, bool factory)
   MemoryStream memory(buffer.data(), buffer.size());
   PresetFile preset(&memory);
   if (!preset.readChunkList()) return false;
+
   // Allow to share factory presets by versioned/unversioned.
   if (!factory && preset.getClassID() != _processor_id) return false;
+
+  // Load controller and processor state. Controller state is optional, older file format versions dont have it.
+  if(preset.seekToControllerState())
+    if(setState(&memory) != kResultOk) return false;
   if (!preset.seekToComponentState()) return false;
   return set_component_state(&memory) == kResultOk;
 }
@@ -248,14 +274,26 @@ vst_controller::load_preset(std::string const& path, bool factory)
 void
 vst_controller::save_preset(std::string const& path)
 {
-  MemoryStream preset_state;
+  // Dump processor state.
   MemoryStream processor_state;
-  IBStreamer streamer(&processor_state, kLittleEndian);
-  vst_io_stream stream(&streamer);
-  if (!stream.save(*_topology, _state.data(), meta_data())) return;
+  IBStreamer processor_streamer(&processor_state, kLittleEndian);
+  vst_io_stream processor_stream(&processor_streamer);
+  if (!processor_stream.save_processor(*_topology, _state.data())) return;
   if (processor_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
-  if (!PresetFile::savePreset(&preset_state, _processor_id, &processor_state)) return;
+
+  // Dump controller state.
+  MemoryStream controller_state;
+  IBStreamer controller_streamer(&controller_state, kLittleEndian);
+  vst_io_stream controller_stream(&controller_streamer);
+  if (!controller_stream.save_controller(*_topology, meta_data())) return;
+  if (controller_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+
+  // Dump both plus metadata to preset format.
+  MemoryStream preset_state;
+  if (!PresetFile::savePreset(&preset_state, _processor_id, &processor_state, &controller_state)) return;
   if (preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+
+  // Write preset format to disk.
   std::vector<char> contents(static_cast<std::size_t>(preset_state.getSize()), '0');
   if (preset_state.read(contents.data(), preset_state.getSize(), nullptr) != kResultTrue) return;
   std::ofstream file(path, std::ios::out | std::ios::binary);

@@ -59,6 +59,8 @@ public:
   std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
   std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
 
+  tresult PLUGIN_API setState(IBStream* state) override;
+  tresult PLUGIN_API getState(IBStream* state) override;
   std::string preset_file_extension() override { return "vstpreset"; }
   tresult PLUGIN_API setComponentState(IBStream* state) override { return set_component_state(state); }
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override { do_edit(target_tag, getParamNormalized(source_tag)); }

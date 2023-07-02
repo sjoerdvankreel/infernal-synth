@@ -43,4 +43,3 @@
 - do gcc build nonetheless
 - check all presets in all hosts
 - manual + automation test everything
-- separate load/save controller/processor
