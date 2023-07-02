@@ -41,5 +41,5 @@
 - rewrite the manual
 - add the fx demo to website
 - do gcc build nonetheless
-- check all presets in all hosts
+- check all presets in all hosts -- fix waveform
 - manual + automation test everything
