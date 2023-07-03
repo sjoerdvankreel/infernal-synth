@@ -10,18 +10,13 @@
 - v update version number in cmake unless only bugfix release
 - v consider updating versioned guid
 - x gcc build
-- x diff presets
 - x update history
 - x debug run demos
 - x run pluginval
 - x run the vst validator
 - x keep manual up to date
 - x don't forget to tag
-- x run win32 & linux host demos
-
-* 3th party
-- renoise automation serialization is broken
-- juce alertbox don't accept a parent component
+- x run host demos
 
 * wishlist big
 - CLAP support
