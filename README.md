@@ -21,13 +21,15 @@ registered in Europe and other countries.
 - Contains a slightly adapted implementation of the [Karplus-Strong algorithm](https://blog.demofox.org/2016/06/16/synthesizing-a-pluked-string-sound-with-the-karplus-strong-algorithm).
 - Contains a verbatim implementation of [Andrew Simper's state variable filter equations](https://cytomic.com/files/dsp/SvfLinearTrapOptimised2.pdf).
 - Contains a verbatim implementation of [Moorer's DSF algorithm as described by Burkhard Reike](https://www.verklagekasper.de/synths/dsfsynthesis/dsfsynthesis.html).
-- Special thanks to all host vendors who have set me up with an NFR license.
-- Special thanks to Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 
 Furthermore parts of InfernalSynth are implemented based on various resources found mostly on
 [KVR Audio](https://www.kvraudio.com), [DSP Stackexchange](https://dsp.stackexchange.com),
 [Music DSP](https://www.musicdsp.org) and [DSP Related](https://www.dsprelated.com).
 Look for // http:// or // https:// in the source code for sources relevant to a specific feature.
+
+# Special thanks
+- To all host vendors who have set me up with an NFR license.
+- To Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 
 # How to build
 - Clone infernal synth into /path/to/infernal
