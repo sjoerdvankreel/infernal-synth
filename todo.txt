@@ -1,16 +1,10 @@
-* breaking changes 
-- dropped osc gain
-- changed r/am ring
-- added delay hold stage
-- dropped down vaudio/gaudio route count to 15
-
 * for each release 
 - v create version branch
 - v update version number in code
 - v update version number in cmake unless only bugfix release
 - v consider updating versioned guid
-- x gcc build
-- x update history
+- v gcc build
+- v update history
 - x debug run demos
 - x run pluginval
 - x run the vst validator
