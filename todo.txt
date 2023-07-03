@@ -34,6 +34,5 @@
 
 * wishlist ui
 - add the fx demo to website
-- do gcc build nonetheless
 - manual + automation test everything
 - check the readme, and the manual, and all screenshots, and the project website
