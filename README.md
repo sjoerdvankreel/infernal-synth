@@ -11,7 +11,7 @@ registered in Europe and other countries.
 <br clear="left"/>
 
 # Dependencies
-- JUCE: [https://github.com/juce-framework/JUCE]
+- JUCE: [https://github.com/juce-framework/JUCE](https://github.com/juce-framework/JUCE).
 - Laurent de Soras' HIIR library: [http://ldesoras.free.fr/](http://ldesoras.free.fr/).
 - Steinberg VST3 SDK: [https://github.com/steinbergmedia/vst3sdk](https://github.com/steinbergmedia/vst3sdk).
 
