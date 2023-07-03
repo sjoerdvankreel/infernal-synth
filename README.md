@@ -22,7 +22,7 @@ registered in Europe and other countries.
 - Contains a verbatim implementation of [Andrew Simper's state variable filter equations](https://cytomic.com/files/dsp/SvfLinearTrapOptimised2.pdf).
 - Contains a verbatim implementation of [Moorer's DSF algorithm as described by Burkhard Reike](https://www.verklagekasper.de/synths/dsfsynthesis/dsfsynthesis.html).
 - Special thanks to all host vendors who have set me up with an NFR license.
-- Special thanks to Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge]
+- Special thanks to Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 
 Furthermore parts of InfernalSynth are implemented based on various resources found mostly on
 [KVR Audio](https://www.kvraudio.com), [DSP Stackexchange](https://dsp.stackexchange.com),
