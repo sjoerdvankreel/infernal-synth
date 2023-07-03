@@ -11,6 +11,7 @@ registered in Europe and other countries.
 <br clear="left"/>
 
 # Dependencies
+- JUCE: [https://github.com/juce-framework/JUCE]
 - Laurent de Soras' HIIR library: [http://ldesoras.free.fr/](http://ldesoras.free.fr/).
 - Steinberg VST3 SDK: [https://github.com/steinbergmedia/vst3sdk](https://github.com/steinbergmedia/vst3sdk).
 
@@ -20,6 +21,8 @@ registered in Europe and other countries.
 - Contains a slightly adapted implementation of the [Karplus-Strong algorithm](https://blog.demofox.org/2016/06/16/synthesizing-a-pluked-string-sound-with-the-karplus-strong-algorithm).
 - Contains a verbatim implementation of [Andrew Simper's state variable filter equations](https://cytomic.com/files/dsp/SvfLinearTrapOptimised2.pdf).
 - Contains a verbatim implementation of [Moorer's DSF algorithm as described by Burkhard Reike](https://www.verklagekasper.de/synths/dsfsynthesis/dsfsynthesis.html).
+- Special thanks to all host vendors who have set me up with an NFR license.
+- Special thanks to Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge]
 
 Furthermore parts of InfernalSynth are implemented based on various resources found mostly on
 [KVR Audio](https://www.kvraudio.com), [DSP Stackexchange](https://dsp.stackexchange.com),

@@ -26,6 +26,7 @@
 * wishlist big
 - CLAP support
 - Linux support
+- Mac support (contact kvr)
 - osc types: feedback lead
 - filter types: formant, vowel
 - noise types: fractal, perlin
@@ -37,10 +38,7 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
-- credit oddy
-- rewrite the manual
 - add the fx demo to website
 - do gcc build nonetheless
-- check all presets in all hosts -- fix waveform
 - manual + automation test everything
-- credit reaper and bitwig for setting me up with flawless software AND giving out nfrs
+- check the readme, and the manual, and all screenshots, and the project website
