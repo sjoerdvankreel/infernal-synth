@@ -227,10 +227,10 @@ synth_topology::try_move_stored_param(
 
     // If not, don't bother with defaults.
     for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.real == 0.5f
-        || id.param_guid == old_bal[i] && old_value.real == 0.5f)
+      if ((id.param_guid == old_in[i] && old_value.discrete == 0)
+        || (id.param_guid == old_out[i] && old_value.discrete == 0)
+        || (id.param_guid == old_amt[i] && old_value.real == 0.5f)
+        || (id.param_guid == old_bal[i] && old_value.real == 0.5f))
       {
         can_be_ignored = true;
         return -1;
@@ -293,10 +293,10 @@ synth_topology::try_move_stored_param(
 
     // If not, don't bother with defaults.
     for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.real == 0.5f
-        || id.param_guid == old_bal[i] && old_value.real == 0.5f)
+      if ((id.param_guid == old_in[i] && old_value.discrete == 0)
+        || (id.param_guid == old_out[i] && old_value.discrete == 0)
+        || (id.param_guid == old_amt[i] && old_value.real == 0.5f)
+        || (id.param_guid == old_bal[i] && old_value.real == 0.5f))
       {
         can_be_ignored = true;
         return -1;
@@ -371,12 +371,12 @@ synth_topology::try_move_stored_param(
 
     // If not, don't bother with defaults.
     for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_op[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.discrete == 1.0f
-        || id.param_guid == old_off[i] && old_value.real == 0.0f
-        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
+      if ((id.param_guid == old_in[i] && old_value.discrete == 0)
+        || (id.param_guid == old_out[i] && old_value.discrete == 0)
+        || (id.param_guid == old_op[i] && old_value.discrete == 0)
+        || (id.param_guid == old_amt[i] && old_value.discrete == 1.0f)
+        || (id.param_guid == old_off[i] && old_value.real == 0.0f)
+        || (id.param_guid == old_scl[i] && old_value.real == 1.0f))
       {
         can_be_ignored = true;
         return -1;
@@ -470,12 +470,12 @@ synth_topology::try_move_stored_param(
 
     // If not, don't bother with defaults.
     for (std::int32_t i = 0; i < old_route_count; i++)
-      if (id.param_guid == old_in[i] && old_value.discrete == 0
-        || id.param_guid == old_out[i] && old_value.discrete == 0
-        || id.param_guid == old_op[i] && old_value.discrete == 0
-        || id.param_guid == old_amt[i] && old_value.discrete == 1.0f
-        || id.param_guid == old_off[i] && old_value.real == 0.0f
-        || id.param_guid == old_scl[i] && old_value.real == 1.0f)
+      if ((id.param_guid == old_in[i] && old_value.discrete == 0)
+        || (id.param_guid == old_out[i] && old_value.discrete == 0)
+        || (id.param_guid == old_op[i] && old_value.discrete == 0)
+        || (id.param_guid == old_amt[i] && old_value.discrete == 1.0f)
+        || (id.param_guid == old_off[i] && old_value.real == 0.0f)
+        || (id.param_guid == old_scl[i] && old_value.real == 1.0f))
       {
         can_be_ignored = true;
         return -1;
