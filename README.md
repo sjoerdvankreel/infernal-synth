@@ -1,8 +1,6 @@
 # About
 InfernalSynth is a semi-modular software synthesizer and effect plugin.\
 For system requirements, download and installation, see the [project website](https://sjoerdvankreel.github.io/infernal-synth).\
-\
-![Screenshot](static/screenshot.png)
 
 # Legal
 <img align="left" alt="VST logo" src="static/vst_logo.png">
@@ -28,8 +26,8 @@ Furthermore parts of InfernalSynth are implemented based on various resources fo
 Look for // http:// or // https:// in the source code for sources relevant to a specific feature.
 
 # Special thanks
-- To all host vendors who have set me up with an NFR license.
-- To Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
+- To host vendors who have set me up with an NFR license.
+- To Surge Synth Team for guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 
 # How to build
 - Needs cmake and visual studio 2022
@@ -37,3 +35,12 @@ Look for // http:// or // https:// in the source code for sources relevant to a 
 - Clone infernal synth into /path/to/infernal
 - Run /path/to/infernal/scripts/build_win32.bat
 - If all goes well, final output is produced in /path/to/infernal/dist.
+
+# Screenshots
+Default theme:
+![Screenshot](static/screenshot_voice_default.png)
+![Screenshot](static/screenshot_global_default.png)
+\
+Infernal theme:
+![Screenshot](static/screenshot_voice_infernal.png)
+![Screenshot](static/screenshot_global_infernal.png)
