@@ -1,6 +1,6 @@
 # About
 InfernalSynth is a semi-modular software synthesizer and effect plugin.\
-For system requirements, download and installation, see the [project website](https://sjoerdvankreel.github.io/infernal-synth).\
+For system requirements, download and installation, see the [project website](https://sjoerdvankreel.github.io/infernal-synth).
 
 # Legal
 <img align="left" alt="VST logo" src="static/vst_logo.png">
