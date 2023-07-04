@@ -32,9 +32,8 @@ Look for // http:// or // https:// in the source code for sources relevant to a 
 - To Surge Synth Team for general guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 
 # How to build
+- Needs cmake and visual studio 2022
+- Source dependencies are included in the /lib folder
 - Clone infernal synth into /path/to/infernal
-- Download HIIR (see CMakeLists for version): [http://ldesoras.free.fr/prod.html](http://ldesoras.free.fr/prod.html) and copy to /path/to/hiir
-- On windows (be sure to use a shell that knows msbuild, such as visual studio developer command prompt): cd /path/to/infernal/scripts && build_win32.bat /path/to/hiir
-- On Linux (experimental, only Ubuntu 22 tested, known issues): cd /path/to/infernal/scripts && ./build_linux.sh /path/to/hiir. See https://steinbergmedia.github.io/vst3_doc/vstgui/html/page_setup.html for dependencies.
-- The build scripts will clone the vst3 sdk, set some submodules to infernal-specific forks/branches, run cmake & make/msbuild for both the vst sdk and infernal itself.
+- Run /path/to/infernal/scripts/build_win32.bat
 - If all goes well, final output is produced in /path/to/infernal/dist.
