@@ -137,10 +137,10 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
 
 ## Effect section
 
-Both per-voice (FX A) and global (FX B) effect modules, containing a comb filter, state-variable filter,
+Both per-voice and global effect modules, containing a comb filter, state-variable filter,
 and multiple waveshapers (both voice and global), and a feedback delay, multi-tap delay and reverb mode (global only).
 
-![Effect](static/effect.png)
+![Effect](static/fx.png)
 
 - Type: effect type
 - Reverb
@@ -166,6 +166,7 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
     - Sprd: stereo-spread amount.
     - Mix: crossfades between dry/wet.
     - Delay: delay mode, feedback or multi-tap.
+    - Hold: time before the delay line kicks in.
     - Sync: specify delay time absolute (seconds) or relative to BPM (bars).
     - Feedback delay
         - L/R: left/right delay time/tempo.
