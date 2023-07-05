@@ -336,7 +336,7 @@ See the CV plot section to view exactly how stacked modulation plays out.\
 \
 For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
 This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
-to be assigned to any modulation output.\
+to be assigned to any modulation target.\
 \
 Also for per-voice CV, global modulation sources can be used in "Hold" mode.
 In this case, the modulation signal is fixed to it's current value at the start
@@ -360,10 +360,10 @@ between C3 and C5, rather than C0 and C9.
 
 ## CV plot section
 
-Both per-voice (CV A) and global (CV B) CV visualizers.
+Both per-voice and global CV visualizers.
 Select a target parameter to view the combined (stacked) modulation signal that's routed to that parameter.
 
-![CV plot](static/cv_plot.png)
+![CV plot](static/vcv_plot.png)
 
 - Tgt: target parameter.
 - Length (global):  plot length in seconds.
