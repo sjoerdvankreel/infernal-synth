@@ -392,3 +392,14 @@ Contains voice/global selection, UI settings and exact-editing.
 - UI size selector and theme selector.
 - Switch between editing voice and global sections.
 - Last tweaked: shows the name and value of the last changed knob/slider/etc. Allows exact-editing of that value.
+
+## Patch section
+
+Patch/preset control.
+
+![Edit](static/patch.png)
+
+- Init: reset to factory default.
+- Clear: reset to the very minimum that produces sound.
+- Load, save: read/write vst3 preset files from/to disk.
+- Factory preset: reset to built-in patch.
