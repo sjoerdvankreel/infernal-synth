@@ -93,7 +93,7 @@ Through the context menu you can reset module values to default, or copy/swap be
 
 Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic generator types, phase, frequency, ring and amplitude modulation, hard sync and unison support.
 
-![Oscillator](static/oscillator.png)
+![Oscillator](static/osc.png)
 
 - Type: generator type, see below.
 - PM (hidden, modulation target only): phase modulation.
