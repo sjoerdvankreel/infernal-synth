@@ -236,22 +236,27 @@ Provides pitch translators affecting all oscillators, portamento settings and po
     - Trig: portamento trigger.
         - Note: always trigger portamento on a new note.
         - Voice: trigger portamento on a new note, except for the first note in a new monophonic section. Useful in combination with release portamento mode.
-        
-## Master section
 
-Controls the final mixdown of global audio routing, allows switching between polyphonic and monophonic modes,
-contains portamento settings and contains a couple of freely-assignable CV sources. These CV sources don't do
-anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
-For example, route CV U1 to both voice gain and FX A1 state variable frequency, and control both at the same
-time, using a single parameter, from the host.
+## Master output section
 
-![Master](static/master.png)
+Controls global gain and balance.
 
-- Graphs: stereo balance image.
-- CV B: bipolar virtual CV param level.
-- CV U: unipolar virtual CV param level.
+![Master](static/master_out.png)
+
 - Gain: amplitude of master mixdown.
 - Bal: stereo balancing of master mixdown.
+
+## Master input section
+
+Contains a couple of freely-assignable CV sources. These CV sources don't do
+anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
+For example, route CVU 1 to both voice gain and FX 1 state variable frequency, and control both at the same
+time, using a single parameter, from the host.
+
+![Master](static/master_in.png)
+
+- CV B: bipolar virtual CV param level.
+- CV U: unipolar virtual CV param level.
 
 ## Envelope section
 
