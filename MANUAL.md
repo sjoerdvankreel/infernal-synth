@@ -305,22 +305,22 @@ bipolar and inverted modes, one-shot option and smoothing filter.
     - Basic: Classic waveform generator.
         - Sine/saw/triangle/pulse generator.
         - PW: pulse width for pulse generator.
-    - Custom: custom generator with 8 sections and customizable slopes.
+    - Free: custom generator with 8 sections and customizable slopes.
         - Each section duration is relative to the total waveform length.
-        - Rise, Slope: controls the first and second upward sections.
-        - Fall, Slope: controls the first and second downward sections.
-        - Delay: delay time before first rise (attack) section and after first fall (decay) section.
-        - Hold: hold time after the first rise (attack) section and after second fall (decay) section.
+        - A1, A2, Slope: control the first and second upward sections.
+        - D1, D2, Slope: control the first and second downward sections.
+        - Delay: delay time before first attack section and after first decay section.
+        - Hold: hold time after the first attack section and after second decay section.
     - Random: random generator.
         - Will fold-back if above 1 or below 0.
-        - Rnd: random type.
+        - Type: random type.
             - Slope: picks a new level at each step and gradually moves to that value.
             - Level: picks a new level at each step and immediately jumps to that value.
             - Both: picks a new level at each step, immediately jumps to that value, then gradually moves to the next level.
         - Steps: step/section count within a single cycle.
         - SeedY: controls the level at the beginning of a new step.
         - Amt: controls next step level relative to current step level.
-        - Rand steps: allows control of the horizontal seed. If disabled, each section has equal length.
+        - RandX: allows control of the horizontal seed. If disabled, each section has equal length.
         - SeedX: a single cycle always has step count equal to the steps parameter, but if "rand steps" is enabled, relative section length may be varied using this parameter.
 
 ## CV section
