@@ -113,8 +113,8 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
     - Kbd: keyboard tracking, react to incoming notes (on) or keep constant pitch (off).
 - Ring and Amplitude modulation
     - Mix: fades between unmodulated and modulated signal.
-    - Balance: down is ring modulation, up is amplitude modulation. Fades in between.
-    - RAM: ring/amplitude modulation source. Has to be less than or equal to the current oscillator, otherwise has no effect.
+    - Ring: down is amplitude modulation, up is ring modulation. Fades in between.
+    - Source: modulation source. Has to be less than or equal to the current oscillator, otherwise has no effect.
 - Generators
     - Basic: Classic waveform generator
         - Sine/saw/triangle/pulse generator.
