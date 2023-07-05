@@ -325,9 +325,9 @@ bipolar and inverted modes, one-shot option and smoothing filter.
 
 ## CV section
 
-Both per-voice (CV A) and global (CV B) CV routing modules.
-Per-voice CV can use any modulation source (Velocity/Key/LFO/Envelope/Master CV), both Voice and Global.
-Global CV can only use global modulation sources (LFO/Master CV).
+Both per-voice and global CV matrices.
+Per-voice CV can use any modulation source (Velocity/Key/Voice LFO/Global LFO/Envelope/Master CV).
+Global CV can only use global modulation sources (Global LFO/Master CV).
 A CV source may be assigned to multiple targets or vice-versa.
 When multiple sources are assigned to a single target, modulation is stacked.
 In this case the order of assignment matters, for example, envelope1->target1 followed by lfo1->target1
@@ -346,7 +346,7 @@ LFO, to have each new voice receive a single new random value at voice start
 for the lifetime of the voice.
 
 
-![CV bank](static/cv_bank.png)
+![CV bank](static/cv_matrix.png)
 
 - In: CV input signal.
 - Out: CV signal target parameter.
