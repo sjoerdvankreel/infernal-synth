@@ -190,15 +190,15 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
         - Gain: gain amount for shelving filters (LSH, HSH, BLL). Defines attenuation at center frequency.
         - Kbd: keyboard tracking amount. When non-zero, alters the filter frequency based on the voice midi note (or last midi note for global) relative to C4.
 
-## Audio section
+## Audio matrix
 
-Both per-voice (Audio A) and global (Audio B) audio routing modules.
-Audio A routes oscillators to effects, effects to other effects, and mixdown to the Voice output section.
-Audio B routes external audio input (in effect mode) or Voice output section (in instrument mode) to effects, effects to other effects, and mixdown to the Master section.
+Both per-voice and global audio routing modules.
+Voice matrix routes oscillators to effects, effects to other effects, and voice mixdown to the Voice output section.
+Global matrix routes external audio input (in effect mode) or Voice output section (in instrument mode) to effects, effects to other effects, and mixdown to the Master section.
 An audio source may be assigned to multiple targets or vice-versa, but note that effects can only be routed to higher-numbered effects
-(e.g. FX A2 to FX A3, but not FX A2 to FX A1), otherwise the input will be silence.
+(e.g. FX 2 to FX 3, but not FX 2 to FX 1), otherwise the input will be silence.
 
-![Audio bank](static/audio_bank.png)
+![Audio matrix](static/audio_matrix.png)
 
 - In: audio signal input
 - Out: audio signal output
