@@ -9,7 +9,7 @@ namespace inf::synth {
 // Activation data.
 struct voice_setup_input
 {
-  std::int32_t master_mode;
+  std::int32_t voice_mode;
   std::int32_t port_mode;
   std::int32_t port_trig;
   std::int32_t port_samples;

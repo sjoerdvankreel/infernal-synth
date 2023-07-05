@@ -1,3 +1,23 @@
+?, ? - V1.2.
+
+* Complete UI rewrite.
+- Bigger knobs.
+- Voice and global section on separate tabs.
+- Improved theming support, theme files only consist of colors and images.
+- Resizing UI support (not completely free, selection of predefined sizes).
+- No exact-editing next to each knob, single place to exact-edit last tweaked param.
+- Dropped the infernal images by default, they are still there in the "infernal" theme.
+- More logical layout, moved voice-related parameters from master to voice input section.
+- Less dependent on context menu. Init / clear / load / save / load factory patch now accessible without context menu.
+
+* Breaking changes:
+- Dropped oscillator gain.
+- Changed the behaviour of ring and amp mod parameters.
+- Decreased the number of routes in both the voice and global cv and audio routing matrices, to make for a cleaner ui.
+
+* New features:
+- Added hold stage for multitap and feedback delay.
+
 April 5, 2023 - V1.1.3.
 
 * Small host-specific fixes.

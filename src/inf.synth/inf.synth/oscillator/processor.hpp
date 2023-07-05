@@ -17,7 +17,7 @@ public audio_part_processor
 {
   std::int32_t _on;
   std::int32_t _type;
-  std::int32_t _ram_src;
+  std::int32_t _am_src;
   std::int32_t _sync_src;
   std::int32_t _kbd_track;
   std::int32_t _dsf_parts;
@@ -32,7 +32,7 @@ public audio_part_processor
   void update_midi_kbd(base::block_input_data const& input, std::int32_t midi);
   template <class processor_type>
   void process(oscillator_input const& input, float const* const* params, 
-    float* const* out, scratch_space& scratch, processor_type processor);
+    float* const* out, scratch_space& scratch, bool allow_unison, processor_type processor);
 
 public:
   audio_part_output process(oscillator_input const& input, float* const* out, cv_bank_processor& cv, scratch_space& scratch);

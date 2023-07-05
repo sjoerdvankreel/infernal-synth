@@ -2,13 +2,13 @@
 #define INF_SYNTH_SYNTH_PROCESSOR_HPP
 
 #include <inf.synth/synth/state.hpp>
+#include <inf.synth/amp/processor.hpp>
 #include <inf.synth/lfo/processor.hpp>
 #include <inf.synth/voice/processor.hpp>
 #include <inf.synth/effect/processor.hpp>
 #include <inf.synth/output/processor.hpp>
 #include <inf.synth/cv_bank/processor.hpp>
 #include <inf.synth/audio_bank/processor.hpp>
-#include <inf.synth/voice_master/processor.hpp>
 #include <inf.synth/shared/scratch_space.hpp>
 #include <inf.base/plugin/audio_processor.hpp>
 
@@ -39,7 +39,7 @@ public base::audio_processor
   // way to do it when user is switching poly/mono modes on the fly.
   bool _voices_drained;
   bool _last_voice_released;
-  std::int32_t _master_mode;
+  std::int32_t _voice_mode;
   std::int32_t _last_midi_note;
   std::int32_t _active_voice_count;
   std::int32_t _last_voice_activated;

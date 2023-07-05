@@ -19,7 +19,7 @@ struct oscillator_input
   std::int32_t new_midi_start_pos;
   base::block_input_data const* block;
   float const* portamento;
-  float* const* const* ram_in;
+  float* const* const* am_in;
   float* const* const* sync_reset_pos;
   std::int32_t* const* const* sync_reset;
 };

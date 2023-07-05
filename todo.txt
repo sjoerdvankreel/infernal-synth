@@ -1,49 +1,30 @@
-* for each release
-- x create version branch
-- x update hiir
-- x update vst3 sdk
-- x update version number in code
-- x update version number in cmake unless only bugfix release
-- x gcc build
-- x diff presets
-- x update history
-- x debug run demos
-- x run pluginval
-- x run the vst validator
-- x keep manual up to date
+* for each release 
+- v create version branch
+- v update version number in code
+- v update version number in cmake unless only bugfix release
+- v consider updating versioned guid
+- v gcc build
+- v update history
+- v keep manual up to date
+- v run host demos
+- v debug run demos
+- v run pluginval
+- v run the vst validator
 - x don't forget to tag
-- x run win32 & linux host demos
-
-* host bugs
-- renoise automation serialization is broken
-- waveform always selects first context menu item
-
-* wishlist small
-- support waveform
-- new menu option: clear all unused
-- make more presets + group by folder
 
 * wishlist big
 - CLAP support
+- Linux support
+- Mac support (contact kvr)
 - osc types: feedback lead
 - filter types: formant, vowel
 - noise types: fractal, perlin
-- fx types: compressor, phaser/flanger/chorus
 - scale CV amount by global CV param
+- make more presets + group by folder
 - improve current noise generator (1/fs)
+- fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
-- tabbed ui
-- larger knobs
-- get rid of uidesc
-- drop uigenerator tool
-- global "edit menu" button
-- remove voice/master graphs
-- reduce the use of background images
-- remove uidescription linker dependency
-- drop text edit fields & put active knob value in 1 single place
-- filter out incompatible menu options (osc sync, ram, audio routing)
-- reduce controller.uidesc to image names, image offsets and color scheme
-- drop view_container_fix etc (anything that's only there for uidescription binding)
+- add the fx demo to website + update the website

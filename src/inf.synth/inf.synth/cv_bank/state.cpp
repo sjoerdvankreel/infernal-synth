@@ -9,8 +9,6 @@ namespace inf::synth {
 cv_bank_data const cv_bank_data::voice =
 {
   part_type::vcv_bank,
-  vcv_bank_count,
-  vcv_bank_route_count,
   vcv_route_output_total_count,
   vcv_route_output_mapping,
   vcv_route_output_target_counts,
@@ -26,8 +24,6 @@ cv_bank_data const cv_bank_data::voice =
 cv_bank_data const cv_bank_data::global = 
 { 
   part_type::gcv_bank,
-  gcv_bank_count,
-  gcv_bank_route_count,
   gcv_route_output_total_count,
   gcv_route_output_mapping,
   gcv_route_output_target_counts,

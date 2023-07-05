@@ -1,5 +1,5 @@
 #include <inf.synth/shared/state.hpp>
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/envelope/graph.hpp>
 #include <inf.synth/envelope/topology.hpp>
 #include <inf.synth/envelope/processor.hpp>
@@ -15,7 +15,14 @@ envelope_graph::needs_repaint(std::int32_t runtime_param) const
   return begin <= runtime_param && runtime_param < begin + envelope_param::count;
 }
 
-bool
+bool 
+envelope_graph::bipolar(base::param_value const* state) const
+{
+  automation_view automation(topology(), state, id());
+  return automation.block_discrete(envelope_param::bipolar) != 0;
+}
+
+void
 envelope_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   plot.resize(input.dsp_output->size());
@@ -23,17 +30,14 @@ envelope_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& p
   bool bipolar = automation.block_discrete(envelope_param::bipolar) != 0;
   for (std::size_t i = 0; i < input.dsp_output->size(); i++)
     plot[i] = bipolar ? ((*input.dsp_output)[i] + 1.0f) * 0.5f : (*input.dsp_output)[i];
-  return bipolar;
 }
 
 std::int32_t
 envelope_graph::sample_count(param_value const* state, float sample_rate) const
 {
-  // Plot some more so we can spot discontinuities at env end.
-  float const plot_length = 1.1f;
   automation_view automation(topology(), state, id());
   envelope_processor processor(topology(), id().index, cv_graph_rate, graph_bpm, automation);
-  return static_cast<std::int32_t>(processor.total_dahdr_samples(true) * plot_length);
+  return static_cast<std::int32_t>(processor.total_dahdr_samples(true));
 }
 
 void

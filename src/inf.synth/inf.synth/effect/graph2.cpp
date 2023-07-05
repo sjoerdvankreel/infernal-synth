@@ -1,4 +1,4 @@
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/effect/state.hpp>
 #include <inf.synth/effect/graph2.hpp>
 #include <inf.synth/effect/topology.hpp>
@@ -82,8 +82,16 @@ effect_graph2::process_shaper_spectrum(block_input const& input, float* output, 
   std::copy(_audio_out[0].data(), _audio_out[0].data() + input.data.sample_count, output);
 }
 
+bool 
+effect_graph2::bipolar(base::param_value const* state) const
+{
+  automation_view automation(topology(), state, id());
+  std::int32_t type = automation.block_discrete(effect_param::type);
+  return type == effect_type::delay || type == effect_type::reverb;
+}
+
 // https://dsp.stackexchange.com/questions/20500/negative-values-of-the-fft
-bool
+void
 effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   automation_view automation(topology(), input.state, id());
@@ -93,7 +101,7 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
   if (type == effect_type::delay || type == effect_type::reverb)
   {
     _graph1.dsp_to_plot(input, plot);
-    return true;
+    return;
   }
 
   // Shaper graph2 plots spectrum of 1 second shaper output of sinewave input.
@@ -102,7 +110,7 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
     float const* spectrum = _analyzer.analyze(*input.dsp_output, input.sample_rate);
     for (std::size_t i = 0; i < spectrum_analyzer::bucket_count; i++)
       plot.push_back(spectrum[i]);
-    return false;
+    return;
   }
 
   // Filter plots IR to FR.
@@ -114,7 +122,6 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
     max = std::max(max, std::abs(fft[i].real()));
   for (std::size_t i = 0; i < fft.size(); i++)
     plot.push_back(std::abs(fft[i].real()) / max);
-  return false;
 }
 
 } // namespace inf::synth

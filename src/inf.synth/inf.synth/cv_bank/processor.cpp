@@ -153,45 +153,39 @@ cv_bank_processor::update_block_params(block_input_data const& input)
   // Find out relevant modulation targets.
   _relevant_indices_count.fill(0);
 
-  // For each bank.
-  for (std::int32_t b = 0; b < _data->bank_count; b++)
-  { 
-    // cv_bank_param_offset = enabled + plot params
-    part_id bank_id = { _data->part_type, b };
-    automation_view bank_automation = input.automation.rearrange_params(bank_id);
-    if (bank_automation.block_discrete(cv_bank_vgcv_param_on) == 0) continue;
+  // cv_bank_param_offset = enabled + plot params
+  part_id bank_id = { _data->part_type, 0 };
+  automation_view bank_automation = input.automation.rearrange_params(bank_id);
 
-    // For each route.
-    for (std::int32_t r = 0; r < _data->route_count; r++)
+  // For each route.
+  for (std::int32_t r = 0; r < cv_bank_route_count; r++)
+  {
+    std::int32_t in_index = cv_bank_param_index(r, cv_bank_param_type::in);
+    std::int32_t source_id = bank_automation.block_discrete(in_index);
+    if (source_id == cv_bank_vgcv_inout_off) continue;
+
+    // For each target.
+    for (std::int32_t output_id = 0; output_id < _data->route_output_total_count; output_id++)
     {
-      std::int32_t in_index = param_index(r, cv_bank_param_type::in);
-      std::int32_t source_id = bank_automation.block_discrete(in_index);
-      if (source_id == cv_bank_vgcv_inout_off) continue;
+      std::pair<std::int32_t, std::int32_t> output_ids = _data->output_table_out[output_id];
+      std::int32_t route_output = output_ids.first;
+      std::int32_t part_index = output_ids.second; 
+      if(route_output == cv_bank_vgcv_inout_off) continue;
 
-      // For each target.
-      for (std::int32_t output_id = 0; output_id < _data->route_output_total_count; output_id++)
+      // If matched, mark in/out combination as relevant for a given mixdown target.
+      for (std::int32_t p = 0; p < _data->route_output_target_counts[route_output]; p++)
       {
-        std::pair<std::int32_t, std::int32_t> output_ids = _data->output_table_out[output_id];
-        std::int32_t route_output = output_ids.first;
-        std::int32_t part_index = output_ids.second; 
-        if(route_output == cv_bank_vgcv_inout_off) continue;
+        std::int32_t target_id = _data->target_table_in[route_output][part_index][p];
+        if (target_id == cv_bank_vgcv_inout_off) continue;
+        std::int32_t target_index = cv_bank_param_index(r, cv_bank_param_type::out);
+        if (bank_automation.block_discrete(target_index) != target_id) continue;
 
-        // If matched, mark in/out combination as relevant for a given mixdown target.
-        for (std::int32_t p = 0; p < _data->route_output_target_counts[route_output]; p++)
-        {
-          std::int32_t target_id = _data->target_table_in[route_output][part_index][p];
-          if (target_id == cv_bank_vgcv_inout_off) continue;
-          std::int32_t target_index = param_index(r, cv_bank_param_type::out);
-          if (bank_automation.block_discrete(target_index) != target_id) continue;
-
-          cv_route_indices indices;
-          indices.bank_index = b; 
-          indices.route_index = r;
-          indices.target_index = p;
-          indices.input_ids = _data->source_table_out[source_id];
-          indices.input_op_index = bank_automation.block_discrete(param_index(r, cv_bank_param_type::op));
-          _relevant_indices[output_id][_relevant_indices_count[output_id]++] = indices;
-        }
+        cv_route_indices indices;
+        indices.route_index = r;
+        indices.target_index = p;
+        indices.input_ids = _data->source_table_out[source_id];
+        indices.input_op_index = bank_automation.block_discrete(cv_bank_param_index(r, cv_bank_param_type::op));
+        _relevant_indices[output_id][_relevant_indices_count[output_id]++] = indices;
       }
     }
   }
@@ -207,9 +201,9 @@ cv_bank_processor::apply_modulation(cv_bank_input const& input,
   float* amt = _state->amt.data();
   float* scale = _state->scale.data();
   float* offset = _state->offset.data();
-  std::int32_t amt_param = param_index(indices.route_index, cv_bank_param_type::amt);
-  std::int32_t scale_param = param_index(indices.route_index, cv_bank_param_type::scale);
-  std::int32_t offset_param = param_index(indices.route_index, cv_bank_param_type::off);
+  std::int32_t amt_param = cv_bank_param_index(indices.route_index, cv_bank_param_type::amt);
+  std::int32_t scale_param = cv_bank_param_index(indices.route_index, cv_bank_param_type::scale);
+  std::int32_t offset_param = cv_bank_param_index(indices.route_index, cv_bank_param_type::off);
   bank_automation.continuous_real_transform(amt_param, amt, sample_count);
   bank_automation.continuous_real_transform(scale_param, scale, sample_count);
   bank_automation.continuous_real_transform(offset_param, offset, sample_count);
@@ -293,19 +287,11 @@ cv_bank_processor::modulate(cv_bank_input const& input, float const* const*& res
     input.automated->continuous_real(target_mapping[p], _state->out.buffer(target_mapping[p]), sample_count);
 
   // Apply modulation (can scale beyond [0, 1], we apply clipping just before transform to dsp domain).
-  automation_view bank_automation;
-  std::int32_t previous_bank_index = -1;
+  part_id bank_id = { _data->part_type, 0 };
+  automation_view bank_automation = input.block->automation.rearrange_params(bank_id);
   for (std::int32_t i = 0; i < relevant_indices_count; i++)
   {
     cv_route_indices indices = _relevant_indices[output_id][i];
-    if (indices.bank_index != previous_bank_index)
-    {
-      part_id bank_id = { _data->part_type, indices.bank_index };
-      bank_automation = input.block->automation.rearrange_params(bank_id);
-      assert(indices.bank_index >= previous_bank_index);
-      previous_bank_index = indices.bank_index;
-    }
-
     std::int32_t mapped_target = target_mapping[indices.target_index];
     apply_modulation(input, bank_automation, indices, mapped_target);
   }

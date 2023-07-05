@@ -2,7 +2,7 @@
 #define INF_SYNTH_EFFECT_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/topology/topology_info.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -12,12 +12,17 @@ namespace inf::synth {
 extern base::param_descriptor const veffect_params[];
 extern base::param_descriptor const geffect_params[];
 extern std::vector<float> const effect_dly_timesig_values;
+extern std::vector<float> const effect_dly_hold_timesig_values;
+
+char const* effect_graph_name_selector(
+base::topology_info const* topology, base::param_value const* state,
+base::part_id id, std::int32_t graph_type);
 
 struct effect_param_t { enum value {
   on, type, filter_type, flt_stvar_type, flt_stvar_freq, flt_stvar_res, flt_stvar_kbd, 
   flt_stvar_shlf_gain, flt_comb_dly_plus, flt_comb_gain_plus, flt_comb_dly_min, flt_comb_gain_min,
   shaper_type, shp_over_order, shp_mix, shp_gain, shp_cheby_terms, shp_cheby_sum_decay, vfx_count,
-  delay_type = vfx_count, dly_synced, dly_mix, dly_amt, dly_fdbk_sprd, dly_multi_sprd, dly_fdbk_time_l, 
+  delay_type = vfx_count, dly_synced, dly_mix, dly_amt, dly_hold_time, dly_hold_tempo, dly_fdbk_sprd, dly_multi_sprd, dly_fdbk_time_l, 
   dly_fdbk_time_r, dly_fdbk_tempo_l, dly_fdbk_tempo_r, dly_multi_time, dly_multi_tempo, dly_multi_taps, 
   reverb_mix, reverb_size, reverb_spread, reverb_damp, reverb_apf, gfx_count, count = gfx_count }; };
 typedef effect_param_t::value effect_param;
@@ -36,11 +41,6 @@ typedef effect_filter_type_t::value effect_filter_type;
 typedef effect_shaper_type_t::value effect_shaper_type;
 typedef effect_shp_over_order_t::value effect_shp_over_order;
 typedef effect_flt_stvar_type_t::value effect_flt_stvar_type;
-
-inline std::vector<base::graph_descriptor> const& effect_graphs = {
-{ effect_graph::graph1, "Filter IR/Shaper ramp/Delay left/Reverb left", { 0, 2, 4, 1 } },
-{ effect_graph::graph2, "Filter FR/Shaper spectrum/Delay right/Reverb right", { 0, 3, 4, 1 } } };
-inline std::vector<base::box_descriptor> const effect_borders = { { 0, 0, 1, 2 }, { 1, 0, 3, 2 } };
 
 } // namespace inf::synth
 #endif // INF_SYNTH_EFFECT_TOPOLOGY_HPP

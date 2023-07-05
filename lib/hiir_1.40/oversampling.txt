@@ -1,0 +1,447 @@
+﻿
+Oversampling with HIIR
+======================
+
+Purpose: upsampling + downsampling with an integer value for the total phase
+delay of both operations. This helps reducing the frequency-dependant cancel-
+lation when mixing the processed signal with the original signal, because the
+original signal can be easily delayed to compensate.
+
+The following designs are ready-to-use coefficient lists for various phase
+delays and oversampling rates, from 2× to 8×. Please note:
+
+– Bandwidth may vary. It is greater than 19 kHz at a 44.1 kHz sampling rate.
+
+– Phase delay is measured at 4 kHz for a 44.1 kHz base sampling rate. For
+audio signals, this helps reaching the initial goal because small sub-sample
+delays on low-frequency content have a neglictible impact on the cancellation
+issue. Moreover, the human ear is most sensitive in the 1–4 kHz range.
+
+– Single-trip filtering (upsampling or downsampling) is *not* the half the
+specified total phase delay. The reason is that the downsampling operation
+is 1 sample full-band (1/2 sample half-band) in advance on the specified
+phase delay, whereas upsampling is done according to the specified figure.
+
+– Filter design is mostly constrained by the number of coefficients and the
+desired phase delay for the stage. Also, phase delay is roughly proportional
+to the number of coefficients. The larger the phase delay, the wider the
+transition bandwidth and the lower the attenuation. When the number of coef-
+ficients is set, this leaves almost no room for controlling the attenuation
+and transition bandwidth. But one can introduce an arbitrary delay in samples
+in the top rate stream. Thus, other combinations can be found. This is left as
+an exercise to the reader.
+
+
+
+————————————————————————————————————————————————————————————————
+    2×
+————————————————————————————————————————————————————————————————
+
+2×, 156 dB
+¯¯¯¯¯¯¯¯¯¯
+
+Total delay : 5.0 spl
+Bandwidth   : 19968 Hz
+
+Coefficients: 12
+Attenuation : 156.686 dB
+Trans BW    : 0.0472053
+Phase delay : 5 spl
+Group delay : 5.14 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.017347915108876406
+        0.067150480426919179
+        0.14330738338179819
+        0.23745131944299824
+        0.34085550201503761
+        0.44601111310335906
+        0.54753112652956148
+        0.6423859124721446
+        0.72968928615804163
+        0.81029959388029904
+        0.88644514917318362
+        0.96150605146543733
+
+
+
+2×, 125 dB
+¯¯¯¯¯¯¯¯¯¯
+
+Total delay : 4.0 spl
+Bandwidth   : 20213 Hz
+
+Coefficients: 10
+Attenuation : 125.619 dB
+Trans BW    : 0.0416368
+Phase delay : 4 spl
+Group delay : 4.11568 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.026280277370383145
+        0.099994562200117765
+        0.20785425737827937
+        0.33334081139102473
+        0.46167004060691091
+        0.58273462309510859
+        0.69172302956824328
+        0.78828933879250873
+        0.87532862123185262
+        0.9580617608216595
+
+
+
+2×, 94 dB
+¯¯¯¯¯¯¯¯¯
+
+Total delay : 3.0 spl
+Bandwidth   : 20534 Hz
+
+Coefficients: 8
+Attenuation : 94.8751 dB
+Trans BW    : 0.0343747
+Phase delay : 3 spl
+Group delay : 3.09123 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.044076093956155402
+        0.16209555156378622
+        0.32057678606990592
+        0.48526821501990786
+        0.63402005787429128
+        0.75902855561016014
+        0.86299283427175177
+        0.9547836337311687
+
+
+
+2×, 64 dB
+¯¯¯¯¯¯¯¯¯
+
+Total delay : 2.0 spl
+Bandwidth   : 20961 Hz
+
+Coefficients: 6
+Attenuation : 64.6458 dB
+Trans BW    : 0.0246851
+Phase delay : 2 spl
+Group delay : 2.06607 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.086928900551398763
+        0.29505822040137708
+        0.52489392936346835
+        0.7137336652558357
+        0.85080135560651127
+        0.95333447720743869
+
+
+
+————————————————————————————————————————————————————————————————
+    4×
+————————————————————————————————————————————————————————————————
+
+4×, 140 dB
+¯¯¯¯¯¯¯¯¯¯
+
+Total delay : 6.0 spl
+Bandwidth   : 20594 Hz
+
+Coefficients: 5
+Attenuation : 140.387 dB
+Trans BW    : 0.241371
+Phase delay : 2.796 spl
+Group delay : 2.81247 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.029113887601773612
+        0.11638402872809682
+        0.26337786480329456
+        0.47885453461538624
+        0.78984065611473109
+
+Coefficients: 12
+Attenuation : 140.698 dB
+Trans BW    : 0.0330036
+Phase delay : 4.602 spl
+Group delay : 4.73517 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.021155607771239357
+        0.081229227715837876
+        0.17117329577828599
+        0.27907679095036358
+        0.39326146586620897
+        0.50450550469712818
+        0.60696304442748228
+        0.69802237610653928
+        0.77761801388575091
+        0.84744854091978927
+        0.91036460053334245
+        0.97003180383006626
+
+
+
+4×, 120 dB
+¯¯¯¯¯¯¯¯¯¯
+
+Total delay : 5.0 spl
+Bandwidth   : 20428 Hz
+
+Coefficients: 4
+Attenuation : 120.958 dB
+Trans BW    : 0.261666
+Phase delay : 2.2324 spl
+Group delay : 2.2459 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.041180778598107023
+        0.1665604775598164
+        0.38702422374344198
+        0.74155297339931314
+
+Coefficients: 10
+Attenuation : 120.98 dB
+Trans BW    : 0.0367598
+Phase delay : 3.8838 spl
+Group delay : 3.99747 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.028143361249169534
+        0.10666337918578024
+        0.22039215120527197
+        0.35084569997865528
+        0.48197792985533633
+        0.60331147102003924
+        0.7102921937907698
+        0.80307423332343497
+        0.88500411159151648
+        0.96155188130366132
+
+
+
+4×, 99 dB
+¯¯¯¯¯¯¯¯¯
+
+Total delay : 4.0 spl
+Bandwidth   : 19084 Hz
+
+Coefficients: 3
+Attenuation : 99.2112 dB
+Trans BW    : 0.283623
+Phase delay : 1.655 spl
+Group delay : 1.66555 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.064871212918289664
+        0.26990325432357809
+        0.67132720810807256
+
+Coefficients: 8
+Attenuation : 101.729 dB
+Trans BW    : 0.0432267
+Phase delay : 3.1725 spl
+Group delay : 3.26671 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.038927716817571831
+        0.1447065207203321
+        0.29070001093670539
+        0.44813928150889282
+        0.59667390381274976
+        0.72756709523681729
+        0.84178734600949523
+        0.94699056169241524
+
+
+
+————————————————————————————————————————————————————————————————
+    8×
+————————————————————————————————————————————————————————————————
+
+8×, 133 dB
+¯¯¯¯¯¯¯¯¯¯
+
+Total delay : 6.0 spl
+Bandwidth   : 19814 Hz
+
+Coefficients: 3
+Attenuation : 133.371 dB
+Trans BW    : 0.373128
+Phase delay : 1.717 spl
+Group delay : 1.7196 spl
+Dly rel freq: 0.0113379
+Coefficient list:
+        0.056028689580145966
+        0.2438952031065017
+        0.64749960965360798
+
+Coefficients: 5
+Attenuation : 133.465 dB
+Trans BW    : 0.224566
+Phase delay : 2.76 spl
+Group delay : 2.77651 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.030628870339135559
+        0.12166431142077823
+        0.27260436967450397
+        0.48939820546688356
+        0.79574591597790167
+
+Coefficients: 10
+Attenuation : 133.697 dB
+Trans BW    : 0.0507022
+Phase delay : 4.19075 spl
+Group delay : 4.30946 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.02347550947773171
+        0.089865847585516564
+        0.18855110667410455
+        0.30593155751915702
+        0.42927272772713948
+        0.54927694585933118
+        0.6609721246235537
+        0.76339208090846
+        0.85879504640138027
+        0.95202395338793633
+
+
+
+8×, 129 dB
+¯¯¯¯¯¯¯¯¯¯
+Total delay : 6.0 spl
+Bandwidth   : 19006 Hz
+
+Coefficients: 3
+Attenuation : 142.312 dB
+Trans BW    : 0.3901
+Phase delay : 1.725 spl
+Group delay : 1.7276 spl
+Dly rel freq: 0.0113379
+Coefficient list:
+        0.055006689941721712
+        0.24080823797621789
+        0.64456305579326278
+
+Coefficients: 4
+Attenuation : 129.624 dB
+Trans BW    : 0.284503
+Phase delay : 2.2634 spl
+Group delay : 2.27686 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.039007192037884615
+        0.15936900049878461
+        0.37605311415523662
+        0.7341922816405595
+
+Coefficients: 10
+Attenuation : 145.17 dB
+Trans BW    : 0.0646551
+Phase delay : 4.43705 spl
+Group delay : 4.55916 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.020259561571818407
+        0.07811926635621437
+        0.165767029808395
+        0.27285653675862664
+        0.38920012889842326
+        0.50682082231815651
+        0.62096457947279504
+        0.73023836303677192
+        0.83631543394763719
+        0.94366551176113678
+
+
+
+8×, 115 dB
+¯¯¯¯¯¯¯¯¯¯
+Total delay : 5.0 spl
+Bandwidth   : 19280 Hz
+
+Coefficients: 3
+Attenuation : 115.108 dB
+Trans BW    : 0.330575
+Phase delay : 1.691 spl
+Group delay : 1.6936 spl
+Dly rel freq: 0.0113379
+Coefficient list:
+        0.059424895788696495
+        0.25402903012559713
+        0.65697309449004115
+
+Coefficients: 4
+Attenuation : 115.306 dB
+Trans BW    : 0.245813
+Phase delay : 2.208 spl
+Group delay : 2.22153 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.042942076687509392
+        0.17233198394244389
+        0.39570312028031407
+        0.74727683965475022
+
+Coefficients: 8
+Attenuation : 115.174 dB
+Trans BW    : 0.0627931
+Phase delay : 3.47325 spl
+Group delay : 3.57186 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.031273333212550401
+        0.11822374968950244
+        0.24354908560025812
+        0.38702325277755739
+        0.53245171533105751
+        0.67117027939107099
+        0.80235276007160961
+        0.93204839936599315
+
+
+
+8×, 96 dB
+¯¯¯¯¯¯¯¯¯
+
+Total delay : 4.0 spl
+Bandwidth   : 19649 Hz
+
+Coefficients: 2
+Attenuation : 97.6237 dB
+Trans BW    : 0.384234
+Phase delay : 1.1 spl
+Group delay : 1.1018 spl
+Dly rel freq: 0.0113379
+Coefficient list:
+        0.11145973802055159
+        0.5389183683274309
+
+Coefficients: 3
+Attenuation : 96.2787 dB
+Trans BW    : 0.273878
+Phase delay : 1.645 spl
+Group delay : 1.65554 spl
+Dly rel freq: 0.0226757
+Coefficient list:
+        0.066279281652775912
+        0.27393598622393989
+        0.67488440000123284
+
+Coefficients: 7
+Attenuation : 96.0343 dB
+Trans BW    : 0.0544272
+Phase delay : 2.9025 spl
+Group delay : 2.98819 spl
+Dly rel freq: 0.0453515
+Coefficient list:
+        0.043525161938154609
+        0.16076108002341286
+        0.32024325682326032
+        0.48987617815497958
+        0.64952123936442452
+        0.79389404748996595
+        0.9300378703058515
+

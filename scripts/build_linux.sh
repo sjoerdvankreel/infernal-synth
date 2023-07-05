@@ -3,12 +3,20 @@ set -e
 
 if [ "$#" -ne 1 ]
 then
-  echo "Usage: $0 <path-to-hiir>"
+  echo "Usage: $0 <linux-distro-name>"
   exit 1
 fi
 
-echo "Setting up vst sdk..."
-sh ./setup_vst3sdk_linux.sh
+cd ..
+mkdir -p build/linux_"$1"/debug
+cd build/linux_"$1"/debug
+cmake -DCMAKE_BUILD_TYPE=Debug -DINFERNAL_LINUX_DISTRO="$1" ../../..
+make
 
-echo "Building infernal..."
-sh ./build_infernal_linux.sh $1
+cd ..
+mkdir -p release
+cd release
+cmake -DCMAKE_BUILD_TYPE=Release -DINFERNAL_LINUX_DISTRO="$1" ../../..
+make
+
+cd ../../../scripts

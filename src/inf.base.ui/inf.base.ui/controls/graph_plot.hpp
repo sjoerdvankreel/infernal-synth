@@ -2,44 +2,54 @@
 #define INF_BASE_UI_CONTROLS_GRAPH_PLOT_HPP
 
 #include <inf.base/plugin/graph_processor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
+#include <inf.base/plugin/plugin_controller.hpp>
+#include <inf.base/topology/part_descriptor.hpp>
 
-#include <vstgui/vstgui.h>
-#include <vstgui/vstgui_uidescription.h>
-#include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
+#include <juce_events/juce_events.h>
+#include <juce_gui_basics/juce_gui_basics.h>
+
+#include <cstdint>
 
 namespace inf::base::ui {
 
-// Graph component backed by graph_descriptor and graph_processor.
-class graph_plot : 
-public VSTGUI::CView
+// Don't paint too often, is expensive.
+class inf_graph_plot_timer:
+public juce::Timer
 {
-  static inline float const bpm = 120.0f;
-  static inline float const sample_rate = 48000.0f;
-
-  part_id const _part_id;
-  std::int32_t const _graph_type;
-  graph_ui_colors const _colors;
-  std::int32_t const _row_span;
-  std::int32_t const _column_span;
-  std::unique_ptr<graph_processor> _processor;
+  bool _dirty = false;
+  bool _inside_callback = false;
+  juce::Component* _plot = nullptr;
+  std::uint64_t _paint_request_time = 0;
 public:
-  graph_processor* processor();
-  void draw(VSTGUI::CDrawContext* context) override;
-public:
-  graph_plot(part_id part_id, std::int32_t graph_type, graph_ui_colors const& colors, std::int32_t row_span, std::int32_t column_span):
-  VSTGUI::CView(VSTGUI::CRect(0, 0, 0, 0)), _part_id(part_id), _graph_type(graph_type),
-  _colors(colors), _row_span(row_span), _column_span(column_span) { }
+#ifdef NDEBUG
+  static inline std::uint64_t const timeout_millis = 50UL;
+#else
+  static inline std::uint64_t const timeout_millis = 1000UL;
+#endif
+  void timerCallback() override;
+  void delayed_repaint_request();
+  void plot(juce::Component* plot) { _plot = plot; }
 };
 
-// VSTGUI graph factory.
-class graph_plot_creator :
-public VSTGUI::ViewCreatorAdapter
+class inf_graph_plot : 
+public juce::Component,
+public juce::SettableTooltipClient
 {
+  juce::Image _bg_image;
+  part_id const _part_id;
+  std::int32_t const _graph_type;
+  std::string const _background_image_path;
+  inf_graph_plot_timer _repaint_timer = {};
+  inf::base::plugin_controller* const _controller;
+  std::unique_ptr<graph_processor> _processor = {};
+  
 public:
-  VSTGUI::IdStringPtr getViewName() const override { return "inf_graph_plot"; }
-  VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCView; }
-  VSTGUI::CView* create(VSTGUI::UIAttributes const& attrs, VSTGUI::IUIDescription const* desc) const override;
+  graph_processor* processor();
+  void paint(juce::Graphics& g) override;  
+  void delayed_repaint_request() { _repaint_timer.delayed_repaint_request(); }
+
+  ~inf_graph_plot();
+  inf_graph_plot(inf::base::plugin_controller* controller, part_id part_id, std::int32_t graph_type, std::string const& background_image_path);
 };
 
 } // namespace inf::base::ui

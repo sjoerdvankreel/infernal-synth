@@ -33,7 +33,6 @@ public:
   std::int64_t modulate(cv_bank_input const& input, float const* const*& result);
 
 private:
-  std::int32_t param_index(std::int32_t route, cv_bank_param_type type);
   void apply_modulation(
     cv_bank_input const& input, base::automation_view const& bank_automation, 
     cv_route_indices const& indices, std::int32_t mapped_target);
@@ -47,17 +46,11 @@ private:
   float const* input_buffer_global(std::int32_t input, std::int32_t index) const;
   
   // Precomputing all relevant routes for each target output.
-  static inline std::int32_t constexpr max_bank_count = std::max(vcv_bank_count, gcv_bank_count);
-  static inline std::int32_t constexpr max_route_count = std::max(vcv_bank_route_count, gcv_bank_route_count);
   static inline std::int32_t constexpr max_total_route_output_count = std::max(vcv_route_output_total_count, gcv_route_output_total_count);
 
   std::array<std::int32_t, max_total_route_output_count> _relevant_indices_count;
-  std::array<std::array<cv_route_indices, max_bank_count * max_route_count>, max_total_route_output_count> _relevant_indices;
+  std::array<std::array<cv_route_indices, cv_bank_route_count>, max_total_route_output_count> _relevant_indices;
 };
-
-inline std::int32_t
-cv_bank_processor::param_index(std::int32_t route, cv_bank_param_type type)
-{ return cv_bank_param_offset + type * _data->route_count + route; }
 
 } // namespace inf::synth
 #endif // INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP

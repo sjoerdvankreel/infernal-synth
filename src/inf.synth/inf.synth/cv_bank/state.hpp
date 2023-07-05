@@ -3,7 +3,8 @@
 
 #include <inf.synth/synth/config.hpp>
 #include <inf.synth/shared/state.hpp>
-#include <inf.synth/voice_master/topology.hpp>
+#include <inf.synth/amp/topology.hpp>
+#include <inf.synth/synth/topology.hpp>
 #include <inf.base/plugin/state.hpp>
 #include <inf.base/shared/cont_storage.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
@@ -23,7 +24,6 @@ struct cv_bank_input
 
 struct cv_route_indices
 {
-  std::int32_t bank_index;
   std::int32_t route_index;
   std::int32_t target_index;
   std::int32_t input_op_index;
@@ -54,8 +54,6 @@ struct cv_bank_data
   static cv_bank_data const global;
 
   std::int32_t const part_type;
-  std::int32_t const bank_count;
-  std::int32_t const route_count;
   std::int32_t const route_output_total_count;
   std::int32_t const* const route_output_mapping;
   std::int32_t const* const route_output_target_counts;

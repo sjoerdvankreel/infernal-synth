@@ -28,7 +28,7 @@ oscillator_processor(
 topology_info const* topology, std::int32_t index, float sample_rate,
 block_input_data const& input, std::int32_t midi, std::int32_t midi_offset, oscillator_state* state):
 audio_part_processor(topology, { part_type::vosc, index }, sample_rate, vcv_route_output::vosc),
-_on(), _type(), _ram_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
+_on(), _type(), _am_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
 _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
 {
   assert(state != nullptr);
@@ -38,7 +38,7 @@ _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
   std::int32_t noise_seed = automation.block_discrete(osc_param::noise_seed);
   _on = automation.block_discrete(osc_param::on);
   _type = automation.block_discrete(osc_param::type);
-  _ram_src = automation.block_discrete(osc_param::ram_src);
+  _am_src = automation.block_discrete(osc_param::am_src);
   _sync_src = automation.block_discrete(osc_param::sync_src);
   _dsf_parts = automation.block_discrete(osc_param::dsf_parts);
   _basic_type = automation.block_discrete(osc_param::basic_type);
@@ -109,8 +109,8 @@ oscillator_processor::update_midi_kbd(block_input_data const& input, std::int32_
 
 template <class processor_type>
 void 
-oscillator_processor::process(oscillator_input const& input, 
-  float const* const* params, float* const* out, scratch_space& scratch, processor_type processor)
+oscillator_processor::process(oscillator_input const& input, float const* const* params, 
+  float* const* out, scratch_space& scratch, bool allow_unison, processor_type processor)
 {
   float const min_fm = 20.0f;
   float const max_fm = 10000.0f;
@@ -121,16 +121,16 @@ oscillator_processor::process(oscillator_input const& input,
 
   float const* pm = params[osc_param::pm];
   float const* fm = params[osc_param::fm];
-  float const* gain = params[osc_param::gain];
   float const* cent = params[osc_param::cent];
   float const* detune = params[osc_param::uni_dtn];
   float const* spread = params[osc_param::uni_sprd];
-  float const* ram_bal = params[osc_param::ram_bal];
-  float const* ram_mix = params[osc_param::ram_mix];
+  float const* am_mix = params[osc_param::am_mix];
+  float const* am_ring = params[osc_param::am_ring];
 
-  float voice_count = static_cast<float>(_uni_voices);
-  float voice_apply = _uni_voices == 1? 0.0f: 1.0f;
-  float voice_range = _uni_voices == 1 ? 1.0f : static_cast<float>(_uni_voices - 1);
+  std::int32_t uni_voices = (allow_unison ? _uni_voices : 1);
+  float voice_apply = uni_voices == 1 ? 0.0f : 1.0f;
+  float voice_count = static_cast<float>(uni_voices);
+  float voice_range = uni_voices == 1 ? 1.0f : static_cast<float>(uni_voices - 1);
 
   // Precompute voice independent stuff (only sample dependent).
   float* pan_min = scratch.storage_f32.buffer(0);
@@ -162,7 +162,7 @@ oscillator_processor::process(oscillator_input const& input,
   }
 
   // Run oscillators in unison.
-  for (std::int32_t v = 0; v < _uni_voices; v++)
+  for (std::int32_t v = 0; v < uni_voices; v++)
   {
     float* voice_out = scratch.storage_f32.buffer(6);
     float* voice_pan = scratch.storage_f32.buffer(7);
@@ -230,14 +230,14 @@ oscillator_processor::process(oscillator_input const& input,
         out[c][s] = sanity(out[c][s] + mono_pan_sqrt_3(c, voice_pan[s]) * voice_out[s] / voice_count);
   }
 
-  // Apply gain + ring mod/amp mod.
+  // Apply ring mod/amp mod.
   for (std::int32_t c = 0; c < stereo_channels; c++)
     for (std::int32_t s = 0; s < input.block->sample_count; s++)
     {
       float carrier = out[c][s];
-      float balance = (ram_bal[s] + 1.0f) * 0.5f; // 0 = RM, 1 = AM.
-      float modulator = (input.ram_in[_ram_src][c][s] + balance) / (1.0f + balance);
-      out[c][s] = gain[s] * ((1.0f - ram_mix[s]) * carrier + ram_mix[s] * carrier * modulator);
+      float balance = 1.0f - am_ring[s];
+      float modulator = (input.am_in[_am_src][c][s] + balance) / (1.0f + balance);
+      out[c][s] = ((1.0f - am_mix[s]) * carrier + am_mix[s] * carrier * modulator);
     }
 }
 
@@ -247,7 +247,7 @@ void oscillator_processor::process_dsf(oscillator_input const& input,
   float const* dist_param = params[osc_param::dsf_dist];
   float const* decay_param = params[osc_param::dsf_decay];
   auto processor = osc_dsf_processor({ sample_rate(), _dsf_parts, dist_param, decay_param });
-  process(input, params, out, scratch, processor);
+  process(input, params, out, scratch, true, processor);
 }
 
 void oscillator_processor::process_noise(oscillator_input const& input,
@@ -257,7 +257,7 @@ void oscillator_processor::process_noise(oscillator_input const& input,
   float const* noise_y_param = params[osc_param::noise_y];
   float const* noise_color_param = params[osc_param::noise_color];
   auto processor = osc_noise_processor({ _state, noise_x_param, noise_y_param, noise_color_param });
-  process(input, params, out, scratch, processor);
+  process(input, params, out, scratch, false, processor);
 }
 
 void oscillator_processor::process_mix(oscillator_input const& input,
@@ -269,7 +269,7 @@ void oscillator_processor::process_mix(oscillator_input const& input,
   float const* mix_tri_param = params[osc_param::mix_triangle];
   float const* mix_pulse_param = params[osc_param::mix_pulse];
   auto processor = osc_mix_processor({ mix_sine_param, mix_saw_param, mix_pulse_param, mix_tri_param, mix_pw_param });
-  process(input, params, out, scratch, processor);
+  process(input, params, out, scratch, true, processor);
 }
 
 void oscillator_processor::process_kps(oscillator_input const& input,
@@ -288,7 +288,7 @@ void oscillator_processor::process_kps(oscillator_input const& input,
     _state->kps_initialized = true;
   }
   auto processor = osc_kps_processor({ _state, sample_rate(), stretch_param, feedback_param });
-  process(input, params, out, scratch, processor);
+  process(input, params, out, scratch, true, processor);
 }
 
 void oscillator_processor::process_basic(oscillator_input const& input,
@@ -297,10 +297,10 @@ void oscillator_processor::process_basic(oscillator_input const& input,
   float const* pw_param = params[osc_param::basic_pw];
   switch (_basic_type)
   {
-  case osc_basic_type::sine: process(input, params, out, scratch, osc_sine_processor()); break;
-  case osc_basic_type::saw: process(input, params, out, scratch, osc_blep_saw_processor()); break;
-  case osc_basic_type::triangle: process(input, params, out, scratch, osc_blamp_triangle_processor()); break;
-  case osc_basic_type::pulse: process(input, params, out, scratch, osc_blep_pulse_processor({ pw_param })); break;
+  case osc_basic_type::sine: process(input, params, out, scratch, true, osc_sine_processor()); break;
+  case osc_basic_type::saw: process(input, params, out, scratch, true, osc_blep_saw_processor()); break;
+  case osc_basic_type::triangle: process(input, params, out, scratch, true, osc_blamp_triangle_processor()); break;
+  case osc_basic_type::pulse: process(input, params, out, scratch, true, osc_blep_pulse_processor({ pw_param })); break;
   default: assert(false); break;
   }
 }

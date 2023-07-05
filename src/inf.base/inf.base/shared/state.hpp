@@ -7,9 +7,6 @@
 
 namespace inf::base {
 
-// Extra info for list items.
-typedef char const* (*list_item_info)(std::int32_t index);
-
 inline std::vector<std::string> const note_names = {
   { "C" }, { "C#" }, { "D" }, { "D#" }, { "E" }, { "F" },
   { "F#" }, { "G" }, { "G#" }, { "A" }, { "A#" }, { "B" } };
@@ -81,12 +78,9 @@ multi_list_table_init_in(std::int32_t const* counts, std::int32_t count);
 std::vector<std::pair<std::int32_t, std::int32_t>>
 multi_list_table_init_out(std::int32_t const* counts, std::int32_t count);
 
-// E.g. "ExtraInfo", "2", "3".
-std::vector<std::string>
-list_tab_items(list_item_info info, std::int32_t count);
 // E.g. ("id", Osc"), 2 -> ("id1", "Osc 1"), ("id2", "Osc 2").
 std::vector<list_item>
-list_items(list_item const& item, list_item_info info, bool space, std::int32_t count);
+list_items(list_item const& item, std::int32_t count);
 
 // Generate time signatures.
 std::vector<std::string>
@@ -97,19 +91,21 @@ std::vector<time_signature>
 synced_timesig(bool with_zero, std::pair<std::int32_t, std::int32_t> max,
 std::vector<std::pair<timesig_type, std::vector<std::int32_t>>> const& series);
 
+// Pass list of id/name with count per name.
+// E.g. [("idA", "Osc"), ("idB", "Flt")], [2, 1] -> [("idA1", "Osc 1"), ("idA2", "Osc 2"), ("idB", "Flt")].
+std::vector<list_item>
+multi_list_items(
+  list_item const* items, char const* const* suffixes,
+  std::int32_t const* counts, std::int32_t count, bool sub_menu);
+
 // Pass list of id/name with count per name plus second list specific to item in first.
 // E.g. [("idA", "Osc"), ("idB", "Flt")], [2, 1], [("idC", "Amp"), ("idD, "Pan")], [("idE", "Freq"), ("idF, "Res")] 
 // -> [("idA1idC", "Osc 1 Amp"), ("idA1idD", "Osc 1 Pan"), ("idA2idC", "Osc 2 Amp"), ("idA2idD", "Osc 2 Pan"), ("idB1idE", "Flt Freq"), ("idB1idF", "Flt Res")] 
 std::vector<list_item>
 zip_list_items(
-list_item const* items1, bool const* space1, std::int32_t const* counts1,
-list_item const* const* items2, std::int32_t const* counts2, std::int32_t count);
-
-// Pass list of id/name with count per name.
-// E.g. [("idA", "Osc"), ("idB", "Flt")], [2, 1] -> [("idA1", "Osc 1"), ("idA2", "Osc 2"), ("idB", "Flt")].
-std::vector<list_item>
-multi_list_items(list_item const* items, list_item_info const* infos, bool const* spaces, 
-char const* const* suffixes, std::int32_t const* counts, std::int32_t count, bool sub_menu);
+   list_item const* items1, std::int32_t const* counts1,
+  list_item const* const* items2, std::int32_t const* counts2, 
+  std::int32_t count);
 
 } // namespace inf::base
 #endif // INF_BASE_SHARED_STATE_HPP

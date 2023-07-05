@@ -6,23 +6,6 @@
 namespace inf::base {
 
 std::vector<std::string>
-list_tab_items(list_item_info info, std::int32_t count)
-{
-  std::vector<std::string> result;
-  for (std::int32_t i = 0; i < count; i++)
-  {
-    std::string name = std::to_string(i + 1);
-    if (info != nullptr)
-    {
-      char const* extra = info(i);
-      if (extra != nullptr) name = std::string(extra);
-    }
-    result.push_back(name);
-  }
-  return result;
-}
-
-std::vector<std::string>
 generate_names(std::int32_t count, std::string(*name)(std::int32_t n))
 {
   std::vector<std::string> result;
@@ -94,20 +77,13 @@ zip_list_table_init_out(std::int32_t const* counts1, std::int32_t const* counts2
 }
 
 std::vector<list_item>
-list_items(list_item const& item, list_item_info info, bool space, std::int32_t count)
+list_items(list_item const& item, std::int32_t count)
 {
   std::vector<list_item> result;
   for (std::int32_t i = 0; i < count; i++)
-  { 
+  {
     std::string name = item.name;
-    if(space) name += " ";
     name += std::to_string(i + 1);
-    if (info != nullptr)
-    {
-      char const* extra = info(i);
-      if (extra != nullptr)
-        name = std::string(extra) + " " + item.name;
-    }
     std::string id = std::string(item.id) + "-" + std::to_string(i);
     result.push_back({ id, name, {} });
   }
@@ -115,8 +91,9 @@ list_items(list_item const& item, list_item_info info, bool space, std::int32_t 
 }
 
 std::vector<list_item>
-multi_list_items(list_item const* items, list_item_info const* infos, bool const* spaces, 
-  char const* const* suffixes, std::int32_t const* counts, std::int32_t count, bool sub_menu)
+multi_list_items(
+  list_item const* items, char const* const* suffixes, 
+  std::int32_t const* counts, std::int32_t count, bool sub_menu)
 {
   std::vector<list_item> result;
   for(std::int32_t i = 0; i < count; i++)
@@ -125,13 +102,7 @@ multi_list_items(list_item const* items, list_item_info const* infos, bool const
       std::vector<std::string> sub_menu_items;
       std::string name = items[i].name;
       if(sub_menu) sub_menu_items.push_back(name);
-      if(counts[i] > 1 && spaces[i]) name += " ";
-      if(counts[i] > 1) name += std::to_string(j + 1);
-      if (infos != nullptr && infos[i] != nullptr)
-      {
-        char const* extra = infos[i](j);
-        if (extra != nullptr) name = std::string(extra) + " " + items[i].name;
-      }
+      if(counts[i] > 1) name += " " + std::to_string(j + 1);
       if(suffixes != nullptr && suffixes[i] != nullptr) name += " " + std::string(suffixes[i]);
       if(counts[i] > 1 && sub_menu) sub_menu_items.push_back(name);
       std::string id = std::string(items[i].id) + "-" + std::to_string(j);
@@ -141,7 +112,7 @@ multi_list_items(list_item const* items, list_item_info const* infos, bool const
 } 
 
 std::vector<list_item>
-zip_list_items(list_item const* items1, bool const* space1, std::int32_t const* counts1,
+zip_list_items(list_item const* items1, std::int32_t const* counts1,
   list_item const* const* items2, std::int32_t const* counts2, std::int32_t count)
 {
   std::vector<list_item> result;
@@ -168,8 +139,7 @@ zip_list_items(list_item const* items1, bool const* space1, std::int32_t const* 
         std::string id = items1[i].id + "-" + std::to_string(j) + "-" + items2[i][k].id;
         if(counts1[i] > 1)
         { 
-          if(space1 == nullptr || space1[i]) name += " ";
-          name += std::to_string(j + 1);
+          name += " " + std::to_string(j + 1);
           submenu_path.push_back(name);
         }
         name = name + " " + items2[i][k].name;

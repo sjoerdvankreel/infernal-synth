@@ -1,7 +1,7 @@
 #include <inf.synth/lfo/graph.hpp>
 #include <inf.synth/lfo/topology.hpp>
 #include <inf.synth/lfo/processor.hpp>
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/shared/scratch_space.hpp>
 
 using namespace inf::base;
@@ -25,10 +25,17 @@ lfo_graph::sample_count(param_value const* state, float sample_rate) const
     float timesig = lfo_timesig_values[automation.block_discrete(lfo_param::tempo)];
     samples = timesig_to_samples(cv_graph_rate, graph_bpm, timesig);
   }
-  return static_cast<std::int32_t>(std::ceil(samples * cv_plot_cycles));
+  return static_cast<std::int32_t>(samples);
 }
 
-bool
+bool 
+lfo_graph::bipolar(base::param_value const* state) const
+{
+  automation_view automation(topology(), state, id());
+  return automation.block_discrete(lfo_param::bipolar) != 0;
+}
+
+void
 lfo_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   plot.resize(input.dsp_output->size());
@@ -36,7 +43,6 @@ lfo_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
   bool bipolar = automation.block_discrete(lfo_param::bipolar) != 0;
   for (std::size_t i = 0; i < input.dsp_output->size(); i++)
     plot[i] = bipolar ? ((*input.dsp_output)[i] + 1.0f) * 0.5f : (*input.dsp_output)[i];
-  return bipolar;
 }
 
 void

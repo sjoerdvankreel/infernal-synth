@@ -17,6 +17,17 @@ namespace inf::base {
 class audio_processor;
 class graph_processor;
 
+// To allow conversions.
+struct stored_param_id
+{
+  std::int32_t io_type;
+  std::string part_guid;
+  std::string param_guid;
+  std::int32_t part_index;
+};
+
+bool operator<(stored_param_id const& l, stored_param_id const& r);
+
 // Runtime param info (e.g. lfo 2 rate).
 struct param_info
 {
@@ -38,10 +49,6 @@ struct part_info
 // Also acts as entry point into the plugin.
 struct topology_info
 {
-  // For ui generator.
-  std::int32_t max_ui_height; // Max controller ui height.
-  std::vector<std::vector<std::int32_t>> ui_param_dependencies; // Toggles visibility.
-
   part_descriptor const* static_parts; // Static description of audio processor.
   std::int32_t static_part_count; // Part count in static description.
   std::int32_t max_note_events = 0; // Not necessarily the same as polyphony.
@@ -54,7 +61,6 @@ struct topology_info
   std::vector<std::vector<std::int32_t>> part_bounds; // Runtime part bounds, e.g. bounds[part_type::osc][1] indexes osc 2 part.
   std::vector<std::vector<std::int32_t>> param_bounds; // Runtime parameter bounds, e.g. bounds[part_type::osc][1] indexes osc 2 wave param.
   std::vector<part_id> inverse_bounds; // Runtime inverse param bounds, e.g. bounds[123] = (part_type::env, 2).
-  std::vector<std::int32_t> selector_to_part; // E.g. selector 1 activates selection of part_type::lfo. Static part index.
 
   // Internally all parameters are handled by index, but
   // they are exposed to the vst3 binding as the hash of the parameter guid.
@@ -76,6 +82,14 @@ struct topology_info
   virtual char const* plugin_name() const = 0;
   virtual std::uint16_t version_major() const = 0;
   virtual std::uint16_t version_minor() const = 0;
+
+  // To allow adjusting bounds etc.
+  // Returns new target index for old stuff, or -1 if N/A.
+  virtual std::int32_t try_move_stored_param(
+    base::stored_param_id const& id, base::param_value old_value, 
+    std::string const& old_text, std::uint16_t old_major, 
+    std::uint16_t old_minor, bool& can_be_ignored) const
+    { can_be_ignored = false; return -1; }
   virtual param_value convert_param(
     std::int32_t index, param_value old_value, std::string const& old_text,
     std::uint16_t old_major, std::uint16_t old_minor) const { return old_value; }
@@ -84,9 +98,9 @@ struct topology_info
   void state_check(param_value const* state) const;
 
   // Output params must follow input params.
-  static void init(topology_info* topology,
-    part_descriptor const* static_parts, std::int32_t part_count,
-    std::int32_t max_notes, std::int32_t max_ui_height);
+  static void init(
+    topology_info* topology, part_descriptor const* static_parts, 
+    std::int32_t part_count, std::int32_t max_notes);
 
   // Plugin entry.
   virtual ~topology_info() {}
@@ -98,7 +112,15 @@ struct topology_info
     create_audio_processor(param_value* state, std::int32_t* changed,
       float sample_rate, std::int32_t max_sample_count) const = 0;
 
+  param_value ui_to_base_value(std::int32_t param_index, param_value ui_value) const;
+  param_value base_to_ui_value(std::int32_t param_index, param_value base_value) const;
   std::int32_t param_start(part_id id) const { return param_bounds[id.type][id.index]; }
+  std::int32_t param_index(part_id id, std::int32_t param) const { return param_start(id) + param; }
+  part_info const& get_part_info(part_id id) const { return parts[part_bounds[id.type][id.index]]; }
+  part_descriptor const& get_part_descriptor(part_id id) const { return *get_part_info(id).descriptor; }
+  std::int32_t param_id(part_id id, std::int32_t param) const { return param_index_to_id[param_index(id, param)]; }
+  param_info const& get_param_info(part_id id, std::int32_t param) const { return params[param_index(id, param)]; }
+  param_descriptor const& get_param_descriptor(part_id id, std::int32_t param) const { return *get_param_info(id, param).descriptor; }
 };
 
 } // namespace inf::base

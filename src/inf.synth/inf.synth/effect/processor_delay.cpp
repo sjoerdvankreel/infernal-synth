@@ -45,8 +45,8 @@ effect_processor::process_dly_feedback(effect_process_input const& input, float*
   { 
     std::int32_t fdbk_length_l = _state->dly_fdbk_length[0];
     std::int32_t fdbk_length_r = _state->dly_fdbk_length[1];
-    float buffer_sample_l = _state->delay_buffer[0].get(fdbk_length_l);
-    float buffer_sample_r = _state->delay_buffer[1].get(fdbk_length_r);
+    float buffer_sample_l = _state->delay_buffer[0].get(fdbk_length_l + _dly_hold_length);
+    float buffer_sample_r = _state->delay_buffer[1].get(fdbk_length_r + _dly_hold_length);
     float wet_l_base = amt[s] * max_feedback * buffer_sample_l;
     float wet_r_base = amt[s] * max_feedback * buffer_sample_r;
     float wet_l = wet_l_base + (1.0f - sprd[s]) * wet_r_base;
@@ -77,7 +77,7 @@ effect_processor::process_dly_multi(effect_process_input const& input, float* co
         std::int32_t lr = (t + c) % 2;
         std::int32_t tap_length = (t + 1) * _dly_multi_length;
         float tap_bal = stereo_balance(lr, sprd[s]);
-        float buffer_sample = _state->delay_buffer[c].get(tap_length);
+        float buffer_sample = _state->delay_buffer[c].get(tap_length + _dly_hold_length);
         wet += tap_bal * tap_amt * buffer_sample;
         tap_amt *= tap_amt;
       }

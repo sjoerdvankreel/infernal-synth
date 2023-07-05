@@ -1,4 +1,3 @@
-#include <inf.synth/shared/config.hpp>
 #include <inf.synth/shared/support.hpp>
 #include <inf.synth/cv_bank/processor.hpp>
 #include <inf.synth/oscillator/processor.hpp>
@@ -17,13 +16,12 @@ oscillator_wave_graph::needs_repaint(
   return begin <= runtime_param && runtime_param < begin + osc_param::count;
 }
 
-bool 
+void 
 oscillator_wave_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   plot.resize(input.dsp_output->size());
   std::copy(input.dsp_output->begin(), input.dsp_output->end(), plot.begin());
   unipolar_untransform(plot.data(), false, true, static_cast<std::int32_t>(plot.size())); 
-  return true;
 }
 
 std::int32_t 
@@ -34,7 +32,7 @@ oscillator_wave_graph::sample_count(param_value const* state, float sample_rate)
   std::int32_t oct = automation.block_discrete(osc_param::oct);
   std::int32_t note = automation.block_discrete(osc_param::note);
   float frequency = note_to_frequency(12 * (oct + 1) + note + cent);
-  return static_cast<std::int32_t>(std::ceil(sample_rate / frequency * cv_plot_cycles));
+  return static_cast<std::int32_t>(std::ceil(sample_rate / frequency));
 }   
  
 void 
@@ -78,7 +76,7 @@ oscillator_wave_graph::process_dsp_core(block_input const& input, float* output,
   osc_in.new_midi = midi_note_c4;
   osc_in.new_midi_start_pos = 0;
   osc_in.portamento = _port.data();
-  osc_in.ram_in = vosc_buffers;
+  osc_in.am_in = vosc_buffers;
   osc_in.sync_reset = vosc_reset_buffers;
   osc_in.sync_reset_pos = vosc_reset_pos_buffers;
 

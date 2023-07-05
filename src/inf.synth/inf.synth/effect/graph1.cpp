@@ -1,4 +1,4 @@
-#include <inf.synth/shared/config.hpp>
+#include <inf.synth/shared/support.hpp>
 #include <inf.synth/effect/state.hpp>
 #include <inf.synth/effect/graph1.hpp>
 #include <inf.synth/effect/topology.hpp>
@@ -16,6 +16,15 @@ static inline float constexpr delay_fdbk_length_secs = 5.0f;
 static inline float constexpr delay_reverb_graph_rate = 500.0f;
 static inline float constexpr delay_reverb_graph_input_freq = 100.0f;
 static inline std::int32_t constexpr shaper_sample_count = 500;
+
+base::param_value
+effect_graph1::transform_param(std::int32_t rt_index, param_value value) const
+{
+  std::int32_t oversampling_index = topology()->param_index(id(), effect_param::shp_over_order);
+  if(rt_index == oversampling_index) 
+    return param_value(effect_shp_over_order::over_none);
+  return graph_disable_modulation(topology(), rt_index, value);
+}
 
 float
 effect_graph1::prepare_input_filter(float sample_rate)
@@ -62,14 +71,13 @@ effect_graph1::needs_repaint(std::int32_t runtime_param) const
   return begin <= runtime_param && runtime_param < begin + effect_param::count;
 }
 
-bool
+void
 effect_graph1::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
 {
   // For plot 1, output is already what we want for all fx types.
   // Just scale to unipolar.
   for (std::size_t s = 0; s < input.dsp_output->size(); s++)
     plot.push_back(std::clamp(((*input.dsp_output)[s] + 1.0f) * 0.5f, 0.0f, 1.0f));
-  return true;
 }
 
 void
@@ -110,8 +118,8 @@ effect_graph1::sample_count_delay(param_value const* state, float sample_rate) c
     delay_reverb_graph_rate, graph_bpm, midi_note_c4, fx_state.get(), automation);
   switch (delay_type)
   {
-  case effect_delay_type::feedback: return static_cast<std::int32_t>(ffeedback_count);
-  case effect_delay_type::multi: return (tap_count + 1) * processor->graph_min_delay_samples();
+  case effect_delay_type::feedback: return static_cast<std::int32_t>(ffeedback_count) + processor->graph_hold_samples();
+  case effect_delay_type::multi: return (tap_count + 1) * processor->graph_min_delay_samples() + processor->graph_hold_samples();
   default: assert(false); return -1;
   }
 }

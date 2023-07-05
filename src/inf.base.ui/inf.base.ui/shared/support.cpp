@@ -1,246 +1,76 @@
 #include <inf.base.ui/shared/support.hpp>
-#include <vstgui/lib/controls/coptionmenu.h>
-#include <vstgui/lib/platform/platformfactory.h>
-#if WIN32
-#include <vstgui/lib/platform/win32/win32factory.h>
-#else
-#include <vstgui/lib/platform/linux/linuxfactory.h>
-#endif
+#include <juce_gui_basics/juce_gui_basics.h>
 
-#include <filesystem>
+#include <cassert>
+#include <algorithm>
 
-using namespace VSTGUI;
+using namespace juce;
+using namespace inf::base;
 
 namespace inf::base::ui {
- 
-inf::base::ui_color
-from_vst_color_name(std::string const* name, IUIDescription const* desc)
+
+void
+show_host_menu_for_param(base::plugin_controller* controller, std::int32_t param_index, juce::LookAndFeel* lnf)
 {
-  CColor color;
-  assert(name != nullptr);
-  bool ok = UIViewCreator::stringToColor(name, color, desc);
-  (void)ok;
-  assert(ok);
-  return from_vst_color(color);
+  PopupMenu menu;
+  menu.setLookAndFeel(lnf);
+  auto host_menu = controller->host_menu_for_param_index(param_index);
+  for (std::int32_t i = 0; i < host_menu->item_count(); i++)
+  {
+    bool enabled;
+    bool checked;
+    std::string name;
+    host_menu->get_item(i, name, enabled, checked);
+    menu.addItem(i + 1, name, enabled, checked);
+  }
+  menu.showMenuAsync(PopupMenu::Options(), [host_menu = host_menu.release()](int option) {
+    if (option != 0) host_menu->item_clicked(option - 1);
+    delete host_menu;
+  });
 }
 
-static void
-clear_module(plugin_controller* controller, std::int32_t type, std::int32_t index)
+std::string
+format_label_short(plugin_controller const* controller, std::int32_t param_index)
 {
-  param_value const* state = controller->state();
-  topology_info const* topology = controller->topology();
-  std::int32_t param_start = topology->param_bounds[type][index];
-  std::int32_t param_count = topology->static_parts[type].param_count;
-  std::vector<param_value> new_values(state, state + topology->params.size());
-  topology->init_param_defaults(new_values.data(), param_start, param_start + param_count);
-  controller->load_component_state(new_values.data(), true);
+  auto const& param_info = controller->topology()->params[param_index];
+  auto const& part_info = controller->topology()->parts[param_info.part_index];
+  auto result = std::string(part_info.descriptor->static_name.short_);
+  if(part_info.descriptor->part_count > 1) result += std::string(" ") + std::to_string(part_info.type_index + 1);
+  return result + std::string(" ") + param_info.descriptor->data.static_name.short_;
 }
 
-static CMenuItem*
-create_copy_swap_context_menu(plugin_controller* controller,
-  std::string const& action, std::string const& target_prefix,
-  std::function<void(std::int32_t, std::int32_t, std::int32_t)> apply)
+std::string
+get_label_text(param_descriptor const* descriptor, label_type type, param_value value)
 {
-  topology_info const* topology = controller->topology();
-  auto item = new CCommandMenuItem(CCommandMenuItem::Desc(action.c_str()));
-  auto static_part_menu = new COptionMenu();
-  for (std::int32_t i = 0; i < topology->static_part_count; i++)
-    if (topology->static_parts[i].part_count > 1)
-    {
-      auto part_name = topology->static_parts[i].static_name.short_;
-      auto static_part_item = new CCommandMenuItem(CCommandMenuItem::Desc(part_name));
-      static_part_menu->addEntry(static_part_item);
-      auto rt_part_menu_source = new COptionMenu();
-      for (std::int32_t j = 0; j < topology->static_parts[i].part_count; j++)
-      {
-        std::int32_t rt_source_index = topology->part_bounds[i][j];
-        auto source_name = topology->parts[rt_source_index].runtime_name;
-        auto rt_part_item_source = new CCommandMenuItem(CCommandMenuItem::Desc(source_name.c_str()));
-        rt_part_menu_source->addEntry(rt_part_item_source);
-        auto rt_part_menu_target = new COptionMenu();
-        for (std::int32_t k = 0; k < topology->static_parts[i].part_count; k++)
-          if (k != j)
-          {
-            std::int32_t rt_target_index = topology->part_bounds[i][k];
-            auto target_name = std::string(target_prefix) + " " + topology->parts[rt_target_index].runtime_name;
-            auto rt_part_item_target = new CCommandMenuItem(CCommandMenuItem::Desc(target_name.c_str()));
-            rt_part_menu_target->addEntry(rt_part_item_target);
-            rt_part_item_target->setActions([=](CCommandMenuItem*) {
-              std::int32_t source_begin = topology->param_bounds[i][j];
-              std::int32_t target_begin = topology->param_bounds[i][k];
-              std::int32_t param_count = topology->static_parts[i].param_count;
-              apply(source_begin, target_begin, param_count);
-              controller->restart();
-            });
-          }
-        rt_part_item_source->setSubmenu(rt_part_menu_target);
-      }
-      static_part_item->setSubmenu(rt_part_menu_source);
-    }
-  item->setSubmenu(static_part_menu);
-  return item;
+  switch (type)
+  {
+  case label_type::label: return descriptor->data.static_name.short_;
+  case label_type::value: return descriptor->data.format(false, value);
+  default: assert(false); return {};
+  }
 }
 
-std::vector<VSTGUI::CMenuItem*>
-create_context_menu(plugin_ui_editor* editor)
+float
+get_scaled_size(plugin_controller const* controller, float min_size, float max_size)
 {
-  std::vector<VSTGUI::CMenuItem*> result;
-  plugin_controller* controller = editor->controller();
-  topology_info const* topology = controller->topology();
+  float const current_width = static_cast<float>(controller->editor_current_width());
+  float const scale_min_width = static_cast<float>(controller->editor_font_scaling_min_width());
+  float const scale_max_width = static_cast<float>(controller->editor_font_scaling_max_width());
+  if(current_width <= scale_min_width) return min_size;
+  if(current_width >= scale_max_width) return max_size;
+  float const factor = (current_width - scale_min_width) / (scale_max_width - scale_min_width);
+  float const result = min_size + factor * (max_size - min_size);
+  return static_cast<float>(static_cast<std::int32_t>(result));
+}
 
-  // Init patch to defaults.
-  auto init_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Init patch"));
-  init_patch->setActions([controller](CCommandMenuItem*) {
-    std::vector<param_value> new_values(controller->topology()->input_param_count, param_value());
-    controller->topology()->init_factory_preset(new_values.data());
-    controller->load_component_state(new_values.data(), true);
-  });
-  result.push_back(init_patch);
-
-  // Clear patch.
-  auto clear_patch = new CCommandMenuItem(CCommandMenuItem::Desc("Clear patch"));
-  clear_patch->setActions([controller](CCommandMenuItem*) {
-    std::vector<param_value> new_values(controller->topology()->input_param_count, param_value());
-    controller->topology()->init_clear_patch(new_values.data());
-    controller->load_component_state(new_values.data(), true);
-  });
-  result.push_back(clear_patch);
-
-  // Separate init / clear.
-  result.push_back(new CMenuItem("", nullptr, 0, nullptr, CMenuItem::kSeparator));
-
-  std::string extension = controller->preset_file_extension().c_str();
-  std::string dot_extension = std::string(".") + extension;
-
-  // Load preset.
-  auto load_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Load preset"));
-  load_preset->setActions([extension, controller, editor](CCommandMenuItem*) {
-    CNewFileSelector* selector = CNewFileSelector::create(editor->frame(), CNewFileSelector::kSelectFile);
-    selector->setDefaultExtension(CFileExtension("Preset file", extension.c_str()));
-    selector->setTitle("Load preset");
-    if (selector->runModal() && selector->getNumSelectedFiles() == 1)
-      controller->load_preset(selector->getSelectedFile(0), false);
-    selector->forget();
-  });
-  result.push_back(load_preset);
-
-  // Save preset.
-  auto save_preset = new CCommandMenuItem(CCommandMenuItem::Desc("Save preset"));
-  save_preset->setActions([extension, dot_extension, controller, editor](CCommandMenuItem*) {
-    CNewFileSelector* selector = CNewFileSelector::create(editor->frame(), CNewFileSelector::kSelectSaveFile);
-    selector->setDefaultExtension(CFileExtension("Preset file", extension.c_str()));
-    selector->setTitle("Save preset");
-    if (selector->runModal() && selector->getNumSelectedFiles() == 1)
-    {
-      std::string path(selector->getSelectedFile(0));
-      if(!path.ends_with(dot_extension)) path += dot_extension;
-      controller->save_preset(path);
-    }
-    selector->forget();
-  });
-  result.push_back(save_preset);
-
-  // Scan directory only once.
-  if (controller->factory_presets().size() == 0)
-  {
-    VSTGUI::Optional<VSTGUI::UTF8String> base_path = {};
-#if WIN32
-    auto const* factory = getPlatformFactory().asWin32Factory();
-    base_path = factory->getResourceBasePath();
-#else
-    auto const* factory = getPlatformFactory().asLinuxFactory();
-    base_path = VSTGUI::Optional<VSTGUI::UTF8String>(factory->getResourcePath());
-#endif
-    if (!base_path) return result;
-    VSTGUI::UTF8String typed_base_path = base_path.value() + "/Presets/";
-    typed_base_path += topology->is_instrument() ? "Instrument" : "Fx";
-    for (auto const& entry : std::filesystem::directory_iterator(typed_base_path.data()))
-    {
-      if (entry.path().extension().string() != dot_extension) continue;
-      factory_preset preset;
-      preset.path = entry.path().string();
-      preset.name = entry.path().stem().string();
-      controller->factory_presets().push_back(preset);
-    }
-  }
-
-  // Add submenu with presets.
-  if (controller->factory_presets().size() > 0)
-  {
-    auto factories_item = new CCommandMenuItem(CCommandMenuItem::Desc("Factory presets"));
-    auto factories_menu = new COptionMenu();
-    for (std::size_t i = 0; i < controller->factory_presets().size(); i++)
-    {
-      auto factory_item = new CCommandMenuItem(CCommandMenuItem::Desc(controller->factory_presets()[i].name.c_str()));
-      factories_menu->addEntry(factory_item);
-      factory_item->setActions([controller, i](CCommandMenuItem*) {
-        controller->load_preset(controller->factory_presets()[i].path, true); });
-    }
-    factories_item->setSubmenu(factories_menu);
-    result.push_back(factories_item);
-  }
-
-  // Separate load / save / factory.
-  result.push_back(new CMenuItem("", nullptr, 0, nullptr, CMenuItem::kSeparator));
-  
-  // Clear single module.
-  std::vector<CCommandMenuItem*> clear_single;
-  std::vector<CCommandMenuItem*> clear_multiple;
-  auto clear_items = new COptionMenu();
-  auto clear_item = new CCommandMenuItem(CCommandMenuItem::Desc("Clear module"));
-  for (std::int32_t i = 0; i < topology->static_part_count; i++)
-  {
-    if (topology->static_parts[i].kind != part_kind::input) continue;
-    auto part_name = topology->static_parts[i].static_name.short_;
-    auto clear_part_item = new CCommandMenuItem(CCommandMenuItem::Desc(part_name));
-    if (topology->static_parts[i].part_count == 1)
-    {
-      clear_part_item->setActions([controller, i](CCommandMenuItem*) { clear_module(controller, i, 0); });
-      clear_single.push_back(clear_part_item);
-    }
-    else
-    {
-      auto clear_part_items = new COptionMenu();
-      for (std::int32_t j = 0; j < topology->static_parts[i].part_count; j++)
-      {
-        std::int32_t rt_part_index = topology->part_bounds[i][j];
-        auto target_name = topology->parts[rt_part_index].runtime_name;
-        auto clear_rt_part_item = new CCommandMenuItem(CCommandMenuItem::Desc(target_name.c_str()));
-        clear_rt_part_item->setActions([controller, i, j](CCommandMenuItem*) { clear_module(controller, i, j); });
-        clear_part_items->addEntry(clear_rt_part_item);
-      }
-      clear_part_item->setSubmenu(clear_part_items);
-      clear_multiple.push_back(clear_part_item);
-    }
-  }
-  for (std::size_t i = 0; i < clear_single.size(); i++)
-    clear_items->addEntry(clear_single[i]);
-  for (std::size_t i = 0; i < clear_multiple.size(); i++)
-    clear_items->addEntry(clear_multiple[i]);
-  clear_item->setSubmenu(clear_items);
-  result.push_back(clear_item);
-
-  // Copy module to.
-  result.push_back(create_copy_swap_context_menu(controller, "Copy module", "To",
-    [controller](std::int32_t source_begin, std::int32_t target_begin, std::int32_t param_count) {
-      for (std::int32_t i = 0; i < param_count; i++)
-      {
-        std::int32_t source_tag = controller->topology()->param_index_to_id[source_begin + i];
-        std::int32_t target_tag = controller->topology()->param_index_to_id[target_begin + i];
-        controller->copy_param(source_tag, target_tag);
-      }}));
-
-  // Swap module with.
-  result.push_back(create_copy_swap_context_menu(controller, "Swap module", "With",
-    [controller](std::int32_t source_begin, std::int32_t target_begin, std::int32_t param_count) {
-      for (std::int32_t i = 0; i < param_count; i++)
-      {
-        std::int32_t source_tag = controller->topology()->param_index_to_id[source_begin + i];
-        std::int32_t target_tag = controller->topology()->param_index_to_id[target_begin + i];
-        controller->swap_param(source_tag, target_tag);
-      }}));
-
-  return result;
+std::int32_t
+plugin_editor_width(plugin_controller const* controller, std::int32_t selected_size_index)
+{
+  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(controller->ui_size_names().size() - 1));
+  float min_width = static_cast<float>(controller->editor_min_width());
+  float max_width = static_cast<float>(controller->editor_max_width());
+  float factor = static_cast<float>(selected_size_index) / static_cast<float>(controller->ui_size_names().size() - 1);
+  return static_cast<std::int32_t>(min_width + factor * (max_width - min_width));
 }
 
 } // namespace inf::base::ui

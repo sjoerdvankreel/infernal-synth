@@ -23,9 +23,10 @@ public effect_graph_base
 public:
   effect_graph2(base::topology_info const* topology, base::part_id id);
 
+  bool bipolar(base::param_value const* state) const override;
   float opacity(base::param_value const* state) const override;
   bool needs_repaint(std::int32_t runtime_param) const override;
-  bool dsp_to_plot(base::graph_plot_input const& input, std::vector<float>& plot) override;
+  void dsp_to_plot(base::graph_plot_input const& input, std::vector<float>& plot) override;
   std::int32_t sample_count(base::param_value const* state, float sample_rate) const override;
   base::param_value transform_param(std::int32_t rt_index, base::param_value value) const override;
   void process_dsp_core(base::block_input const& input, float* output, float sample_rate) override;

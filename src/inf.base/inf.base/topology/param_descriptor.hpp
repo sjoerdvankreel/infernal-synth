@@ -11,14 +11,11 @@
 
 namespace inf::base {
 
-struct param_ui_descriptor;
-
 // Defines how parameters are to be serialized.
 struct param_io_t { enum value { real, discrete, text, count }; };
 typedef param_io_t::value param_io;
 
 // All but real are discrete param types.
-// Mostly just affects the way data is displayed in UI.
 struct param_type_t { enum value { real, toggle, knob, list_knob, text, list, knob_list, count }; };
 typedef param_type_t::value param_type;
 
@@ -44,6 +41,9 @@ typedef param_type_t::value param_type;
 struct param_kind_t { enum value { ui, block, voice, continuous, fixed, output, count }; };
 typedef param_kind_t::value param_kind;
 
+// When max control value depends on the current part index.
+typedef std::int32_t(*discrete_max_selector)(std::int32_t part_index);
+
 // Real valued specific data.
 struct real_descriptor
 {
@@ -61,50 +61,43 @@ struct discrete_descriptor
   std::int32_t const min;
   std::int32_t const max;
   std::int32_t default_;
+  discrete_max_selector _max_selector;
   std::vector<list_item> const* const items; // Items for a list parameter.
   std::vector<std::string> const* const names; // Names for a knob-list parameter.
-  std::vector<std::string> const* const tab_items; // Short names for tab headers.
   
   // IO: false parses for UI (display name), true parses for persistance (guids).
-  std::int32_t parse_ui(param_type type, char const* buffer) const;
-  bool parse(param_type type, bool io, char const* buffer, std::int32_t& val) const;
+  std::int32_t parse_ui(param_type type, std::int32_t part_index, char const* buffer) const;
+  bool parse(param_type type, bool io, std::int32_t part_index, char const* buffer, std::int32_t& val) const;
 
-  std::string format_tab(std::int32_t index) const
-  { 
-    assert(tab_items != nullptr); 
-    return (*tab_items)[index]; 
+  // Get max given part index.
+  std::int32_t effective_max(std::int32_t part_index) const
+  {
+    std::int32_t result = _max_selector == nullptr ? max : _max_selector(part_index);
+    assert(min <= result && result <= max);
+    return result;
   }
 
   // Regular discrete.
   discrete_descriptor(std::int32_t min, std::int32_t max, std::int32_t default_):
-  min(min), max(max), default_(default_), items(nullptr), names(nullptr), tab_items(nullptr)
+  min(min), max(max), default_(default_), _max_selector(nullptr), items(nullptr), names(nullptr)
   { assert(min < max && min <= default_ && default_ <= max); }
 
-  // For tabbed controls.
-  discrete_descriptor(std::vector<list_item> const* items, std::vector<std::string> const* tab_items) :
-  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(0), items(items), names(nullptr), tab_items(tab_items)
-  { 
-    assert(tab_items->size() == items->size());
-    assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size()));
-  }
-
   // For actual dropdown lists.
-  discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_) :
-  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(default_), items(items), names(nullptr), tab_items(nullptr)
+  discrete_descriptor(std::vector<list_item> const* items, std::int32_t default_, discrete_max_selector selector = nullptr) :
+  min(0), max(static_cast<std::int32_t>(items->size() - 1)),
+  default_(default_), _max_selector(selector), items(items), names(nullptr)
   { assert(items->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(items->size())); }
 
   // For knob-lists with dynamically generated data.
-  discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_) :
+  discrete_descriptor(std::vector<std::string> const* names, std::int32_t default_, discrete_max_selector selector = nullptr) :
   min(0), max(static_cast<std::int32_t>(names->size() - 1)),
-  default_(default_), items(nullptr), names(names), tab_items(nullptr)
+  default_(default_), _max_selector(selector), items(nullptr), names(names)
   { assert(names->size() > 0 && default_ >= 0 && default_ < static_cast<std::int32_t>(names->size())); }
 
   // For actual dropdown lists.
-  discrete_descriptor(std::vector<list_item> const* items, char const* default_) :
-  min(0), max(static_cast<std::int32_t>(items->size() - 1)), 
-  default_(-1), items(items), names(nullptr), tab_items(nullptr)
+  discrete_descriptor(std::vector<list_item> const* items, char const* default_, discrete_max_selector selector = nullptr) :
+  min(0), max(static_cast<std::int32_t>(items->size() - 1)),
+  default_(-1), _max_selector(selector), items(items), names(nullptr)
   { 
     this->default_ = -1;
     assert(items->size() > 0 && default_ != nullptr);
@@ -115,9 +108,9 @@ struct discrete_descriptor
   }
 
   // For knob-lists with dynamically generated data.
-  discrete_descriptor(std::vector<std::string> const* names, char const* default_) :
+  discrete_descriptor(std::vector<std::string> const* names, char const* default_, discrete_max_selector selector = nullptr) :
   min(0), max(static_cast<std::int32_t>(names->size() - 1)),
-  default_(-1), items(nullptr), names(names), tab_items(nullptr)
+  default_(-1), _max_selector(selector), items(nullptr), names(names)
   { 
     this->default_ = -1;
     assert(names->size() > 0 && default_ != nullptr);
@@ -138,7 +131,7 @@ discrete_2way_bounds(std::int32_t range, std::int32_t default_) {
 inline real_descriptor 
 percentage_01_bounds(float default_) {
   assert(0.0f <= default_ && default_ <= 1.0f);
-  return { default_, 2, real_bounds::linear(0.0f, 1.0f), real_bounds::linear(0.0f, 100.0f) }; }
+  return { default_, 1, real_bounds::linear(0.0f, 1.0f), real_bounds::linear(0.0f, 100.0f) }; }
 
 inline real_descriptor 
 decibel_bounds(float linear_max) { 
@@ -179,8 +172,6 @@ struct param_descriptor_data
   param_type const type; // Parameter type.
   char const* const unit; // Parameter unit, e.g. "dB", "Hz".
   param_kind const kind; // Parameter has a fixed value. Don't display in UI and not automatable (useful as modulation target).
-  std::int32_t const ui_index; // Index within the UI grid.
-  param_ui_descriptor const* const ui; // For ui generator. 
   union
   {
     real_descriptor const real; // Real valued specific data.
@@ -188,37 +179,31 @@ struct param_descriptor_data
   };
 
   // IO: false parses/formats for UI (display name), true parses/formats for persistance (guids).
-  param_value parse_ui(char const* buffer) const;
   std::string format(bool io, param_value val) const;
-  bool parse(bool io, char const* buffer, param_value& val) const;
   std::size_t format(bool io, param_value val, char* buffer, std::size_t size) const;
+  param_value parse_ui(std::int32_t part_index, char const* buffer) const;
+  bool parse(bool io, std::int32_t part_index, char const* buffer, param_value& val) const;
 
   param_io io_type() const;
   bool is_continuous() const { return kind == param_kind::continuous || kind == param_kind::fixed; }
   param_value default_value() const { return type == param_type::real ? param_value(real.default_) : param_value(discrete.default_); }
 
-  // Real.
+  // Toggle.
   param_descriptor_data(
-    item_name const& static_name, char const* unit,
-    param_kind kind, real_descriptor const& real, 
-    std::int32_t ui_index, param_ui_descriptor const* ui) :
-    static_name(static_name), type(param_type::real), unit(unit), 
-    kind(kind), ui_index(ui_index), ui(ui), real(real) {}
+    item_name const& static_name, param_kind kind, bool default_):
+    static_name(static_name), type(param_type::toggle), unit(""), 
+    kind(kind), discrete(discrete_descriptor({ 0, 1, default_ })) {}
 
   // Knob/text.
   param_descriptor_data(
     item_name const& static_name, char const* unit, param_kind kind,
-    param_type type, discrete_descriptor const& discrete,
-    std::int32_t ui_index, param_ui_descriptor const* ui) :
-    static_name(static_name), type(type), unit(unit),
-    kind(kind), ui_index(ui_index), ui(ui), discrete(discrete) {}
+    param_type type, discrete_descriptor const& discrete) :
+    static_name(static_name), type(type), unit(unit), kind(kind), discrete(discrete) {}
 
-  // Toggle.
+  // Real.
   param_descriptor_data(
-    item_name const& static_name, param_kind kind, bool default_, 
-    std::int32_t ui_index, param_ui_descriptor const* ui) :
-    static_name(static_name), type(param_type::toggle), unit(""), kind(kind),
-    ui_index(ui_index), ui(ui), discrete(discrete_descriptor({ 0, 1, default_ })) {}
+    item_name const& static_name, char const* unit, param_kind kind, real_descriptor const& real) :
+    static_name(static_name), type(param_type::real), unit(unit), kind(kind), real(real) {}
 };
 
 // Ties a parameter descriptor to an actual parameter id.

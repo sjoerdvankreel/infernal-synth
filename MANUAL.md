@@ -5,7 +5,7 @@ It is currently available as a VST3 plugin only, and ships as different binaries
 In instrument mode, InfernalSynth is a polyphonic synthesizer where the combined output of all voices is routed through a global effect bank.\
 In effect mode, the voice generators are not used, and instead an external audio source is routed through the same global effect bank.\
 \
-![Screentshot](static/screenshot.png)
+![Screentshot](static/screenshot_voice_default.png)
 
 ## Versioned builds
 
@@ -19,19 +19,20 @@ from the host's point of view).
 ## Theming
 
 Due to VST3's bundle format, InfernalSynth can easily be themed if you're comfortable editing json files.\
-Look for the "colors" section near the top of the controller.uidesc file in Contents/Resources/UI. \
-Editing anything other than the colors is not likely to be forward-compatible though. \
-The background images live in the same folder, they can be swapped for anything else as long as the other image has the same dimensions.
+See /Contents/Resources/Themes/(theme name)/themefile.json. It contains a root section definining all colors \
+on a global level, an audio section containing overrides for the oscillator, fx and audio matrix, and a cv \
+section containing overrides for the lfo, envelope and cv matrix. The background images live in the same folder, \
+they can be swapped for anything else as long as the other image has the same dimensions.
 
 ## Architecture
 
 InfernalSynth is conceptually split up into 5 parts:
 
 - Output: monitors CPU usage, clipping and voice count.
-- Global CV: LFO's (LFO B), CV routing (CV B), and CV plot section displaying stacked CV modulation.
-- Global audio: effects (FX B), audio routing (Audio B), and Master section with common synth-wide controls.
-- Per-voice CV: envelopes, LFO's (LFO A), CV routing (CV A), and CV plot section displaying stacked CV modulation.
-- Per-voice audio: oscillators, effects (FX A), audio routing (Audio A), and Voice section with common per-voice controls.
+- Global CV: LFO's, CV matrix, and CV plot section displaying stacked CV modulation.
+- Global audio: effects, audio matrix, and Master section with common synth-wide controls.
+- Per-voice CV: envelopes, LFO's, CV matrix, and CV plot section displaying stacked CV modulation.
+- Per-voice audio: oscillators, effects, audio matrix, and Voice section with common per-voice controls.
 
 The maximum voice count is limited to 32. If this number is exceeded, the oldest voice (the one that started
 earliest among all active voices) is recycled to make room for the new incoming voice.
@@ -83,15 +84,8 @@ However, individual components are either bandlimited or have options to reduce 
     
 ## Context menu options
 
-Context menu opens by right-click or ctrl+left-click (not on a parameter, that pops up the host menu).\
-Alternatively, the context menu may be opened by keyboard combination ctrl+alt+shift+m.
-
-- Init patch resets settings to factory default.
-- Clear patch clears all settings except the bare minimum required to produce sound.
-- Save preset allows to save the current plugin state to disk (vstpreset file).
-- Load preset allows to load an existing preset from disk. Note: this will silently fail if the selected preset was made using another plugin. (This also goes for versioned/generic and instrument/fx builds of InfernalSynth).
-- Factory presets provides a couple of built-in patches.
-- Clear, copy and swap module may be used to update a particular module. Please note that the associated routing (Audio bank/CV bank) is NOT updated.
+Context menu opens by right-click on a module (osc, lfo, env, etc) header. \
+Through the context menu you can reset module values to default, or copy/swap between modules of the same type.
 
 ![Context menu](static/context_menu.png)
 
@@ -99,9 +93,8 @@ Alternatively, the context menu may be opened by keyboard combination ctrl+alt+s
 
 Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic generator types, phase, frequency, ring and amplitude modulation, hard sync and unison support.
 
-![Oscillator](static/oscillator.png)
+![Oscillator](static/osc.png)
 
-- Gain: oscillator amplitude.
 - Type: generator type, see below.
 - PM (hidden, modulation target only): phase modulation.
 - FM: generic frequency modulation target, works nice in combination with hard sync.
@@ -120,8 +113,8 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
     - Kbd: keyboard tracking, react to incoming notes (on) or keep constant pitch (off).
 - Ring and Amplitude modulation
     - Mix: fades between unmodulated and modulated signal.
-    - Balance: down is ring modulation, up is amplitude modulation. Fades in between.
-    - RAM: ring/amplitude modulation source. Has to be less than or equal to the current oscillator, otherwise has no effect.
+    - Ring: down is amplitude modulation, up is ring modulation. Fades in between.
+    - Source: modulation source. Has to be less than or equal to the current oscillator, otherwise has no effect.
 - Generators
     - Basic: Classic waveform generator
         - Sine/saw/triangle/pulse generator.
@@ -144,10 +137,10 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
 
 ## Effect section
 
-Both per-voice (FX A) and global (FX B) effect modules, containing a comb filter, state-variable filter,
+Both per-voice and global effect modules, containing a comb filter, state-variable filter,
 and multiple waveshapers (both voice and global), and a feedback delay, multi-tap delay and reverb mode (global only).
 
-![Effect](static/effect.png)
+![Effect](static/fx.png)
 
 - Type: effect type
 - Reverb
@@ -173,6 +166,7 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
     - Sprd: stereo-spread amount.
     - Mix: crossfades between dry/wet.
     - Delay: delay mode, feedback or multi-tap.
+    - Hold: time before the delay line kicks in.
     - Sync: specify delay time absolute (seconds) or relative to BPM (bars).
     - Feedback delay
         - L/R: left/right delay time/tempo.
@@ -196,48 +190,37 @@ and multiple waveshapers (both voice and global), and a feedback delay, multi-ta
         - Gain: gain amount for shelving filters (LSH, HSH, BLL). Defines attenuation at center frequency.
         - Kbd: keyboard tracking amount. When non-zero, alters the filter frequency based on the voice midi note (or last midi note for global) relative to C4.
 
-## Audio section
+## Audio matrix
 
-Both per-voice (Audio A) and global (Audio B) audio routing modules.
-Audio A routes oscillators to effects, effects to other effects, and mixdown to the Voice output section.
-Audio B routes external audio input (in effect mode) or Voice output section (in instrument mode) to effects, effects to other effects, and mixdown to the Master section.
+Both per-voice and global audio routing modules.
+Voice matrix routes oscillators to effects, effects to other effects, and voice mixdown to the Voice output section.
+Global matrix routes external audio input (in effect mode) or Voice output section (in instrument mode) to effects, effects to other effects, and mixdown to the Master section.
 An audio source may be assigned to multiple targets or vice-versa, but note that effects can only be routed to higher-numbered effects
-(e.g. FX A2 to FX A3, but not FX A2 to FX A1), otherwise the input will be silence.
+(e.g. FX 2 to FX 3, but not FX 2 to FX 1), otherwise the input will be silence.
 
-![Audio bank](static/audio_bank.png)
+![Audio matrix](static/audio_matrix.png)
 
 - In: audio signal input
 - Out: audio signal output
 - Amt: input signal amplitude
 - Bal: input signal stereo balancing
 
-## Voice section
+## Voice output section
 
-Controls the final per-voice mixdown, and provides pitch translators affecting all oscillators.
-Please note: envelope 1 (Amp Env) is hard-wired to the voice section amplitude.
+Controls per-voice gain and balance. Please note: envelope 1 (Amp Env) is hard-wired to voice gain.
 
-![Voice](static/voice.png)
+![Voice](static/voice_out.png)
 
-- Graphs: stereo balance image.
 - Gain: amplitude of single voice output.
 - Bal: stereo balancing of single voice output.
+
+## Voice input section
+
+Provides pitch translators affecting all oscillators, portamento settings and poly/monophonic mode selection.
+
+![Voice](static/voice_in.png)
+
 - Oct, Note: oscillator pitch offset relative to C4.
-
-## Master section
-
-Controls the final mixdown of global audio routing, allows switching between polyphonic and monophonic modes,
-contains portamento settings and contains a couple of freely-assignable CV sources. These CV sources don't do
-anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
-For example, route CV U1 to both voice gain and FX A1 state variable frequency, and control both at the same
-time, using a single parameter, from the host.
-
-![Master](static/master.png)
-
-- Graphs: stereo balance image.
-- CV B: bipolar virtual CV param level.
-- CV U: unipolar virtual CV param level.
-- Gain: amplitude of master mixdown.
-- Bal: stereo balancing of master mixdown.
 - Mode: select polyphonic/monophonic mode.
     - Poly: regular polyphonic mode.
     - Mono: true monophonic mode (voice count will never exceed 1).
@@ -254,13 +237,34 @@ time, using a single parameter, from the host.
         - Note: always trigger portamento on a new note.
         - Voice: trigger portamento on a new note, except for the first note in a new monophonic section. Useful in combination with release portamento mode.
 
+## Master output section
+
+Controls global gain and balance.
+
+![Master](static/master_out.png)
+
+- Gain: amplitude of master mixdown.
+- Bal: stereo balancing of master mixdown.
+
+## Master input section
+
+Contains a couple of freely-assignable CV sources. These CV sources don't do
+anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
+For example, route CVU 1 to both voice gain and FX 1 state variable frequency, and control both at the same
+time, using a single parameter, from the host.
+
+![Master](static/master_in.png)
+
+- CVB: bipolar virtual CV param level.
+- CVU: unipolar virtual CV param level.
+
 ## Envelope section
 
 Per-voice DAHDSR envelope generator with retrigger and multitrigger options, optional sustain, 
 bipolar and inverted modes, and 2 stages with customizable slope and split level for each of attack, decay, and release sections.
 Please note: if release length is zero, envelope sustains at it's final pre-release level.
 
-![Envelope](static/envelope.png)
+![Envelope](static/env.png)
 
 - Graphs: Envelope.
 - Type
@@ -284,10 +288,10 @@ Please note: if release length is zero, envelope sustains at it's final pre-rele
 
 ## LFO section
 
-Both per-voice (LFO A) and global (LFO B) LFO modules with classic, random and custom generator types, 
+Both per-voice and global LFO modules with classic, random and custom generator types,
 bipolar and inverted modes, one-shot option and smoothing filter.
 
-![LFO](static/lfo.png)
+![LFO](static/vlfo.png)
 
 - Graphs: LFO.
 - Rate/tempo: LFO frequency.
@@ -301,29 +305,29 @@ bipolar and inverted modes, one-shot option and smoothing filter.
     - Basic: Classic waveform generator.
         - Sine/saw/triangle/pulse generator.
         - PW: pulse width for pulse generator.
-    - Custom: custom generator with 8 sections and customizable slopes.
+    - Free: custom generator with 8 sections and customizable slopes.
         - Each section duration is relative to the total waveform length.
-        - Rise, Slope: controls the first and second upward sections.
-        - Fall, Slope: controls the first and second downward sections.
-        - Delay: delay time before first rise (attack) section and after first fall (decay) section.
-        - Hold: hold time after the first rise (attack) section and after second fall (decay) section.
+        - A1, A2, Slope: control the first and second upward sections.
+        - D1, D2, Slope: control the first and second downward sections.
+        - Delay: delay time before first attack section and after first decay section.
+        - Hold: hold time after the first attack section and after second decay section.
     - Random: random generator.
         - Will fold-back if above 1 or below 0.
-        - Rnd: random type.
+        - Type: random type.
             - Slope: picks a new level at each step and gradually moves to that value.
             - Level: picks a new level at each step and immediately jumps to that value.
             - Both: picks a new level at each step, immediately jumps to that value, then gradually moves to the next level.
         - Steps: step/section count within a single cycle.
         - SeedY: controls the level at the beginning of a new step.
         - Amt: controls next step level relative to current step level.
-        - Rand steps: allows control of the horizontal seed. If disabled, each section has equal length.
-        - SeedX: a single cycle always has step count equal to the steps parameter, but if "rand steps" is enabled, relative section length may be varied using this parameter.
+        - RandX: allows control of the horizontal seed. If disabled, each section has equal length.
+        - SeedX: a single cycle always has step count equal to the steps parameter, but if RandX is enabled, relative section length may be varied using this parameter.
 
 ## CV section
 
-Both per-voice (CV A) and global (CV B) CV routing modules.
-Per-voice CV can use any modulation source (Velocity/Key/LFO/Envelope/Master CV), both Voice and Global.
-Global CV can only use global modulation sources (LFO/Master CV).
+Both per-voice and global CV matrices.
+Per-voice CV can use any modulation source (Velocity/Key/Voice LFO/Global LFO/Envelope/Master CV).
+Global CV can only use global modulation sources (Global LFO/Master CV).
 A CV source may be assigned to multiple targets or vice-versa.
 When multiple sources are assigned to a single target, modulation is stacked.
 In this case the order of assignment matters, for example, envelope1->target1 followed by lfo1->target1
@@ -332,7 +336,7 @@ See the CV plot section to view exactly how stacked modulation plays out.\
 \
 For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
 This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
-to be assigned to any modulation output.\
+to be assigned to any modulation target.\
 \
 Also for per-voice CV, global modulation sources can be used in "Hold" mode.
 In this case, the modulation signal is fixed to it's current value at the start
@@ -342,7 +346,7 @@ LFO, to have each new voice receive a single new random value at voice start
 for the lifetime of the voice.
 
 
-![CV bank](static/cv_bank.png)
+![CV bank](static/cv_matrix.png)
 
 - In: CV input signal.
 - Out: CV signal target parameter.
@@ -356,25 +360,46 @@ between C3 and C5, rather than C0 and C9.
 
 ## CV plot section
 
-Both per-voice (CV A) and global (CV B) CV visualizers.
+Both per-voice and global CV visualizers.
 Select a target parameter to view the combined (stacked) modulation signal that's routed to that parameter.
 
-![CV plot](static/cv_plot.png)
+![CV plot](static/vcv_plot.png)
 
 - Tgt: target parameter.
 - Length (global):  plot length in seconds.
-- Key (voice): key-down time, affects the sustain section of the envelope generators.
+- Hold (voice): key-down time, affects the sustain section of the envelope generators.
 
-## Output section
+## Monitor section
 
-Monitor section just to get an idea of what the plugin is doing.
+Just to get an idea of what the plugin is doing.
 
-![Output](static/output.png)
+![Output](static/monitor.png)
 
 - Voices: active voice count. InfernalSynth is internally limited to 32 voices.
 - Drain: indicates whether maximum voice count is exceeded and voices are being recycled.
 - Clip: indicates whether the audio output exceeds [-1, +1]. Output is NOT actually clipped, since that is the task of the host.
 - High, High CPU: indicate which module is currently using the most CPU relative to total usage.
-For example, "FX B", "80%" indicates that 80% of total processing time was spent in the global fx modules.
+For example, "G.FX", "80%" indicates that 80% of processing time was spent in the global fx modules.
 - CPU: absolute total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
+
+## Edit section
+
+Contains voice/global selection, UI settings and exact-editing.
+
+![Edit](static/edit.png)
+
+- UI size selector and theme selector.
+- Switch between editing voice and global sections.
+- Last tweaked: shows the name and value of the last changed knob/slider/etc. Allows exact-editing of that value.
+
+## Patch section
+
+Patch/preset control.
+
+![Edit](static/patch.png)
+
+- Init: reset to factory default.
+- Clear: reset to the very minimum that produces sound.
+- Load, save: read/write vst3 preset files from/to disk.
+- Factory preset: reset to built-in patch.

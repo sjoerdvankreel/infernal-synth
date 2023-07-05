@@ -3,7 +3,6 @@
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
-#include <inf.base/topology/param_ui_descriptor.hpp>
 
 using namespace inf::base;
 
@@ -13,7 +12,7 @@ static std::vector<list_item> const effect_delay_types = {
   { "{B130A459-A336-4AE6-93F5-AE8CF8D09F0E}", "Feedback" },
   { "{40083B26-3878-400F-991B-97254FDE8107}", "Multitap" } };
 static std::vector<list_item> const effect_filter_types = {
-  { "{4D124C3B-DC17-4241-AF3B-F9590CEC837B}", "State Variable" },
+  { "{4D124C3B-DC17-4241-AF3B-F9590CEC837B}", "StVar" },
   { "{DFF83170-5380-4CC0-B418-3BC2C5638D88}", "Comb" } };
 static std::vector<list_item> const effect_types = {
   { "{A9F10C03-1757-4759-B127-82CD86B61ED7}", "Filter" },
@@ -21,7 +20,7 @@ static std::vector<list_item> const effect_types = {
   { "{2579F57B-4E61-4727-8EC5-766F4711FA2D}", "Delay" },
   { "{26C05CA1-6B5C-4B78-B2CB-662B43EF72AC}", "Reverb" } };
 static std::vector<list_item> const effect_shp_over_orders = {
-  { "{5FC4A099-B447-420F-97A5-FEF5F8817829}", "None" },
+  { "{5FC4A099-B447-420F-97A5-FEF5F8817829}", "1X" },
   { "{A513F4DD-6D41-4B08-BC1F-8C1D02A72A48}", "2X" },
   { "{72E89613-58DE-4529-9DCD-7D95C57D977B}", "4X" },
   { "{D663C977-1DC3-4F7D-9CE5-D7CD209E43E0}", "8X" },
@@ -31,8 +30,8 @@ static std::vector<list_item> const effect_shaper_types = {
   { "{99EF60E2-B366-4184-88B7-B4C9C5514A7D}", "Tanh" },
   { "{7B8F970B-3087-4097-8AF6-49260E57DBEC}", "Fold" },
   { "{254ECC12-1396-442F-93B8-40505171613E}", "Sine" },
-  { "{60285A7E-D1D3-45DB-BD58-98BA17349627}", "Chebyshev 1" }, 
-  { "{5749E885-1196-4E1B-B464-B95C8B0393B5}", "Chebyshev 2" } }; 
+  { "{60285A7E-D1D3-45DB-BD58-98BA17349627}", "Cheb1" }, 
+  { "{5749E885-1196-4E1B-B464-B95C8B0393B5}", "Cheb2" } }; 
 static std::vector<list_item> const effect_flt_stvar_types = {
   { "{DA174004-DDF9-4DA1-8414-AAC6C204690A}", "LPF" },
   { "{8F9774E2-990C-415A-8DB3-732D4091C7A6}", "HPF" },
@@ -45,112 +44,90 @@ static std::vector<list_item> const effect_flt_stvar_types = {
   { "{3E7BEBD7-CA16-40BD-8869-A80E4E112532}", "HSH" } };
 
 // 2/1 = 4 seconds at 120 bpm
-static std::vector<time_signature> const effect_dly_timesig = synced_timesig(false, { 2, 1 }, {
+static std::vector<std::pair<timesig_type, std::vector<std::int32_t>>> const effect_dly_timesig_series = {
   { timesig_type::one_over, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16 } },
   { timesig_type::lower, { 2, 3, 4, 5, 6, 7, 8, 9, 12, 16 } },
   { timesig_type::upper, { 2, 3, 4, 5, 6, 7, 8 } },
-  { timesig_type::over_one, { 1, 2 } } }); 
-std::vector<float> const effect_dly_timesig_values = 
-synced_timesig_values(effect_dly_timesig);
-static std::vector<std::string> const effect_dly_timesig_names =
-synced_timesig_names(effect_dly_timesig);
+  { timesig_type::over_one, { 1, 2 } } };
+static std::vector<time_signature> const effect_dly_timesig = synced_timesig(false, { 2, 1 }, effect_dly_timesig_series);
+std::vector<float> const effect_dly_timesig_values = synced_timesig_values(effect_dly_timesig);
+static std::vector<std::string> const effect_dly_timesig_names = synced_timesig_names(effect_dly_timesig);
+static std::vector<time_signature> const effect_dly_hold_timesig = synced_timesig(true, { 2, 1 }, effect_dly_timesig_series);
+std::vector<float> const effect_dly_hold_timesig_values = synced_timesig_values(effect_dly_hold_timesig);
+static std::vector<std::string> const effect_dly_hold_timesig_names = synced_timesig_names(effect_dly_hold_timesig);
 
 static std::vector<list_item> const effect_global_types =
 std::vector<list_item>(effect_types.begin(), effect_types.end());
 static std::vector<list_item> const effect_voice_types =
 std::vector<list_item>(effect_types.begin(), effect_types.begin() + effect_type::delay);
-    
-static param_ui_descriptor const effect_filter_type_ui = 
-{ true, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } } } };
-static param_ui_descriptor const effect_shaper_ui = 
-{ false, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } } } };
-static param_ui_descriptor const effect_shaper_type_ui =
-{ true, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } } } };
-static param_ui_descriptor const effect_delay_ui =
-{ false, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } } } };
-static param_ui_descriptor const effect_delay_type_ui =
-{ true, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } } } };
-static param_ui_descriptor const effect_reverb_ui =
-{ false, 0.0f, { { effect_param::type, [](std::int32_t v) { return v == effect_type::reverb; } } } };
 
-static param_ui_descriptor const effect_dly_multi_time_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
-{ effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::multi; } },
-{ effect_param::dly_synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const effect_dly_multi_tempo_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
-{ effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::multi; } },
-{ effect_param::dly_synced, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const effect_dly_fdbk_time_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
-{ effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::feedback; } },
-{ effect_param::dly_synced, [](std::int32_t v) { return v == 0; } } } };
-static param_ui_descriptor const effect_dly_fdbk_tempo_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
-{ effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::feedback; } },
-{ effect_param::dly_synced, [](std::int32_t v) { return v == 1; } } } };
-static param_ui_descriptor const effect_dly_multi_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
-{ effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::multi; } } } };
-static param_ui_descriptor const effect_dly_fdbk_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::delay; } },
-{ effect_param::delay_type, [](std::int32_t v) { return v == effect_delay_type::feedback; } } } };
-
-static param_ui_descriptor const effect_flt_comb_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } },
-{ effect_param::filter_type, [](std::int32_t v) { return v == effect_filter_type::comb; } } } };
-static param_ui_descriptor const effect_flt_stvar_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } },
-{ effect_param::filter_type, [](std::int32_t v) { return v == effect_filter_type::state_var; } } } };
-static param_ui_descriptor const effect_flt_stvar_shlf_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::filter; } },
-{ effect_param::filter_type, [](std::int32_t v) { return v == effect_filter_type::state_var; } },
-{ effect_param::flt_stvar_type, [](std::int32_t v) { return v >= effect_flt_stvar_type::bll; } } } };
-
-static param_ui_descriptor const effect_shp_cheby_sum_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } },
-{ effect_param::shaper_type, [](std::int32_t v) { return v == effect_shaper_type::cheby_sum; } } } };
-static param_ui_descriptor const effect_shp_cheby_ui = { false, 0.0f, {
-{ effect_param::type, [](std::int32_t v) { return v == effect_type::shaper; } },
-{ effect_param::shaper_type, [](std::int32_t v) { return v == effect_shaper_type::cheby_one || v == effect_shaper_type::cheby_sum; } } } };
+char const* 
+effect_graph_name_selector(
+  topology_info const* topology, param_value const* state, 
+  part_id id, std::int32_t graph_type)
+{
+  std::int32_t type = state[topology->param_index(id, effect_param::type)].discrete;
+  switch (type)
+  {
+  case effect_type::filter:
+    switch (graph_type) {
+    case effect_graph::graph1: return "Impulse response";
+    case effect_graph::graph2: return "Frequency response";
+    default: assert(false); return nullptr; } break;
+  case effect_type::shaper:
+    switch (graph_type) {
+    case effect_graph::graph1: return "Shape";
+    case effect_graph::graph2: return "Spectrum";
+    default: assert(false); return nullptr; } break;
+  case effect_type::delay:
+  case effect_type::reverb:
+    switch (graph_type) {
+    case effect_graph::graph1: return "Left";
+    case effect_graph::graph2: return "Right";
+    default: assert(false); return nullptr; } break;
+  default: assert(false); return nullptr;
+  }
+}
  
-static param_descriptor_data const effect_on_data = { { "On", "Enabled" }, param_kind::voice, false, -1, nullptr }; 
-static param_descriptor_data const effect_voice_type_data = { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &effect_voice_types, effect_type::filter }, 0, nullptr };
-static param_descriptor_data const effect_global_type_data = { { "Type", "Type" }, "", param_kind::block, param_type::list, { &effect_global_types, effect_type::filter }, 0, nullptr };
-static param_descriptor_data const effect_filter_type_data = { { "Flt", "Filter type" }, "", param_kind::voice, param_type::list, { &effect_filter_types, effect_filter_type::state_var }, 1, &effect_filter_type_ui };
-static param_descriptor_data const effect_flt_stvar_type_data = { { "SV", "State variable filter type" }, "", param_kind::voice, param_type::list, { &effect_flt_stvar_types, effect_flt_stvar_type::lpf }, 2, &effect_flt_stvar_ui };
-static param_descriptor_data const effect_flt_stvar_freq_data = { { "Freq", "State variable filter frequency" }, "Hz", param_kind::continuous, quad_bounds(effect_flt_stvar_min_freq, effect_flt_stvar_max_freq, "1000", 0), 4, &effect_flt_stvar_ui };
-static param_descriptor_data const effect_flt_stvar_res_data = { { "Res", "State variable filter resonance" }, "%", param_kind::continuous, percentage_01_bounds(0.0f), 5, &effect_flt_stvar_ui };
-static param_descriptor_data const effect_flt_stvar_kbd_data = { { "Kbd", "State variable filter keyboard tracking" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f), 3, &effect_flt_stvar_ui };
-static param_descriptor_data const effect_flt_stvar_shlf_gain_data = { { "Gain", "State variable filter shelf gain" }, "dB", param_kind::continuous, linear_bounds(-24.0f, 24.0f, 0.0f, 2), 6, &effect_flt_stvar_shlf_ui };
-static param_descriptor_data const effect_flt_comb_dly_plus_data = { { "Dly+", "Comb filter delay+" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2), 2, &effect_flt_comb_ui };
-static param_descriptor_data const effect_flt_comb_gain_plus_data = { { "Gain+", "Comb filter gain+" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f), 3, &effect_flt_comb_ui };
-static param_descriptor_data const effect_flt_comb_dly_min_data = { { "Dly-", "Comb filter delay-" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2), 4, &effect_flt_comb_ui };
-static param_descriptor_data const effect_flt_comb_gain_min_data = { { "Gain-", "Comb filter gain-" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f), 5, &effect_flt_comb_ui };
-static param_descriptor_data const effect_shaper_type_data = { { "Shp", "Shaper type" }, "", param_kind::voice, param_type::list, { &effect_shaper_types, effect_shaper_type::tanh }, 1, &effect_shaper_type_ui };
-static param_descriptor_data const effect_shp_over_data = { { "Over", "Shaper oversampling" }, "", param_kind::voice, param_type::list, { &effect_shp_over_orders, effect_shp_over_order::over_4 }, 2, &effect_shaper_ui };
-static param_descriptor_data const effect_shp_mix_data = { { "Mix", "Shaper mix" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 3, &effect_shaper_ui };
-static param_descriptor_data const effect_shp_gain_data = { { "Gain", "Shaper gain" }, "", param_kind::continuous, quad_bounds(effect_shp_min_gain, effect_shp_max_gain, "1", 1), 4, &effect_shaper_ui };
-static param_descriptor_data const effect_shp_cheby_terms_data = { { "Terms", "Chebyshev shaper terms" }, "", param_kind::voice, param_type::list_knob, { effect_shp_cheby_min_terms, effect_shp_cheby_max_terms, effect_shp_cheby_min_terms + 1 }, 5, &effect_shp_cheby_ui };
-static param_descriptor_data const effect_shp_cheby_sum_decay_data = { { "Decay", "Chebyshev shaper sum decay" }, "", param_kind::continuous, percentage_01_bounds(1.0f), 6, &effect_shp_cheby_sum_ui };
-static param_descriptor_data const effect_delay_type_data = { { "Dly", "Delay type" }, "", param_kind::voice, param_type::list, { &effect_delay_types, effect_delay_type::feedback }, 1, &effect_delay_type_ui };
-static param_descriptor_data const effect_dly_synced_data = { { "Sync", "Delay tempo sync" }, param_kind::voice, false, 3, &effect_delay_ui };  
-static param_descriptor_data const effect_dly_mix_data = { { "Mix", "Delay mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f), 2, &effect_delay_ui }; 
-static param_descriptor_data const effect_dly_amt_data = { { "Amt", "Delay amount" }, "%", param_kind::continuous, percentage_01_bounds(0.25f), 4, &effect_delay_ui };
-static param_descriptor_data const effect_dly_fdbk_sprd_data = { { "Sprd", "Feedback delay stereo spread" }, "%", param_kind::continuous, percentage_01_bounds(0.5f), 5, &effect_dly_fdbk_ui };
-static param_descriptor_data const effect_dly_multi_sprd_data = { { "Sprd", "Multitap delay stereo spread" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1), 5, &effect_dly_multi_ui };
-static param_descriptor_data const effect_dly_fdbk_time_l_data = { { "L", "Feedback delay left time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3), 6, &effect_dly_fdbk_time_ui };
-static param_descriptor_data const effect_dly_fdbk_time_r_data = { { "R", "Feedback delay right time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3), 7, &effect_dly_fdbk_time_ui };
-static param_descriptor_data const effect_dly_fdbk_tempo_l_data = { { "L", "Feedback delay left tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" }, 6, &effect_dly_fdbk_tempo_ui };
-static param_descriptor_data const effect_dly_fdbk_tempo_r_data = { { "R", "Feedback delay right tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" }, 7, &effect_dly_fdbk_tempo_ui };
-static param_descriptor_data const effect_dly_multi_time_data = { { "Time", "Multitap delay time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3), 6, &effect_dly_multi_time_ui };
-static param_descriptor_data const effect_dly_multi_tempo_data = { { "Tempo", "Multitap delay tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" }, 6, &effect_dly_multi_tempo_ui };
-static param_descriptor_data const effect_dly_multi_taps_data = { { "Taps", "Multitap delay tap count" }, "", param_kind::voice, param_type::list_knob, { 1, effect_dly_max_taps, effect_dly_max_taps / 2 }, 7, &effect_dly_multi_ui };
-static param_descriptor_data const effect_reverb_mix_data = { { "Mix", "Reverb mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f), 1, &effect_reverb_ui };
-static param_descriptor_data const effect_reverb_size_data = { { "Size", "Reverb room size" }, "%", param_kind::continuous, percentage_01_bounds(0.5f), 2, &effect_reverb_ui };
-static param_descriptor_data const effect_reverb_spread_data = { { "Sprd", "Reverb stereo spread" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 3, &effect_reverb_ui };
-static param_descriptor_data const effect_reverb_damp_data = { { "Damp", "Reverb damping" }, "%", param_kind::continuous, percentage_01_bounds(0.5f), 4, &effect_reverb_ui };
-static param_descriptor_data const effect_reverb_apf_data = { { "APF", "Reverb APF" }, "%", param_kind::continuous, percentage_01_bounds(1.0f), 5, &effect_reverb_ui };
+static param_descriptor_data const effect_on_data = { { "On", "On" }, param_kind::voice, false }; 
+static param_descriptor_data const effect_voice_type_data = { { "Type", "Type" }, "", param_kind::voice, param_type::list, { &effect_voice_types, effect_type::filter } };
+static param_descriptor_data const effect_global_type_data = { { "Type", "Type" }, "", param_kind::block, param_type::list, { &effect_global_types, effect_type::filter } };
+static param_descriptor_data const effect_filter_type_data = { { "Flt", "Filter type" }, "", param_kind::voice, param_type::list, { &effect_filter_types, effect_filter_type::state_var } };
+static param_descriptor_data const effect_flt_stvar_type_data = { { "StVar", "StVar type" }, "", param_kind::voice, param_type::list, { &effect_flt_stvar_types, effect_flt_stvar_type::lpf } };
+static param_descriptor_data const effect_flt_stvar_freq_data = { { "Freq", "StVar frequency" }, "Hz", param_kind::continuous, quad_bounds(effect_flt_stvar_min_freq, effect_flt_stvar_max_freq, "1000", 0) };
+static param_descriptor_data const effect_flt_stvar_res_data = { { "Res", "StVar resonance" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) };
+static param_descriptor_data const effect_flt_stvar_kbd_data = { { "Kbd", "StVar keytrack" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) };
+static param_descriptor_data const effect_flt_stvar_shlf_gain_data = { { "Gain", "StVar shelf gain" }, "dB", param_kind::continuous, linear_bounds(-24.0f, 24.0f, 0.0f, 2) };
+static param_descriptor_data const effect_flt_comb_dly_plus_data = { { "Dly+", "Comb delay+" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2) };
+static param_descriptor_data const effect_flt_comb_gain_plus_data = { { "Gain+", "Comb gain+" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f) };
+static param_descriptor_data const effect_flt_comb_dly_min_data = { { "Dly-", "Comb delay-" }, "Ms", param_kind::continuous, millisecond_bounds(0.0f, effect_flt_comb_max_ms, 2.5f, 2) };
+static param_descriptor_data const effect_flt_comb_gain_min_data = { { "Gain-", "Comb gain-" }, "%", param_kind::continuous, percentage_m11_bounds(0.5f) };
+static param_descriptor_data const effect_shaper_type_data = { { "Shp", "Shaper type" }, "", param_kind::voice, param_type::list, { &effect_shaper_types, effect_shaper_type::tanh } };
+static param_descriptor_data const effect_shp_over_data = { { "Over", "Shaper oversampling" }, "", param_kind::voice, param_type::list, { &effect_shp_over_orders, effect_shp_over_order::over_4 } };
+static param_descriptor_data const effect_shp_mix_data = { { "Mix", "Shaper mix" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
+static param_descriptor_data const effect_shp_gain_data = { { "Gain", "Shaper gain" }, "", param_kind::continuous, quad_bounds(effect_shp_min_gain, effect_shp_max_gain, "1", 1) };
+static param_descriptor_data const effect_shp_cheby_terms_data = { { "Terms", "Shaper cheby terms" }, "", param_kind::voice, param_type::list_knob, { effect_shp_cheby_min_terms, effect_shp_cheby_max_terms, effect_shp_cheby_min_terms + 1 } };
+static param_descriptor_data const effect_shp_cheby_sum_decay_data = { { "Decay", "Shaper cheby decay" }, "", param_kind::continuous, percentage_01_bounds(1.0f) };
+static param_descriptor_data const effect_delay_type_data = { { "Dly", "Delay type" }, "", param_kind::voice, param_type::list, { &effect_delay_types, effect_delay_type::feedback } };
+static param_descriptor_data const effect_dly_synced_data = { { "Sync", "Delay tempo sync" }, param_kind::voice, false };  
+static param_descriptor_data const effect_dly_mix_data = { { "Mix", "Delay mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) }; 
+static param_descriptor_data const effect_dly_amt_data = { { "Amt", "Delay amount" }, "%", param_kind::continuous, percentage_01_bounds(0.25f) };
+static param_descriptor_data const effect_dly_hold_time_data = { { "Hold", "Delay hold time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_hold_min_time_sec, effect_dly_hold_max_time_sec, "0", 3) };
+static param_descriptor_data const effect_dly_hold_tempo_data = { { "Hold", "Delay hold tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_hold_timesig_names, "0" } };
+static param_descriptor_data const effect_dly_fdbk_sprd_data = { { "Sprd", "Fbdk dly spread" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_dly_multi_sprd_data = { { "Sprd", "Multi dly sprd" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) };
+static param_descriptor_data const effect_dly_fdbk_time_l_data = { { "L", "Fbdk dly time L" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
+static param_descriptor_data const effect_dly_fdbk_time_r_data = { { "R", "Fbdk dly time R" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
+static param_descriptor_data const effect_dly_fdbk_tempo_l_data = { { "L", "Fbdk dly tempo L" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
+static param_descriptor_data const effect_dly_fdbk_tempo_r_data = { { "R", "Fbdk dly tempo R" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
+static param_descriptor_data const effect_dly_multi_time_data = { { "Time", "Multi dly time" }, "Sec", param_kind::voice, quad_bounds(effect_dly_min_time_sec, effect_dly_max_time_sec, "1", 3) };
+static param_descriptor_data const effect_dly_multi_tempo_data = { { "Tempo", "Multi dly tempo" }, "", param_kind::voice, param_type::knob_list, { &effect_dly_timesig_names, "1/4" } };
+static param_descriptor_data const effect_dly_multi_taps_data = { { "Taps", "Multi dly taps" }, "", param_kind::voice, param_type::list_knob, { 1, effect_dly_max_taps, effect_dly_max_taps / 2 } };
+static param_descriptor_data const effect_reverb_mix_data = { { "Mix", "Reverb mix" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_reverb_size_data = { { "Size", "Reverb size" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_reverb_spread_data = { { "Sprd", "Reverb spread" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
+static param_descriptor_data const effect_reverb_damp_data = { { "Damp", "Reverb damp" }, "%", param_kind::continuous, percentage_01_bounds(0.5f) };
+static param_descriptor_data const effect_reverb_apf_data = { { "APF", "Reverb APF" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) };
     
 param_descriptor const  
 veffect_params[effect_param::vfx_count] =     
@@ -200,6 +177,8 @@ geffect_params[effect_param::gfx_count] =
   { "{02064D73-819F-4F19-B048-477C3AE810EE}", effect_dly_synced_data },
   { "{4B7E75E7-152D-4646-806C-8DA3587458EF}", effect_dly_mix_data },
   { "{681460BC-F34E-4D26-9A5F-DE36D78B0EC1}", effect_dly_amt_data },
+  { "{CAEA463C-F990-41D8-B9B6-3097D2A20CE1}", effect_dly_hold_time_data },
+  { "{B8302415-EB6C-42D8-AA0B-9838E02CB6A2}", effect_dly_hold_tempo_data },
   { "{A4CBA645-C23D-4372-90CA-8E9419601485}", effect_dly_fdbk_sprd_data },
   { "{983FB1AE-E7F3-4FD5-B904-C383E68402E3}", effect_dly_multi_sprd_data },
   { "{979FCE21-44D4-4CE3-88F6-04A27D14D19A}", effect_dly_fdbk_time_l_data },

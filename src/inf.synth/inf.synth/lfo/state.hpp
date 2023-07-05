@@ -16,13 +16,13 @@ struct lfo_basic_state
   std::int32_t type;
 };
 
-struct lfo_custom_stage
+struct lfo_free_stage
 {
   float factor;
   std::int32_t slope;
 };
 
-struct lfo_custom_state
+struct lfo_free_state
 {
   bool enabled;
   float hold1_factor;
@@ -30,10 +30,10 @@ struct lfo_custom_state
   float delay1_factor;
   float delay2_factor;
 
-  lfo_custom_stage rise1;
-  lfo_custom_stage rise2;
-  lfo_custom_stage fall1;
-  lfo_custom_stage fall2;
+  lfo_free_stage rise1;
+  lfo_free_stage rise2;
+  lfo_free_stage fall1;
+  lfo_free_stage fall2;
 };
 
 struct lfo_random_state

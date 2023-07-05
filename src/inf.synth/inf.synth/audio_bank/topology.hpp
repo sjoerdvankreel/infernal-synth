@@ -3,7 +3,6 @@
 
 #include <inf.synth/synth/config.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
-#include <inf.base/topology/part_ui_descriptor.hpp>
 
 #include <vector>
 #include <cstdint>
@@ -13,25 +12,25 @@ namespace inf::synth {
 
 // ---- shared ----
 
-std::vector<base::box_descriptor> audio_bank_borders();
-  
+// On/off must be 0.
+inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; 
 struct audio_bank_param_type_t { enum value { in, out, amt, bal, count }; };
 typedef audio_bank_param_type_t::value audio_bank_param_type;
 
-struct audio_bank_param_t { enum value { on, 
-  in1, in2, in3, in4, in5, in6, out1, out2, out3, out4, out5, out6, 
-  amt1, amt2, amt3, amt4, amt5, amt6, bal1, bal2, bal3, bal4, bal5, bal6, count }; };
+inline std::int32_t
+audio_bank_param_index(std::int32_t route, audio_bank_param_type type)
+{ return route * audio_bank_param_type::count + type; }
+
+struct audio_bank_param_t { enum value { 
+  in1, out1, amt1, bal1, in2, out2, amt2, bal2, in3, out3, amt3, bal3,
+  in4, out4, amt4, bal4, in5, out5, amt5, bal5, in6, out6, amt6, bal6,
+  in7, out7, amt7, bal7, in8, out8, amt8, bal8, in9, out9, amt9, bal9,
+  in10, out10, amt10, bal10, in11, out11, amt11, bal11, in12, out12, amt12, bal12,
+  in13, out13, amt13, bal13, in14, out14, amt14, bal14, in15, out15, amt15, bal15, count }; };
 typedef audio_bank_param_t::value audio_bank_param;
 
-inline std::int32_t constexpr audio_bank_param_offset = 1; // for enabled
-inline std::int32_t constexpr audio_bank_vgaudio_param_on = 0; // On/off must be 0.
-inline std::int32_t constexpr audio_bank_vgaudio_inout_off = 0; // On/off must be 0.
-inline std::int32_t constexpr audio_bank_route_count = (audio_bank_param::count - audio_bank_param_offset) / audio_bank_param_type::count;
-
-inline std::int32_t const audio_bank_table_col_count = audio_bank_route_count + 1;
-inline float const audio_bank_table_col_widths[audio_bank_table_col_count] = { 0.1f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f };
-inline char const* const audio_bank_table_row_headers[audio_bank_param_type::count] = { "In", "Out", "Amt", "Bal" };
-inline base::part_table_descriptor const audio_bank_table = { true, audio_bank_table_col_count, audio_bank_table_col_widths, audio_bank_table_row_headers };
+inline std::int32_t constexpr audio_bank_route_count = 
+audio_bank_param::count / static_cast<std::int32_t>(audio_bank_param_type::count);
 
 // ---- voice ----
 

@@ -16,7 +16,7 @@ struct voice_input
   std::int32_t port_mode;
   std::int32_t port_trig;
   std::int32_t port_samples;
-  std::int32_t master_mode;
+  std::int32_t voice_mode;
   std::int32_t release_sample;
   std::int32_t new_midi;
   std::int32_t new_midi_start_pos;
