@@ -19,14 +19,16 @@ _controller(controller)
   File file(File::getSpecialLocation(File::currentExecutableFile));
   auto current_theme = controller->get_theme();
   auto themes = controller->themes(file.getFullPathName().toStdString());
-  auto current_path = controller->default_theme_path(file.getFullPathName().toStdString());
+  auto default_path = controller->default_theme_path(file.getFullPathName().toStdString());
+  auto current_path = default_path;
   for(std::size_t i = 0; i < themes.size(); i++)
     if(themes[i].name == current_theme)
       current_path = themes[i].path;
   
   std::filesystem::path theme_path(current_path);
-  File theme_file((theme_path / std::filesystem::path("theme.json")).c_str());
-  if(!theme_file.exists()) return;  
+  File theme_file((theme_path / std::filesystem::path("themefile.json")).c_str());
+  if(!theme_file.exists())
+    theme_file = File((std::filesystem::path(default_path) / std::filesystem::path("themefile.json")).c_str());
   
   juce::var root;
   FileInputStream stream(theme_file);
@@ -186,7 +188,7 @@ inf_look_and_feel::try_load_theme_color(std::int32_t color, juce::var const& col
   if(!colors.hasProperty(name)) return;
   std::string text = colors[name].toString().toStdString();
   setColour(color, juce::Colour(static_cast<std::uint32_t>(std::stoul(text, nullptr, 16))));
-} 
+}  
 
 juce::Colour
 inf_look_and_feel::with_enabled(Component& component, std::int32_t color_id, bool check_enabled, bool extra_dark)
