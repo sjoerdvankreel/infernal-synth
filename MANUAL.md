@@ -29,10 +29,10 @@ they can be swapped for anything else as long as the other image has the same di
 InfernalSynth is conceptually split up into 5 parts:
 
 - Output: monitors CPU usage, clipping and voice count.
-- Global CV: LFO's (LFO B), CV routing (CV B), and CV plot section displaying stacked CV modulation.
-- Global audio: effects (FX B), audio routing (Audio B), and Master section with common synth-wide controls.
-- Per-voice CV: envelopes, LFO's (LFO A), CV routing (CV A), and CV plot section displaying stacked CV modulation.
-- Per-voice audio: oscillators, effects (FX A), audio routing (Audio A), and Voice section with common per-voice controls.
+- Global CV: LFO's, CV matrix, and CV plot section displaying stacked CV modulation.
+- Global audio: effects, audio matrix, and Master section with common synth-wide controls.
+- Per-voice CV: envelopes, LFO's, CV matrix, and CV plot section displaying stacked CV modulation.
+- Per-voice audio: oscillators, effects, audio matrix, and Voice section with common per-voice controls.
 
 The maximum voice count is limited to 32. If this number is exceeded, the oldest voice (the one that started
 earliest among all active voices) is recycled to make room for the new incoming voice.
