@@ -367,13 +367,13 @@ Select a target parameter to view the combined (stacked) modulation signal that'
 
 - Tgt: target parameter.
 - Length (global):  plot length in seconds.
-- Key (voice): key-down time, affects the sustain section of the envelope generators.
+- Hold (voice): key-down time, affects the sustain section of the envelope generators.
 
-## Output section
+## Monitor section
 
-Monitor section just to get an idea of what the plugin is doing.
+Just to get an idea of what the plugin is doing.
 
-![Output](static/output.png)
+![Output](static/monitor.png)
 
 - Voices: active voice count. InfernalSynth is internally limited to 32 voices.
 - Drain: indicates whether maximum voice count is exceeded and voices are being recycled.
