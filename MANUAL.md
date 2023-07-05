@@ -19,9 +19,10 @@ from the host's point of view).
 ## Theming
 
 Due to VST3's bundle format, InfernalSynth can easily be themed if you're comfortable editing json files.\
-Look for the "colors" section near the top of the controller.uidesc file in Contents/Resources/UI. \
-Editing anything other than the colors is not likely to be forward-compatible though. \
-The background images live in the same folder, they can be swapped for anything else as long as the other image has the same dimensions.
+See /Contents/Resources/Themes/(theme name)/themefile.json. It contains a root section definining all colors \
+on a global level, an audio section containing overrides for the oscillator, fx and audio matrix, and a cv \
+section containing overrides for the lfo, envelope and cv matrix. The background images live in the same folder, \
+they can be swapped for anything else as long as the other image has the same dimensions.
 
 ## Architecture
 
