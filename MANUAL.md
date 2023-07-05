@@ -321,7 +321,7 @@ bipolar and inverted modes, one-shot option and smoothing filter.
         - SeedY: controls the level at the beginning of a new step.
         - Amt: controls next step level relative to current step level.
         - RandX: allows control of the horizontal seed. If disabled, each section has equal length.
-        - SeedX: a single cycle always has step count equal to the steps parameter, but if "rand steps" is enabled, relative section length may be varied using this parameter.
+        - SeedX: a single cycle always has step count equal to the steps parameter, but if RandX is enabled, relative section length may be varied using this parameter.
 
 ## CV section
 
