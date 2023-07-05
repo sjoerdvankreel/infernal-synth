@@ -23,7 +23,7 @@ _controller(controller)
   auto current_path = default_path;
   for(std::size_t i = 0; i < themes.size(); i++)
     if(themes[i].name == current_theme)
-      current_path = themes[i].path;
+      current_path = themes[i].path; 
   
   std::filesystem::path theme_path(current_path);
   File theme_file((theme_path / std::filesystem::path("themefile.json")).c_str());
