@@ -25,6 +25,3 @@
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
-
-* wishlist ui
-- add the fx demo to website + update the website
