@@ -27,7 +27,4 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist ui
-- add the fx demo to website
-- manual + automation test everything
-- check the readme, and the manual, and all screenshots, and the project website
-- theming doesnt work
+- add the fx demo to website + update the website
