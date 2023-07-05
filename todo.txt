@@ -7,9 +7,9 @@
 - v update history
 - v keep manual up to date
 - v run host demos
-- x debug run demos
-- x run pluginval
-- x run the vst validator
+- v debug run demos
+- v run pluginval
+- v run the vst validator
 - x don't forget to tag
 
 * wishlist big
