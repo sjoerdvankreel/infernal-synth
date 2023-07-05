@@ -255,8 +255,8 @@ time, using a single parameter, from the host.
 
 ![Master](static/master_in.png)
 
-- CV B: bipolar virtual CV param level.
-- CV U: unipolar virtual CV param level.
+- CVB: bipolar virtual CV param level.
+- CVU: unipolar virtual CV param level.
 
 ## Envelope section
 
