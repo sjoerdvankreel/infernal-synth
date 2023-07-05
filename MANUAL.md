@@ -382,3 +382,13 @@ Just to get an idea of what the plugin is doing.
 For example, "G.FX", "80%" indicates that 80% of processing time was spent in the global fx modules.
 - CPU: absolute total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
+
+## Edit section
+
+Contains voice/global selection, UI settings and exact-editing.
+
+![Edit](static/edit.png)
+
+- UI size selector and theme selector.
+- Switch between editing voice and global sections.
+- Last tweaked: shows the name and value of the last changed knob/slider/etc. Allows exact-editing of that value.
