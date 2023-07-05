@@ -264,7 +264,7 @@ Per-voice DAHDSR envelope generator with retrigger and multitrigger options, opt
 bipolar and inverted modes, and 2 stages with customizable slope and split level for each of attack, decay, and release sections.
 Please note: if release length is zero, envelope sustains at it's final pre-release level.
 
-![Envelope](static/envelope.png)
+![Envelope](static/env.png)
 
 - Graphs: Envelope.
 - Type
