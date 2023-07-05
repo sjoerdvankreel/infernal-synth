@@ -14,6 +14,8 @@ registered in Europe and other countries.
 - Steinberg VST3 SDK: [https://github.com/steinbergmedia/vst3sdk](https://github.com/steinbergmedia/vst3sdk).
 
 # Credits
+- Special thanks to host vendors who have set me up with an NFR license.
+- Special thanks to Surge Synth Team: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 - Artwork by DanteCyberman: [Seven deadly sins](https://www.deviantart.com/dantecyberman/art/Seven-deadly-sins-442680725).
 - Contains a slightly adapted implementation of [Jezar's Freeverb](https://github.com/sinshu/freeverb).
 - Contains a slightly adapted implementation of the [Karplus-Strong algorithm](https://blog.demofox.org/2016/06/16/synthesizing-a-pluked-string-sound-with-the-karplus-strong-algorithm).
@@ -24,10 +26,6 @@ Furthermore parts of InfernalSynth are implemented based on various resources fo
 [KVR Audio](https://www.kvraudio.com), [DSP Stackexchange](https://dsp.stackexchange.com),
 [Music DSP](https://www.musicdsp.org) and [DSP Related](https://www.dsprelated.com).
 Look for // http:// or // https:// in the source code for sources relevant to a specific feature.
-
-# Special thanks
-- To host vendors who have set me up with an NFR license.
-- To Surge Synth Team for guidance and advice: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 
 # How to build
 - Needs cmake and visual studio 2022
