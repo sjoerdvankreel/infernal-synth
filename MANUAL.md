@@ -205,33 +205,22 @@ An audio source may be assigned to multiple targets or vice-versa, but note that
 - Amt: input signal amplitude
 - Bal: input signal stereo balancing
 
-## Voice section
+## Voice output section
 
-Controls the final per-voice mixdown, and provides pitch translators affecting all oscillators.
-Please note: envelope 1 (Amp Env) is hard-wired to the voice section amplitude.
+Controls per-voice gain and balance. Please note: envelope 1 (Amp Env) is hard-wired to voice gain.
 
-![Voice](static/voice.png)
+![Voice](static/voice_out.png)
 
-- Graphs: stereo balance image.
 - Gain: amplitude of single voice output.
 - Bal: stereo balancing of single voice output.
+
+## Voice input section
+
+Provides pitch translators affecting all oscillators, portamento settings and poly/monophonic mode selection.
+
+![Voice](static/voice_in.png)
+
 - Oct, Note: oscillator pitch offset relative to C4.
-
-## Master section
-
-Controls the final mixdown of global audio routing, allows switching between polyphonic and monophonic modes,
-contains portamento settings and contains a couple of freely-assignable CV sources. These CV sources don't do
-anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
-For example, route CV U1 to both voice gain and FX A1 state variable frequency, and control both at the same
-time, using a single parameter, from the host.
-
-![Master](static/master.png)
-
-- Graphs: stereo balance image.
-- CV B: bipolar virtual CV param level.
-- CV U: unipolar virtual CV param level.
-- Gain: amplitude of master mixdown.
-- Bal: stereo balancing of master mixdown.
 - Mode: select polyphonic/monophonic mode.
     - Poly: regular polyphonic mode.
     - Mono: true monophonic mode (voice count will never exceed 1).
@@ -247,6 +236,22 @@ time, using a single parameter, from the host.
     - Trig: portamento trigger.
         - Note: always trigger portamento on a new note.
         - Voice: trigger portamento on a new note, except for the first note in a new monophonic section. Useful in combination with release portamento mode.
+        
+## Master section
+
+Controls the final mixdown of global audio routing, allows switching between polyphonic and monophonic modes,
+contains portamento settings and contains a couple of freely-assignable CV sources. These CV sources don't do
+anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
+For example, route CV U1 to both voice gain and FX A1 state variable frequency, and control both at the same
+time, using a single parameter, from the host.
+
+![Master](static/master.png)
+
+- Graphs: stereo balance image.
+- CV B: bipolar virtual CV param level.
+- CV U: unipolar virtual CV param level.
+- Gain: amplitude of master mixdown.
+- Bal: stereo balancing of master mixdown.
 
 ## Envelope section
 
