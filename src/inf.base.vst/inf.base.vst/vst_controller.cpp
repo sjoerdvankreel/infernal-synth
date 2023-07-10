@@ -132,7 +132,7 @@ vst_controller::default_theme_path(std::string const& plugin_file) const
 {
   auto path = std::filesystem::path(plugin_file);
   return (path.parent_path().parent_path() / "Resources" / "Themes" / "3D Default").string();
-}        
+}          
   
 std::vector<inf::base::external_resource> 
 vst_controller::themes(std::string const& plugin_file) const
