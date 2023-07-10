@@ -59,11 +59,11 @@
       "button_down_background_low": "FF1C7485",
       "button_down_background_high": "FF1C7485",
       "tab_button_text": "FFD3DEE4",
-      "tab_button_outline_low": "FFDA6102",
+      "tab_button_outline_low": "FFFD9A4D",
       "tab_button_outline_high": "FFFD9A4D",
       "tab_button_background_low": "FF444444",
-      "tab_button_background_high": "FF777777",
-      "tab_button_highlight_background_low": "FF0D363E",
+      "tab_button_background_high": "FF444444",
+      "tab_button_highlight_background_low": "FF14525D",
       "tab_button_highlight_background_high": "FF14525D",
       "dropdown_text": "FFD3DEE4",
       "dropdown_outline_low": "FFFD9A4D",
@@ -138,7 +138,7 @@
       "part_group_container_fill_high": "FF3E150D",
       "part_group_container_outline_low": "FFAE3925",
       "part_group_container_outline_high": "FFAE3925",
-      "tab_button_highlight_background_low": "FF3E150D",
+      "tab_button_highlight_background_low": "FF5D1F14",
       "tab_button_highlight_background_high": "FF5D1F14"
     },
     "cv": {
