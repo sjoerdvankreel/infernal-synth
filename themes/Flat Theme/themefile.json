@@ -105,14 +105,14 @@
       "slider_spot_fill_high": "80BBBBBB",
       "slider_gradient_fill_low": "E0DA6102",
       "slider_gradient_fill_high": "E0FD9A4D",
-      "switch_outline_low": "FF14525D",
+      "switch_outline_low": "FF2EB8D1",
       "switch_outline_high": "FF2EB8D1",
-      "switch_spot_fill_low": "00222222",
-      "switch_spot_fill_high": "80BBBBBB",
-      "switch_gradient_fill_low_on": "A0DA6102",
+      "switch_spot_fill_low": "00000000",
+      "switch_spot_fill_high": "00000000",
+      "switch_gradient_fill_low_on": "A0FD9A4D",
       "switch_gradient_fill_high_on": "A0FD9A4D",
-      "switch_gradient_fill_center_low": "FF222222",
-      "switch_gradient_fill_center_high": "FF999999"
+      "switch_gradient_fill_center_low": "FF444444",
+      "switch_gradient_fill_center_high": "FF444444"
     },
     "audio": {
       "slider_track_low": "FFAE3A25",
