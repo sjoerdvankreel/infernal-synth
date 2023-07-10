@@ -28,4 +28,3 @@
 
 * bugs v1.2
 - don't paint graphs so often when playing
-- cannot edit exact when playing
