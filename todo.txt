@@ -25,6 +25,3 @@
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
-
-* bugs v1.2
-- don't paint graphs so often when playing
