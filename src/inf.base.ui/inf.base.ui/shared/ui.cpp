@@ -227,6 +227,7 @@ Component*
 action_dropdown_element::build_core(juce::LookAndFeel& lnf)
 {
   ComboBox* result = new ComboBox;
+  result->setTooltip(_default_text);
   result->setTextWhenNothingSelected(_default_text);
   for(std::size_t i = 0; i < _items.size(); i++)
     result->addItem(_items[i], static_cast<std::int32_t>(i) + dropdown_id_offset);

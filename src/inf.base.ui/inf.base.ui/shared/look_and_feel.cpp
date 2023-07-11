@@ -694,7 +694,7 @@ inf_look_and_feel::drawLinearSlider(
   float track_size = small * track_size_factor;
   juce::Rectangle<float> track_rect(
     start_x - track_size / 2.0f, 
-    start_y - track_size / 2.0f, 
+    start_y - track_size / 2.0f,  
     vertical ? track_size : w + track_size, 
     vertical ? h + track_size : track_size);
   fill_gradient_rounded_rectangle(
