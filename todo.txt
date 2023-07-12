@@ -17,6 +17,7 @@
 - Linux support
 - Mac support (contact kvr)
 - osc types: feedback lead
+- slope controls for cv matrix
 - filter types: formant, vowel
 - noise types: fractal, perlin
 - scale CV amount by global CV param
