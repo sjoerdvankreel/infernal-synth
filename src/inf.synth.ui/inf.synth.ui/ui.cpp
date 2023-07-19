@@ -863,7 +863,7 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
   header_grid->add_cell(create_label_ui(controller, "Out/Offset/Scl", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 21, 1, 20);
   outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0);
   for (std::int32_t i = 0; i < cv_bank_route_count; i++)
-  {
+  { 
     auto inner_grid = create_grid_ui(controller, 2, 42);
     inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 1, 1, 20);
     auto op = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::op), edit_type::dropdown, tooltip_type::label, false, true), 1, 1, 1, 10);
