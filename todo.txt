@@ -29,4 +29,5 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist small
+- hard reset on program change
 - faster repaint graph when playing
