@@ -29,3 +29,4 @@
 
 * wishlist small
 - flip scale/offset in ui
+- faster repaint graph when playing
