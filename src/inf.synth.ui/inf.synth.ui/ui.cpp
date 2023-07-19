@@ -860,10 +860,10 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
   auto outer_grid = create_grid_ui(controller, cv_bank_route_count * 2 + 1, 1);
   auto header_grid = create_grid_ui(controller, 1, 42);
   header_grid->add_cell(create_label_ui(controller, "In/Op/Amt", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 1, 1, 20);
-  header_grid->add_cell(create_label_ui(controller, "Out/Scl/Offset", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 21, 1, 20);
+  header_grid->add_cell(create_label_ui(controller, "Out/Offset/Scl", Justification::centred, font_height, inf_look_and_feel::colors::param_label), 0, 21, 1, 20);
   outer_grid->add_cell(create_part_group_container_ui(controller, std::move(header_grid)), 0, 0);
   for (std::int32_t i = 0; i < cv_bank_route_count; i++)
-  {
+  { 
     auto inner_grid = create_grid_ui(controller, 2, 42);
     inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::in), edit_type::dropdown, tooltip_type::label, false, true), 0, 1, 1, 20);
     auto op = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::op), edit_type::dropdown, tooltip_type::label, false, true), 1, 1, 1, 10);
@@ -872,10 +872,10 @@ create_cv_part(plugin_controller* controller, std::int32_t part_type)
     amt->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     auto out = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::out), edit_type::dropdown, tooltip_type::label, false, true), 0, 21, 1, 20);
     out->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    auto scl = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::scale), edit_type::hslider, tooltip_type::value, false, true), 1, 21, 1, 10);
-    scl->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
-    auto off = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::off), edit_type::hslider, tooltip_type::value, false, true), 1, 31, 1, 10);
+    auto off = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::off), edit_type::hslider, tooltip_type::value, false, true), 1, 21, 1, 10);
     off->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
+    auto scl = inner_grid->add_cell(create_param_edit_ui(controller, part_type, 0, cv_bank_param_index(i, cv_bank_param_type::scale), edit_type::hslider, tooltip_type::value, false, true), 1, 31, 1, 10);
+    scl->relevant_if(part_id(part_type, 0), cv_bank_param_index(i, cv_bank_param_type::in), false, [](std::int32_t part_index, std::int32_t val) { return val != 0; });
     outer_grid->add_cell(create_part_group_container_ui(controller, std::move(inner_grid)), i * 2 + 1, 0, 2, 1);
   }
   return create_part_single_ui(controller, "CV", part_type, false, selector_routing_dir::none, std::move(outer_grid));

@@ -17,6 +17,7 @@
 - Linux support
 - Mac support (contact kvr)
 - osc types: feedback lead
+- slope controls for cvu/b
 - slope controls for cv matrix
 - filter types: formant, vowel
 - noise types: fractal, perlin
@@ -28,4 +29,5 @@
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
 
 * wishlist small
-- flip scale/offset in ui
+- hard reset on program change
+- faster repaint graph when playing
