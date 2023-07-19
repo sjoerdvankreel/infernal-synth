@@ -9,6 +9,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 #include <cstdint>
+#include <atomic>
 
 namespace inf::base::ui {
 
@@ -16,16 +17,12 @@ namespace inf::base::ui {
 class inf_graph_plot_timer:
 public juce::Timer
 {
-  bool _dirty = false;
   bool _inside_callback = false;
   juce::Component* _plot = nullptr;
-  std::uint64_t _paint_request_time = 0;
+  std::atomic<bool> _dirty = false;
+  std::atomic<std::uint64_t> _paint_request_time = 0;
 public:
-#ifdef NDEBUG
-  static inline std::uint64_t const timeout_millis = 50UL;
-#else
-  static inline std::uint64_t const timeout_millis = 1000UL;
-#endif
+  static inline std::uint64_t const timeout_millis = 200L;
   void timerCallback() override;
   void delayed_repaint_request();
   void plot(juce::Component* plot) { _plot = plot; }

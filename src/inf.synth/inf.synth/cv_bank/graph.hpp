@@ -22,13 +22,13 @@ public:
   void process_dsp_core(base::block_input const& input, float* output, float sample_rate) override;
 };
 
-inline bool
-cv_bank_graph::needs_repaint(std::int32_t runtime_param) const
-{ return true; }
-
 inline cv_bank_graph::
 cv_bank_graph(base::topology_info const* topology, base::part_id id) :
 inf::base::graph_processor(topology, id) {}
+
+inline bool
+cv_bank_graph::needs_repaint(std::int32_t runtime_param) const
+{ return topology()->params[runtime_param].descriptor->data.kind != base::param_kind::output; }
 
 } // namespace inf::synth
 #endif // INF_SYNTH_CV_BANK_GRAPH_HPP
