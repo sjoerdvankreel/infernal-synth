@@ -97,7 +97,10 @@ inf_graph_plot::paint(juce::Graphics& g)
   auto plot_bounds = Rectangle<float>(
     bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
     bounds.getWidth() - 2.0f, bounds.getHeight() - (bipolar? 2.0f: 1.0f) * plot_vpad);
-  std::vector<graph_point> const graph_data = {};
+  std::vector<graph_point> const& graph_data = processor()->plot(
+    state, graph_sample_rate,
+    static_cast<std::int32_t>(plot_bounds.getWidth()),
+    static_cast<std::int32_t>(plot_bounds.getHeight()));
 
   if (graph_data.size() != 0)
   {

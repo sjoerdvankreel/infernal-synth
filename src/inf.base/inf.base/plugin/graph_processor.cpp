@@ -41,7 +41,22 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
   // Of size parameter count (so nullptr at block parameter indices).
   std::vector<float*> continuous_automation(topology()->input_param_count);
 
+#ifdef NDEBUG // too slow for debug
+  continuous_automation_buffer.reserve(samples * topology()->continuous_param_count);
+  for (std::int32_t p = 0; p < topology()->input_param_count; p++)
+  {
+    _state_copy[p] = transform_param(p, state[p]);
+    auto const& descriptor = topology()->params[p].descriptor->data;
+    if (descriptor.kind == param_kind::fixed)
+      for (std::int32_t s = 0; s < samples; s++)
+        continuous_automation_buffer.push_back(descriptor.real.default_);
+    else if (_topology->params[p].descriptor->data.kind == param_kind::continuous)
+      for (std::int32_t s = 0; s < samples; s++)
+        continuous_automation_buffer.push_back(transform_param(p, state[p]).real);
+  }
+#else
   continuous_automation_buffer.resize(samples * topology()->continuous_param_count);
+#endif
 
   std::int32_t continuous = 0;
   for (std::int32_t p = 0; p < topology()->input_param_count; p++)
