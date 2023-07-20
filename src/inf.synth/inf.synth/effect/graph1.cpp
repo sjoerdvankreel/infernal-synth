@@ -11,10 +11,12 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-static inline float constexpr reverb_length_sec = 5.0f;
+static inline float constexpr reverb_length_sec = 3.0f;
 static inline float constexpr delay_fdbk_length_secs = 5.0f;
-static inline float constexpr delay_reverb_graph_rate = 500.0f;
-static inline float constexpr delay_reverb_graph_input_freq = 100.0f;
+static inline float constexpr delay_graph_rate = 100.0f;
+static inline float constexpr delay_graph_input_freq = 20.0f;
+static inline float constexpr reverb_graph_rate = 300.0f;
+static inline float constexpr reverb_graph_input_freq = 60.0f;
 static inline std::int32_t constexpr shaper_sample_count = 500;
 
 base::param_value
@@ -56,10 +58,10 @@ effect_graph1::opacity(param_value const* state) const
   std::int32_t filter_type = automation.block_discrete(effect_param::filter_type);
   switch (type)
   {
-  case effect_type::delay: return 0.5f;
-  case effect_type::reverb: return 0.33f;
+  case effect_type::delay: return 0.8f;
+  case effect_type::reverb: return 0.67f;
   case effect_type::shaper: return 1.0f;
-  case effect_type::filter: return filter_type == effect_filter_type::comb? 0.75f: 1.0f;
+  case effect_type::filter: return filter_type == effect_filter_type::comb? 0.875f: 1.0f;
   default: assert(false); return 0.0f;
   }
 }
@@ -113,9 +115,9 @@ effect_graph1::sample_count_delay(param_value const* state, float sample_rate) c
   auto fx_state = std::make_unique<effect_state>(true, sample_rate, 1);
   std::int32_t delay_type = automation.block_discrete(effect_param::delay_type);
   std::int32_t tap_count = automation.block_discrete(effect_param::dly_multi_taps);
-  float ffeedback_count = delay_reverb_graph_rate * delay_fdbk_length_secs;
+  float ffeedback_count = delay_graph_rate * delay_fdbk_length_secs;
   auto processor = std::make_unique<effect_processor>(topology(), id(),
-    delay_reverb_graph_rate, graph_bpm, midi_note_c4, fx_state.get(), automation);
+    delay_graph_rate, graph_bpm, midi_note_c4, fx_state.get(), automation);
   switch (delay_type)
   {
   case effect_delay_type::feedback: return static_cast<std::int32_t>(ffeedback_count) + processor->graph_hold_samples();
@@ -134,7 +136,7 @@ effect_graph1::sample_count(param_value const* state, float sample_rate) const
   case effect_type::shaper: return shaper_sample_count;
   case effect_type::delay: return sample_count_delay(state, sample_rate);
   case effect_type::filter: return sample_count_filter(state, sample_rate);
-  case effect_type::reverb: return static_cast<std::int32_t>(reverb_length_sec * delay_reverb_graph_rate);
+  case effect_type::reverb: return static_cast<std::int32_t>(reverb_length_sec * reverb_graph_rate);
   default: assert(false); return -1;
   }
 }
@@ -144,9 +146,12 @@ effect_graph1::prepare_input_delay_reverb(block_input const& input, float rate)
 {
   assert(id().type == part_type::geffect);
   automation_view automation = input.data.automation.rearrange_params(id());
+  bool is_reverb = automation.block_discrete(effect_param::type) == effect_type::reverb;
+  float graph_rate = is_reverb? reverb_graph_rate: delay_graph_rate;
+  float input_freq = is_reverb? reverb_graph_input_freq: delay_graph_input_freq;
   auto fx_state = std::make_unique<effect_state>(true, rate, input.data.sample_count);
   auto processor = std::make_unique<effect_processor>(topology(), id(), 
-    delay_reverb_graph_rate, graph_bpm, midi_note_c4, fx_state.get(), automation);
+    graph_rate, graph_bpm, midi_note_c4, fx_state.get(), automation);
 
   // Short fade-out sinewave, looks better in graph than single impulse.
   float phase = 0.0f;
@@ -154,11 +159,11 @@ effect_graph1::prepare_input_delay_reverb(block_input const& input, float rate)
   for (std::int32_t i = 0; i < length; i++)
   {
     float sample = std::sin(phase * 2.0f * pi32) * (length - i) / static_cast<float>(length);
-    phase += delay_reverb_graph_input_freq / delay_reverb_graph_rate;
+    phase += input_freq / graph_rate;
     _audio_in[0][i] = sample;
     _audio_in[1][i] = sample;
   }
-  return delay_reverb_graph_rate;
+  return graph_rate;
 }
 
 void
