@@ -1,3 +1,7 @@
+July 22, 2023 - V1.2-preview4.
+
+* Fix slow UI repainting.
+
 July 19, 2023 - V1.2-preview3.
 
 * More presets.
