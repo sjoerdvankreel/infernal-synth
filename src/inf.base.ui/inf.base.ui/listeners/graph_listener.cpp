@@ -23,7 +23,7 @@ void
 graph_listener::any_controller_param_changed(std::int32_t index)
 { 
   if(_plot->processor()->needs_repaint(index)) 
-    _plot->repaint_request();
+    _plot->repaint();
 }
 
 void 
