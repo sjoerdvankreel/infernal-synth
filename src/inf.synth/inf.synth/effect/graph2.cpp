@@ -107,7 +107,7 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
   // Shaper graph2 plots spectrum of 1 second shaper output of sinewave input.
   if (type == effect_type::shaper)
   {
-    float const* spectrum = _analyzer.analyze(*input.dsp_output, input.sample_rate);
+    float const* spectrum = _analyzer.analyze(*input.dsp_output);
     for (std::size_t i = 0; i < spectrum_analyzer::bucket_count; i++)
       plot.push_back(spectrum[i]);
     return;
