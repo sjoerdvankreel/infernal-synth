@@ -14,8 +14,8 @@ spectrum_analyzer::power_at_note(std::vector<std::complex<float>> const& fft, st
   float next_note_freq = note_to_frequency_table(static_cast<float>(midi + 1));
   float fend_bin = next_note_freq / resolution;
   float fstart_bin = this_note_freq / resolution;
-  std::int32_t end_bin = static_cast<std::int32_t>(std::ceil(end_bin));
-  std::int32_t start_bin = static_cast<std::int32_t>(std::floor(start_bin));
+  std::int32_t end_bin = static_cast<std::int32_t>(std::ceil(fend_bin));
+  std::int32_t start_bin = static_cast<std::int32_t>(std::floor(fstart_bin));
   for (std::int32_t i = start_bin; i < end_bin; i++)
   {
     float weight = 1.0f;
