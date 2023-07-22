@@ -80,13 +80,20 @@ inf_graph_plot::paint(juce::Graphics& g)
     g.reduceClipRegion(clip);
     float opacity = _processor->opacity(state);
 
-    bool _bars = true;
-    if (_bars)
+    if (_processor->bars(state))
     {
       g.setColour(findColour(inf_look_and_feel::colors::part_graph_area).withMultipliedAlpha(opacity));
       for (std::size_t i = 0; i < graph_data.size(); i++)
         g.fillRect(
           plot_bounds.getX() + graph_data[i].x, 
+          plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y,
+          plot_bounds.getWidth() / static_cast<float>(graph_data.size()),
+          graph_data[i].y);
+
+      g.setColour(findColour(inf_look_and_feel::colors::part_graph_line).withMultipliedAlpha(opacity));
+      for (std::size_t i = 0; i < graph_data.size(); i++)
+        g.drawRect(
+          plot_bounds.getX() + graph_data[i].x,
           plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y,
           plot_bounds.getWidth() / static_cast<float>(graph_data.size()),
           graph_data[i].y);

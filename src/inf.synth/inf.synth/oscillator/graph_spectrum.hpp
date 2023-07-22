@@ -23,6 +23,7 @@ public:
 
 public:
   bool needs_repaint(std::int32_t runtime_param) const override;
+  bool bars(base::param_value const* state) const override { return true; }
   bool bipolar(base::param_value const* state) const override { return false; }
   void dsp_to_plot(base::graph_plot_input const& input, std::vector<float>& plot) override;
   std::int32_t sample_count(base::param_value const* state, float sample_rate) const override;

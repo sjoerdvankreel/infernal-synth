@@ -23,6 +23,7 @@ public effect_graph_base
 public:
   effect_graph2(base::topology_info const* topology, base::part_id id);
 
+  bool bars(base::param_value const* state) const override;
   bool bipolar(base::param_value const* state) const override;
   float opacity(base::param_value const* state) const override;
   bool needs_repaint(std::int32_t runtime_param) const override;

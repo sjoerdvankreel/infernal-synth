@@ -83,6 +83,14 @@ effect_graph2::process_shaper_spectrum(block_input const& input, float* output, 
 }
 
 bool 
+effect_graph2::bars(base::param_value const* state) const
+{
+  automation_view automation(topology(), state, id());
+  std::int32_t type = automation.block_discrete(effect_param::type);
+  return type == effect_type::shaper;
+}
+
+bool 
 effect_graph2::bipolar(base::param_value const* state) const
 {
   automation_view automation(topology(), state, id());
