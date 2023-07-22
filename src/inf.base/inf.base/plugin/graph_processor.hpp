@@ -40,6 +40,8 @@ public:
 
   // Need to know upfront.
   virtual bool bipolar(param_value const* state) const = 0;
+  // Bars or lines?
+  virtual bool bars(param_value const* state) const { return false; }
   // Allow dense graphs to soften a bit.
   virtual float opacity(param_value const* state) const { return 1.0f; }
   // Allow for some reuse between graphs. Repaint if that parameter changes?
