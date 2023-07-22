@@ -80,21 +80,34 @@ inf_graph_plot::paint(juce::Graphics& g)
     g.reduceClipRegion(clip);
     float opacity = _processor->opacity(state);
 
-    Path area_path;
-    float base_y = bipolar? 0.5f: 1.0f;
-    area_path.startNewSubPath(plot_bounds.getX(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
-    for (std::size_t i = 0; i < graph_data.size(); i++)
-      area_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
-    area_path.lineTo(plot_bounds.getX() + plot_bounds.getWidth(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
-    g.setColour(findColour(inf_look_and_feel::colors::part_graph_area).withMultipliedAlpha(opacity));
-    g.fillPath(area_path);
+    bool _bars = true;
+    if (_bars)
+    {
+      g.setColour(findColour(inf_look_and_feel::colors::part_graph_area).withMultipliedAlpha(opacity));
+      for (std::size_t i = 0; i < graph_data.size(); i++)
+        g.fillRect(
+          plot_bounds.getX() + graph_data[i].x, 0.0f,
+          plot_bounds.getWidth() / static_cast<float>(graph_data.size()),
+          plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
+    } else
+    {
+      Path area_path;
+      float base_y = bipolar? 0.5f: 1.0f;
+      area_path.startNewSubPath(plot_bounds.getX(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
+      for (std::size_t i = 0; i < graph_data.size(); i++)
+        area_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
+      area_path.lineTo(plot_bounds.getX() + plot_bounds.getWidth(), plot_bounds.getY() + plot_bounds.getHeight() * base_y);
+      g.setColour(findColour(inf_look_and_feel::colors::part_graph_area).withMultipliedAlpha(opacity));
+      g.fillPath(area_path);
 
-    Path line_path;
-    line_path.startNewSubPath(plot_bounds.getX() + graph_data[0].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[0].y);
-    for (std::size_t i = 1; i < graph_data.size(); i++)
-      line_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
-    g.setColour(findColour(inf_look_and_feel::colors::part_graph_line).withMultipliedAlpha(opacity));
-    g.strokePath(line_path, PathStrokeType(1.0f));
+      Path line_path;
+      line_path.startNewSubPath(plot_bounds.getX() + graph_data[0].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[0].y);
+      for (std::size_t i = 1; i < graph_data.size(); i++)
+        line_path.lineTo(plot_bounds.getX() + graph_data[i].x, plot_bounds.getY() + plot_bounds.getHeight() - graph_data[i].y);
+      g.setColour(findColour(inf_look_and_feel::colors::part_graph_line).withMultipliedAlpha(opacity));
+      g.strokePath(line_path, PathStrokeType(1.0f));
+    }
+
     g.restoreState();
   }
 
