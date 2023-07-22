@@ -14,10 +14,10 @@ spectrum_analyzer::analyze(float const* audio, std::size_t count)
   std::size_t start_bin = 0;
   std::size_t bin_count = 1;
   std::vector<std::complex<float>> const& fft = _fft.transform(audio, count);
-  while (start_bin < fft.size())
+  while (start_bin  + bin_count < fft.size())
   {
     float power = 0.0f;
-    for (std::size_t i = start_bin; i < start_bin + bin_count && i < fft.size(); i++)
+    for (std::size_t i = start_bin; i < start_bin + bin_count; i++)
     {
       float real2 = fft[i].real() * fft[i].real();
       float imag2 = fft[i].imag() * fft[i].imag();
