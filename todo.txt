@@ -30,4 +30,3 @@
 
 * wishlist small
 - hard reset on program change
-- faster repaint graph when playing
