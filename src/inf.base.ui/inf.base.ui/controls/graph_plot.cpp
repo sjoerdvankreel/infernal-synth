@@ -8,6 +8,7 @@ using namespace juce;
 
 namespace inf::base::ui {
 
+static float const plot_vpad = 3.0f;
 static float const graph_bpm = 120.0f;
 static float const graph_sample_rate = 48000.0f;
 
@@ -17,9 +18,37 @@ inf_graph_plot(
   std::int32_t graph_type, std::string const& background_image_path) :
   juce::Component(), _part_id(part_id), _graph_type(graph_type), 
   _background_image_path(background_image_path), _controller(controller)
-{ setBufferedToImage(true); }
+{ _render_thread = std::make_unique<std::thread>(render_loop, this); }
 
-graph_processor* 
+void
+inf_graph_plot::render_loop(inf_graph_plot* plot)
+{
+  while (true)
+  {
+    std::lock_guard<std::mutex> guard(plot->_render_mutex);
+    plot->_graph_data = plot->processor()->plot(
+      plot->_state_snapshot.data(), graph_sample_rate,
+      static_cast<std::int32_t>(plot->_bounds_snapshot.getWidth()),
+      static_cast<std::int32_t>(plot->_bounds_snapshot.getHeight()));
+  }
+}
+
+void 
+inf_graph_plot::repaint_request()
+{
+  auto bounds = getLocalBounds().expanded(-container_margin, -container_margin).toFloat();
+  std::lock_guard<std::mutex> guard(_render_mutex);
+  _opacity_snapshot = _processor->opacity(_controller->state());
+  _bipolar_snapshot = processor()->bipolar(_controller->state());
+  _state_snapshot = std::vector<param_value>(
+    _controller->state(),
+    _controller->state() + _controller->topology()->params.size());
+  _bounds_snapshot = Rectangle<float>(
+    bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
+    bounds.getWidth() - 2.0f, bounds.getHeight() - (_bipolar_snapshot ? 2.0f : 1.0f) * plot_vpad);
+}
+
+graph_processor*
 inf_graph_plot::processor()
 {
   if (_processor) return _processor.get();
@@ -30,7 +59,6 @@ inf_graph_plot::processor()
 void 
 inf_graph_plot::paint(juce::Graphics& g)
 {
-  float const plot_vpad = 3.0f;
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto bounds = getLocalBounds().expanded(-container_margin, -container_margin).toFloat();
 
@@ -62,15 +90,19 @@ inf_graph_plot::paint(juce::Graphics& g)
     g.fillRect(bounds.getX() + i * col_width, bounds.getY(), 1.0f, bounds.getHeight());
 
   // plot data
-  param_value const* state = _controller->state();
-  bool bipolar = processor()->bipolar(state);
-  auto plot_bounds = Rectangle<float>(
-    bounds.getX() + 1.0f, bounds.getY() + plot_vpad,
-    bounds.getWidth() - 2.0f, bounds.getHeight() - (bipolar? 2.0f: 1.0f) * plot_vpad);
-  std::vector<graph_point> const& graph_data = processor()->plot(
-    state, graph_sample_rate,
-    static_cast<std::int32_t>(plot_bounds.getWidth()),
-    static_cast<std::int32_t>(plot_bounds.getHeight()));
+  bool bipolar;
+  float opacity;
+  Rectangle<float> plot_bounds;
+  std::vector<graph_point> graph_data;
+
+  {
+    // Copy in pre-rendered stuff.
+    std::lock_guard<std::mutex> guard(_render_mutex);
+    graph_data = _graph_data;
+    bipolar = _bipolar_snapshot;
+    opacity = _opacity_snapshot;
+    plot_bounds = _bounds_snapshot;
+  }
 
   if (graph_data.size() != 0)
   {
@@ -78,7 +110,6 @@ inf_graph_plot::paint(juce::Graphics& g)
     clip.addRoundedRectangle(bounds, 8.0f);
     g.saveState();
     g.reduceClipRegion(clip);
-    float opacity = _processor->opacity(state);
 
     Path area_path;
     float base_y = bipolar? 0.5f: 1.0f;
