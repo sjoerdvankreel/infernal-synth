@@ -23,7 +23,7 @@ effect_graph2::sample_count(param_value const* state, float sample_rate) const
   case effect_type::filter:
     return _graph1.sample_count(state, sample_rate);
   case effect_type::shaper:
-    return static_cast<std::int32_t>(std::ceil(sample_rate / spectrum_freq_resolution));
+    return static_cast<std::int32_t>(std::ceil(sample_rate));
   default:
     assert(false);
     return -1;
@@ -107,7 +107,7 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
   // Shaper graph2 plots spectrum of 1 second shaper output of sinewave input.
   if (type == effect_type::shaper)
   {
-    float const* spectrum = _analyzer.analyze(*input.dsp_output, spectrum_freq_resolution);
+    float const* spectrum = _analyzer.analyze(*input.dsp_output);
     for (std::size_t i = 0; i < spectrum_analyzer::bucket_count; i++)
       plot.push_back(spectrum[i]);
     return;

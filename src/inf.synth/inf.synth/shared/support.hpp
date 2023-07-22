@@ -13,8 +13,6 @@ namespace inf::synth {
 
 // For plotting.
 inline float constexpr cv_graph_rate = 500.0f;
-inline float constexpr spectrum_freq_resolution = 20.0f;
-
 base::param_value graph_disable_modulation(
 base::topology_info const* topology, std::int32_t rt_index, base::param_value value);
 
