@@ -44,7 +44,7 @@ transform_param(std::int32_t rt_index, base::param_value value) const
 
 inline std::int32_t oscillator_spectrum_graph::
 sample_count(base::param_value const* state, float sample_rate) const
-{ return static_cast<std::int32_t>(std::ceil(sample_rate)); }
+{ return static_cast<std::int32_t>(std::ceil(sample_rate / spectrum_freq_resolution)); }
 
 inline void oscillator_spectrum_graph::
 process_dsp_core(base::block_input const& input, float* output, float sample_rate)
