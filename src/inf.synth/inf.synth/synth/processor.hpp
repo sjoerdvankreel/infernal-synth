@@ -71,12 +71,12 @@ public base::audio_processor
   std::array<std::array<effect_state, veffect_count>, synth_polyphony> _voice_effect_states;
   std::array<std::array<oscillator_state, vosc_count>, synth_polyphony> _voice_oscillator_states;
 
+  void clear_delay_buffers();
+
 public:
   synth_processor(
     base::topology_info const* topology, base::param_value* state,
     std::int32_t* changed, float sample_rate, std::int32_t max_sample_count);
-
-  void set_processing(bool processing) override;
 
 protected:
   void process(base::block_input const& input, base::block_output& output) override;

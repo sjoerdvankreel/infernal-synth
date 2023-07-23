@@ -10,6 +10,8 @@
 
 namespace inf::base::vst {
 
+inline char constexpr hard_reset_request_msg_id[] = "XT_HARD_RESET_REQUEST";
+
 inline std::string
 from_vst_string(Steinberg::Vst::TChar const* str)
 {

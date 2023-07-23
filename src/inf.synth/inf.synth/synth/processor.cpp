@@ -78,10 +78,8 @@ _global_effect_states(), _voice_effect_states(), _voice_oscillator_states()
 }
 
 void
-synth_processor::set_processing(bool processing)
+synth_processor::clear_delay_buffers()
 {
-  // Clear delay lines.
-  if(processing) return;
   for(std::int32_t i = 0; i < geffect_count; i++)
   {
     _global_effect_states[i].delay_buffer[0].clear();
@@ -386,6 +384,13 @@ synth_processor::process(block_input const& input, block_output& output)
   vinput.bpm = input.data.bpm;
   audio_bank_output audio_mixdown;
   std::int64_t start_time = performance_counter();
+
+  // Init or preset switch.
+  if (input.hard_reset)
+  {
+    release_all_voices();
+    clear_delay_buffers();
+  }
 
   // Setup block parameters for global banks.
   _gcv_bank.update_block_params(input.data);
