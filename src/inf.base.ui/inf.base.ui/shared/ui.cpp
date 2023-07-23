@@ -746,18 +746,12 @@ create_factory_preset_ui(
   }
   return create_action_dropdown_ui(controller, initial_index, "Factory preset", items, 
     [controller, presets, lnf_factory](juce::ComboBox* dropdown) {
-      show_confirm_box(controller, "Load factory preset", lnf_factory, 
-        [presets, dropdown](plugin_controller* controller) { 
-          std::int32_t selected_index = dropdown->getSelectedItemIndex();
-          if(0 <= selected_index && selected_index < static_cast<std::int32_t>(presets.size()))
-          {
-            controller->load_preset(presets[selected_index].path, true);
-            controller->set_factory_preset(presets[selected_index].name);
-          }
-        },
-        [dropdown](){ dropdown->setSelectedId(0, dontSendNotification); }
-        );
-      }, 
+      std::int32_t selected_index = dropdown->getSelectedItemIndex();
+      if (0 <= selected_index && selected_index < static_cast<std::int32_t>(presets.size()))
+      {
+        controller->load_preset(presets[selected_index].path, true);
+        controller->set_factory_preset(presets[selected_index].name);
+      } }, 
     [controller, presets](juce::ComboBox* combo) {
       for (std::size_t i = 0; i < presets.size(); i++)
         if (presets[i].name == controller->get_factory_preset())
