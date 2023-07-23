@@ -1,5 +1,7 @@
 #include <inf.base/shared/support.hpp>
 #include <inf.base/shared/spectrum_analyzer.hpp>
+
+#include <cmath>
 #include <cassert>
 
 namespace inf::base {
@@ -23,7 +25,7 @@ spectrum_analyzer::analyze(float const* audio, std::size_t count)
       float imag2 = fft[i].imag() * fft[i].imag();
       power += real2 + imag2;
     }
-    _output.push_back(power);
+    _output.push_back(std::sqrt(power));
     start_bin += bin_count;
     bin_count *= 2;
   }
