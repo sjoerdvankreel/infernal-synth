@@ -33,6 +33,8 @@ private:
   using SpeakerArrangement = Steinberg::Vst::SpeakerArrangement;
 
 private:
+  // Passed to next process() call, drop voices, clear delay lines etc.
+  std::atomic_int32_t _hard_reset_request = 0;
   // Allow implementation to accurately measure total cpu.
   std::int64_t _prev_end_perf_count = 0;
   // State of all parameters. 
@@ -57,7 +59,8 @@ public:
   tresult PLUGIN_API initialize(FUnknown* context) override;
   tresult PLUGIN_API setupProcessing(ProcessSetup& setup) override;
   tresult PLUGIN_API canProcessSampleSize(int32 symbolic_size) override;
-  tresult PLUGIN_API setBusArrangements(SpeakerArrangement* inputs, 
+  tresult PLUGIN_API receiveText(Steinberg::char8 const* text) override;
+  tresult PLUGIN_API setBusArrangements(SpeakerArrangement* inputs,
     int32 input_count, SpeakerArrangement* outputs, int32 output_count) override;
 
   vst_processor(std::unique_ptr<inf::base::topology_info>&& topology, FUID controller_id);

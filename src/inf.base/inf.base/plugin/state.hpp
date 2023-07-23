@@ -60,6 +60,9 @@ struct block_input_data
 // Audio processor input.
 struct block_input
 {
+  // Clear voices, delay lines etc.
+  bool hard_reset;
+
   // Midi note events.
   note_event* notes;
   std::int32_t note_count;

@@ -82,6 +82,14 @@ vst_controller::reload_editor(std::int32_t width)
   _current_editor->set_width(width);
 }
 
+void 
+vst_controller::restart() 
+{ 
+  if (componentHandler != nullptr) 
+    componentHandler->restartComponent(Steinberg::Vst::kParamValuesChanged); 
+  sendTextMessage(hard_reset_request_msg_id);
+}
+
 IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {

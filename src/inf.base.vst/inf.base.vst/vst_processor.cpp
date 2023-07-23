@@ -52,9 +52,23 @@ vst_processor::canProcessSampleSize(int32 symbolic_size)
 
 tresult PLUGIN_API 
 vst_processor::setProcessing(TBool state)
-{
-  if(_processor) _processor->set_processing(state);
+{  
+  std::int32_t request = 0;
+  _hard_reset_request.compare_exchange_strong(request, 1);
   return AudioEffect::setProcessing(state);
+}
+
+tresult PLUGIN_API 
+vst_processor::receiveText(Steinberg::char8 const* text)
+{
+  // WTF this is received on the UI thread.
+  // Now we *still* need to take care of threading.
+  // What is the point in message passing, then ?
+  std::int32_t request = 0;
+  if (_processor)
+    if(!strcmp(text, hard_reset_request_msg_id))
+      _hard_reset_request.compare_exchange_strong(request, 1);
+  return kResultOk;
 }
 
 // Save parameter values to stream.
@@ -149,8 +163,11 @@ vst_processor::process(ProcessData& data)
   if(!_topology->is_instrument()) audio_in = data.inputs[0].channelBuffers32;
   float* const* audio_out = data.outputs[0].channelBuffers32;
   input.channel_count = data.outputs[0].numChannels;
+  std::int32_t request = 1;
+  bool hard_reset = _hard_reset_request.compare_exchange_strong(request, 0);
   block_output const& output = _processor->process(
-    audio_in, audio_out, _prev_end_perf_count, new_start_perf_count);
+    audio_in, audio_out, hard_reset,
+    _prev_end_perf_count, new_start_perf_count);
 
   // Sync both in and output param values.
   process_input_parameters(data);

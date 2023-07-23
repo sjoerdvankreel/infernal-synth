@@ -77,7 +77,7 @@ audio_processor::prepare_block(std::int32_t sample_count)
 
 block_output const&
 audio_processor::process(
-  float const* const* input, float* const* output, 
+  float const* const* input, float* const* output, bool hard_reset,
   std::int64_t prev_end_perf_count, std::int64_t new_start_perf_count)
 {
   _topology->state_check(_state);
@@ -91,6 +91,7 @@ audio_processor::process(
   automation_check();
   audio_check(_input.data.audio);
   std::uint64_t state = disable_denormals();
+  _input.hard_reset = hard_reset;
   _input.prev_perf_count = prev_end_perf_count - _prev_start_perf_count;
   _input.prev_sample_count = _prev_block_size == -1? _input.data.sample_count: _prev_block_size;
   process(_input, _output);

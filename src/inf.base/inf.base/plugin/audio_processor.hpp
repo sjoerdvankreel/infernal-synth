@@ -50,13 +50,11 @@ public:
   audio_processor(topology_info const* topology, float sample_rate, 
     std::int32_t max_sample_count, param_value* state, std::int32_t* changed);
 
-  // Inform of processing begin/end.
-  virtual void set_processing(bool processing) {}
   // Caller writes either discrete or normalized (0..1) values to automation.
   block_input& prepare_block(std::int32_t sample_count);
   // Process block call overwrites real valued automation with actual range.
   block_output const& process(
-    float const* const* input, float* const* output, 
+    float const* const* input, float* const* output, bool hard_reset,
     std::int64_t prev_end_perf_count, std::int64_t new_start_perf_count);
 };
 
