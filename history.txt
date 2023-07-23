@@ -1,3 +1,9 @@
+July 23, 2023 - V1.2-preview5.
+
+* Fix preset loading.
+* Bugfix related to spectrum graph.
+* Dropped confirmation box when switching factory presets.
+
 July 22, 2023 - V1.2-preview4.
 
 * Fix slow UI repainting.
