@@ -10,19 +10,19 @@ static list_item const vaudio_route_inputs[vaudio_route_input::count] = {
   { "{49276AD4-960F-49D4-9B74-A8E4D5A86B6B}", "Off" },
   { "{BA7D11D6-27D3-460C-849E-4FFA756290DF}", "Osc" }, // all
   { "{A3D43958-5219-4D44-A51A-54853EF6F457}", "Osc" }, // any 
-  { "{1E01C31B-3160-49B6-A88F-7A532AE5B407}", "FX" } };
+  { "{1E01C31B-3160-49B6-A88F-7A532AE5B407}", "V.FX" } };
 static list_item const vaudio_route_outputs[vaudio_route_output::count] = {
   { "{F91EF1BE-F439-44AA-9B6C-EAB5A186ECCB}", "Off" },
-  { "{514ED3EB-9195-412D-8E50-9EB89D80CF1D}", "FX" },
+  { "{514ED3EB-9195-412D-8E50-9EB89D80CF1D}", "V.FX" },
   { "{E05A9233-EF1F-4267-85DF-04F33DFC611B}", "V.Out" } };
 static list_item const gaudio_route_inputs[gaudio_route_input::count] = {
   { "{18620BA6-61E3-4AFE-88D0-37DBE443B67D}", "Off" }, 
   { "{973FADF8-945E-4196-9E9A-3B422B09ED21}", "V.Out" },
   { "{C4FFD4E3-9BBC-4D9F-8083-FAD0268BD4C3}", "Ext" },
-  { "{213616DC-90FD-4128-A517-E63C97457D15}", "FX" } };
+  { "{213616DC-90FD-4128-A517-E63C97457D15}", "G.FX" } };
 static list_item const gaudio_route_outputs[gaudio_route_output::count] = {
   { "{AE02B0B8-10DD-44F9-912C-C94E46D7615D}", "Off" },
-  { "{5F5E1D56-311E-4558-9C90-B368E8BAF237}", "FX" },
+  { "{5F5E1D56-311E-4558-9C90-B368E8BAF237}", "G.FX" },
   { "{A781CA9A-B8AA-448A-924B-D16C31108CB5}", "M.Out" } };
  
 static std::vector<list_item> const vaudio_route_input_items =  
