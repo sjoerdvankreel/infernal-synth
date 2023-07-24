@@ -36,6 +36,8 @@ inf_selector_label::paint(Graphics& g)
   float const router_width = get_router_width(_controller);
   float const router_line_size = get_router_line_size(_controller);
   float const router_arrow_size = get_router_arrow_size(_controller);
+  int const text_padl = _justification == Justification::left ? 5 : 0;
+  int const text_padr = _justification == Justification::right ? 5 : 0;
 
   auto& lnf = dynamic_cast<inf_look_and_feel&>(getLookAndFeel());
   auto area = Rectangle<int>(
@@ -57,17 +59,19 @@ inf_selector_label::paint(Graphics& g)
     inf_look_and_feel::colors::selector_label_outline_high, corner_size_fixed, 0.25f, outline_size_fixed);
 
   // text
+  auto text_area = Rectangle<int>(area.getX() + text_padl, area.getY(), area.getWidth() - text_padl - text_padr, area.getHeight());
+
   g.setFont(getFont());
   g.setColour(findColour(inf_look_and_feel::colors::selector_label_text));
   g.saveState();
   if(_vertical) 
   {
-    auto transform = AffineTransform().rotated(-pi32 / 2.0f, area.getWidth() / 2.0f, area.getHeight() / 2.0f);
+    auto transform = AffineTransform().rotated(-pi32 / 2.0f, text_area.getWidth() / 2.0f, text_area.getHeight() / 2.0f);
     g.addTransform(transform);
-    area = area.transformedBy(transform);
-    area = juce::Rectangle<int>(area.getX() - vhpad, area.getY() + vhpad, area.getWidth() + vhpad, area.getHeight() - vhpad);
+    text_area = text_area.transformedBy(transform);
+    text_area = juce::Rectangle<int>(text_area.getX() - vhpad, text_area.getY() + vhpad, text_area.getWidth() + vhpad, text_area.getHeight() - vhpad);
   }
-  g.drawText(getText(), area, _justification, false);
+  g.drawText(getText(), text_area, _justification, false);
 
   float router_l_left = router_hmargin;
   float router_l_right = router_hmargin + router_width;
