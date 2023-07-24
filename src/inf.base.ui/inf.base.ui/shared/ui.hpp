@@ -237,21 +237,23 @@ public ui_element
   std::int32_t const _part_type;
   std::int32_t const _part_count;
   selector_routing_dir const _routing_dir;
+  juce::Justification const _justification;
 protected:
   juce::Component* build_core(juce::LookAndFeel& lnf) override;
 public:
   void layout() override {}
   selector_label_element(
-    inf::base::plugin_controller* controller, std::int32_t part_type, 
-    std::int32_t part_count, std::string const& text, bool vertical, selector_routing_dir routing_dir):
-  ui_element(controller), _vertical(vertical), _text(text), _part_type(part_type), _part_count(part_count), _routing_dir(routing_dir) {}
+    inf::base::plugin_controller* controller, std::int32_t part_type, std::int32_t part_count, 
+    std::string const& text, bool vertical, selector_routing_dir routing_dir, juce::Justification justification):
+  ui_element(controller), _vertical(vertical), _text(text), _part_type(part_type), 
+  _part_count(part_count), _routing_dir(routing_dir), _justification(justification) {}
 };
 
 inline std::unique_ptr<selector_label_element>
 create_selector_label_ui(
   inf::base::plugin_controller* controller, std::string const& text, 
-  std::int32_t part_type, std::int32_t part_count, bool vertical, selector_routing_dir routing_dir)
-{ return std::make_unique<selector_label_element>(controller, part_type, part_count, text, vertical, routing_dir); }
+  std::int32_t part_type, std::int32_t part_count, bool vertical, selector_routing_dir routing_dir, juce::Justification justification)
+{ return std::make_unique<selector_label_element>(controller, part_type, part_count, text, vertical, routing_dir, justification); }
 
 class selector_bar_element :
 public ui_element
@@ -476,7 +478,7 @@ create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type, 
   std::int32_t selector_param_index, std::int32_t selected_part_type, std::int32_t label_columns, 
   std::int32_t selector_columns, bool label_right, selector_routing_dir routing_dir, 
-  std::vector<std::unique_ptr<ui_element>>&& selected_parts);
+  juce::Justification justification, std::vector<std::unique_ptr<ui_element>>&& selected_parts);
 
 std::unique_ptr<ui_element>
 create_labeled_param_ui(

@@ -17,16 +17,17 @@ public inf_label
   std::int32_t const _part_type;
   std::int32_t const _part_count;
   selector_routing_dir const _routing_dir;
+  juce::Justification const _justification;
   inf::base::plugin_controller* const _controller;
 public:
   void paint(juce::Graphics& g) override;
   void mouseUp(juce::MouseEvent const& event) override;
 
   inf_selector_label(
-    inf::base::plugin_controller* const controller, std::int32_t part_type, 
-    std::int32_t part_count, bool vertical, selector_routing_dir routing_dir):
-  inf_label(!vertical), _vertical(vertical), _part_type(part_type), 
-  _part_count(part_count), _routing_dir(routing_dir), _controller(controller) {}
+    inf::base::plugin_controller* const controller, std::int32_t part_type, std::int32_t part_count, 
+    bool vertical, selector_routing_dir routing_dir, juce::Justification justification):
+  inf_label(!vertical), _vertical(vertical), _part_type(part_type), _part_count(part_count), 
+  _routing_dir(routing_dir), _justification(justification), _controller(controller) {}
 };
 
 } // namespace inf::base::ui

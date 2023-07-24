@@ -67,7 +67,7 @@ inf_selector_label::paint(Graphics& g)
     area = area.transformedBy(transform);
     area = juce::Rectangle<int>(area.getX() - vhpad, area.getY() + vhpad, area.getWidth() + vhpad, area.getHeight() - vhpad);
   }
-  g.drawText(getText(), area, Justification::centred, false);
+  g.drawText(getText(), area, _justification, false);
 
   float router_l_left = router_hmargin;
   float router_l_right = router_hmargin + router_width;

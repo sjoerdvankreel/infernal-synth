@@ -226,7 +226,8 @@ create_oscillator_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> oscillators;
   for(std::int32_t i = 0; i < vosc_count; i++)
     oscillators.emplace_back(create_oscillator_grid(controller, i));
-  return create_part_selector_ui(controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 2, 6, false, selector_routing_dir::left_toleft, std::move(oscillators));
+  return create_part_selector_ui(
+    controller, "Osc", part_type::active, active_param::vosc, part_type::vosc, 2, 6, false, selector_routing_dir::left_toleft, Justification::centred, std::move(oscillators));
 }
 
 static std::unique_ptr<ui_element>
@@ -487,7 +488,8 @@ create_fx_selector(plugin_controller* controller, std::int32_t part_type, std::i
       fxs.emplace_back(create_voice_fx_grid(controller, i));
     else
       fxs.emplace_back(create_global_fx_grid(controller, i));
-  return create_part_selector_ui(controller, name, part_type::active, selector_param_index, part_type, 2, 6, false, selector_routing_dir::left_bidirectional, std::move(fxs));
+  return create_part_selector_ui(
+    controller, name, part_type::active, selector_param_index, part_type, 2, 6, false, selector_routing_dir::left_bidirectional, Justification::right, std::move(fxs));
 }
 
 static std::unique_ptr<ui_element>
@@ -590,7 +592,8 @@ create_envelope_selector(plugin_controller* controller)
   std::vector<std::unique_ptr<ui_element>> envelopes;
   for (std::int32_t i = 0; i < venv_count; i++)
     envelopes.emplace_back(create_envelope_grid(controller, i));
-  return create_part_selector_ui(controller, "Env", part_type::active, active_param::venv, part_type::venv, 2, 5, true, selector_routing_dir::right_toright, std::move(envelopes));
+  return create_part_selector_ui(
+    controller, "Env", part_type::active, active_param::venv, part_type::venv, 2, 5, true, selector_routing_dir::right_toright, Justification::centred, std::move(envelopes));
 }
 
 static std::unique_ptr<ui_element>
@@ -724,7 +727,8 @@ create_lfo_selector(plugin_controller* controller, std::int32_t part_type, std::
   std::vector<std::unique_ptr<ui_element>> lfos;
   for (std::int32_t i = 0; i < part_count; i++)
     lfos.emplace_back(create_lfo_grid(controller, part_type, i));
-  return create_part_selector_ui(controller, name, part_type::active, selector_param_index, part_type, 2, 5, true, selector_routing_dir::right_toright, std::move(lfos));
+  return create_part_selector_ui(
+    controller, name, part_type::active, selector_param_index, part_type, 2, 5, true, selector_routing_dir::right_toright, Justification::centred, std::move(lfos));
 }
 
 static std::unique_ptr<ui_element>
@@ -920,7 +924,7 @@ create_global_cv_plot_part(plugin_controller* controller)
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
   auto grid = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) });
   grid->add_cell(create_global_cv_plot_controls(controller), 0, 0, 1, 3);
-  grid->add_cell(create_selector_label_ui(controller, "Global CV Plot", part_type::gcv_plot, 1, false, selector_routing_dir::right_toleft), 0, 3, 1, 1);
+  grid->add_cell(create_selector_label_ui(controller, "Global CV Plot", part_type::gcv_plot, 1, false, selector_routing_dir::right_toleft, Justification::centred), 0, 3, 1, 1);
   grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, "gcv_plot", cv_plot_param::target), 1, 0, 1, 4);
   return grid;
 }
