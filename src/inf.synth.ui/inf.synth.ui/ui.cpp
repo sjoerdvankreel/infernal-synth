@@ -924,7 +924,7 @@ create_global_cv_plot_part(plugin_controller* controller)
   auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
   auto grid = create_grid_ui(controller, { Grid::Px(selector_height), Grid::Fr(1) }, { Grid::Fr(1), Grid::Fr(1), Grid::Fr(1), Grid::Fr(1) });
   grid->add_cell(create_global_cv_plot_controls(controller), 0, 0, 1, 3);
-  grid->add_cell(create_selector_label_ui(controller, "Global CV Plot", part_type::gcv_plot, 1, false, selector_routing_dir::right_toleft, Justification::centred), 0, 3, 1, 1);
+  grid->add_cell(create_selector_label_ui(controller, "Global CV Plot", part_type::gcv_plot, 1, false, selector_routing_dir::right_toleft, Justification::left), 0, 3, 1, 1);
   grid->add_cell(create_part_graph_ui(controller, part_type::gcv_plot, 0, 0, "gcv_plot", cv_plot_param::target), 1, 0, 1, 4);
   return grid;
 }
