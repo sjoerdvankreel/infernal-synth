@@ -20,13 +20,13 @@ static std::vector<list_item> const cv_route_input_ops = {
 static list_item const vcv_route_outputs[vcv_route_output::count] = {
   { "{C318FB21-F79F-46DB-9DD9-C92DAA04430A}", "Off" },
   { "{0CD174A0-699B-401F-AE22-0B716C84A764}", "Osc" },
-  { "{A04AB56A-6653-44B2-87CA-5AAA9E50249F}", "FX" },
-  { "{0A94D3C0-B00D-452D-A7F1-D1D30CC644C2}", "Audio" },
+  { "{A04AB56A-6653-44B2-87CA-5AAA9E50249F}", "V.FX" },
+  { "{0A94D3C0-B00D-452D-A7F1-D1D30CC644C2}", "V.Audio" },
   { "{73DD8E5A-F210-4E55-8FDC-4A1052E71D7E}", "V.Out" } };
 static list_item const gcv_route_outputs[gcv_route_output::count] = {
   { "{C80A4D13-6AE6-4D54-A477-E42E185F2C28}", "Off" },
-  { "{F0CE73FF-7973-43A5-AD9C-75E67C689AE3}", "FX" },
-  { "{4BD18162-21CE-4B19-BAFA-05432C653EB0}", "Audio" },
+  { "{F0CE73FF-7973-43A5-AD9C-75E67C689AE3}", "G.FX" },
+  { "{4BD18162-21CE-4B19-BAFA-05432C653EB0}", "G.Audio" },
   { "{9E111E9D-8C9B-49B2-8D9D-A3A192E9DA4D}", "M.Out" } };
 
 // input routing
@@ -34,7 +34,7 @@ static list_item const gcv_route_inputs[gcv_route_input::count] = {
   { "{E26F7364-965D-4CF3-AE95-178C1EEA8BCB}", "Off" },
   { "{294CEAF7-C69B-4ECA-BB44-A727E7872DCA}", "CVU" },
   { "{C8CF0423-29D7-4FB3-8B17-2B1B5AE735DC}", "CVB" },
-  { "{862452FE-1786-48A8-9F60-33030BB8B3C9}", "LFO" } };
+  { "{862452FE-1786-48A8-9F60-33030BB8B3C9}", "G.LFO" } };
 static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{76EDD4AA-E81B-4777-B46E-A0DE12B60541}", "Off" },
   { "{81C92941-AD92-47BD-B1DC-7A46AB6E088D}", "Velocity" },

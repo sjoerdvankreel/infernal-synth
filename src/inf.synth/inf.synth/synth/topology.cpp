@@ -521,8 +521,8 @@ synth_topology::init_fx_clear_patch(param_value* state) const
   set_ui_value(state, part_type::geffect, 0, effect_param::on, "On");
   set_ui_value(state, part_type::geffect, 0, effect_param::type, "Delay");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "G.FX 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "G.FX 1");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "M.Out");
 }
 
@@ -548,32 +548,32 @@ synth_topology::init_fx_factory_preset(param_value* state) const
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "Ext");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "M.Out");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "FX 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "FX 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out3, "FX 2");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in4, "FX 2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "G.FX 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "G.FX 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out3, "G.FX 2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in4, "G.FX 2");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out4, "M.Out");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in5, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out5, "FX 3");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in6, "FX 3");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out6, "FX 4");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in7, "FX 4");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out5, "G.FX 3");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in6, "G.FX 3");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out6, "G.FX 4");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in7, "G.FX 4");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out7, "M.Out");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in8, "Ext");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out8, "FX 5");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in9, "FX 5");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out9, "FX 6");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in10, "FX 6");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out8, "G.FX 5");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in9, "G.FX 5");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out9, "G.FX 6");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in10, "G.FX 6");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out10, "M.Out");
 
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "LFO 1");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out1, "FX 2 StVar Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "G.LFO 1");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out1, "G.FX 2 StVar Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::amt1, "10");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in2, "LFO 2");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out2, "FX 4 StVar Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in2, "G.LFO 2");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out2, "G.FX 4 StVar Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::amt2, "20");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in3, "LFO 3");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out3, "FX 6 StVar Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in3, "G.LFO 3");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out3, "G.FX 6 StVar Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::amt3, "30");
 
   set_ui_value(state, part_type::geffect, 0, effect_param::on, "On");
@@ -694,18 +694,18 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
 
   // vaudio 1 osc->fx1->fx2->voice
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in1, "Osc");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "FX 1");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in2, "FX 1");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out2, "FX 2");
-  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in3, "FX 2");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out1, "V.FX 1");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in2, "V.FX 1");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out2, "V.FX 2");
+  set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::in3, "V.FX 2");
   set_ui_value(state, part_type::vaudio_bank, 0, audio_bank_param::out3, "V.Out");
 
   // gaudio 1 voice->fx1->fx2->master
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in1, "V.Out");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "FX 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "FX 1");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "FX 2");
-  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "FX 2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out1, "G.FX 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in2, "G.FX 1");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out2, "G.FX 2");
+  set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::in3, "G.FX 2");
   set_ui_value(state, part_type::gaudio_bank, 0, audio_bank_param::out3, "M.Out");
 
   // vlfo1 on & bipolar
@@ -753,16 +753,16 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out2, "Osc 1 Cent");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::amt2, "10");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in3, "Env 2");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out3, "FX 2 StVar Frq");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out3, "V.FX 2 StVar Frq");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op3, "Mul");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in4, "CVU 2");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out4, "FX 2 StVar Frq");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out4, "V.FX 2 StVar Frq");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::off4, "20");
   set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op4, "Mul");
 
   // glfo 1 to filter freq & master cvs
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "LFO 1");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out1, "FX 1 StVar Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "G.LFO 1");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out1, "G.FX 1 StVar Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::op1, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::amt1, "66");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in2, "CVU 1");
@@ -772,14 +772,14 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out3, "M.Out Bal");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::op3, "Add");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in4, "CVU 2");
-  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out4, "FX 1 StVar Frq");
+  set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::out4, "G.FX 1 StVar Frq");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::op4, "Mul");
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::off4, "20");
 
   // cv plots
   set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::length, "5");
-  set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "FX 1 StVar Frq");
-  set_ui_value(state, part_type::vcv_plot, 0, cv_plot_param::target, "FX 2 StVar Frq");
+  set_ui_value(state, part_type::gcv_plot, 0, cv_plot_param::target, "G.FX 1 StVar Frq");
+  set_ui_value(state, part_type::vcv_plot, 0, cv_plot_param::target, "V.FX 2 StVar Frq");
 }
 
 // ---- params ----

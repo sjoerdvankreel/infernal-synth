@@ -316,7 +316,7 @@ group_label_element::layout()
 Component*
 selector_label_element::build_core(LookAndFeel& lnf)
 {
-  Label* result = new inf_selector_label(controller(), _part_type, _part_count, _vertical, _routing_dir);
+  Label* result = new inf_selector_label(controller(), _part_type, _part_count, _vertical, _routing_dir, _justification);
   result->setText(_text, dontSendNotification);
   result->setFont(juce::Font(get_selector_font_height(controller()), juce::Font::bold));
   return result;
@@ -675,7 +675,7 @@ create_part_single_ui(
   bool vertical, selector_routing_dir routing_dir, std::unique_ptr<ui_element>&& part)
 {
   auto selector_grid = create_grid_ui(controller, 1, 1);
-  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, 1, vertical, routing_dir), 0, 0);
+  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, 1, vertical, routing_dir, Justification::centred), 0, 0);
   if(!vertical)
   {
     auto selector_height = static_cast<std::int32_t>(std::ceil(get_selector_height(controller)));
@@ -696,14 +696,14 @@ std::unique_ptr<ui_element>
 create_part_selector_ui(
   plugin_controller* controller, std::string const& header, std::int32_t selector_part_type,
   std::int32_t selector_param_index, std::int32_t selected_part_type, std::int32_t label_columns, 
-  std::int32_t selector_columns, bool label_right, selector_routing_dir routing_dir, 
+  std::int32_t selector_columns, bool label_right, selector_routing_dir routing_dir, Justification justification,
   std::vector<std::unique_ptr<ui_element>>&& selected_parts)
 {
   inf::base::part_id selector_id = { selector_part_type, 0 };
   auto label_col = label_right? selector_columns: 0;
   auto selector_col = label_right? 0: label_columns;
   auto selector_grid = create_grid_ui(controller, 1, selector_columns + label_columns);
-  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, static_cast<std::int32_t>(selected_parts.size()), false, routing_dir), 0, label_col, 1, label_columns);
+  selector_grid->add_cell(create_selector_label_ui(controller, header, selected_part_type, static_cast<std::int32_t>(selected_parts.size()), false, routing_dir, justification), 0, label_col, 1, label_columns);
   auto selector_bar = create_selector_bar(controller, selector_id, selector_param_index, selected_part_type);
   auto selector_bar_ptr = selector_bar.get();
   for(std::int32_t i = 0; i < static_cast<std::int32_t>(selected_parts.size()); i++)
