@@ -199,7 +199,7 @@ Global matrix routes external audio input (in effect mode) or Voice output secti
 An audio source may be assigned to multiple targets or vice-versa, but note that effects can only be routed to higher-numbered effects
 (e.g. FX 2 to FX 3, but not FX 2 to FX 1), otherwise the input will be silence.
 
-![Audio matrix](static/manual_vaudio.png)
+![Audio matrix](static/manual_vaudio.png)\
 ![Audio matrix](static/manual_gaudio.png)
 
 - In: audio signal input
