@@ -349,7 +349,7 @@ LFO, to have each new voice receive a single new random value at voice start
 for the lifetime of the voice.
 
 
-![CV matrix](static/manual_vcv.png)
+![CV matrix](static/manual_vcv.png)\
 ![CV matrix](static/manual_gcv.png)
 
 - In: CV input signal.
@@ -367,7 +367,7 @@ between C3 and C5, rather than C0 and C9.
 Both per-voice and global CV visualizers.
 Select a target parameter to view the combined (stacked) modulation signal that's routed to that parameter.
 
-![CV plot](static/manual_vcv_plot.png)
+![CV plot](static/manual_vcv_plot.png)\
 ![CV plot](static/manual_gcv_plot.png)
 
 - Tgt: target parameter.
