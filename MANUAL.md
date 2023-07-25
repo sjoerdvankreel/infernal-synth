@@ -140,7 +140,7 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
 Both per-voice and global effect modules, containing a comb filter, state-variable filter,
 and multiple waveshapers (both voice and global), and a feedback delay, multi-tap delay and reverb mode (global only).
 
-![Effect](static/manual_vfx.png)
+![Effect](static/manual_vfx.png)\
 ![Effect](static/manual_gfx.png)
 
 - Type: effect type
