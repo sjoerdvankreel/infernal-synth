@@ -35,6 +35,7 @@ Look for // http:// or // https:// in the source code for sources relevant to a 
 - If all goes well, final output is produced in /path/to/infernal/dist.
 
 # Screenshots
+See screenshots for all themes: [https://sjoerdvankreel.github.io/infernal-synth/screenshots.html] (https://sjoerdvankreel.github.io/infernal-synth/screenshots.html).\
 ![Screenshot](static/screenshot1.png)
 ![Screenshot](static/screenshot2.png)
 ![Screenshot](static/screenshot3.png)
