@@ -293,7 +293,7 @@ Please note: if release length is zero, envelope sustains at it's final pre-rele
 Both per-voice and global LFO modules with classic, random and custom generator types,
 bipolar and inverted modes, one-shot option and smoothing filter.
 
-![LFO](static/manual_vlfo.png)
+![LFO](static/manual_vlfo.png)\
 ![LFO](static/manual_glfo.png)
 
 - Graphs: LFO.
