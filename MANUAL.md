@@ -93,7 +93,7 @@ Through the context menu you can reset module values to default, or copy/swap be
 
 Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic generator types, phase, frequency, ring and amplitude modulation, hard sync and unison support.
 
-![Oscillator](static/osc.png)
+![Oscillator](static/manual_osc.png)
 
 - Type: generator type, see below.
 - PM (hidden, modulation target only): phase modulation.
@@ -140,7 +140,8 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
 Both per-voice and global effect modules, containing a comb filter, state-variable filter,
 and multiple waveshapers (both voice and global), and a feedback delay, multi-tap delay and reverb mode (global only).
 
-![Effect](static/fx.png)
+![Effect](static/manual_vfx.png)
+![Effect](static/manual_gfx.png)
 
 - Type: effect type
 - Reverb
@@ -198,27 +199,28 @@ Global matrix routes external audio input (in effect mode) or Voice output secti
 An audio source may be assigned to multiple targets or vice-versa, but note that effects can only be routed to higher-numbered effects
 (e.g. FX 2 to FX 3, but not FX 2 to FX 1), otherwise the input will be silence.
 
-![Audio matrix](static/audio_matrix.png)
+![Audio matrix](static/manual_vaudio.png)
+![Audio matrix](static/manual_gaudio.png)
 
 - In: audio signal input
 - Out: audio signal output
 - Amt: input signal amplitude
 - Bal: input signal stereo balancing
 
-## Voice output section
+## Voice section
+
+![Voice](static/manual_voice.png)
+
+### Output
 
 Controls per-voice gain and balance. Please note: envelope 1 (Amp Env) is hard-wired to voice gain.
-
-![Voice](static/voice_out.png)
 
 - Gain: amplitude of single voice output.
 - Bal: stereo balancing of single voice output.
 
-## Voice input section
+### Input
 
 Provides pitch translators affecting all oscillators, portamento settings and poly/monophonic mode selection.
-
-![Voice](static/voice_in.png)
 
 - Oct, Note: oscillator pitch offset relative to C4.
 - Mode: select polyphonic/monophonic mode.
@@ -237,23 +239,23 @@ Provides pitch translators affecting all oscillators, portamento settings and po
         - Note: always trigger portamento on a new note.
         - Voice: trigger portamento on a new note, except for the first note in a new monophonic section. Useful in combination with release portamento mode.
 
-## Master output section
+## Master section
+
+![Master](static/manual_master.png)
+
+### Output
 
 Controls global gain and balance.
-
-![Master](static/master_out.png)
 
 - Gain: amplitude of master mixdown.
 - Bal: stereo balancing of master mixdown.
 
-## Master input section
+### Input
 
 Contains a couple of freely-assignable CV sources. These CV sources don't do
 anything by themselves, but may be routed to multiple CV targets, thereby providing a single automation target.
 For example, route CVU 1 to both voice gain and FX 1 state variable frequency, and control both at the same
 time, using a single parameter, from the host.
-
-![Master](static/master_in.png)
 
 - CVB: bipolar virtual CV param level.
 - CVU: unipolar virtual CV param level.
@@ -264,7 +266,7 @@ Per-voice DAHDSR envelope generator with retrigger and multitrigger options, opt
 bipolar and inverted modes, and 2 stages with customizable slope and split level for each of attack, decay, and release sections.
 Please note: if release length is zero, envelope sustains at it's final pre-release level.
 
-![Envelope](static/env.png)
+![Envelope](static/manual_envelope.png)
 
 - Graphs: Envelope.
 - Type
@@ -291,7 +293,8 @@ Please note: if release length is zero, envelope sustains at it's final pre-rele
 Both per-voice and global LFO modules with classic, random and custom generator types,
 bipolar and inverted modes, one-shot option and smoothing filter.
 
-![LFO](static/vlfo.png)
+![LFO](static/manual_vlfo.png)
+![LFO](static/manual_glfo.png)
 
 - Graphs: LFO.
 - Rate/tempo: LFO frequency.
@@ -323,7 +326,7 @@ bipolar and inverted modes, one-shot option and smoothing filter.
         - RandX: allows control of the horizontal seed. If disabled, each section has equal length.
         - SeedX: a single cycle always has step count equal to the steps parameter, but if RandX is enabled, relative section length may be varied using this parameter.
 
-## CV section
+## CV matrix
 
 Both per-voice and global CV matrices.
 Per-voice CV can use any modulation source (Velocity/Key/Voice LFO/Global LFO/Envelope/Master CV).
@@ -346,7 +349,8 @@ LFO, to have each new voice receive a single new random value at voice start
 for the lifetime of the voice.
 
 
-![CV bank](static/cv_matrix.png)
+![CV matrix](static/manual_vcv.png)
+![CV matrix](static/manual_gcv.png)
 
 - In: CV input signal.
 - Out: CV signal target parameter.
@@ -358,22 +362,25 @@ For Key/Key Inv sources, Offset and Scale scale "out" rather than "in". For all 
 the effect of modulation. For Key/Key Inv sources, they are used to widen the effect of modulation, for example to have full range (0%-100%)
 between C3 and C5, rather than C0 and C9.
 
-## CV plot section
+## CV plot
 
 Both per-voice and global CV visualizers.
 Select a target parameter to view the combined (stacked) modulation signal that's routed to that parameter.
 
-![CV plot](static/vcv_plot.png)
+![CV plot](static/manual_vcv_plot.png)
+![CV plot](static/manual_gcv_plot.png)
 
 - Tgt: target parameter.
 - Length (global):  plot length in seconds.
 - Hold (voice): key-down time, affects the sustain section of the envelope generators.
 
-## Monitor section
+## Monitor/edit/patch sections
+
+![Monitor/edit/patch](static/manual_monitor_edit_patch.png)
+
+### Monitor
 
 Just to get an idea of what the plugin is doing.
-
-![Output](static/monitor.png)
 
 - Voices: active voice count. InfernalSynth is internally limited to 32 voices.
 - Drain: indicates whether maximum voice count is exceeded and voices are being recycled.
@@ -383,21 +390,17 @@ For example, "G.FX", "80%" indicates that 80% of processing time was spent in th
 - CPU: absolute total CPU usage measured as the percentage of time the plugin needs to render a single audio buffer relative to the buffer size.
 For example, with 5 millisecond buffers, 20% CPU indicates that the plugin rendered the last buffer in 1 millisecond.
 
-## Edit section
+### Edit
 
 Contains voice/global selection, UI settings and exact-editing.
-
-![Edit](static/edit.png)
 
 - UI size selector and theme selector.
 - Switch between editing voice and global sections.
 - Last tweaked: shows the name and value of the last changed knob/slider/etc. Allows exact-editing of that value.
 
-## Patch section
+### Patch
 
 Patch/preset control.
-
-![Edit](static/patch.png)
 
 - Init: reset to factory default.
 - Clear: reset to the very minimum that produces sound.
