@@ -36,7 +36,7 @@ Look for // http:// or // https:// in the source code for sources relevant to a 
 
 # Screenshots
 See screenshots for all themes: [https://sjoerdvankreel.github.io/infernal-synth/screenshots.html](https://sjoerdvankreel.github.io/infernal-synth/screenshots.html).\
-![Screenshot](static/screenshot1.png)
-![Screenshot](static/screenshot2.png)
-![Screenshot](static/screenshot3.png)
-![Screenshot](static/screenshot4.png)
+![Screenshot](static/screenshot_1.png)
+![Screenshot](static/screenshot_2.png)
+![Screenshot](static/screenshot_3.png)
+![Screenshot](static/screenshot_4.png)
