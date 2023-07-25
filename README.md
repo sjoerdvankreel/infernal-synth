@@ -35,10 +35,7 @@ Look for // http:// or // https:// in the source code for sources relevant to a 
 - If all goes well, final output is produced in /path/to/infernal/dist.
 
 # Screenshots
-Default theme:
-![Screenshot](static/screenshot_voice_default.png)
-![Screenshot](static/screenshot_global_default.png)
-\
-Infernal theme:
-![Screenshot](static/screenshot_voice_infernal.png)
-![Screenshot](static/screenshot_global_infernal.png)
+![Screenshot](static/screenshot1.png)
+![Screenshot](static/screenshot2.png)
+![Screenshot](static/screenshot3.png)
+![Screenshot](static/screenshot4.png)
