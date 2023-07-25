@@ -5,7 +5,7 @@ It is currently available as a VST3 plugin only, and ships as different binaries
 In instrument mode, InfernalSynth is a polyphonic synthesizer where the combined output of all voices is routed through a global effect bank.\
 In effect mode, the voice generators are not used, and instead an external audio source is routed through the same global effect bank.\
 \
-![Screentshot](static/screenshot_voice_default.png)
+![Screenshot](static/screenshot_1.png)
 
 ## Versioned builds
 
