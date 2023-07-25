@@ -87,7 +87,7 @@ However, individual components are either bandlimited or have options to reduce 
 Context menu opens by right-click on a module (osc, lfo, env, etc) header. \
 Through the context menu you can reset module values to default, or copy/swap between modules of the same type.
 
-![Context menu](static/context_menu.png)
+![Context menu](static/manual_context.png)
 
 ## Oscillator section
 
