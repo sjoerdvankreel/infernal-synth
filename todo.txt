@@ -15,6 +15,7 @@
 * wishlist small
 - dont release the generic build
 - provide separate binaries for fx/ins mode
+- save ui size/theme/last directory in user settings
 
 * wishlist big
 - CLAP support
