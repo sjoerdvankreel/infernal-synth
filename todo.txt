@@ -13,7 +13,9 @@
 - x don't forget to tag
 
 * wishlist small
+- pitchbend
 - dont release the generic build
+- clearer voice/global distinction
 - provide separate binaries for fx/ins mode
 - save ui size/theme/last directory in user settings
 
