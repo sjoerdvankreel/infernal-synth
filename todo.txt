@@ -12,6 +12,10 @@
 - x run the vst validator
 - x don't forget to tag
 
+* wishlist small
+- dont release the generic build
+- provide separate binaries for fx/ins mode
+
 * wishlist big
 - CLAP support
 - Linux support
