@@ -164,8 +164,6 @@ vst_controller::factory_presets(std::string const& plugin_file) const
   std::string dot_extension = ".vstpreset";
   std::vector<inf::base::external_resource> result;
   auto path = std::filesystem::path(plugin_file).parent_path().parent_path() / "Resources" / "Presets";
-  if(topology()->is_instrument()) path = path / "Instrument";
-  else path = path / "Fx";
   for (auto const& entry: std::filesystem::directory_iterator(path))
   {
     if (entry.path().extension().string() != dot_extension) continue;
