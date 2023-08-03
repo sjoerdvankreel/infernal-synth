@@ -869,6 +869,8 @@ save_preset_file(
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box->setOpaque(true);
+  state->box->addToDesktop(0, nullptr);
   state->box->center_around(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(saved), false);
 }
@@ -903,6 +905,8 @@ load_preset_file(
     }
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box->setOpaque(true);
+  state->box->addToDesktop(0, nullptr);
   state->box->center_around(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(selected), false);
 }
