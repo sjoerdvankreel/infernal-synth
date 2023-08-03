@@ -126,7 +126,7 @@ public:
 static
 topology_info* inf_vst_create_topology()
 { 
-  topology_info* result = new synth_vst_topology(INF_FX != 0);
+  topology_info* result = new synth_vst_topology(INF_FX == 0);
   topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
   return result;
 }
