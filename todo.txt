@@ -14,6 +14,8 @@
 
 * wishlist small
 - pitchbend
+- fix text edit/focus
+- bitwig 504 crash win11
 - dont release the generic build
 - clearer voice/global distinction
 - provide separate binaries for fx/ins mode
