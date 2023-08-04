@@ -17,7 +17,7 @@
 - pitchbend as mod source
 - dont release the generic build
 - clearer voice/global distinction
-- free-running random voice-lfo + oscillator
+- free-running random lfo + oscillator
 - save ui size/theme/last directory in user settings
 
 * wishlist big
