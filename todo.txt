@@ -21,6 +21,7 @@
 - save ui size/theme/last directory in user settings
 
 * wishlist big
+- Midi MPE
 - CLAP support
 - Linux support
 - Mac support (contact kvr)
@@ -30,7 +31,7 @@
 - noise types: fractal, perlin
 - scale CV amount by global CV param
 - make more presets + group by folder
-- improve current noise generator (1/fs)
+- add new noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
 - filter types: formant, vowel, zero-feedback-delay
