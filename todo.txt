@@ -13,10 +13,11 @@
 - x don't forget to tag
 
 * wishlist small
-- pitchbend
 - fix text edit/focus
+- pitchbend as mod source
 - dont release the generic build
 - clearer voice/global distinction
+- free-running random voice-lfo + oscillator
 - save ui size/theme/last directory in user settings
 
 * wishlist big
@@ -26,11 +27,11 @@
 - osc types: feedback lead
 - slope controls for cvu/b
 - slope controls for cv matrix
-- filter types: formant, vowel
 - noise types: fractal, perlin
 - scale CV amount by global CV param
 - make more presets + group by folder
 - improve current noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
+- filter types: formant, vowel, zero-feedback-delay
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
