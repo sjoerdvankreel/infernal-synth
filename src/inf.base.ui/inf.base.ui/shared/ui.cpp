@@ -108,6 +108,11 @@ public:
     _ok.onClick = [this]() { 
       if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
       {
+        param_value new_ui_value;
+        auto text = _editor.getText().toStdString();
+        auto part_index = _controller->topology()->params[_param_index].part_index;
+        if(_controller->topology()->params[_param_index].descriptor->data.parse(false, part_index, text.c_str(), new_ui_value))
+          _controller->editor_param_changed(_param_index, new_ui_value);
         w->exitModalState(0);
         delete w;
       }
