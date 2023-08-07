@@ -514,7 +514,7 @@ Component*
 param_edit_element::build_toggle_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
-  ToggleButton* result = new inf_toggle_button(controller(), index, _force_toggle_on);
+  ToggleButton* result = new inf_toggle_button(controller(), index, _force_toggle_on, _lnf_factory);
   _toggle_listener.reset(new toggle_param_listener(controller(), result, index));
   result->setToggleState(controller()->state()[index].discrete != 0, dontSendNotification);
   result->addListener(_toggle_listener.get());
@@ -541,7 +541,7 @@ param_edit_element::build_dropdown_core(LookAndFeel& lnf)
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
-  inf_param_dropdown* result = new inf_param_dropdown(controller(), index);
+  inf_param_dropdown* result = new inf_param_dropdown(controller(), index, _lnf_factory);
   result->setColour(ComboBox::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::dropdown_text));
   result->setJustificationType(Justification::centred);
   if (desc.data.discrete.items != nullptr)
@@ -569,7 +569,7 @@ param_edit_element::build_slider_core(LookAndFeel& lnf)
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   auto default_value = controller()->topology()->base_to_ui_value(index, desc.data.default_value());
   std::int32_t part_index = controller()->topology()->params[index].part_index;
-  inf_param_slider* result = new inf_param_slider(controller(), index, _type);
+  inf_param_slider* result = new inf_param_slider(controller(), index, _type, _lnf_factory);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   if(desc.data.type == param_type::real)
   {
@@ -674,7 +674,7 @@ create_grid_ui(
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
-  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, bool force_toggle_on, std::int32_t hslider_cols)
+  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on, std::int32_t hslider_cols)
 {
   if (edit_type == edit_type::hslider)
   {
@@ -682,7 +682,7 @@ create_param_ui(
     if(hslider_cols == -1) return {};
     auto result = create_grid_ui(controller, 1, hslider_cols);
     result->add_cell(std::move(label_or_icon), 0, 0);
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on), 0, 1, 1, hslider_cols - 1);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on), 0, 1, 1, hslider_cols - 1);
     return result;
   }
   else
@@ -690,7 +690,7 @@ create_param_ui(
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
     auto fixed_label_height = Grid::TrackInfo(Grid::Px(get_param_label_total_height(controller)));
     auto result = create_grid_ui(controller, { auto_rest, fixed_label_height }, { auto_rest });
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on), 0, 0);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on), 0, 0);
     result->add_cell(std::move(label_or_icon), 1, 0);
     return result;
   }
@@ -699,29 +699,29 @@ create_param_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, label_type label_type, tooltip_type tooltip_type, bool force_toggle_on, std::int32_t hslider_cols)
+  edit_type edit_type, label_type label_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on, std::int32_t hslider_cols)
 {
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
   auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
-  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on, hslider_cols);
+  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on, hslider_cols);
 }
 
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, bool force_toggle_on)
+  edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on)
 {
   auto icon = create_param_icon_ui(controller, icon_type);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on);
 }
 
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, bool force_toggle_on)
+  edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on)
 {
   auto icon = create_param_icon_ui(controller, part_type, part_index, param_index, icon_selector);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on);
 }
 
 std::unique_ptr<ui_element>

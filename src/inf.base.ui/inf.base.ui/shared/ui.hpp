@@ -345,6 +345,8 @@ public ui_element
   base::part_id const _part_id;
   std::int32_t const _param_index;
   tooltip_type const _tooltip_type;
+  lnf_factory const _lnf_factory;
+
   std::unique_ptr<tooltip_listener> _tooltip_listener = {};
   std::unique_ptr<toggle_param_listener> _toggle_listener = {};
   std::unique_ptr<slider_param_listener> _slider_listener = {};
@@ -360,15 +362,15 @@ public:
   void layout() override;
   param_edit_element(
     inf::base::plugin_controller* controller, 
-    base::part_id const& part_id, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on, bool in_table):
-  ui_element(controller), _in_table(in_table), _type(type), _force_toggle_on(force_toggle_on), _part_id(part_id), _param_index(param_index), _tooltip_type(tooltip_type) {}
+    base::part_id const& part_id, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on, bool in_table, lnf_factory lnf_factory):
+  ui_element(controller), _in_table(in_table), _type(type), _force_toggle_on(force_toggle_on), _part_id(part_id), _param_index(param_index), _tooltip_type(tooltip_type), _lnf_factory(lnf_factory) {}
 };
 
 inline std::unique_ptr<param_edit_element>
 create_param_edit_ui(
   inf::base::plugin_controller* controller, std::int32_t part_type,
-  std::int32_t part_index, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on = false, bool in_table = false)
-{ return std::make_unique<param_edit_element>(controller, part_id(part_type, part_index), param_index, type, tooltip_type, force_toggle_on, in_table); }
+  std::int32_t part_index, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on = false, bool in_table = false)
+{ return std::make_unique<param_edit_element>(controller, part_id(part_type, part_index), param_index, type, tooltip_type, force_toggle_on, in_table, lnf_factory); }
 
 class part_graph_element:
 public ui_element
@@ -485,19 +487,19 @@ create_part_selector_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, label_type label_type, tooltip_type tooltip_type, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
+  edit_type edit_type, label_type label_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, bool force_toggle_on = false);
+  edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on = false);
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, bool force_toggle_on = false);
+  edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on = false);
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
-  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
+  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on = false, std::int32_t hslider_cols = -1);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_UI_HPP
