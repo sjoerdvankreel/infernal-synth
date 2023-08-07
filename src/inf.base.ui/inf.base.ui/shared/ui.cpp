@@ -13,6 +13,10 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
+static std::int32_t const exact_edit_dialog_h = 60;
+static std::int32_t const exact_edit_dialog_w = 200;
+static std::int32_t const exact_edit_dialog_pad = 1;
+
 struct dialog_box_state
 {
   // mind order of destruction
@@ -57,6 +61,7 @@ class exact_edit_dialog_content :
 public juce::Component
 {
 private:
+  juce::Label _title;
   juce::TextButton _ok;
   juce::TextButton _cancel;
   juce::TextEditor _editor;
@@ -77,24 +82,31 @@ public:
     _lnf->setColour(TextButton::ColourIds::textColourOffId, _lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
     _lnf->setColour(TextButton::ColourIds::buttonColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
 
-    setSize(200, 40);
+    std::int32_t pad = exact_edit_dialog_pad;
+    setSize(exact_edit_dialog_w + 3 * pad, exact_edit_dialog_h + 6 * pad);
     setLookAndFeel(_lnf.get());
+
+    auto title = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
+    _title.setText(title, juce::dontSendNotification);
+    _title.setLookAndFeel(_lnf.get());
+    addAndMakeVisible(_title);
+    _title.setBounds(pad, pad, exact_edit_dialog_w - pad, exact_edit_dialog_h / 3);
+
+    _editor.setLookAndFeel(_lnf.get());
+    addAndMakeVisible(_editor);
+    _editor.setBounds(pad, 2 * pad + exact_edit_dialog_h / 3, exact_edit_dialog_w, exact_edit_dialog_h / 3);
 
     _ok.setButtonText("OK");
     _ok.setLookAndFeel(_lnf.get());
     _ok.addShortcut(KeyPress(KeyPress::returnKey));
     addAndMakeVisible(_ok);
-    _ok.setBounds(100, 20, 50, 20);
+    _ok.setBounds(pad + exact_edit_dialog_w / 2, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 4 - pad, exact_edit_dialog_h / 3);
 
     _cancel.setButtonText("Cancel");
     _cancel.setLookAndFeel(_lnf.get());
     _cancel.addShortcut(KeyPress(KeyPress::escapeKey));
     addAndMakeVisible(_cancel);
-    _cancel.setBounds(150, 20, 50, 20);
-
-    addAndMakeVisible(_editor);
-    _editor.setBounds(0, 0, 200, 20);
-    _editor.setLookAndFeel(_lnf.get());
+    _cancel.setBounds(pad + exact_edit_dialog_w * 3 / 4, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 4 - pad, exact_edit_dialog_h / 3);
   }
 };
 
@@ -189,21 +201,22 @@ fill_dropdown_menu(PopupMenu* menu, std::vector<list_item> const& items)
     fill_dropdown_menu(menu, child.get(), counter);
 }
 
-
-
 static void 
 show_exact_edit_dialog(base::plugin_controller* controller,
   std::int32_t param_index, lnf_factory lnf_factory)
 {
-  juce::DialogWindow::LaunchOptions options;
-  options.resizable = false;
-  options.useNativeTitleBar = false;
-  options.useBottomRightCornerResizer = false;
-  options.escapeKeyTriggersCloseButton = true;
-  options.componentToCentreAround = static_cast<juce::Component*>(controller->current_editor_window());
-  options.dialogTitle = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
-  options.content.setOwned(new exact_edit_dialog_content(controller, param_index, lnf_factory(controller)));
-  options.launchAsync();
+  auto title = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
+  auto window = std::make_unique<juce::ResizableWindow>(title, true);
+  window->setResizable(false, false);
+  window->setContentOwned(new exact_edit_dialog_content(controller, param_index, lnf_factory(controller)), false);
+  window->setOpaque(true);
+  window->addToDesktop(0, nullptr);
+  window->centreAroundComponent(
+    static_cast<juce::Component*>(controller->current_editor_window()), 
+    exact_edit_dialog_w + 3 * exact_edit_dialog_pad, 
+    exact_edit_dialog_h + 6 * exact_edit_dialog_pad);
+  window->enterModalState(true);
+  window.release();
 }
 
 void
