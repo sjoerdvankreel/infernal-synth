@@ -32,27 +32,22 @@ static std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
   edit_type edit_type, label_type label_type, tooltip_type tooltip_type, bool force_toggle_on = false, std::int32_t hslider_cols = -1)
-{ return create_labeled_param_ui(controller, part_type, part_index, param_index, edit_type, label_type, tooltip_type, create_root_lnf, force_toggle_on, hslider_cols); };
+{ return inf::base::ui::create_labeled_param_ui(controller, part_type, part_index, param_index, edit_type, label_type, tooltip_type, create_root_lnf, force_toggle_on, hslider_cols); };
 static std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
   edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, bool force_toggle_on = false)
-{ return create_iconed_param_ui(controller, part_type, part_index, param_index, edit_type, icon_type, tooltip_type, create_root_lnf, force_toggle_on); }
+{ return inf::base::ui::create_iconed_param_ui(controller, part_type, part_index, param_index, edit_type, icon_type, tooltip_type, create_root_lnf, force_toggle_on); }
 static std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index,
   edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, bool force_toggle_on = false)
-{ return create_iconed_param_ui(controller, part_type, part_index, param_index, edit_type, icon_selector, tooltip_type, create_root_lnf, force_toggle_on); }
-static std::unique_ptr<ui_element>
-create_param_ui(
-  plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type,
-  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, bool force_toggle_on = false, std::int32_t hslider_cols = -1)
-{ return create_param_ui(controller, label_or_icon, part_type, part_index, param_index, edit_type, tooltip_type, create_root_lnf, force_toggle_on, hslider_cols); }
+{ return inf::base::ui::create_iconed_param_ui(controller, part_type, part_index, param_index, edit_type, icon_selector, tooltip_type, create_root_lnf, force_toggle_on); }
 static std::unique_ptr<param_edit_element>
 create_param_edit_ui(
   inf::base::plugin_controller* controller, std::int32_t part_type,
   std::int32_t part_index, std::int32_t param_index, edit_type type, tooltip_type tooltip_type, bool force_toggle_on = false, bool in_table = false)
-{ return create_param_edit_ui(controller, part_type, part_index, param_index, type, tooltip_type, create_root_lnf, force_toggle_on, in_table); }
+{ return inf::base::ui::create_param_edit_ui(controller, part_type, part_index, param_index, type, tooltip_type, create_root_lnf, force_toggle_on, in_table); }
 
 static icon_type
 icon_for_osc_basic_type(std::int32_t value)
