@@ -13,7 +13,7 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
-static std::int32_t const exact_edit_dialog_h = 60;
+static std::int32_t const exact_edit_dialog_h = 78;
 static std::int32_t const exact_edit_dialog_w = 200;
 static std::int32_t const exact_edit_dialog_pad = 1;
 
@@ -89,10 +89,14 @@ public:
     auto title = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
     _title.setText(title, juce::dontSendNotification);
     _title.setLookAndFeel(_lnf.get());
+    _title.setFont(juce::Font(15.0, juce::Font::bold));
     addAndMakeVisible(_title);
     _title.setBounds(pad, pad, exact_edit_dialog_w - pad, exact_edit_dialog_h / 3);
 
     _editor.setLookAndFeel(_lnf.get());
+    _editor.setFont(juce::Font(14.0));
+    _editor.setJustification(juce::Justification::right);
+    _editor.setText(juce::String(controller->topology()->params[param_index].descriptor->data.format(false, controller->ui_value_at_index(param_index))));
     addAndMakeVisible(_editor);
     _editor.setBounds(pad, 2 * pad + exact_edit_dialog_h / 3, exact_edit_dialog_w, exact_edit_dialog_h / 3);
 
@@ -100,7 +104,7 @@ public:
     _ok.setLookAndFeel(_lnf.get());
     _ok.addShortcut(KeyPress(KeyPress::returnKey));
     addAndMakeVisible(_ok);
-    _ok.setBounds(pad + exact_edit_dialog_w / 2, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 4 - pad, exact_edit_dialog_h / 3);
+    _ok.setBounds(pad, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 2 - pad, exact_edit_dialog_h / 3);
     _ok.onClick = [this]() { 
       if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
       {
@@ -113,7 +117,7 @@ public:
     _cancel.setLookAndFeel(_lnf.get());
     _cancel.addShortcut(KeyPress(KeyPress::escapeKey));
     addAndMakeVisible(_cancel);
-    _cancel.setBounds(pad + exact_edit_dialog_w * 3 / 4, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 4 - pad, exact_edit_dialog_h / 3);
+    _cancel.setBounds(pad + exact_edit_dialog_w / 2, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 2 - pad, exact_edit_dialog_h / 3);
     _cancel.onClick = [this]() {
       if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
       {
