@@ -23,6 +23,7 @@
 - clearer voice/global distinction
 - free-running random lfo + oscillator
 - save ui size/theme/last directory in user settings
+- parameter flush bug when playing
 
 * wishlist big
 - Midi MPE
