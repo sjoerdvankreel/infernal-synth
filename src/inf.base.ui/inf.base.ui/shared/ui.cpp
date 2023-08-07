@@ -70,12 +70,12 @@ public:
     std::int32_t param_index, std::unique_ptr<inf_look_and_feel>&& lnf) :
     _param_index(param_index), _lnf(std::move(lnf)), _controller(controller)
   {
-    _lnf->setColour(Label::ColourIds::textColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-    _lnf->setColour(Label::ColourIds::textWhenEditingColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-    _lnf->setColour(Label::ColourIds::backgroundColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-    _lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-    _lnf->setColour(TextButton::ColourIds::textColourOffId, lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
-    _lnf->setColour(TextButton::ColourIds::buttonColourId, lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
+    _lnf->setColour(Label::ColourIds::textColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
+    _lnf->setColour(Label::ColourIds::textWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
+    _lnf->setColour(Label::ColourIds::backgroundColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
+    _lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
+    _lnf->setColour(TextButton::ColourIds::textColourOffId, _lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
+    _lnf->setColour(TextButton::ColourIds::buttonColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
 
     setSize(200, 40);
     setLookAndFeel(_lnf.get());
