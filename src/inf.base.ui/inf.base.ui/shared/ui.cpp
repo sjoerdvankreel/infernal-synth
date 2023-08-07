@@ -53,6 +53,51 @@ struct dropdown_tree
   std::vector<std::unique_ptr<dropdown_tree>> children;
 };
 
+class exact_edit_dialog_content :
+public juce::Component
+{
+private:
+  juce::TextButton _ok;
+  juce::TextButton _cancel;
+  juce::TextEditor _editor;
+
+  std::int32_t const _param_index;
+  std::unique_ptr<inf_look_and_feel> _lnf;
+  base::plugin_controller* const _controller;
+
+public:
+  exact_edit_dialog_content(base::plugin_controller* controller,
+    std::int32_t param_index, std::unique_ptr<inf_look_and_feel>&& lnf) :
+    _param_index(param_index), _lnf(std::move(lnf)), _controller(controller)
+  {
+    _lnf->setColour(Label::ColourIds::textColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
+    _lnf->setColour(Label::ColourIds::textWhenEditingColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
+    _lnf->setColour(Label::ColourIds::backgroundColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
+    _lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
+    _lnf->setColour(TextButton::ColourIds::textColourOffId, lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
+    _lnf->setColour(TextButton::ColourIds::buttonColourId, lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
+
+    setSize(200, 40);
+    setLookAndFeel(_lnf.get());
+
+    _ok.setButtonText("OK");
+    _ok.setLookAndFeel(_lnf.get());
+    _ok.addShortcut(KeyPress(KeyPress::returnKey));
+    addAndMakeVisible(_ok);
+    _ok.setBounds(100, 20, 50, 20);
+
+    _cancel.setButtonText("Cancel");
+    _cancel.setLookAndFeel(_lnf.get());
+    _cancel.addShortcut(KeyPress(KeyPress::escapeKey));
+    addAndMakeVisible(_cancel);
+    _cancel.setBounds(150, 20, 50, 20);
+
+    addAndMakeVisible(_editor);
+    _editor.setBounds(0, 0, 200, 20);
+    _editor.setLookAndFeel(_lnf.get());
+  }
+};
+
 static void
 run_dialog_box(dialog_box_state* state, std::int32_t w, std::int32_t h)
 {
@@ -142,6 +187,48 @@ fill_dropdown_menu(PopupMenu* menu, std::vector<list_item> const& items)
     append_dropdown_tree(tree.get(), item.submenu_path.data(), item.submenu_path.size());
   for(auto const& child: tree->children)
     fill_dropdown_menu(menu, child.get(), counter);
+}
+
+
+
+static void 
+show_exact_edit_dialog(base::plugin_controller* controller,
+  std::int32_t param_index, lnf_factory lnf_factory)
+{
+  juce::DialogWindow::LaunchOptions options;
+  options.resizable = false;
+  options.useNativeTitleBar = false;
+  options.useBottomRightCornerResizer = false;
+  options.escapeKeyTriggersCloseButton = true;
+  options.componentToCentreAround = static_cast<juce::Component*>(controller->current_editor_window());
+  options.dialogTitle = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
+  options.content.setOwned(new exact_edit_dialog_content(controller, param_index, lnf_factory(controller)));
+  options.launchAsync();
+}
+
+void
+show_context_menu_for_param(
+  base::plugin_controller* controller, std::int32_t param_index, 
+  bool exact_edit, juce::LookAndFeel* lnf, lnf_factory lnf_factory)
+{
+  PopupMenu menu;
+  menu.setLookAndFeel(lnf);
+  auto host_menu = controller->host_menu_for_param_index(param_index);
+  for (std::int32_t i = 0; i < host_menu->item_count(); i++)
+  {
+    bool enabled;
+    bool checked;
+    std::string name;
+    host_menu->get_item(i, name, enabled, checked);
+    menu.addItem(i + 1, name, enabled, checked);
+  }
+  if(exact_edit)
+    menu.addItem(host_menu->item_count() + 1, "Edit...");
+  menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu = host_menu.release()](int option) {
+    if (option > 0 && option <= host_menu->item_count()) host_menu->item_clicked(option - 1);
+    else if (option == host_menu->item_count() + 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    delete host_menu;
+  });
 }
 
 void

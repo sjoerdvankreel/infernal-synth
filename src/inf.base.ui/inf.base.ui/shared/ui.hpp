@@ -36,8 +36,6 @@
 
 namespace inf::base::ui {
 
-typedef std::unique_ptr<inf_look_and_feel> (*
-lnf_factory)(inf::base::plugin_controller*);
 typedef std::function<void(inf::base::plugin_controller*)>
 confirmed_callback;
 typedef std::function<void()>
@@ -53,6 +51,10 @@ void show_ok_box(
 void show_confirm_box(
   inf::base::plugin_controller* controller, std::string const& header,
   lnf_factory lnf_factory, confirmed_callback confirmed, cancelled_callback cancelled);
+void
+show_context_menu_for_param(
+  base::plugin_controller* controller, std::int32_t param_index,
+  bool exact_edit, juce::LookAndFeel* lnf, lnf_factory lnf_factory);
 
 class ui_element
 {
