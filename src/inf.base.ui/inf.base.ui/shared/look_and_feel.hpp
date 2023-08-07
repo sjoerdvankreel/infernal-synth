@@ -5,9 +5,7 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <inf.base/plugin/plugin_controller.hpp>
-
 #include <vector>
-#include <memory>
 
 namespace inf::base::ui {
 
@@ -268,9 +266,6 @@ public:
   juce::Font getComboBoxFont(juce::ComboBox& box) override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
 };
-
-typedef std::unique_ptr<inf_look_and_feel>(*
-  lnf_factory)(inf::base::plugin_controller*);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP
