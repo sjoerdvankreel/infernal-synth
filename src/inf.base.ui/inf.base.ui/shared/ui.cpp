@@ -250,7 +250,8 @@ show_context_menu_for_param(
   PopupMenu menu;
   menu.setLookAndFeel(lnf);
   auto host_menu = controller->host_menu_for_param_index(param_index);
-  for (std::int32_t i = 0; i < host_menu->item_count(); i++)
+  std::int32_t host_menu_count = host_menu? host_menu->item_count(): 0;
+  for (std::int32_t i = 0; i < host_menu_count; i++)
   {
     bool enabled;
     bool checked;
@@ -259,10 +260,10 @@ show_context_menu_for_param(
     menu.addItem(i + 1, name, enabled, checked);
   }
   if(exact_edit)
-    menu.addItem(host_menu->item_count() + 1, "Edit...");
-  menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu = host_menu.release()](int option) {
-    if (option > 0 && option <= host_menu->item_count()) host_menu->item_clicked(option - 1);
-    else if (option == host_menu->item_count() + 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    menu.addItem(host_menu_count + 1, "Edit...");
+  menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu_count, host_menu = host_menu.release()](int option) {
+    if (option > 0 && option <= host_menu_count) host_menu->item_clicked(option - 1);
+    else if (option == host_menu_count + 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
     delete host_menu;
   });
 }
