@@ -18,7 +18,7 @@ inf_param_slider::mouseUp(juce::MouseEvent const& e)
   if (e.mods.isLeftButtonDown())
     Slider::mouseUp(e);
   else if(e.mods.isRightButtonDown())
-    show_context_menu_for_param(_controller, _param_index, true, &getLookAndFeel(), _lnf_factory);
+    show_context_menu_for_param(_controller, _param_index, isEnabled(), &getLookAndFeel(), _lnf_factory);
 }
 
 } // namespace inf::base::ui

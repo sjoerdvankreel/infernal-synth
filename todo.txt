@@ -12,10 +12,13 @@
 - x run the vst validator
 - x don't forget to tag
 
+* changes current release
+- fix text edit/focus (save/load, exact-edit)
+- split fx/inst to different binaries
+
 * wishlist small
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters
-- fix text edit/focus
 - finetune -100/+100 cents
 - midi expression (volume) as mod source
 - midi pitchbend as mod source plus bend range semis
