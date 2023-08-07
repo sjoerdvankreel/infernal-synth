@@ -13,8 +13,12 @@
 - x don't forget to tag
 
 * wishlist small
+- filter n/a options from dropdowns
+- incorporate chris airwindows filters
 - fix text edit/focus
-- pitchbend as mod source
+- finetune -100/+100 cents
+- midi expression (volume) as mod source
+- midi pitchbend as mod source plus bend range semis
 - dont release the generic build
 - clearer voice/global distinction
 - free-running random lfo + oscillator
@@ -22,8 +26,11 @@
 
 * wishlist big
 - Midi MPE
+- global envs
 - CLAP support
 - Linux support
+- more fm control (+mix?)
+- per-voice delay/reverb
 - Mac support (contact kvr)
 - osc types: feedback lead
 - slope controls for cvu/b
@@ -34,5 +41,5 @@
 - add new noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
-- filter types: formant, vowel, zero-feedback-delay
+- filter types: formant, vowel, zero-feedback-delay, ladder
 - improve dsf generator: high partials roll off too fast + allow falloff to the left
