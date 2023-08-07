@@ -101,12 +101,26 @@ public:
     _ok.addShortcut(KeyPress(KeyPress::returnKey));
     addAndMakeVisible(_ok);
     _ok.setBounds(pad + exact_edit_dialog_w / 2, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 4 - pad, exact_edit_dialog_h / 3);
+    _ok.onClick = [this]() { 
+      if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
+      {
+        w->exitModalState(0);
+        delete w;
+      }
+    };
 
     _cancel.setButtonText("Cancel");
     _cancel.setLookAndFeel(_lnf.get());
     _cancel.addShortcut(KeyPress(KeyPress::escapeKey));
     addAndMakeVisible(_cancel);
     _cancel.setBounds(pad + exact_edit_dialog_w * 3 / 4, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 4 - pad, exact_edit_dialog_h / 3);
+    _cancel.onClick = [this]() {
+      if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
+      {
+        w->exitModalState(0);
+        delete w;
+      }
+    };
   }
 };
 
