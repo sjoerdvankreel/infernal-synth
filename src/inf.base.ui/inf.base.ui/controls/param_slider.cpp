@@ -1,4 +1,5 @@
 #include <inf.base.ui/controls/param_slider.hpp>
+#include <inf.base.ui/shared/ui.hpp>
 
 using namespace juce;
 
@@ -17,7 +18,7 @@ inf_param_slider::mouseUp(juce::MouseEvent const& e)
   if (e.mods.isLeftButtonDown())
     Slider::mouseUp(e);
   else if(e.mods.isRightButtonDown())
-    show_host_menu_for_param(_controller, _param_index, &getLookAndFeel());
+    show_context_menu_for_param(_controller, _param_index, true, &getLookAndFeel(), _lnf_factory);
 }
 
 } // namespace inf::base::ui

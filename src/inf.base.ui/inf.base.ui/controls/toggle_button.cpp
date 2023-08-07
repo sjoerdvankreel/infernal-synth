@@ -1,4 +1,5 @@
 #include <inf.base.ui/controls/toggle_button.hpp>
+#include <inf.base.ui/shared/ui.hpp>
 
 using namespace juce;
 
@@ -17,7 +18,7 @@ inf_toggle_button::mouseUp(juce::MouseEvent const& e)
   if (e.mods.isLeftButtonDown())
     ToggleButton::mouseUp(e);
   else if(e.mods.isRightButtonDown())
-    show_host_menu_for_param(_controller, _param_index, &getLookAndFeel());
+    show_context_menu_for_param(_controller, _param_index, false, &getLookAndFeel(), _lnf_factory);
 }
 
 } // namespace inf::base::ui
