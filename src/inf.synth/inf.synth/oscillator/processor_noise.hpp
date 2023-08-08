@@ -16,10 +16,12 @@ namespace inf::synth {
 // won't do anything, but stereo spreading still works.
 struct osc_noise_processor
 {
-  oscillator_state* state;
+  oscillator_state* const state;
+  float const sample_rate;
   float const* const x_param;
   float const* const y_param;
   float const* const color_param;
+  float const* const filter_param;
 
   float next_color_value(std::int32_t sample) const;
   float operator()(std::int32_t voice, float frequency,
@@ -61,6 +63,9 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
   float phase, float increment, std::int32_t sample) const
 {
   float const offset = 0.01f;
+  float const min_freq = 20.0f;
+  float const max_freq = 20000.0f;
+
   float x = offset + (1.0f - offset) * x_param[sample];
   if (std::abs(phase - state->noise_prev_draw_phase) >= (1.0f / x - offset) * increment)
   {
@@ -69,7 +74,19 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
     if (fast_rand_next(state->noise_rand_state_x) <= y)
       state->noise_prev_draw = next_color_value(sample);
   }
-  return state->noise_prev_draw;
+
+  // Prevent filter start from zero.
+  if (!state->noise_started)
+  {
+    state->noise_started = true;
+    state->noise_filter.in1 = state->noise_prev_draw;
+    state->noise_filter.out1 = state->noise_prev_draw;
+  }
+
+  // Filter + pick either filtered or plain.
+  state->noise_filter.init(sample_rate, min_freq + filter_param[sample] * (max_freq - min_freq));
+  float filtered = state->noise_filter.next(state->noise_prev_draw);
+  return filter_param[sample] < 1.0f? filtered: state->noise_prev_draw;
 }
 
 } // namespace inf::synth

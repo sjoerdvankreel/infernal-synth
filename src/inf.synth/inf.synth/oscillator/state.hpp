@@ -3,6 +3,7 @@
 
 #include <inf.base/plugin/state.hpp>
 #include <inf.synth/oscillator/config.hpp>
+#include <inf.synth/shared/basic_lp_filter.hpp>
 
 #include <cmath>
 #include <array>
@@ -43,8 +44,10 @@ struct oscillator_state
   std::array<std::vector<float>, osc_max_voices> kps_lines;
 
   // Noise state.
+  bool noise_started;
   float noise_prev_draw;
   float noise_prev_draw_phase;
+  basic_lp_filter noise_filter;
   std::uint32_t noise_rand_state_x;
   std::uint32_t noise_rand_state_y;
   std::array<float, osc_noise_color_bin_count> noise_color_value;

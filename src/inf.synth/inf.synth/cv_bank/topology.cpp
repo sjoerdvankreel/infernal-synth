@@ -134,6 +134,7 @@ static list_item const vcv_route_vosc_targets[vcv_route_vosc_target::count] = {
   { "{986660DA-E6EC-4B36-8AE0-D469B1BE0343}", "K+S Fltr" },
   { "{58C3BC8F-8C44-4C88-BECA-4ADD765AF13A}", "K+S Fdbk" },
   { "{F4CC7E11-407F-4C05-834E-6DD0CDAE774B}", "K+S Str" },
+  { "{96BA0191-6A34-4949-BA6F-E7D788E67D87}", "Noise Flt" },
   { "{8EBA9BAA-529F-445C-BEA1-D9CC17BC42A2}", "Noise Clr" },
   { "{A3DF88E5-448D-47E1-B33E-AA0B932B4B38}", "Noise X" },
   { "{4C8CD2BD-54D3-466B-B733-68AE424724EF}", "Noise Y" } };

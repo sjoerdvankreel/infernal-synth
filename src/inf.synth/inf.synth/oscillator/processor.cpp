@@ -60,7 +60,10 @@ _uni_voices(), _noise_free(), _noise_seed(), _midi_note(), _state(state), _midi_
 
   // Clear out noise initial state.
   if (_type == osc_type::noise)
+  {
+    _state->noise_started = false;
     reset_noise();
+  }
 
   // Clear out kps initial state.
   if(_type == osc_type::kps)
@@ -74,7 +77,7 @@ _uni_voices(), _noise_free(), _noise_seed(), _midi_note(), _state(state), _midi_
   }
 }
 
-// Reset noise for cycle mode.
+// Reset noise for cycle mode. Note: do NOT reset filter and started!.
 void
 oscillator_processor::reset_noise()
 {
@@ -266,7 +269,8 @@ void oscillator_processor::process_noise(oscillator_input const& input,
   float const* noise_x_param = params[osc_param::noise_x];
   float const* noise_y_param = params[osc_param::noise_y];
   float const* noise_color_param = params[osc_param::noise_color];
-  auto processor = osc_noise_processor({ _state, noise_x_param, noise_y_param, noise_color_param });
+  float const* noise_filter_param = params[osc_param::noise_filter];
+  auto processor = osc_noise_processor({ _state, sample_rate(), noise_x_param, noise_y_param, noise_color_param, noise_filter_param });
   process(input, params, out, scratch, false, processor);
 }
 
