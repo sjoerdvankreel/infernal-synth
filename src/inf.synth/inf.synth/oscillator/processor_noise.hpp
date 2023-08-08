@@ -63,7 +63,7 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
   float phase, float increment, std::int32_t sample) const
 {
   float const offset = 0.01f;
-  float const min_freq = 20.0f;
+  float const min_freq = 40.0f;
   float const max_freq = 20000.0f;
 
   float x = offset + (1.0f - offset) * x_param[sample];

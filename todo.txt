@@ -18,6 +18,7 @@
 - split fx/inst to different binaries
 
 * wishlist small
+- rename hold->"on note"
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters
 - midi expression (volume) as mod source
