@@ -57,7 +57,7 @@ osc_params[osc_param::count] =
   { "{60D81FF7-F9AB-4E19-B7BC-8D7D08CFEAD3}", { { "Kbd", "Keytrack" }, param_kind::voice, true } },
   { "{5E3DB4DC-B459-43C4-9BBD-0FF8F2232AFA}", { { "Oct", "Octave" }, "", param_kind::voice, param_type::list_knob, { 0, 9, 4 } } },
   { "{501C5217-5A5B-48D8-AEFE-CFE67417E8AD}", { { "Note", "Note" }, "", param_kind::voice, param_type::knob_list, { &note_names, "C" } } },
-  { "{FD0A2D20-FCCD-4939-B1CC-BD2EBD998A25}", { { "Cent", "Cent" }, "", param_kind::continuous, linear_bounds(-0.5f, 0.5f, 0.0f, -50.0f, 50.0f, 1) } },
+  { "{FD0A2D20-FCCD-4939-B1CC-BD2EBD998A25}", { { "Cent", "Cent" }, "", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{10D13CC1-EE5C-488A-8F48-F8BA70855B5A}", { { "PM", "Phasemod" }, "", param_kind::fixed, linear_bounds(-1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 2) } },
   { "{3D379D24-CE2D-4AE2-92EF-3951C7CA608C}", { { "FM", "Freqmod" }, "", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{AFA9850B-ACB0-4666-95C0-42D32D197EB2}", { { "Src", "AM source" }, "", param_kind::voice, param_type::knob_list, { &osc_ram_sources, 0, osc_max_ram_index } } },
