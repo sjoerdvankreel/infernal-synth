@@ -29,18 +29,19 @@ topology_info const* topology, std::int32_t index, float sample_rate,
 block_input_data const& input, std::int32_t midi, std::int32_t midi_offset, oscillator_state* state):
 audio_part_processor(topology, { part_type::vosc, index }, sample_rate, vcv_route_output::vosc),
 _on(), _type(), _am_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
-_uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
+_uni_voices(), _noise_free(), _noise_seed(), _midi_note(), _state(state), _midi_offset(midi_offset)
 {
   assert(state != nullptr);
   update_midi_kbd(input, midi);
 
   automation_view automation(input.automation.rearrange_params({ part_type::vosc, index }));
-  std::int32_t noise_seed = automation.block_discrete(osc_param::noise_seed);
   _on = automation.block_discrete(osc_param::on);
   _type = automation.block_discrete(osc_param::type);
   _am_src = automation.block_discrete(osc_param::am_src);
   _sync_src = automation.block_discrete(osc_param::sync_src);
   _dsf_parts = automation.block_discrete(osc_param::dsf_parts);
+  _noise_free = automation.block_discrete(osc_param::noise_free);
+  _noise_seed = automation.block_discrete(osc_param::noise_seed);
   _basic_type = automation.block_discrete(osc_param::basic_type);
   _uni_voices = automation.block_discrete(osc_param::uni_voices);
 
@@ -59,14 +60,7 @@ _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
 
   // Clear out noise initial state.
   if (_type == osc_type::noise)
-  {
-    _state->noise_prev_draw_phase = 1.0f;
-    _state->noise_rand_state_x = std::numeric_limits<uint32_t>::max() / noise_seed;
-    _state->noise_rand_state_y = std::numeric_limits<uint32_t>::max() / noise_seed;
-    _state->noise_prev_draw = fast_rand_next(_state->noise_rand_state_x);
-    std::fill(state->noise_color_hold.begin(), state->noise_color_hold.end(), 0);
-    std::fill(state->noise_color_value.begin(), state->noise_color_value.end(), 0.0f);
-  }
+    reset_noise();
 
   // Clear out kps initial state.
   if(_type == osc_type::kps)
@@ -78,6 +72,18 @@ _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
     for (std::int32_t v = 0; v < _uni_voices; v++)
       _state->kps_positions[v] = static_cast<std::int32_t>(_state->phases[v] * kps_length);
   }
+}
+
+// Reset noise for cycle mode.
+void
+oscillator_processor::reset_noise()
+{
+  _state->noise_prev_draw_phase = 1.0f;
+  _state->noise_rand_state_x = std::numeric_limits<uint32_t>::max() / _noise_seed;
+  _state->noise_rand_state_y = std::numeric_limits<uint32_t>::max() / _noise_seed;
+  _state->noise_prev_draw = fast_rand_next(_state->noise_rand_state_x);
+  std::fill(_state->noise_color_hold.begin(), _state->noise_color_hold.end(), 0);
+  std::fill(_state->noise_color_value.begin(), _state->noise_color_value.end(), 0.0f);
 }
 
 // Set up per-voice unison bursts for KPS.
@@ -117,7 +123,7 @@ oscillator_processor::process(oscillator_input const& input, float const* const*
 
   // These are not phase based. Sync could probably be made to work for kps
   // by resetting the table somehow, but doesn't seem like a real use case.
-  bool apply_sync = _type != osc_type::kps && _type != osc_type::noise;
+  bool apply_sync = _type != osc_type::kps && (_type != osc_type::noise || _noise_free == 0);
 
   float const* pm = params[osc_param::pm];
   float const* fm = params[osc_param::fm];
@@ -216,6 +222,10 @@ oscillator_processor::process(oscillator_input const& input, float const* const*
       if(apply_sync && _state->phases[v] >= 1.0f)
       {
         _state->phases[v] -= std::floor(_state->phases[v]);
+
+        // Only when not free-running.
+        reset_noise();
+
         // How much subsamples did we overshoot?
         input.sync_reset_pos[id().index][v][s] = _state->phases[v] / voice_increment;
         input.sync_reset[id().index][v][s] = 1;
