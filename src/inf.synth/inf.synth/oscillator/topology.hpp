@@ -17,17 +17,19 @@ struct osc_graph_t { enum value { left, right, spectrum, count }; };
 struct osc_type_t { enum value { basic, mix, dsf, kps, noise, count }; };
 struct osc_basic_type_t { enum value { sine, saw, pulse, triangle, count }; };
 struct osc_noise_type_t { enum value { sample_hold, linear, cubic_spline, count }; };
+struct osc_noise_over_order_t { enum value { over_none, over_2, over_4, over_8, over_16, count }; };
 typedef osc_type_t::value osc_type;
 typedef osc_graph_t::value osc_graph;
 typedef osc_basic_type_t::value osc_basic_type;
 typedef osc_noise_type_t::value osc_noise_type;
+typedef osc_noise_over_order_t::value osc_noise_over_order;
 
 struct osc_param_t { enum value { 
   on, type, sync_src, kbd, oct, note, cent, pm, fm,
   am_src, am_ring, am_mix, uni_voices, uni_offset, uni_dtn, uni_sprd,
   basic_type, basic_pw, mix_sine, mix_saw, mix_triangle, mix_pulse, mix_pw,
   dsf_parts, dsf_dist, dsf_decay, kps_filter, kps_feedback, kps_stretch,
-  noise_seed, noise_free, noise_filter, noise_color, noise_x, noise_y, count }; };
+  noise_over, noise_seed, noise_free, noise_filter, noise_color, noise_x, noise_y, count }; };
 typedef osc_param_t::value osc_param;
 inline char const* osc_graph_names[osc_graph::count] = { "Left", "Right", "Spectrum" };
 

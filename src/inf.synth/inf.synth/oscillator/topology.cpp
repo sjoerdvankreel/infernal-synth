@@ -20,6 +20,12 @@ static std::vector<list_item> const osc_basic_types = {
   { "{F94E9891-2B5E-45EC-A122-4A368DC251DC}", "Saw" },
   { "{3B1D347E-C3ED-4D4A-BBF9-4441B35D353A}", "Pulse" },
   { "{172E9222-7DAD-4FC7-8748-8A1CBEA3317D}", "Tri" } }; 
+static std::vector<list_item> const osc_noise_over_orders = {
+  { "{8D43E599-C396-43E0-9F98-0C4707478A47}", "1X" },
+  { "{F1FF259C-6705-4594-8E13-44954B236E03}", "2X" },
+  { "{CB7A88E3-7BF0-49DC-99EE-464249DE60C6}", "4X" },
+  { "{CD4AA642-7D84-46E7-9D2F-6DEDF67D4E46}", "8X" },
+  { "{2D9ABC38-33F9-4E56-8385-1749FD3C5201}", "16X" } };
 
 static std::int32_t
 osc_max_ram_index(std::int32_t part_index)
@@ -80,6 +86,7 @@ osc_params[osc_param::count] =
   { "{3431E946-57D6-444B-B478-13230E7CD34E}", { { "Filter", "K+S filter" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },   
   { "{F0BD5863-3F06-492F-8540-F8F9C5B7060E}", { { "Fbdk", "K+S feedback" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } }, 
   { "{F1E0D711-74A3-4238-A52B-59432CBE92D9}", { { "Stretch", "K+S stretch" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) } },  
+  { "{DBC0B716-6147-4D11-BC22-49FE11D465DF}", { { "Over", "Noise oversampling" }, "", param_kind::voice, param_type::list, { &osc_noise_over_orders, osc_noise_over_order::over_none } } },
   { "{30F3EFB0-F6E2-40E0-AE7B-D72A31E15B5C}", { { "Seed", "Noise seed" }, "", param_kind::voice, param_type::knob, { 1, 256, 1 } } },  
   { "{EB395AFA-CD03-4905-8B48-78B9CB09747D}", { { "Free", "Noise free" }, param_kind::voice, true } },
   { "{C6C7EF7E-9EEE-42ED-BF7B-9557CA136B60}", { { "Filter", "Noise filter" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },

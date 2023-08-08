@@ -195,6 +195,9 @@ create_osc_kps_group(plugin_controller* controller, std::int32_t part_index)
 static std::unique_ptr<ui_element>
 create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
 {
+  auto over_grid = create_grid_ui(controller, 3, 1);
+  over_grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::noise_over, edit_type::selector, tooltip_type::label), 0, 0, 2, 1);
+  over_grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::noise_over, edit_type::dropdown, tooltip_type::off), 2, 0, 1, 1);
   auto seed_grid = create_grid_ui(controller, 3, 1);
   seed_grid->add_cell(create_param_edit_ui(controller, part_type::vosc, part_index, osc_param::noise_seed, edit_type::knob, tooltip_type::value), 0, 0, 2, 1);
   seed_grid->add_cell(create_param_label_ui(controller, part_type::vosc, part_index, osc_param::noise_seed, label_type::label, Justification::centred), 2, 0, 1, 1);
@@ -208,11 +211,12 @@ create_osc_noise_group(plugin_controller* controller, std::int32_t part_index)
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_color, edit_type::hslider, label_type::label, tooltip_type::value, false, 6), 0, 0);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_x, edit_type::hslider, label_type::label, tooltip_type::value, false, 6), 1, 0);
   slider_grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::noise_y, edit_type::hslider, label_type::label, tooltip_type::value, false, 6), 2, 0);
-  auto grid = create_grid_ui(controller, 1, 5);
-  grid->add_cell(std::move(seed_grid), 0, 0, 1, 1);
-  grid->add_cell(std::move(filter_grid), 0, 1, 1, 1);
-  grid->add_cell(std::move(free_grid), 0, 2, 1, 1);
-  grid->add_cell(std::move(slider_grid), 0, 3, 1, 2);
+  auto grid = create_grid_ui(controller, 1, 6);
+  grid->add_cell(std::move(over_grid), 0, 0, 1, 1);
+  grid->add_cell(std::move(seed_grid), 0, 1, 1, 1);
+  grid->add_cell(std::move(filter_grid), 0, 2, 1, 1);
+  grid->add_cell(std::move(free_grid), 0, 3, 1, 1);
+  grid->add_cell(std::move(slider_grid), 0, 4, 1, 2);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Noise", true), std::move(grid));
 }
 
