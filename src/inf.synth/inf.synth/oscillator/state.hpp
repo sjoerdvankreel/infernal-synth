@@ -51,7 +51,6 @@ struct oscillator_state
   basic_lp_filter noise_filter;
   std::uint32_t noise_rand_state_x;
   std::uint32_t noise_rand_state_y;
-  base::oversampler noise_oversampler;
   std::array<float, osc_noise_color_bin_count> noise_color_value;
   std::array<std::int32_t, osc_noise_color_bin_count> noise_color_hold;
 

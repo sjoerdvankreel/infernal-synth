@@ -17,7 +17,6 @@ namespace inf::synth {
 struct osc_noise_processor
 {
   oscillator_state* const state;
-  std::int32_t const over_order;
   float const sample_rate;
   float const* const x_param;
   float const* const y_param;
@@ -25,8 +24,6 @@ struct osc_noise_processor
   float const* const filter_param;
 
   float next_color_value(std::int32_t sample) const;
-  float next_sample(std::int32_t voice, float frequency,
-    float phase, float increment, std::int32_t sample) const;
   float operator()(std::int32_t voice, float frequency,
     float phase, float increment, std::int32_t sample) const;
 };
@@ -62,10 +59,13 @@ osc_noise_processor::next_color_value(std::int32_t sample) const
 // Noise generator with x = how often to draw,
 // y = do we really draw when x is met, color = spectrum control.
 inline float
-osc_noise_processor::next_sample(std::int32_t voice, float frequency,
+osc_noise_processor::operator()(std::int32_t voice, float frequency,
   float phase, float increment, std::int32_t sample) const
 {
   float const offset = 0.01f;
+  float const min_freq = 80.0f;
+  float const max_freq = 20000.0f;
+
   float x = offset + (1.0f - offset) * x_param[sample];
   if (std::abs(phase - state->noise_prev_draw_phase) >= (1.0f / x - offset) * increment)
   {
@@ -74,41 +74,19 @@ osc_noise_processor::next_sample(std::int32_t voice, float frequency,
     if (fast_rand_next(state->noise_rand_state_x) <= y)
       state->noise_prev_draw = next_color_value(sample);
   }
-  return state->noise_prev_draw;
-}
-
-// Oversampling + filter of the noise osc.
-inline float
-osc_noise_processor::operator()(std::int32_t voice, float frequency,
-  float phase, float increment, std::int32_t sample) const
-{
-  float const min_freq = 80.0f;
-  float const max_freq = 20000.0f;
-
-  float in = 0.0f;
-  float out = 0.0f;
-  float current = 0.0f;
-  float* out_channel = &out;
-  float const* in_channel = &in;
-
-  state->noise_oversampler.process(&in_channel, &out_channel, 1,
-    [=, &current](std::int32_t _1, std::int32_t _2, std::int32_t over_s, float _3) {
-      if(over_s == 0) current = next_sample(voice, frequency, phase, increment, sample);
-      return current;
-    });
 
   // Prevent filter start from zero.
   if (!state->noise_started)
   {
     state->noise_started = true;
-    state->noise_filter.in1 = out;
-    state->noise_filter.out1 = out;
+    state->noise_filter.in1 = state->noise_prev_draw;
+    state->noise_filter.out1 = state->noise_prev_draw;
   }
 
   // Filter + pick either filtered or plain.
   state->noise_filter.init(sample_rate, min_freq + filter_param[sample] * (max_freq - min_freq));
-  float filtered = state->noise_filter.next(out);
-  return filter_param[sample] < 1.0f? filtered: out;
+  float filtered = state->noise_filter.next(state->noise_prev_draw);
+  return filter_param[sample] < 1.0f ? filtered : state->noise_prev_draw;
 }
 
 } // namespace inf::synth
