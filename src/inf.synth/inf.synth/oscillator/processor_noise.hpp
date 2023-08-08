@@ -32,8 +32,8 @@ struct osc_noise_processor
 };
 
 // Produce next colored noise.
-// Not really 1/f^a, but still has controllable spectrum.
-// Basically we just stack N white noise streams, log2 spaced
+// Not 1/f^a, but still has controllable spectrum.
+// Basically just stack N white noise streams, log2 spaced
 // in frequency domain, with controllable rolloff per bin.
 inline float 
 osc_noise_processor::next_color_value(std::int32_t sample) const
