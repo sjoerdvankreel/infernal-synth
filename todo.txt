@@ -18,8 +18,7 @@
 - split fx/inst to different binaries
 
 * wishlist small
-- not plot osc oversample
-- osc rand oversample + fm + am
+- osc rand fm / uni?
 - rename hold->"on note"
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters
