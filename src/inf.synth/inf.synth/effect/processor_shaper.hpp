@@ -26,7 +26,7 @@ void effect_processor::process_shp_basic(effect_process_input const& input, floa
   float const* gain = input.params[effect_param::shp_gain];
   _state->oversampler.rearrange(base::stereo_channels, _shp_over_order);
   _state->oversampler.process(input.audio_in, out, input.sample_count,
-    [=](std::int32_t c, std::int32_t s, float sample) {
+    [=](std::int32_t c, std::int32_t s, std::int32_t over_s, float sample) {
       return (1.0f - mix[s]) * sample + mix[s] * shaper(sample * gain[s]); });
 }
 

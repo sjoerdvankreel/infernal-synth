@@ -99,12 +99,15 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
 {
   float in = 0.0f;
   float out = 0.0f;
+  float current = 0.0f;
   float* out_channel = &out;
   float const* in_channel = &in;
-  float const over_factor = static_cast<float>(1 << over_order);
   state->noise_oversampler.process(&in_channel, &out_channel, 1, 
-    [=](std::int32_t _1, std::int32_t _2, float _3) {
-      return next_sample(voice, frequency, phase, increment * over_factor, sample); });
+    [=, &current](std::int32_t _1, std::int32_t _2, std::int32_t over_s, float _3) {
+      if(over_s == 0) 
+        current = next_sample(voice, frequency, phase, increment, sample); 
+      return current;
+    });
   return out;
 }
 

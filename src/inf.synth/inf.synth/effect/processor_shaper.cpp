@@ -40,7 +40,7 @@ effect_processor::process_shp_cheby_one(effect_process_input const& input, float
   float const* gain = input.params[effect_param::shp_gain];
   _state->oversampler.rearrange(stereo_channels, _shp_over_order);
   _state->oversampler.process(input.audio_in, out, input.sample_count,
-    [&](std::int32_t c, std::int32_t s, float sample) {
+    [&](std::int32_t c, std::int32_t s, std::int32_t over_s, float sample) {
       generate_cheby_terms(std::clamp(sample * gain[s], -1.0f, 1.0f), t, _shp_cheby_terms);
       return (1.0f - mix[s]) * sample + mix[s] * t[_shp_cheby_terms]; });
 }
@@ -55,7 +55,7 @@ effect_processor::process_shp_cheby_sum(effect_process_input const& input, float
   float const* dcy = input.params[effect_param::shp_cheby_sum_decay];
   _state->oversampler.rearrange(stereo_channels, _shp_over_order);
   _state->oversampler.process(input.audio_in, out, input.sample_count,
-    [&](std::int32_t c, std::int32_t s, float sample) {
+    [&](std::int32_t c, std::int32_t s, std::int32_t over_s, float sample) {
       float sum = 0.0f;
       float scale = 0.0f;
       float amount = 1.0f;

@@ -73,23 +73,23 @@ oversampler::process(float const* const* in, float* const* out, std::int32_t sam
     {
     case 0: 
       for (std::int32_t i = 0; i < sample_count; i++) 
-        out[c][i] = op(c, i, in[c][i]); 
+        out[c][i] = op(c, i, i, in[c][i]); 
       break;
     case 1: 
       for (std::int32_t i = 0; i < sample_count * 2; i++) 
-        _down2_data.buffer(c)[i] = op(c, i / 2, _up2_data.buffer(c)[i]); 
+        _down2_data.buffer(c)[i] = op(c, i / 2, i, _up2_data.buffer(c)[i]); 
       break;
     case 2: 
       for (std::int32_t i = 0; i < sample_count * 4; i++) 
-        _down4_data.buffer(c)[i] = op(c, i / 4, _up4_data.buffer(c)[i]); 
+        _down4_data.buffer(c)[i] = op(c, i / 4, i, _up4_data.buffer(c)[i]); 
       break;
     case 3: 
       for (std::int32_t i = 0; i < sample_count * 8; i++) 
-        _down8_data.buffer(c)[i] = op(c, i / 8, _up8_data.buffer(c)[i]); 
+        _down8_data.buffer(c)[i] = op(c, i / 8, i, _up8_data.buffer(c)[i]); 
       break;
     case 4: 
       for (std::int32_t i = 0; i < sample_count * 16; i++) 
-        _down16_data.buffer(c)[i] = op(c, i / 16, _up16_data.buffer(c)[i]); 
+        _down16_data.buffer(c)[i] = op(c, i / 16, i, _up16_data.buffer(c)[i]); 
       break;
     default: 
       assert(false); 
