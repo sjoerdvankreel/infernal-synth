@@ -91,6 +91,18 @@ synth_topology::convert_param(
       }
     }
 
+  // 1.3 changed oscillator cents from +/-50 to +/-100.
+  if(old_major < 1 || (old_major == 1 && old_minor < 3))
+    for (std::int32_t i = 0; i < vosc_count; i++)
+    {
+      std::int32_t osc_start = param_bounds[part_type::vosc][i];
+      if(index == osc_start + osc_param::cent)
+      {
+        float old_in_range = real_bounds::linear(-0.5f, 0.5f).to_range(old_value.real);
+        return param_value(params[index].descriptor->data.real.dsp.from_range(old_in_range));
+      }
+    }
+
   return old_value;
 }
 
