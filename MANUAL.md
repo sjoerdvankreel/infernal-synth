@@ -87,7 +87,7 @@ However, individual components are either bandlimited or have options to reduce 
 Context menu opens by right-click on a module (osc, lfo, env, etc) header. \
 Through the context menu you can reset module values to default, or copy/swap between modules of the same type.
 
-![Context menu](static/manual_context.png) \
+![Context menu](static/manual_context.png)
 
 You can also right-click a knob or slider to pop up the host's context menu. \
 Below the host context menu (if any) is an "Edit..." menu option that allows exact-editing of the parameter.
