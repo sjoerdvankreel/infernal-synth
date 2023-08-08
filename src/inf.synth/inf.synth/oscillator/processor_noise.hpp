@@ -90,14 +90,11 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
   float current = 0.0f;
   float* out_channel = &out;
   float const* in_channel = &in;
-  float const over_factor = static_cast<float>(1 << over_order);
-  float const over_increment = increment / over_factor; 
 
   state->noise_oversampler.process(&in_channel, &out_channel, 1,
-    [=](std::int32_t _1, std::int32_t _2, std::int32_t over_s, float _3) {
-      float over_phase = phase + over_increment * static_cast<float>(over_s / over_factor);
-      over_phase -= std::floor(over_phase);
-      return next_sample(voice, frequency, over_phase, over_increment, sample);
+    [=, &current](std::int32_t _1, std::int32_t _2, std::int32_t over_s, float _3) {
+      if(over_s == 0) current = next_sample(voice, frequency, phase, increment, sample);
+      return current;
     });
 
   // Prevent filter start from zero.
