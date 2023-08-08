@@ -2,21 +2,21 @@
 #define INF_SYNTH_VST_PLUGIN_HPP
 
 // Don't forget to update the versioned guids, too, if breaking changes are introduced.
-#define INF_SYNTH_VST_VERSION "1.2"
+#define INF_SYNTH_VST_VERSION "1.3"
 #define INF_SYNTH_VST_VERSION_MAJOR 1
-#define INF_SYNTH_VST_VERSION_MINOR 2
+#define INF_SYNTH_VST_VERSION_MINOR 3
 #define INF_SYNTH_VST_VERSION_REVISION 0
 
 #if INF_FX
 #if INF_VERSIONED
-#define INF_SYNTH_VST_NAME "InfernalSynth FX 1.2"
+#define INF_SYNTH_VST_NAME "InfernalSynth FX 1.3"
 #else
 #define INF_SYNTH_VST_NAME "InfernalSynth FX Generic"
 #endif // versioned
 #define INF_SYNTH_VST_CONTROLLER_NAME "InfernalSynthFXController"
 #else // fx
 #if INF_VERSIONED
-#define INF_SYNTH_VST_NAME "InfernalSynth 1.2"
+#define INF_SYNTH_VST_NAME "InfernalSynth 1.3"
 #else
 #define INF_SYNTH_VST_NAME "InfernalSynth Generic"
 #endif // versioned

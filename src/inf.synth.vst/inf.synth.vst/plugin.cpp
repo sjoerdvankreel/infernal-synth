@@ -152,7 +152,6 @@ BEGIN_FACTORY_DEF(
   INF_SYNTH_VST_COMPANY_WEB,
   INF_SYNTH_VST_COMPANY_MAIL,
   2)
-  // fx
   DEF_CLASS(vst_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
     INF_SYNTH_VST_NAME, Steinberg::Vst::kDistributable, INF_PLUG_TYPE,
     INF_SYNTH_VST_VERSION, kVstVersionString, create_processor, nullptr)
