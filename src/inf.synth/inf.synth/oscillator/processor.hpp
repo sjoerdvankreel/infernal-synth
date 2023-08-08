@@ -25,6 +25,7 @@ public audio_part_processor
   std::int32_t _uni_voices;
   std::int32_t _noise_free;
   std::int32_t _noise_seed;
+  std::int32_t _noise_over;
 
   float _midi_note;
   oscillator_state* _state;

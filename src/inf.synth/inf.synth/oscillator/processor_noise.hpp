@@ -17,6 +17,7 @@ namespace inf::synth {
 struct osc_noise_processor
 {
   oscillator_state* const state;
+  std::int32_t const over_order;
   float const sample_rate;
   float const* const x_param;
   float const* const y_param;
@@ -24,6 +25,8 @@ struct osc_noise_processor
   float const* const filter_param;
 
   float next_color_value(std::int32_t sample) const;
+  float next_sample(std::int32_t voice, float frequency,
+    float phase, float increment, std::int32_t sample) const;
   float operator()(std::int32_t voice, float frequency,
     float phase, float increment, std::int32_t sample) const;
 };
@@ -59,7 +62,7 @@ osc_noise_processor::next_color_value(std::int32_t sample) const
 // Noise generator with x = how often to draw,
 // y = do we really draw when x is met, color = spectrum control.
 inline float
-osc_noise_processor::operator()(std::int32_t voice, float frequency,
+osc_noise_processor::next_sample(std::int32_t voice, float frequency,
   float phase, float increment, std::int32_t sample) const
 {
   float const offset = 0.01f;
@@ -87,6 +90,22 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
   state->noise_filter.init(sample_rate, min_freq + filter_param[sample] * (max_freq - min_freq));
   float filtered = state->noise_filter.next(state->noise_prev_draw);
   return filter_param[sample] < 1.0f? filtered: state->noise_prev_draw;
+}
+
+// Oversampling of the noise osc.
+inline float
+osc_noise_processor::operator()(std::int32_t voice, float frequency,
+  float phase, float increment, std::int32_t sample) const
+{
+  float in = 0.0f;
+  float out = 0.0f;
+  float* out_channel = &out;
+  float const* in_channel = &in;
+  float const over_factor = static_cast<float>(1 << over_order);
+  state->noise_oversampler.process(&in_channel, &out_channel, 1, 
+    [=](std::int32_t _1, std::int32_t _2, float _3) {
+      return next_sample(voice, frequency, phase, increment * over_factor, sample); });
+  return out;
 }
 
 } // namespace inf::synth

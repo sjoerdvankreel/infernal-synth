@@ -28,8 +28,8 @@ oscillator_processor(
 topology_info const* topology, std::int32_t index, float sample_rate,
 block_input_data const& input, std::int32_t midi, std::int32_t midi_offset, oscillator_state* state):
 audio_part_processor(topology, { part_type::vosc, index }, sample_rate, vcv_route_output::vosc),
-_on(), _type(), _am_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
-_uni_voices(), _noise_free(), _noise_seed(), _midi_note(), _state(state), _midi_offset(midi_offset)
+_on(), _type(), _am_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), _uni_voices(), 
+_noise_free(), _noise_seed(), _noise_over(), _midi_note(), _state(state), _midi_offset(midi_offset)
 {
   assert(state != nullptr);
   update_midi_kbd(input, midi);
@@ -62,6 +62,8 @@ _uni_voices(), _noise_free(), _noise_seed(), _midi_note(), _state(state), _midi_
   if (_type == osc_type::noise)
   {
     _state->noise_started = false;
+    _noise_over = automation.block_discrete(osc_param::noise_over);
+    _state->noise_oversampler.rearrange(1, _noise_over);
     reset_noise();
   }
 
@@ -270,7 +272,7 @@ void oscillator_processor::process_noise(oscillator_input const& input,
   float const* noise_y_param = params[osc_param::noise_y];
   float const* noise_color_param = params[osc_param::noise_color];
   float const* noise_filter_param = params[osc_param::noise_filter];
-  auto processor = osc_noise_processor({ _state, sample_rate(), noise_x_param, noise_y_param, noise_color_param, noise_filter_param });
+  auto processor = osc_noise_processor({ _state, _noise_over, sample_rate(), noise_x_param, noise_y_param, noise_color_param, noise_filter_param });
   process(input, params, out, scratch, false, processor);
 }
 

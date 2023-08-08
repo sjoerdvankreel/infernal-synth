@@ -2,6 +2,7 @@
 #define INF_SYNTH_OSCILLATOR_STATE_HPP
 
 #include <inf.base/plugin/state.hpp>
+#include <inf.base/shared/oversampler.hpp>
 #include <inf.synth/oscillator/config.hpp>
 #include <inf.synth/shared/basic_lp_filter.hpp>
 
@@ -50,11 +51,12 @@ struct oscillator_state
   basic_lp_filter noise_filter;
   std::uint32_t noise_rand_state_x;
   std::uint32_t noise_rand_state_y;
+  base::oversampler noise_oversampler;
   std::array<float, osc_noise_color_bin_count> noise_color_value;
   std::array<std::int32_t, osc_noise_color_bin_count> noise_color_hold;
 
   oscillator_state() = default;
-  oscillator_state(float sample_rate);
+  oscillator_state(float sample_rate, std::int32_t max_sample_count);
 };
 
 } // namespace inf::synth

@@ -47,7 +47,7 @@ _global_effect_states(), _voice_effect_states(), _voice_oscillator_states()
   // Init per-voice osc state.
   for (std::int32_t i = 0; i < synth_polyphony; i++)
     for (std::int32_t j = 0; j < vosc_count; j++)
-      _voice_oscillator_states[i][j] = oscillator_state(sample_rate);
+      _voice_oscillator_states[i][j] = oscillator_state(sample_rate, max_sample_count);
 
   // Init per-voice fx state.
   for (std::int32_t i = 0; i < synth_polyphony; i++)
