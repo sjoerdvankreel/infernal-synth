@@ -11,9 +11,6 @@
 
 namespace inf::synth {
 
-// Note: unison works by drawing from the same random
-// stream for each voice. The detune and offset parameters
-// won't do anything, but stereo spreading still works.
 struct osc_noise_processor
 {
   oscillator_state* const state;
