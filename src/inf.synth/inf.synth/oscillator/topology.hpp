@@ -27,7 +27,7 @@ struct osc_param_t { enum value {
   am_src, am_ring, am_mix, uni_voices, uni_offset, uni_dtn, uni_sprd,
   basic_type, basic_pw, mix_sine, mix_saw, mix_triangle, mix_pulse, mix_pw,
   dsf_parts, dsf_dist, dsf_decay, kps_filter, kps_feedback, kps_stretch,
-  noise_seed, noise_color, noise_x, noise_y, count }; };
+  noise_seed, noise_free, noise_color, noise_x, noise_y, count }; };
 typedef osc_param_t::value osc_param;
 inline char const* osc_graph_names[osc_graph::count] = { "Left", "Right", "Spectrum" };
 
