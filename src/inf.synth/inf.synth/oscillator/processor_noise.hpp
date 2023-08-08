@@ -66,9 +66,6 @@ osc_noise_processor::next_sample(std::int32_t voice, float frequency,
   float phase, float increment, std::int32_t sample) const
 {
   float const offset = 0.01f;
-  float const min_freq = 80.0f;
-  float const max_freq = 20000.0f;
-
   float x = offset + (1.0f - offset) * x_param[sample];
   if (std::abs(phase - state->noise_prev_draw_phase) >= (1.0f / x - offset) * increment)
   {
@@ -77,38 +74,44 @@ osc_noise_processor::next_sample(std::int32_t voice, float frequency,
     if (fast_rand_next(state->noise_rand_state_x) <= y)
       state->noise_prev_draw = next_color_value(sample);
   }
-
-  // Prevent filter start from zero.
-  if (!state->noise_started)
-  {
-    state->noise_started = true;
-    state->noise_filter.in1 = state->noise_prev_draw;
-    state->noise_filter.out1 = state->noise_prev_draw;
-  }
-
-  // Filter + pick either filtered or plain.
-  state->noise_filter.init(sample_rate, min_freq + filter_param[sample] * (max_freq - min_freq));
-  float filtered = state->noise_filter.next(state->noise_prev_draw);
-  return filter_param[sample] < 1.0f? filtered: state->noise_prev_draw;
+  return state->noise_prev_draw;
 }
 
-// Oversampling of the noise osc.
+// Oversampling + filter of the noise osc.
 inline float
 osc_noise_processor::operator()(std::int32_t voice, float frequency,
   float phase, float increment, std::int32_t sample) const
 {
+  float const min_freq = 80.0f;
+  float const max_freq = 20000.0f;
+
   float in = 0.0f;
   float out = 0.0f;
   float current = 0.0f;
   float* out_channel = &out;
   float const* in_channel = &in;
-  state->noise_oversampler.process(&in_channel, &out_channel, 1, 
-    [=, &current](std::int32_t _1, std::int32_t _2, std::int32_t over_s, float _3) {
-      if(over_s == 0) 
-        current = next_sample(voice, frequency, phase, increment, sample); 
-      return current;
+  float const over_factor = static_cast<float>(1 << over_order);
+  float const over_increment = increment / over_factor; 
+
+  state->noise_oversampler.process(&in_channel, &out_channel, 1,
+    [=](std::int32_t _1, std::int32_t _2, std::int32_t over_s, float _3) {
+      float over_phase = phase + over_increment * static_cast<float>(over_s / over_factor);
+      over_phase -= std::floor(over_phase);
+      return next_sample(voice, frequency, over_phase, over_increment, sample);
     });
-  return out;
+
+  // Prevent filter start from zero.
+  if (!state->noise_started)
+  {
+    state->noise_started = true;
+    state->noise_filter.in1 = out;
+    state->noise_filter.out1 = out;
+  }
+
+  // Filter + pick either filtered or plain.
+  state->noise_filter.init(sample_rate, min_freq + filter_param[sample] * (max_freq - min_freq));
+  float filtered = state->noise_filter.next(out);
+  return filter_param[sample] < 1.0f? filtered: out;
 }
 
 } // namespace inf::synth
