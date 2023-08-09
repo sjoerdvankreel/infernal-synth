@@ -13,12 +13,9 @@ registered in Europe and other countries.
 - Laurent de Soras' HIIR library: [http://ldesoras.free.fr/](http://ldesoras.free.fr/).
 - Steinberg VST3 SDK: [https://github.com/steinbergmedia/vst3sdk](https://github.com/steinbergmedia/vst3sdk).
 
-# Special thanks
-- All host vendors who have set me up with an NFR license.
-- Headroom Mastering: [https://www.headroom-mastering.nl/](https://www.headroom-mastering.nl/).
-- Surge Synth Team: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
-
 # Credits
+- Special thanks to host vendors who have set me up with an NFR license.
+- Special thanks to Surge Synth Team: [https://github.com/surge-synthesizer/surge](https://github.com/surge-synthesizer/surge).
 - Artwork by DanteCyberman: [Seven deadly sins](https://www.deviantart.com/dantecyberman/art/Seven-deadly-sins-442680725).
 - Contains a slightly adapted implementation of [Jezar's Freeverb](https://github.com/sinshu/freeverb).
 - Contains a slightly adapted implementation of the [Karplus-Strong algorithm](https://blog.demofox.org/2016/06/16/synthesizing-a-pluked-string-sound-with-the-karplus-strong-algorithm).
