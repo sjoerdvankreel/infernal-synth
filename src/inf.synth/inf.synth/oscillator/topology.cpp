@@ -81,8 +81,6 @@ osc_params[osc_param::count] =
   { "{F0BD5863-3F06-492F-8540-F8F9C5B7060E}", { { "Fbdk", "K+S feedback" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } }, 
   { "{F1E0D711-74A3-4238-A52B-59432CBE92D9}", { { "Stretch", "K+S stretch" }, "%", param_kind::continuous, percentage_01_bounds(0.0f) } },  
   { "{30F3EFB0-F6E2-40E0-AE7B-D72A31E15B5C}", { { "Seed", "Noise seed" }, "", param_kind::voice, param_type::knob, { 1, 256, 1 } } },  
-  { "{EB395AFA-CD03-4905-8B48-78B9CB09747D}", { { "Free", "Noise free" }, param_kind::voice, true } },
-  { "{C6C7EF7E-9EEE-42ED-BF7B-9557CA136B60}", { { "Filter", "Noise filter" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
   { "{F0D8FF2E-31DC-4221-AFF2-CC79EAF00421}", { { "Color", "Noise color" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
   { "{1326E5CD-5544-4962-AE37-01307C306F18}", { { "X", "Noise X" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
   { "{4F1F7660-BE8B-421D-9646-DD9D6D827C38}", { { "Y", "Noise Y" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } } 

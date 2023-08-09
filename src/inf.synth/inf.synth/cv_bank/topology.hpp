@@ -130,7 +130,7 @@ inline std::int32_t constexpr vcv_route_output_total_count = std::accumulate(
 struct vcv_route_vosc_target_t { enum value {
   pm, fm, cent, uni_detune, uni_spread, ram_bal, ram_mix,
   basic_pw, mix_sine, mix_saw, mix_triangle, mix_pulse, mix_pw, dsf_dist, dsf_decay, 
-  kps_filter, kps_feedback, kps_stretch, noise_filter, noise_color, noise_x, noise_y, count }; };
+  kps_filter, kps_feedback, kps_stretch, noise_color, noise_x, noise_y, count }; };
 typedef vcv_route_vosc_target_t::value vcv_route_vosc_target;
 
 // oscillator output mapping
@@ -139,7 +139,7 @@ inline std::int32_t constexpr vcv_route_vosc_mapping[vcv_route_vosc_target::coun
   osc_param::am_ring, osc_param::am_mix, osc_param::basic_pw, osc_param::mix_sine, 
   osc_param::mix_saw, osc_param::mix_triangle, osc_param::mix_pulse, osc_param::mix_pw, 
   osc_param::dsf_dist, osc_param::dsf_decay, osc_param::kps_filter, osc_param::kps_feedback, 
-  osc_param::kps_stretch, osc_param::noise_filter, osc_param::noise_color, osc_param::noise_x, osc_param::noise_y };
+  osc_param::kps_stretch, osc_param::noise_color, osc_param::noise_x, osc_param::noise_y };
 
 // output target mapping
 inline std::int32_t constexpr vcv_route_output_target_counts[vcv_route_output::count] = {

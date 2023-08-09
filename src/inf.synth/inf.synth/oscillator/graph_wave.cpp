@@ -80,7 +80,7 @@ oscillator_wave_graph::process_dsp_core(block_input const& input, float* output,
   osc_in.sync_reset = vosc_reset_buffers;
   osc_in.sync_reset_pos = vosc_reset_pos_buffers;
 
-  auto oscillator_state_ = std::make_unique<oscillator_state>(sample_rate, input.data.sample_count);
+  auto oscillator_state_ = std::make_unique<oscillator_state>(sample_rate);
   float* audio_out[stereo_channels] = { _audio_out[0].data(), _audio_out[1].data() };
   oscillator_processor processor(topology(), id().index, sample_rate, input.data, midi_note_c4, 0, oscillator_state_.get());
   processor.process(osc_in, audio_out, cv_bank, scratch);

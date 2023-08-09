@@ -23,16 +23,12 @@ public audio_part_processor
   std::int32_t _dsf_parts;
   std::int32_t _basic_type;
   std::int32_t _uni_voices;
-  std::int32_t _noise_free;
-  std::int32_t _noise_seed;
 
   float _midi_note;
   oscillator_state* _state;
   std::int32_t _midi_offset;
 
-  void reset_noise();
   void init_kps(float filter_amt);
-
   void update_midi_kbd(base::block_input_data const& input, std::int32_t midi);
   template <class processor_type>
   void process(oscillator_input const& input, float const* const* params, 
