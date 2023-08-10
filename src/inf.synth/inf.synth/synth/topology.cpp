@@ -809,7 +809,7 @@ master_params[master_param::count] =
   { "{580FF8F1-4C06-4562-B4A0-702355B6E152}", { { "CVB 2", "CVB 2" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{DD9A20AD-563A-4855-BAEF-2C53E6B94815}", { { "CVU 3", "CVU 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
   { "{B3B033A3-B615-4AD2-81AB-5CB769891BB0}", { { "CVB 3", "CVB 3" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } },
-  { "{632B9205-8EEC-4CB4-8071-B101195DCB80}", { { "PB", "MIDI Pitchbend" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } }
+  { "{632B9205-8EEC-4CB4-8071-B101195DCB80}", { { "PB", "MIDI Pitchbend" }, "%", param_kind::fixed, percentage_m11_bounds(0.0f) } }
 };
 
 param_descriptor const
