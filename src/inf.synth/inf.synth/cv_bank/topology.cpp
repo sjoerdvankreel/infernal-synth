@@ -32,6 +32,7 @@ static list_item const gcv_route_outputs[gcv_route_output::count] = {
 // input routing
 static list_item const gcv_route_inputs[gcv_route_input::count] = {
   { "{E26F7364-965D-4CF3-AE95-178C1EEA8BCB}", "Off" },
+  { "{AA6C4A15-05D1-4732-B90E-51980F44A294}", "MIDI PB" },
   { "{294CEAF7-C69B-4ECA-BB44-A727E7872DCA}", "CVU" },
   { "{C8CF0423-29D7-4FB3-8B17-2B1B5AE735DC}", "CVB" },
   { "{862452FE-1786-48A8-9F60-33030BB8B3C9}", "G.LFO" } };
@@ -40,6 +41,7 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{81C92941-AD92-47BD-B1DC-7A46AB6E088D}", "Velocity" },
   { "{6211FF30-9D1F-4011-B8AA-A3DF08D84B71}", "Key" },
   { "{9C81D502-DF00-4759-A2D0-B4FBCED9D9B0}", "Key Inv" },
+  { "{D096E91B-0572-418A-B0E8-3412114228C5}", "MIDI PB" },
   { "{F935E7CE-CC76-4548-B22F-4476A304BCEA}", "Env" },
   { "{33038A70-7256-46A8-AF33-6676157709C4}", "CVU" },
   { "{1209DAFC-6F0B-452E-B613-01097DB6249A}", "CVU" }, // Hold
@@ -171,11 +173,11 @@ static std::vector<list_item> const gcv_route_output_target_list = zip_list_item
 
 // input sources
 static char const* const vcv_route_input_suffixes[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
+  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
 static std::vector<list_item> const vcv_route_input_sources_list = multi_list_items(
   vcv_route_inputs, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
 static std::vector<list_item> const gcv_route_input_sources_list = multi_list_items(
-  gcv_route_inputs,  nullptr, gcv_route_input_counts, gcv_route_input::count, false);
+  gcv_route_inputs, nullptr, gcv_route_input_counts, gcv_route_input::count, false);
 
 param_descriptor const
 vcv_plot_params[cv_plot_param::count] =
