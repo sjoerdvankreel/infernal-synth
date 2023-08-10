@@ -45,6 +45,12 @@ protected:
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:
+  OBJ_METHODS (vst_controller, Steinberg::Vst::EditController)
+	DEFINE_INTERFACES
+		DEF_INTERFACE (Steinberg::Vst::IMidiMapping)
+	END_DEFINE_INTERFACES (vst_controller)
+	REFCOUNT_METHODS (Steinberg::Vst::EditController)
+
   void reload_editor(std::int32_t width) override;
   std::int32_t editor_current_width() const override { return _editor_width; }
   void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
