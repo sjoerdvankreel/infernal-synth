@@ -80,7 +80,7 @@ _controller(controller)
 
     try_load_theme_color(colors::dialog_title, colors, "dialog_title");
     try_load_theme_color(colors::dialog_file_text, colors, "dialog_file_text");
-    try_load_theme_color(colors::dialog_background, colors, "dialog_background");
+    try_load_theme_color(colors::dialog_background, colors, "dialog_background"); 
     try_load_theme_color(colors::dialog_file_background, colors, "dialog_file_background");
     try_load_theme_color(colors::dialog_label_text, colors, "dialog_label_text");
     try_load_theme_color(colors::dialog_label_background, colors, "dialog_label_background");
