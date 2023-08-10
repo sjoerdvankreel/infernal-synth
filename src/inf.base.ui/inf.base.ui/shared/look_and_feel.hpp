@@ -56,12 +56,12 @@ public:
     tooltip_background_low,
     tooltip_background_high,
 
-    dialog_text,
-    dialog_header_text,
-    dialog_outline_low,
-    dialog_outline_high,
-    dialog_background_low,
-    dialog_background_high,
+    alert_text,
+    alert_header_text,
+    alert_outline_low,
+    alert_outline_high,
+    alert_background_low,
+    alert_background_high,
     
     file_box_title,
     file_box_file_text,
