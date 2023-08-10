@@ -13,13 +13,13 @@
 - x don't forget to tag
 
 * done changes current release
+- free-running random lfo
 - finetune -100/+100 cents
 - fix text edit/focus (save/load, exact-edit)
 - split fx/inst to different binaries
 
 * wishlist small
 - rename dialog/filebox in theme
-- free-running random lfo
 - rename hold->"on note"
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters
