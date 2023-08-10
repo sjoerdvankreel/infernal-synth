@@ -20,6 +20,7 @@
 - fix text edit/focus (save/load, exact-edit)
 
 * wishlist small
+- do param_kind::external
 - rename hold->"on note"
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters

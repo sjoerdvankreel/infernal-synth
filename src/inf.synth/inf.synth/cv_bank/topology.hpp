@@ -107,7 +107,7 @@ inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_ban
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
-  off, velo, key, key_inv, venv, gcv_uni, gcv_uni_hold, 
+  off, velo, key, key_inv, pitch_bend, venv, gcv_uni, gcv_uni_hold, 
   gcv_bi, gcv_bi_hold, vlfo, glfo, glfo_hold, count }; };
 typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
