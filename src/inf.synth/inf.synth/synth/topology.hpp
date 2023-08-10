@@ -29,7 +29,9 @@ struct edit_selector_param_t { enum value {
 struct active_param_t { enum value { 
   vosc, veffect, geffect, venv, vlfo, glfo, count }; };
 struct master_param_t { enum value {
-  gcv1_uni, gcv1_bi, gcv2_uni, gcv2_bi, gcv3_uni, gcv3_bi, count }; };
+  gcv1_uni, gcv1_bi, gcv2_uni, 
+  gcv2_bi, gcv3_uni, gcv3_bi, 
+  midi_pitchbend, count }; };
 
 typedef active_param_t::value active_param;
 typedef master_param_t::value master_param;

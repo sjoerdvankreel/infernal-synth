@@ -13,6 +13,7 @@
 #include <inf.base.vst/vst_controller.hpp>
 
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
+#include <pluginterfaces/vst/ivstmidicontrollers.h>
 #include <public.sdk/source/main/pluginfactory_constexpr.h>
 
 #if WIN32
@@ -109,9 +110,19 @@ public:
   std::vector<char const*> ui_size_names() const override { return { "XS UI", "Small UI", "Medium UI", "Large UI", "XL UI" }; }
 
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
+  bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
+
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
+
+bool 
+synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target_tag) const
+{
+  if(number != Steinberg::Vst::ControllerNumbers::kPitchBend) return false;
+  target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitchbend);
+  return true;
+}
 
 class synth_vst_topology :
 public synth_topology

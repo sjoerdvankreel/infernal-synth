@@ -97,6 +97,8 @@ public:
   virtual std::int32_t editor_current_width() const = 0;
   virtual std::int32_t editor_font_scaling_min_width() const = 0;
   virtual std::int32_t editor_font_scaling_max_width() const = 0;
+  virtual bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const = 0;
+
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
@@ -104,8 +106,8 @@ public:
   virtual std::vector<char const*> ui_size_names() const = 0;
   virtual std::string default_theme_path(std::string const& plugin_file) const = 0;
   virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
-  virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
   virtual std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const = 0;
+  virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
 
   std::string get_theme() { return _meta_data[theme_key]; }
   void set_theme(std::string const& theme) { _meta_data[theme_key] = theme; }

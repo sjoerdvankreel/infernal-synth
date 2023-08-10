@@ -17,16 +17,20 @@ class vst_editor;
 // Vst edit controller.
 class vst_controller: 
 public Steinberg::Vst::EditController,
+public Steinberg::Vst::IMidiMapping,
 public inf::base::plugin_controller
 {
 protected:
   using FUID = Steinberg::FUID;
+  using int16 = Steinberg::int16;
+  using int32 = Steinberg::int32;
   using tresult = Steinberg::tresult;
   using IBStream = Steinberg::IBStream;
   using FUnknown = Steinberg::FUnknown;
   using IPlugView = Steinberg::IPlugView;
   using ParamID = Steinberg::Vst::ParamID;
   using ParamValue = Steinberg::Vst::ParamValue;
+  using CtrlNumber = Steinberg::Vst::CtrlNumber;
 
   FUID const _processor_id;
   std::int32_t _editor_width = 0;
@@ -56,8 +60,9 @@ public:
   tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
   std::string default_theme_path(std::string const& plugin_file) const override;
   std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const override;
-  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
   std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
+  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
+  tresult PLUGIN_API getMidiControllerAssignment(int32 bus_index, int16 channel, CtrlNumber midi_ctrl_nr, ParamID& id) override;
 
   void restart() override;
   tresult PLUGIN_API setState(IBStream* state) override;
