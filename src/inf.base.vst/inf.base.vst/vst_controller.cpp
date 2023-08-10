@@ -92,10 +92,13 @@ vst_controller::queryInterface(char const* iid, void** obj)
 tresult PLUGIN_API 
 vst_controller::getMidiControllerAssignment(int32 bus_index, int16 channel, CtrlNumber midi_ctrl_nr, ParamID& id)
 {
+  return kResultFalse;
+/*
   std::int32_t target_tag;
   if(!map_midi_control(midi_ctrl_nr, target_tag)) return kResultFalse;
   id = static_cast<ParamID>(target_tag);
   return kResultTrue;
+*/
 }
 
 void 
