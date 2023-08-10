@@ -75,12 +75,12 @@ public:
     std::int32_t param_index, std::unique_ptr<inf_look_and_feel>&& lnf) :
     _param_index(param_index), _lnf(std::move(lnf)), _controller(controller)
   {
-    _lnf->setColour(Label::ColourIds::textColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-    _lnf->setColour(Label::ColourIds::textWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-    _lnf->setColour(Label::ColourIds::backgroundColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-    _lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-    _lnf->setColour(TextButton::ColourIds::textColourOffId, _lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
-    _lnf->setColour(TextButton::ColourIds::buttonColourId, _lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
+    _lnf->setColour(Label::ColourIds::textColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+    _lnf->setColour(Label::ColourIds::textWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+    _lnf->setColour(Label::ColourIds::backgroundColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+    _lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+    _lnf->setColour(TextButton::ColourIds::textColourOffId, _lnf->findColour(inf_look_and_feel::colors::dialog_button_text));
+    _lnf->setColour(TextButton::ColourIds::buttonColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_button_background));
 
     std::int32_t pad = exact_edit_dialog_pad;
     setSize(exact_edit_dialog_w + 3 * pad, exact_edit_dialog_h + 6 * pad);
@@ -156,22 +156,22 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
   flags |= FileBrowserComponent::canSelectFiles;
   state->controller = controller;
   state->lnf = lnf_factory(controller);
-  state->lnf->setColour(Label::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-  state->lnf->setColour(Label::ColourIds::textWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-  state->lnf->setColour(Label::ColourIds::backgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-  state->lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-  state->lnf->setColour(TextButton::ColourIds::textColourOffId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
-  state->lnf->setColour(TextButton::ColourIds::buttonColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
-  state->lnf->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_title));
-  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_text));
-  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_background));
-  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_text));
-  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight));
-  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight_text));
+  state->lnf->setColour(Label::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+  state->lnf->setColour(Label::ColourIds::textWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+  state->lnf->setColour(Label::ColourIds::backgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+  state->lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+  state->lnf->setColour(TextButton::ColourIds::textColourOffId, state->lnf->findColour(inf_look_and_feel::colors::dialog_button_text));
+  state->lnf->setColour(TextButton::ColourIds::buttonColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_button_background));
+  state->lnf->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_title));
+  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_file_text));
+  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_file_background));
+  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_selector_text));
+  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_selector_highlight));
+  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_selector_highlight_text));
   if(!state->controller->get_last_directory().empty()) last_directory = juce::File(state->controller->get_last_directory());
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
   state->browser = std::make_unique<FileBrowserComponent>(flags, last_directory, state->filter.get(), nullptr);
-  auto background = state->lnf->findColour(inf_look_and_feel::colors::file_box_background);
+  auto background = state->lnf->findColour(inf_look_and_feel::colors::dialog_background);
   auto editor = static_cast<juce::Component*>(controller->current_editor_window());
   state->box = std::make_unique<inf_file_chooser_dialog>(controller, title, *state->browser, background, editor);
   state->box->setLookAndFeel(state->lnf.get());

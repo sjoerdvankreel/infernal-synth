@@ -78,17 +78,17 @@ _controller(controller)
     try_load_theme_color(colors::alert_background_low, colors, "alert_background_low");
     try_load_theme_color(colors::alert_background_high, colors, "alert_background_high");
 
-    try_load_theme_color(colors::file_box_title, colors, "file_box_title");
-    try_load_theme_color(colors::file_box_file_text, colors, "file_box_file_text");
-    try_load_theme_color(colors::file_box_background, colors, "file_box_background");
-    try_load_theme_color(colors::file_box_file_background, colors, "file_box_file_background");
-    try_load_theme_color(colors::file_box_label_text, colors, "file_box_label_text");
-    try_load_theme_color(colors::file_box_label_background, colors, "file_box_label_background");
-    try_load_theme_color(colors::file_box_button_text, colors, "file_box_button_text");
-    try_load_theme_color(colors::file_box_button_background, colors, "file_box_button_background");
-    try_load_theme_color(colors::file_box_selector_text, colors, "file_box_selector_text");
-    try_load_theme_color(colors::file_box_selector_highlight, colors, "file_box_selector_highlight");
-    try_load_theme_color(colors::file_box_selector_highlight_text, colors, "file_box_selector_highlight_text");
+    try_load_theme_color(colors::dialog_title, colors, "dialog_title");
+    try_load_theme_color(colors::dialog_file_text, colors, "dialog_file_text");
+    try_load_theme_color(colors::dialog_background, colors, "dialog_background");
+    try_load_theme_color(colors::dialog_file_background, colors, "dialog_file_background");
+    try_load_theme_color(colors::dialog_label_text, colors, "dialog_label_text");
+    try_load_theme_color(colors::dialog_label_background, colors, "dialog_label_background");
+    try_load_theme_color(colors::dialog_button_text, colors, "dialog_button_text");
+    try_load_theme_color(colors::dialog_button_background, colors, "dialog_button_background");
+    try_load_theme_color(colors::dialog_selector_text, colors, "dialog_selector_text");
+    try_load_theme_color(colors::dialog_selector_highlight, colors, "dialog_selector_highlight");
+    try_load_theme_color(colors::dialog_selector_highlight_text, colors, "dialog_selector_highlight_text");
 
     try_load_theme_color(colors::selector_label_text, colors, "selector_label_text");
     try_load_theme_color(colors::selector_label_outline_low, colors, "selector_label_outline_low");
