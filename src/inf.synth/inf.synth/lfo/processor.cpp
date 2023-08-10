@@ -25,7 +25,7 @@ _filter_amt(), _end_sample(), _synced_frequency(), _free(), _basic(), _random(),
   _type = lfo_automation.block_discrete(lfo_param::type);
   if (_type == lfo_type::random) init_random(lfo_automation);
   update_block_params(lfo_automation, bpm);
-  if(_type == lfo_type::random) _random.reset();
+  if(_type == lfo_type::random) _random.full_reset();
 }
 
 void
@@ -75,6 +75,7 @@ lfo_processor::update_block_random(automation_view const& automation)
   float const distrib_max = 0.9f;
 
   _random.type = automation.block_discrete(lfo_param::rand_type);
+  _random.free = automation.block_discrete(lfo_param::rand_free);
   _random.steps = automation.block_discrete(lfo_param::rand_steps);
   _random.seed_x = automation.block_discrete(lfo_param::rand_seedx);
   _random.seed_y = automation.block_discrete(lfo_param::rand_seedy);
@@ -191,7 +192,7 @@ lfo_processor::process_global(block_input_data const& input, cv_buffer& buffer, 
   // Project reset, be sure to start over from scratch.
   if (input.stream_position == 0)
   {
-    _random.reset();
+    _random.full_reset();
     _phase = 0.0f;
   }
 

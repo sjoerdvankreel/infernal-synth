@@ -44,6 +44,7 @@ struct lfo_random_state
   float direction;
 
   std::int32_t type;
+  std::int32_t free;
   std::int32_t steps;
   std::int32_t length;
   std::int32_t rand_steps;
@@ -55,15 +56,22 @@ struct lfo_random_state
   std::int32_t seed_y = 1;
   std::array<float, lfo_rand_max_steps> distribution;
 
-  void reset();
+  void full_reset();
+  void free_reset();
 };
 
 inline void
-lfo_random_state::reset()
+lfo_random_state::free_reset()
 {
   length = 0;
-  slope = 0.0f;
   current_step = 0;
+}
+
+inline void
+lfo_random_state::full_reset()
+{
+  free_reset();
+  slope = 0.0f;
   direction = 1.0f;
   state_x = std::numeric_limits<uint32_t>::max() / seed_x;
   state_y = std::numeric_limits<uint32_t>::max() / seed_y;
