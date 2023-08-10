@@ -18,7 +18,8 @@
 - split fx/inst to different binaries
 
 * wishlist small
-- osc rand fm / uni?
+- rename dialog/filebox in theme
+- free-running random lfo
 - rename hold->"on note"
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters
@@ -26,7 +27,6 @@
 - midi pitchbend as mod source plus bend range semis
 - dont release the generic build
 - clearer voice/global distinction
-- free-running random lfo + oscillator
 - save ui size/theme/last directory in user settings
 - parameter flush bug when playing bitwig
 
