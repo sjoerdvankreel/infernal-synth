@@ -45,11 +45,7 @@ protected:
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:
-  OBJ_METHODS (vst_controller, Steinberg::Vst::EditController)
-	DEFINE_INTERFACES
-		DEF_INTERFACE (Steinberg::Vst::IMidiMapping)
-	END_DEFINE_INTERFACES (vst_controller)
-	REFCOUNT_METHODS (Steinberg::Vst::EditController)
+  DELEGATE_REFCOUNT(EditController)
 
   void reload_editor(std::int32_t width) override;
   std::int32_t editor_current_width() const override { return _editor_width; }
@@ -61,6 +57,7 @@ public:
   IPlugView* PLUGIN_API createView(char const* name) override;
   bool load_preset(std::string const& path, bool factory) override;
   void load_component_state(inf::base::param_value* state) override;
+  tresult PLUGIN_API queryInterface(char const* iid, void** obj) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
   tresult PLUGIN_API setParamNormalized(ParamID tag, ParamValue value) override;
