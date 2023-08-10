@@ -35,7 +35,7 @@ private:
   std::vector<float> _continuous_automation_buffer;
 
 private:
-  void sanitize_automation();
+  void automation_check();
   void audio_check(float const* const* audio);
 
 protected:
