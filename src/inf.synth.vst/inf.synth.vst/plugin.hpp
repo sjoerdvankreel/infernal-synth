@@ -7,6 +7,8 @@
 #define INF_SYNTH_VST_VERSION_MINOR 3
 #define INF_SYNTH_VST_VERSION_REVISION 0
 
+#define INF_SYNTH_VENDOR_NAME "Sjoerd van Kreel"
+
 #if INF_FX
 #if INF_VERSIONED
 #define INF_SYNTH_VST_NAME "InfernalSynth FX 1.3"

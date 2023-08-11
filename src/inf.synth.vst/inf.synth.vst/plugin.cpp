@@ -138,6 +138,7 @@ public synth_topology
 public:
   synth_vst_topology(bool is_instrument): synth_topology(is_instrument) {}
   char const* plugin_name() const override { return INF_SYNTH_VST_NAME; }
+  char const* vendor_name() const override { return INF_SYNTH_VENDOR_NAME; }
   std::uint16_t version_major() const { return INF_SYNTH_VST_VERSION_MAJOR; }
   std::uint16_t version_minor() const { return INF_SYNTH_VST_VERSION_MINOR; }
 };

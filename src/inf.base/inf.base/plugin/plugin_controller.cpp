@@ -23,7 +23,9 @@ juce::PropertiesFile::Options
 plugin_controller::global_meta_options()
 {
   PropertiesFile::Options options;
+  options.filenameSuffix = ".xml";
   options.processLock = &_global_meta_lock;
+  options.folderName = juce::String(topology()->vendor_name());
   options.applicationName = juce::String(topology()->plugin_name());
   options.storageFormat = PropertiesFile::StorageFormat::storeAsXML;
   return options;
