@@ -46,6 +46,7 @@ public base::topology_info
 
   void init_fx_clear_patch(base::param_value* state) const;
   void init_fx_factory_preset(base::param_value* state) const;
+  void set_default_instrument_cv(base::param_value* state) const;
   void init_instrument_clear_patch(base::param_value* state) const;
   void init_instrument_factory_preset(base::param_value* state) const;
 
