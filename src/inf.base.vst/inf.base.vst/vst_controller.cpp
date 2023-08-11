@@ -83,13 +83,6 @@ vst_controller::reload_editor(std::int32_t width)
 }
 
 tresult PLUGIN_API 
-vst_controller::queryInterface(char const* iid, void** obj)
-{
-  QUERY_INTERFACE(iid, obj, IMidiMapping::iid, IMidiMapping)
-  return EditController::queryInterface(iid, obj);
-}
-
-tresult PLUGIN_API 
 vst_controller::getMidiControllerAssignment(int32 bus_index, int16 channel, CtrlNumber midi_ctrl_nr, ParamID& id)
 {
   std::int32_t target_tag;
