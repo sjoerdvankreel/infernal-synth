@@ -104,6 +104,7 @@ Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic 
 
 - Type: generator type, see below.
 - PM (hidden, modulation target only): phase modulation.
+- Pitch (hidden, modulation target only): pitch control (defaults to midi pitch bend, but any mod source can be used).
 - FM: generic frequency modulation target, works nice in combination with hard sync.
 - Sync: hard sync source. Either Off, or has to be less than than the current oscillator, otherwise has no effect.\
 Please note that hard sync is per-unison-voice, so the source has to have at least as many voices as the target.
