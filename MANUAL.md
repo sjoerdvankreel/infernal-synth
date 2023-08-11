@@ -51,7 +51,7 @@ of parameters can also be modulated. Modulation always takes place *on top of* a
 - If it can't be modulated, automation is either applied per-voice or per-block (for global parameters).
 - If it's discrete-valued (i.e. on/off, bar tempo, dropdowns, integer-valued knobs) it can NOT be modulated.
 - If it's continuous-valued (i.e. dB, Hz, %), and not a CV parameter (like LFO rate) or a time parameter (like delay time) it can be modulated.
-- Oscillator PM and Pitch are the odd ones, these are hidden parameters and can only be used as a modulation target, but it can't be automated.
+- Oscillator PM and Pitch are the odd ones, these are hidden parameters and can only be used as a modulation target, but can't be automated.
 
 Besides internal mod sources like lfo's and envelopes, there are also host provided ones like velocity and midi pitchbend/channel pressure.
 
