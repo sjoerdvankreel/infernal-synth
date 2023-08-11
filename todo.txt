@@ -23,6 +23,7 @@
 - midi stuff docs + make good presets
 
 * wishlist small
+- midi modwheel
 - new images/screenshots
 - rename hold->"on note"
 - filter n/a options from dropdowns
