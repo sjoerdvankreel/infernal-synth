@@ -68,8 +68,10 @@ lfo_random_processor::operator()(float frequency, float phase) const
    state->length--;
   float result = base::sanity_unipolar(state->level);
   if (phase + frequency / sample_rate >= 1.0f)
+  {
     if(state->free == 0) state->full_reset();
     else state->free_reset();
+  }
   return result;
 }
 
