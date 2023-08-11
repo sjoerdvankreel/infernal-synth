@@ -116,6 +116,7 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
 - Pitch control
     - Note, Octave, Cent: oscillator base pitch.
     - Kbd: keyboard tracking, react to incoming notes (on) or keep constant pitch (off).
+    - Bend: pitch bend range in semitones (both up/down). So 1 goes from down 1 semi to up 1 semi, 24 goes from down 2 octaves to up 2 octaves. This only works in combination with the "Pitch" modulation target.
 - Ring and Amplitude modulation
     - Mix: fades between unmodulated and modulated signal.
     - Ring: down is amplitude modulation, up is ring modulation. Fades in between.
