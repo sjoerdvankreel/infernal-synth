@@ -53,14 +53,17 @@ public:
 // Controller base interface.
 class plugin_controller
 {
-  static inline std::string const theme_key = "theme";
-  static inline std::string const ui_size_key = "ui_size";
-  static inline std::string const factory_preset_key = "factory_preset";
-  static inline std::string const last_directory_key = "last_directory";
+  static inline std::string const global_meta_theme_key = "theme";
+  static inline std::string const global_meta_ui_size_key = "ui_size";
+  static inline std::string const global_meta_last_directory_key = "last_directory";
+  static inline std::string const patch_meta_factory_preset_key = "factory_preset";
+
+  std::string get_global_meta(std::string const& key) const;
+  void set_global_meta(std::string const& key, std::string const& value) const;
 
 protected:
   std::vector<inf::base::param_value> _state;
-  std::map<std::string, std::string> _meta_data;
+  std::map<std::string, std::string> _patch_meta_data;
   std::unique_ptr<inf::base::topology_info> _topology;
   std::set<reload_listener*> _reload_listeners = {};
   std::set<any_param_listener*> _any_param_listeners = {};
@@ -74,7 +77,7 @@ protected:
   void controller_param_changed(std::int32_t tag, param_value base_value);
 
 public:
-  std::map<std::string, std::string>& meta_data();
+  std::map<std::string, std::string>& patch_meta_data();
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
 
@@ -109,15 +112,6 @@ public:
   virtual std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const = 0;
   virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
 
-  std::string get_theme() { return _meta_data[theme_key]; }
-  void set_theme(std::string const& theme) { _meta_data[theme_key] = theme; }
-  std::string get_ui_size() { return _meta_data[ui_size_key]; }
-  void set_ui_size(std::string const& ui_size) { _meta_data[ui_size_key] = ui_size; }
-  std::string get_factory_preset() { return _meta_data[factory_preset_key]; }
-  void set_factory_preset(std::string const& factory_preset) { _meta_data[factory_preset_key] = factory_preset; }
-  std::string get_last_directory() { return _meta_data[last_directory_key]; }
-  void set_last_directory(std::string const& last_directory) { _meta_data[last_directory_key] = last_directory; }
-
   void add_reload_listener(reload_listener* listener)
   { _reload_listeners.insert(listener); }
   void remove_reload_listener(reload_listener* listener)
@@ -145,6 +139,15 @@ public:
   { return ui_value_at_index(topology()->param_index(part_id(part_type, part_index), param)); }
   param_value base_value_at(std::int32_t part_type, std::int32_t part_index, std::int32_t param) const
   { return base_value_at_index(topology()->param_index(part_id(part_type, part_index), param)); };
+
+  std::string get_theme() { return get_global_meta(global_meta_theme_key); }
+  void set_theme(std::string const& theme) { set_global_meta(global_meta_theme_key, theme); }
+  std::string get_ui_size() { return get_global_meta(global_meta_ui_size_key); }
+  void set_ui_size(std::string const& ui_size) { set_global_meta(global_meta_ui_size_key, ui_size); }
+  std::string get_last_directory() { return get_global_meta(global_meta_last_directory_key); }
+  void set_last_directory(std::string const& last_directory) { set_global_meta(global_meta_last_directory_key, last_directory); }
+  std::string get_factory_preset() { return _patch_meta_data[patch_meta_factory_preset_key]; }
+  void set_factory_preset(std::string const& factory_preset) { _patch_meta_data[patch_meta_factory_preset_key] = factory_preset; }
 };
 
 } // namespace inf::base

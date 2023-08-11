@@ -203,7 +203,7 @@ vst_controller::setState(IBStream* state)
   if(state == nullptr) return kResultFalse;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  stream.load_controller(*topology(), meta_data());
+  stream.load_controller(*topology(), patch_meta_data());
   reloaded();
   return kResultOk;
 }
@@ -214,7 +214,7 @@ vst_controller::getState(IBStream* state)
   if (state == nullptr) return kResultFalse;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  stream.save_controller(*topology(), meta_data());
+  stream.save_controller(*topology(), patch_meta_data());
   return kResultOk;
 }
 
@@ -315,7 +315,7 @@ vst_controller::save_preset(std::string const& path)
   MemoryStream controller_state;
   IBStreamer controller_streamer(&controller_state, kLittleEndian);
   vst_io_stream controller_stream(&controller_streamer);
-  if (!controller_stream.save_controller(*_topology, meta_data())) return;
+  if (!controller_stream.save_controller(*_topology, patch_meta_data())) return;
   if (controller_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
 
   // Dump both plus metadata to preset format.

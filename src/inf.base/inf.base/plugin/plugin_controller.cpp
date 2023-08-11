@@ -1,23 +1,33 @@
 #include <inf.base/plugin/plugin_controller.hpp>
+
+#include <juce_data_structures/app_properties/juce_ApplicationProperties.h>
 #include <vector>
 
 namespace inf::base {
 
 std::map<std::string, std::string>& 
-plugin_controller::meta_data()
+plugin_controller::patch_meta_data()
 {
   std::vector<std::string> unknown_keys;
   std::vector<std::string> known_keys;
-  known_keys.push_back(theme_key);
-  known_keys.push_back(ui_size_key);
-  known_keys.push_back(factory_preset_key);
-  known_keys.push_back(last_directory_key);
-  for(auto iter = _meta_data.begin(); iter != _meta_data.end(); ++iter)
+  known_keys.push_back(patch_meta_factory_preset_key);
+  for(auto iter = _patch_meta_data.begin(); iter != _patch_meta_data.end(); ++iter)
     if(std::find(known_keys.begin(), known_keys.end(), iter->first) == known_keys.end())
       unknown_keys.push_back(iter->first);
   for(std::size_t i = 0; i < unknown_keys.size(); i++)
-    _meta_data.erase(unknown_keys[i]);
-  return _meta_data;
+    _patch_meta_data.erase(unknown_keys[i]);
+  return _patch_meta_data;
+}
+
+std::string 
+plugin_controller::get_global_meta(std::string const& key) const
+{
+  return {};
+}
+
+void 
+plugin_controller::set_global_meta(std::string const& key, std::string const& value) const
+{
 }
 
 void
