@@ -40,6 +40,7 @@ protected:
 
 protected:
   void update_state(ParamID tag);
+  std::u16string host_name() const;
   virtual vst_editor* create_editor() = 0;
   tresult set_component_state(IBStream* state);
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);

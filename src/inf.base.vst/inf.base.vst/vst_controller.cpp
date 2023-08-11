@@ -82,9 +82,21 @@ vst_controller::reload_editor(std::int32_t width)
   _current_editor->set_width(width);
 }
 
+std::u16string
+vst_controller::host_name() const
+{
+  String128 name;
+  IPtr<IHostApplication> app;
+  if(hostContext->queryInterface(IHostApplication::iid, reinterpret_cast<void**>(&app)) != kResultOk) return {};
+  if(app->getName(name) != kResultOk) return {};
+  return std::u16string(name);
+}
+
 tresult PLUGIN_API 
 vst_controller::getMidiControllerAssignment(int32 bus_index, int16 channel, CtrlNumber midi_ctrl_nr, ParamID& id)
 {
+  // VST3PluginTestHost crashes if we map any midi controller.
+  if(std::u16string(u"VST3PluginTestHost Standalone") == host_name()) return kResultFalse;
   std::int32_t target_tag;
   if(bus_index != 0) return kResultFalse;
   if(!map_midi_control(midi_ctrl_nr, target_tag)) return kResultFalse;
