@@ -176,7 +176,7 @@ static std::vector<list_item> const gcv_route_output_target_list = zip_list_item
 
 // input sources
 static char const* const vcv_route_input_suffixes[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
+  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
 static std::vector<list_item> const vcv_route_input_sources_list = multi_list_items(
   vcv_route_inputs, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
 static std::vector<list_item> const gcv_route_input_sources_list = multi_list_items(
