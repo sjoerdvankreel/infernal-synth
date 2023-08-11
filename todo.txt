@@ -21,6 +21,7 @@
 - midi expression (volume) as mod source
 - midi pitchbend as mod source plus bend range semis
 - midi stuff docs + make good presets
+- save ui size/theme/last directory in user settings
 
 * wishlist small
 - midi modwheel
@@ -30,7 +31,6 @@
 - incorporate chris airwindows filters
 - dont release the generic build
 - clearer voice/global distinction
-- save ui size/theme/last directory in user settings
 - parameter flush bug when playing bitwig
 
 * wishlist big
