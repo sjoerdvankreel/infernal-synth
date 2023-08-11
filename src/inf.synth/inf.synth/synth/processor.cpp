@@ -410,6 +410,7 @@ synth_processor::process(block_input const& input, block_output& output)
   // Set master and external (midi) CV to input buffers.
   part_id master_id = { part_type::master, 0 };
   auto master_automation = input.data.automation.rearrange_params(master_id);
+  master_automation.continuous_real_transform(master_param::midi_chpress, _cv_state.midi_cp.data(), input.data.sample_count);
   master_automation.continuous_real_transform(master_param::midi_pitchbend, _cv_state.midi_pb.data(), input.data.sample_count);
   for(std::int32_t i = 0; i < master_gcv_count; i++)
   { 

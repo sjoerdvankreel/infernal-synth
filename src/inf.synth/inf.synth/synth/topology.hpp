@@ -31,7 +31,7 @@ struct active_param_t { enum value {
 struct master_param_t { enum value {
   gcv1_uni, gcv1_bi, gcv2_uni, 
   gcv2_bi, gcv3_uni, gcv3_bi, 
-  midi_pitchbend, count }; };
+  midi_pitchbend, midi_chpress, count }; };
 
 typedef active_param_t::value active_param;
 typedef master_param_t::value master_param;

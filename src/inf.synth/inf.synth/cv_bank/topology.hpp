@@ -107,12 +107,12 @@ inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_ban
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
-  off, velo, key, key_inv, midi_pb, venv, gcv_uni, gcv_uni_hold, 
+  off, velo, key, key_inv, midi_pb, midi_cp, venv, gcv_uni, gcv_uni_hold, 
   gcv_bi, gcv_bi_hold, vlfo, glfo, glfo_hold, count }; };
 typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
-  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, 1 /* midi pb */, venv_count,
-  master_gcv_count /* uni */, master_gcv_count /* uni hold */, 
+  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, 1 /* midi pb */, 1 /* midi cp */,
+  venv_count, master_gcv_count /* uni */, master_gcv_count /* uni hold */, 
   master_gcv_count /* bi */, master_gcv_count /* bi hold */,
   vlfo_count, glfo_count, glfo_count /* hold */};
 
@@ -152,10 +152,10 @@ inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_outpu
 // ---- global ----
 
 // input routing and mapping, off must be 0
-struct gcv_route_input_t { enum value { off, midi_pb, gcv_uni, gcv_bi, glfo, count }; };
+struct gcv_route_input_t { enum value { off, midi_pb, midi_cp, gcv_uni, gcv_bi, glfo, count }; };
 typedef gcv_route_input_t::value gcv_route_input;
 inline std::int32_t constexpr gcv_route_input_counts[gcv_route_input::count] = {
-  1 /* off */, 1 /* midi_pb */, master_gcv_count /* cvu */, master_gcv_count /* cvb */, glfo_count};
+  1 /* off */, 1 /* midi_pb */, 1 /* midi_cp */, master_gcv_count /* cvu */, master_gcv_count /* cvb */, glfo_count};
 
 // output routing, off must be 0
 struct gcv_route_output_t { enum value { off, geffect, gaudio_bank, gamp, count }; };

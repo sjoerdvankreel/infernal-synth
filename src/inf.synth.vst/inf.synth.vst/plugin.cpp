@@ -119,9 +119,17 @@ public:
 bool 
 synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target_tag) const
 {
-  if(number != Steinberg::Vst::ControllerNumbers::kPitchBend) return false;
-  target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitchbend);
-  return true;
+  if (number == Steinberg::Vst::ControllerNumbers::kAfterTouch)
+  {
+    target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_chpress);
+    return true;
+  }
+  if(number == Steinberg::Vst::ControllerNumbers::kPitchBend)
+  {
+    target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitchbend);
+    return true;
+  }
+  return false;
 }
 
 class synth_vst_topology :
