@@ -356,7 +356,7 @@ In this case, the modulation signal is fixed to it's current value at the start
 of the voice. This is useful for example in combination with a global random-type
 LFO, to have each new voice receive a single new random value at voice start
 (say, assigned to filter frequency), then keep at that same filter frequency
-for the lifetime of the voice.
+for the lifetime of the voice.\
 \
 Velocity, Key, and MIDI mod sources are external to the plugin and only accessible through the host.
 
