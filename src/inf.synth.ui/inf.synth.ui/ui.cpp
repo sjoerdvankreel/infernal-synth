@@ -238,7 +238,7 @@ create_oscillator_grid(plugin_controller* controller, std::int32_t part_index)
   kps->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::kps; });
   auto noise = result->add_cell(create_part_group_container_ui(controller, create_osc_noise_group(controller, part_index)), 3, 3, 1, 5);
   noise->relevant_if(part_id(part_type::vosc, part_index), osc_param::type, true, [](std::int32_t part_index, std::int32_t val) { return val == osc_type::noise; });
-  result->add_cell(create_osc_graph_group(controller, part_index), 0, 5, 3, 3);
+  result->add_cell(create_osc_graph_group(controller, part_index), 0, 4, 3, 4);
   return result;
 }
 
