@@ -51,7 +51,9 @@ of parameters can also be modulated. Modulation always takes place *on top of* a
 - If it can't be modulated, automation is either applied per-voice or per-block (for global parameters).
 - If it's discrete-valued (i.e. on/off, bar tempo, dropdowns, integer-valued knobs) it can NOT be modulated.
 - If it's continuous-valued (i.e. dB, Hz, %), and not a CV parameter (like LFO rate) or a time parameter (like delay time) it can be modulated.
-- Oscillator PM is the odd-one out, this is a hidden parameter and can only be used as a modulation target, but it can't be automated.
+- Oscillator PM and Pitch are the odd ones, these are hidden parameters and can only be used as a modulation target, but it can't be automated.
+
+Besides internal mod sources like lfo's and envelopes, there are also host provided ones like velocity and midi pitchbend/channel pressure.
 
 ## Aliasing
 
@@ -336,15 +338,15 @@ bipolar and inverted modes, one-shot option and smoothing filter.
 ## CV matrix
 
 Both per-voice and global CV matrices.
-Per-voice CV can use any modulation source (Velocity/Key/Voice LFO/Global LFO/Envelope/Master CV).
-Global CV can only use global modulation sources (Global LFO/Master CV).
+Per-voice CV can use any modulation source (Velocity/Key/MIDI PB/MIDI CP/Voice LFO/Global LFO/Envelope/Master CV).
+Global CV can only use global modulation sources (MIDI PB/MIDI CP/Global LFO/Master CV).
 A CV source may be assigned to multiple targets or vice-versa.
 When multiple sources are assigned to a single target, modulation is stacked.
 In this case the order of assignment matters, for example, envelope1->target1 followed by lfo1->target1
 is different from lfo1->target1 followed by envelope1->target1.
 See the CV plot section to view exactly how stacked modulation plays out.\
 \
-For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
+For per-voice CV, midi note in is available as a modulation source ("keyboard tracking anything").
 This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
 to be assigned to any modulation target.\
 \
@@ -354,7 +356,8 @@ of the voice. This is useful for example in combination with a global random-typ
 LFO, to have each new voice receive a single new random value at voice start
 (say, assigned to filter frequency), then keep at that same filter frequency
 for the lifetime of the voice.
-
+\
+Velocity, Key, and MIDI mod sources are external to the plugin and only accessible through the host.
 
 ![CV matrix](static/manual_vcv.png)\
 ![CV matrix](static/manual_gcv.png)
