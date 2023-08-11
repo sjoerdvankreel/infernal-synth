@@ -20,11 +20,13 @@
 - fix text edit/focus (save/load, exact-edit)
 
 * wishlist small
+- new images/screenshots
 - rename hold->"on note"
 - filter n/a options from dropdowns
 - incorporate chris airwindows filters
 - midi expression (volume) as mod source
 - midi pitchbend as mod source plus bend range semis
+- midi stuff docs + make good presets
 - dont release the generic build
 - clearer voice/global distinction
 - save ui size/theme/last directory in user settings
