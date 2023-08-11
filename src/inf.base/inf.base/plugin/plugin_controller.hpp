@@ -2,6 +2,7 @@
 #define INF_BASE_PLUGIN_PLUGIN_CONTROLLER_HPP
 
 #include <inf.base/topology/topology_info.hpp>
+#include <juce_data_structures/juce_data_structures.h>
 
 #include <set>
 #include <map>
@@ -58,8 +59,10 @@ class plugin_controller
   static inline std::string const global_meta_last_directory_key = "last_directory";
   static inline std::string const patch_meta_factory_preset_key = "factory_preset";
 
-  std::string get_global_meta(std::string const& key) const;
-  void set_global_meta(std::string const& key, std::string const& value) const;
+  juce::InterProcessLock _global_meta_lock;
+  juce::PropertiesFile::Options global_meta_options();
+  std::string get_global_meta(std::string const& key);
+  void set_global_meta(std::string const& key, std::string const& value);
 
 protected:
   std::vector<inf::base::param_value> _state;
@@ -70,6 +73,7 @@ protected:
   std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
 
   plugin_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
+  _global_meta_lock(juce::String(topology->plugin_name())),
   _state(topology->params.size()), _topology(std::move(topology))
   { _topology->init_factory_preset(_state.data()); }
 

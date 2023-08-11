@@ -1,7 +1,7 @@
 #include <inf.base/plugin/plugin_controller.hpp>
-
-#include <juce_data_structures/app_properties/juce_ApplicationProperties.h>
 #include <vector>
+
+using namespace juce;
 
 namespace inf::base {
 
@@ -19,15 +19,31 @@ plugin_controller::patch_meta_data()
   return _patch_meta_data;
 }
 
-std::string 
-plugin_controller::get_global_meta(std::string const& key) const
+juce::PropertiesFile::Options 
+plugin_controller::global_meta_options()
 {
-  return {};
+  PropertiesFile::Options options;
+  options.processLock = &_global_meta_lock;
+  options.applicationName = juce::String(topology()->plugin_name());
+  options.storageFormat = PropertiesFile::StorageFormat::storeAsXML;
+  return options;
+}
+
+std::string 
+plugin_controller::get_global_meta(std::string const& key)
+{
+  ApplicationProperties properties;
+  properties.setStorageParameters(global_meta_options());
+  return properties.getUserSettings()->getValue(juce::String(key)).toStdString();
 }
 
 void 
-plugin_controller::set_global_meta(std::string const& key, std::string const& value) const
+plugin_controller::set_global_meta(std::string const& key, std::string const& value)
 {
+  ApplicationProperties properties;
+  properties.setStorageParameters(global_meta_options());
+  properties.getUserSettings()->setValue(juce::String(key), juce::String(value));
+  properties.saveIfNeeded();
 }
 
 void
