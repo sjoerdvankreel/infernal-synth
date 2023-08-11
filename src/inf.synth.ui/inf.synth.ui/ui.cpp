@@ -100,7 +100,7 @@ create_osc_pitch_group(plugin_controller* controller, std::int32_t part_index)
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::note, edit_type::selector, label_type::value, tooltip_type::label), 0, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::oct, edit_type::selector, label_type::value, tooltip_type::label), 1, 0);
   grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::cent, edit_type::knob, label_type::value, tooltip_type::label), 2, 0);
-  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::cent, edit_type::knob, label_type::value, tooltip_type::label), 3, 0);
+  grid->add_cell(create_labeled_param_ui(controller, part_type::vosc, part_index, osc_param::pb_range, edit_type::knob, label_type::label, tooltip_type::value), 3, 0);
   return create_part_group_ui(controller, create_group_label_ui(controller, "Pitch", false), std::move(grid));
 }
 
