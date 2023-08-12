@@ -51,7 +51,9 @@ of parameters can also be modulated. Modulation always takes place *on top of* a
 - If it can't be modulated, automation is either applied per-voice or per-block (for global parameters).
 - If it's discrete-valued (i.e. on/off, bar tempo, dropdowns, integer-valued knobs) it can NOT be modulated.
 - If it's continuous-valued (i.e. dB, Hz, %), and not a CV parameter (like LFO rate) or a time parameter (like delay time) it can be modulated.
-- Oscillator PM is the odd-one out, this is a hidden parameter and can only be used as a modulation target, but it can't be automated.
+- Oscillator PM and Pitch are the odd ones, these are hidden parameters and can only be used as a modulation target, but can't be automated.
+
+Besides internal mod sources like lfo's and envelopes, there are also host provided ones like velocity and a couple of midi cc messages.
 
 ## Aliasing
 
@@ -89,6 +91,11 @@ Through the context menu you can reset module values to default, or copy/swap be
 
 ![Context menu](static/manual_context.png)
 
+You can also right-click a knob or slider to pop up the host's context menu. \
+Below the host context menu (if any) is an "Edit..." menu option that allows exact-editing of the parameter.
+
+![Context menu](static/manual_exact_edit.png)
+
 ## Oscillator section
 
 Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic generator types, phase, frequency, ring and amplitude modulation, hard sync and unison support.
@@ -97,6 +104,7 @@ Per-voice oscillator with classic, noise, DSF, Karplus-Strong and mixed-classic 
 
 - Type: generator type, see below.
 - PM (hidden, modulation target only): phase modulation.
+- Pitch (hidden, modulation target only): pitch control (defaults to midi pitch bend, but any mod source can be used).
 - FM: generic frequency modulation target, works nice in combination with hard sync.
 - Sync: hard sync source. Either Off, or has to be less than than the current oscillator, otherwise has no effect.\
 Please note that hard sync is per-unison-voice, so the source has to have at least as many voices as the target.
@@ -111,6 +119,7 @@ Please note that hard sync is per-unison-voice, so the source has to have at lea
 - Pitch control
     - Note, Octave, Cent: oscillator base pitch.
     - Kbd: keyboard tracking, react to incoming notes (on) or keep constant pitch (off).
+    - Bend: pitch bend range in semitones (both up/down). So 1 goes from down 1 semi to up 1 semi, 24 goes from down 2 octaves to up 2 octaves. This only works in combination with the "Pitch" modulation target.
 - Ring and Amplitude modulation
     - Mix: fades between unmodulated and modulated signal.
     - Ring: down is amplitude modulation, up is ring modulation. Fades in between.
@@ -324,20 +333,21 @@ bipolar and inverted modes, one-shot option and smoothing filter.
         - SeedY: controls the level at the beginning of a new step.
         - Amt: controls next step level relative to current step level.
         - RandX: allows control of the horizontal seed. If disabled, each section has equal length.
+        - Free: puts the random generator into free-running mode, i.e., do not reset state to the seed values at cycle end.
         - SeedX: a single cycle always has step count equal to the steps parameter, but if RandX is enabled, relative section length may be varied using this parameter.
 
 ## CV matrix
 
 Both per-voice and global CV matrices.
-Per-voice CV can use any modulation source (Velocity/Key/Voice LFO/Global LFO/Envelope/Master CV).
-Global CV can only use global modulation sources (Global LFO/Master CV).
+Per-voice CV can use any modulation source (Velocity/Key/MIDI CC/Voice LFO/Global LFO/Envelope/Master CV).
+Global CV can only use global modulation sources (MIDI CC/Global LFO/Master CV).
 A CV source may be assigned to multiple targets or vice-versa.
 When multiple sources are assigned to a single target, modulation is stacked.
 In this case the order of assignment matters, for example, envelope1->target1 followed by lfo1->target1
 is different from lfo1->target1 followed by envelope1->target1.
 See the CV plot section to view exactly how stacked modulation plays out.\
 \
-For per-voice CV, midi in is available as a modulation source ("keyboard tracking anything").
+For per-voice CV, midi note in is available as a modulation source ("keyboard tracking anything").
 This allows to use the incoming midi note relative to C4, scaled and offset by configurable parameters,
 to be assigned to any modulation target.\
 \
@@ -346,8 +356,10 @@ In this case, the modulation signal is fixed to it's current value at the start
 of the voice. This is useful for example in combination with a global random-type
 LFO, to have each new voice receive a single new random value at voice start
 (say, assigned to filter frequency), then keep at that same filter frequency
-for the lifetime of the voice.
-
+for the lifetime of the voice.\
+\
+Velocity, Key, and MIDI mod sources are external to the plugin and only accessible through the host.
+At the moment only MIDI modwheel (1), volume (7), channel pressure (128) and pitchbend (129) are supported.
 
 ![CV matrix](static/manual_vcv.png)\
 ![CV matrix](static/manual_gcv.png)

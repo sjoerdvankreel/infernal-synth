@@ -43,13 +43,16 @@ struct list_item
   // or identity for timesig.
   std::string const id; 
   std::string const name; // Item name.
+  std::int32_t zip_index1; // For matching list items in enabled selectors.
+  std::int32_t zip_index2; // For matching list items in enabled selectors.
+  std::int32_t zip_index3; // For matching list items in enabled selectors.
   std::vector<std::string> const submenu_path; // Optional, for use with ziplist + regular dropdown only.
 
   list_item(std::string const& id, std::string const& name) :
-  id(id), name(name), submenu_path() {}
-
-  list_item(std::string const& id, std::string const& name, std::vector<std::string> const& submenu_path):
-  id(id), name(name), submenu_path(submenu_path) {}
+  id(id), name(name), zip_index1(-1), zip_index2(-1), zip_index3(-1), submenu_path() {}
+  list_item(std::string const& id, std::string const& name, std::vector<std::string> const& submenu_path, 
+    std::int32_t zip_index1, std::int32_t zip_index2, std::int32_t zip_index3):
+  id(id), name(name), zip_index1(zip_index1), zip_index2(zip_index2), zip_index3(zip_index3), submenu_path(submenu_path) {}
 };
 
 // Generic short name/detailed description.

@@ -26,7 +26,7 @@ typedef lfo_basic_type_t::value lfo_basic_type;
 
 struct lfo_param_t { enum value {
   on, type, bipolar, synced, invert, single, rate, tempo, filter,
-  basic_type, basic_offset, basic_pw, rand_type, rand_seedx, rand_seedy, rand_rand_steps, rand_steps, rand_amt,
+  basic_type, basic_offset, basic_pw, rand_type, rand_free, rand_seedx, rand_seedy, rand_rand_steps, rand_steps, rand_amt,
   free_delay1, free_rise1, free_rise1_slope, free_hold1, free_fall1, free_fall1_slope,
   free_delay2, free_fall2, free_fall2_slope, free_hold2, free_rise2, free_rise2_slope, count }; };
 typedef lfo_param_t::value lfo_param;

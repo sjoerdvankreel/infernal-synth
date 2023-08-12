@@ -5,7 +5,9 @@
 #include <inf.base.ui/shared/support.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <inf.base/plugin/plugin_controller.hpp>
+
 #include <vector>
+#include <memory>
 
 namespace inf::base::ui {
 
@@ -54,24 +56,24 @@ public:
     tooltip_background_low,
     tooltip_background_high,
 
-    dialog_text,
-    dialog_header_text,
-    dialog_outline_low,
-    dialog_outline_high,
-    dialog_background_low,
-    dialog_background_high,
+    alert_text,
+    alert_header_text,
+    alert_outline_low,
+    alert_outline_high,
+    alert_background_low,
+    alert_background_high,
     
-    file_box_title,
-    file_box_file_text,
-    file_box_background,
-    file_box_file_background,
-    file_box_label_text,
-    file_box_label_background,
-    file_box_button_text,
-    file_box_button_background,
-    file_box_selector_text,
-    file_box_selector_highlight,
-    file_box_selector_highlight_text,
+    dialog_title,
+    dialog_file_text,
+    dialog_background,
+    dialog_file_background,
+    dialog_label_text,
+    dialog_label_background,
+    dialog_button_text,
+    dialog_button_background,
+    dialog_selector_text,
+    dialog_selector_highlight,
+    dialog_selector_highlight_text,
 
     selector_label_text,
     selector_label_outline_low,
@@ -266,6 +268,9 @@ public:
   juce::Font getComboBoxFont(juce::ComboBox& box) override
   { return juce::Font(get_dropdown_font_height(_controller), juce::Font::bold); }
 };
+
+typedef std::unique_ptr<inf_look_and_feel> (*
+lnf_factory)(inf::base::plugin_controller*);
 
 } // namespace inf::base::ui
 #endif // INF_BASE_UI_SHARED_LOOK_AND_FEEL_HPP

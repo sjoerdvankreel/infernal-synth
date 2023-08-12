@@ -71,6 +71,7 @@ inline std::int32_t constexpr cv_route_amp_mapping[vgcv_route_amp_target::count]
 { amp_param::gain, amp_param::bal };
 
 // effect output routing and mapping. vfx_count: stuff after this is global only.
+// dont forget to update mod target enabled selectors.
 struct vgcv_route_effect_target_t { enum value { 
   flt_stvar_freq, flt_stvar_res, flt_stvar_kbd, flt_stvar_shlf_gain,
   flt_comb_dly_plus, flt_comb_gain_plus, flt_comb_dly_min, flt_comb_gain_min,
@@ -107,12 +108,14 @@ inline std::int32_t constexpr vgcv_route_audio_bank_mapping[vgcv_route_audio_ban
 
 // input routing and mapping, off must be 0
 struct vcv_route_input_t { enum value { 
-  off, velo, key, key_inv, venv, gcv_uni, gcv_uni_hold, 
+  off, velo, key, key_inv, midi_mod_wheel, midi_ch_vol,
+  midi_ch_press, midi_pitch_bend, venv, gcv_uni, gcv_uni_hold,
   gcv_bi, gcv_bi_hold, vlfo, glfo, glfo_hold, count }; };
 typedef vcv_route_input_t::value vcv_route_input;
 inline std::int32_t constexpr vcv_route_input_counts[vcv_route_input::count] = {
-  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, venv_count, 
-  master_gcv_count /* uni */, master_gcv_count /* uni hold */, 
+  1 /* off */, 1 /* velocity */, 1 /* key */, 1 /* inv key */, 
+  1 /* midi_mod_wheel */, 1 /* midi_ch_vol */, 1 /* midi_ch_press */, 1 /* midi_pitch_bend */,
+  venv_count, master_gcv_count /* uni */, master_gcv_count /* uni hold */, 
   master_gcv_count /* bi */, master_gcv_count /* bi hold */,
   vlfo_count, glfo_count, glfo_count /* hold */};
 
@@ -128,14 +131,14 @@ inline std::int32_t constexpr vcv_route_output_total_count = std::accumulate(
 
 // oscillator output routing
 struct vcv_route_vosc_target_t { enum value {
-  pm, fm, cent, uni_detune, uni_spread, ram_bal, ram_mix,
+  pm, fm, cent, pitch, uni_detune, uni_spread, ram_bal, ram_mix,
   basic_pw, mix_sine, mix_saw, mix_triangle, mix_pulse, mix_pw, dsf_dist, dsf_decay, 
   kps_filter, kps_feedback, kps_stretch, noise_color, noise_x, noise_y, count }; };
 typedef vcv_route_vosc_target_t::value vcv_route_vosc_target;
 
 // oscillator output mapping
 inline std::int32_t constexpr vcv_route_vosc_mapping[vcv_route_vosc_target::count] = {
-  osc_param::pm, osc_param::fm, osc_param::cent, osc_param::uni_dtn, osc_param::uni_sprd,
+  osc_param::pm, osc_param::fm, osc_param::cent, osc_param::pitch, osc_param::uni_dtn, osc_param::uni_sprd,
   osc_param::am_ring, osc_param::am_mix, osc_param::basic_pw, osc_param::mix_sine, 
   osc_param::mix_saw, osc_param::mix_triangle, osc_param::mix_pulse, osc_param::mix_pw, 
   osc_param::dsf_dist, osc_param::dsf_decay, osc_param::kps_filter, osc_param::kps_feedback, 
@@ -152,10 +155,13 @@ inline std::int32_t const* const vcv_route_output_target_mapping[vcv_route_outpu
 // ---- global ----
 
 // input routing and mapping, off must be 0
-struct gcv_route_input_t { enum value { off, gcv_uni, gcv_bi, glfo, count }; };
+struct gcv_route_input_t { enum value { off, 
+  midi_mod_wheel, midi_ch_vol, midi_ch_press, 
+  midi_pitch_bend, gcv_uni, gcv_bi, glfo, count }; };
 typedef gcv_route_input_t::value gcv_route_input;
 inline std::int32_t constexpr gcv_route_input_counts[gcv_route_input::count] = {
-  1 /* off */, master_gcv_count /* cvu */, master_gcv_count /* cvb */, glfo_count};
+  1 /* off */, 1 /* midi_mod_wheel */, 1 /* midi_ch_vol */, 1 /* midi_ch_press */,
+  1 /* midi_pitch_bend */, master_gcv_count /* cvu */, master_gcv_count /* cvb */, glfo_count};
 
 // output routing, off must be 0
 struct gcv_route_output_t { enum value { off, geffect, gaudio_bank, gamp, count }; };

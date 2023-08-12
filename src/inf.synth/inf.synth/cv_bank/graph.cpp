@@ -10,7 +10,7 @@ using namespace inf::base;
 
 namespace inf::synth {
 
-static float constexpr vcv_plot_graph_velo = 0.5f;
+static float constexpr vcv_plot_graph_velo = 1.0f;
 static std::vector<std::tuple<std::int32_t, std::int32_t, std::int32_t>> const vtarget_table_out
 = zip_list_table_init_out(vcv_route_output_counts, vcv_route_output_target_counts, vcv_route_output::count);
 static std::vector<std::tuple<std::int32_t, std::int32_t, std::int32_t>> const gtarget_table_out
@@ -79,7 +79,13 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
     gcv_bi_hold[i].flags = cv_state.gcv_bi[i].buffer.flags;
     gcv_bi_hold[i].value = cv_state.gcv_bi[i].buffer.values[0];
   }
-  
+
+  // Setup master external (midi) input.
+  std::fill(cv_state.midi_mod_wheel.data(), cv_state.midi_mod_wheel.data() + input.data.sample_count, 0.0f);
+  std::fill(cv_state.midi_ch_vol.data(), cv_state.midi_ch_vol.data() + input.data.sample_count, 1.0f);
+  std::fill(cv_state.midi_ch_press.data(), cv_state.midi_ch_press.data() + input.data.sample_count, 1.0f);
+  std::fill(cv_state.midi_pitch_bend.data(), cv_state.midi_pitch_bend.data() + input.data.sample_count, 0.0f);
+
   // Setup envelopes.
   float length = plot_automation.block_real_transform(cv_plot_param::length);
   std::int32_t release_sample = static_cast<std::int32_t>(std::ceil(length * cv_graph_rate));

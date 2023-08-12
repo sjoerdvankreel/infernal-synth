@@ -65,6 +65,10 @@ cv_bank_processor::input_buffer_global(std::int32_t input, std::int32_t index) c
   case gcv_route_input::glfo: return _state->glfo[index].buffer.values;
   case gcv_route_input::gcv_bi: return _state->gcv_bi[index].buffer.values;
   case gcv_route_input::gcv_uni: return _state->gcv_uni[index].buffer.values;
+  case gcv_route_input::midi_ch_vol: return _state->midi_ch_vol.data();
+  case gcv_route_input::midi_ch_press: return _state->midi_ch_press.data();
+  case gcv_route_input::midi_mod_wheel: return _state->midi_mod_wheel.data();
+  case gcv_route_input::midi_pitch_bend: return _state->midi_pitch_bend.data();
   default: assert(false); return nullptr;
   }
 }
@@ -78,6 +82,11 @@ cv_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index) co
   case vcv_route_input::key: return _state->key.data();
   case vcv_route_input::velo: return _state->velo.data();
   case vcv_route_input::key_inv: return _state->key_inv.data();
+  case vcv_route_input::midi_ch_vol: return _state->midi_ch_vol.data();
+  case vcv_route_input::midi_ch_press: return _state->midi_ch_press.data();
+  case vcv_route_input::midi_mod_wheel: return _state->midi_mod_wheel.data();
+  case vcv_route_input::midi_pitch_bend: return _state->midi_pitch_bend.data();
+
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.values;
   case vcv_route_input::venv: return _state->venv[index].buffer.values;
   case vcv_route_input::glfo: return _state->glfo[index].buffer.values;
@@ -98,6 +107,10 @@ cv_bank_processor::input_bipolar_global(std::int32_t input, std::int32_t index) 
   case gcv_route_input::off: return false;
   case gcv_route_input::gcv_bi: return true;
   case gcv_route_input::gcv_uni: return false;
+  case gcv_route_input::midi_ch_vol: return false;
+  case gcv_route_input::midi_ch_press: return false;
+  case gcv_route_input::midi_mod_wheel: return false;
+  case gcv_route_input::midi_pitch_bend: return true;
   case gcv_route_input::glfo: return _state->glfo[index].buffer.flags.bipolar;
   default: assert(false); return false;
   }
@@ -112,6 +125,11 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
   case vcv_route_input::key: return false;
   case vcv_route_input::velo: return false;
   case vcv_route_input::key_inv: return false;
+  case vcv_route_input::midi_ch_vol: return false;
+  case vcv_route_input::midi_ch_press: return false;
+  case vcv_route_input::midi_mod_wheel: return false;
+  case vcv_route_input::midi_pitch_bend: return true;
+
   case vcv_route_input::gcv_bi: return true;
   case vcv_route_input::gcv_uni: return false;
   case vcv_route_input::gcv_bi_hold: return true;

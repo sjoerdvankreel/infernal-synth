@@ -13,6 +13,10 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
+static std::int32_t const exact_edit_dialog_h = 78;
+static std::int32_t const exact_edit_dialog_w = 200;
+static std::int32_t const exact_edit_dialog_pad = 1;
+
 struct dialog_box_state
 {
   // mind order of destruction
@@ -50,7 +54,84 @@ struct file_box_state
 struct dropdown_tree
 {
   std::string name;
+  list_item const* item; // Only for leafs.
   std::vector<std::unique_ptr<dropdown_tree>> children;
+};
+
+class exact_edit_dialog_content :
+public juce::Component
+{
+private:
+  juce::Label _title;
+  juce::TextButton _ok;
+  juce::TextButton _cancel;
+  juce::TextEditor _editor;
+
+  std::int32_t const _param_index;
+  std::unique_ptr<inf_look_and_feel> _lnf;
+  base::plugin_controller* const _controller;
+
+public:
+  exact_edit_dialog_content(base::plugin_controller* controller,
+    std::int32_t param_index, std::unique_ptr<inf_look_and_feel>&& lnf) :
+    _param_index(param_index), _lnf(std::move(lnf)), _controller(controller)
+  {
+    _lnf->setColour(Label::ColourIds::textColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+    _lnf->setColour(Label::ColourIds::textWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+    _lnf->setColour(Label::ColourIds::backgroundColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+    _lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+    _lnf->setColour(TextButton::ColourIds::textColourOffId, _lnf->findColour(inf_look_and_feel::colors::dialog_button_text));
+    _lnf->setColour(TextButton::ColourIds::buttonColourId, _lnf->findColour(inf_look_and_feel::colors::dialog_button_background));
+
+    std::int32_t pad = exact_edit_dialog_pad;
+    setSize(exact_edit_dialog_w + 3 * pad, exact_edit_dialog_h + 6 * pad);
+    setLookAndFeel(_lnf.get());
+
+    auto title = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
+    _title.setText(title, juce::dontSendNotification);
+    _title.setLookAndFeel(_lnf.get());
+    _title.setFont(juce::Font(15.0, juce::Font::bold));
+    addAndMakeVisible(_title);
+    _title.setBounds(pad, pad, exact_edit_dialog_w - pad, exact_edit_dialog_h / 3);
+
+    _editor.setLookAndFeel(_lnf.get());
+    _editor.setFont(juce::Font(14.0));
+    _editor.setJustification(juce::Justification::right);
+    _editor.setText(juce::String(controller->topology()->params[param_index].descriptor->data.format(false, controller->ui_value_at_index(param_index))));
+    addAndMakeVisible(_editor);
+    _editor.setBounds(pad, 2 * pad + exact_edit_dialog_h / 3, exact_edit_dialog_w, exact_edit_dialog_h / 3);
+
+    _ok.setButtonText("OK");
+    _ok.setLookAndFeel(_lnf.get());
+    _ok.addShortcut(KeyPress(KeyPress::returnKey));
+    addAndMakeVisible(_ok);
+    _ok.setBounds(pad, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 2 - pad, exact_edit_dialog_h / 3);
+    _ok.onClick = [this]() { 
+      if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
+      {
+        param_value new_ui_value;
+        auto text = _editor.getText().toStdString();
+        auto part_index = _controller->topology()->params[_param_index].part_index;
+        if(_controller->topology()->params[_param_index].descriptor->data.parse(false, part_index, text.c_str(), new_ui_value))
+          _controller->editor_param_changed(_param_index, new_ui_value);
+        w->exitModalState(0);
+        delete w;
+      }
+    };
+
+    _cancel.setButtonText("Cancel");
+    _cancel.setLookAndFeel(_lnf.get());
+    _cancel.addShortcut(KeyPress(KeyPress::escapeKey));
+    addAndMakeVisible(_cancel);
+    _cancel.setBounds(pad + exact_edit_dialog_w / 2, 3 * pad + exact_edit_dialog_h * 2 / 3, exact_edit_dialog_w / 2 - pad, exact_edit_dialog_h / 3);
+    _cancel.onClick = [this]() {
+      if (ResizableWindow* w = findParentComponentOfClass<ResizableWindow>())
+      {
+        w->exitModalState(0);
+        delete w;
+      }
+    };
+  }
 };
 
 static void
@@ -76,22 +157,22 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
   flags |= FileBrowserComponent::canSelectFiles;
   state->controller = controller;
   state->lnf = lnf_factory(controller);
-  state->lnf->setColour(Label::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-  state->lnf->setColour(Label::ColourIds::textWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_text));
-  state->lnf->setColour(Label::ColourIds::backgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-  state->lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_label_background));
-  state->lnf->setColour(TextButton::ColourIds::textColourOffId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_text));
-  state->lnf->setColour(TextButton::ColourIds::buttonColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_button_background));
-  state->lnf->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_title));
-  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_text));
-  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_file_background));
-  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_text));
-  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight));
-  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::file_box_selector_highlight_text));
+  state->lnf->setColour(Label::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+  state->lnf->setColour(Label::ColourIds::textWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_text));
+  state->lnf->setColour(Label::ColourIds::backgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+  state->lnf->setColour(Label::ColourIds::backgroundWhenEditingColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_label_background));
+  state->lnf->setColour(TextButton::ColourIds::textColourOffId, state->lnf->findColour(inf_look_and_feel::colors::dialog_button_text));
+  state->lnf->setColour(TextButton::ColourIds::buttonColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_button_background));
+  state->lnf->setColour(FileChooserDialogBox::ColourIds::titleTextColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_title));
+  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxTextColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_file_text));
+  state->lnf->setColour(FileBrowserComponent::ColourIds::filenameBoxBackgroundColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_file_background));
+  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::textColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_selector_text));
+  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_selector_highlight));
+  state->lnf->setColour(DirectoryContentsDisplayComponent::ColourIds::highlightedTextColourId, state->lnf->findColour(inf_look_and_feel::colors::dialog_selector_highlight_text));
   if(!state->controller->get_last_directory().empty()) last_directory = juce::File(state->controller->get_last_directory());
   state->filter = std::make_unique<WildcardFileFilter>(filter_match, String(), "Preset files");
   state->browser = std::make_unique<FileBrowserComponent>(flags, last_directory, state->filter.get(), nullptr);
-  auto background = state->lnf->findColour(inf_look_and_feel::colors::file_box_background);
+  auto background = state->lnf->findColour(inf_look_and_feel::colors::dialog_background);
   auto editor = static_cast<juce::Component*>(controller->current_editor_window());
   state->box = std::make_unique<inf_file_chooser_dialog>(controller, title, *state->browser, background, editor);
   state->box->setLookAndFeel(state->lnf.get());
@@ -100,7 +181,7 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
 }
 
 static void 
-append_dropdown_tree(dropdown_tree* tree, std::string const* path, std::size_t path_size)
+append_dropdown_tree(dropdown_tree* tree, list_item const* item, std::string const* path, std::size_t path_size)
 {
   dropdown_tree* child = nullptr;
   for(std::size_t i = 0; i < tree->children.size(); i++)
@@ -113,35 +194,89 @@ append_dropdown_tree(dropdown_tree* tree, std::string const* path, std::size_t p
   {
     child = new dropdown_tree();
     child->name = *path;
+    child->item = nullptr;
     tree->children.push_back(std::unique_ptr<dropdown_tree>(child));
   }
   if(path_size > 1)
-    append_dropdown_tree(child, path + 1, path_size - 1);
+    append_dropdown_tree(child, item, path + 1, path_size - 1);
+  else
+    child->item = item;
 }
 
 static void
-fill_dropdown_menu(PopupMenu* menu, dropdown_tree const* tree, std::int32_t& counter)
+fill_dropdown_menu(
+  inf_param_dropdown* dropdown, PopupMenu* menu, 
+  dropdown_tree const* tree, std::int32_t& counter)
 {
   if (tree->children.size() == 0)
   {
-    menu->addItem(dropdown_id_offset + counter++, tree->name);
+    assert(tree->item != nullptr);
+    std::int32_t id = dropdown_id_offset + counter++;
+    menu->addItem(id, tree->name);
+    dropdown->set_item_id(tree->item, id);
     return;
   }
+
+  assert(tree->item == nullptr);
   PopupMenu child;
   for (std::size_t i = 0; i < tree->children.size(); i++)
-    fill_dropdown_menu(&child, tree->children[i].get(), counter);
+    fill_dropdown_menu(dropdown, &child, tree->children[i].get(), counter);
   menu->addSubMenu(tree->name, child);
 }
 
 static void 
-fill_dropdown_menu(PopupMenu* menu, std::vector<list_item> const& items)
+fill_dropdown_menu(inf_param_dropdown* dropdown, PopupMenu* menu, std::vector<list_item> const& items)
 {
   std::int32_t counter = 0;
   auto tree = std::make_unique<dropdown_tree>();
   for (auto const& item : items)
-    append_dropdown_tree(tree.get(), item.submenu_path.data(), item.submenu_path.size());
+    append_dropdown_tree(tree.get(), &item, item.submenu_path.data(), item.submenu_path.size());
   for(auto const& child: tree->children)
-    fill_dropdown_menu(menu, child.get(), counter);
+    fill_dropdown_menu(dropdown, menu, child.get(), counter);
+}
+
+static void 
+show_exact_edit_dialog(base::plugin_controller* controller,
+  std::int32_t param_index, lnf_factory lnf_factory)
+{
+  auto title = juce::String("Edit " + controller->topology()->params[param_index].runtime_name);
+  auto window = std::make_unique<juce::ResizableWindow>(title, true);
+  window->setResizable(false, false);
+  window->setContentOwned(new exact_edit_dialog_content(controller, param_index, lnf_factory(controller)), false);
+  window->setOpaque(true);
+  window->addToDesktop(0, nullptr);
+  window->centreAroundComponent(
+    static_cast<juce::Component*>(controller->current_editor_window()), 
+    exact_edit_dialog_w + 3 * exact_edit_dialog_pad, 
+    exact_edit_dialog_h + 6 * exact_edit_dialog_pad);
+  window->enterModalState(true);
+  window.release();
+}
+
+void
+show_context_menu_for_param(
+  base::plugin_controller* controller, std::int32_t param_index, 
+  bool exact_edit, juce::LookAndFeel* lnf, lnf_factory lnf_factory)
+{
+  PopupMenu menu;
+  menu.setLookAndFeel(lnf);
+  auto host_menu = controller->host_menu_for_param_index(param_index);
+  std::int32_t host_menu_count = host_menu? host_menu->item_count(): 0;
+  for (std::int32_t i = 0; i < host_menu_count; i++)
+  {
+    bool enabled;
+    bool checked;
+    std::string name;
+    host_menu->get_item(i, name, enabled, checked);
+    menu.addItem(i + 1, name, enabled, checked);
+  }
+  if(exact_edit)
+    menu.addItem(host_menu_count + 1, "Edit...");
+  menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu_count, host_menu = host_menu.release()](int option) {
+    if (option > 0 && option <= host_menu_count) host_menu->item_clicked(option - 1);
+    else if (option == host_menu_count + 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    delete host_menu;
+  });
 }
 
 void
@@ -427,7 +562,7 @@ Component*
 param_edit_element::build_toggle_core(LookAndFeel& lnf)
 {
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
-  ToggleButton* result = new inf_toggle_button(controller(), index, _force_toggle_on);
+  ToggleButton* result = new inf_toggle_button(controller(), index, _force_toggle_on, _lnf_factory);
   _toggle_listener.reset(new toggle_param_listener(controller(), result, index));
   result->setToggleState(controller()->state()[index].discrete != 0, dontSendNotification);
   result->addListener(_toggle_listener.get());
@@ -454,12 +589,12 @@ param_edit_element::build_dropdown_core(LookAndFeel& lnf)
   std::int32_t index = controller()->topology()->param_index(_part_id, _param_index);
   std::int32_t part_index = controller()->topology()->params[index].part_index;
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
-  inf_param_dropdown* result = new inf_param_dropdown(controller(), index);
+  inf_param_dropdown* result = new inf_param_dropdown(controller(), index, _lnf_factory, desc.data.discrete.enabled_selector);
   result->setColour(ComboBox::ColourIds::textColourId, lnf.findColour(inf_look_and_feel::colors::dropdown_text));
   result->setJustificationType(Justification::centred);
   if (desc.data.discrete.items != nullptr)
     if((*desc.data.discrete.items)[0].submenu_path.size() > 0)
-      fill_dropdown_menu(result->getRootMenu(), *desc.data.discrete.items);
+      fill_dropdown_menu(result, result->getRootMenu(), *desc.data.discrete.items);
     else
       for (std::int32_t i = 0; i <= desc.data.discrete.effective_max(part_index); i++)
         result->addItem((*desc.data.discrete.items)[i].name, static_cast<std::int32_t>(i) + dropdown_id_offset);
@@ -482,7 +617,7 @@ param_edit_element::build_slider_core(LookAndFeel& lnf)
   auto const& desc = controller()->topology()->get_param_descriptor(_part_id, _param_index);
   auto default_value = controller()->topology()->base_to_ui_value(index, desc.data.default_value());
   std::int32_t part_index = controller()->topology()->params[index].part_index;
-  inf_param_slider* result = new inf_param_slider(controller(), index, _type);
+  inf_param_slider* result = new inf_param_slider(controller(), index, _type, _lnf_factory);
   result->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
   if(desc.data.type == param_type::real)
   {
@@ -587,7 +722,7 @@ create_grid_ui(
 std::unique_ptr<ui_element>
 create_param_ui(
   plugin_controller* controller, std::unique_ptr<ui_element>&& label_or_icon, std::int32_t part_type, 
-  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, bool force_toggle_on, std::int32_t hslider_cols)
+  std::int32_t part_index, std::int32_t param_index, edit_type edit_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on, std::int32_t hslider_cols)
 {
   if (edit_type == edit_type::hslider)
   {
@@ -595,7 +730,7 @@ create_param_ui(
     if(hslider_cols == -1) return {};
     auto result = create_grid_ui(controller, 1, hslider_cols);
     result->add_cell(std::move(label_or_icon), 0, 0);
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on), 0, 1, 1, hslider_cols - 1);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on), 0, 1, 1, hslider_cols - 1);
     return result;
   }
   else
@@ -603,7 +738,7 @@ create_param_ui(
     auto auto_rest = Grid::TrackInfo(Grid::Fr(1));
     auto fixed_label_height = Grid::TrackInfo(Grid::Px(get_param_label_total_height(controller)));
     auto result = create_grid_ui(controller, { auto_rest, fixed_label_height }, { auto_rest });
-    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on), 0, 0);
+    result->add_cell(create_param_edit_ui(controller, part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on), 0, 0);
     result->add_cell(std::move(label_or_icon), 1, 0);
     return result;
   }
@@ -612,29 +747,29 @@ create_param_ui(
 std::unique_ptr<ui_element>
 create_labeled_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, label_type label_type, tooltip_type tooltip_type, bool force_toggle_on, std::int32_t hslider_cols)
+  edit_type edit_type, label_type label_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on, std::int32_t hslider_cols)
 {
   auto justification = edit_type == edit_type::hslider? juce::Justification::centredRight: juce::Justification::centred;
   auto label = create_param_label_ui(controller, part_type, part_index, param_index, label_type, justification);
-  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on, hslider_cols);
+  return create_param_ui(controller, std::move(label), part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on, hslider_cols);
 }
 
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, bool force_toggle_on)
+  edit_type edit_type, icon_type icon_type, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on)
 {
   auto icon = create_param_icon_ui(controller, icon_type);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on);
 }
 
 std::unique_ptr<ui_element>
 create_iconed_param_ui(
   plugin_controller* controller, std::int32_t part_type, std::int32_t part_index, std::int32_t param_index, 
-  edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, bool force_toggle_on)
+  edit_type edit_type, icon_selector icon_selector, tooltip_type tooltip_type, lnf_factory lnf_factory, bool force_toggle_on)
 {
   auto icon = create_param_icon_ui(controller, part_type, part_index, param_index, icon_selector);
-  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, force_toggle_on);
+  return create_param_ui(controller, std::move(icon), part_type, part_index, param_index, edit_type, tooltip_type, lnf_factory, force_toggle_on);
 }
 
 std::unique_ptr<ui_element>
@@ -841,7 +976,7 @@ show_ok_box(
   state->lnf = std::move(lnf);
   state->content = create_grid_ui(controller, 2, 2);
   state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
-  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_text), 0, 0, 1, 2);
+  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::alert_text), 0, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
     delete state; }), 1, 1);
@@ -869,6 +1004,8 @@ save_preset_file(
     delete state;
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box->setOpaque(true);
+  state->box->addToDesktop(0, nullptr);
   state->box->center_around(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(saved), false);
 }
@@ -903,6 +1040,8 @@ load_preset_file(
     }
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());
+  state->box->setOpaque(true);
+  state->box->addToDesktop(0, nullptr);
   state->box->center_around(current_window);
   state->box->enterModalState(true, ModalCallbackFunction::create(selected), false);
 }
@@ -919,8 +1058,8 @@ show_confirm_box(
   state->lnf = lnf_factory(controller);
   state->content = create_grid_ui(controller, 3, 2);
   state->window = std::make_unique<AlertWindow>("", "", MessageBoxIconType::NoIcon);
-  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::dialog_header_text), 0, 0, 1, 2);
-  state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::dialog_text), 1, 0, 1, 2);
+  state->content->add_cell(create_label_ui(controller, header, Justification::left, dialog_font_header_height, inf_look_and_feel::colors::alert_header_text), 0, 0, 1, 2);
+  state->content->add_cell(create_label_ui(controller, "Are you sure?", Justification::left, dialog_font_height, inf_look_and_feel::colors::alert_text), 1, 0, 1, 2);
   state->content->add_cell(create_button_ui(controller, "OK", Justification::centred, [state]() {
     state->window->exitModalState();
     state->confirmed(state->controller);

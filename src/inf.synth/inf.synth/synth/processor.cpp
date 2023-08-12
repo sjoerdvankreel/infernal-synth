@@ -407,9 +407,13 @@ synth_processor::process(block_input const& input, block_output& output)
   for (std::int32_t c = 0; c < stereo_channels; c++)
     std::copy(input.data.audio[c], input.data.audio[c] + input.data.sample_count, _audio_state.external.buffer(c));
 
-  // Set master CV to input buffers.
+  // Set master and external (midi) CV to input buffers.
   part_id master_id = { part_type::master, 0 };
   auto master_automation = input.data.automation.rearrange_params(master_id);
+  master_automation.continuous_real_transform(master_param::midi_mod_wheel, _cv_state.midi_mod_wheel.data(), input.data.sample_count);
+  master_automation.continuous_real_transform(master_param::midi_ch_vol, _cv_state.midi_ch_vol.data(), input.data.sample_count);
+  master_automation.continuous_real_transform(master_param::midi_ch_press, _cv_state.midi_ch_press.data(), input.data.sample_count);
+  master_automation.continuous_real_transform(master_param::midi_pitch_bend, _cv_state.midi_pitch_bend.data(), input.data.sample_count);
   for(std::int32_t i = 0; i < master_gcv_count; i++)
   { 
     _cv_state.gcv_bi[i].buffer.flags.bipolar = true;

@@ -19,6 +19,7 @@ public audio_part_processor
   std::int32_t _type;
   std::int32_t _am_src;
   std::int32_t _sync_src;
+  std::int32_t _pb_range;
   std::int32_t _kbd_track;
   std::int32_t _dsf_parts;
   std::int32_t _basic_type;

@@ -12,25 +12,42 @@
 - x run the vst validator
 - x don't forget to tag
 
-* wishlist small
-- pitchbend
-- dont release the generic build
-- clearer voice/global distinction
-- provide separate binaries for fx/ins mode
+* done changes current release
+- free-running random lfo
+- filter n/a options from dropdowns
+- finetune -100/+100 cents
+- rename dialog/filebox in theme
+- split fx/inst to different binaries
+- fix text edit/focus (save/load, exact-edit)
+- midi modwheel + volume
+- midi expression (volume) as mod source
+- midi pitchbend as mod source plus bend range semis
+- midi stuff docs + make good presets
 - save ui size/theme/last directory in user settings
 
+* wishlist small
+- new images/screenshots
+
+* bugs
+- parameter flush bug when playing bitwig
+
 * wishlist big
+- Midi MPE
+- global envs
 - CLAP support
 - Linux support
+- more fm control (+mix?)
+- per-voice delay/reverb
 - Mac support (contact kvr)
 - osc types: feedback lead
 - slope controls for cvu/b
 - slope controls for cv matrix
-- filter types: formant, vowel
 - noise types: fractal, perlin
 - scale CV amount by global CV param
 - make more presets + group by folder
-- improve current noise generator (1/fs)
+- incorporate chris airwindows filters
+- add new noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
+- filter types: formant, vowel, zero-feedback-delay, ladder
 - improve dsf generator: high partials roll off too fast + allow falloff to the left

@@ -85,7 +85,7 @@ list_items(list_item const& item, std::int32_t count)
     std::string name = item.name;
     name += std::to_string(i + 1);
     std::string id = std::string(item.id) + "-" + std::to_string(i);
-    result.push_back({ id, name, {} });
+    result.push_back({ id, name });
   }
   return result;
 }
@@ -106,7 +106,7 @@ multi_list_items(
       if(suffixes != nullptr && suffixes[i] != nullptr) name += " " + std::string(suffixes[i]);
       if(counts[i] > 1 && sub_menu) sub_menu_items.push_back(name);
       std::string id = std::string(items[i].id) + "-" + std::to_string(j);
-      result.push_back({id, name, sub_menu_items });
+      result.push_back({id, name, sub_menu_items, -1, -1, -1 });
     }
   return result;
 } 
@@ -129,7 +129,7 @@ zip_list_items(list_item const* items1, std::int32_t const* counts1,
           name += " " + std::to_string(j + 1);
           submenu_path.push_back(name);
         }
-        result.push_back({id, name, submenu_path});
+        result.push_back({id, name, submenu_path, i, j , 0});
       }
       else for(std::int32_t k = 0; k < counts2[i]; k++)
       {
@@ -144,7 +144,7 @@ zip_list_items(list_item const* items1, std::int32_t const* counts1,
         }
         name = name + " " + items2[i][k].name;
         submenu_path.push_back(name);
-        result.push_back({ id, name, submenu_path });
+        result.push_back({ id, name, submenu_path, i, j, k });
       }
   return result; 
 }

@@ -43,6 +43,7 @@ static param_descriptor_data const lfo_basic_type_data = { { "Basic", "Basic typ
 static param_descriptor_data const lfo_basic_offset_data = { { "Offset", "Basic offset" }, "%", param_kind::voice, percentage_01_bounds(0.0f) };
 static param_descriptor_data const lfo_basic_pw_data = { { "PW", "Basic PW" }, "%", param_kind::voice, percentage_01_bounds(1.0f) };
 static param_descriptor_data const lfo_rand_type_data = { { "Rnd", "Random type" }, "", param_kind::voice, param_type::list, { &lfo_rand_types, lfo_rand_type::slope } };
+static param_descriptor_data const lfo_rand_free_data = { { "Free", "Free running" }, param_kind::voice, false };
 static param_descriptor_data const lfo_rand_seedx_data = { { "SeedX", "Random seed X" }, "", param_kind::voice, param_type::knob, { 1, 256, 1 } };
 static param_descriptor_data const lfo_rand_seedy_data = { { "SeedY", "Random seed Y" }, "", param_kind::voice, param_type::knob, { 1, 256, 1 } };
 static param_descriptor_data const lfo_rand_rand_steps_data = { { "RandX", "Randomize X" }, param_kind::voice, false };
@@ -77,6 +78,7 @@ vlfo_params[lfo_param::count] =
   { "{3522F726-2A14-4D50-A8D7-18472144328C}", lfo_basic_offset_data }, 
   { "{43BE423A-9F74-4041-B601-7CB0C4F3F0A3}", lfo_basic_pw_data },
   { "{86C7F58F-CD51-4E69-AD66-B2972B8D4B2E}", lfo_rand_type_data },
+  { "{D99853D5-FD71-4417-8DC7-7ADCD80DD93D}", lfo_rand_free_data },
   { "{3234DC7B-4345-4DEA-8BDA-EEFF6439580A}", lfo_rand_seedx_data },
   { "{A4474F5D-8B86-4285-B0ED-33188A6DC01F}", lfo_rand_seedy_data },
   { "{821E8CA4-3EE8-45CF-B526-10D46FC390CA}", lfo_rand_rand_steps_data },
@@ -112,6 +114,7 @@ glfo_params[lfo_param::count] =
   { "{F98D6477-FDF4-4389-96DC-2E369DC0F6B9}", lfo_basic_offset_data },
   { "{B80D3669-EF18-468A-81F8-5DF1C750E009}", lfo_basic_pw_data },
   { "{BC3D8BC1-6596-4CA0-A51A-4128907225B7}", lfo_rand_type_data },
+  { "{9C240ADC-E02A-483C-B627-5C3D58B53168}", lfo_rand_free_data },
   { "{57DCF0B9-C6FF-4C1E-A673-90EF55DF718B}", lfo_rand_seedx_data }, 
   { "{1EA74D6F-0C8B-4C96-9E35-2C4145860A38}", lfo_rand_seedy_data },
   { "{CA48F606-4CDD-468A-B6BE-00AEB08686C5}", lfo_rand_rand_steps_data }, 

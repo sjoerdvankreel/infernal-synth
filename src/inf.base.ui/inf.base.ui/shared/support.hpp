@@ -25,9 +25,6 @@ plugin_editor_width(plugin_controller const* controller, std::int32_t selected_s
 std::string
 get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);
 
-void
-show_host_menu_for_param(base::plugin_controller* controller, std::int32_t param_index, juce::LookAndFeel* lnf);
-
 inline float
 get_router_width(inf::base::plugin_controller const* controller)
 { return get_scaled_size(controller, router_width_min, router_width_max); }

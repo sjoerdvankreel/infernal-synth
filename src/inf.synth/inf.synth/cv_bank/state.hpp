@@ -78,6 +78,11 @@ struct cv_bank_state
   std::vector<float> key;
   std::vector<float> key_inv;
   std::vector<float> velo;
+  std::vector<float> midi_mod_wheel;
+  std::vector<float> midi_ch_vol;
+  std::vector<float> midi_ch_press;
+  std::vector<float> midi_pitch_bend;
+
   std::array<cv_bank_storage, venv_count> venv;
   std::array<cv_bank_storage, vlfo_count> vlfo;
   std::array<cv_bank_storage, glfo_count> glfo;

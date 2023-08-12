@@ -44,16 +44,20 @@ audio_processor::audio_check(float const* const* audio)
 void
 audio_processor::automation_check()
 {
+  // Renoise comes with values slightly out of bounds, maybe because of interpolation?
+  // Cannot clamp() because that is a major performance hit.
+  float const epsilon = 1.0E-5f;
+  (void) epsilon; // Debug assert.
   for (std::int32_t p = 0; p < _topology->input_param_count; p++)
   {
     auto const& descriptor = *_topology->params[p].descriptor;
     if(descriptor.data.is_continuous())
       for (std::int32_t s = 0; s < _input.data.sample_count; s++)
-        assert(0.0f <= _input.continuous_automation_raw[p][s] && 
-          _input.continuous_automation_raw[p][s] <= 1.0f);
+        assert(-epsilon <= _input.continuous_automation_raw[p][s] &&
+          _input.continuous_automation_raw[p][s] <= 1.0f + epsilon);
     else if(descriptor.data.type == param_type::real)
-      assert(0.0f <= _input.block_automation_raw[p].real && 
-        _input.block_automation_raw[p].real <= 1.0f);
+      assert(-epsilon <= _input.block_automation_raw[p].real &&
+        _input.block_automation_raw[p].real <= 1.0f + epsilon);
     else
       assert(descriptor.data.discrete.min <= _input.block_automation_raw[p].discrete 
         && _input.block_automation_raw[p].discrete <= descriptor.data.discrete.max);
