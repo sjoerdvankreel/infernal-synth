@@ -9,6 +9,26 @@ using namespace inf::base;
 
 namespace inf::base::ui {
 
+void
+show_host_menu_for_param(base::plugin_controller* controller, std::int32_t param_index, juce::LookAndFeel* lnf)
+{
+  PopupMenu menu;
+  menu.setLookAndFeel(lnf);
+  auto host_menu = controller->host_menu_for_param_index(param_index);
+  for (std::int32_t i = 0; i < host_menu->item_count(); i++)
+  {
+    bool enabled;
+    bool checked;
+    std::string name;
+    host_menu->get_item(i, name, enabled, checked);
+    menu.addItem(i + 1, name, enabled, checked);
+  }
+  menu.showMenuAsync(PopupMenu::Options(), [host_menu = host_menu.release()](int option) {
+    if (option != 0) host_menu->item_clicked(option - 1);
+    delete host_menu;
+  });
+}
+
 std::string
 format_label_short(plugin_controller const* controller, std::int32_t param_index)
 {

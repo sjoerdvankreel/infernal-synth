@@ -82,28 +82,6 @@ vst_controller::reload_editor(std::int32_t width)
   _current_editor->set_width(width);
 }
 
-std::u16string
-vst_controller::host_name() const
-{
-  String128 name;
-  IPtr<IHostApplication> app;
-  if(hostContext->queryInterface(IHostApplication::iid, reinterpret_cast<void**>(&app)) != kResultOk) return {};
-  if(app->getName(name) != kResultOk) return {};
-  return std::u16string(name);
-}
-
-tresult PLUGIN_API 
-vst_controller::getMidiControllerAssignment(int32 bus_index, int16 channel, CtrlNumber midi_ctrl_nr, ParamID& id)
-{
-  // VST3PluginTestHost crashes if we map any midi controller.
-  if(std::u16string(u"VST3PluginTestHost Standalone") == host_name()) return kResultFalse;
-  std::int32_t target_tag;
-  if(bus_index != 0) return kResultFalse;
-  if(!map_midi_control(midi_ctrl_nr, target_tag)) return kResultFalse;
-  id = static_cast<ParamID>(target_tag);
-  return kResultTrue;
-}
-
 void 
 vst_controller::restart() 
 { 
@@ -186,6 +164,8 @@ vst_controller::factory_presets(std::string const& plugin_file) const
   std::string dot_extension = ".vstpreset";
   std::vector<inf::base::external_resource> result;
   auto path = std::filesystem::path(plugin_file).parent_path().parent_path() / "Resources" / "Presets";
+  if(topology()->is_instrument()) path = path / "Instrument";
+  else path = path / "Fx";
   for (auto const& entry: std::filesystem::directory_iterator(path))
   {
     if (entry.path().extension().string() != dot_extension) continue;
@@ -203,7 +183,7 @@ vst_controller::setState(IBStream* state)
   if(state == nullptr) return kResultFalse;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  stream.load_controller(*topology(), patch_meta_data());
+  stream.load_controller(*topology(), meta_data());
   reloaded();
   return kResultOk;
 }
@@ -214,7 +194,7 @@ vst_controller::getState(IBStream* state)
   if (state == nullptr) return kResultFalse;
   IBStreamer streamer(state, kLittleEndian);
   vst_io_stream stream(&streamer);
-  stream.save_controller(*topology(), patch_meta_data());
+  stream.save_controller(*topology(), meta_data());
   return kResultOk;
 }
 
@@ -315,7 +295,7 @@ vst_controller::save_preset(std::string const& path)
   MemoryStream controller_state;
   IBStreamer controller_streamer(&controller_state, kLittleEndian);
   vst_io_stream controller_stream(&controller_streamer);
-  if (!controller_stream.save_controller(*_topology, patch_meta_data())) return;
+  if (!controller_stream.save_controller(*_topology, meta_data())) return;
   if (controller_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
 
   // Dump both plus metadata to preset format.

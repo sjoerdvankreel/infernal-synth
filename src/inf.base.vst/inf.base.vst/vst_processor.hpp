@@ -12,7 +12,6 @@
 #include <chrono>
 #include <memory>
 #include <vector>
-#include <atomic>
 
 namespace inf::base::vst {
 

@@ -79,7 +79,6 @@ struct topology_info
   virtual void init_factory_preset(param_value* state) const { init_all_param_defaults(state); }
 
   // Metadata and conversions (backwards compat).
-  virtual char const* vendor_name() const = 0;
   virtual char const* plugin_name() const = 0;
   virtual std::uint16_t version_major() const = 0;
   virtual std::uint16_t version_minor() const = 0;

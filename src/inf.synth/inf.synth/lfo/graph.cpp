@@ -18,7 +18,6 @@ lfo_graph::needs_repaint(std::int32_t runtime_param) const
 std::int32_t
 lfo_graph::sample_count(param_value const* state, float sample_rate) const
 {
-  std::int32_t const rand_free_cycles = 5;
   automation_view automation(topology(), state, id());
   float samples = cv_graph_rate / automation.block_real_transform(lfo_param::rate);
   if(automation.block_discrete(lfo_param::synced) != 0)
@@ -26,11 +25,7 @@ lfo_graph::sample_count(param_value const* state, float sample_rate) const
     float timesig = lfo_timesig_values[automation.block_discrete(lfo_param::tempo)];
     samples = timesig_to_samples(cv_graph_rate, graph_bpm, timesig);
   }
-  auto result = static_cast<std::int32_t>(samples);
-  if(automation.block_discrete(lfo_param::type) == lfo_type::random &&
-     automation.block_discrete(lfo_param::rand_free) != 0)
-    result *= rand_free_cycles;
-  return result;
+  return static_cast<std::int32_t>(samples);
 }
 
 bool 

@@ -28,7 +28,7 @@ oscillator_processor(
 topology_info const* topology, std::int32_t index, float sample_rate,
 block_input_data const& input, std::int32_t midi, std::int32_t midi_offset, oscillator_state* state):
 audio_part_processor(topology, { part_type::vosc, index }, sample_rate, vcv_route_output::vosc),
-_on(), _type(), _am_src(), _sync_src(), _pb_range(), _kbd_track(0), _dsf_parts(), _basic_type(), 
+_on(), _type(), _am_src(), _sync_src(), _kbd_track(0), _dsf_parts(), _basic_type(), 
 _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
 {
   assert(state != nullptr);
@@ -40,7 +40,6 @@ _uni_voices(), _midi_note(), _state(state), _midi_offset(midi_offset)
   _type = automation.block_discrete(osc_param::type);
   _am_src = automation.block_discrete(osc_param::am_src);
   _sync_src = automation.block_discrete(osc_param::sync_src);
-  _pb_range = automation.block_discrete(osc_param::pb_range);
   _dsf_parts = automation.block_discrete(osc_param::dsf_parts);
   _basic_type = automation.block_discrete(osc_param::basic_type);
   _uni_voices = automation.block_discrete(osc_param::uni_voices);
@@ -123,13 +122,11 @@ oscillator_processor::process(oscillator_input const& input, float const* const*
   float const* pm = params[osc_param::pm];
   float const* fm = params[osc_param::fm];
   float const* cent = params[osc_param::cent];
-  float const* pitch = params[osc_param::pitch];
   float const* detune = params[osc_param::uni_dtn];
   float const* spread = params[osc_param::uni_sprd];
   float const* am_mix = params[osc_param::am_mix];
   float const* am_ring = params[osc_param::am_ring];
 
-  float fpb_range = static_cast<float>(_pb_range);
   std::int32_t uni_voices = (allow_unison ? _uni_voices : 1);
   float voice_apply = uni_voices == 1 ? 0.0f : 1.0f;
   float voice_count = static_cast<float>(uni_voices);
@@ -149,16 +146,10 @@ oscillator_processor::process(oscillator_input const& input, float const* const*
   {
     // Midi switching for mono mode.
     if (s == input.new_midi_start_pos) update_midi_kbd(*input.block, input.new_midi);
-
-    // Unison stereo spread.
     float spread_apply = spread[s] * voice_apply * 0.5f;
     pan_min[s] = 0.5f - spread_apply;
     pan_max[s] = 0.5f + spread_apply;
-
-    // Base frequency and pitch mod.
-    float midi_cent = _midi_note + cent[s] + pitch[s] * fpb_range;
-
-    // Unison detune and portamento.
+    float midi_cent = _midi_note + cent[s];
     float detune_apply = detune[s] * voice_apply * 0.5f;
     midi_min[s] = midi_cent - detune_apply;
     midi_max[s] = midi_cent + detune_apply;

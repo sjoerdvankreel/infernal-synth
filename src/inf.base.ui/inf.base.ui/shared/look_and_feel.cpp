@@ -71,24 +71,24 @@ _controller(controller)
     try_load_theme_color(colors::tooltip_background_low, colors, "tooltip_background_low");
     try_load_theme_color(colors::tooltip_background_high, colors, "tooltip_background_high");
 
-    try_load_theme_color(colors::alert_text, colors, "alert_text");
-    try_load_theme_color(colors::alert_header_text, colors, "alert_header_text");
-    try_load_theme_color(colors::alert_outline_low, colors, "alert_outline_low");
-    try_load_theme_color(colors::alert_outline_high, colors, "alert_outline_high");
-    try_load_theme_color(colors::alert_background_low, colors, "alert_background_low");
-    try_load_theme_color(colors::alert_background_high, colors, "alert_background_high");
+    try_load_theme_color(colors::dialog_text, colors, "dialog_text");
+    try_load_theme_color(colors::dialog_header_text, colors, "dialog_header_text");
+    try_load_theme_color(colors::dialog_outline_low, colors, "dialog_outline_low");
+    try_load_theme_color(colors::dialog_outline_high, colors, "dialog_outline_high");
+    try_load_theme_color(colors::dialog_background_low, colors, "dialog_background_low");
+    try_load_theme_color(colors::dialog_background_high, colors, "dialog_background_high");
 
-    try_load_theme_color(colors::dialog_title, colors, "dialog_title");
-    try_load_theme_color(colors::dialog_file_text, colors, "dialog_file_text");
-    try_load_theme_color(colors::dialog_background, colors, "dialog_background"); 
-    try_load_theme_color(colors::dialog_file_background, colors, "dialog_file_background");
-    try_load_theme_color(colors::dialog_label_text, colors, "dialog_label_text");
-    try_load_theme_color(colors::dialog_label_background, colors, "dialog_label_background");
-    try_load_theme_color(colors::dialog_button_text, colors, "dialog_button_text");
-    try_load_theme_color(colors::dialog_button_background, colors, "dialog_button_background");
-    try_load_theme_color(colors::dialog_selector_text, colors, "dialog_selector_text");
-    try_load_theme_color(colors::dialog_selector_highlight, colors, "dialog_selector_highlight");
-    try_load_theme_color(colors::dialog_selector_highlight_text, colors, "dialog_selector_highlight_text");
+    try_load_theme_color(colors::file_box_title, colors, "file_box_title");
+    try_load_theme_color(colors::file_box_file_text, colors, "file_box_file_text");
+    try_load_theme_color(colors::file_box_background, colors, "file_box_background");
+    try_load_theme_color(colors::file_box_file_background, colors, "file_box_file_background");
+    try_load_theme_color(colors::file_box_label_text, colors, "file_box_label_text");
+    try_load_theme_color(colors::file_box_label_background, colors, "file_box_label_background");
+    try_load_theme_color(colors::file_box_button_text, colors, "file_box_button_text");
+    try_load_theme_color(colors::file_box_button_background, colors, "file_box_button_background");
+    try_load_theme_color(colors::file_box_selector_text, colors, "file_box_selector_text");
+    try_load_theme_color(colors::file_box_selector_highlight, colors, "file_box_selector_highlight");
+    try_load_theme_color(colors::file_box_selector_highlight_text, colors, "file_box_selector_highlight_text");
 
     try_load_theme_color(colors::selector_label_text, colors, "selector_label_text");
     try_load_theme_color(colors::selector_label_outline_low, colors, "selector_label_outline_low");
@@ -361,9 +361,9 @@ inf_look_and_feel::drawAlertBox(
   dummy.setLookAndFeel(this);
   auto bounds = w.getLocalBounds().toFloat();
   fill_gradient_rounded_rectangle(g, dummy, bounds,
-    colors::alert_background_low, colors::alert_background_high, 0.0f, 0.25f);
+    colors::dialog_background_low, colors::dialog_background_high, 0.0f, 0.25f);
   stroke_gradient_rounded_rectangle(g, dummy, bounds,
-    colors::alert_outline_low, colors::alert_outline_high, 0.0f, 0.25f, 2.0f);
+    colors::dialog_outline_low, colors::dialog_outline_high, 0.0f, 0.25f, 2.0f);
 }
 
 int 

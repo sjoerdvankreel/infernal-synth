@@ -1,51 +1,23 @@
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <vector>
 
-using namespace juce;
-
 namespace inf::base {
 
 std::map<std::string, std::string>& 
-plugin_controller::patch_meta_data()
+plugin_controller::meta_data()
 {
   std::vector<std::string> unknown_keys;
   std::vector<std::string> known_keys;
-  known_keys.push_back(patch_meta_factory_preset_key);
-  for(auto iter = _patch_meta_data.begin(); iter != _patch_meta_data.end(); ++iter)
+  known_keys.push_back(theme_key);
+  known_keys.push_back(ui_size_key);
+  known_keys.push_back(factory_preset_key);
+  known_keys.push_back(last_directory_key);
+  for(auto iter = _meta_data.begin(); iter != _meta_data.end(); ++iter)
     if(std::find(known_keys.begin(), known_keys.end(), iter->first) == known_keys.end())
       unknown_keys.push_back(iter->first);
   for(std::size_t i = 0; i < unknown_keys.size(); i++)
-    _patch_meta_data.erase(unknown_keys[i]);
-  return _patch_meta_data;
-}
-
-juce::PropertiesFile::Options 
-plugin_controller::global_meta_options()
-{
-  PropertiesFile::Options options;
-  options.filenameSuffix = ".xml";
-  options.processLock = &_global_meta_lock;
-  options.folderName = juce::String(topology()->vendor_name());
-  options.applicationName = juce::String(topology()->plugin_name());
-  options.storageFormat = PropertiesFile::StorageFormat::storeAsXML;
-  return options;
-}
-
-std::string 
-plugin_controller::get_global_meta(std::string const& key)
-{
-  ApplicationProperties properties;
-  properties.setStorageParameters(global_meta_options());
-  return properties.getUserSettings()->getValue(juce::String(key)).toStdString();
-}
-
-void 
-plugin_controller::set_global_meta(std::string const& key, std::string const& value)
-{
-  ApplicationProperties properties;
-  properties.setStorageParameters(global_meta_options());
-  properties.getUserSettings()->setValue(juce::String(key), juce::String(value));
-  properties.saveIfNeeded();
+    _meta_data.erase(unknown_keys[i]);
+  return _meta_data;
 }
 
 void

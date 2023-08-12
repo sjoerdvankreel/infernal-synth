@@ -62,8 +62,6 @@ cv_bank_processor::input_buffer_global(std::int32_t input, std::int32_t index) c
   switch (input)
   {
   case gcv_route_input::off: assert(false); return nullptr;
-  case gcv_route_input::midi_pb: return _state->midi_pb.data();
-  case gcv_route_input::midi_cp: return _state->midi_cp.data();
   case gcv_route_input::glfo: return _state->glfo[index].buffer.values;
   case gcv_route_input::gcv_bi: return _state->gcv_bi[index].buffer.values;
   case gcv_route_input::gcv_uni: return _state->gcv_uni[index].buffer.values;
@@ -80,8 +78,6 @@ cv_bank_processor::input_buffer_voice(std::int32_t input, std::int32_t index) co
   case vcv_route_input::key: return _state->key.data();
   case vcv_route_input::velo: return _state->velo.data();
   case vcv_route_input::key_inv: return _state->key_inv.data();
-  case vcv_route_input::midi_pb: return _state->midi_pb.data();
-  case vcv_route_input::midi_cp: return _state->midi_cp.data();
   case vcv_route_input::vlfo: return _state->vlfo[index].buffer.values;
   case vcv_route_input::venv: return _state->venv[index].buffer.values;
   case vcv_route_input::glfo: return _state->glfo[index].buffer.values;
@@ -102,8 +98,6 @@ cv_bank_processor::input_bipolar_global(std::int32_t input, std::int32_t index) 
   case gcv_route_input::off: return false;
   case gcv_route_input::gcv_bi: return true;
   case gcv_route_input::gcv_uni: return false;
-  case gcv_route_input::midi_pb: return true;
-  case gcv_route_input::midi_cp: return false;
   case gcv_route_input::glfo: return _state->glfo[index].buffer.flags.bipolar;
   default: assert(false); return false;
   }
@@ -118,8 +112,6 @@ cv_bank_processor::input_bipolar_voice(std::int32_t input, std::int32_t index) c
   case vcv_route_input::key: return false;
   case vcv_route_input::velo: return false;
   case vcv_route_input::key_inv: return false;
-  case vcv_route_input::midi_pb: return true;
-  case vcv_route_input::midi_cp: return false;
   case vcv_route_input::gcv_bi: return true;
   case vcv_route_input::gcv_uni: return false;
   case vcv_route_input::gcv_bi_hold: return true;
