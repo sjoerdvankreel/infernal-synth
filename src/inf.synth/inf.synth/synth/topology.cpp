@@ -91,6 +91,18 @@ synth_topology::convert_param(
       }
     }
 
+  // 1.3 changed oscillator cents from +/-50 to +/-100.
+  if(old_major < 1 || (old_major == 1 && old_minor < 3))
+    for (std::int32_t i = 0; i < vosc_count; i++)
+    {
+      std::int32_t osc_start = param_bounds[part_type::vosc][i];
+      if(index == osc_start + osc_param::cent)
+      {
+        float old_in_range = real_bounds::linear(-0.5f, 0.5f).to_range(old_value.real);
+        return param_value(params[index].descriptor->data.real.dsp.from_range(old_in_range));
+      }
+    }
+
   return old_value;
 }
 
@@ -512,6 +524,22 @@ synth_topology::init_factory_preset(param_value* state) const
   else init_fx_factory_preset(state);
 }
 
+void
+synth_topology::set_default_instrument_cv(param_value* state) const
+{
+
+  // Map some logical defaults.
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in1, "Velocity");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op1, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out1, "V.Out Gain");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in2, "MIDI CP");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op2, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out2, "V.Out Gain");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in3, "MIDI PB");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op3, "Add");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out3, "Osc 1 Pitch");
+}
+
 void 
 synth_topology::init_fx_clear_patch(param_value* state) const
 {
@@ -530,6 +558,7 @@ void
 synth_topology::init_instrument_clear_patch(param_value* state) const
 {
   topology_info::init_clear_patch(state);
+  set_default_instrument_cv(state);
 
   // Bare minimum to have sound.
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
@@ -647,6 +676,7 @@ void
 synth_topology::init_instrument_factory_preset(param_value* state) const
 {
   topology_info::init_factory_preset(state);
+  set_default_instrument_cv(state);
 
   // osc 1 detuned saw
   set_ui_value(state, part_type::vosc, 0, osc_param::on, "On");
@@ -745,20 +775,17 @@ synth_topology::init_instrument_factory_preset(param_value* state) const
   set_ui_value(state, part_type::venv, 0, envelope_param::release2_slope, "-33");
 
   // vcv velo to voice amp, vlfo1 to osc 1 cent, env 2 to filter freq, cvu 2 to filter freq
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op1, "Mul");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in1, "Velocity");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out1, "V.Out Gain");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op2, "Add");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in2, "V.LFO 1");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out2, "Osc 1 Cent");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::amt2, "10");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in3, "Env 2");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out3, "V.FX 2 StVar Frq");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op3, "Mul");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in4, "CVU 2");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out4, "V.FX 2 StVar Frq");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::off4, "20");
-  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op4, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op4, "Add");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in4, "V.LFO 1");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out4, "Osc 1 Cent");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::amt4, "10");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in5, "Env 2");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out5, "V.FX 2 StVar Frq");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op5, "Mul");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::in6, "CVU 2");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::out6, "V.FX 2 StVar Frq");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::off6, "20");
+  set_ui_value(state, part_type::vcv_bank, 0, cv_bank_param::op6, "Mul");
 
   // glfo 1 to filter freq & master cvs
   set_ui_value(state, part_type::gcv_bank, 0, cv_bank_param::in1, "G.LFO 1");
@@ -796,7 +823,9 @@ master_params[master_param::count] =
   { "{060B5E5E-2E49-4DF1-90B8-8D8F87E98707}", { { "CVU 2", "CVU 2" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
   { "{580FF8F1-4C06-4562-B4A0-702355B6E152}", { { "CVB 2", "CVB 2" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } },
   { "{DD9A20AD-563A-4855-BAEF-2C53E6B94815}", { { "CVU 3", "CVU 3" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } },
-  { "{B3B033A3-B615-4AD2-81AB-5CB769891BB0}", { { "CVB 3", "CVB 3" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } }
+  { "{B3B033A3-B615-4AD2-81AB-5CB769891BB0}", { { "CVB 3", "CVB 3" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } },
+  { "{632B9205-8EEC-4CB4-8071-B101195DCB80}", { { "PB", "MIDI Pitchbend" }, "%", param_kind::continuous, percentage_m11_bounds(0.0f) } },
+  { "{7C6B9AD7-BED5-48DD-8ED2-0073B80F1A23}", { { "CP", "MIDI Channel Pressure" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } }
 };
 
 param_descriptor const

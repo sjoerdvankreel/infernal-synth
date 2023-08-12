@@ -32,6 +32,8 @@ static list_item const gcv_route_outputs[gcv_route_output::count] = {
 // input routing
 static list_item const gcv_route_inputs[gcv_route_input::count] = {
   { "{E26F7364-965D-4CF3-AE95-178C1EEA8BCB}", "Off" },
+  { "{AA6C4A15-05D1-4732-B90E-51980F44A294}", "MIDI PB" },
+  { "{06368117-D25D-4734-903A-8097C16CEF38}", "MIDI CP" },
   { "{294CEAF7-C69B-4ECA-BB44-A727E7872DCA}", "CVU" },
   { "{C8CF0423-29D7-4FB3-8B17-2B1B5AE735DC}", "CVB" },
   { "{862452FE-1786-48A8-9F60-33030BB8B3C9}", "G.LFO" } };
@@ -40,6 +42,8 @@ static list_item const vcv_route_inputs[vcv_route_input::count] = {
   { "{81C92941-AD92-47BD-B1DC-7A46AB6E088D}", "Velocity" },
   { "{6211FF30-9D1F-4011-B8AA-A3DF08D84B71}", "Key" },
   { "{9C81D502-DF00-4759-A2D0-B4FBCED9D9B0}", "Key Inv" },
+  { "{D096E91B-0572-418A-B0E8-3412114228C5}", "MIDI PB" },
+  { "{C58C3FBE-F831-44AA-89FC-8E5FDB90CEBC}", "MIDI CP" },
   { "{F935E7CE-CC76-4548-B22F-4476A304BCEA}", "Env" },
   { "{33038A70-7256-46A8-AF33-6676157709C4}", "CVU" },
   { "{1209DAFC-6F0B-452E-B613-01097DB6249A}", "CVU" }, // Hold
@@ -119,7 +123,8 @@ static list_item const vcv_route_vosc_targets[vcv_route_vosc_target::count] = {
   { "{8F07B23B-8F7E-4388-BBA7-968A30957F40}", "PM" },
   { "{987BE249-E672-4055-BFEA-BCDA828DB269}", "FM" },
   { "{7580316C-1C46-46B3-A230-E3F0BAA3634C}", "Cent" },
-  { "{495D49A2-97F4-4B4D-A6B1-0BE194B09B68}", "Uni Dtn" }, 
+  { "{C3F69DA2-C7DA-4624-B870-70894044503B}", "Pitch" },
+  { "{495D49A2-97F4-4B4D-A6B1-0BE194B09B68}", "Uni Dtn" },
   { "{0348A9C4-0414-418E-AC83-965C6F58487D}", "Uni Sprd" },
   { "{DBCDDC0D-8CA2-4DC1-A06C-A93AC8AF828A}", "AM Ring" },
   { "{D1FB8DF5-9E17-493C-B564-324045FE18C1}", "AM Mix" },
@@ -171,11 +176,11 @@ static std::vector<list_item> const gcv_route_output_target_list = zip_list_item
 
 // input sources
 static char const* const vcv_route_input_suffixes[vcv_route_input::count] = {
-  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
+  nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, "Hold", nullptr, "Hold", nullptr, nullptr, "Hold" };
 static std::vector<list_item> const vcv_route_input_sources_list = multi_list_items(
   vcv_route_inputs, vcv_route_input_suffixes, vcv_route_input_counts, vcv_route_input::count, true);
 static std::vector<list_item> const gcv_route_input_sources_list = multi_list_items(
-  gcv_route_inputs,  nullptr, gcv_route_input_counts, gcv_route_input::count, false);
+  gcv_route_inputs, nullptr, gcv_route_input_counts, gcv_route_input::count, false);
 
 param_descriptor const
 vcv_plot_params[cv_plot_param::count] =
