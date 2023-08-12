@@ -1,3 +1,31 @@
+August 12, 2023 - V1.3 preview.
+
+Implemented some feedback from KVR OSC #174.
+
+V1.3 should be backwards compatible with V1.2, but NOT with v1.2-Instrument only.
+Renoise users: parameter order changed and this will break automation.
+See https://forum.renoise.com/t/saved-automation-data-does-not-respect-vst3s-parameter-id/68461/2.
+
+* New stuff:
+
+- Free-running random lfos.
+- Right-click knob allows exact-edit.
+- UI Size/Theme/Last directory are now shared across plugin instances.
+
+- New oscillator param: pitch bend semitones.
+- New modulation target: oscillator pitch.
+- New modulation sources: midi mod wheel, channel volume, channel pressure, pitch wheel.
+Default "clear" and "init" patches now set up midi PB and midi CP to sensible defaults.
+
+* Fixes:
+- Host no longer steals keyboard focus from load/save dialog.
+- Split fx/instrument to different binaries as some hosts have problems with both in 1 dll.
+
+* Changes:
+- Oscillator cents changed from +/-50 to +/- 100.
+- Renamed dialog/filebox in theme (only interesting for custom themes).
+- Filtered N/A targets from modulation targets (i.e. fx1 filter freq is disabled when fx1 is a wave shaper.)
+
 July 29, 2023 - V1.2.
 
 * No changes.
