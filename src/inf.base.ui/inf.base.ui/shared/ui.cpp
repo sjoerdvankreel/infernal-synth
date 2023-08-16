@@ -1022,7 +1022,7 @@ load_preset_file(
     std::string old_size = state->controller->get_ui_size();
     if (result != 0)
     {
-      auto selected = state->browser->getSelectedFile(0);
+      auto selected = state->browser->getSelectedFile(0); 
       if (!state->controller->load_preset(selected.getFullPathName().toStdString()))
         show_ok_box(state->controller, "Could not load preset file.", lnf_factory(state->controller));        
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
