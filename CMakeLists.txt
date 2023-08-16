@@ -138,19 +138,19 @@ source_group(TREE "../../${INF_BASE_FORMAT_VST_SRC_DIR}" FILES ${INF_BASE_FORMAT
 target_compile_options(infernal.base.format.vst PRIVATE /external:I ${VST3_SDK_SRC_DIR})
 endif()
 
-if(FALSE)
-
-# Inf synth library.
-set(INF_SYNTH_SRC_DIR "src/inf.synth")
-file(GLOB_RECURSE INF_SYNTH_SRC "${INF_SYNTH_SRC_DIR}/*.*")
-add_library(infernal.synth STATIC ${INF_SYNTH_SRC})
-target_include_directories(infernal.synth PRIVATE ${INF_SYNTH_SRC_DIR} ${INF_BASE_SRC_DIR})
-target_include_directories(infernal.synth SYSTEM PRIVATE ${HIIR_SRC_DIR})
-target_include_directories(infernal.synth SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
-target_link_libraries(infernal.synth infernal.base)
+# Inf plugin infernal synth library.
+set(INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR "src/inf.plugin.infernal_synth")
+file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_SRC "${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}/*.*")
+add_library(infernal.plugin.infernal_synth STATIC ${INF_PLUGIN_INFERNAL_SYNTH_SRC})
+target_include_directories(infernal.plugin.infernal_synth PRIVATE ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR} ${INF_BASE_SRC_DIR})
+target_include_directories(infernal.plugin.infernal_synth SYSTEM PRIVATE ${HIIR_SRC_DIR})
+target_include_directories(infernal.plugin.infernal_synth SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+target_link_libraries(infernal.plugin.infernal_synth infernal.base)
 if (MSVC)
-source_group(TREE "../../${INF_SYNTH_SRC_DIR}" FILES ${INF_SYNTH_SRC})
+source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_SRC})
 endif()
+
+if(FALSE)
 
 # Inf synth ui library.
 set(INF_SYNTH_UI_SRC_DIR "src/inf.synth.ui")
