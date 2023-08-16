@@ -18,6 +18,7 @@
 * todo this version
 - fix the demos
 - clap
+- re-do the generic build possibly with obsolete???
 
 * bugs
 - parameter flush bug when playing bitwig
