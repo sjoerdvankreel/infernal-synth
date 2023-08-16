@@ -9,7 +9,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // operation
 static std::vector<list_item> const cv_route_input_ops = {   
@@ -447,4 +447,4 @@ gcv_bank_params[cv_bank_param::count] =
   { "{62B03471-CF37-4D16-A6C5-50057CE0E206}", { { "Scl", "Scale 15" }, "%", param_kind::continuous, percentage_01_bounds(1.0f) } }
 };
  
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

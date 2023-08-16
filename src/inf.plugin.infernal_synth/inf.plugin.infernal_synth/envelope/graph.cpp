@@ -6,7 +6,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 bool
 envelope_graph::needs_repaint(std::int32_t runtime_param) const
@@ -57,4 +57,4 @@ envelope_graph::process_dsp_core(block_input const& input, float* output, float 
   processor.process(envelope_in, buffer);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

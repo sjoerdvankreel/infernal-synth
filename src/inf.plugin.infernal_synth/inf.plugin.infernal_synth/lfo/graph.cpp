@@ -6,7 +6,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 bool
 lfo_graph::needs_repaint(std::int32_t runtime_param) const
@@ -61,4 +61,4 @@ lfo_graph::process_dsp_core(block_input const& input, float* output, float sampl
   processor.process_any(input.data, buffer, scratch);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

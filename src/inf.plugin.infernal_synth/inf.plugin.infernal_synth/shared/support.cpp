@@ -3,7 +3,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 param_value graph_disable_modulation(
 topology_info const* topology, std::int32_t rt_index, param_value value)
@@ -17,4 +17,4 @@ topology_info const* topology, std::int32_t rt_index, param_value value)
   return value;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

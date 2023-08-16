@@ -9,7 +9,7 @@
 #include <cassert>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct lfo_free_processor
 {
@@ -68,5 +68,5 @@ lfo_free_processor::operator()(float frequency, float phase) const
   return 0.0f;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_FREE_HPP

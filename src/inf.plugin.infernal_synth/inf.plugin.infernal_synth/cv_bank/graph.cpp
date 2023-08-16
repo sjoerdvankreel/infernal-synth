@@ -8,7 +8,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static float constexpr vcv_plot_graph_velo = 1.0f;
 static std::vector<std::tuple<std::int32_t, std::int32_t, std::int32_t>> const vtarget_table_out
@@ -143,4 +143,4 @@ cv_bank_graph::process_dsp_core(block_input const& input, float* output, float s
       output[i] *= cv_state.venv[0].buffer.values[i];
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

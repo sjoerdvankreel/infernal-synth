@@ -8,7 +8,7 @@
 #include <inf.plugin.infernal_synth/shared/audio_part_processor.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class cv_bank_processor;
 
@@ -35,5 +35,5 @@ inline amp_bal_processor::
 amp_bal_processor::amp_bal_processor(base::topology_info const* topology, std::int32_t part_type, float sample_rate):
 audio_part_processor(topology, { part_type, 0 }, sample_rate, modulation_type(part_type)) {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_AMP_PROCESSOR_HPP

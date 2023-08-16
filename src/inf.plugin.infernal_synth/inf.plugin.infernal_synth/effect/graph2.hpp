@@ -9,7 +9,7 @@
 #include <array>
 #include <vector>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class effect_graph2 :
 public effect_graph_base
@@ -49,5 +49,5 @@ inline effect_graph2::
 effect_graph2(base::topology_info const* topology, base::part_id id) :
 effect_graph_base(topology, id), _fft(), _graph1(topology, id), _analyzer() {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH2_HPP

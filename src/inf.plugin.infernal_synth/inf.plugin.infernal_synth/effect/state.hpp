@@ -6,7 +6,7 @@
 #include <inf.base/shared/ring_buffer.hpp>
 #include <inf.base/shared/oversampler.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct effect_process_input
 {
@@ -51,5 +51,5 @@ struct effect_state
   effect_state(bool global, float sample_rate, std::int32_t max_sample_count);
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_STATE_HPP

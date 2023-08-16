@@ -3,7 +3,7 @@
 
 #include <inf.base/shared/support.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // https://www.musicdsp.org/en/latest/Filters/117-one-pole-one-zero-lp-hp.html
 struct basic_lp_filter
@@ -36,5 +36,5 @@ basic_lp_filter::init(float rate, float freq)
   a = angle * norm;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SHARED_BASIC_LP_FILTER_HPP

@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static std::vector<list_item> const env_modes = {
   { "{D4FC491C-38AB-4BC6-9076-B74CDFA76772}", "Legato" },
@@ -61,4 +61,4 @@ envelope_params[envelope_param::count] =
   { "{AD5E39BE-C438-4448-A43E-9496352BB545}", { { "S2", "R2 slope" }, "%", param_kind::voice, percentage_m11_bounds(0.0f) } }, 
 }; 
  
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

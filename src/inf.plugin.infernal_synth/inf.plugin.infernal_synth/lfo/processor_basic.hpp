@@ -7,7 +7,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct lfo_basic_processor
 {
@@ -57,5 +57,5 @@ lfo_pulse_processor::operator()(float frequency, float phase) const
   return offset_phase(phase) < (min_pw + (1.0f - min_pw) * pw) * 0.5f ? 1.0f: 0.0f; 
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_BASIC_HPP

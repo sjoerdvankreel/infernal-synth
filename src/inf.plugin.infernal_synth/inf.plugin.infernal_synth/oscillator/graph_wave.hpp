@@ -11,7 +11,7 @@
 #include <array>
 #include <vector>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class oscillator_wave_graph :
 public inf::base::graph_processor
@@ -44,5 +44,5 @@ inline base::param_value oscillator_wave_graph::
 transform_param(std::int32_t rt_index, base::param_value value) const
 { return graph_disable_modulation(topology(), rt_index, value); }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP

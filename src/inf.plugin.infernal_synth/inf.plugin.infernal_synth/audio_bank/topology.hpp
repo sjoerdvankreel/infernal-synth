@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <numeric>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // ---- shared ----
 
@@ -56,5 +56,5 @@ inline std::int32_t constexpr gaudio_route_output_counts[gaudio_route_output::co
 inline std::int32_t constexpr gaudio_route_input_counts[gaudio_route_input::count] = { 1 /* off */, 1 /* voice */, 1 /* external */, geffect_count };
 inline std::int32_t constexpr gaudio_route_output_total_count = std::accumulate(gaudio_route_output_counts, gaudio_route_output_counts + gaudio_route_output::count, 0);
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_TOPOLOGY_HPP

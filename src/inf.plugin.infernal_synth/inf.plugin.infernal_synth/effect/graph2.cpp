@@ -9,7 +9,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 std::int32_t
 effect_graph2::sample_count(param_value const* state, float sample_rate) const
@@ -132,4 +132,4 @@ effect_graph2::dsp_to_plot(graph_plot_input const& input, std::vector<float>& pl
     plot.push_back(std::abs(fft[i].real()) / max);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

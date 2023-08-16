@@ -9,7 +9,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Given control parameter between -1 and 1, returns accumulator 
 // A (e.g. 1.0001) and max value M such that A^samples = M.
@@ -322,4 +322,4 @@ retriggered:
   return result;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

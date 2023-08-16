@@ -2,7 +2,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
  
 void 
 oscillator_spectrum_graph::dsp_to_plot(graph_plot_input const& input, std::vector<float>& plot)
@@ -12,4 +12,4 @@ oscillator_spectrum_graph::dsp_to_plot(graph_plot_input const& input, std::vecto
     plot.push_back(spectrum[i]);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

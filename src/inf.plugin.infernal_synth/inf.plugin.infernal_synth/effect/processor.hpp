@@ -10,7 +10,7 @@
 #include <array>
 #include <cassert>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct scratch_space;
 class cv_bank_processor;
@@ -74,5 +74,5 @@ effect_processor::modulation_type(std::int32_t part_type)
   return gcv_route_output::geffect;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_HPP

@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Per-voice envelope generator.
 class envelope_processor:
@@ -60,5 +60,5 @@ private:
   envelope_split_stage make_split_stage(base::automation_view const& automation, stage_param_ids ids1, std::int32_t split, stage_param_ids ids2) const;
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_PROCESSOR_HPP

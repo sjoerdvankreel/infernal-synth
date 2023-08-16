@@ -4,7 +4,7 @@
 #include <inf.plugin.infernal_synth/shared/part_processor.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class audio_part_processor: 
 public part_processor
@@ -25,5 +25,5 @@ inline audio_part_processor::
 audio_part_processor(base::topology_info const* topology, base::part_id id, float sample_rate, std::int32_t modulation_type):
 part_processor(topology, id, sample_rate), _modulation_id({ modulation_type, id.index }) {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SHARED_AUDIO_PART_PROCESSOR_HPP

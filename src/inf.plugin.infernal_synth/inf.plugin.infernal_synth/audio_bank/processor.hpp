@@ -5,7 +5,7 @@
 #include <inf.plugin.infernal_synth/audio_bank/state.hpp>
 #include <inf.plugin.infernal_synth/audio_bank/topology.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class cv_bank_processor;
 

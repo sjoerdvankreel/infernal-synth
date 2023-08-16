@@ -3,7 +3,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 param_descriptor const
 vamp_params[amp_param::count] =
@@ -19,4 +19,4 @@ gamp_params[amp_param::count] =
   { "{7917BE01-867D-490B-BD72-3CCE267CE872}", { { "Bal", "Balance" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } },
 };
  
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

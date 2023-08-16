@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 inline float constexpr effect_shp_min_gain = 0.1f;
 inline float constexpr effect_shp_max_gain = 32.0f;
@@ -34,5 +34,5 @@ inline float constexpr effect_reverb_comb_length[effect_reverb_comb_count] = {
   1116.0f / 44100.0f, 1188.0f / 44100.0f, 1277.0f / 44100.0f, 1356.0f / 44100.0f,
   1422.0f / 44100.0f, 1491.0f / 44100.0f, 1557.0f / 44100.0f, 1617.0f / 44100.0f };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_CONFIG_HPP

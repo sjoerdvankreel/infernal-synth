@@ -7,7 +7,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct osc_sine_processor
 {
@@ -108,5 +108,5 @@ osc_blamp_triangle_processor::operator()(std::int32_t voice,
   return base::sanity_bipolar(result * triangle_scale);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_BASIC_HPP

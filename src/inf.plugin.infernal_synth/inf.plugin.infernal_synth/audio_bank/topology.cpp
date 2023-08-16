@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static list_item const vaudio_route_inputs[vaudio_route_input::count] = {
   { "{49276AD4-960F-49D4-9B74-A8E4D5A86B6B}", "Off" },
@@ -164,4 +164,4 @@ gaudio_bank_params[audio_bank_param::count] =
   { "{05A9AFDF-D47C-4B86-A532-1B5BB027DB90}", { { "Bal", "Balance 15" }, "%", param_kind::continuous, linear_bounds(0.0f, 1.0f, 0.5f, -100.0f, 100.0f, 1) } }
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

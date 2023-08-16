@@ -6,7 +6,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
  
 static std::vector<list_item> const effect_delay_types = {
   { "{B130A459-A336-4AE6-93F5-AE8CF8D09F0E}", "Feedback" },
@@ -195,4 +195,4 @@ geffect_params[effect_param::gfx_count] =
   { "{46B7C3CF-3BBA-4BFF-AA7F-4DBEB87DDBE8}", effect_reverb_apf_data }
 }; 
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

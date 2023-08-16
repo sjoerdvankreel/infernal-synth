@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // https://github.com/sinshu/freeverb
 void
@@ -70,4 +70,4 @@ effect_processor::process_reverb(effect_process_input const& input, float* const
   }
 }
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

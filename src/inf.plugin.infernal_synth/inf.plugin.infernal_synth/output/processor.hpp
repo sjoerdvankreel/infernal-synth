@@ -8,7 +8,7 @@
 #include <inf.base/plugin/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Cpu usage, clip and voice info.
 class output_processor:
@@ -24,5 +24,5 @@ inline output_processor::
 output_processor(base::topology_info const* topology, float sample_rate):
 audio_part_processor(topology, { part_type::output, 0 }, sample_rate, -1) {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_PROCESSOR_HPP

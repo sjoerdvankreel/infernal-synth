@@ -8,7 +8,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 synth_processor::
 synth_processor(topology_info const* topology, param_value* state, 
@@ -511,4 +511,4 @@ synth_processor::process(block_input const& input, block_output& output)
       _last_automation_previous_block[p] = input.continuous_automation_raw[p][input.data.sample_count - 1];
 }
   
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

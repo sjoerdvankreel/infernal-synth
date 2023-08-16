@@ -8,7 +8,7 @@
 #include <memory>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 inline std::int32_t constexpr master_gcv_count = 3;
 extern base::param_descriptor const master_params[];
@@ -80,5 +80,5 @@ private:
     create_graph_processor_oscillator(base::part_id id, std::int32_t graph_type) const;
 };
  
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SYNTH_TOPOLOGY_HPP

@@ -9,7 +9,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static inline float constexpr reverb_length_sec = 3.0f;
 static inline float constexpr delay_fdbk_length_secs = 5.0f;
@@ -195,4 +195,4 @@ effect_graph1::process_dsp_lr(base::block_input const& input, float sample_rate,
   output_lr[1] = _audio_out[1].data();
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

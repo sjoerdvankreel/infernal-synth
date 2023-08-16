@@ -5,7 +5,7 @@
 #include <inf.plugin.infernal_synth/shared/part_processor.hpp>
 #include <inf.plugin.infernal_synth/shared/basic_lp_filter.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct scratch_space;
 
@@ -56,5 +56,5 @@ public:
   lfo_processor(base::topology_info const* topology, base::part_id id, float sample_rate, float bpm, base::automation_view const& automation);
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_HPP

@@ -4,7 +4,7 @@
 #include <inf.base/topology/topology_info.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class part_processor
 {
@@ -38,5 +38,5 @@ inline part_processor::
 part_processor(base::topology_info const* topology, base::part_id id, float sample_rate):
 _id(id), _sample_rate(sample_rate), _topology(topology) {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SHARED_PART_PROCESSOR_HPP

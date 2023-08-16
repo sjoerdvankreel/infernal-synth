@@ -13,7 +13,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct cv_bank_input
 {
@@ -107,5 +107,5 @@ cv_bank_storage::resize(std::int32_t max_sample_count)
   buffer.values = storage.data();
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_STATE_HPP

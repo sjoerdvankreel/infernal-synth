@@ -7,7 +7,7 @@
 #include <array>
 #include <vector>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class effect_graph_base:
 public inf::base::graph_processor
@@ -24,5 +24,5 @@ inline effect_graph_base::
 effect_graph_base(base::topology_info const* topology, base::part_id id):
 inf::base::graph_processor(topology, id), _audio_in(), _audio_out() {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH_HPP

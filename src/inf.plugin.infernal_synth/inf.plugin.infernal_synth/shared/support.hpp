@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <algorithm>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // For plotting.
 inline float constexpr cv_graph_rate = 500.0f;
@@ -73,5 +73,5 @@ inline void
 unipolar_untransform(cv_buffer& buffer, std::int32_t count)
 { unipolar_untransform(buffer.values, buffer.flags.inverted, buffer.flags.bipolar, count); }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SHARED_SUPPORT_HPP

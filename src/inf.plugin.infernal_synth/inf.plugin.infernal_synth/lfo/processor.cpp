@@ -10,7 +10,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct scratch_space;
 
@@ -256,4 +256,4 @@ lfo_processor::process_any(block_input_data const& input, cv_buffer& buffer, scr
   return performance_counter() - start_time;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

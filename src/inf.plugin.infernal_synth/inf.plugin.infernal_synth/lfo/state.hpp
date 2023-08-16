@@ -7,7 +7,7 @@
 #include <array>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct lfo_basic_state
 {
@@ -78,5 +78,5 @@ lfo_random_state::full_reset()
   level = fast_rand_next(state_y);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_STATE_HPP

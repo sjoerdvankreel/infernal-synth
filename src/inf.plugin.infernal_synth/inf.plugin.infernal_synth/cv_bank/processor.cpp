@@ -5,7 +5,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Global.
 cv_bank_processor::
@@ -339,4 +339,4 @@ cv_bank_processor::modulate(cv_bank_input const& input, float const* const*& res
   return performance_counter() - start_time;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

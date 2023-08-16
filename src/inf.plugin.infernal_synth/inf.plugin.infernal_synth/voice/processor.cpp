@@ -9,7 +9,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 voice_processor::
 voice_processor(topology_info const* topology, float sample_rate,
@@ -253,4 +253,4 @@ bool voice_processor::process(voice_input const& input, cpu_usage& usage)
   return ended;
 }  
   
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

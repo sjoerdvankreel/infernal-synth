@@ -7,7 +7,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // https://www.verklagekasper.de/synths/dsfsynthesis/dsfsynthesis.html
 struct osc_dsf_processor
@@ -46,5 +46,5 @@ osc_dsf_processor::operator()(std::int32_t voice, float frequency,
   return base::sanity_bipolar(x * scale_factor / (y * scale));
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP

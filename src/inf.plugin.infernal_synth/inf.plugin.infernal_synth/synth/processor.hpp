@@ -12,7 +12,7 @@
 #include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
 #include <inf.base/plugin/audio_processor.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Note: release = both note off and no longer tracking automation.
 // Could be improved by differentiating note off and channel reuse using
@@ -102,5 +102,5 @@ private:
   void process_note_off(voice_setup_input const& input, base::note_event const& note);
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SYNTH_PROCESSOR_HPP

@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Chebyshev polynomials of the first kind.
 static inline void
@@ -70,4 +70,4 @@ effect_processor::process_shp_cheby_sum(effect_process_input const& input, float
     });
 }
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

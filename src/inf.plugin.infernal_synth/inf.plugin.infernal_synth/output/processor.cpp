@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 void 
 output_processor::process(base::block_input const& input, output_info const& info, base::block_output& output)
@@ -41,4 +41,4 @@ output_processor::process(base::block_input const& input, output_info const& inf
   output.block_automation_raw[output_start + output_param::high_cpu].discrete = high_use_cpu;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

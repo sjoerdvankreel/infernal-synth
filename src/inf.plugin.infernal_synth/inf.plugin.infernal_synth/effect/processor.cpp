@@ -7,7 +7,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static std::int32_t 
 delay_sample_count(automation_view const& automation, std::vector<float> const& timesig_values, float rate, float bpm, effect_param time, effect_param tempo)
@@ -111,4 +111,4 @@ effect_processor::process_any(effect_input const& input, float* const* out, cv_b
   return result;
 } 
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

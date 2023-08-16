@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 void 
 effect_processor::process_dly(effect_process_input const& input, float* const* out)
@@ -86,4 +86,4 @@ effect_processor::process_dly_multi(effect_process_input const& input, float* co
     }
 }
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

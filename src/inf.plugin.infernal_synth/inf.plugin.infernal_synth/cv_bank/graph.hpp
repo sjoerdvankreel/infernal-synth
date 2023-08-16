@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class cv_bank_graph:
 public inf::base::graph_processor
@@ -30,5 +30,5 @@ inline bool
 cv_bank_graph::needs_repaint(std::int32_t runtime_param) const
 { return topology()->params[runtime_param].descriptor->data.kind != base::param_kind::output; }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_GRAPH_HPP

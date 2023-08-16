@@ -9,7 +9,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct lfo_random_processor
 {
@@ -75,5 +75,5 @@ lfo_random_processor::operator()(float frequency, float phase) const
   return result;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_RANDOM_HPP

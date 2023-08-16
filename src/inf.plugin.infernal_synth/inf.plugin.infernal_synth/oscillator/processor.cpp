@@ -11,7 +11,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // 0 = 100% left, 1 = 100% right, sqrt taper, -3dB at center.
 // https://www.kvraudio.com/forum/viewtopic.php?t=148865.
@@ -354,4 +354,4 @@ oscillator_processor::process(oscillator_input const& input,
   return result;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

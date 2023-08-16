@@ -2,7 +2,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static std::vector<list_item> const usage_sources = {
   { "{EF08E89F-BA8D-4351-B884-28CED7C666DA}", "V.Out" },
@@ -29,4 +29,4 @@ output_params[output_param::count] =
   { "{5E2D8A99-F779-4C12-97D3-66D8ADC02507}", { { "High CPU", "Highest usage CPU" }, "%", param_kind::output, param_type::text, { 0, 100, 0 } } }
 }; 
   
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

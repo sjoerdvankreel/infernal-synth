@@ -6,7 +6,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 bool 
 oscillator_wave_graph::needs_repaint(
@@ -88,4 +88,4 @@ oscillator_wave_graph::process_dsp_core(block_input const& input, float* output,
   else std::copy(_audio_out[0].data(), _audio_out[0].data() + input.data.sample_count, output);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

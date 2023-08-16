@@ -4,7 +4,7 @@
 #include <inf.plugin.infernal_synth/cv_bank/state.hpp>
 #include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Combined CV routing, either voice or global.
 // Handles both modulation and transformation from [0, 1] to dsp range (e.g. 20-20000 for filter freq).
@@ -52,5 +52,5 @@ private:
   std::array<std::array<cv_route_indices, cv_bank_route_count>, max_total_route_output_count> _relevant_indices;
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_PROCESSOR_HPP

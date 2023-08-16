@@ -4,7 +4,7 @@
 #include <inf.base/plugin/state.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct amp_bal_input
 {
@@ -13,5 +13,5 @@ struct amp_bal_input
   base::block_input_data const* block;
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_AMP_STATE_HPP

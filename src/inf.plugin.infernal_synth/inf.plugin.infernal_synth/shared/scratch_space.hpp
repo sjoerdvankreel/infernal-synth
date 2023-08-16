@@ -4,7 +4,7 @@
 #include <inf.base/shared/cont_storage.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Scratch space for anyone who wants it.
 // Storage maintained by synth.
@@ -28,5 +28,5 @@ scratch_space(std::int32_t max_sample_count) :
 storage_f32(count_f32, max_sample_count),
 storage_f64(count_f64, max_sample_count) {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SHARED_SCRATCH_SPACE_HPP

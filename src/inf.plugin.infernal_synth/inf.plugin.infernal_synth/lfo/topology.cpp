@@ -6,7 +6,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
  
 static std::vector<list_item> const lfo_types = {
   { "{BA47C8D9-458A-4FE7-B4EC-E0A5BF6F0073}", "Basic" },
@@ -134,4 +134,4 @@ glfo_params[lfo_param::count] =
   { "{75BE0782-4E29-4111-8BDD-A4E1208B12EE}", lfo_free_rise2_slope_data }
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

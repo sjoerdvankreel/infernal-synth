@@ -6,7 +6,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 audio_bank_data const audio_bank_data::voice =
 {
@@ -41,4 +41,4 @@ vosc_all(stereo_channels, max_sample_count), vosc(), veffect(), geffect(), vosc_
   }
 }
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

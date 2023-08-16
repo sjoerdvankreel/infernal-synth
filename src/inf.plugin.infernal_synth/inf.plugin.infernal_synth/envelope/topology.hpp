@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 extern base::param_descriptor const envelope_params[];
 extern std::vector<float> const envelope_timesig_values;
@@ -31,5 +31,5 @@ struct envelope_type_t { enum value { sustain, release, follow, count }; };
 typedef envelope_type_t::value envelope_type;
 typedef envelope_mode_t::value envelope_mode;
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_TOPOLOGY_HPP

@@ -5,7 +5,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 float const* const*
 audio_bank_processor::input_buffer(std::int32_t input, std::int32_t index) const
@@ -119,4 +119,4 @@ audio_bank_processor::process(block_input_data const& input, part_id id, cv_bank
   return result;
 }
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

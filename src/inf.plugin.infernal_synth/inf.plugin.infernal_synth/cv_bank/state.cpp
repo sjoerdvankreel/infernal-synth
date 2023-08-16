@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 cv_bank_data const cv_bank_data::voice =
 {
@@ -75,4 +75,4 @@ gcv_bi(), gcv_uni(), gcv_bi_hold(), gcv_uni_hold()
   out.resize(max_param_count, max_sample_count);
 }
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

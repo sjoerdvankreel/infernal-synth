@@ -17,7 +17,7 @@
  
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // ---- plugin entry ----
 
@@ -882,4 +882,4 @@ part_descriptors[part_type::count] =
   { "{FEEBA3F5-F248-4C1B-BD8C-F3A492D084E2}", { "Output", "Output" }, part_kind::output, part_type::output, 1, output_params, output_param::count, nullptr }
 };         
                                     
-} // namespace inf::synth                               
+} // namespace inf::plugin::infernal_synth                               

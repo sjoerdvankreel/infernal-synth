@@ -9,7 +9,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Note: unison works by drawing from the same random
 // stream for each voice. The detune and offset parameters
@@ -72,5 +72,5 @@ osc_noise_processor::operator()(std::int32_t voice, float frequency,
   return state->noise_prev_draw;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_NOISE_HPP

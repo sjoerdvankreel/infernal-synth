@@ -7,7 +7,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 audio_part_output 
 amp_bal_processor::process(amp_bal_input const& input, float* const* audio_out, cv_bank_processor& cv)
@@ -37,4 +37,4 @@ amp_bal_processor::process(amp_bal_input const& input, float* const* audio_out, 
   return result;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

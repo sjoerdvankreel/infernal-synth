@@ -5,7 +5,7 @@
 #include <inf.plugin.infernal_synth/effect/topology.hpp>
 #include <inf.plugin.infernal_synth/effect/processor.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Foldback shaper.
 inline float
@@ -30,5 +30,5 @@ void effect_processor::process_shp_basic(effect_process_input const& input, floa
       return (1.0f - mix[s]) * sample + mix[s] * shaper(sample * gain[s]); });
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP

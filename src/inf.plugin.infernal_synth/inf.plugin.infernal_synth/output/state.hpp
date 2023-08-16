@@ -4,7 +4,7 @@
 #include <inf.plugin.infernal_synth/synth/config.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct cpu_usage
 {
@@ -32,5 +32,5 @@ struct output_info
   std::int32_t voice_count;
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_STATE_HPP

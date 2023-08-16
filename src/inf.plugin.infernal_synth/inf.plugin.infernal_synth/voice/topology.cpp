@@ -3,7 +3,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 static std::vector<list_item> const voice_port_trigs = {
   { "{506D3FCE-5A35-4209-9A0E-0931C6EDDC0B}", "Note" },
@@ -38,4 +38,4 @@ voice_params[voice_param::count] =
   { "{1DD53257-2104-4C66-BA00-2B73E9F6BA63}", { { "Tempo", "Portamento tempo" }, "", param_kind::block, param_type::knob_list, { &voice_port_timesig_names, "1/16" } } },
 };
  
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

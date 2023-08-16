@@ -9,7 +9,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // New midi: switching base pitch in mono/legato mode.
 // Ram_in: osc sources for RM/AM. Note that output is part of ram_in.
@@ -54,5 +54,5 @@ struct oscillator_state
   oscillator_state(float sample_rate);
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_STATE_HPP

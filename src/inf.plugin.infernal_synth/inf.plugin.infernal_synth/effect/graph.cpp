@@ -10,7 +10,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Set up and process a single effect bank.
 void
@@ -46,4 +46,4 @@ effect_graph_base::process_graph(block_input const& input, float sample_rate)
   processor->process_any(fx_input, audio_out, cv_bank, scratch);
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

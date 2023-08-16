@@ -4,7 +4,7 @@
 
 using namespace inf::base;
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 void 
 effect_processor::update_flt_stvar_kbd_track(std::int32_t midi)
@@ -149,4 +149,4 @@ effect_processor::process_flt_stvar(effect_process_input const& input, float* co
     }
 } 
 
-} // namespace inf::synth 
+} // namespace inf::plugin::infernal_synth 

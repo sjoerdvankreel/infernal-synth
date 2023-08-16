@@ -10,7 +10,7 @@
 #include <array>
 #include <vector>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class oscillator_spectrum_graph:
 public inf::base::graph_processor
@@ -51,5 +51,5 @@ inline void oscillator_spectrum_graph::
 process_dsp_core(base::block_input const& input, float* output, float sample_rate)
 { return _wave.process_dsp_core(input, output, sample_rate); }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP

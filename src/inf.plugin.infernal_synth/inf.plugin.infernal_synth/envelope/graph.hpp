@@ -4,7 +4,7 @@
 #include <inf.base/plugin/graph_processor.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 class envelope_graph:
 public inf::base::graph_processor
@@ -23,5 +23,5 @@ inline envelope_graph::
 envelope_graph(base::topology_info const* topology, base::part_id id):
   inf::base::graph_processor(topology, id) {}
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_GRAPH_HPP

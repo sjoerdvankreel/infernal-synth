@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 extern base::param_descriptor const veffect_params[];
 extern base::param_descriptor const geffect_params[];
@@ -42,5 +42,5 @@ typedef effect_shaper_type_t::value effect_shaper_type;
 typedef effect_shp_over_order_t::value effect_shp_over_order;
 typedef effect_flt_stvar_type_t::value effect_flt_stvar_type;
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_TOPOLOGY_HPP

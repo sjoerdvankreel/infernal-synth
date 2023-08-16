@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <utility>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct audio_bank_output
 {

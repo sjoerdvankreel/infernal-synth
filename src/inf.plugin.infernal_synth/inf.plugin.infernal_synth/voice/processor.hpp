@@ -12,7 +12,7 @@
 #include <array>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct cpu_usage;
 struct voice_input;
@@ -76,5 +76,5 @@ public:
     std::int32_t midi, std::int32_t last_midi, bool new_voice_section, base::block_input_data const& input);
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_VOICE_PROCESSOR_HPP

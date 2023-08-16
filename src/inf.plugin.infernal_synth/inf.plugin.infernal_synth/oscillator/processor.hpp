@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct scratch_space;
 class cv_bank_processor;
@@ -51,5 +51,5 @@ private:
   void process_basic(oscillator_input const& input, float const* const* params, float* const* out, scratch_space& scratch);
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_HPP

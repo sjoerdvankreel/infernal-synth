@@ -4,7 +4,7 @@
 #include <inf.base/plugin/state.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // Activation data.
 struct voice_setup_input
@@ -45,5 +45,5 @@ struct voice_state
   std::int32_t release_position_buffer = -1;
 };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_SYNTH_STATE_HPP

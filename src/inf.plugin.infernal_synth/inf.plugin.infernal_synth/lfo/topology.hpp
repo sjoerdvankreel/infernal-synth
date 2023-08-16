@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 extern base::param_descriptor const vlfo_params[];
 extern base::param_descriptor const glfo_params[];
@@ -31,5 +31,5 @@ struct lfo_param_t { enum value {
   free_delay2, free_fall2, free_fall2_slope, free_hold2, free_rise2, free_rise2_slope, count }; };
 typedef lfo_param_t::value lfo_param;
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_TOPOLOGY_HPP

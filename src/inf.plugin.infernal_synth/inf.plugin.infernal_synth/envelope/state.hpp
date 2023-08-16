@@ -4,7 +4,7 @@
 #include <inf.base/plugin/state.hpp>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct envelope_split
 {
@@ -58,5 +58,5 @@ envelope_stage::next()
   return (value - 1.0) * inv_slope_range;
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_STATE_HPP

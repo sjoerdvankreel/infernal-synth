@@ -1,7 +1,7 @@
 #include <inf.plugin.infernal_synth/effect/state.hpp>
 #include <inf.plugin.infernal_synth/effect/config.hpp>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 effect_state::
 effect_state(bool global, float sample_rate, std::int32_t max_sample_count):
@@ -70,4 +70,4 @@ effect_state::reset()
   }
 }
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth

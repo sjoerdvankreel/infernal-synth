@@ -15,7 +15,7 @@
 #include <cstdint>
 #include <numeric>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 // ---- shared ----
 
@@ -179,5 +179,5 @@ inline std::int32_t const* const gcv_route_output_target_mapping[gcv_route_outpu
 inline std::int32_t constexpr gcv_route_output_target_counts[gcv_route_output::count] = {
   0 /* off */, vgcv_route_effect_target::gfx_count, vgcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_TOPOLOGY_HPP

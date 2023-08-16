@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 struct voice_param_t { enum value { 
   oct, note, mode, port_mode, port_trig, 
@@ -22,5 +22,5 @@ typedef voice_mode_t::value voice_mode;
 typedef voice_port_mode_t::value voice_port_mode;
 typedef voice_port_trig_t::value voice_port_trig;
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_VOICE_TOPOLOGY_HPP

@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace inf::synth {
+namespace inf::plugin::infernal_synth {
 
 extern base::param_descriptor const osc_params[];
 char const* osc_graph_name_selector(
@@ -31,5 +31,5 @@ struct osc_param_t { enum value {
 typedef osc_param_t::value osc_param;
 inline char const* osc_graph_names[osc_graph::count] = { "Left", "Right", "Spectrum" };
 
-} // namespace inf::synth
+} // namespace inf::plugin::infernal_synth
 #endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_TOPOLOGY_HPP
