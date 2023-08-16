@@ -21,6 +21,11 @@ add_definitions(-DJUCE_DISPLAY_SPLASH_SCREEN=0)
 add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=0)
 add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 
+# Juce linux dependencies.
+if (NOT MSVC)
+find_package(Freetype REQUIRED)
+endif()
+
 # VST3 flags.
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DRELEASE=1")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEVELOPMENT=1")
@@ -50,6 +55,10 @@ target_include_directories(lib.juce.data_structures SYSTEM PRIVATE ${JUCE_SRC_DI
 file (GLOB JUCE_GRAPHICS_SRC "${JUCE_SRC_DIR}/modules/juce_graphics/juce_graphics.cpp")
 add_library(lib.juce.graphics STATIC ${JUCE_GRAPHICS_SRC})
 target_include_directories(lib.juce.graphics SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+if (NOT MSVC)
+target_link_libraries(lib.juce.graphics ${FREETYPE_LIBRARIES})
+target_include_directories(lib.juce.graphics PRIVATE ${FREETYPE_INCLUDE_DIRS})
+endif ()
 
 # Juce events library.
 file (GLOB JUCE_EVENTS_SRC "${JUCE_SRC_DIR}/modules/juce_events/juce_events.cpp")
