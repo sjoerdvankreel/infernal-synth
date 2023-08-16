@@ -1,12 +1,12 @@
-#ifndef INF_BASE_FORMAT_VST_VST_EDITOR_HPP
-#define INF_BASE_FORMAT_VST_VST_EDITOR_HPP
+#ifndef INF_BASE_FORMAT_VST3_VST_EDITOR_HPP
+#define INF_BASE_FORMAT_VST3_VST_EDITOR_HPP
 
 #include <inf.base.ui/shared/ui.hpp>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <memory>
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
 
 class vst_controller;
 
@@ -39,5 +39,5 @@ public:
   void* current_window() const { return _plugin_ui? _plugin_ui->component(): nullptr ; }
 };
 
-} // namespace inf::base::format::vst
+} // namespace inf::base::format::vst3
 #endif // INF_BASE_FORMAT_VST_VST_EDITOR_HPP

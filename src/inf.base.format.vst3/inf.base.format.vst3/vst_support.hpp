@@ -8,7 +8,7 @@
 #include <cassert>
 #include <algorithm>
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
 
 inline char constexpr hard_reset_request_msg_id[] = "XT_HARD_RESET_REQUEST";
 
@@ -70,5 +70,5 @@ vst_normalized_to_base(
   return inf::base::param_value(vst_normalized_to_discrete(info, val));
 }
 
-} // namespace inf::base::format::vst
+} // namespace inf::base::format::vst3
 #endif // INF_BASE_FORMAT_VST_VST_SUPPORT_HPP

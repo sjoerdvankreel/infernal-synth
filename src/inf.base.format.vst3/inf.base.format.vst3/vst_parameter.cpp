@@ -1,5 +1,5 @@
-#include <inf.base.format.vst/vst_support.hpp>
-#include <inf.base.format.vst/vst_parameter.hpp>
+#include <inf.base.format.vst3/vst_support.hpp>
+#include <inf.base.format.vst3/vst_parameter.hpp>
 
 #include <cassert>
 
@@ -7,7 +7,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
   
 static double 
 param_step_count(param_info const& info)
@@ -134,4 +134,4 @@ vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
   return true;
 }
 
-} // namespace inf::base::format::vst
+} // namespace inf::base::format::vst3

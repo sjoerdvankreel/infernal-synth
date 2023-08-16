@@ -1,5 +1,5 @@
-#ifndef INF_BASE_FORMAT_VST_VST_CONTROLLER_HPP
-#define INF_BASE_FORMAT_VST_VST_CONTROLLER_HPP
+#ifndef INF_BASE_FORMAT_VST3_VST_CONTROLLER_HPP
+#define INF_BASE_FORMAT_VST3_VST_CONTROLLER_HPP
 
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -10,7 +10,7 @@
 
 #include <vector>
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
 
 class vst_editor;
 
@@ -81,5 +81,5 @@ public:
   REFCOUNT_METHODS(EditController)
 };
 
-} // namespace inf::base::format::vst
-#endif // INF_BASE_FORMAT_VST_VST_CONTROLLER_HPP
+} // namespace inf::base::format::vst3
+#endif // INF_BASE_FORMAT_VST3_VST_CONTROLLER_HPP

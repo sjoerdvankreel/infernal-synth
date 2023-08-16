@@ -6,11 +6,11 @@
 #include <inf.plugin.infernal_synth/oscillator/topology.hpp>
 
 #include <inf.plugin.infernal_synth.ui/ui.hpp>
-#include <inf.plugin.infernal_synth.format.vst/plugin.hpp>
+#include <inf.plugin.infernal_synth.format.vst3/plugin.hpp>
 #include <inf.base.ui/shared/support.hpp>
-#include <inf.base.format.vst/vst_editor.hpp>
-#include <inf.base.format.vst/vst_processor.hpp>
-#include <inf.base.format.vst/vst_controller.hpp>
+#include <inf.base.format.vst3/vst_editor.hpp>
+#include <inf.base.format.vst3/vst_processor.hpp>
+#include <inf.base.format.vst3/vst_controller.hpp>
 
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <pluginterfaces/vst/ivstmidicontrollers.h>
@@ -22,7 +22,7 @@
 
 using namespace inf::base;
 using namespace inf::base::ui;
-using namespace inf::base::format::vst;
+using namespace inf::base::format::vst3;
 using namespace inf::plugin::infernal_synth;
 using namespace inf::plugin::infernal_synth::ui;
 
@@ -34,12 +34,12 @@ extern bool DeinitModule();
 void* moduleHandle = nullptr;
 static std::int32_t _inf_module_counter = 0;
 
-#if INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_FX
-#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_PLUG_TYPE Steinberg::Vst::PlugType::kFx
+#if INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX
+#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE Steinberg::Vst::PlugType::kFx
 static const DECLARE_UID(vst_processor_id, 0xD1D38026, 0x92374AB7, 0xB6FC3A55, 0xA9AE3BCC);
 static const DECLARE_UID(vst_controller_id, 0x35695F63, 0x837242BE, 0x88FB88A4, 0xE4F2D1B8);
-#elif (!INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_FX)
-#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_PLUG_TYPE Steinberg::Vst::PlugType::kInstrumentSynth
+#elif (!INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX)
+#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE Steinberg::Vst::PlugType::kInstrumentSynth
 static const DECLARE_UID(vst_processor_id, 0x5626A8A2, 0x47C740E3, 0x895EF722, 0xE6C1D9C4);
 static const DECLARE_UID(vst_controller_id, 0x612E5225, 0xD6A44771, 0xA581057D, 0x04034620);
 #else
@@ -139,16 +139,16 @@ public synth_topology
 {
 public:
   synth_vst_topology(bool is_instrument): synth_topology(is_instrument) {}
-  char const* plugin_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_NAME; }
-  char const* vendor_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_VENDOR_NAME; }
-  std::uint16_t version_major() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_VERSION_MAJOR; }
-  std::uint16_t version_minor() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_VERSION_MINOR; }
+  char const* plugin_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_NAME; }
+  char const* vendor_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VENDOR_NAME; }
+  std::uint16_t version_major() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION_MINOR; }
 };
 
 static
 topology_info* inf_vst_create_topology()
 { 
-  topology_info* result = new synth_vst_topology(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_FX == 0);
+  topology_info* result = new synth_vst_topology(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX == 0);
   topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
   return result;
 }
@@ -170,14 +170,14 @@ create_processor(void* context)
 }
 
 BEGIN_FACTORY_DEF(
-  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_COMPANY_NAME,
-  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_COMPANY_WEB,
-  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_COMPANY_MAIL,
+  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_COMPANY_NAME,
+  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_COMPANY_WEB,
+  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_COMPANY_MAIL,
   2)
   DEF_CLASS(vst_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_NAME, Steinberg::Vst::kDistributable, INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_PLUG_TYPE,
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_VERSION, kVstVersionString, create_processor, nullptr)
+    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_NAME, Steinberg::Vst::kDistributable, INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE,
+    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION, kVstVersionString, create_processor, nullptr)
   DEF_CLASS(vst_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_CONTROLLER_NAME, 0, "",
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_VERSION, kVstVersionString, create_controller, nullptr)
+    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_CONTROLLER_NAME, 0, "",
+    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION, kVstVersionString, create_controller, nullptr)
 END_FACTORY

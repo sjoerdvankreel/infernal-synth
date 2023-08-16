@@ -1,5 +1,5 @@
-#include <inf.base.format.vst/vst_editor.hpp>
-#include <inf.base.format.vst/vst_controller.hpp>
+#include <inf.base.format.vst3/vst_editor.hpp>
+#include <inf.base.format.vst3/vst_controller.hpp>
 
 #include <cstring>
 
@@ -7,7 +7,7 @@ using namespace juce;
 using namespace inf::base::ui;
 using namespace Steinberg;
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
 
 vst_editor::
 ~vst_editor() {}
@@ -108,4 +108,4 @@ vst_editor::set_width(std::int32_t width)
   if(width > 0) _controller->editor_current_width(width);
 }
 
-} // namespace inf::base::format::vst
+} // namespace inf::base::format::vst3

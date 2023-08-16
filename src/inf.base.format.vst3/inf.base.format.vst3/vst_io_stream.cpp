@@ -1,6 +1,6 @@
-#include <inf.base.format.vst/vst_io_stream.hpp>
+#include <inf.base.format.vst3/vst_io_stream.hpp>
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
 
 bool 
 vst_io_stream::read_int32(std::int32_t& val)
@@ -45,4 +45,4 @@ vst_io_stream::write_string(std::string const& val)
   return true;
 }
 
-} // namespace inf::base::format::vst
+} // namespace inf::base::format::vst3

@@ -1,5 +1,5 @@
-#ifndef INF_BASE_FORMAT_VST_VST_PROCESSOR_HPP
-#define INF_BASE_FORMAT_VST_VST_PROCESSOR_HPP
+#ifndef INF_BASE_FORMAT_VST3_VST_PROCESSOR_HPP
+#define INF_BASE_FORMAT_VST3_VST_PROCESSOR_HPP
 
 #include <inf.base/plugin/state.hpp>
 #include <inf.base/plugin/audio_processor.hpp>
@@ -14,7 +14,7 @@
 #include <vector>
 #include <atomic>
 
-namespace inf::base::format::vst {
+namespace inf::base::format::vst3 {
 
 // Vst3 processor wrapping inf::base::audio_processor.
 class vst_processor : 
@@ -74,5 +74,5 @@ private:
   void process_output_parameters(inf::base::block_output const& output, ProcessData& data);
 };
 
-} // namespace inf::base::format::vst
-#endif // INF_BASE_FORMAT_VST_VST_PROCESSOR_HPP
+} // namespace inf::base::format::vst3
+#endif // INF_BASE_FORMAT_VST3_VST_PROCESSOR_HPP
