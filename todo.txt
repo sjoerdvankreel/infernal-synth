@@ -12,6 +12,13 @@
 - x run the vst validator
 - x don't forget to tag
 
+* done this version
+- drop generic build (=breaking change!)
+
+* todo this version
+- fix the demos
+- clap
+
 * bugs
 - parameter flush bug when playing bitwig
 
