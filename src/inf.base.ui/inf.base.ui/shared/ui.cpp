@@ -886,7 +886,7 @@ create_factory_preset_ui(
       {
         controller->load_preset(presets[selected_index].path);
         controller->set_factory_preset(presets[selected_index].name);
-      } }, 
+      } },  
     [controller, presets](juce::ComboBox* combo) {
       for (std::size_t i = 0; i < presets.size(); i++)
         if (presets[i].name == controller->get_factory_preset())
