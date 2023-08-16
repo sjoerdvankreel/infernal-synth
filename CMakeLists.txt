@@ -160,23 +160,26 @@ if (MSVC)
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC})
 endif()
 
-# Inf plugin infernal synth format vst3.
+# Inf plugin infernal synth format vst3fx and vst3i.
+function(declare_inf_plugin_infernal_synth_format_vst3 target_name is_fx suffix)
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR "src/inf.plugin.infernal_synth.format.vst3")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}/*.*")
-add_library(infernal.plugin.infernal_synth.format.vst3 SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
-target_compile_definitions(infernal.plugin.infernal_synth.format.vst3 PRIVATE -DINF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX=0)
-target_include_directories(infernal.plugin.infernal_synth.format.vst3 SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
-target_include_directories(infernal.plugin.infernal_synth.format.vst3 PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR}
-  ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_VST3_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR})
-set_target_properties(infernal.plugin.infernal_synth.format.vst3 PROPERTIES OUTPUT_NAME "InfernalSynth${INFERNAL_VERSION}")
+add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
+target_compile_definitions(${target_name} PRIVATE -DINF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX=${is_fx})
+target_include_directories(${target_name} SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
+target_include_directories(${target_name} PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
+  ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_VST3_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR})
+set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${suffix}${INFERNAL_VERSION}")
 if (MSVC)
-set_target_properties(infernal.plugin.infernal_synth.format.vst3 PROPERTIES SUFFIX ".vst3")
+set_target_properties(${target_name} PROPERTIES SUFFIX ".vst3")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
-target_compile_options(infernal.plugin.infernal_synth.format.vst3 PRIVATE "SHELL:/external:I ${VST3_SDK_SRC_DIR}")
-set_target_properties(infernal.plugin.infernal_synth.format.vst3 PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+target_compile_options(${target_name} PRIVATE "SHELL:/external:I ${VST3_SDK_SRC_DIR}")
+set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
   "${PROJECT_SOURCE_DIR}/dist/win32/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/x86_64-win")
 else ()
-target_link_libraries(infernal.plugin.infernal_synth.format.vst3 ${CMAKE_DL_LIBS})
-set_target_properties(infernal.plugin.infernal_synth.format.vst3 PROPERTIES LIBRARY_OUTPUT_DIRECTORY 
+set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
   "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/x86_64-linux")
 endif()
+endfunction()
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i 0 "")
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx 1 "FX")
