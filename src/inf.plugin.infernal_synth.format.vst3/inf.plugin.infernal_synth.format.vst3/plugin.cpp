@@ -34,12 +34,12 @@ extern bool DeinitModule();
 void* moduleHandle = nullptr;
 static std::int32_t _inf_module_counter = 0;
 
-#if INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX
-#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE Steinberg::Vst::PlugType::kFx
+#if IPISFV3_FX
+#define IPISFV3_PLUG_TYPE Steinberg::Vst::PlugType::kFx
 static const DECLARE_UID(vst_processor_id, 0xD1D38026, 0x92374AB7, 0xB6FC3A55, 0xA9AE3BCC);
 static const DECLARE_UID(vst_controller_id, 0x35695F63, 0x837242BE, 0x88FB88A4, 0xE4F2D1B8);
-#elif (!INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX)
-#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE Steinberg::Vst::PlugType::kInstrumentSynth
+#elif (!IPISFV3_FX)
+#define IPISFV3_PLUG_TYPE Steinberg::Vst::PlugType::kInstrumentSynth
 static const DECLARE_UID(vst_processor_id, 0x5626A8A2, 0x47C740E3, 0x895EF722, 0xE6C1D9C4);
 static const DECLARE_UID(vst_controller_id, 0x612E5225, 0xD6A44771, 0xA581057D, 0x04034620);
 #else
@@ -148,7 +148,7 @@ public:
 static
 topology_info* inf_vst_create_topology()
 { 
-  topology_info* result = new synth_vst_topology(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX == 0);
+  topology_info* result = new synth_vst_topology(IPISFV3_FX == 0);
   topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
   return result;
 }
@@ -175,7 +175,7 @@ BEGIN_FACTORY_DEF(
   IPISFV3_COMPANY_MAIL,
   2)
   DEF_CLASS(vst_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
-    IPISFV3_NAME, Steinberg::Vst::kDistributable, INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE,
+    IPISFV3_NAME, Steinberg::Vst::kDistributable, IPISFV3_PLUG_TYPE,
     IPISFV3_VERSION, kVstVersionString, create_processor, nullptr)
   DEF_CLASS(vst_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
     IPISFV3_CONTROLLER_NAME, 0, "",

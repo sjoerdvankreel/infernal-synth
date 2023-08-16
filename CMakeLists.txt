@@ -175,7 +175,7 @@ function(declare_inf_plugin_infernal_synth_format_vst3 target_name is_fx suffix 
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR "src/inf.plugin.infernal_synth.format.vst3")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}/*.*")
 add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
-target_compile_definitions(${target_name} PRIVATE -DINF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_FX=${is_fx})
+target_compile_definitions(${target_name} PRIVATE -DIPISFV3_FX=${is_fx})
 target_include_directories(${target_name} SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
 target_include_directories(${target_name} PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
   ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_VST3_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR})
