@@ -180,9 +180,8 @@ target_include_directories(${target_name} SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${J
 target_include_directories(${target_name} PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
   ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_VST3_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR})
 set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${suffix}${INFERNAL_VERSION}")
-target_link_libraries(${target_name} 
-  infernal.base infernal.base.ui infernal.base.format.vst3 infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui 
-  lib.vst3sdk lib.juce.core lib.juce.data_structures lib.juce.events lib.juce.graphics lib.juce.gui_basics)
+target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.vst3 
+  infernal.base.ui infernal.base lib.vst3sdk lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".vst3")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
