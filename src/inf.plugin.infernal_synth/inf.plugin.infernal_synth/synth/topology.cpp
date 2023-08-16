@@ -1,19 +1,19 @@
-#include <inf.synth/lfo/graph.hpp>
-#include <inf.synth/amp/topology.hpp>
-#include <inf.synth/lfo/topology.hpp>
-#include <inf.synth/cv_bank/graph.hpp>
-#include <inf.synth/effect/graph1.hpp>
-#include <inf.synth/effect/graph2.hpp>
-#include <inf.synth/voice/topology.hpp>
-#include <inf.synth/synth/topology.hpp>
-#include <inf.synth/envelope/graph.hpp>
-#include <inf.synth/envelope/topology.hpp>
-#include <inf.synth/effect/topology.hpp>
-#include <inf.synth/output/topology.hpp>
-#include <inf.synth/envelope/topology.hpp>
-#include <inf.synth/synth/processor.hpp>
-#include <inf.synth/oscillator/graph_wave.hpp>
-#include <inf.synth/oscillator/graph_spectrum.hpp>
+#include <inf.plugin.infernal_synth/lfo/graph.hpp>
+#include <inf.plugin.infernal_synth/amp/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/graph.hpp>
+#include <inf.plugin.infernal_synth/effect/graph1.hpp>
+#include <inf.plugin.infernal_synth/effect/graph2.hpp>
+#include <inf.plugin.infernal_synth/voice/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/graph.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/output/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/processor.hpp>
+#include <inf.plugin.infernal_synth/oscillator/graph_wave.hpp>
+#include <inf.plugin.infernal_synth/oscillator/graph_spectrum.hpp>
  
 using namespace inf::base;
 

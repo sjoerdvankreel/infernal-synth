@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
-#define INF_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
 
-#include <inf.synth/synth/config.hpp>
-#include <inf.synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/shared/cont_storage.hpp>
@@ -45,4 +45,4 @@ transform_param(std::int32_t rt_index, base::param_value value) const
 { return graph_disable_modulation(topology(), rt_index, value); }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_WAVE_HPP

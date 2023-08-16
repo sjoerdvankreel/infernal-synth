@@ -1,5 +1,5 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
 
 #include <algorithm>
 

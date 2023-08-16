@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
-#define INF_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
 
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/oscillator/config.hpp>
+#include <inf.plugin.infernal_synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <cstdint>
@@ -47,4 +47,4 @@ osc_dsf_processor::operator()(std::int32_t voice, float frequency,
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_DSF_HPP

@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_ENVELOPE_PROCESSOR_HPP
-#define INF_SYNTH_ENVELOPE_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_PROCESSOR_HPP
 
 #include <inf.base/plugin/state.hpp>
-#include <inf.synth/envelope/state.hpp>
-#include <inf.synth/shared/part_processor.hpp>
+#include <inf.plugin.infernal_synth/envelope/state.hpp>
+#include <inf.plugin.infernal_synth/shared/part_processor.hpp>
 
 #include <cstdint>
 
@@ -61,4 +61,4 @@ private:
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_ENVELOPE_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_PROCESSOR_HPP

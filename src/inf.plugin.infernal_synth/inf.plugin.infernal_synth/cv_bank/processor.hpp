@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
-#define INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
 
-#include <inf.synth/cv_bank/state.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/state.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
 
 namespace inf::synth {
 
@@ -53,4 +53,4 @@ private:
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_DSP_CV_BANK_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_PROCESSOR_HPP

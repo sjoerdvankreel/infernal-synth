@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_AUDIO_BANK_STATE_HPP
-#define INF_SYNTH_AUDIO_BANK_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_STATE_HPP
 
 #include <inf.base/shared/cont_storage.hpp>
 
@@ -53,4 +53,4 @@ struct audio_bank_state
 };
 
 } // namespace inf::base
-#endif // INF_SYNTH_AUDIO_BANK_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_STATE_HPP

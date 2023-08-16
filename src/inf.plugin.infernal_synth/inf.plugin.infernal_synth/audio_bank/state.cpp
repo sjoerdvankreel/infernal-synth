@@ -1,8 +1,8 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
-#include <inf.synth/audio_bank/state.hpp>
-#include <inf.synth/oscillator/config.hpp>
-#include <inf.synth/audio_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/state.hpp>
+#include <inf.plugin.infernal_synth/oscillator/config.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/topology.hpp>
 
 using namespace inf::base;
 

@@ -1,13 +1,13 @@
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/oscillator/topology.hpp>
-#include <inf.synth/oscillator/processor.hpp>
-#include <inf.synth/shared/scratch_space.hpp>
-#include <inf.synth/shared/basic_lp_filter.hpp>
-#include <inf.synth/oscillator/processor_dsf.hpp>
-#include <inf.synth/oscillator/processor_kps.hpp>
-#include <inf.synth/oscillator/processor_mix.hpp>
-#include <inf.synth/oscillator/processor_noise.hpp>
-#include <inf.synth/oscillator/processor_basic.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/oscillator/topology.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
+#include <inf.plugin.infernal_synth/shared/basic_lp_filter.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor_dsf.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor_kps.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor_mix.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor_noise.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor_basic.hpp>
 
 using namespace inf::base;
 

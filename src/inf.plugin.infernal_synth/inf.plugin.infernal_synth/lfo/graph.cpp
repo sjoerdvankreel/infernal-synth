@@ -1,8 +1,8 @@
-#include <inf.synth/lfo/graph.hpp>
-#include <inf.synth/lfo/topology.hpp>
-#include <inf.synth/lfo/processor.hpp>
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.plugin.infernal_synth/lfo/graph.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
 
 using namespace inf::base;
 

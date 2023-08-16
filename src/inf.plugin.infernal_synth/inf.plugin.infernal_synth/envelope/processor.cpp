@@ -1,8 +1,8 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/envelope/topology.hpp>
-#include <inf.synth/envelope/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/processor.hpp>
 
 #include <cmath>
 #include <cassert>

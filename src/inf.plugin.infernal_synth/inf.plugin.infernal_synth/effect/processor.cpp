@@ -1,7 +1,7 @@
-#include <inf.synth/effect/topology.hpp>
-#include <inf.synth/effect/processor.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/effect/processor_shaper.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/processor.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/effect/processor_shaper.hpp>
 
 #include <cassert>
 

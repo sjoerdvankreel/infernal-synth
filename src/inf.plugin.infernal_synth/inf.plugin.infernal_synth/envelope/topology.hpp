@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
-#define INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_TOPOLOGY_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -32,4 +32,4 @@ typedef envelope_type_t::value envelope_type;
 typedef envelope_mode_t::value envelope_mode;
 
 } // namespace inf::synth
-#endif // INF_SYNTH_ENVELOPE_TOPOLOGY_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_ENVELOPE_TOPOLOGY_HPP

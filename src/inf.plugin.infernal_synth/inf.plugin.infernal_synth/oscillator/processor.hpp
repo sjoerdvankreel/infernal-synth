@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_OSCILLATOR_PROCESSOR_HPP
-#define INF_SYNTH_OSCILLATOR_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_HPP
 
 #include <inf.base/plugin/state.hpp>
-#include <inf.synth/oscillator/state.hpp>
-#include <inf.synth/shared/audio_part_processor.hpp>
+#include <inf.plugin.infernal_synth/oscillator/state.hpp>
+#include <inf.plugin.infernal_synth/shared/audio_part_processor.hpp>
 
 #include <cstdint>
 
@@ -52,4 +52,4 @@ private:
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_HPP

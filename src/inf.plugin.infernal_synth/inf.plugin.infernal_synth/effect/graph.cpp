@@ -1,10 +1,10 @@
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/effect/state.hpp>
-#include <inf.synth/effect/graph.hpp>
-#include <inf.synth/effect/topology.hpp>
-#include <inf.synth/effect/processor.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/effect/state.hpp>
+#include <inf.plugin.infernal_synth/effect/graph.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/processor.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
 
 #include <memory>
 

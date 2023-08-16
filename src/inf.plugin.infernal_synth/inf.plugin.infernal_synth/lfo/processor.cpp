@@ -1,9 +1,9 @@
-#include <inf.synth/lfo/topology.hpp>
-#include <inf.synth/lfo/processor.hpp>
-#include <inf.synth/lfo/processor_free.hpp>
-#include <inf.synth/lfo/processor_basic.hpp>
-#include <inf.synth/lfo/processor_random.hpp>
-#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor_free.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor_basic.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor_random.hpp>
+#include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
 
 #include <cmath>
 #include <cassert>

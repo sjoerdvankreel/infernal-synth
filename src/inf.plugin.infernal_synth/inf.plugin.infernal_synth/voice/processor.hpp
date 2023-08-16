@@ -1,13 +1,13 @@
-#ifndef INF_SYNTH_VOICE_PROCESSOR_HPP
-#define INF_SYNTH_VOICE_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_VOICE_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_VOICE_PROCESSOR_HPP
 
-#include <inf.synth/amp/processor.hpp>
-#include <inf.synth/lfo/processor.hpp>
-#include <inf.synth/effect/processor.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/envelope/processor.hpp>
-#include <inf.synth/oscillator/processor.hpp>
-#include <inf.synth/audio_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/amp/processor.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor.hpp>
+#include <inf.plugin.infernal_synth/effect/processor.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/envelope/processor.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/processor.hpp>
 
 #include <array>
 #include <cstdint>
@@ -77,4 +77,4 @@ public:
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_VOICE_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_VOICE_PROCESSOR_HPP

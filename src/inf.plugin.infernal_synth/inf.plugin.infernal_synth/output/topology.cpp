@@ -1,4 +1,4 @@
-#include <inf.synth/output/topology.hpp>
+#include <inf.plugin.infernal_synth/output/topology.hpp>
 
 using namespace inf::base;
 

@@ -1,4 +1,4 @@
-#include <inf.synth/amp/topology.hpp>
+#include <inf.plugin.infernal_synth/amp/topology.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 
 using namespace inf::base;

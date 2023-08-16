@@ -1,6 +1,6 @@
-#include <inf.synth/voice/state.hpp>
-#include <inf.synth/synth/processor.hpp>
-#include <inf.synth/voice/topology.hpp>
+#include <inf.plugin.infernal_synth/voice/state.hpp>
+#include <inf.plugin.infernal_synth/synth/processor.hpp>
+#include <inf.plugin.infernal_synth/voice/topology.hpp>
 #include <inf.base/shared/support.hpp>
 
 #include <cassert>

@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
-#define INF_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
 
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/effect/topology.hpp>
-#include <inf.synth/effect/processor.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/processor.hpp>
 
 namespace inf::synth {
 
@@ -31,4 +31,4 @@ void effect_processor::process_shp_basic(effect_process_input const& input, floa
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_SHAPER_HPP

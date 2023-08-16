@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_LFO_TOPOLOGY_HPP
-#define INF_SYNTH_LFO_TOPOLOGY_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_TOPOLOGY_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -32,4 +32,4 @@ struct lfo_param_t { enum value {
 typedef lfo_param_t::value lfo_param;
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_TOPOLOGY_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_TOPOLOGY_HPP

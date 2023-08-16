@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_LFO_GRAPH_HPP
-#define INF_SYNTH_LFO_GRAPH_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_GRAPH_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_GRAPH_HPP
 
 #include <inf.base/plugin/graph_processor.hpp>
 #include <cstdint>
@@ -24,4 +24,4 @@ lfo_graph(base::topology_info const* topology, base::part_id id):
 inf::base::graph_processor(topology, id) {}
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_GRAPH_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_GRAPH_HPP

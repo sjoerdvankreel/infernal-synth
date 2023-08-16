@@ -1,5 +1,5 @@
-#include <inf.synth/lfo/config.hpp>
-#include <inf.synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/config.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/part_descriptor.hpp>

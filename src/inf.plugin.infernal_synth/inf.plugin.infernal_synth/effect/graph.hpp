@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_EFFECT_GRAPH_HPP
-#define INF_SYNTH_EFFECT_GRAPH_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH_HPP
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/plugin/graph_processor.hpp>
@@ -25,4 +25,4 @@ effect_graph_base(base::topology_info const* topology, base::part_id id):
 inf::base::graph_processor(topology, id), _audio_in(), _audio_out() {}
 
 } // namespace inf::synth
-#endif // INF_SYNTH_EFFECT_GRAPH_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH_HPP

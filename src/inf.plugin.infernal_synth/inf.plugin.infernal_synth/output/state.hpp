@@ -1,7 +1,7 @@
-#ifndef INF_SYNTH_OUTPUT_STATE_HPP
-#define INF_SYNTH_OUTPUT_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_STATE_HPP
 
-#include <inf.synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
 #include <cstdint>
 
 namespace inf::synth {
@@ -33,4 +33,4 @@ struct output_info
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OUTPUT_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_STATE_HPP

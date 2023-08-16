@@ -1,15 +1,15 @@
-#ifndef INF_SYNTH_SYNTH_PROCESSOR_HPP
-#define INF_SYNTH_SYNTH_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_SYNTH_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_SYNTH_PROCESSOR_HPP
 
-#include <inf.synth/synth/state.hpp>
-#include <inf.synth/amp/processor.hpp>
-#include <inf.synth/lfo/processor.hpp>
-#include <inf.synth/voice/processor.hpp>
-#include <inf.synth/effect/processor.hpp>
-#include <inf.synth/output/processor.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/audio_bank/processor.hpp>
-#include <inf.synth/shared/scratch_space.hpp>
+#include <inf.plugin.infernal_synth/synth/state.hpp>
+#include <inf.plugin.infernal_synth/amp/processor.hpp>
+#include <inf.plugin.infernal_synth/lfo/processor.hpp>
+#include <inf.plugin.infernal_synth/voice/processor.hpp>
+#include <inf.plugin.infernal_synth/effect/processor.hpp>
+#include <inf.plugin.infernal_synth/output/processor.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
 #include <inf.base/plugin/audio_processor.hpp>
 
 namespace inf::synth {
@@ -103,4 +103,4 @@ private:
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_SYNTH_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_SYNTH_PROCESSOR_HPP

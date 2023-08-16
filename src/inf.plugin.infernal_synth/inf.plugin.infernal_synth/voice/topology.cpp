@@ -1,4 +1,4 @@
-#include <inf.synth/voice/topology.hpp>
+#include <inf.plugin.infernal_synth/voice/topology.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 
 using namespace inf::base;

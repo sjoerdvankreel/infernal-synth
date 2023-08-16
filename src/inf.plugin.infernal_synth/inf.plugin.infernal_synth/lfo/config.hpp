@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_LFO_CONFIG_HPP
-#define INF_SYNTH_LFO_CONFIG_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_CONFIG_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_CONFIG_HPP
 
 #include <cstdint>
 
@@ -14,4 +14,4 @@ inline std::int32_t constexpr lfo_rand_max_steps = 32;
 inline std::int32_t constexpr lfo_rand_default_steps = 4;
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_CONFIG_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_CONFIG_HPP

@@ -1,7 +1,7 @@
-#ifndef INF_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
-#define INF_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
 
-#include <inf.synth/oscillator/graph_wave.hpp>
+#include <inf.plugin.infernal_synth/oscillator/graph_wave.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/shared/spectrum_analyzer.hpp>
@@ -52,4 +52,4 @@ process_dsp_core(base::block_input const& input, float* output, float sample_rat
 { return _wave.process_dsp_core(input, output, sample_rate); }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_GRAPH_SPECTRUM_HPP

@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_SYNTH_CONFIG_HPP
-#define INF_SYNTH_SYNTH_CONFIG_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_SYNTH_CONFIG_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_SYNTH_CONFIG_HPP
 
 #include <cstdint>
 
@@ -14,4 +14,4 @@ inline std::int32_t constexpr geffect_count = 10;
 inline std::int32_t constexpr synth_polyphony = 32;
 
 } // namespace inf::synth
-#endif // INF_SYNTH_SYNTH_CONFIG_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_SYNTH_CONFIG_HPP

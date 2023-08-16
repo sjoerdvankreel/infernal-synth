@@ -1,5 +1,5 @@
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
 
 using namespace inf::base;
 

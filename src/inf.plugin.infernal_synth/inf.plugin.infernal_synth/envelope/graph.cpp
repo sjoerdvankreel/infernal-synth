@@ -1,8 +1,8 @@
-#include <inf.synth/shared/state.hpp>
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/envelope/graph.hpp>
-#include <inf.synth/envelope/topology.hpp>
-#include <inf.synth/envelope/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/state.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/envelope/graph.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/processor.hpp>
 
 using namespace inf::base;
 

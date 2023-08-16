@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
-#define INF_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
 
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/oscillator/config.hpp>
-#include <inf.synth/oscillator/processor_basic.hpp>
+#include <inf.plugin.infernal_synth/oscillator/config.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor_basic.hpp>
 
 #include <cmath>
 #include <cstdint>
@@ -35,4 +35,4 @@ osc_mix_processor::operator()(std::int32_t voice, float frequency,
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_PROCESSOR_MIX_HPP

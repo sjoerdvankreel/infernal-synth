@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_EFFECT_TOPOLOGY_HPP
-#define INF_SYNTH_EFFECT_TOPOLOGY_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_EFFECT_TOPOLOGY_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_EFFECT_TOPOLOGY_HPP
 
 #include <inf.base/topology/param_descriptor.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -43,4 +43,4 @@ typedef effect_shp_over_order_t::value effect_shp_over_order;
 typedef effect_flt_stvar_type_t::value effect_flt_stvar_type;
 
 } // namespace inf::synth
-#endif // INF_SYNTH_EFFECT_TOPOLOGY_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_TOPOLOGY_HPP

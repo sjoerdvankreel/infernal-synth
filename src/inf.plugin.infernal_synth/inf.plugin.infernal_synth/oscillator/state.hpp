@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_OSCILLATOR_STATE_HPP
-#define INF_SYNTH_OSCILLATOR_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_STATE_HPP
 
 #include <inf.base/plugin/state.hpp>
-#include <inf.synth/oscillator/config.hpp>
+#include <inf.plugin.infernal_synth/oscillator/config.hpp>
 
 #include <cmath>
 #include <array>
@@ -55,4 +55,4 @@ struct oscillator_state
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_STATE_HPP

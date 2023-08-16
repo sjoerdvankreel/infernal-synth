@@ -1,6 +1,6 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/cv_bank/state.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/state.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
 
 using namespace inf::base;
 

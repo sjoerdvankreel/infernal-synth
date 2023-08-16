@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_LFO_PROCESSOR_RANDOM_HPP
-#define INF_SYNTH_LFO_PROCESSOR_RANDOM_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_RANDOM_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_RANDOM_HPP
 
-#include <inf.synth/lfo/state.hpp>
-#include <inf.synth/lfo/config.hpp>
-#include <inf.synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/state.hpp>
+#include <inf.plugin.infernal_synth/lfo/config.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
 #include <inf.base/shared/support.hpp>
 
 #include <cmath>
@@ -76,4 +76,4 @@ lfo_random_processor::operator()(float frequency, float phase) const
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_PROCESSOR_RANDOM_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_RANDOM_HPP

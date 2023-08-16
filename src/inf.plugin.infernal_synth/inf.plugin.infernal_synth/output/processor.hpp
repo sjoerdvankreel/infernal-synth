@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_OUTPUT_PROCESSOR_HPP
-#define INF_SYNTH_OUTPUT_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_PROCESSOR_HPP
 
-#include <inf.synth/output/state.hpp>
-#include <inf.synth/synth/topology.hpp>
-#include <inf.synth/shared/audio_part_processor.hpp>
+#include <inf.plugin.infernal_synth/output/state.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/shared/audio_part_processor.hpp>
 
 #include <inf.base/plugin/state.hpp>
 #include <inf.base/topology/topology_info.hpp>
@@ -25,4 +25,4 @@ output_processor(base::topology_info const* topology, float sample_rate):
 audio_part_processor(topology, { part_type::output, 0 }, sample_rate, -1) {}
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OUTPUT_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OUTPUT_PROCESSOR_HPP

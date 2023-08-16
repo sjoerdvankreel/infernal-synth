@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_SHARED_STATE_HPP
-#define INF_SYNTH_SHARED_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_SHARED_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_SHARED_STATE_HPP
 
 #include <cstdint>
 
@@ -34,4 +34,4 @@ struct audio_part_output
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_SHARED_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_SHARED_STATE_HPP

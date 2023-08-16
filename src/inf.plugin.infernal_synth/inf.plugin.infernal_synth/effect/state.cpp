@@ -1,5 +1,5 @@
-#include <inf.synth/effect/state.hpp>
-#include <inf.synth/effect/config.hpp>
+#include <inf.plugin.infernal_synth/effect/state.hpp>
+#include <inf.plugin.infernal_synth/effect/config.hpp>
 
 namespace inf::synth {
 

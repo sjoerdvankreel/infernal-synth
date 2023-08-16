@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_LFO_PROCESSOR_HPP
-#define INF_SYNTH_LFO_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_HPP
 
-#include <inf.synth/lfo/state.hpp>
-#include <inf.synth/shared/part_processor.hpp>
-#include <inf.synth/shared/basic_lp_filter.hpp>
+#include <inf.plugin.infernal_synth/lfo/state.hpp>
+#include <inf.plugin.infernal_synth/shared/part_processor.hpp>
+#include <inf.plugin.infernal_synth/shared/basic_lp_filter.hpp>
 
 namespace inf::synth {
 
@@ -57,4 +57,4 @@ public:
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_HPP

@@ -1,9 +1,9 @@
-#ifndef INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
-#define INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_PROCESSOR_HPP
 
 #include <inf.base/plugin/state.hpp>
-#include <inf.synth/audio_bank/state.hpp>
-#include <inf.synth/audio_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/state.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/topology.hpp>
 
 namespace inf::synth {
 
@@ -46,4 +46,4 @@ _state(state), _data(&audio_bank_data::voice), _relevant_indices_count(), _relev
 { update_block_params(input); }
 
 } // namespace inf::base
-#endif // INF_SYNTH_AUDIO_BANK_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_PROCESSOR_HPP

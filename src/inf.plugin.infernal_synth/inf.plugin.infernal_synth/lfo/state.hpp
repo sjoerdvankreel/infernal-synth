@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_LFO_STATE_HPP
-#define INF_SYNTH_LFO_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_STATE_HPP
 
-#include <inf.synth/lfo/config.hpp>
-#include <inf.synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/lfo/config.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
 
 #include <array>
 #include <cstdint>
@@ -79,4 +79,4 @@ lfo_random_state::full_reset()
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_STATE_HPP

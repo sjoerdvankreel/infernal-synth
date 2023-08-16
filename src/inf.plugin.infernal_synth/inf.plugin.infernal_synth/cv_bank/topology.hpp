@@ -1,12 +1,12 @@
-#ifndef INF_SYNTH_CV_BANK_TOPOLOGY_HPP
-#define INF_SYNTH_CV_BANK_TOPOLOGY_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_TOPOLOGY_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_TOPOLOGY_HPP
 
-#include <inf.synth/synth/config.hpp>
-#include <inf.synth/amp/topology.hpp>
-#include <inf.synth/synth/topology.hpp>
-#include <inf.synth/effect/topology.hpp>
-#include <inf.synth/audio_bank/topology.hpp>
-#include <inf.synth/oscillator/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth/amp/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/oscillator/topology.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
@@ -180,4 +180,4 @@ inline std::int32_t constexpr gcv_route_output_target_counts[gcv_route_output::c
   0 /* off */, vgcv_route_effect_target::gfx_count, vgcv_route_audio_bank_target::count, vgcv_route_amp_target::count };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_CV_BANK_TOPOLOGY_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_TOPOLOGY_HPP

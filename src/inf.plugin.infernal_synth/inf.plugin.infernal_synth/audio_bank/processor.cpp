@@ -1,7 +1,7 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/audio_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/processor.hpp>
 
 using namespace inf::base;
 

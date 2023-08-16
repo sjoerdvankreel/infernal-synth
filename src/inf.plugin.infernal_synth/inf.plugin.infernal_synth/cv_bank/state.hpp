@@ -1,10 +1,10 @@
-#ifndef INF_SYNTH_DSP_CV_BANK_STATE_HPP
-#define INF_SYNTH_DSP_CV_BANK_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_STATE_HPP
 
-#include <inf.synth/synth/config.hpp>
-#include <inf.synth/shared/state.hpp>
-#include <inf.synth/amp/topology.hpp>
-#include <inf.synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth/shared/state.hpp>
+#include <inf.plugin.infernal_synth/amp/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
 #include <inf.base/plugin/state.hpp>
 #include <inf.base/shared/cont_storage.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
@@ -108,4 +108,4 @@ cv_bank_storage::resize(std::int32_t max_sample_count)
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_DSP_CV_BANK_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_CV_BANK_STATE_HPP

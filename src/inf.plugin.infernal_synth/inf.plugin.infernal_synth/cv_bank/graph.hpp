@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_CV_BANK_GRAPH_HPP
-#define INF_SYNTH_CV_BANK_GRAPH_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_GRAPH_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_GRAPH_HPP
 
 #include <inf.base/shared/state.hpp>
 #include <inf.base/plugin/graph_processor.hpp>
@@ -31,4 +31,4 @@ cv_bank_graph::needs_repaint(std::int32_t runtime_param) const
 { return topology()->params[runtime_param].descriptor->data.kind != base::param_kind::output; }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_CV_BANK_GRAPH_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_CV_BANK_GRAPH_HPP

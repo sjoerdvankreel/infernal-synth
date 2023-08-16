@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_OSCILLATOR_CONFIG_HPP
-#define INF_SYNTH_OSCILLATOR_CONFIG_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_CONFIG_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_CONFIG_HPP
 
 #include <cstdint>
 
@@ -11,4 +11,4 @@ inline std::int32_t constexpr osc_sync_fade_length = 16;
 inline std::int32_t constexpr osc_noise_color_bin_count = 16;
 
 } // namespace inf::synth
-#endif // INF_SYNTH_OSCILLATOR_CONFIG_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_OSCILLATOR_CONFIG_HPP

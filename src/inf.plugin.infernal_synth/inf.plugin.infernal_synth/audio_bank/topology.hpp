@@ -1,7 +1,7 @@
-#ifndef INF_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
-#define INF_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
 
-#include <inf.synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
 #include <inf.base/topology/param_descriptor.hpp>
 
 #include <vector>
@@ -57,4 +57,4 @@ inline std::int32_t constexpr gaudio_route_input_counts[gaudio_route_input::coun
 inline std::int32_t constexpr gaudio_route_output_total_count = std::accumulate(gaudio_route_output_counts, gaudio_route_output_counts + gaudio_route_output::count, 0);
 
 } // namespace inf::synth
-#endif // INF_SYNTH_AUDIO_BANK_TOPOLOGY_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_AUDIO_BANK_TOPOLOGY_HPP

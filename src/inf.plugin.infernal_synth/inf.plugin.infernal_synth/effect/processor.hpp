@@ -1,10 +1,10 @@
-#ifndef INF_SYNTH_DSP_EFFECT_PROCESSOR_HPP
-#define INF_SYNTH_DSP_EFFECT_PROCESSOR_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_HPP
 
-#include <inf.synth/shared/state.hpp>
-#include <inf.synth/effect/state.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
-#include <inf.synth/shared/audio_part_processor.hpp>
+#include <inf.plugin.infernal_synth/shared/state.hpp>
+#include <inf.plugin.infernal_synth/effect/state.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/shared/audio_part_processor.hpp>
 
 #include <cmath>
 #include <array>
@@ -75,4 +75,4 @@ effect_processor::modulation_type(std::int32_t part_type)
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_DSP_EFFECT_PROCESSOR_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_DSP_EFFECT_PROCESSOR_HPP

@@ -1,4 +1,4 @@
-#include <inf.synth/oscillator/graph_spectrum.hpp>
+#include <inf.plugin.infernal_synth/oscillator/graph_spectrum.hpp>
 
 using namespace inf::base;
 

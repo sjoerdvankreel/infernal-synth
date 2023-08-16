@@ -1,8 +1,8 @@
-#include <inf.synth/shared/support.hpp>
-#include <inf.synth/cv_bank/processor.hpp>
-#include <inf.synth/oscillator/processor.hpp>
-#include <inf.synth/shared/scratch_space.hpp>
-#include <inf.synth/oscillator/graph_wave.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/processor.hpp>
+#include <inf.plugin.infernal_synth/oscillator/processor.hpp>
+#include <inf.plugin.infernal_synth/shared/scratch_space.hpp>
+#include <inf.plugin.infernal_synth/oscillator/graph_wave.hpp>
 
 using namespace inf::base;
 

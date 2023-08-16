@@ -1,6 +1,6 @@
 #include <inf.base/shared/support.hpp>
-#include <inf.synth/output/topology.hpp>
-#include <inf.synth/output/processor.hpp>
+#include <inf.plugin.infernal_synth/output/topology.hpp>
+#include <inf.plugin.infernal_synth/output/processor.hpp>
 
 using namespace inf::base;
 

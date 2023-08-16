@@ -1,7 +1,7 @@
-#ifndef INF_SYNTH_EFFECT_GRAPH2_HPP
-#define INF_SYNTH_EFFECT_GRAPH2_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH2_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH2_HPP
 
-#include <inf.synth/effect/graph1.hpp>
+#include <inf.plugin.infernal_synth/effect/graph1.hpp>
 #include <inf.base/shared/support.hpp>
 #include <inf.base/shared/spectrum_analyzer.hpp>
 #include <inf.base/plugin/graph_processor.hpp>
@@ -50,4 +50,4 @@ effect_graph2(base::topology_info const* topology, base::part_id id) :
 effect_graph_base(topology, id), _fft(), _graph1(topology, id), _analyzer() {}
 
 } // namespace inf::synth
-#endif // INF_SYNTH_EFFECT_GRAPH2_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH2_HPP

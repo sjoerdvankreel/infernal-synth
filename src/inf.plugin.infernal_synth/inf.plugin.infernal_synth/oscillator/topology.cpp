@@ -1,6 +1,6 @@
-#include <inf.synth/synth/config.hpp>
-#include <inf.synth/oscillator/config.hpp>
-#include <inf.synth/oscillator/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth/oscillator/config.hpp>
+#include <inf.plugin.infernal_synth/oscillator/topology.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/part_descriptor.hpp>

@@ -1,5 +1,5 @@
-#include <inf.synth/effect/config.hpp>
-#include <inf.synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/config.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/topology/part_descriptor.hpp>

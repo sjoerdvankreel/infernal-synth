@@ -1,7 +1,7 @@
-#ifndef INF_SYNTH_EFFECT_STATE_HPP
-#define INF_SYNTH_EFFECT_STATE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_EFFECT_STATE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_EFFECT_STATE_HPP
 
-#include <inf.synth/effect/config.hpp>
+#include <inf.plugin.infernal_synth/effect/config.hpp>
 #include <inf.base/shared/support.hpp>
 #include <inf.base/shared/ring_buffer.hpp>
 #include <inf.base/shared/oversampler.hpp>
@@ -52,4 +52,4 @@ struct effect_state
 };
 
 } // namespace inf::synth
-#endif // INF_SYNTH_EFFECT_STATE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_STATE_HPP

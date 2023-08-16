@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_EFFECT_GRAPH1_HPP
-#define INF_SYNTH_EFFECT_GRAPH1_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH1_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH1_HPP
 
-#include <inf.synth/effect/graph.hpp>
-#include <inf.synth/shared/support.hpp>
+#include <inf.plugin.infernal_synth/effect/graph.hpp>
+#include <inf.plugin.infernal_synth/shared/support.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/plugin/graph_processor.hpp>
@@ -39,4 +39,4 @@ effect_graph1(base::topology_info const* topology, base::part_id id) :
 effect_graph_base(topology, id) {}
 
 } // namespace inf::synth
-#endif // INF_SYNTH_EFFECT_GRAPH1_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_EFFECT_GRAPH1_HPP

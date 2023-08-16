@@ -1,5 +1,5 @@
-#include <inf.synth/cv_bank/topology.hpp>
-#include <inf.synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
 
 #include <inf.base/shared/support.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>

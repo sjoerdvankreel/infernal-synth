@@ -1,8 +1,8 @@
-#ifndef INF_SYNTH_LFO_PROCESSOR_FREE_HPP
-#define INF_SYNTH_LFO_PROCESSOR_FREE_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_FREE_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_FREE_HPP
 
-#include <inf.synth/lfo/config.hpp>
-#include <inf.synth/lfo/state.hpp>
+#include <inf.plugin.infernal_synth/lfo/config.hpp>
+#include <inf.plugin.infernal_synth/lfo/state.hpp>
 #include <inf.base/shared/support.hpp>
 
 #include <cmath>
@@ -69,4 +69,4 @@ lfo_free_processor::operator()(float frequency, float phase) const
 }
 
 } // namespace inf::synth
-#endif // INF_SYNTH_LFO_PROCESSOR_FREE_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_LFO_PROCESSOR_FREE_HPP

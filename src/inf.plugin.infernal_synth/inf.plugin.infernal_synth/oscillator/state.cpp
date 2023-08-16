@@ -1,4 +1,4 @@
-#include <inf.synth/oscillator/state.hpp>
+#include <inf.plugin.infernal_synth/oscillator/state.hpp>
 
 namespace inf::synth {
 
