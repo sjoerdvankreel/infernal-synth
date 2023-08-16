@@ -171,7 +171,7 @@ source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR}" FILES ${INF_PL
 endif()
 
 # Inf plugin infernal synth format vst3fx and vst3i.
-function(declare_inf_plugin_infernal_synth_format_vst3 target_name is_fx suffix)
+function(declare_inf_plugin_infernal_synth_format_vst3 target_name is_fx suffix platform)
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR "src/inf.plugin.infernal_synth.format.vst3")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}/*.*")
 add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
@@ -182,6 +182,10 @@ target_include_directories(${target_name} PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE
 set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${suffix}${INFERNAL_VERSION}")
 target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.vst3 
   infernal.base.ui infernal.base lib.vst3sdk lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
+add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
+  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
+add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets 
+  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".vst3")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
@@ -193,5 +197,10 @@ set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
   "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynth${INFERNAL_VERSION}.vst3/Contents/x86_64-linux")
 endif()
 endfunction()
-declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i 0 "")
-declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx 1 "FX")
+if (MSVC)
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i 0 "" win32)
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx 1 "FX" win32)
+else ()
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i 0 "" linux)
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx 1 "FX" linux)
+endif ()
