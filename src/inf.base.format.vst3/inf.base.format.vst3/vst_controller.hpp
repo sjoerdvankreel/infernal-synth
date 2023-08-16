@@ -54,7 +54,7 @@ public:
 
   void restart() override;
   void save_preset(std::string const& path) override;
-  bool load_preset(std::string const& path, bool factory) override;
+  bool load_preset(std::string const& path) override;
   void load_component_state(inf::base::param_value* state) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override 

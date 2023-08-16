@@ -95,7 +95,7 @@ public:
   virtual void reload_editor(std::int32_t width) = 0;
   virtual void load_component_state(param_value* state) = 0;
   virtual void save_preset(std::string const& path) = 0;
-  virtual bool load_preset(std::string const& path, bool factory) = 0;
+  virtual bool load_preset(std::string const& path) = 0;
 
   virtual float editor_aspect_ratio() const = 0;
   virtual void* current_editor_window() const = 0;
