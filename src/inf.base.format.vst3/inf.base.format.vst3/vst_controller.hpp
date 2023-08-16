@@ -3,7 +3,7 @@
 
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/topology_info.hpp>
-#include <inf.base.format.vst/vst_support.hpp>
+#include <inf.base.format.vst3/vst_support.hpp>
 
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
