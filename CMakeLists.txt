@@ -162,12 +162,12 @@ endif()
 
 # Inf plugin infernal synth format vst.
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC_DIR "src/inf.plugin.infernal_synth.format.vst")
-file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC_DIR}/*.*")
+file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC_DIR}/*.*")
 add_library(infernal.plugin.infernal_synth.format.vst SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC})
 target_include_directories(infernal.plugin.infernal_synth.format.vst SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
 target_include_directories(infernal.plugin.infernal_synth.format.vst PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} 
   ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_VST_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC})
-set_target_properties(infernal.synth.vst.versioned PROPERTIES OUTPUT_NAME "InfernalSynth${INFERNAL_VERSION}")
+set_target_properties(infernal.plugin.infernal_synth.format.vst PROPERTIES OUTPUT_NAME "InfernalSynth${INFERNAL_VERSION}")
 if (MSVC)
 set_target_properties(infernal.plugin.infernal_synth.format.vst PROPERTIES SUFFIX ".vst3")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_SRC})

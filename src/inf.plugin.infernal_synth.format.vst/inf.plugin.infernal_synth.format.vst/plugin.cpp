@@ -1,16 +1,16 @@
-#include <inf.synth/lfo/topology.hpp>
-#include <inf.synth/synth/topology.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
-#include <inf.synth/envelope/topology.hpp>
-#include <inf.synth/audio_bank/topology.hpp>
-#include <inf.synth/oscillator/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/oscillator/topology.hpp>
 
-#include <inf.synth.ui/ui.hpp>
-#include <inf.synth.vst/plugin.hpp>
+#include <inf.plugin.infernal_synth.ui/ui.hpp>
+#include <inf.plugin.infernal_synth.format.vst/plugin.hpp>
 #include <inf.base.ui/shared/support.hpp>
-#include <inf.base.vst/vst_editor.hpp>
-#include <inf.base.vst/vst_processor.hpp>
-#include <inf.base.vst/vst_controller.hpp>
+#include <inf.base.format.vst/vst_editor.hpp>
+#include <inf.base.format.vst/vst_processor.hpp>
+#include <inf.base.format.vst/vst_controller.hpp>
 
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <pluginterfaces/vst/ivstmidicontrollers.h>
@@ -22,9 +22,9 @@
 
 using namespace inf::base;
 using namespace inf::base::ui;
-using namespace inf::base::vst;
-using namespace inf::synth;
-using namespace inf::synth::ui;
+using namespace inf::base::format::vst;
+using namespace inf::plugin::infernal_synth;
+using namespace inf::plugin::infernal_synth::ui;
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;

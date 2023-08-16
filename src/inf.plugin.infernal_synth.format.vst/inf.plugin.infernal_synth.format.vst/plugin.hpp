@@ -1,5 +1,5 @@
-#ifndef INF_SYNTH_VST_PLUGIN_HPP
-#define INF_SYNTH_VST_PLUGIN_HPP
+#ifndef INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_PLUGIN_HPP
+#define INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_PLUGIN_HPP
 
 // Don't forget to update the versioned guids, too, if breaking changes are introduced.
 #define INF_SYNTH_VST_VERSION "1.3"
@@ -32,4 +32,4 @@
 #define INF_SYNTH_VST_COMPANY_MAIL "sjoerdvankreel@gmail.com"
 #define INF_SYNTH_VST_LEGAL_TRADEMARKS "VST is a trademark of Steinberg Media Technologies GmbH"
 
-#endif // INF_SYNTH_VST_PLUGIN_HPP
+#endif // INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST_PLUGIN_HPP
