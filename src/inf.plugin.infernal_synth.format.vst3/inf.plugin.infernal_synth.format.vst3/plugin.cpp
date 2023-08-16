@@ -139,10 +139,10 @@ public synth_topology
 {
 public:
   synth_vst_topology(bool is_instrument): synth_topology(is_instrument) {}
-  char const* plugin_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_NAME; }
-  char const* vendor_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VENDOR_NAME; }
-  std::uint16_t version_major() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION_MAJOR; }
-  std::uint16_t version_minor() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION_MINOR; }
+  std::uint16_t version_major() const { return IPISFV3_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return IPISFV3_VERSION_MINOR; }
+  char const* plugin_name() const override { return IPISFV3_NAME; }
+  char const* vendor_name() const override { return IPISFV3_VENDOR_NAME; }
 };
 
 static
@@ -170,14 +170,14 @@ create_processor(void* context)
 }
 
 BEGIN_FACTORY_DEF(
-  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_COMPANY_NAME,
-  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_COMPANY_WEB,
-  INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_COMPANY_MAIL,
+  IPISFV3_COMPANY_NAME,
+  IPISFV3_COMPANY_WEB,
+  IPISFV3_COMPANY_MAIL,
   2)
   DEF_CLASS(vst_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_NAME, Steinberg::Vst::kDistributable, INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE,
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION, kVstVersionString, create_processor, nullptr)
+    IPISFV3_NAME, Steinberg::Vst::kDistributable, INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_PLUG_TYPE,
+    IPISFV3_VERSION, kVstVersionString, create_processor, nullptr)
   DEF_CLASS(vst_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_CONTROLLER_NAME, 0, "",
-    INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_VERSION, kVstVersionString, create_controller, nullptr)
+    IPISFV3_CONTROLLER_NAME, 0, "",
+    IPISFV3_VERSION, kVstVersionString, create_controller, nullptr)
 END_FACTORY
