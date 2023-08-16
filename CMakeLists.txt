@@ -145,23 +145,21 @@ add_library(infernal.plugin.infernal_synth STATIC ${INF_PLUGIN_INFERNAL_SYNTH_SR
 target_include_directories(infernal.plugin.infernal_synth PRIVATE ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR} ${INF_BASE_SRC_DIR})
 target_include_directories(infernal.plugin.infernal_synth SYSTEM PRIVATE ${HIIR_SRC_DIR})
 target_include_directories(infernal.plugin.infernal_synth SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
-target_link_libraries(infernal.plugin.infernal_synth infernal.base)
 if (MSVC)
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_SRC})
 endif()
 
-if(FALSE)
-
-# Inf synth ui library.
-set(INF_SYNTH_UI_SRC_DIR "src/inf.synth.ui")
-file(GLOB_RECURSE INF_SYNTH_UI_SRC "${INF_SYNTH_UI_SRC_DIR}/*.*")
-add_library(infernal.synth.ui STATIC ${INF_SYNTH_UI_SRC})
-target_include_directories(infernal.synth.ui PRIVATE ${INF_SYNTH_UI_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_SYNTH_SRC_DIR} ${INF_BASE_SRC_DIR})
-target_include_directories(infernal.synth.ui SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
-target_link_libraries(infernal.synth.ui infernal.synth infernal.base.ui infernal.base lib.juce)
+# Inf plugin infernal synth ui library.
+set(INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR "src/inf.plugin.infernal_synth.ui")
+file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_UI_SRC "${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR}/*.*")
+add_library(infernal.plugin.infernal_synth.ui STATIC ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC})
+target_include_directories(infernal.plugin.infernal_synth.ui PRIVATE ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_BASE_SRC_DIR})
+target_include_directories(infernal.plugin.infernal_synth.ui SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
 if (MSVC)
-source_group(TREE "../../${INF_SYNTH_UI_SRC_DIR}" FILES ${INF_SYNTH_UI_SRC})
+source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC})
 endif()
+
+if(FALSE)
 
 # Inf synth vst generic.
 set(INF_SYNTH_VST_GENERIC_SRC_DIR "src/inf.synth.vst")

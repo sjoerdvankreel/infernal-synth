@@ -1,20 +1,20 @@
-#include <inf.synth.ui/ui.hpp>
-#include <inf.synth/amp/topology.hpp>
-#include <inf.synth/lfo/topology.hpp>
-#include <inf.synth/voice/topology.hpp>
-#include <inf.synth/synth/topology.hpp>
-#include <inf.synth/effect/topology.hpp>
-#include <inf.synth/output/topology.hpp>
-#include <inf.synth/cv_bank/topology.hpp>
-#include <inf.synth/envelope/topology.hpp>
-#include <inf.synth/oscillator/topology.hpp>
-#include <inf.synth/audio_bank/topology.hpp>
+#include <inf.plugin.infernal_synth.ui/ui.hpp>
+#include <inf.plugin.infernal_synth/amp/topology.hpp>
+#include <inf.plugin.infernal_synth/lfo/topology.hpp>
+#include <inf.plugin.infernal_synth/voice/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/effect/topology.hpp>
+#include <inf.plugin.infernal_synth/output/topology.hpp>
+#include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
+#include <inf.plugin.infernal_synth/envelope/topology.hpp>
+#include <inf.plugin.infernal_synth/oscillator/topology.hpp>
+#include <inf.plugin.infernal_synth/audio_bank/topology.hpp>
 
 using namespace juce;
 using namespace inf::base;
 using namespace inf::base::ui;
 
-namespace inf::synth::ui {
+namespace inf::plugin::infernal_synth::ui {
 
 static std::unique_ptr<inf_look_and_feel>
 create_root_lnf(plugin_controller* controller)
@@ -1101,4 +1101,4 @@ create_synth_ui(plugin_controller* controller)
   return result;
 }
 
-} // inf::synth::ui 
+} // inf::plugin::infernal_synth::ui 
