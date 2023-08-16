@@ -1,5 +1,5 @@
-#ifndef INF_BASE_VST_VST_SUPPORT_HPP
-#define INF_BASE_VST_VST_SUPPORT_HPP
+#ifndef INF_BASE_FORMAT_VST_VST_SUPPORT_HPP
+#define INF_BASE_FORMAT_VST_VST_SUPPORT_HPP
 
 #include <inf.base/topology/topology_info.hpp>
 #include <pluginterfaces/base/ftypes.h>
@@ -8,7 +8,7 @@
 #include <cassert>
 #include <algorithm>
 
-namespace inf::base::vst {
+namespace inf::base::format::vst {
 
 inline char constexpr hard_reset_request_msg_id[] = "XT_HARD_RESET_REQUEST";
 
@@ -70,5 +70,5 @@ vst_normalized_to_base(
   return inf::base::param_value(vst_normalized_to_discrete(info, val));
 }
 
-} // namespace inf::base::vst
-#endif // INF_BASE_VST_VST_SUPPORT_HPP
+} // namespace inf::base::format::vst
+#endif // INF_BASE_FORMAT_VST_VST_SUPPORT_HPP

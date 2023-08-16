@@ -10,40 +10,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
-# Compiler flags.
-if (MSVC)
-add_compile_options(/W4)
-add_compile_options(/WX)
-add_compile_options(/wd4100)
-add_compile_options(/wd4388)
-add_compile_options(/wd26451)
-add_compile_options(/wd26498)
-add_compile_options(/wd26812)
-add_compile_options(/fp:fast)
-add_compile_options(/arch:AVX)
-add_compile_options(/external:W0)
-#add_compile_options(/Qvec-report:2)
-add_definitions(-DJUCE_WINDOWS=1)
-add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-else ()
-add_compile_options(-std=c++2a)
-add_compile_options(-Wall)
-add_compile_options(-Wextra)
-add_compile_options(-Werror)
-# Need to pull in part of vst sdk.
-# Can't disable this one with pragma on g++.
-add_compile_options(-Wno-cpp)
-add_compile_options(-Wno-sign-compare)
-add_compile_options(-Wno-unused-parameter)
-add_compile_options(-ffast-math)
-add_compile_options(-march=native)
-add_definitions(-DJUCE_LINUX=1 -DJUCE_GUI_BASICS_INCLUDE_XHEADERS=1)
-set(CMAKE_SHARED_LIBRARY_PREFIX "")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,--no-undefined -fvisibility=hidden -fvisibility-inlines-hidden -pthread")
-endif()
+# Dependency versions.
+set(HIIR_SRC_DIR "lib/hiir_1.40")
+set(JUCE_SRC_DIR "lib/JUCE_7.0.5")
+set(VST3_SDK_SRC_DIR "lib/vst3sdk_3.7.8")
 
 # Juce flags.
-add_definitions(-DJUCE_USE_CURL=0)
 add_definitions(-DJUCE_DISPLAY_SPLASH_SCREEN=0)
 add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=0)
 add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
@@ -52,17 +24,46 @@ add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DRELEASE=1")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEVELOPMENT=1")
 
-# Juce linux dependencies.
-if (NOT MSVC)
-find_package(Freetype REQUIRED)
+# Compiler flags.
+if (MSVC)
+add_definitions(-DJUCE_WINDOWS=1 -D_CRT_SECURE_NO_WARNINGS=1)
+add_compile_options(/W4;/WX;/wd4100;/wd4388;/wd26451;/wd26498;/wd26812;/fp:fast;/arch:AVX;/external:W0)
+else ()
+add_definitions(-DJUCE_LINUX=1 -DJUCE_GUI_BASICS_INCLUDE_XHEADERS=1)
+add_compile_options(-std=c++2a;-Wall;-Wextra;-Werror;-Wno-cpp;-Wno-sign-compare;-Wno-unused-parameter;-ffast-math;-march=native)
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,--no-undefined -fvisibility=hidden -fvisibility-inlines-hidden -pthread")
 endif()
 
-# Dependency versions.
-set(HIIR_SRC_DIR "lib/hiir_1.40")
-set(JUCE_SRC_DIR "lib/JUCE_7.0.5")
-set(VST3_SDK_SRC_DIR "lib/vst3sdk_3.7.8")
+# Juce core library.
+file (GLOB JUCE_CORE_SRC "${JUCE_SRC_DIR}/modules/juce_core/juce_core.cpp")
+add_library(lib.juce.core STATIC ${JUCE_CORE_SRC})
+target_include_directories(lib.juce.core SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
 
-# Vst3 sdk binary.
+# Juce data structures library.
+file (GLOB JUCE_DATA_STRUCTURES_SRC "${JUCE_SRC_DIR}/modules/juce_data_structures/juce_data_structures.cpp")
+add_library(lib.juce.data_structures STATIC ${JUCE_DATA_STRUCTURES_SRC})
+target_include_directories(lib.juce.data_structures SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+
+# Juce graphics library.
+file (GLOB JUCE_GRAPHICS_SRC "${JUCE_SRC_DIR}/modules/juce_graphics/juce_graphics.cpp")
+add_library(lib.juce.graphics STATIC ${JUCE_GRAPHICS_SRC})
+target_include_directories(lib.juce.graphics SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+
+# Juce events library.
+file (GLOB JUCE_EVENTS_SRC "${JUCE_SRC_DIR}/modules/juce_events/juce_events.cpp")
+add_library(lib.juce.events STATIC ${JUCE_EVENTS_SRC})
+target_include_directories(lib.juce.events SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+
+# Juce gui basics library.
+file (GLOB JUCE_GUI_BASICS_SRC "${JUCE_SRC_DIR}/modules/juce_gui_basics/juce_gui_basics.cpp")
+add_library(lib.juce.gui_basics STATIC ${JUCE_GUI_BASICS_SRC})
+target_include_directories(lib.juce.gui_basics SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
+if (MSVC)
+target_compile_options(lib.juce.gui_basics PRIVATE "$<$<CONFIG:Debug>:/bigobj>")
+endif ()
+
+# Vst3 sdk library.
 file (GLOB VST3_BASE_SOURCE "${VST3_SDK_SRC_DIR}/base/source/*.cpp" "${VST3_SDK_SRC_DIR}/base/source/*.h")
 file (GLOB VST3_BASE_THREAD_SOURCE "${VST3_SDK_SRC_DIR}/base/thread/source/*.cpp" "${VST3_SDK_SRC_DIR}/base/thread/source/*.h")
 file (GLOB VST3_BASE_THREAD_INCLUDE "${VST3_SDK_SRC_DIR}/base/thread/include/*.cpp" "${VST3_SDK_SRC_DIR}/base/thread/include/*.h")
@@ -76,32 +77,33 @@ file (GLOB VST3_PUBLIC_SDK_SOURCE_VST_VSTGUI_WIN32_BUNDLE_SUPPORT "${VST3_SDK_SR
 list (REMOVE_ITEM VST3_PUBLIC_SDK_SOURCE_VST ${VST3_PUBLIC_SDK_SOURCE_VST_VSTGUIEDITOR})
 list (REMOVE_ITEM VST3_PUBLIC_SDK_SOURCE_VST ${VST3_PUBLIC_SDK_SOURCE_VST_VSTGUI_WIN32_BUNDLE_SUPPORT})
 if (MSVC)
-file (GLOB VST3_PUBLIC_SDK_SOURCE_MAIN "${VST3_SDK_SRC_DIR}/public.sdk/source/main/dllmain.cpp" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.cpp" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.h" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.cpp" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.h" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory_constexpr.h")
+file (GLOB VST3_PUBLIC_SDK_SOURCE_MAIN 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/dllmain.cpp"
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.cpp"
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.h"
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.cpp"
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.h"
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory_constexpr.h")
 else()
-file (GLOB VST3_PUBLIC_SDK_SOURCE_MAIN "${VST3_SDK_SRC_DIR}/public.sdk/source/main/linuxmain.cpp" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.cpp" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.h" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.cpp" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.h" "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory_constexpr.h")
+file (GLOB VST3_PUBLIC_SDK_SOURCE_MAIN 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/linuxmain.cpp" 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.cpp" 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/moduleinit.h" 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.cpp" 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory.h" 
+  "${VST3_SDK_SRC_DIR}/public.sdk/source/main/pluginfactory_constexpr.h")
 endif()
-add_library(lib.vst3sdk STATIC ${VST3_BASE_SOURCE} ${VST3_BASE_THREAD_SOURCE} ${VST3_BASE_THREAD_INCLUDE} ${VST3_PLUGINTERFACES_GUI} ${VST3_PLUGINTERFACES_VST} ${VST3_PLUGINTERFACES_BASE} ${VST3_PUBLIC_SDK_SOURCE_COMMON} ${VST3_PUBLIC_SDK_SOURCE_MAIN} ${VST3_PUBLIC_SDK_SOURCE_VST})
+add_library(lib.vst3sdk STATIC 
+  ${VST3_BASE_SOURCE} 
+  ${VST3_BASE_THREAD_SOURCE} ${VST3_BASE_THREAD_INCLUDE}
+  ${VST3_PLUGINTERFACES_GUI} ${VST3_PLUGINTERFACES_VST} ${VST3_PLUGINTERFACES_BASE} 
+  ${VST3_PUBLIC_SDK_SOURCE_COMMON} ${VST3_PUBLIC_SDK_SOURCE_MAIN} ${VST3_PUBLIC_SDK_SOURCE_VST})
 target_include_directories(lib.vst3sdk SYSTEM PRIVATE ${VST3_SDK_SRC_DIR})
 if (MSVC)
 target_compile_options(lib.vst3sdk PRIVATE /wd4245)
 else ()
 target_compile_options(lib.vst3sdk PRIVATE -w)
 endif ()
-
-# Juce binary.
-file (GLOB JUCE_CORE_SRC "${JUCE_SRC_DIR}/modules/juce_core/juce_core.cpp")
-file (GLOB JUCE_EVENTS_SRC "${JUCE_SRC_DIR}/modules/juce_events/juce_events.cpp")
-file (GLOB JUCE_GRAPHICS_SRC "${JUCE_SRC_DIR}/modules/juce_graphics/juce_graphics.cpp")
-file (GLOB JUCE_GUI_BASICS_SRC "${JUCE_SRC_DIR}/modules/juce_gui_basics/juce_gui_basics.cpp")
-file (GLOB JUCE_DATA_STRUCTURES_SRC "${JUCE_SRC_DIR}/modules/juce_data_structures/juce_data_structures.cpp")
-add_library(lib.juce STATIC ${JUCE_CORE_SRC} ${JUCE_EVENTS_SRC} ${JUCE_GRAPHICS_SRC} ${JUCE_GUI_BASICS_SRC} ${JUCE_DATA_STRUCTURES_SRC})
-target_include_directories(lib.juce SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
-if (MSVC)
-target_compile_options(lib.juce PRIVATE "$<$<CONFIG:Debug>:/bigobj>")
-else ()
-target_link_libraries(lib.juce ${FREETYPE_LIBRARIES})
-target_include_directories(lib.juce PRIVATE ${FREETYPE_INCLUDE_DIRS})
-endif()
 
 # Inf base library.
 set(INF_BASE_SRC_DIR "src/inf.base")
@@ -110,7 +112,6 @@ add_library(infernal.base STATIC ${INF_BASE_SRC})
 target_include_directories(infernal.base PRIVATE ${INF_BASE_SRC_DIR})
 target_include_directories(infernal.base SYSTEM PRIVATE ${HIIR_SRC_DIR})
 target_include_directories(infernal.base SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
-target_link_libraries(infernal.base lib.juce)
 if (MSVC)
 source_group(TREE "../../${INF_BASE_SRC_DIR}" FILES ${INF_BASE_SRC})
 endif()
@@ -121,23 +122,23 @@ file(GLOB_RECURSE INF_BASE_UI_SRC "${INF_BASE_UI_SRC_DIR}/*.*")
 add_library(infernal.base.ui STATIC ${INF_BASE_UI_SRC})
 target_include_directories(infernal.base.ui PRIVATE ${INF_BASE_UI_SRC_DIR} ${INF_BASE_SRC_DIR})
 target_include_directories(infernal.base.ui SYSTEM PRIVATE ${JUCE_SRC_DIR}/modules)
-target_link_libraries(infernal.base.ui infernal.base lib.juce)
 if (MSVC)
 source_group(TREE "../../${INF_BASE_UI_SRC_DIR}" FILES ${INF_BASE_UI_SRC})
 endif()
 
-# Inf base vst library.
-set(INF_BASE_VST_SRC_DIR "src/inf.base.vst")
-file(GLOB_RECURSE INF_BASE_VST_SRC "${INF_BASE_VST_SRC_DIR}/*.*")
-add_library(infernal.base.vst STATIC ${INF_BASE_VST_SRC})
-target_compile_definitions(infernal.base.vst PRIVATE $<$<CONFIG:Debug>:DEVELOPMENT=1>)
-target_include_directories(infernal.base.vst PRIVATE ${INF_BASE_VST_SRC_DIR} ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR})
-target_include_directories(infernal.base.vst SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
-target_link_libraries(infernal.base.vst infernal.base infernal.base.ui lib.juce lib.vst3sdk)
+# Inf base format vst library.
+set(INF_BASE_FORMAT_VST_SRC_DIR "src/inf.base.format.vst")
+file(GLOB_RECURSE INF_BASE_FORMAT_VST_SRC "${INF_BASE_FORMAT_VST_SRC_DIR}/*.*")
+add_library(infernal.base.format.vst STATIC ${INF_BASE_FORMAT_VST_SRC})
+target_compile_definitions(infernal.base.format.vst PRIVATE $<$<CONFIG:Debug>:DEVELOPMENT=1>)
+target_include_directories(infernal.base.format.vst PRIVATE ${INF_BASE_FORMAT_VST_SRC_DIR} ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR})
+target_include_directories(infernal.base.format.vst SYSTEM PRIVATE ${VST3_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
 if (MSVC)
-source_group(TREE "../../${INF_BASE_VST_SRC_DIR}" FILES ${INF_BASE_VST_SRC})
-target_compile_options(infernal.base.vst PRIVATE /external:I ${VST3_SDK_SRC_DIR})
+source_group(TREE "../../${INF_BASE_FORMAT_VST_SRC_DIR}" FILES ${INF_BASE_FORMAT_VST_SRC})
+target_compile_options(infernal.base.format.vst PRIVATE /external:I ${VST3_SDK_SRC_DIR})
 endif()
+
+if(FALSE)
 
 # Inf synth library.
 set(INF_SYNTH_SRC_DIR "src/inf.synth")
@@ -256,4 +257,6 @@ target_link_libraries(infernal.synth.fx.vst.versioned ${CMAKE_DL_LIBS})
 set_target_properties(infernal.synth.fx.vst.versioned PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/x86_64-linux")
 add_custom_target(copy-themes-synth-fx-versioned ALL DEPENDS infernal.synth.fx.vst.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
 add_custom_target(copy-presets-synth-fx-versioned ALL DEPENDS infernal.synth.fx.vst.versioned COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/Fx "${PROJECT_SOURCE_DIR}/dist/linux_${INFERNAL_LINUX_DISTRO}/${CMAKE_BUILD_TYPE}/InfernalSynthFX${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
+endif()
+
 endif()

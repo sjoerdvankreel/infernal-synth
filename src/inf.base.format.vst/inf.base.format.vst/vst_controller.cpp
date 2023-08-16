@@ -13,11 +13,11 @@
 #include <public.sdk/source/common/memorystream.cpp>
 
 #include <inf.base/shared/support.hpp>
-#include <inf.base.vst/vst_parameter.hpp>
-#include <inf.base.vst/vst_editor.hpp>
-#include <inf.base.vst/vst_controller.hpp>
-#include <inf.base.vst/vst_support.hpp>
-#include <inf.base.vst/vst_io_stream.hpp>
+#include <inf.base.format.vst/vst_parameter.hpp>
+#include <inf.base.format.vst/vst_editor.hpp>
+#include <inf.base.format.vst/vst_controller.hpp>
+#include <inf.base.format.vst/vst_support.hpp>
+#include <inf.base.format.vst/vst_io_stream.hpp>
 
 #include <vector>
 #include <cstring>
@@ -29,7 +29,7 @@ using namespace inf::base;
 using namespace Steinberg;
 using namespace Steinberg::Vst;                  
 
-namespace inf::base::vst {
+namespace inf::base::format::vst {
 
 class vst_host_context_menu:
 public host_context_menu
@@ -344,4 +344,4 @@ vst_controller::host_menu_for_param_index(std::int32_t param_index) const
   return std::make_unique<vst_host_context_menu>(menu);
 }
 
-} // namespace inf::base::vst
+} // namespace inf::base::format::vst
