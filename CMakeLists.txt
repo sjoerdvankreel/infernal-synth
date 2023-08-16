@@ -16,6 +16,7 @@ set(JUCE_SRC_DIR "lib/JUCE_7.0.5")
 set(VST3_SDK_SRC_DIR "lib/vst3sdk_3.7.8")
 
 # Juce flags.
+add_definitions(-DJUCE_USE_CURL=0)
 add_definitions(-DJUCE_DISPLAY_SPLASH_SCREEN=0)
 add_definitions(-DJUCE_MODAL_LOOPS_PERMITTED=0)
 add_definitions(-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
