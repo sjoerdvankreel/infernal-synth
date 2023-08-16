@@ -183,18 +183,18 @@ set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${targ
 target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.vst3 
   infernal.base.ui infernal.base lib.vst3sdk lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
 add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
-  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
+  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
 add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_suffix}
-  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
+  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".vst3")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
 target_compile_options(${target_name} PRIVATE "SHELL:/external:I ${VST3_SDK_SRC_DIR}")
 set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/dist/win32/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${suffix}${INFERNAL_VERSION}.vst3/Contents/x86_64-win")
+  "${PROJECT_SOURCE_DIR}/dist/win32/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/x86_64-win")
 else ()
 set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynth${suffix}${INFERNAL_VERSION}.vst3/Contents/x86_64-linux")
+  "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/x86_64-linux")
 endif()
 endfunction()
 if (MSVC)
