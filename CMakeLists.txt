@@ -183,9 +183,9 @@ set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${targ
 target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.vst3 
   infernal.base.ui infernal.base lib.vst3sdk lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
 add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
-  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
+  "${PROJECT_SOURCE_DIR}/dist/${target_platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
 add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_suffix}
-  "${PROJECT_SOURCE_DIR}/dist/${platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
+  "${PROJECT_SOURCE_DIR}/dist/${target_platform}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".vst3")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
