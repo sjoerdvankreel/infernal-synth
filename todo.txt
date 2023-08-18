@@ -21,9 +21,11 @@
 - re-do the generic build possibly with obsolete???
 
 * bugs
+- PRNG draw relative to sample rate
 - parameter flush bug when playing bitwig
 
 * wishlist big
+
 - Midi MPE
 - global envs
 - CLAP support
@@ -35,6 +37,7 @@
 - slope controls for cvu/b
 - slope controls for cv matrix
 - noise types: fractal, perlin
+- make it more cpu efficient
 - scale CV amount by global CV param
 - make more presets + group by folder
 - incorporate chris airwindows filters
