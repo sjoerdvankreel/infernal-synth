@@ -1,5 +1,10 @@
+#include <inf.plugin.infernal_synth.format.clap/plugin.hpp>
+#include <inf.plugin.infernal_synth/synth/topology.hpp>
+#include <inf.plugin.infernal_synth/synth/config.hpp>
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
+
+using namespace inf::plugin::infernal_synth;
 
 static const char* features[] = { 
   CLAP_PLUGIN_FEATURE_INSTRUMENT, 
@@ -14,19 +19,19 @@ std::unique_ptr<topology_info> create_topology()
   auto result = std::make_unique<synth_topology>(synth_vst_topology(IPISFV3_FX == 0);
   topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
   return result;
-return std::make_unique<synth_topology>(); }
+}
 
 clap_plugin_descriptor_t const inf_plugin_descriptor = 
 {
   .clap_version = CLAP_VERSION_INIT,
-  .id = "sjoerdvankreel.infernal_synth",
-  .name = "Infernal Synth",
-  .vendor = "Sjoerd van Kreel",
-  .url = "https://sjoerdvankreel.github.io/infernal-synth/",
-  .manual_url = "https://sjoerdvankreel.github.io/infernal-synth/",
-  .support_url = "https://sjoerdvankreel.github.io/infernal-synth/",
-  .version = "1.3",
-  .description = "Infernal Synth",
+  .id = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_ID,
+  .name = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_NAME,
+  .vendor = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VENDOR,
+  .url = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_URL,
+  .manual_url = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_URL,
+  .support_url = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_URL,
+  .version = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VERSION,
+  .description = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_NAME,
   .features = features
 };
 
