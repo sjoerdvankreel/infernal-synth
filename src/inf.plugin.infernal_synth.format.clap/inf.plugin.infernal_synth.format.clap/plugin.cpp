@@ -28,7 +28,7 @@ clap_plugin_descriptor_t const plugin_descriptor =
 extern "C" clap_plugin_entry_t const clap_entry =
 {
   .clap_version = CLAP_VERSION_INIT,
-  .init = inf::base::format::clap::init,
-  .deinit = inf::base::format::clap::deinit,
-  .get_factory = inf::base::format::clap::get_factory,
+  .init = inf::base::format::clap::entry_init,
+  .deinit = inf::base::format::clap::entry_deinit,
+  .get_factory = inf::base::format::clap::entry_get_factory
 };
