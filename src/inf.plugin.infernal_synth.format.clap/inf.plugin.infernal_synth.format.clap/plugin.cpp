@@ -9,7 +9,7 @@ static const char* features[] = {
 namespace inf::base::format::clap
 {
 
-clap_plugin_descriptor_t const plugin_descriptor = 
+clap_plugin_descriptor_t const inf_plugin_descriptor = 
 {
   .clap_version = CLAP_VERSION_INIT,
   .id = "sjoerdvankreel.infernal_synth",

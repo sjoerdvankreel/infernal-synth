@@ -1,4 +1,5 @@
 #include <inf.base.format.clap/clap_entry.hpp>
+#include <inf.base.format.clap/clap_plugin.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
 
 #include <cstdint>
@@ -20,7 +21,14 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
 {
   if(!clap_version_is_compatible(host->clap_version)) return nullptr;
   if(strcmp(plugin_id, inf_plugin_descriptor.id)) return nullptr;
-  return nullptr;
+  inf_clap_plugin* plugin = new inf_clap_plugin;
+  plugin->host = host;
+  plugin->klass = plugin_class;
+  plugin->klass.plugin_data = plugin;
+  plugin->topology = create_topology();
+  plugin->state.resize(plugin->topology->params.size());
+  plugin->changed.resize(plugin->topology->params.size());
+  return &plugin->klass;
 }
 
 clap_plugin_factory_t const inf_plugin_factory = 
