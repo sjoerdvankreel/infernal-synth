@@ -22,6 +22,7 @@
 * midi
 * choke/end
 * figure out versioning
+* see what to share for vst3/clap
 
 * bugs
 - PRNG draw relative to sample rate

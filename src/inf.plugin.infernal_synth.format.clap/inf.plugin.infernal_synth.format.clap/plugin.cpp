@@ -11,13 +11,24 @@ static const char* features[] = {
   CLAP_PLUGIN_FEATURE_SYNTHESIZER, 
   CLAP_PLUGIN_FEATURE_STEREO, nullptr };
 
+class synth_clap_topology :
+public synth_topology
+{
+public:
+  synth_clap_topology(): synth_topology(true) {}
+  char const* plugin_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_NAME; }
+  char const* vendor_name() const override { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VENDOR; }
+  std::uint16_t version_major() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VERSION_MAJOR; }
+  std::uint16_t version_minor() const { return INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VERSION_MINOR; }
+};
+
 namespace inf::base::format::clap
 {
 
 std::unique_ptr<topology_info> create_topology()
-{ 
-  auto result = std::make_unique<synth_topology>(synth_vst_topology(IPISFV3_FX == 0);
-  topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
+{
+  auto result = std::make_unique<synth_clap_topology>();
+  topology_info::init(result.get(), part_descriptors, part_type::count, synth_polyphony);
   return result;
 }
 
