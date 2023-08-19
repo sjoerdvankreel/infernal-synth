@@ -9,6 +9,13 @@ static const char* features[] = {
 namespace inf::base::format::clap
 {
 
+std::unique_ptr<topology_info> create_topology()
+{ 
+  auto result = std::make_unique<synth_topology>(synth_vst_topology(IPISFV3_FX == 0);
+  topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
+  return result;
+return std::make_unique<synth_topology>(); }
+
 clap_plugin_descriptor_t const inf_plugin_descriptor = 
 {
   .clap_version = CLAP_VERSION_INIT,

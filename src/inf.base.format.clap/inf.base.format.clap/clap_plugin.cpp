@@ -136,10 +136,11 @@ static clap_process_status
 plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
-  if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;
+  if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
   auto inf_plugin = static_cast<inf_clap_plugin*>(plugin->plugin_data);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
   plugin_process_notes(process, input, inf_plugin->topology->max_note_events);
+  inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
   return CLAP_PROCESS_CONTINUE;
 }
 
