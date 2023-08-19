@@ -114,7 +114,10 @@ plugin_activate(
 static clap_process_status
 plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
+  if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
+  if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;
   auto inf_plugin = static_cast<inf_clap_plugin*>(plugin->plugin_data);
+  auto const& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
   return CLAP_PROCESS_CONTINUE;
 }
 
