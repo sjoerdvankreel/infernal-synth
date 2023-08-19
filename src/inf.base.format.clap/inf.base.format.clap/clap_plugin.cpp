@@ -137,9 +137,19 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
+
   auto inf_plugin = static_cast<inf_clap_plugin*>(plugin->plugin_data);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
   plugin_process_notes(process, input, inf_plugin->topology->max_note_events);
+
+  input.data.bpm = 0.0f;
+  input.data.stream_position = process->steady_time;
+  input.data.sample_count = static_cast<std::int32_t>(process->frames_count);
+  if(process->transport != nullptr) input.data.bpm = static_cast<float>(process->transport->tempo);
+
+  // TEMP
+  inf_plugin->topology->init_clear_patch(inf_plugin->state.data());
+
   inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
   return CLAP_PROCESS_CONTINUE;
 }
