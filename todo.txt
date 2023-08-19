@@ -16,9 +16,7 @@
 - drop generic build (=breaking change!)
 
 * todo this version
-- fix the demos
-- clap
-- re-do the generic build possibly with obsolete???
+- clap -- fx mode?
 
 * bugs
 - PRNG draw relative to sample rate

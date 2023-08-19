@@ -13,6 +13,7 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 # Dependency versions.
 set(HIIR_SRC_DIR "lib/hiir_1.40")
 set(JUCE_SRC_DIR "lib/JUCE_7.0.5")
+set(CLAP_SDK_SRC_DIR "lib/clap_1.1.8")
 set(VST3_SDK_SRC_DIR "lib/vst3sdk_3.7.8")
 
 # Juce flags.
@@ -148,6 +149,17 @@ source_group(TREE "../../${INF_BASE_FORMAT_VST3_SRC_DIR}" FILES ${INF_BASE_FORMA
 target_compile_options(infernal.base.format.vst3 PRIVATE /external:I ${VST3_SDK_SRC_DIR})
 endif()
 
+# Inf base format clap library.
+set(INF_BASE_FORMAT_CLAP_SRC_DIR "src/inf.base.format.clap")
+file(GLOB_RECURSE INF_BASE_FORMAT_CLAP_SRC "${INF_BASE_FORMAT_CLAP_SRC_DIR}/*.*")
+add_library(infernal.base.format.clap STATIC ${INF_BASE_FORMAT_CLAP_SRC})
+target_include_directories(infernal.base.format.clap PRIVATE ${INF_BASE_FORMAT_CLAP_SRC_DIR} ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR})
+target_include_directories(infernal.base.format.clap SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
+if (MSVC)
+source_group(TREE "../../${INF_BASE_FORMAT_CLAP_SRC_DIR}" FILES ${INF_BASE_FORMAT_CLAP_SRC})
+target_compile_options(infernal.base.format.clap PRIVATE /external:I ${CLAP_SDK_SRC_DIR})
+endif()
+
 # Inf plugin infernal synth library.
 set(INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR "src/inf.plugin.infernal_synth")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_SRC "${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}/*.*")
@@ -204,3 +216,24 @@ else ()
 declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i linux 0 "" "Instrument")
 declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx linux 1 "FX" "FX")
 endif ()
+
+# Inf plugin infernal synth format clap.
+set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR "src/inf.plugin.infernal_synth.format.clap")
+file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}/*.*")
+add_library(infernal.plugin.infernal_synth.format.clap SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
+target_include_directories(infernal.plugin.infernal_synth.format.clap SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
+target_include_directories(infernal.plugin.infernal_synth.format.clap PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
+  ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_CLAP_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR})
+set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES OUTPUT_NAME "InfernalSynth${target_suffix}${INFERNAL_VERSION}")
+target_link_libraries(infernal.plugin.infernal_synth.format.clap infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.clap 
+  infernal.base.ui infernal.base lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
+if (MSVC)
+set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES SUFFIX ".clap")
+source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
+target_compile_options(infernal.plugin.infernal_synth.format.clap PRIVATE "SHELL:/external:I ${CLAP_SDK_SRC_DIR}")
+set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+  "${PROJECT_SOURCE_DIR}/dist/win32/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>")
+else ()
+set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES LIBRARY_OUTPUT_DIRECTORY
+  "${PROJECT_SOURCE_DIR}/dist/linux/${CMAKE_BUILD_TYPE}")
+endif()
