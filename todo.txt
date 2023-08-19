@@ -16,7 +16,10 @@
 - drop generic build (=breaking change!)
 
 * todo this version
-- clap -- fx mode, midi
+- clap 
+* fx mode
+* midi
+* choke/end
 
 * bugs
 - PRNG draw relative to sample rate

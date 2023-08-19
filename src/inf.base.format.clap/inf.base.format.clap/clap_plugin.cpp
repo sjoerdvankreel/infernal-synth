@@ -2,6 +2,8 @@
 #include <inf.base.format.clap/clap_plugin.hpp>
 #include <cstring>
 
+using namespace inf::base;
+
 namespace inf::base::format::clap
 {
 
@@ -111,13 +113,33 @@ plugin_activate(
   return true;
 };
 
+// Translate from clap note events.
+static void
+plugin_process_notes(clap_process_t const* process, block_input& input, std::int32_t max_note_events)
+{
+  for (std::uint32_t i = 0; i < process->in_events->size(process->in_events); i++)
+  {
+    clap_event_header_t const* header = process->in_events->get(process->in_events, i);
+    if (input.note_count == max_note_events) return;
+    if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
+    if (header->type != CLAP_EVENT_NOTE_ON && header->type != CLAP_EVENT_NOTE_OFF) continue;
+    auto& note = input.notes[input.note_count++];
+    clap_event_note_t const* event = reinterpret_cast<clap_event_note_t const*>(header);
+    note.midi = event->key;
+    note.note_on = header->type == CLAP_EVENT_NOTE_ON;
+    note.velocity = static_cast<float>(event->velocity);
+    note.sample_index = static_cast<std::int32_t>(header->time);
+  }
+}
+
 static clap_process_status
 plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;
   auto inf_plugin = static_cast<inf_clap_plugin*>(plugin->plugin_data);
-  auto const& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
+  auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
+  plugin_process_notes(process, input, inf_plugin->topology->max_note_events);
   return CLAP_PROCESS_CONTINUE;
 }
 
