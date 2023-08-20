@@ -26,6 +26,8 @@ struct inf_clap_plugin
 };
 
 extern clap_plugin_t const plugin_class;
+inline inf_clap_plugin* plugin_cast(clap_plugin const* plug)
+{ return static_cast<inf_clap_plugin*>(plug->plugin_data); }
 
 } // inf::base::format::clap
 #endif // INF_BASE_FORMAT_CLAP_CLAP_PLUGIN_HPP

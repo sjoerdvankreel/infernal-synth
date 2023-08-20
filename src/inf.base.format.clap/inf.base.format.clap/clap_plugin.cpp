@@ -16,7 +16,7 @@ static void CLAP_ABI plugin_stop_processing(clap_plugin const* plugin) {}
 static bool CLAP_ABI plugin_init(clap_plugin const* plugin) { return true; }
 static bool CLAP_ABI plugin_start_processing(clap_plugin const* plugin) { return true; }
 static void CLAP_ABI plugin_deactivate(clap_plugin const* plugin)
-{ static_cast<inf_clap_plugin*>(plugin->plugin_data)->processor.reset(); }
+{ plugin_cast(plugin)->processor.reset(); }
 
 static void const* CLAP_ABI plugin_get_extension(
   clap_plugin const* plugin, char const* id);
@@ -108,7 +108,7 @@ plugin_activate(
   clap_plugin const* plugin, double sample_rate, 
   std::uint32_t min_frames_count, std::uint32_t max_frames_count)
 {
-  auto inf_plugin = static_cast<inf_clap_plugin*>(plugin->plugin_data);
+  auto inf_plugin = plugin_cast(plugin);
   inf_plugin->sample_rate = static_cast<float>(sample_rate);
   inf_plugin->max_sample_count = static_cast<std::int32_t>(max_frames_count);
   inf_plugin->processor = inf_plugin->topology->create_audio_processor(
@@ -141,7 +141,7 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
 
-  auto inf_plugin = static_cast<inf_clap_plugin*>(plugin->plugin_data);
+  auto inf_plugin = plugin_cast(plugin);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
   plugin_process_notes(process, input, inf_plugin->topology->max_note_events);
 
