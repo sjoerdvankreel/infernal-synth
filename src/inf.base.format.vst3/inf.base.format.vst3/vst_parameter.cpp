@@ -1,3 +1,4 @@
+#include <inf.base/shared/support.hpp>
 #include <inf.base.format.vst3/vst_support.hpp>
 #include <inf.base.format.vst3/vst_parameter.hpp>
 
@@ -25,7 +26,7 @@ param_default_to_vst_normalized(param_info const& info)
   switch (info.descriptor->data.type)
   {
   case param_type::real: return info.descriptor->data.real.default_;
-  default: return discrete_to_vst_normalized(info, info.descriptor->data.discrete.default_);
+  default: return discrete_to_format_normalized(info, info.descriptor->data.discrete.default_);
   }
 }
 
@@ -88,7 +89,7 @@ vst_parameter::toPlain(ParamValue normalized) const
   switch (_info->descriptor->data.type)
   {
   case param_type::real: return _info->descriptor->data.real.display.to_range(normalized);
-  default: return vst_normalized_to_discrete(*_info, normalized);
+  default: return format_normalized_to_discrete(*_info, normalized);
   }
 }
 
@@ -98,7 +99,7 @@ vst_parameter::toNormalized(ParamValue plain) const
   switch (_info->descriptor->data.type)
   {
   case param_type::real: return _info->descriptor->data.real.display.from_range(plain);
-  default: return discrete_to_vst_normalized(*_info, static_cast<std::int32_t>(plain));
+  default: return discrete_to_format_normalized(*_info, static_cast<std::int32_t>(plain));
   }
 }
 
@@ -110,7 +111,7 @@ vst_parameter::toString(ParamValue normalized, String128 string) const
   switch (_info->descriptor->data.type)
   {
   case param_type::real: value.real = toPlain(normalized); break;
-  default: value.discrete = vst_normalized_to_discrete(*_info, normalized); break;
+  default: value.discrete = format_normalized_to_discrete(*_info, normalized); break;
   }
   _info->descriptor->data.format(false, value, str8, 128);
   for(std::size_t i = 0; i < 128; i++)  
@@ -129,7 +130,7 @@ vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
   switch (_info->descriptor->data.type)
   {
   case param_type::real: normalized = toNormalized(value.real); break;
-  default: normalized = discrete_to_vst_normalized(*_info, value.discrete); break;
+  default: normalized = discrete_to_format_normalized(*_info, value.discrete); break;
   }
   return true;
 }

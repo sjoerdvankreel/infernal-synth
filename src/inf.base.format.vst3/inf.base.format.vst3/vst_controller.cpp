@@ -135,7 +135,7 @@ vst_controller::editor_param_changed(std::int32_t index, param_value ui_value)
 {
   param_value base_value = topology()->ui_to_base_value(index, ui_value);
   std::int32_t tag = topology()->param_index_to_id[index];
-  do_edit(tag, base_to_vst_normalized(topology(), index, base_value));
+  do_edit(tag, base_to_format_normalized(topology(), index, base_value));
 }
 
 void
@@ -153,7 +153,7 @@ vst_controller::setParamNormalized(ParamID tag, ParamValue value)
   if(result != kResultOk) return result;
   update_state(tag);
   std::int32_t index = topology()->param_id_to_index.at(tag);
-  controller_param_changed(tag, vst_normalized_to_base(topology(), index, static_cast<float>(value)));
+  controller_param_changed(tag, format_normalized_to_base(topology(), index, static_cast<float>(value)));
   return kResultOk;
 }
 
@@ -239,7 +239,7 @@ vst_controller::update_state(ParamID tag)
   double normalized = getParamNormalized(tag);
   std::int32_t index = _topology->param_id_to_index[tag];
   assert(index >= 0 && index < static_cast<std::int32_t>(_topology->params.size()));
-  _state[index] = vst_normalized_to_base(_topology.get(), index, normalized);
+  _state[index] = format_normalized_to_base(_topology.get(), index, normalized);
 }
 
 void 
@@ -249,7 +249,7 @@ vst_controller::load_component_state(param_value* state)
   for (std::int32_t p = 0; p < _topology->input_param_count; p++)
   {
     ParamID tag = _topology->param_index_to_id[p];
-    ParamValue value = base_to_vst_normalized(_topology.get(), p, state[p]);
+    ParamValue value = base_to_format_normalized(_topology.get(), p, state[p]);
     do_edit(tag, value);
     update_state(tag);
   }
