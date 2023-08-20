@@ -103,10 +103,14 @@ param_value_to_text(
   clap_plugin_t const* plugin, clap_id param_id,
   double value, char* out_buffer, std::uint32_t out_buffer_capacity)
 {
+  param_value ui_value;
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
   auto const& inf_info = inf_plugin->topology->params[index];
-  auto ui_value = inf_plugin->topology->base_to_ui_value(index, param_value(static_cast<float>(value)));
+  if(inf_info.descriptor->data.type == param_type::real)
+    ui_value = inf_plugin->topology->base_to_ui_value(index, param_value(static_cast<float>(value)));
+  else
+    ui_value = inf_plugin->topology->base_to_ui_value(index, param_value(static_cast<std::int32_t>(value)));
   inf_info.descriptor->data.format(false, ui_value, out_buffer, out_buffer_capacity);
   return true;
 }
