@@ -98,19 +98,23 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
   return true;
 }
 
-static bool CLAP_ABI 
-param_value_to_text(clap_plugin_t const* plugin, clap_id param_id, double value, char* out_buffer, std::uint32_t out_buffer_capacity)
+static bool CLAP_ABI
+param_value_to_text(
+  clap_plugin_t const* plugin, clap_id param_id,
+  double value, char* out_buffer, std::uint32_t out_buffer_capacity)
 {
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
   auto const& inf_info = inf_plugin->topology->params[index];
   auto ui_value = inf_plugin->topology->base_to_ui_value(index, param_value(static_cast<float>(value)));
-  auto text_value = inf_info.descriptor->data.format(false, ui_value, out_buffer, out_buffer_capacity);
+  inf_info.descriptor->data.format(false, ui_value, out_buffer, out_buffer_capacity);
   return true;
 }
 
 static bool CLAP_ABI
-param_text_to_value(clap_plugin_t const* plugin, clap_id param_id, char const* param_value_text, double* out_value)
+param_text_to_value(
+  clap_plugin_t const* plugin, clap_id param_id, 
+  char const* param_value_text, double* out_value)
 {
   param_value ui_value;
   auto inf_plugin = plugin_cast(plugin);
@@ -118,7 +122,8 @@ param_text_to_value(clap_plugin_t const* plugin, clap_id param_id, char const* p
   auto const& inf_info = inf_plugin->topology->params[index];
   if(!inf_info.descriptor->data.parse(false, inf_info.part_index, param_value_text, ui_value)) return false;
   param_value base_value = inf_plugin->topology->ui_to_base_value(index, ui_value);
-
+  *out_value = inf_info.descriptor->data.type == param_type::real? base_value.real: base_value.discrete;
+  return true;
 }
 
 } // inf::base::format::clap
