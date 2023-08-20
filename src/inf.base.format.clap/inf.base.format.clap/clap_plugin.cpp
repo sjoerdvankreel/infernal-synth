@@ -9,34 +9,34 @@ using namespace inf::base;
 namespace inf::base::format::clap
 {
 
-static void plugin_reset(clap_plugin const* plugin) {}
-static void plugin_destroy(clap_plugin const* plugin) {}
-static void plugin_on_main_thread(clap_plugin const* plugin) {}
-static void plugin_stop_processing(clap_plugin const* plugin) {}
-static bool plugin_init(clap_plugin const* plugin) { return true; }
-static bool plugin_start_processing(clap_plugin const* plugin) { return true; }
-static void plugin_deactivate(clap_plugin const* plugin) 
+static void CLAP_ABI plugin_reset(clap_plugin const* plugin) {}
+static void CLAP_ABI plugin_destroy(clap_plugin const* plugin) {}
+static void CLAP_ABI plugin_on_main_thread(clap_plugin const* plugin) {}
+static void CLAP_ABI plugin_stop_processing(clap_plugin const* plugin) {}
+static bool CLAP_ABI plugin_init(clap_plugin const* plugin) { return true; }
+static bool CLAP_ABI plugin_start_processing(clap_plugin const* plugin) { return true; }
+static void CLAP_ABI plugin_deactivate(clap_plugin const* plugin)
 { static_cast<inf_clap_plugin*>(plugin->plugin_data)->processor.reset(); }
 
-static void const* plugin_get_extension(
+static void const* CLAP_ABI plugin_get_extension(
   clap_plugin const* plugin, char const* id);
-static clap_process_status plugin_process(
+static clap_process_status CLAP_ABI plugin_process(
   clap_plugin const* plugin, clap_process_t const* process);
-static bool plugin_activate(
+static bool CLAP_ABI plugin_activate(
   clap_plugin const* plugin, double sample_rate, 
   std::uint32_t min_frames_count, std::uint32_t max_frames_count);
 
-static std::uint32_t 
+static std::uint32_t CLAP_ABI
 extension_note_ports_count(clap_plugin_t const* plugin, bool is_input) 
 { return is_input ? 1 : 0; }
-static bool extension_note_ports_get(
+static bool CLAP_ABI extension_note_ports_get(
   clap_plugin_t const* plugin, std::uint32_t index, 
   bool is_input, clap_note_port_info_t* info);
 
-static std::uint32_t 
+static std::uint32_t CLAP_ABI
 extension_audio_ports_count(clap_plugin_t const* plugin, bool is_input) 
 { return is_input ? 0 : 1; }
-static bool extension_audio_ports_get(
+static bool CLAP_ABI extension_audio_ports_get(
   clap_plugin_t const* plugin, std::uint32_t index, 
   bool is_input, clap_audio_port_info_t* info);
 
@@ -68,7 +68,7 @@ static const clap_plugin_audio_ports_t extension_audio_ports =
   .get = extension_audio_ports_get
 };
 
-static bool 
+static bool CLAP_ABI
 extension_note_ports_get(
   clap_plugin_t const* plugin, std::uint32_t index,
   bool is_input, clap_note_port_info_t* info)
@@ -80,7 +80,7 @@ extension_note_ports_get(
   return true;
 }
 
-static bool 
+static bool CLAP_ABI
 extension_audio_ports_get(
   clap_plugin_t const* plugin, std::uint32_t index,
   bool is_input, clap_audio_port_info_t* info)
@@ -94,7 +94,7 @@ extension_audio_ports_get(
   return true;
 }
 
-static void const*
+static void const* CLAP_ABI
 plugin_get_extension(clap_plugin const* plugin, char const* id)
 {
   if (!strcmp(id, CLAP_EXT_NOTE_PORTS)) return &extension_note_ports;
@@ -103,7 +103,7 @@ plugin_get_extension(clap_plugin const* plugin, char const* id)
   return nullptr;
 }
 
-static bool 
+static bool CLAP_ABI
 plugin_activate(
   clap_plugin const* plugin, double sample_rate, 
   std::uint32_t min_frames_count, std::uint32_t max_frames_count)
@@ -135,7 +135,7 @@ plugin_process_notes(clap_process_t const* process, block_input& input, std::int
   }
 }
 
-static clap_process_status
+static clap_process_status CLAP_ABI
 plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;

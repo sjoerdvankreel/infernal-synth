@@ -10,10 +10,10 @@
 
 namespace inf::base::format::clap
 {
-inline void entry_deinit() {}
-inline bool entry_init(char const* path) { return true; }
+inline void CLAP_ABI entry_deinit() {}
+inline bool CLAP_ABI entry_init(char const* path) { return true; }
 
-inline void const* entry_get_factory(char const* factory_id)
+inline void const* CLAP_ABI entry_get_factory(char const* factory_id)
 { return strcmp(factory_id, CLAP_PLUGIN_FACTORY_ID) ? nullptr : &inf_plugin_factory; }
 
 // These come from the plugin project.
