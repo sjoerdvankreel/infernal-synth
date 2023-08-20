@@ -1,3 +1,4 @@
+#include <inf.base/shared/support.hpp>
 #include <inf.base.format.clap/clap_parameter.hpp>
 
 #include <cstdint>
@@ -8,9 +9,9 @@ namespace inf::base::format::clap
 
 static std::uint32_t CLAP_ABI param_count(clap_plugin_t const* plugin);
 static bool CLAP_ABI param_get_value(clap_plugin_t const* plugin, clap_id param_id, double* out_value);
-static void CLAP_ABI param_flush(clap_plugin_t const* plugin, clap_input_events_t const* in, clap_output_events_t const* out);
 static bool CLAP_ABI param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_param_info_t* param_info);
 static bool CLAP_ABI param_text_to_value(clap_plugin_t const* plugin, clap_id param_id, char const* param_value_text, double* out_value);
+static void CLAP_ABI param_flush(clap_plugin_t const* plugin, clap_input_events_t const* in, clap_output_events_t const* out) { /* TODO */ }
 static bool CLAP_ABI param_value_to_text(clap_plugin_t const* plugin, clap_id param_id, double value, char* out_buffer, std::uint32_t out_buffer_capacity);
 
 void 
@@ -33,30 +34,27 @@ param_get_value(clap_plugin_t const* plugin, clap_id param_id, double* out_value
 {
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
-  *out_value = inf_plugin->topology-> inf_plugin->state[index];
-}
-
-static void CLAP_ABI 
-param_flush(clap_plugin_t const* plugin, clap_input_events_t const* in, clap_output_events_t const* out)
-{
-
+  *out_value = base_to_format_normalized(inf_plugin->topology.get(), index, inf_plugin->state[index]);
+  return true;
 }
 
 static bool CLAP_ABI 
 param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_param_info_t* param_info)
 {
+  auto inf_plugin = plugin_cast(plugin);
+  auto topo = inf_plugin->topology.get();
+  param_info->cookie = nullptr;
+  param_info->default_value
 }
 
 static bool CLAP_ABI 
 param_text_to_value(clap_plugin_t const* plugin, clap_id param_id, char const* param_value_text, double* out_value)
 {
-
 }
 
 static bool CLAP_ABI 
 param_value_to_text(clap_plugin_t const* plugin, clap_id param_id, double value, char* out_buffer, std::uint32_t out_buffer_capacity)
 {
-
 }
 
 } // inf::base::format::clap

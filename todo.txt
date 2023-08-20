@@ -16,6 +16,7 @@
 - drop generic build (=breaking change!)
 
 * todo this version
+- crash on param hash collisions
 - clap 
 * midi
 * fx mode
