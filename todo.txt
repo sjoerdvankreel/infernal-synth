@@ -21,6 +21,7 @@
 * midi
 * fx mode
 * choke/end
+* concat module+name
 * do load/save state
 * make clap a folder?
 * set onoff as list mode
