@@ -24,6 +24,7 @@
 * figure out versioning
 * see what to share for vst3/clap
 * make clap a folder?
+* better folder structure also for vst3?
 
 * bugs
 - PRNG draw relative to sample rate
