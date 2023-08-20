@@ -44,7 +44,12 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
   auto inf_plugin = plugin_cast(plugin);
   auto topo = inf_plugin->topology.get();
   param_info->cookie = nullptr;
-  param_info->default_value
+  param_info->id = inf_plugin->topology->param_index_to_id[param_index];
+  param_info->flags = 
+  memset(param_info->name, 0, sizeof(param_info->name));
+  strncpy(param_info->name, inf_plugin->topology->params[param_index].descriptor->data.static_name.short_, sizeof(param_info->name));
+  memset(param_info->module, 0, sizeof(param_info->module));
+  strncpy(param_info->name, inf_plugin->topology->parts[inf_plugin->topology->params[param_index].part_index].runtime_name.c_str(), sizeof(param_info->module));
 }
 
 static bool CLAP_ABI 
