@@ -1,6 +1,7 @@
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
+#include <inf.base.format.clap/clap_parameter.hpp>
 
 #include <cstdint>
 #include <cstring>
@@ -28,6 +29,7 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
   plugin->topology = create_topology();
   plugin->state.resize(plugin->topology->params.size());
   plugin->changed.resize(plugin->topology->params.size());
+  plugin_init_params(plugin);
   return &plugin->klass;
 }
 

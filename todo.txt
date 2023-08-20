@@ -16,14 +16,15 @@
 - drop generic build (=breaking change!)
 
 * todo this version
-- fix cakewalk exact edit bug
 - clap 
-* fx mode
 * midi
+* fx mode
 * choke/end
-* figure out versioning
-* see what to share for vst3/clap
+* do load/save state
 * make clap a folder?
+* figure out versioning
+* do the polyphonic mod stuff
+* see what to share for vst3/clap
 * better folder structure also for vst3?
 
 * bugs

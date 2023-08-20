@@ -14,6 +14,7 @@ struct inf_clap_plugin
 {
 	clap_plugin_t klass = {};
 	clap_host_t const* host = {};
+  clap_plugin_params_t params = {};
 	float sample_rate = {};
   std::int32_t max_sample_count = {};
   std::unique_ptr<topology_info> topology = {};

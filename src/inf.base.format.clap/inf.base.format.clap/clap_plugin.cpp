@@ -1,5 +1,7 @@
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
+#include <inf.base.format.clap/clap_parameter.hpp>
+
 #include <cstring>
 
 using namespace inf::base;
@@ -73,8 +75,8 @@ extension_note_ports_get(
 {
   if (!is_input || index != 0) return false;
   info->id = 0;
-  info->supported_dialects = CLAP_NOTE_DIALECT_CLAP;
   info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
+  info->supported_dialects = CLAP_NOTE_DIALECT_CLAP;
   return true;
 }
 
@@ -97,6 +99,7 @@ plugin_get_extension(clap_plugin const* plugin, char const* id)
 {
   if (!strcmp(id, CLAP_EXT_NOTE_PORTS)) return &extension_note_ports;
   if (!strcmp(id, CLAP_EXT_AUDIO_PORTS)) return &extension_audio_ports;
+  if (!strcmp(id, CLAP_EXT_PARAMS)) return &static_cast<inf_clap_plugin*>(plugin->plugin_data)->params;
   return nullptr;
 }
 
