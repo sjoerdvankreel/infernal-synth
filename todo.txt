@@ -25,6 +25,7 @@
 * make clap a folder?
 * set onoff as list mode
 * figure out versioning
+* show version in clap gui
 * do the polyphonic mod stuff
 * see what to share for vst3/clap
 * better folder structure also for vst3?
