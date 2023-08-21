@@ -16,7 +16,6 @@
 - drop generic build (=breaking change!)
 
 * todo this version
-- delete vst3 current_editor
 - cakewalk demo
 - clap 
 * midi

@@ -2,7 +2,6 @@
 #define INF_BASE_FORMAT_CLAP_CLAP_CONTROLLER_HPP
 
 #include <inf.base/plugin/plugin_controller.hpp>
-#include <inf.base.format.clap/clap_plugin.hpp>
 #include <clap/clap.h>
 
 namespace inf::base::format::clap 
@@ -29,9 +28,6 @@ public:
   std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
   std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
 };
-
-void
-plugin_init_editor(inf_clap_plugin* plugin);
 
 } // inf::base::format::clap
 #endif // INF_BASE_FORMAT_CLAP_CLAP_CONTROLLER_HPP
