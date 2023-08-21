@@ -61,7 +61,7 @@ vst_parameter(ParamID tag,
     to_vst_string(info->runtime_name.c_str()).c_str(),
     tag,
     to_vst_string(info->descriptor->data.unit).c_str(),
-    param_default_to_format_normalized(*info),
+    param_default_to_format_normalized(*info, true),
     param_step_count(*info),
     param_flags(info->descriptor),
     0,
@@ -75,7 +75,7 @@ vst_parameter(ParamID tag,
 void
 vst_parameter::toString(ParamValue normalized, String128 string) const
 {
-  std::string text = format_normalized_to_text(*_info, normalized);
+  std::string text = format_normalized_to_text(*_info, true, normalized);
   std::memset(string, 0, 128 * sizeof(string[0]));
   for(std::size_t i = 0; i < 127 && i < text.size(); i++)
     string[i] = text[i];
@@ -88,7 +88,7 @@ vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
   while(*string != static_cast<TChar>(0))
     str8.push_back(static_cast<char>(*string++));
   str8.push_back('\0');
-  return text_to_format_normalized(*_info, str8.data(), normalized);
+  return text_to_format_normalized(*_info, true, str8.data(), normalized);
 }
 
 } // namespace inf::base::format::vst3

@@ -72,7 +72,7 @@ param_get_value(clap_plugin_t const* plugin, clap_id param_id, double* out_value
 {
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
-  *out_value = base_to_format_normalized(inf_plugin->topology.get(), index, inf_plugin->state[index]);
+  *out_value = base_to_format_normalized(inf_plugin->topology.get(), false, index, inf_plugin->state[index]);
   return true;
 }
 
@@ -81,18 +81,22 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
 {
   auto inf_plugin = plugin_cast(plugin);
   auto const& inf_info = inf_plugin->topology->params[param_index];
-  // Just go with 0/1 to be the same as vst3, seems easier to do it like this.
-  param_info->min_value = 0.0;
-  param_info->max_value = 1.0;
   param_info->cookie = nullptr;
   param_info->flags = param_flags(inf_info.descriptor);
   param_info->id = inf_plugin->topology->param_index_to_id[param_index];
+
+  // Just go with 0/1 to be the same as vst3 for real-valued, seems easier to do it like this.
+  // We still need to supply the full range for discrete values as clap doesnt do normalization for stepped params.
+  bool is_real = inf_info.descriptor->data.type == param_type::real;
+  param_info->min_value = is_real ? 0.0f: inf_info.descriptor->data.discrete.min;
+  param_info->max_value = is_real ? 1.0f : inf_info.descriptor->data.discrete.max;
+  param_info->default_value = param_default_to_format_normalized(inf_info, false);
+
   std::string const& module = inf_plugin->topology->parts[inf_info.part_index].runtime_name;
   memset(param_info->name, 0, sizeof(param_info->name));
   strncpy(param_info->name, inf_info.runtime_name.c_str(), sizeof(param_info->name));
   memset(param_info->module, 0, sizeof(param_info->module));
   strncpy(param_info->module, module.c_str(), sizeof(param_info->module));
-  param_info->default_value = param_default_to_format_normalized(inf_info);
   return true;
 }
 
@@ -104,7 +108,7 @@ param_text_to_value(
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
   auto const& inf_info = inf_plugin->topology->params[index];
-  return text_to_format_normalized(inf_info, param_value_text, *out_value);
+  return text_to_format_normalized(inf_info, false, param_value_text, *out_value);
 }
 
 static bool CLAP_ABI
@@ -115,8 +119,8 @@ param_value_to_text(
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
   auto const& inf_info = inf_plugin->topology->params[index];
-  double normalized = base_to_format_normalized(inf_plugin->topology.get(), index, inf_plugin->state[index]);
-  std::string text = format_normalized_to_text(inf_info, normalized);
+  double normalized = base_to_format_normalized(inf_plugin->topology.get(), false, index, inf_plugin->state[index]);
+  std::string text = format_normalized_to_text(inf_info, false, normalized);
   auto text_size = std::min(static_cast<std::int32_t>(out_buffer_capacity) - 1, static_cast<std::int32_t>(text.size()));
   strncpy(out_buffer, text.data(), text_size);
   out_buffer[text_size] = '\0';

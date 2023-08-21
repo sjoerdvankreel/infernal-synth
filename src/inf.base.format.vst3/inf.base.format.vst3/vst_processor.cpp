@@ -243,7 +243,7 @@ vst_processor::process_input_parameters(ProcessData const& data)
         std::int32_t param_index = _topology->param_id_to_index[tag];
         assert(param_index >= 0 && param_index < _topology->params.size());
         _changed[param_index] = 1;
-        _state[param_index] = format_normalized_to_base(_topology.get(), param_index, value);
+        _state[param_index] = format_normalized_to_base(_topology.get(), true, param_index, value);
       }
     }
   _topology->state_check(_state.data());
@@ -272,7 +272,7 @@ vst_processor::process_automation(block_input& input, ProcessData const& data)
         if (queue->getPoint(queue->getPointCount() - 1, index, value) == kResultTrue)
         {
           _changed[param_index] = 1;
-          _state[param_index] = format_normalized_to_base(_topology.get(), param_index, value);
+          _state[param_index] = format_normalized_to_base(_topology.get(), true, param_index, value);
         }
       } 
       // Fixed should always be set at the default value (done by base).
@@ -310,7 +310,7 @@ vst_processor::process_output_parameters(
     ParamID tag = _topology->param_index_to_id[input_count + p];
     IParamValueQueue* queue = data.outputParameterChanges->addParameterData(tag, index);
     if (queue == nullptr) continue;
-    double normalized = base_to_format_normalized(_topology.get(), _topology->input_param_count + p, output.block_automation_raw[input_count + p]);
+    double normalized = base_to_format_normalized(_topology.get(), true, _topology->input_param_count + p, output.block_automation_raw[input_count + p]);
     queue->addPoint(0, normalized, index);
   }
 }

@@ -29,8 +29,8 @@ public:
   // Forwarding to param_descriptor.
   void toString(ParamValue normalized, String128 string) const override;
   bool fromString(TChar const* string, ParamValue& normalized) const override;
-  ParamValue toNormalized(ParamValue plain) const override { return display_to_format_normalized(*_info, plain); }
-  ParamValue toPlain(ParamValue normalized) const override { return format_normalized_to_display(*_info, normalized); }
+  ParamValue toNormalized(ParamValue plain) const override { return display_to_format_normalized(*_info, true, plain); }
+  ParamValue toPlain(ParamValue normalized) const override { return format_normalized_to_display(*_info, true, normalized); }
 };
 
 } // namespace inf::base::format::vst3
