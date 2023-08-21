@@ -112,7 +112,7 @@ plugin_activate(
   inf_plugin->sample_rate = static_cast<float>(sample_rate);
   inf_plugin->max_sample_count = static_cast<std::int32_t>(max_frames_count);
   inf_plugin->processor = inf_plugin->topology->create_audio_processor(
-    inf_plugin->state.data(), inf_plugin->changed.data(), inf_plugin->sample_rate, inf_plugin->max_sample_count);
+    inf_plugin->audio_state.data(), inf_plugin->changed.data(), inf_plugin->sample_rate, inf_plugin->max_sample_count);
   return true;
 };
 
@@ -151,7 +151,7 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   if(process->transport != nullptr) input.data.bpm = static_cast<float>(process->transport->tempo);
 
   // TEMP
-  inf_plugin->topology->init_clear_patch(inf_plugin->state.data());
+  inf_plugin->topology->init_clear_patch(inf_plugin->audio_state.data());
 
   inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
   return CLAP_PROCESS_CONTINUE;

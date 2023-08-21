@@ -29,6 +29,7 @@
 * show version in clap gui
 * do the polyphonic mod stuff
 * see what to share for vst3/clap
+* figure out threading requirements
 * better folder structure also for vst3?
 
 * bugs

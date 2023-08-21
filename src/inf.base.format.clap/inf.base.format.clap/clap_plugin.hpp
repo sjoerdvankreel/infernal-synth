@@ -20,7 +20,7 @@ struct inf_clap_plugin
   std::unique_ptr<topology_info> topology = {};
   std::unique_ptr<audio_processor> processor = {};
   // This fully defines the audio_processor and thus the plugin state.
-  std::vector<inf::base::param_value> state = {};
+  std::vector<inf::base::param_value> audio_state = {};
   // Indicates whether any param index changed this block (0/1, since no vector<bool>).
   std::vector<std::int32_t> changed = {};
 };

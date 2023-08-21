@@ -27,8 +27,8 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
   plugin->klass = plugin_class;
   plugin->klass.plugin_data = plugin;
   plugin->topology = create_topology();
-  plugin->state.resize(plugin->topology->params.size());
   plugin->changed.resize(plugin->topology->params.size());
+  plugin->audio_state.resize(plugin->topology->params.size());
   plugin_init_params(plugin);
   return &plugin->klass;
 }
