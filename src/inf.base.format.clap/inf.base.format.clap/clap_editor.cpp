@@ -4,6 +4,8 @@
 namespace inf::base::format::clap
 {
 
+static bool CLAP_ABI editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating); 
+  
 static void CLAP_ABI editor_destroy(clap_plugin_t const* plugin) {}
 static void CLAP_ABI editor_suggest_title(clap_plugin_t const* plugin, char const* title) {}
 static bool CLAP_ABI editor_show(clap_plugin_t const* plugin) { return false; }
@@ -16,7 +18,6 @@ static bool CLAP_ABI editor_create(clap_plugin_t const* plugin, char const* api,
 static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_window_t const* window) { return false; }
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
-static bool CLAP_ABI editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating) { return false; }
 static bool CLAP_ABI editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_preferred_api(clap_plugin_t const* plugin, char const** api, bool* is_floating) { return false; }
 
@@ -38,6 +39,13 @@ plugin_init_editor(inf_clap_plugin* plugin)
   plugin->editor.get_resize_hints = editor_get_resize_hints;
   plugin->editor.is_api_supported = editor_is_api_supported;
   plugin->editor.get_preferred_api = editor_get_preferred_api;
+}
+
+static bool CLAP_ABI 
+editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating)
+{
+  if (is_floating) return false;
+  return !strcmp(api, CLAP_WINDOW_API_WIN32);
 }
 
 } // inf::base::format::clap
