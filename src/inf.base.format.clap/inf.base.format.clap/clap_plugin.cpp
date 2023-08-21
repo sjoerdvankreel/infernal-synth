@@ -168,7 +168,7 @@ plugin_process_events(
       // Just make a "bumpy" curve for now.
       if(header->time == s)
         plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
-      input.continuous_automation_raw
+      input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
     }
 }
 
