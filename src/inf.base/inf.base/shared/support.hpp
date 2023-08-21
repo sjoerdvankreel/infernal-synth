@@ -130,8 +130,8 @@ note_to_frequency_table(float midi)
 }
 
 // These are helper functions to go from base (which is either discrete or 0..1)
-// to both VST3 and CLAP normalized values (always 0..1) to display values (e.g. -6db..+6db).
-// CLAP doesnt really need this 0-1 normalization but its easier to keep parity with vst3.
+// to both VST3 and CLAP normalized values (always 0..1) to display values (e.g. -6..+6)
+// to text values (e.g. "-6dB""). CLAP doesnt really need this 0-1 normalization but its easier to keep parity with vst3.
 
 inline double 
 discrete_to_format_normalized(
@@ -155,7 +155,7 @@ format_normalized_to_discrete(
 
 inline double
 format_normalized_to_display(
-inf::base::param_info const& info, double val)
+  inf::base::param_info const& info, double val)
 {
   switch (info.descriptor->data.type)
   {
@@ -166,7 +166,7 @@ inf::base::param_info const& info, double val)
 
 inline double
 display_to_format_normalized(
-inf::base::param_info const& info, double val)
+  inf::base::param_info const& info, double val)
 {
   switch (info.descriptor->data.type)
   {
@@ -191,6 +191,33 @@ format_normalized_to_base(
   auto const& info = topology->params[param];
   if(info.descriptor->data.type == inf::base::param_type::real) return inf::base::param_value(static_cast<float>(val));
   return inf::base::param_value(format_normalized_to_discrete(info, val));
+}
+
+inline std::string
+format_normalized_to_text(
+  inf::base::param_info const& info, double val)
+{
+  param_value value;
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: value.real = format_normalized_to_display(info, val); break;
+  default: value.discrete = format_normalized_to_discrete(info, val); break;
+  }
+  return info.descriptor->data.format(false, value);
+}
+
+inline bool
+text_to_format_normalized(
+  inf::base::param_info const& info, char const* text, double& result)
+{
+  param_value value;
+  if (!info.descriptor->data.parse(false, info.part_index, text, value)) return false;
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: result = display_to_format_normalized(info, value.real); break;
+  default: result = discrete_to_format_normalized(info, value.discrete); break;
+  }
+  return true;
 }
 
 inline double

@@ -75,33 +75,20 @@ vst_parameter(ParamID tag,
 void
 vst_parameter::toString(ParamValue normalized, String128 string) const
 {
-  param_value value;
-  char str8[128] = { 0 };
-  switch (_info->descriptor->data.type)
-  {
-  case param_type::real: value.real = toPlain(normalized); break;
-  default: value.discrete = format_normalized_to_discrete(*_info, normalized); break;
-  }
-  _info->descriptor->data.format(false, value, str8, 128);
-  for(std::size_t i = 0; i < 128; i++)  
-    string[i] = str8[i];
+  std::string text = format_normalized_to_text(*_info, normalized);
+  std::memset(string, 0, 128 * sizeof(string[0]));
+  for(std::size_t i = 0; i < 127 && i < text.size(); i++)
+    string[i] = text[i];
 }
  
 bool
 vst_parameter::fromString(TChar const* string, ParamValue& normalized) const
 {
-  param_value value;
   std::vector<char> str8;
   while(*string != static_cast<TChar>(0))
     str8.push_back(static_cast<char>(*string++));
   str8.push_back('\0');
-  if (!_info->descriptor->data.parse(false, _info->part_index, str8.data(), value)) return false;
-  switch (_info->descriptor->data.type)
-  {
-  case param_type::real: normalized = toNormalized(value.real); break;
-  default: normalized = discrete_to_format_normalized(*_info, value.discrete); break;
-  }
-  return true;
+  return text_to_format_normalized(*_info, str8.data(), normalized);
 }
 
 } // namespace inf::base::format::vst3

@@ -80,6 +80,9 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
 {
   auto inf_plugin = plugin_cast(plugin);
   auto const& inf_info = inf_plugin->topology->params[param_index];
+  // Just go with 0/1 to be the same as vst3, seems easier to do it like this.
+  param_info->min_value = 0.0;
+  param_info->max_value = 1.0;
   param_info->cookie = nullptr;
   param_info->flags = param_flags(inf_info.descriptor);
   param_info->id = inf_plugin->topology->param_index_to_id[param_index];
@@ -90,16 +93,7 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
   strncpy(param_info->name, full_name.c_str(), sizeof(param_info->name));
   memset(param_info->module, 0, sizeof(param_info->module));
   strncpy(param_info->module, module.c_str(), sizeof(param_info->module));
-  if (inf_info.descriptor->data.type == param_type::real)
-  {
-    param_info->min_value = inf_info.descriptor->data.real.dsp.min;
-    param_info->max_value = inf_info.descriptor->data.real.dsp.max;
-    param_info->default_value = inf_info.descriptor->data.real.default_;
-  } else {
-    param_info->min_value = inf_info.descriptor->data.discrete.min;
-    param_info->max_value = inf_info.descriptor->data.discrete.max;
-    param_info->default_value = inf_info.descriptor->data.discrete.default_;
-  }
+  param_info->default_value = param_default_to_format_normalized(inf_info);
   return true;
 }
 
