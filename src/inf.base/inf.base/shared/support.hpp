@@ -133,28 +133,6 @@ note_to_frequency_table(float midi)
 // to both VST3 and CLAP normalized values (always 0..1) to display values (e.g. -6db..+6db).
 // CLAP doesnt really need this 0-1 normalization but its easier to keep parity with vst3.
 
-inline double
-format_normalized_to_display(
-inf::base::param_info const& info, double val)
-{
-  switch (info.descriptor->data.type)
-  {
-  case param_type::real: return info.descriptor->data.real.display.to_range(val);
-  default: return format_normalized_to_discrete(info, val);
-  }
-}
-
-inline double
-display_to_format_normalized(
-inf::base::param_info const& info, double val)
-{
-  switch (info.descriptor->data.type)
-  {
-  case param_type::real: return info.descriptor->data.real.display.from_range(val);
-  default: return discrete_to_format_normalized(info, static_cast<std::int32_t>(val));
-  }
-}
-
 inline double 
 discrete_to_format_normalized(
   inf::base::param_info const& info, std::int32_t val)
@@ -173,6 +151,28 @@ format_normalized_to_discrete(
   std::int32_t min = info.descriptor->data.discrete.min;
   std::int32_t max = info.descriptor->data.discrete.effective_max(info.part_index);
   return min + std::clamp(static_cast<std::int32_t>(val * (max - min + 1)), 0, max - min);
+}
+
+inline double
+format_normalized_to_display(
+inf::base::param_info const& info, double val)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.display.to_range(static_cast<float>(val));
+  default: return format_normalized_to_discrete(info, val);
+  }
+}
+
+inline double
+display_to_format_normalized(
+inf::base::param_info const& info, double val)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.display.from_range(static_cast<float>(val));
+  default: return discrete_to_format_normalized(info, static_cast<std::int32_t>(val));
+  }
 }
 
 inline double 
