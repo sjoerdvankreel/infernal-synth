@@ -104,7 +104,6 @@ public:
   virtual std::int32_t editor_current_width() const = 0;
   virtual std::int32_t editor_font_scaling_min_width() const = 0;
   virtual std::int32_t editor_font_scaling_max_width() const = 0;
-  virtual bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const = 0;
 
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;

@@ -93,6 +93,9 @@ public:
 class synth_vst_controller :
 public vst_controller
 {
+protected:
+  bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
+
 public:
   float editor_aspect_ratio() const override { return 1.629f; }
   std::int32_t editor_min_width() const override { return 1200; }
@@ -102,8 +105,6 @@ public:
   std::vector<char const*> ui_size_names() const override { return { "XS UI", "Small UI", "Medium UI", "Large UI", "XL UI" }; }
 
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
-  bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
-
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
