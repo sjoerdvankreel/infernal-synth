@@ -33,7 +33,6 @@ protected:
   using CtrlNumber = Steinberg::Vst::CtrlNumber;
 
   FUID const _processor_id;
-  std::int32_t _editor_width = 0;
   vst_editor* _current_editor = nullptr;
 
   void do_edit(std::int32_t tag, double normalized);
@@ -51,8 +50,6 @@ public:
   void* current_editor_window() const override;
   void reload_editor(std::int32_t width) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
-  std::int32_t editor_current_width() const override { return _editor_width; }
-  void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
 
   void restart() override;
   void save_preset(std::string const& path) override;

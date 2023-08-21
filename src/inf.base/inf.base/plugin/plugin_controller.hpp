@@ -59,6 +59,7 @@ class plugin_controller
   static inline std::string const global_meta_last_directory_key = "last_directory";
   static inline std::string const patch_meta_factory_preset_key = "factory_preset";
 
+  std::int32_t _editor_width = 0;
   juce::InterProcessLock _global_meta_lock;
   juce::PropertiesFile::Options global_meta_options();
   std::string get_global_meta(std::string const& key);
@@ -125,6 +126,9 @@ public:
   { _any_param_listeners.erase(listener); }
   void add_param_listener(std::int32_t param_index, param_listener* listener);
   void remove_param_listener(std::int32_t param_index, param_listener* listener);
+
+  std::int32_t editor_current_width() const { return _editor_width; }
+  void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
 
   param_value base_value_at_index(std::int32_t param_index) const
   { return state()[param_index]; }
