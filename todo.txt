@@ -30,7 +30,6 @@
 * do the polyphonic mod stuff
 * see what to share for vst3/clap
 * better folder structure also for vst3?
-* all dsp params must be linear + bounded
 
 * bugs
 - PRNG draw relative to sample rate
