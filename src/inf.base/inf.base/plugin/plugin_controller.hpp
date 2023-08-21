@@ -102,7 +102,6 @@ public:
   virtual void* current_editor_window() const = 0;
   virtual std::int32_t editor_min_width() const = 0;
   virtual std::int32_t editor_max_width() const = 0;
-  virtual std::int32_t editor_current_width() const = 0;
   virtual std::int32_t editor_font_scaling_min_width() const = 0;
   virtual std::int32_t editor_font_scaling_max_width() const = 0;
 
