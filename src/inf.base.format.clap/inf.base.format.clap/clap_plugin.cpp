@@ -152,7 +152,7 @@ plugin_process_events(
       // TODO set up continuous automation arrays
       auto event = reinterpret_cast<clap_event_param_value const*>(header);
       auto index = plugin->topology->param_id_to_index[event->param_id];
-      plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), true, index, event->value);
+      plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
     }
   }
 }
