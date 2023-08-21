@@ -132,7 +132,7 @@ param_flush(
   clap_input_events_t const* in,
   clap_output_events_t const* out)
 {
-
+  // TODO limited version of same stuff as process() call
 }
 
 } // inf::base::format::clap

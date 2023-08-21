@@ -24,6 +24,7 @@
 * concat module+name
 * do load/save state
 * make clap a folder?
+* do the gesture thing
 * set onoff as list mode
 * figure out versioning
 * show version in clap gui

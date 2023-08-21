@@ -1,3 +1,4 @@
+#include <inf.base/shared/support.hpp>
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
 #include <inf.base.format.clap/clap_parameter.hpp>
@@ -116,22 +117,43 @@ plugin_activate(
   return true;
 };
 
-// Translate from clap note events.
+// Translate from clap events.
 static void
-plugin_process_notes(clap_process_t const* process, block_input& input, std::int32_t max_note_events)
+plugin_process_events(
+  inf_clap_plugin* plugin, clap_process_t const* process, 
+  block_input& input, std::int32_t max_note_events)
 {
   for (std::uint32_t i = 0; i < process->in_events->size(process->in_events); i++)
   {
     clap_event_header_t const* header = process->in_events->get(process->in_events, i);
     if (input.note_count == max_note_events) return;
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
-    if (header->type != CLAP_EVENT_NOTE_ON && header->type != CLAP_EVENT_NOTE_OFF) continue;
-    auto& note = input.notes[input.note_count++];
-    clap_event_note_t const* event = reinterpret_cast<clap_event_note_t const*>(header);
-    note.midi = event->key;
-    note.note_on = header->type == CLAP_EVENT_NOTE_ON;
-    note.velocity = static_cast<float>(event->velocity);
-    note.sample_index = static_cast<std::int32_t>(header->time);
+    if (header->type == CLAP_EVENT_NOTE_ON || header->type == CLAP_EVENT_NOTE_OFF)
+    {
+      auto& note = input.notes[input.note_count++];
+      auto event = reinterpret_cast<clap_event_note_t const*>(header);
+      note.midi = event->key;
+      note.note_on = header->type == CLAP_EVENT_NOTE_ON;
+      note.velocity = static_cast<float>(event->velocity);
+      note.sample_index = static_cast<std::int32_t>(header->time);
+    }
+    else if (header->type == CLAP_EVENT_PARAM_VALUE)
+    {
+      // We set the audio state "ahead of time", i.e.,
+      // since plugin_process_events is called at the start
+      // of each plugin_process() call, the value in audio_state
+      // will be the last (sample index) adjustment for this parameter
+      // for the current block. That'll cause the UI to be slightly out
+      // of sync for automation events but that's the case anyway since
+      // changes are propagated cross-thread using queues.
+      // The actual dsp processing will not use this value anyway!
+      // Instead it relies on the continuous_automation arrays.
+      // TODO broadcast to UI
+      // TODO set up continuous automation arrays
+      auto event = reinterpret_cast<clap_event_param_value const*>(header);
+      auto index = plugin->topology->param_id_to_index[event->param_id];
+      plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), true, index, event->value);
+    }
   }
 }
 
@@ -143,7 +165,7 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 
   auto inf_plugin = plugin_cast(plugin);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
-  plugin_process_notes(process, input, inf_plugin->topology->max_note_events);
+  plugin_process_events(inf_plugin, process, input, inf_plugin->topology->max_note_events);
 
   input.data.bpm = 0.0f;
   input.data.stream_position = process->steady_time;
