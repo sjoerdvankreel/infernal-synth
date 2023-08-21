@@ -179,6 +179,17 @@ topology_info::init(
     for (std::int32_t j = 0; j < part.param_count; j++)
       assert(seen_params.insert(part.params[j].guid).second);
   }  
+
+  // Make sure all DSP bounds are linear bounded otherwise CLAP behaves funny.
+  for (std::size_t i = 0; i < topology->params.size(); i++)
+  {
+    auto const& param_data = topology->params[i].descriptor->data;
+    (void)param_data;
+    assert(param_data.type != param_type::real ||
+      (param_data.real.dsp.slope == real_slope::linear &&
+       param_data.real.dsp.min > -std::numeric_limits<float>::infinity() &&
+       param_data.real.dsp.max < std::numeric_limits<float>::infinity()));
+  }
    
   assert(topology->parts.size() > 0);
   assert(topology->params.size() > 0);
