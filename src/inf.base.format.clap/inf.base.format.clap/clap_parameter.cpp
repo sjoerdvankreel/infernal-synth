@@ -87,11 +87,9 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
   param_info->cookie = nullptr;
   param_info->flags = param_flags(inf_info.descriptor);
   param_info->id = inf_plugin->topology->param_index_to_id[param_index];
-  std::string name = inf_info.descriptor->data.static_name.short_;
   std::string const& module = inf_plugin->topology->parts[inf_info.part_index].runtime_name;
-  std::string full_name = module + std::string(" ") + name;
   memset(param_info->name, 0, sizeof(param_info->name));
-  strncpy(param_info->name, full_name.c_str(), sizeof(param_info->name));
+  strncpy(param_info->name, inf_info.runtime_name.c_str(), sizeof(param_info->name));
   memset(param_info->module, 0, sizeof(param_info->module));
   strncpy(param_info->module, module.c_str(), sizeof(param_info->module));
   param_info->default_value = param_default_to_format_normalized(inf_info);
