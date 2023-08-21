@@ -1,8 +1,8 @@
 #ifndef INF_BASE_FORMAT_CLAP_CLAP_PARAMETER_HPP
 #define INF_BASE_FORMAT_CLAP_CLAP_PARAMETER_HPP
 
-#include <clap/clap.h>
 #include <inf.base.format.clap/clap_plugin.hpp>
+#include <clap/clap.h>
 
 namespace inf::base::format::clap 
 {

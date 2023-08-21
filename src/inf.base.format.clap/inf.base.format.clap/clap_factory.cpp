@@ -1,5 +1,6 @@
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
+#include <inf.base.format.clap/clap_editor.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
 #include <inf.base.format.clap/clap_parameter.hpp>
 
@@ -31,6 +32,7 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
   plugin->audio_state.resize(plugin->topology->params.size());
   plugin->topology->init_factory_preset(plugin->audio_state.data());
   plugin_init_params(plugin);
+  plugin_init_editor(plugin);
   return &plugin->klass;
 }
 
