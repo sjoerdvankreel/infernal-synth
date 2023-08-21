@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdint>
 #include <cstring>
+#include <algorithm>
 
 namespace inf::base::format::clap
 {
@@ -98,34 +99,29 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
 }
 
 static bool CLAP_ABI
+param_text_to_value(
+  clap_plugin_t const* plugin, clap_id param_id,
+  char const* param_value_text, double* out_value)
+{
+  auto inf_plugin = plugin_cast(plugin);
+  std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
+  auto const& inf_info = inf_plugin->topology->params[index];
+  return text_to_format_normalized(inf_info, param_value_text, *out_value);
+}
+
+static bool CLAP_ABI
 param_value_to_text(
   clap_plugin_t const* plugin, clap_id param_id,
   double value, char* out_buffer, std::uint32_t out_buffer_capacity)
 {
-  param_value ui_value;
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
   auto const& inf_info = inf_plugin->topology->params[index];
-  if(inf_info.descriptor->data.type == param_type::real)
-    ui_value = inf_plugin->topology->base_to_ui_value(index, param_value(static_cast<float>(value)));
-  else
-    ui_value = inf_plugin->topology->base_to_ui_value(index, param_value(static_cast<std::int32_t>(value)));
-  inf_info.descriptor->data.format(false, ui_value, out_buffer, out_buffer_capacity);
-  return true;
-}
-
-static bool CLAP_ABI
-param_text_to_value(
-  clap_plugin_t const* plugin, clap_id param_id, 
-  char const* param_value_text, double* out_value)
-{
-  param_value ui_value;
-  auto inf_plugin = plugin_cast(plugin);
-  std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
-  auto const& inf_info = inf_plugin->topology->params[index];
-  if(!inf_info.descriptor->data.parse(false, inf_info.part_index, param_value_text, ui_value)) return false;
-  param_value base_value = inf_plugin->topology->ui_to_base_value(index, ui_value);
-  *out_value = inf_info.descriptor->data.type == param_type::real? base_value.real: base_value.discrete;
+  double normalized = base_to_format_normalized(inf_plugin->topology.get(), index, inf_plugin->state[index]);
+  std::string text = format_normalized_to_text(inf_info, normalized);
+  auto text_size = std::min(static_cast<std::int32_t>(out_buffer_capacity) - 1, static_cast<std::int32_t>(text.size()));
+  strncpy(out_buffer, text.data(), text_size);
+  out_buffer[text_size] = '\0';
   return true;
 }
 

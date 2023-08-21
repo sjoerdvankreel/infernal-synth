@@ -200,7 +200,7 @@ format_normalized_to_text(
   param_value value;
   switch (info.descriptor->data.type)
   {
-  case param_type::real: value.real = format_normalized_to_display(info, val); break;
+  case param_type::real: value.real = static_cast<float>(format_normalized_to_display(info, val)); break;
   default: value.discrete = format_normalized_to_discrete(info, val); break;
   }
   return info.descriptor->data.format(false, value);
