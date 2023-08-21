@@ -1,4 +1,3 @@
-#include <inf.base/shared/support.hpp>
 #include <inf.base.format.vst3/vst_support.hpp>
 #include <inf.base.format.vst3/vst_parameter.hpp>
 
@@ -17,16 +16,6 @@ param_step_count(param_info const& info)
   {
   case param_type::real: return 0.0;
   default: return info.descriptor->data.discrete.effective_max(info.part_index) - info.descriptor->data.discrete.min;
-  }
-}
-
-static double
-param_default_to_vst_normalized(param_info const& info)
-{
-  switch (info.descriptor->data.type)
-  {
-  case param_type::real: return info.descriptor->data.real.default_;
-  default: return discrete_to_format_normalized(info, info.descriptor->data.discrete.default_);
   }
 }
 
@@ -72,7 +61,7 @@ vst_parameter(ParamID tag,
     to_vst_string(info->runtime_name.c_str()).c_str(),
     tag,
     to_vst_string(info->descriptor->data.unit).c_str(),
-    param_default_to_vst_normalized(*info),
+    param_default_to_format_normalized(*info),
     param_step_count(*info),
     param_flags(info->descriptor),
     0,
@@ -81,26 +70,6 @@ vst_parameter(ParamID tag,
 {    
   assert(info != nullptr);
   setPrecision(info->descriptor->data.real.precision);
-}
-
-ParamValue
-vst_parameter::toPlain(ParamValue normalized) const
-{
-  switch (_info->descriptor->data.type)
-  {
-  case param_type::real: return _info->descriptor->data.real.display.to_range(normalized);
-  default: return format_normalized_to_discrete(*_info, normalized);
-  }
-}
-
-ParamValue
-vst_parameter::toNormalized(ParamValue plain) const
-{
-  switch (_info->descriptor->data.type)
-  {
-  case param_type::real: return _info->descriptor->data.real.display.from_range(plain);
-  default: return discrete_to_format_normalized(*_info, static_cast<std::int32_t>(plain));
-  }
 }
 
 void

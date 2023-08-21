@@ -1,6 +1,7 @@
 #ifndef INF_BASE_FORMAT_VST3_VST_PARAMETER_HPP
 #define INF_BASE_FORMAT_VST3_VST_PARAMETER_HPP
 
+#include <inf.base/shared/support.hpp>
 #include <inf.base/topology/topology_info.hpp>
 #include <public.sdk/source/vst/vstparameters.h>
 
@@ -26,10 +27,10 @@ public:
     inf::base::param_info const* info);
   
   // Forwarding to param_descriptor.
-  ParamValue toPlain(ParamValue normalized) const override;
-  ParamValue toNormalized(ParamValue plain) const override;
   void toString(ParamValue normalized, String128 string) const override;
   bool fromString(TChar const* string, ParamValue& normalized) const override;
+  ParamValue toNormalized(ParamValue plain) const override { return display_to_format_normalized(*_info, plain); }
+  ParamValue toPlain(ParamValue normalized) const override { return format_normalized_to_display(*_info, normalized); }
 };
 
 } // namespace inf::base::format::vst3

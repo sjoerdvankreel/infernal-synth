@@ -130,7 +130,30 @@ note_to_frequency_table(float midi)
 }
 
 // These are helper functions to go from base (which is either discrete or 0..1)
-// to both VST3 and CLAP normalized values (always 0..1).
+// to both VST3 and CLAP normalized values (always 0..1) to display values (e.g. -6db..+6db).
+// CLAP doesnt really need this 0-1 normalization but its easier to keep parity with vst3.
+
+inline double
+format_normalized_to_display(
+inf::base::param_info const& info, double val)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.display.to_range(val);
+  default: return format_normalized_to_discrete(info, val);
+  }
+}
+
+inline double
+display_to_format_normalized(
+inf::base::param_info const& info, double val)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.display.from_range(val);
+  default: return discrete_to_format_normalized(info, static_cast<std::int32_t>(val));
+  }
+}
 
 inline double 
 discrete_to_format_normalized(
@@ -168,6 +191,16 @@ format_normalized_to_base(
   auto const& info = topology->params[param];
   if(info.descriptor->data.type == inf::base::param_type::real) return inf::base::param_value(static_cast<float>(val));
   return inf::base::param_value(format_normalized_to_discrete(info, val));
+}
+
+inline double
+param_default_to_format_normalized(param_info const& info)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.default_;
+  default: return discrete_to_format_normalized(info, info.descriptor->data.discrete.default_);
+  }
 }
 
 } // namespace inf::base
