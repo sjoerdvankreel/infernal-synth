@@ -119,8 +119,7 @@ param_value_to_text(
   auto inf_plugin = plugin_cast(plugin);
   std::int32_t index = inf_plugin->topology->param_id_to_index[param_id];
   auto const& inf_info = inf_plugin->topology->params[index];
-  double normalized = base_to_format_normalized(inf_plugin->topology.get(), false, index, inf_plugin->state[index]);
-  std::string text = format_normalized_to_text(inf_info, false, normalized);
+  std::string text = format_normalized_to_text(inf_info, false, value);
   auto text_size = std::min(static_cast<std::int32_t>(out_buffer_capacity) - 1, static_cast<std::int32_t>(text.size()));
   strncpy(out_buffer, text.data(), text_size);
   out_buffer[text_size] = '\0';
