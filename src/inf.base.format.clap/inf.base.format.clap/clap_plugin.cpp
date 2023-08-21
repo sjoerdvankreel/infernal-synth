@@ -166,7 +166,7 @@ plugin_process_events(
       if (!plugin->topology->params[index].descriptor->data.is_continuous()) continue;
 
       // Just make a "bumpy" curve for now.
-      if(header->time == s)
+      if(header->time == static_cast<std::uint32_t>(s))
         plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
       input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
     }
