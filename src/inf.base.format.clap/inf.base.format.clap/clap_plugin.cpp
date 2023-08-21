@@ -123,9 +123,10 @@ plugin_process_events(
   inf_clap_plugin* plugin, clap_process_t const* process, 
   block_input& input, std::int32_t max_note_events)
 {
-  for (std::uint32_t i = 0; i < process->in_events->size(process->in_events); i++)
+  // Note events.
+  for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
   {
-    clap_event_header_t const* header = process->in_events->get(process->in_events, i);
+    clap_event_header_t const* header = process->in_events->get(process->in_events, e);
     if (input.note_count == max_note_events) return;
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
     if (header->type == CLAP_EVENT_NOTE_ON || header->type == CLAP_EVENT_NOTE_OFF)
@@ -137,24 +138,38 @@ plugin_process_events(
       note.velocity = static_cast<float>(event->velocity);
       note.sample_index = static_cast<std::int32_t>(header->time);
     }
-    else if (header->type == CLAP_EVENT_PARAM_VALUE)
+  }
+
+  // TODO handle _changed + broadcast ui changes
+  // Discrete automation events - effectively we only pick up the last value.
+  for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
+  {
+    clap_event_header_t const* header = process->in_events->get(process->in_events, e);
+    if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
+    if (header->type != CLAP_EVENT_PARAM_VALUE) continue; 
+    auto event = reinterpret_cast<clap_event_param_value const*>(header);
+    auto index = plugin->topology->param_id_to_index[event->param_id];
+    if(plugin->topology->params[index].descriptor->data.is_continuous()) continue;
+    plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+  }
+
+  // TODO handle _changed + broadcast ui changes
+  // Continuous automation events - build up the curve. TODO interpolation.
+  for(std::int32_t s = 0; s < input.data.sample_count; s++)
+    for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
     {
-      // We set the audio state "ahead of time", i.e.,
-      // since plugin_process_events is called at the start
-      // of each plugin_process() call, the value in audio_state
-      // will be the last (sample index) adjustment for this parameter
-      // for the current block. That'll cause the UI to be slightly out
-      // of sync for automation events but that's the case anyway since
-      // changes are propagated cross-thread using queues.
-      // The actual dsp processing will not use this value anyway!
-      // Instead it relies on the continuous_automation arrays.
-      // TODO broadcast to UI
-      // TODO set up continuous automation arrays
+      clap_event_header_t const* header = process->in_events->get(process->in_events, e);
+      if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
+      if (header->type != CLAP_EVENT_PARAM_VALUE) continue;
       auto event = reinterpret_cast<clap_event_param_value const*>(header);
       auto index = plugin->topology->param_id_to_index[event->param_id];
-      plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+      if (!plugin->topology->params[index].descriptor->data.is_continuous()) continue;
+
+      // Just make a "bumpy" curve for now.
+      if(header->time == s)
+        plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+      input.continuous_automation_raw
     }
-  }
 }
 
 static clap_process_status CLAP_ABI
