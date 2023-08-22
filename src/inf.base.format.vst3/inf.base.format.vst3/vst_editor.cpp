@@ -41,12 +41,12 @@ vst_editor::attached(void* parent, FIDString type)
 {
   if (!plugFrame) return EditorView::attached(parent, type);
   MessageManager::getInstance();
-  auto ui_size_names = _controller->ui_size_names();
-  auto found = std::find(ui_size_names.begin(), ui_size_names.end(), _controller->get_ui_size());
-  if(found == ui_size_names.end())
-    recreate_ui(_controller->editor_min_width(), parent);
+  auto props = _controller->get_editor_properties();
+  auto found = std::find(props.ui_size_names.begin(), props.ui_size_names.end(), _controller->get_ui_size());
+  if(found == props.ui_size_names.end())
+    recreate_ui(props.min_width, parent);
   else
-    recreate_ui(plugin_editor_width(_controller, static_cast<std::int32_t>(found - ui_size_names.begin())), parent);
+    recreate_ui(plugin_editor_width(_controller, static_cast<std::int32_t>(found - props.ui_size_names.begin())), parent);
   ViewRect vr(0, 0, _plugin_ui->component()->getWidth(), _plugin_ui->component()->getHeight());
   setRect(vr);
   plugFrame->resizeView(this, &vr);
@@ -98,7 +98,7 @@ vst_editor::set_width(std::int32_t width)
   if(width > 0)
   {
     new_rect.right = rect.left + width;
-    new_rect.bottom = rect.top + static_cast<std::int32_t>(width / _controller->editor_aspect_ratio());
+    new_rect.bottom = rect.top + static_cast<std::int32_t>(width / _controller->get_editor_properties().aspect_ratio);
   }
   plugFrame->resizeView(this, &new_rect);
   if(width == -1)
