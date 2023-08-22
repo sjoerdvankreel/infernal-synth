@@ -13,6 +13,7 @@
 - x don't forget to tag
 
 * done this version
+- NEEDS PLUG RESCAN!
 - drop generic build (=breaking change!)
 
 * todo this version
