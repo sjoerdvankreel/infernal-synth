@@ -19,7 +19,6 @@
 * todo this version
 - document new dependencies
 - disable v.out/ext regarding mode
-- cakewalk demo
 - clap 
 * midi
 * fx mode
@@ -30,6 +29,7 @@
 * figure out threading requirements
 * make clap a folder?
 * better folder structure also for vst3?
+* also revise the demos folders (clap/vst etc)
 
 * bugs
 - PRNG draw relative to sample rate
