@@ -56,25 +56,25 @@ protected:
     std::int32_t part_count, std::int32_t max_notes);
 
 public:
-  part_descriptor const* static_parts; // Static description of audio processor.
-  std::int32_t static_part_count; // Part count in static description.
+  part_descriptor const* static_parts = {}; // Static description of audio processor.
+  std::int32_t static_part_count = 0; // Part count in static description.
   std::int32_t max_note_events = 0; // Not necessarily the same as polyphony.
   std::int32_t input_param_count = 0; // Runtime input params.
   std::int32_t output_param_count = 0; // Runtime output params.  
   std::int32_t continuous_param_count = 0; // Runtime sample-accurate automation parameter count.
 
-  std::vector<part_info> parts; // Runtime part descriptor array, e.g. osc 1, osc 2, lfo 1, lfo 2.
-  std::vector<param_info> params; // Runtime parameter descriptor array, e.g. osc 1 wave, osc 1 amp, osc 2 wave, etc.
-  std::vector<std::vector<std::int32_t>> part_bounds; // Runtime part bounds, e.g. bounds[part_type::osc][1] indexes osc 2 part.
-  std::vector<std::vector<std::int32_t>> param_bounds; // Runtime parameter bounds, e.g. bounds[part_type::osc][1] indexes osc 2 wave param.
-  std::vector<part_id> inverse_bounds; // Runtime inverse param bounds, e.g. bounds[123] = (part_type::env, 2).
+  std::vector<part_info> parts = {}; // Runtime part descriptor array, e.g. osc 1, osc 2, lfo 1, lfo 2.
+  std::vector<param_info> params = {}; // Runtime parameter descriptor array, e.g. osc 1 wave, osc 1 amp, osc 2 wave, etc.
+  std::vector<std::vector<std::int32_t>> part_bounds = {}; // Runtime part bounds, e.g. bounds[part_type::osc][1] indexes osc 2 part.
+  std::vector<std::vector<std::int32_t>> param_bounds = {}; // Runtime parameter bounds, e.g. bounds[part_type::osc][1] indexes osc 2 wave param.
+  std::vector<part_id> inverse_bounds = {}; // Runtime inverse param bounds, e.g. bounds[123] = (part_type::env, 2).
 
   // Internally all parameters are handled by index, but
   // they are exposed to the vst3 binding as the hash of the parameter guid.
   // This allows us to drop/add/swap parameters and still have stored host automation
   // data work correctly when a track is loaded, as long as param guids are stable.
-  std::vector<std::int32_t> param_index_to_id;
-  std::map<std::int32_t, std::int32_t> param_id_to_index;
+  std::vector<std::int32_t> param_index_to_id = {};
+  std::map<std::int32_t, std::int32_t> param_id_to_index = {};
 
   // Set parameters to their default value as defined in param descriptor.
   void init_param_defaults(param_value* state, std::int32_t from, std::int32_t to) const;

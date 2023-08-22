@@ -16,6 +16,7 @@
 - drop generic build (=breaking change!)
 
 * todo this version
+- disable v.out/ext regarding mode
 - delete vst3editor (someone wants my editor/_current_editor)
 - cakewalk demo
 - clap 

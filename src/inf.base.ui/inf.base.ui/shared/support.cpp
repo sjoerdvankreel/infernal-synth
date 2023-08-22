@@ -33,9 +33,10 @@ get_label_text(param_descriptor const* descriptor, label_type type, param_value 
 float
 get_scaled_size(plugin_controller const* controller, float min_size, float max_size)
 {
+  auto props = controller->get_editor_properties();
+  float const scale_min_width = static_cast<float>(props.font_scaling_min_width);
+  float const scale_max_width = static_cast<float>(props.font_scaling_max_width);
   float const current_width = static_cast<float>(controller->editor_current_width());
-  float const scale_min_width = static_cast<float>(controller->editor_font_scaling_min_width());
-  float const scale_max_width = static_cast<float>(controller->editor_font_scaling_max_width());
   if(current_width <= scale_min_width) return min_size;
   if(current_width >= scale_max_width) return max_size;
   float const factor = (current_width - scale_min_width) / (scale_max_width - scale_min_width);
@@ -46,10 +47,14 @@ get_scaled_size(plugin_controller const* controller, float min_size, float max_s
 std::int32_t
 plugin_editor_width(plugin_controller const* controller, std::int32_t selected_size_index)
 {
-  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(controller->ui_size_names().size() - 1));
-  float min_width = static_cast<float>(controller->editor_min_width());
-  float max_width = static_cast<float>(controller->editor_max_width());
-  float factor = static_cast<float>(selected_size_index) / static_cast<float>(controller->ui_size_names().size() - 1);
+  std::int32_t ui_size_names_size = 0;
+  auto props = controller->get_editor_properties();
+  char const* const* ui_size_names = props.ui_size_names;
+  while(*ui_size_names++ != nullptr) ui_size_names++; 
+  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(ui_size_names_size - 1));
+  float min_width = static_cast<float>(props.min_width);
+  float max_width = static_cast<float>(props.max_width);
+  float factor = static_cast<float>(selected_size_index) / static_cast<float>(ui_size_names_size - 1);
   return static_cast<std::int32_t>(min_width + factor * (max_width - min_width));
 }
 

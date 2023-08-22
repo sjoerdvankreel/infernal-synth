@@ -54,11 +54,11 @@ public:
 struct editor_properties
 {
   float aspect_ratio;
-  char const* const* ui_size_names;
   std::int32_t min_width;
   std::int32_t max_width;
   std::int32_t font_scaling_min_width;
   std::int32_t font_scaling_max_width;
+  std::vector<std::string> ui_size_names;
 };
 
 // Controller base interface.

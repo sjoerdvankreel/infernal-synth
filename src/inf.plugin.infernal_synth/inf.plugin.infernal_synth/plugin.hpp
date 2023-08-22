@@ -20,5 +20,4 @@
 #error
 #endif
 
-} // namespace inf::plugin::infernal_synth
 #endif // IPIS_PLUGIN_HPP

@@ -52,9 +52,12 @@ public base::topology_info
   void init_instrument_factory_preset(base::param_value* state) const;
 
 public:
+  synth_topology(
+    base::part_descriptor const* static_parts, std::int32_t part_count, std::int32_t max_note_events, bool is_instrument) : 
+    topology_info(static_parts, part_count, max_note_events), _is_instrument(is_instrument) {}
+
   void init_clear_patch(base::param_value* state) const override;
   void init_factory_preset(base::param_value* state) const override;
-  synth_topology(bool is_instrument) : _is_instrument(is_instrument) {}
 
   bool is_instrument() const override { return _is_instrument; }
   char const* plugin_name() const override { return IPIS_NAME; }
