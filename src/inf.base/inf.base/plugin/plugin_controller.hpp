@@ -51,6 +51,16 @@ public:
   virtual void get_item(std::int32_t index, std::string& name, bool& enabled, bool& checked) const = 0;
 };
 
+struct editor_properties
+{
+  float aspect_ratio;
+  char const* const* ui_size_names;
+  std::int32_t min_width;
+  std::int32_t max_width;
+  std::int32_t font_scaling_min_width;
+  std::int32_t font_scaling_max_width;
+};
+
 // Controller base interface.
 class plugin_controller
 {
@@ -92,24 +102,19 @@ public:
   void copy_or_swap_part(part_id source, std::int32_t target, bool swap);
 
   virtual void restart() = 0;
-  virtual std::string preset_file_extension() = 0;
+  virtual void* current_editor_window() const = 0;
   virtual void reload_editor(std::int32_t width) = 0;
+  virtual editor_properties get_editor_properties() const = 0;
+
+  virtual std::string preset_file_extension() = 0;
   virtual void load_component_state(param_value* state) = 0;
   virtual void save_preset(std::string const& path) = 0;
   virtual bool load_preset(std::string const& path) = 0;
-
-  virtual float editor_aspect_ratio() const = 0;
-  virtual void* current_editor_window() const = 0;
-  virtual std::int32_t editor_min_width() const = 0;
-  virtual std::int32_t editor_max_width() const = 0;
-  virtual std::int32_t editor_font_scaling_min_width() const = 0;
-  virtual std::int32_t editor_font_scaling_max_width() const = 0;
 
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
 
-  virtual std::vector<char const*> ui_size_names() const = 0;
   virtual std::string default_theme_path(std::string const& plugin_file) const = 0;
   virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
   virtual std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const = 0;

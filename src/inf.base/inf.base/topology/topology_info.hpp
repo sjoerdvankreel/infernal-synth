@@ -49,6 +49,13 @@ struct part_info
 // Also acts as entry point into the plugin.
 struct topology_info
 {
+protected:  
+  // Output params must follow input params.
+  topology_info(
+    part_descriptor const* static_parts,
+    std::int32_t part_count, std::int32_t max_notes);
+
+public:
   part_descriptor const* static_parts; // Static description of audio processor.
   std::int32_t static_part_count; // Part count in static description.
   std::int32_t max_note_events = 0; // Not necessarily the same as polyphony.
@@ -97,11 +104,6 @@ struct topology_info
 
   // Sanity check.
   void state_check(param_value const* state) const;
-
-  // Output params must follow input params.
-  static void init(
-    topology_info* topology, part_descriptor const* static_parts, 
-    std::int32_t part_count, std::int32_t max_notes);
 
   // Plugin entry.
   virtual ~topology_info() {}

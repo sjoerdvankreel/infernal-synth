@@ -9,6 +9,8 @@
 
 namespace inf::plugin::infernal_synth::ui {
 
+editor_properties
+get_synth_editor_properties();
 std::unique_ptr<inf::base::ui::root_element>
 create_synth_ui(inf::base::plugin_controller* controller);
 

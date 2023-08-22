@@ -16,6 +16,30 @@ using namespace inf::base::ui;
 
 namespace inf::plugin::infernal_synth::ui {
 
+struct editor_properties
+{
+  float aspect_ratio;
+  char const* const* ui_size_names;
+  std::int32_t min_width;
+  std::int32_t max_width;
+  std::int32_t font_scaling_min_width;
+  std::int32_t font_scaling_max_width;
+};
+
+editor_properties
+get_synth_editor_properties()
+{
+  editor_properties result;
+  result.aspect_ratio = 1.629f; 
+  result.min_width = 1200;
+  result.max_width = 2000;
+  result.font_scaling_min_width = 1360;
+  result.font_scaling_max_width = 1800;
+  static char const* ui_size_names[] = { "XS UI", "Small UI", "Medium UI", "Large UI", "XL UI", nullptr };
+  result.ui_size_names = ui_size_names;
+  return result;
+}
+
 static std::unique_ptr<inf_look_and_feel>
 create_root_lnf(plugin_controller* controller)
 { return std::make_unique<inf_look_and_feel>(controller, std::vector<std::string>({ std::string("root") })); }

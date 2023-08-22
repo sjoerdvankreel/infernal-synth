@@ -36,11 +36,9 @@ static std::int32_t _inf_module_counter = 0;
 
 #if IPISFV3_FX
 #define IPISFV3_PLUG_TYPE Steinberg::Vst::PlugType::kFx
-static const DECLARE_UID(vst_processor_id, 0xD1D38026, 0x92374AB7, 0xB6FC3A55, 0xA9AE3BCC);
 static const DECLARE_UID(vst_controller_id, 0x35695F63, 0x837242BE, 0x88FB88A4, 0xE4F2D1B8);
 #elif (!IPISFV3_FX)
 #define IPISFV3_PLUG_TYPE Steinberg::Vst::PlugType::kInstrumentSynth
-static const DECLARE_UID(vst_processor_id, 0x5626A8A2, 0x47C740E3, 0x895EF722, 0xE6C1D9C4);
 static const DECLARE_UID(vst_controller_id, 0x612E5225, 0xD6A44771, 0xA581057D, 0x04034620);
 #else
 #error
@@ -95,15 +93,7 @@ public vst_controller
 {
 protected:
   bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
-
 public:
-  float editor_aspect_ratio() const override { return 1.629f; }
-  std::int32_t editor_min_width() const override { return 1200; }
-  std::int32_t editor_max_width() const override { return 2000; }
-  std::int32_t editor_font_scaling_min_width() const override { return 1360; }
-  std::int32_t editor_font_scaling_max_width() const override { return 1800; }
-  std::vector<char const*> ui_size_names() const override { return { "XS UI", "Small UI", "Medium UI", "Large UI", "XL UI" }; }
-
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
@@ -134,17 +124,6 @@ synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target
   }
   return false;
 }
-
-class synth_vst_topology :
-public synth_topology
-{
-public:
-  synth_vst_topology(bool is_instrument): synth_topology(is_instrument) {}
-  std::uint16_t version_major() const { return IPISFV3_VERSION_MAJOR; }
-  std::uint16_t version_minor() const { return IPISFV3_VERSION_MINOR; }
-  char const* plugin_name() const override { return IPISFV3_NAME; }
-  char const* vendor_name() const override { return IPISFV3_VENDOR_NAME; }
-};
 
 static
 topology_info* inf_vst_create_topology()
