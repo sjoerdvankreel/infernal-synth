@@ -41,6 +41,11 @@ clap_plugin_descriptor_t const inf_plugin_descriptor =
   .features = features
 };
 
+std::unique_ptr<clap_controller> create_controller()
+{ return std::make_unique<synth_clap_controller>(); }
+std::unique_ptr<topology_info> create_topology()
+{ return std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFCLAP_FX == 0); }
+
 } // namespace inf::base::format::clap
 
 extern "C" clap_plugin_entry_t const clap_entry =
