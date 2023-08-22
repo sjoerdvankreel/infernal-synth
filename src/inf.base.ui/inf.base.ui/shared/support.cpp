@@ -47,14 +47,11 @@ get_scaled_size(plugin_controller const* controller, float min_size, float max_s
 std::int32_t
 plugin_editor_width(plugin_controller const* controller, std::int32_t selected_size_index)
 {
-  std::int32_t ui_size_names_size = 0;
   auto props = controller->get_editor_properties();
-  char const* const* ui_size_names = props.ui_size_names;
-  while(*ui_size_names++ != nullptr) ui_size_names++; 
-  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(ui_size_names_size - 1));
+  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(props.ui_size_names.size() - 1));
   float min_width = static_cast<float>(props.min_width);
   float max_width = static_cast<float>(props.max_width);
-  float factor = static_cast<float>(selected_size_index) / static_cast<float>(ui_size_names_size - 1);
+  float factor = static_cast<float>(selected_size_index) / static_cast<float>(props.ui_size_names.size() - 1);
   return static_cast<std::int32_t>(min_width + factor * (max_width - min_width));
 }
 

@@ -396,7 +396,7 @@ void
 root_element::layout()
 {
   std::int32_t w = _width;
-  std::int32_t h = static_cast<std::int32_t>(std::ceil(1.0f / controller()->editor_aspect_ratio() * w));
+  std::int32_t h = static_cast<std::int32_t>(std::ceil(1.0f / controller()->get_editor_properties().aspect_ratio * w));
   component()->setBounds(0, 0, w, h);
   _content->component()->setBounds(0, 0, w, h);
   _content->layout();
@@ -940,9 +940,10 @@ create_ui_size_ui(
   std::int32_t initial_index = -1;
   std::vector<std::string> size_names;
   std::string ui_size = controller->get_ui_size();
-  for(std::size_t i = 0; i < controller->ui_size_names().size(); i++)
+  auto props = controller->get_editor_properties();
+  for(std::size_t i = 0; i < props.ui_size_names.size(); i++)
   {
-    size_names.push_back(controller->ui_size_names()[i]);
+    size_names.push_back(props.ui_size_names[i]);
     if (size_names[i] == ui_size)
       initial_index = static_cast<std::int32_t>(i);
   }
@@ -1014,9 +1015,10 @@ void
 load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {  
+  auto props = controller->get_editor_properties();
   auto flags = FileBrowserComponent::openMode | FileBrowserComponent::filenameBoxIsReadOnly;
   auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset", flags);
-  auto selected = [state, controller, lnf_factory](int result)
+  auto selected = [state, controller, lnf_factory, props](int result)
   {
     std::string old_theme = state->controller->get_theme();
     std::string old_size = state->controller->get_ui_size();
@@ -1032,7 +1034,7 @@ load_preset_file(
     if (result != 0 && (controller->get_theme() != old_theme || controller->get_ui_size() != old_size))
     {
       std::size_t size_index = 0;
-      auto size_names = controller->ui_size_names();
+      auto size_names = props.ui_size_names;
       for(std::size_t i = 0; i < size_names.size(); i++)
         if(size_names[i] == controller->get_ui_size())
           size_index = i;
