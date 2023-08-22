@@ -13,6 +13,9 @@ public inf::base::plugin_controller
 {
   std::unique_ptr<inf::base::ui::root_element> _plugin_ui = {};
 
+protected:
+  clap_controller();
+
 public:
   void restart() override;
   void save_preset(std::string const& path) override;

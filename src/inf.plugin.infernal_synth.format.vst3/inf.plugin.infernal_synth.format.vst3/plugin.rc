@@ -26,7 +26,7 @@ BEGIN
             VALUE "CompanyName", IPIS_VENDOR_NAME
             VALUE "InternalName", IPISFV3_NAME
             VALUE "FileDescription", IPISFV3_NAME
-            VALUE "LegalCopyright", IPISFV3_VENDOR
+            VALUE "LegalCopyright", IPIS_VENDOR_NAME
             VALUE "OriginalFilename", IPISFV3_NAME
             VALUE "LegalTrademarks", "VST is a trademark of Steinberg Media Technologies GmbH"
         END
