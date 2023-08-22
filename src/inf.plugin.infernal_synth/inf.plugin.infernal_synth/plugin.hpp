@@ -10,14 +10,15 @@
 #define IPIS_VENDOR_MAIL "sjoerdvankreel@gmail.com"
 #define IPIS_VENDOR_URL "https://sjoerdvankreel.github.io/infernal-synth"
 
+#if (!defined IPIS_FX)
+#error
+#endif
 #if IPIS_FX
 #define IPIS_NAME "InfernalSynthFX 1.3"
 #define IPIS_UNIQUE_ID "D1D3802692374AB7B6FC3A55A9AE3BCC"
-#elif (!IPIS_FX)
+#else (!IPIS_FX)
 #define IPIS_NAME "InfernalSynth 1.3"
 #define IPIS_UNIQUE_ID "5626A8A247C740E3895EF722E6C1D9C4"
-#else 
-#error
 #endif
 
 #endif // IPIS_PLUGIN_HPP

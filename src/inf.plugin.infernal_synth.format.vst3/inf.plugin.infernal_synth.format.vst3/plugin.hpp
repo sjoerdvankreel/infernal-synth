@@ -3,12 +3,13 @@
 
 #include <inf.plugin.infernal_synth/plugin.hpp>
 
+#if (!defined IPISFV3_FX)
+#error
+#endif
 #if IPISFV3_FX
 #define IPISFV3_CONTROLLER_NAME "InfernalSynthFXController"
-#elif (!IPISFV3_FX)
+#else
 #define IPISFV3_CONTROLLER_NAME "InfernalSynthController"
-#else 
-#error
 #endif
 
 #endif // IPISFV3_PLUGIN_HPP

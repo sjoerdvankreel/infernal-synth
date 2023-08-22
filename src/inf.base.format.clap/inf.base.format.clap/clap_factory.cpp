@@ -28,9 +28,9 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
   plugin->klass = plugin_class;
   plugin->klass.plugin_data = plugin;
   plugin->topology = create_topology();
+  plugin->controller = create_controller();
   plugin->changed.resize(plugin->topology->params.size());
   plugin->audio_state.resize(plugin->topology->params.size());
-  plugin->controller = std::make_unique<clap_controller>();
   plugin->topology->init_factory_preset(plugin->audio_state.data());
   plugin_init_params(plugin);
   plugin_init_editor(plugin);

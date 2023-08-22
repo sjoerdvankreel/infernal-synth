@@ -1,16 +1,28 @@
 #include <inf.plugin.infernal_synth/plugin.hpp>
 #include <inf.plugin.infernal_synth/synth/topology.hpp>
 #include <inf.plugin.infernal_synth/synth/config.hpp>
+#include <inf.plugin.infernal_synth.ui/ui.hpp>
 
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
+#include <inf.base.format.clap/clap_controller.hpp>
 
+using namespace inf::base;
+using namespace inf::base::format::clap;
 using namespace inf::plugin::infernal_synth;
+using namespace inf::plugin::infernal_synth::ui;
 
 static const char* features[] = { 
   CLAP_PLUGIN_FEATURE_INSTRUMENT, 
   CLAP_PLUGIN_FEATURE_SYNTHESIZER, 
   CLAP_PLUGIN_FEATURE_STEREO, nullptr };
+
+class synth_clap_controller :
+public inf::base::format::clap::clap_controller
+{
+public:
+  inf::base::editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
+};
 
 namespace inf::base::format::clap
 {

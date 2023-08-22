@@ -3,8 +3,9 @@
 
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
-#include <clap/clap.h>
+#include <inf.base.format.clap/clap_controller.hpp>
 
+#include <clap/clap.h>
 #include <cstring>
 #include <memory>
 
@@ -18,6 +19,8 @@ inline void const* CLAP_ABI entry_get_factory(char const* factory_id)
 
 // These come from the plugin project.
 extern std::unique_ptr<topology_info> create_topology();
+extern std::unique_ptr<clap_controller> create_controller();
 extern const clap_plugin_descriptor_t inf_plugin_descriptor;
+
 } // inf::base::format::clap
 #endif // #define INF_BASE_FORMAT_CLAP_CLAP_ENTRY_HPP
