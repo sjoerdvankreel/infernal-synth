@@ -97,23 +97,23 @@ topology_info::state_check(param_value const* state) const
 // into the topology. Lots of index arrays, saves some loops in the processing call.
 topology_info::
 topology_info(
-  part_descriptor const* static_parts,
-  std::int32_t part_count, std::int32_t max_note_events)
+  part_descriptor const* static_parts_,
+  std::int32_t part_count_, std::int32_t max_note_events_)
 {
-  assert(part_count > 0);
-  assert(max_note_events >= 0);
-  assert(static_parts != nullptr);     
+  assert(part_count_ > 0);
+  assert(max_note_events_ >= 0);
+  assert(static_parts_ != nullptr);
 
   input_param_count = 0;
   output_param_count = 0;
-  static_parts = static_parts;
-  static_part_count = part_count;
-  max_note_events = max_note_events;
+  static_parts = static_parts_;
+  static_part_count = part_count_;
+  max_note_events = max_note_events_;
 
   bool seen_output = false;
   std::int32_t part_index = 0;
   std::int32_t param_index = 0;
-  for (std::int32_t t = 0; t < part_count; t++)
+  for (std::int32_t t = 0; t < static_part_count; t++)
   {             
     assert(!seen_output || static_parts[t].kind == part_kind::output);
     seen_output |= static_parts[t].kind == part_kind::output;
