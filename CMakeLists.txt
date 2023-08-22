@@ -221,6 +221,7 @@ endif ()
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR "src/inf.plugin.infernal_synth.format.clap")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}/*.*")
 add_library(infernal.plugin.infernal_synth.format.clap SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
+target_compile_definitions(infernal.plugin.infernal_synth.format.clap PRIVATE -DIPISFCLAP_FX=0)
 target_include_directories(infernal.plugin.infernal_synth.format.clap SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
 target_include_directories(infernal.plugin.infernal_synth.format.clap PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
   ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_CLAP_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR})

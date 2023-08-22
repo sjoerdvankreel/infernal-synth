@@ -60,10 +60,10 @@ public:
   void init_factory_preset(base::param_value* state) const override;
 
   bool is_instrument() const override { return _is_instrument; }
-  char const* plugin_name() const override { return IPIS_NAME; }
   char const* vendor_name() const override { return IPIS_VENDOR_NAME; }
   std::uint16_t version_major() const override { return IPIS_VERSION_MAJOR; }
   std::uint16_t version_minor() const override { return IPIS_VERSION_MINOR; }
+  char const* plugin_name() const override { return _is_instrument ? IPIS_INST_NAME : IPIS_FX_NAME; }
 
   std::unique_ptr<base::audio_processor> 
   create_audio_processor(

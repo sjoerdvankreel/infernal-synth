@@ -30,14 +30,14 @@ namespace inf::base::format::clap
 clap_plugin_descriptor_t const inf_plugin_descriptor = 
 {
   .clap_version = CLAP_VERSION_INIT,
-  .id = "io.github.sjoerdvankreel.infernal_synth" IPIS_UNIQUE_ID,
-  .name = IPIS_NAME,
+  .id = "io.github.sjoerdvankreel.infernal_synth" IPIS_INST_UNIQUE_ID,
+  .name = IPIS_INST_NAME,
   .vendor = IPIS_VENDOR_NAME,
   .url = IPIS_VENDOR_URL,
   .manual_url = IPIS_VENDOR_URL,
   .support_url = IPIS_VENDOR_URL,
   .version = IPIS_VERSION,
-  .description = IPIS_NAME,
+  .description = IPIS_INST_NAME,
   .features = features
 };
 
