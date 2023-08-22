@@ -33,7 +33,7 @@ protected:
   using CtrlNumber = Steinberg::Vst::CtrlNumber;
 
   FUID const _processor_id;
-  std::unique_ptr<vst_editor> _current_editor = {};
+  vst_editor* _current_editor = nullptr;
 
   void do_edit(std::int32_t tag, double normalized);
 
