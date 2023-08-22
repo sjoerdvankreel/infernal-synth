@@ -116,9 +116,9 @@ IPlugView* PLUGIN_API
 vst_controller::createView(char const* name)
 {
   if (ConstString(name) != ViewType::kEditor) return nullptr;
-  _current_editor = create_editor();
+  _current_editor.reset(create_editor());
   setKnobMode(KnobModes::kLinearMode);
-  return _current_editor;
+  return _current_editor.get();
 }
 
 void
@@ -337,7 +337,7 @@ vst_controller::host_menu_for_param_index(std::int32_t param_index) const
   if (!_current_editor) return {};
 
   ParamID tag = topology()->param_index_to_id[param_index];
-  Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu(handler->createContextMenu(_current_editor, &tag));
+  Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu(handler->createContextMenu(_current_editor.get(), &tag));
   return std::make_unique<vst_host_context_menu>(menu);
 }
 

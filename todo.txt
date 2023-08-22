@@ -17,7 +17,6 @@
 
 * todo this version
 - disable v.out/ext regarding mode
-- delete vst3editor (someone wants my editor/_current_editor)
 - cakewalk demo
 - clap 
 * midi
@@ -50,7 +49,6 @@
 - make it more cpu efficient
 - scale CV amount by global CV param
 - make more presets + group by folder
-- incorporate chris airwindows filters
 - add new noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
