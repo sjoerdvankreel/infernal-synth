@@ -129,8 +129,10 @@ synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target
 static FUnknown*
 create_controller(void* context)
 {
+  FUID fuid;
+  fuid.fromString(IPIS_UNIQUE_ID);
   auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
-  auto controller = new synth_vst_controller(std::move(topology), FUID::fromString(IPIS_UNIQUE_ID));
+  auto controller = new synth_vst_controller(std::move(topology), fuid);
   return static_cast<IEditController*>(controller);
 }
 
