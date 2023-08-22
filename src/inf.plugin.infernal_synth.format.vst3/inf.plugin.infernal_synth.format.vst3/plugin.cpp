@@ -1,3 +1,4 @@
+#include <inf.plugin.infernal_synth/plugin.hpp>
 #include <inf.plugin.infernal_synth/lfo/topology.hpp>
 #include <inf.plugin.infernal_synth/synth/topology.hpp>
 #include <inf.plugin.infernal_synth/cv_bank/topology.hpp>
@@ -6,7 +7,6 @@
 #include <inf.plugin.infernal_synth/oscillator/topology.hpp>
 
 #include <inf.plugin.infernal_synth.ui/ui.hpp>
-#include <inf.plugin.infernal_synth.format.vst3/plugin.hpp>
 #include <inf.base.ui/shared/support.hpp>
 #include <inf.base.format.vst3/vst_editor.hpp>
 #include <inf.base.format.vst3/vst_processor.hpp>
@@ -35,11 +35,19 @@ void* moduleHandle = nullptr;
 static std::int32_t _inf_module_counter = 0;
 
 #if IPISFV3_FX
+#define IPISFV3_NAME IPIS_FX_NAME
+#define IPISFV3_UNIQUE_ID_TEXT IPIS_FX_UNIQUE_ID_TEXT
+#define IPISFV3_CONTROLLER_NAME "InfernalSynthFXController"
 #define IPISFV3_PLUG_TYPE Steinberg::Vst::PlugType::kFx
 static const DECLARE_UID(vst_controller_id, 0x35695F63, 0x837242BE, 0x88FB88A4, 0xE4F2D1B8);
+static const DECLARE_UID(vst_processor_id, IPIS_FX_UNIQUE_ID_HEX1, IPIS_FX_UNIQUE_ID_HEX2, IPIS_FX_UNIQUE_ID_HEX3, IPIS_FX_UNIQUE_ID_HEX4);
 #elif (!IPISFV3_FX)
+#define IPISFV3_NAME IPIS_INST_NAME
+#define IPISFV3_UNIQUE_ID_TEXT IPIS_INST_UNIQUE_ID_TEXT
+#define IPISFV3_CONTROLLER_NAME "InfernalSynthController"
 #define IPISFV3_PLUG_TYPE Steinberg::Vst::PlugType::kInstrumentSynth
 static const DECLARE_UID(vst_controller_id, 0x612E5225, 0xD6A44771, 0xA581057D, 0x04034620);
+static const DECLARE_UID(vst_processor_id, IPIS_INST_UNIQUE_ID_HEX1, IPIS_INST_UNIQUE_ID_HEX2, IPIS_INST_UNIQUE_ID_HEX3, IPIS_INST_UNIQUE_ID_HEX4);
 #else
 #error
 #endif
@@ -120,7 +128,7 @@ static FUnknown*
 create_controller(void* context)
 {
   FUID fuid;
-  fuid.fromString(IPISFV3_UNIQUE_ID);
+  fuid.fromString(IPISFV3_UNIQUE_ID_TEXT);
   auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
   auto controller = new synth_vst_controller(std::move(topology), fuid);
   return static_cast<IEditController*>(controller);
@@ -139,7 +147,7 @@ BEGIN_FACTORY_DEF(
   IPIS_VENDOR_URL,
   IPIS_VENDOR_MAIL,
   2)
-  DEF_CLASS(IPISFV3_UNIQUE_ID, PClassInfo::kManyInstances, kVstAudioEffectClass,
+  DEF_CLASS(vst_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
     IPISFV3_NAME, Steinberg::Vst::kDistributable, IPISFV3_PLUG_TYPE,
     IPIS_VERSION, kVstVersionString, create_processor, nullptr)
   DEF_CLASS(vst_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
