@@ -21,14 +21,14 @@ BEGIN
         BLOCK "040004e4"
         BEGIN
             VALUE "ProductName", IPISFV3_NAME
-            VALUE "FileVersion", IPISFV3_VERSION
-            VALUE "ProductVersion", IPISFV3_VERSION
-            VALUE "CompanyName", IPISFV3_COMPANY_NAME
-            VALUE "InternalName", IPISFV3_ORIG_FILE_NAME
-            VALUE "FileDescription", IPISFV3_ORIG_FILE_NAME
-            VALUE "LegalCopyright", IPISFV3_LEGAL_COPYRIGHT
-            VALUE "OriginalFilename", IPISFV3_ORIG_FILE_NAME
-            VALUE "LegalTrademarks", IPISFV3_LEGAL_TRADEMARKS
+            VALUE "FileVersion", IPIS_VERSION
+            VALUE "ProductVersion", IPIS_VERSION
+            VALUE "CompanyName", IPIS_VENDOR_NAME
+            VALUE "InternalName", IPISFV3_NAME
+            VALUE "FileDescription", IPISFV3_NAME
+            VALUE "LegalCopyright", IPISFV3_VENDOR
+            VALUE "OriginalFilename", IPISFV3_NAME
+            VALUE "LegalTrademarks", "VST is a trademark of Steinberg Media Technologies GmbH"
         END
     END
     BLOCK "VarFileInfo"

@@ -104,33 +104,23 @@ bool
 synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target_tag) const
 {
   if (number == Steinberg::Vst::ControllerNumbers::kCtrlModWheel)
-  {
     target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
-    return true;
-  }
-  if (number == Steinberg::Vst::ControllerNumbers::kCtrlVolume)
-  {
+  else if (number == Steinberg::Vst::ControllerNumbers::kCtrlVolume)
     target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
-    return true;
-  }
-  if (number == Steinberg::Vst::ControllerNumbers::kAfterTouch)
-  {
+  else if (number == Steinberg::Vst::ControllerNumbers::kAfterTouch)
     target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_press);
-    return true;
-  }
-  if(number == Steinberg::Vst::ControllerNumbers::kPitchBend)
-  {
+  else if(number == Steinberg::Vst::ControllerNumbers::kPitchBend)
     target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
-    return true;
-  }
-  return false;
+  else 
+    return false;
+  return true;
 }
 
 static FUnknown*
 create_controller(void* context)
 {
   FUID fuid;
-  fuid.fromString(IPIS_UNIQUE_ID);
+  fuid.fromString(IPISFV3_UNIQUE_ID);
   auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
   auto controller = new synth_vst_controller(std::move(topology), fuid);
   return static_cast<IEditController*>(controller);
@@ -149,8 +139,8 @@ BEGIN_FACTORY_DEF(
   IPIS_VENDOR_URL,
   IPIS_VENDOR_MAIL,
   2)
-  DEF_CLASS(IPIS_UNIQUE_ID, PClassInfo::kManyInstances, kVstAudioEffectClass,
-    IPIS_NAME, Steinberg::Vst::kDistributable, IPISFV3_PLUG_TYPE,
+  DEF_CLASS(IPISFV3_UNIQUE_ID, PClassInfo::kManyInstances, kVstAudioEffectClass,
+    IPISFV3_NAME, Steinberg::Vst::kDistributable, IPISFV3_PLUG_TYPE,
     IPIS_VERSION, kVstVersionString, create_processor, nullptr)
   DEF_CLASS(vst_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
     IPISFV3_CONTROLLER_NAME, 0, "",
