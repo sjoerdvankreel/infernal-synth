@@ -22,16 +22,16 @@
 - check the links for demo project
 - document new dependencies
 - disable v.out/ext regarding mode
+
 - clap 
 * midi
+* do ui extension
 * fx mode
 * choke/end
 * do load/save state
 * do the gesture thing
 * do the polyphonic mod stuff
 * figure out threading requirements
-* make clap a folder?
-* better folder structure also for vst3?
 
 * bugs
 - PRNG draw relative to sample rate
