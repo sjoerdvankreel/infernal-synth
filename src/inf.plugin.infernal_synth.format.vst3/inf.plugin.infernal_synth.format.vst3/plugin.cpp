@@ -95,6 +95,7 @@ protected:
   bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
 public:
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
+  editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
@@ -125,39 +126,31 @@ synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target
   return false;
 }
 
-static
-topology_info* inf_vst_create_topology()
-{ 
-  topology_info* result = new synth_vst_topology(IPISFV3_FX == 0);
-  topology_info::init(result, part_descriptors, part_type::count, synth_polyphony);
-  return result;
-}
-
 static FUnknown*
 create_controller(void* context)
 {
-  auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology());
-  auto controller = new synth_vst_controller(std::move(topology), FUID::fromTUID(vst_processor_id));
+  auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
+  auto controller = new synth_vst_controller(std::move(topology), FUID::fromString(IPIS_UNIQUE_ID));
   return static_cast<IEditController*>(controller);
 }
 
 static FUnknown* 
 create_processor(void* context)
 {
-  auto topology = std::unique_ptr<topology_info>(inf_vst_create_topology());
+  auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
   auto processor = new vst_processor(std::move(topology), FUID::fromTUID(vst_controller_id));
   return static_cast<IAudioProcessor*>(processor);
 }
 
 BEGIN_FACTORY_DEF(
-  IPISFV3_COMPANY_NAME,
-  IPISFV3_COMPANY_WEB,
-  IPISFV3_COMPANY_MAIL,
+  IPIS_VENDOR_NAME,
+  IPIS_VENDOR_URL,
+  IPIS_VENDOR_MAIL,
   2)
-  DEF_CLASS(vst_processor_id, PClassInfo::kManyInstances, kVstAudioEffectClass,
-    IPISFV3_NAME, Steinberg::Vst::kDistributable, IPISFV3_PLUG_TYPE,
-    IPISFV3_VERSION, kVstVersionString, create_processor, nullptr)
+  DEF_CLASS(IPIS_UNIQUE_ID, PClassInfo::kManyInstances, kVstAudioEffectClass,
+    IPIS_NAME, Steinberg::Vst::kDistributable, IPISFV3_PLUG_TYPE,
+    IPIS_VERSION, kVstVersionString, create_processor, nullptr)
   DEF_CLASS(vst_controller_id, PClassInfo::kManyInstances, kVstComponentControllerClass,
     IPISFV3_CONTROLLER_NAME, 0, "",
-    IPISFV3_VERSION, kVstVersionString, create_controller, nullptr)
+    IPIS_VERSION, kVstVersionString, create_controller, nullptr)
 END_FACTORY
