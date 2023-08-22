@@ -23,16 +23,11 @@
 * midi
 * fx mode
 * choke/end
-* concat module+name
 * do load/save state
-* make clap a folder?
 * do the gesture thing
-* set onoff as list mode
-* figure out versioning
-* show version in clap gui
 * do the polyphonic mod stuff
-* see what to share for vst3/clap
 * figure out threading requirements
+* make clap a folder?
 * better folder structure also for vst3?
 
 * bugs
