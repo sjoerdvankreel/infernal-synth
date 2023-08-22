@@ -1,5 +1,7 @@
+#include <inf.plugin.infernal_synth/plugin.hpp>
 #include <inf.plugin.infernal_synth/synth/topology.hpp>
 #include <inf.plugin.infernal_synth/synth/config.hpp>
+
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
 
@@ -16,14 +18,14 @@ namespace inf::base::format::clap
 clap_plugin_descriptor_t const inf_plugin_descriptor = 
 {
   .clap_version = CLAP_VERSION_INIT,
-  .id = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_ID,
-  .name = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_NAME,
-  .vendor = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VENDOR,
-  .url = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_URL,
-  .manual_url = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_URL,
-  .support_url = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_URL,
-  .version = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_VERSION,
-  .description = INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_NAME,
+  .id = "io.github.sjoerdvankreel.infernal_synth" IPIS_UNIQUE_ID,
+  .name = IPIS_NAME,
+  .vendor = IPIS_VENDOR_NAME,
+  .url = IPIS_VENDOR_URL,
+  .manual_url = IPIS_VENDOR_URL,
+  .support_url = IPIS_VENDOR_URL,
+  .version = IPIS_VERSION,
+  .description = IPIS_NAME,
   .features = features
 };
 
