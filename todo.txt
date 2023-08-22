@@ -21,7 +21,6 @@
 - check the linux dist output
 - check the links for demo project
 - document new dependencies
-- disable v.out/ext regarding mode
 
 - clap 
 * midi
