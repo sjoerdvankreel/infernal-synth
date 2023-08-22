@@ -3,8 +3,9 @@
 
 #include <inf.base/plugin/audio_processor.hpp>
 #include <inf.base/topology/topology_info.hpp>
-#include <clap/clap.h>
+#include <inf.base.format.clap/clap_controller.hpp>
 
+#include <clap/clap.h>
 #include <vector>
 #include <cstdint>
 
@@ -21,6 +22,7 @@ struct inf_clap_plugin
   std::int32_t max_sample_count = {};
   std::unique_ptr<topology_info> topology = {};
   std::unique_ptr<audio_processor> processor = {};
+  std::unique_ptr<clap_controller> controller = {};
   // This fully defines the audio_processor and thus the plugin state.
   std::vector<inf::base::param_value> audio_state = {};
   // Indicates whether any param index changed this block (0/1, since no vector<bool>).
