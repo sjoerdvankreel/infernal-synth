@@ -121,6 +121,16 @@ clap_controller():
 plugin_controller(create_topology()) {}
 
 void 
+clap_controller::reload_editor(std::int32_t width)
+{
+}
+
+void 
+clap_controller::editor_param_changed(std::int32_t index, param_value ui_value)
+{
+}
+
+void 
 clap_controller::restart()
 {
 }
