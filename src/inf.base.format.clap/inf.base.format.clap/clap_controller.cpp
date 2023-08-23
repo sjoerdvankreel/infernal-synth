@@ -3,6 +3,7 @@
 #include <inf.base.format.clap/clap_controller.hpp>
 
 #include <clap/clap.h>
+#include <filesystem>
 
 using namespace inf::base::ui;
 
@@ -161,33 +162,23 @@ clap_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
 {
 }
 
-std::string 
-clap_controller::preset_file_extension()
+std::string
+clap_controller::themes_folder(std::string const& plugin_file) const
 {
-  return "isp";
+  auto path = std::filesystem::path(plugin_file);
+  return (path / "Themes").string();
 }
 
-std::string 
-clap_controller::default_theme_path(std::string const& plugin_file) const
+std::string
+clap_controller::factory_presets_folder(std::string const& plugin_file) const
 {
-  return {};
-}
-
-std::vector<inf::base::external_resource> 
-clap_controller::themes(std::string const& plugin_file) const
-{
-  return {};
+  auto path = std::filesystem::path(plugin_file);
+  return (path / "Presets").string();
 }
 
 std::unique_ptr<host_context_menu> 
 clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 {
-  return {};
-}
-
-std::vector<inf::base::external_resource> 
-clap_controller::factory_presets(std::string const& plugin_file) const
-{  
   return {};
 }
 

@@ -158,43 +158,17 @@ vst_controller::setParamNormalized(ParamID tag, ParamValue value)
 }
 
 std::string 
-vst_controller::default_theme_path(std::string const& plugin_file) const
+vst_controller::themes_folder(std::string const& plugin_file) const
 {
   auto path = std::filesystem::path(plugin_file);
-  return (path.parent_path().parent_path() / "Resources" / "Themes" / "3D Default").string();
-}              
-  
-std::vector<inf::base::external_resource> 
-vst_controller::themes(std::string const& plugin_file) const
-{
-  std::vector<inf::base::external_resource> result;
-  auto path = std::filesystem::path(plugin_file).parent_path().parent_path() / "Resources" / "Themes";
-  for (auto const& entry : std::filesystem::directory_iterator(path))
-  {
-    if (!entry.is_directory()) continue;
-    external_resource preset;
-    preset.path = entry.path().string();
-    preset.name = entry.path().filename().string();
-    result.push_back(preset);
-  }
-  return result;
+  return (path.parent_path().parent_path() / "Resources" / "Themes").string();
 }
 
-std::vector<inf::base::external_resource> 
-vst_controller::factory_presets(std::string const& plugin_file) const
+std::string 
+vst_controller::factory_presets_folder(std::string const& plugin_file) const
 {
-  std::string dot_extension = ".vstpreset";
-  std::vector<inf::base::external_resource> result;
-  auto path = std::filesystem::path(plugin_file).parent_path().parent_path() / "Resources" / "Presets";
-  for (auto const& entry: std::filesystem::directory_iterator(path))
-  {
-    if (entry.path().extension().string() != dot_extension) continue;
-    external_resource preset;
-    preset.path = entry.path().string();
-    preset.name = entry.path().stem().string();
-    result.push_back(preset);
-  }
-  return result;
+  auto path = std::filesystem::path(plugin_file);
+  return (path.parent_path().parent_path() / "Resources" / "Presets").string();
 }
 
 tresult 

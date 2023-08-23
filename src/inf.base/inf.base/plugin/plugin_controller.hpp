@@ -101,12 +101,6 @@ public:
   void clear_part(part_id id);
   void copy_or_swap_part(part_id source, std::int32_t target, bool swap);
 
-  virtual void restart() = 0;
-  virtual void* current_editor_window() const = 0;
-  virtual void reload_editor(std::int32_t width) = 0;
-  virtual editor_properties get_editor_properties() const = 0;
-
-  virtual std::string preset_file_extension() = 0;
   virtual void load_component_state(param_value* state) = 0;
   virtual void save_preset(std::string const& path) = 0;
   virtual bool load_preset(std::string const& path) = 0;
@@ -115,10 +109,16 @@ public:
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
 
-  virtual std::string default_theme_path(std::string const& plugin_file) const = 0;
-  virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
+  virtual std::string default_theme_name() const = 0;
+  virtual std::string preset_file_extension() const = 0;
+  virtual std::string themes_folder(std::string const& plugin_file) const = 0;
+  virtual std::string factory_presets_folder(std::string const& plugin_file) const = 0;
+
+  virtual void restart() = 0;
+  virtual void* current_editor_window() const = 0;
+  virtual void reload_editor(std::int32_t width) = 0;
+  virtual editor_properties get_editor_properties() const = 0;
   virtual std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const = 0;
-  virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
 
   void add_reload_listener(reload_listener* listener)
   { _reload_listeners.insert(listener); }
@@ -133,6 +133,10 @@ public:
 
   std::int32_t editor_current_width() const { return _editor_width; }
   void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
+  
+  std::string default_theme_path(std::string const& plugin_file) const;
+  std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const;
+  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const;
 
   param_value base_value_at_index(std::int32_t param_index) const
   { return state()[param_index]; }

@@ -59,11 +59,11 @@ public:
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override 
   { do_edit(target_tag, getParamNormalized(source_tag)); }
 
-  std::string preset_file_extension() override { return "vstpreset"; }
-  std::string default_theme_path(std::string const& plugin_file) const override;
-  std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const override;
+  std::string default_theme_name() const override { return "3D Default"; }
+  std::string preset_file_extension() const override { return "vstpreset"; }
+  std::string themes_folder(std::string const& plugin_file) const override;
+  std::string factory_presets_folder(std::string const& plugin_file) const override;
   std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
-  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
 
   tresult PLUGIN_API setState(IBStream* state) override;
   tresult PLUGIN_API getState(IBStream* state) override;

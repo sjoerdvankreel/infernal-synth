@@ -1,5 +1,7 @@
 #include <inf.base/plugin/plugin_controller.hpp>
+
 #include <vector>
+#include <filesystem>
 
 using namespace juce;
 
@@ -126,6 +128,46 @@ plugin_controller::copy_or_swap_part(part_id source, std::int32_t target, bool s
     else copy_param(source_tag, target_tag);
   }
   restart();
+}
+
+std::string 
+plugin_controller::default_theme_path(std::string const& plugin_file) const
+{ 
+  auto folder = std::filesystem::path(themes_folder(plugin_file));
+  return (folder / default_theme_name()).string(); 
+}
+
+std::vector<inf::base::external_resource>
+plugin_controller::themes(std::string const& plugin_file) const
+{
+  std::vector<inf::base::external_resource> result;
+  auto folder = std::filesystem::path(themes_folder(plugin_file));
+  for (auto const& entry : std::filesystem::directory_iterator(folder))
+  {
+    if (!entry.is_directory()) continue;
+    external_resource theme;
+    theme.path = entry.path().string();
+    theme.name = entry.path().filename().string();
+    result.push_back(theme);
+  }
+  return result;
+}
+
+std::vector<inf::base::external_resource>
+plugin_controller::factory_presets(std::string const& plugin_file) const
+{
+  std::vector<inf::base::external_resource> result;
+  std::string dot_extension = std::string(".") + preset_file_extension();
+  auto folder = std::filesystem::path(factory_presets_folder(plugin_file));
+  for (auto const& entry : std::filesystem::directory_iterator(folder))
+  {
+    if (entry.path().extension().string() != dot_extension) continue;
+    external_resource preset;
+    preset.path = entry.path().string();
+    preset.name = entry.path().stem().string();
+    result.push_back(preset);
+  }
+  return result;
 }
 
 } // namespace inf::base

@@ -27,14 +27,15 @@ public:
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
 
-  std::string preset_file_extension();
-  std::string default_theme_path(std::string const& plugin_file) const override;
-  std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const override;
-  std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
-  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const override;
+  std::string default_theme_name() const override { return "3D Default"; }
+  std::string preset_file_extension() const override { return "isp"; }
+  std::string themes_folder(std::string const& plugin_file) const override;
+  std::string factory_presets_folder(std::string const& plugin_file) const override;
 
   void reload_editor(std::int32_t width) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
+  std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
+
   void* current_editor_window() const override { return plugin_ui.get() ? plugin_ui->component() : nullptr; }
 };
 
