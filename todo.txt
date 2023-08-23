@@ -23,7 +23,8 @@
 - document new dependencies
 
 - clap 
-* tag queue lib version
+* sync on load ui
+* do ui to audio
 * midi
 * do ui extension
 * choke/end
