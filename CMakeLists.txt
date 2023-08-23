@@ -224,7 +224,7 @@ set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR "src/inf.plugin.infernal_synth
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}/*.*")
 add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
 target_compile_definitions(${target_name} PRIVATE -DIPISFCLAP_FX=${is_fx})
-target_include_directories(${target_name} SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
+target_include_directories(${target_name} SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${RWQ_SRC_DIR} ${JUCE_SRC_DIR}/modules)
 target_include_directories(${target_name} PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
   ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_CLAP_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR})
 set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${target_suffix}${INFERNAL_VERSION}")
