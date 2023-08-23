@@ -133,6 +133,7 @@ clap_controller::save_preset(std::string const& path)
 bool 
 clap_controller::load_preset(std::string const& path)
 {
+  return false;
 }
 
 void
@@ -159,11 +160,13 @@ clap_controller::preset_file_extension()
 std::string 
 clap_controller::default_theme_path(std::string const& plugin_file) const
 {
+  return {};
 }
 
 std::vector<inf::base::external_resource> 
 clap_controller::themes(std::string const& plugin_file) const
 {
+  return {};
 }
 
 std::unique_ptr<host_context_menu> 
@@ -175,6 +178,7 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 std::vector<inf::base::external_resource> 
 clap_controller::factory_presets(std::string const& plugin_file) const
 {  
+  return {};
 }
 
 } // inf::base::format::clap
