@@ -124,8 +124,8 @@ editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t
 }
 
 clap_controller::
-clap_controller():
-plugin_controller(create_topology()) {}
+clap_controller(clap_host_t const* host) : 
+plugin_controller(create_topology()), _host(host) {}
 
 void 
 clap_controller::reload_editor(std::int32_t width)
@@ -133,6 +133,9 @@ clap_controller::reload_editor(std::int32_t width)
   if(width == -1) width = editor_current_width();
   plugin_ui->component()->removeFromDesktop();
   editor_current_width(width);
+  auto new_bounds = get_editor_wanted_size();
+  auto host_gui = static_cast<clap_host_gui_t const*>(_host->get_extension(_host, CLAP_EXT_GUI));
+  host_gui->request_resize(_host, new_bounds.first, new_bounds.second);
   plugin_ui = create_ui();
   plugin_ui->build();
   plugin_ui->layout();

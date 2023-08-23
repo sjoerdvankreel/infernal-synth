@@ -19,7 +19,7 @@ inline void const* CLAP_ABI entry_get_factory(char const* factory_id)
 
 // These come from the plugin project.
 extern std::unique_ptr<topology_info> create_topology();
-extern std::unique_ptr<clap_controller> create_controller();
+extern std::unique_ptr<clap_controller> create_controller(clap_host_t const* host);
 extern const clap_plugin_descriptor_t inf_plugin_descriptor;
 
 } // inf::base::format::clap

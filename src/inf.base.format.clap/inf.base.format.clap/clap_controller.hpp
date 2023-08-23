@@ -4,6 +4,8 @@
 #include <inf.base.ui/shared/ui.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 
+#include <clap/clap.h>
+
 namespace inf::base::format::clap 
 {
 
@@ -12,8 +14,10 @@ struct inf_clap_plugin;
 class clap_controller:
 public inf::base::plugin_controller
 {
+  clap_host_t const* const _host;
+
 protected:
-  clap_controller();
+  clap_controller(clap_host_t const* host);
 
 public:
   // Allow access by clap_plugin_gui_t.
