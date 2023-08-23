@@ -25,7 +25,6 @@
 - clap 
 * midi
 * do ui extension
-* fx mode
 * choke/end
 * do load/save state
 * do the gesture thing
