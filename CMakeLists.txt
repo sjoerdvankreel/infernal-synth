@@ -217,24 +217,37 @@ declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.for
 declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx linux-vst3 1 "FX" "FX")
 endif ()
 
-# Inf plugin infernal synth format clap.
+# Inf plugin infernal synth format clapfx and clapi.
+function(declare_inf_plugin_infernal_synth_format_clap target_name target_type is_fx target_suffix preset_suffix)
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR "src/inf.plugin.infernal_synth.format.clap")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}/*.*")
-add_library(infernal.plugin.infernal_synth.format.clap SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
-target_compile_definitions(infernal.plugin.infernal_synth.format.clap PRIVATE -DIPISFCLAP_FX=0)
-target_include_directories(infernal.plugin.infernal_synth.format.clap SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
-target_include_directories(infernal.plugin.infernal_synth.format.clap PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
+add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
+target_compile_definitions(${target_name} PRIVATE -DIPISFCLAP_FX=${is_fx})
+target_include_directories(${target_name} SYSTEM PRIVATE ${CLAP_SDK_SRC_DIR} ${JUCE_SRC_DIR}/modules)
+target_include_directories(${target_name} PRIVATE ${INF_BASE_SRC_DIR} ${INF_BASE_UI_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_SRC_DIR}
   ${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR} ${INF_BASE_FORMAT_CLAP_SRC_DIR} ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR})
-set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES OUTPUT_NAME "InfernalSynth${target_suffix}${INFERNAL_VERSION}")
-target_link_libraries(infernal.plugin.infernal_synth.format.clap infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.clap 
+set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${target_suffix}${INFERNAL_VERSION}")
+target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.clap
   infernal.base.ui infernal.base lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
+add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
+  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth${target_suffix}/Themes")
+add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_suffix}
+  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth${target_suffix}/Presets")
 if (MSVC)
-set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES SUFFIX ".clap")
+set_target_properties(${target_name} PROPERTIES SUFFIX ".clap")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
-target_compile_options(infernal.plugin.infernal_synth.format.clap PRIVATE "SHELL:/external:I ${CLAP_SDK_SRC_DIR}")
-set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/win-clap/InfernalSynth")
+target_compile_options(${target_name} PRIVATE "SHELL:/external:I ${CLAP_SDK_SRC_DIR}")
+set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth${target_suffix}")
 else ()
-set_target_properties(infernal.plugin.infernal_synth.format.clap PROPERTIES LIBRARY_OUTPUT_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/dist/${CMAKE_BUILD_TYPE}/linux-clap/InfernalSynth")
+set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
+  "${PROJECT_SOURCE_DIR}/dist/${CMAKE_BUILD_TYPE}/${target_type}/InfernalSynth${target_suffix}")
 endif()
+endfunction()
+if (MSVC)
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapi win-clap 0 "" "Instrument")
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapfx win-clap 1 "FX" "FX")
+else ()
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapi linux-clap 0 "" "Instrument")
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapfx linux-clap 1 "FX" "FX")
+endif ()
