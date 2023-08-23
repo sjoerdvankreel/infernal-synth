@@ -30,7 +30,6 @@
 * do the gesture thing
 * do the polyphonic mod stuff
 * host menu
-* fix ui resizing
 * figure out threading requirements
 * somehow fix all the preset files
 
