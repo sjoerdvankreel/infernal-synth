@@ -3,6 +3,7 @@
 
 #include <inf.base/plugin/audio_processor.hpp>
 #include <inf.base/topology/topology_info.hpp>
+#include <inf.base.format.clap/clap_support.hpp>
 #include <inf.base.format.clap/clap_controller.hpp>
 
 #include <clap/clap.h>
@@ -13,12 +14,6 @@
 
 namespace inf::base::format::clap
 {
-
-struct audio_to_main_msg
-{
-  std::int32_t index;
-  double value;
-};
 
 struct inf_clap_plugin 
 {

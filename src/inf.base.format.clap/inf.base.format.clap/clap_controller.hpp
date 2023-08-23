@@ -2,6 +2,7 @@
 #define INF_BASE_FORMAT_CLAP_CLAP_CONTROLLER_HPP
 
 #include <inf.base.ui/shared/ui.hpp>
+#include <inf.base.format.clap/clap_support.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 
 #include <readerwriterqueue.h>
@@ -9,9 +10,6 @@
 
 namespace inf::base::format::clap 
 {
-
-// Will this be enough ?
-inline std::int32_t constexpr queue_size = 4096;
 
 struct inf_clap_plugin;
 
