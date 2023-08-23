@@ -29,6 +29,7 @@
 * do load/save state
 * do the gesture thing
 * do the polyphonic mod stuff
+* host menu
 * figure out threading requirements
 
 * bugs

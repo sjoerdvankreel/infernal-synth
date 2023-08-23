@@ -93,6 +93,7 @@ editor_destroy(clap_plugin_t const* plugin)
 static bool CLAP_ABI 
 editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 {
+  juce::MessageManager::getInstance();
   plugin_controller(plugin)->plugin_ui = plugin_controller(plugin)->create_ui();
   plugin_ui(plugin)->build();
   plugin_ui(plugin)->layout();
