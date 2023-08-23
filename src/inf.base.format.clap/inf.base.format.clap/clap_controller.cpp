@@ -21,7 +21,8 @@ static bool CLAP_ABI editor_hide(clap_plugin_t const* plugin);
 static void CLAP_ABI editor_destroy(clap_plugin_t const* plugin);
 static bool CLAP_ABI editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window);
 static bool CLAP_ABI editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating);
-static bool CLAP_ABI editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating); 
+static bool CLAP_ABI editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating);
+static bool CLAP_ABI editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height);
 static bool CLAP_ABI editor_get_preferred_api(clap_plugin_t const* plugin, char const** api, bool* is_floating);
 
 static void CLAP_ABI editor_suggest_title(clap_plugin_t const* plugin, char const* title) {}
@@ -31,7 +32,6 @@ static bool CLAP_ABI editor_set_size(clap_plugin_t const* plugin, uint32_t width
 static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_window_t const* window) { return false; }
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
-static bool CLAP_ABI editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height) { return false; }
 
 void
 plugin_init_editor_api(inf_clap_plugin* plugin)
@@ -104,6 +104,15 @@ editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 {
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
   plugin_ui(plugin)->component()->setVisible(true);
+  return true;
+}
+
+
+static bool CLAP_ABI 
+editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height)
+{ 
+  *width = plugin_ui(plugin)->component()->getWidth();
+  *height = plugin_ui(plugin)->component()->getWidth();
   return true;
 }
 
