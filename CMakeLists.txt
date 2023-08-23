@@ -230,18 +230,18 @@ set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "InfernalSynth${targ
 target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plugin.infernal_synth.ui infernal.base.format.clap
   infernal.base.ui infernal.base lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
 add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
-  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth${target_suffix}/Themes")
+  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}/Themes")
 add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_suffix}
-  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth${target_suffix}/Presets")
+  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}/Presets")
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".clap")
 source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}" FILES ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
 target_compile_options(${target_name} PRIVATE "SHELL:/external:I ${CLAP_SDK_SRC_DIR}")
 set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth${target_suffix}")
+  "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}")
 else ()
 set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
-  "${PROJECT_SOURCE_DIR}/dist/${CMAKE_BUILD_TYPE}/${target_type}/InfernalSynth${target_suffix}")
+  "${PROJECT_SOURCE_DIR}/dist/${CMAKE_BUILD_TYPE}/${target_type}/InfernalSynth/InfernalSynth${target_suffix}")
 endif()
 endfunction()
 if (MSVC)
