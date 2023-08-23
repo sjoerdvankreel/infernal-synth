@@ -94,8 +94,8 @@ static bool CLAP_ABI
 editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 {
   juce::MessageManager::getInstance();
-  auto props = plugin_controller(plugin)->get_editor_properties();
-  plugin_controller(plugin)->editor_current_width(props.min_width);
+  auto w = plugin_controller(plugin)->get_editor_wanted_size().first;
+  plugin_controller(plugin)->editor_current_width(w);
   plugin_controller(plugin)->plugin_ui = plugin_controller(plugin)->create_ui();
   plugin_ui(plugin)->build();
   plugin_ui(plugin)->layout();
@@ -107,6 +107,7 @@ editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 static bool CLAP_ABI 
 editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 {
+  plugin_controller(plugin)->_parent_window = window->ptr;
   plugin_ui(plugin)->component()->setTopLeftPosition(0, 0);
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
   plugin_ui(plugin)->component()->setVisible(true);
@@ -116,9 +117,9 @@ editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 static bool CLAP_ABI 
 editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height)
 { 
-  auto props = plugin_controller(plugin)->get_editor_properties();
-  *width = props.min_width;
-  *height = static_cast<std::int32_t>(std::ceil(props.min_width / props.aspect_ratio));
+  auto size = plugin_controller(plugin)->get_editor_wanted_size();
+  *width = static_cast<std::uint32_t>(size.first);
+  *height = static_cast<std::uint32_t>(size.second);
   return true;
 }
 
@@ -129,6 +130,17 @@ plugin_controller(create_topology()) {}
 void 
 clap_controller::reload_editor(std::int32_t width)
 {
+  if(width == -1) width = editor_current_width();
+  plugin_ui->component()->removeFromDesktop();
+  editor_current_width(width);
+  plugin_ui = create_ui();
+  plugin_ui->build();
+  plugin_ui->layout();
+  plugin_ui->component()->setVisible(false);
+  plugin_ui->component()->setOpaque(true);
+  plugin_ui->component()->setTopLeftPosition(0, 0);
+  plugin_ui->component()->addToDesktop(0, _parent_window);
+  plugin_ui->component()->setVisible(true);
 }
 
 void 
