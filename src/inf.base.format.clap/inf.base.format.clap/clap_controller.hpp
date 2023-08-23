@@ -3,20 +3,22 @@
 
 #include <inf.base.ui/shared/ui.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
-#include <clap/clap.h>
 
 namespace inf::base::format::clap 
 {
 
+struct inf_clap_plugin;
+
 class clap_controller:
 public inf::base::plugin_controller
 {
-  std::unique_ptr<inf::base::ui::root_element> _plugin_ui = {};
-
 protected:
   clap_controller();
 
 public:
+  // Allow access by clap_plugin_gui_t.
+  std::unique_ptr<inf::base::ui::root_element> plugin_ui = {};
+
   void restart() override {}
   void save_preset(std::string const& path) override {}
   bool load_preset(std::string const& path) override { return false; }
@@ -32,8 +34,11 @@ public:
 
   void reload_editor(std::int32_t width) override {}
   void editor_param_changed(std::int32_t index, param_value ui_value) override {}
-  void* current_editor_window() const override { return _plugin_ui.get() ? _plugin_ui->component() : nullptr; }
+  void* current_editor_window() const override { return plugin_ui.get() ? plugin_ui->component() : nullptr; }
 };
+
+void
+plugin_init_editor_api(inf_clap_plugin* plugin);
 
 } // inf::base::format::clap
 #endif // INF_BASE_FORMAT_CLAP_CLAP_CONTROLLER_HPP

@@ -1,9 +1,9 @@
 #include <inf.base/shared/support.hpp>
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
-#include <inf.base.format.clap/clap_editor.hpp>
 #include <inf.base.format.clap/clap_parameter.hpp>
 
+#include <clap/clap.h>
 #include <cstring>
 
 using namespace inf::base;

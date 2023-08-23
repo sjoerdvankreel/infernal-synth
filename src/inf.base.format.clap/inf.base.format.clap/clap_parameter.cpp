@@ -1,6 +1,8 @@
 #include <inf.base/shared/support.hpp>
+#include <inf.base.format.clap/clap_plugin.hpp>
 #include <inf.base.format.clap/clap_parameter.hpp>
 
+#include <clap/clap.h>
 #include <string>
 #include <cstdint>
 #include <cstring>
@@ -17,7 +19,7 @@ static bool CLAP_ABI param_text_to_value(clap_plugin_t const* plugin, clap_id pa
 static bool CLAP_ABI param_value_to_text(clap_plugin_t const* plugin, clap_id param_id, double value, char* out_buffer, std::uint32_t out_buffer_capacity);
 
 void 
-plugin_init_params(inf_clap_plugin* plugin)
+plugin_init_params_api(inf_clap_plugin* plugin)
 {
   plugin->params.count = param_count;
   plugin->params.flush = param_flush;
