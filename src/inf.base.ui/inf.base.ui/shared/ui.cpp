@@ -953,7 +953,7 @@ create_ui_size_ui(
       if (0 <= selected_index && selected_index < static_cast<std::int32_t>(size_names.size()))
       {
         controller->set_ui_size(size_names[selected_index]);
-        controller->reload_editor(plugin_editor_width(controller, selected_index));
+        controller->reload_editor(controller->ui_size_to_editor_width(selected_index));
       }
     }, 
     [size_names, controller](juce::ComboBox* combo){
@@ -1038,7 +1038,7 @@ load_preset_file(
       for(std::size_t i = 0; i < size_names.size(); i++)
         if(size_names[i] == controller->get_ui_size())
           size_index = i;
-      controller->reload_editor(plugin_editor_width(controller, static_cast<std::int32_t>(size_index)));
+      controller->reload_editor(controller->ui_size_to_editor_width(static_cast<std::int32_t>(size_index)));
     }
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());

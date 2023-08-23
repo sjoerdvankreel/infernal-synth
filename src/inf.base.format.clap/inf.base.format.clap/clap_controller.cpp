@@ -54,12 +54,6 @@ plugin_init_editor_api(inf_clap_plugin* plugin)
   plugin->editor.get_preferred_api = editor_get_preferred_api;
 }
 
-static void
-get_editor_size(clap_plugin_t const* plugin, std::uint32_t* w, std::uint32_t* h)
-{
-
-}
-
 static bool CLAP_ABI
 editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating)
 {
