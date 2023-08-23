@@ -6,11 +6,19 @@
 #include <inf.base.format.clap/clap_controller.hpp>
 
 #include <clap/clap.h>
+#include <readerwriterqueue.h>
+
 #include <vector>
 #include <cstdint>
 
 namespace inf::base::format::clap
 {
+
+struct audio_to_main_msg
+{
+  std::int32_t index;
+  double value;
+};
 
 struct inf_clap_plugin 
 {
@@ -23,10 +31,11 @@ struct inf_clap_plugin
   std::unique_ptr<topology_info> topology = {};
   std::unique_ptr<audio_processor> processor = {};
   std::unique_ptr<clap_controller> controller = {};
-  // This fully defines the audio_processor and thus the plugin state.
   std::vector<inf::base::param_value> audio_state = {};
-  // Indicates whether any param index changed this block (0/1, since no vector<bool>).
   std::vector<std::int32_t> changed = {};
+
+  // For async main<>audio messaging.
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size> audio_to_main_queue = {};
 };
 
 extern clap_plugin_t const plugin_class;

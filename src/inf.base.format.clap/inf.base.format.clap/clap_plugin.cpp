@@ -140,10 +140,9 @@ plugin_process_events(
       note.velocity = static_cast<float>(event->velocity);
       note.sample_index = static_cast<std::int32_t>(header->time);
     }
-  }
+  }  
 
-  // TODO handle _changed + broadcast ui changes
-  // Discrete automation events - effectively we only pick up the last value.
+  // TODO handle _changed
   for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
   {
     clap_event_header_t const* header = process->in_events->get(process->in_events, e);
@@ -151,6 +150,18 @@ plugin_process_events(
     if (header->type != CLAP_EVENT_PARAM_VALUE) continue; 
     auto event = reinterpret_cast<clap_event_param_value const*>(header);
     auto index = plugin->topology->param_id_to_index[event->param_id];
+
+    // Push stuff to the ui.
+    // Note that we push stuff "ahead of time" but i really
+    // dont want to break into the internal audio loop for this.
+    // Continuous-valued automation streams will still work as expected
+    // (parameters change at exact sample position) just the ui runs a bit ahead.
+    audio_to_main_msg msg;
+    msg.index = index;
+    msg.value = event->value;
+    plugin->audio_to_main_queue.try_enqueue(msg);
+
+    // Discrete automation events - effectively we only pick up the last value.
     if(plugin->topology->params[index].descriptor->data.is_continuous()) continue;
     plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
   }

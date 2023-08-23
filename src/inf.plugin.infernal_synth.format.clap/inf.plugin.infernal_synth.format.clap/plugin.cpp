@@ -34,9 +34,6 @@ features[] = { IPISFCLAP_FEATURE, CLAP_PLUGIN_FEATURE_STEREO, nullptr };
 class synth_clap_controller :
 public inf::base::format::clap::clap_controller
 {
-public:
-  synth_clap_controller(clap_host_t const* host): 
-  clap_controller(host) {}
   std::unique_ptr<root_element> create_ui() override 
   { return create_synth_ui(this); }
   inf::base::editor_properties get_editor_properties() const override 
@@ -60,8 +57,8 @@ clap_plugin_descriptor_t const inf_plugin_descriptor =
   .features = features
 };
 
-std::unique_ptr<clap_controller> create_controller(clap_host_t const* host)
-{ return std::make_unique<synth_clap_controller>(host); }
+std::unique_ptr<clap_controller> create_controller()
+{ return std::make_unique<synth_clap_controller>(); }
 std::unique_ptr<topology_info> create_topology()
 { return std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFCLAP_FX == 0); }
 

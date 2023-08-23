@@ -28,10 +28,11 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
   plugin->klass = plugin_class;
   plugin->klass.plugin_data = plugin;
   plugin->topology = create_topology();
-  plugin->controller = create_controller(plugin->host);
+  plugin->controller = create_controller();
   plugin->changed.resize(plugin->topology->params.size());
   plugin->audio_state.resize(plugin->topology->params.size());
   plugin->topology->init_factory_preset(plugin->audio_state.data());
+  plugin->controller->init(plugin->host, &plugin->audio_to_main_queue);
   plugin_init_params_api(plugin);
   plugin_init_editor_api(plugin);
   return &plugin->klass;

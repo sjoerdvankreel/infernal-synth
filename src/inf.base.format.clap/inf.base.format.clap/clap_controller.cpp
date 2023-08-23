@@ -124,8 +124,17 @@ editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t
 }
 
 clap_controller::
-clap_controller(clap_host_t const* host) : 
-plugin_controller(create_topology()), _host(host) {}
+clap_controller() : 
+plugin_controller(create_topology()) {}
+
+void 
+clap_controller::init(
+  clap_host_t const* host,
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue)
+{
+  _host = host;
+  _audio_to_main_queue = audio_to_main_queue;
+}
 
 void 
 clap_controller::reload_editor(std::int32_t width)
