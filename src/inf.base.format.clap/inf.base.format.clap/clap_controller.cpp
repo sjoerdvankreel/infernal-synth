@@ -86,6 +86,7 @@ editor_hide(clap_plugin_t const* plugin)
 static void CLAP_ABI
 editor_destroy(clap_plugin_t const* plugin)
 {
+  plugin_cast(plugin)->controller->_timer.stopTimer();
   plugin_ui(plugin)->component()->removeFromDesktop();
   plugin_cast(plugin)->controller->plugin_ui.reset();
 }
@@ -111,6 +112,7 @@ editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
   plugin_ui(plugin)->component()->setTopLeftPosition(0, 0);
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
   plugin_ui(plugin)->component()->setVisible(true);
+  plugin_controller(plugin)->_timer.startTimer(1000 / 30);
   return true;
 }
 
@@ -123,9 +125,15 @@ editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t
   return true;
 }
 
+void 
+clap_timer::timerCallback()
+{
+}
+
 clap_controller::
 clap_controller() : 
-plugin_controller(create_topology()) {}
+plugin_controller(create_topology()), 
+_timer(this) {}
 
 void 
 clap_controller::init(

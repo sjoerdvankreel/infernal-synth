@@ -5,11 +5,27 @@
 #include <inf.base.format.clap/clap_support.hpp>
 #include <inf.base/plugin/plugin_controller.hpp>
 
-#include <readerwriterqueue.h>
 #include <clap/clap.h>
+#include <readerwriterqueue.h>
+#include <juce_events/juce_events.h>
+
+// https://nakst.gitlab.io/tutorial/clap-part-1.html
+// https://github.com/surge-synthesizer/clap-saw-demo
+// https://github.com/free-audio/clap-juce-extensions/
 
 namespace inf::base::format::clap 
 {
+
+class clap_controller;
+
+class clap_timer:
+public juce::Timer
+{
+  clap_controller* const _controller;
+public:
+  void timerCallback() override;
+  clap_timer(clap_controller* controller): _controller(controller) {}
+};
 
 struct inf_clap_plugin;
 
@@ -24,6 +40,7 @@ protected:
 
 public:
   // Allow access by clap_plugin_gui_t.
+  clap_timer _timer;
   void* _parent_window = {};
   std::unique_ptr<inf::base::ui::root_element> plugin_ui = {};
   virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;

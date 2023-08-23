@@ -17,6 +17,10 @@
 #pragma warning(disable: 4324)
 #endif // padding warnings
 
+// https://nakst.gitlab.io/tutorial/clap-part-1.html
+// https://github.com/surge-synthesizer/clap-saw-demo
+// https://github.com/free-audio/clap-juce-extensions/
+
 namespace inf::base::format::clap
 {
 
