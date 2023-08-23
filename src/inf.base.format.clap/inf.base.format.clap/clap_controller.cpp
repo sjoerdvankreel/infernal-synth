@@ -94,9 +94,12 @@ static bool CLAP_ABI
 editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 {
   juce::MessageManager::getInstance();
+  auto props = plugin_controller(plugin)->get_editor_properties();
+  plugin_controller(plugin)->editor_current_width(props.min_width);
   plugin_controller(plugin)->plugin_ui = plugin_controller(plugin)->create_ui();
   plugin_ui(plugin)->build();
   plugin_ui(plugin)->layout();
+  plugin_ui(plugin)->component()->setVisible(false);
   plugin_ui(plugin)->component()->setOpaque(true);
   return true;
 }
@@ -104,16 +107,18 @@ editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 static bool CLAP_ABI 
 editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 {
+  plugin_ui(plugin)->component()->setTopLeftPosition(0, 0);
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
+  plugin_ui(plugin)->component()->setVisible(true);
   return true;
 }
 
 static bool CLAP_ABI 
 editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height)
 { 
-  *width = plugin_ui(plugin)->component()->getWidth();
-  *height = plugin_ui(plugin)->component()->getWidth();
-  *width = *height = 1000; // TEMP TODO
+  auto props = plugin_controller(plugin)->get_editor_properties();
+  *width = props.min_width;
+  *height = static_cast<std::int32_t>(std::ceil(props.min_width / props.aspect_ratio));
   return true;
 }
 
