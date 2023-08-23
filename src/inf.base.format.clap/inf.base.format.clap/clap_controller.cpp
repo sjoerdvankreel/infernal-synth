@@ -1,3 +1,4 @@
+#include <inf.base/shared/support.hpp>
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
 #include <inf.base.format.clap/clap_controller.hpp>
@@ -5,6 +6,7 @@
 #include <clap/clap.h>
 #include <filesystem>
 
+using namespace inf::base;
 using namespace inf::base::ui;
 
 namespace inf::base::format::clap
@@ -128,6 +130,13 @@ editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t
 void 
 clap_timer::timerCallback()
 {
+  audio_to_main_msg msg;
+  while (_controller->_audio_to_main_queue->try_dequeue(msg))
+  {
+    std::int32_t id = _controller->topology()->param_index_to_id[msg.index];
+    _controller->state()[msg.index] = format_normalized_to_base(_controller->topology(), true, msg.index, msg.value);
+    _controller->controller_param_changed(id, _controller->state()[msg.index]);
+  }
 }
 
 clap_controller::

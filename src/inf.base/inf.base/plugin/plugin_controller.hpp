@@ -89,17 +89,20 @@ protected:
   { _topology->init_factory_preset(_state.data()); }
 
   void reloaded();
-  void controller_param_changed(std::int32_t tag, param_value base_value);
 
 public:
-  std::map<std::string, std::string>& patch_meta_data();
-  inf::base::param_value const* state() const { return _state.data(); }
+  // Cant be const because clap needs to fiddle in it.
+  inf::base::param_value* state() { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
+  std::map<std::string, std::string>& patch_meta_data();
 
   void init_patch();
   void clear_patch();
   void clear_part(part_id id);
   void copy_or_swap_part(part_id source, std::int32_t target, bool swap);
+
+  // Needs to be public for clap controller.
+  void controller_param_changed(std::int32_t tag, param_value base_value);
 
   virtual void load_component_state(param_value* state) = 0;
   virtual void save_preset(std::string const& path) = 0;

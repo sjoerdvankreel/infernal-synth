@@ -33,7 +33,6 @@ class clap_controller:
 public inf::base::plugin_controller
 {
   clap_host_t const* _host;
-  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* _audio_to_main_queue;
 
 protected:
   clap_controller();
@@ -43,6 +42,8 @@ public:
   clap_timer _timer;
   void* _parent_window = {};
   std::unique_ptr<inf::base::ui::root_element> plugin_ui = {};
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* _audio_to_main_queue;
+
   virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;
 
   void restart() override;
