@@ -131,6 +131,8 @@ public:
   void add_param_listener(std::int32_t param_index, param_listener* listener);
   void remove_param_listener(std::int32_t param_index, param_listener* listener);
 
+  std::pair<std::int32_t, std::int32_t> get_editor_wanted_size();
+  std::int32_t ui_size_to_editor_width(std::int32_t selected_size_index);
   std::int32_t editor_current_width() const { return _editor_width; }
   void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
   

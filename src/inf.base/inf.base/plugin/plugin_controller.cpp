@@ -170,4 +170,27 @@ plugin_controller::factory_presets(std::string const& plugin_file) const
   return result;
 }
 
+std::int32_t 
+plugin_controller::ui_size_to_editor_width(std::int32_t selected_size_index)
+{
+  auto props = get_editor_properties();
+  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(props.ui_size_names.size() - 1));
+  float min_width = static_cast<float>(props.min_width);
+  float max_width = static_cast<float>(props.max_width);
+  float factor = static_cast<float>(selected_size_index) / static_cast<float>(props.ui_size_names.size() - 1);
+  return static_cast<std::int32_t>(min_width + factor * (max_width - min_width));
+}
+
+std::pair<std::int32_t, std::int32_t>
+plugin_controller::get_editor_wanted_size()
+{
+  std::int32_t w = 0;
+  auto props = get_editor_properties();
+  auto found = std::find(props.ui_size_names.begin(), props.ui_size_names.end(), get_ui_size());
+  if (found == props.ui_size_names.end()) w = props.min_width;
+  else w = ui_size_to_editor_width(static_cast<std::int32_t>(found - props.ui_size_names.begin()));
+  std::int32_t h = static_cast<std::int32_t>(std::ceil(w / props.aspect_ratio));
+  return std::make_pair(w, h);
+}
+
 } // namespace inf::base
