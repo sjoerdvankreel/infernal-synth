@@ -105,16 +105,15 @@ static bool CLAP_ABI
 editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 {
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
-  plugin_ui(plugin)->component()->setVisible(true);
   return true;
 }
-
 
 static bool CLAP_ABI 
 editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height)
 { 
   *width = plugin_ui(plugin)->component()->getWidth();
   *height = plugin_ui(plugin)->component()->getWidth();
+  *width = *height = 1000; // TEMP TODO
   return true;
 }
 
