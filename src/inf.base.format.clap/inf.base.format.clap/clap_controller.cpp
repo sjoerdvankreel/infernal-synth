@@ -4,21 +4,27 @@
 
 #include <clap/clap.h>
 
+using namespace inf::base::ui;
+
 namespace inf::base::format::clap
 {
 
-static void CLAP_ABI 
-editor_destroy(clap_plugin_t const* plugin)
-{ plugin_cast(plugin)->controller->plugin_ui.reset(); }
+static clap_controller*
+plugin_controller(clap_plugin_t const* plugin)
+{ return plugin_cast(plugin)->controller.get(); }
+static root_element* 
+plugin_ui(clap_plugin_t const* plugin)
+{ return plugin_controller(plugin)->plugin_ui.get(); }
 
+static bool CLAP_ABI editor_show(clap_plugin_t const* plugin);
+static bool CLAP_ABI editor_hide(clap_plugin_t const* plugin);
 static void CLAP_ABI editor_destroy(clap_plugin_t const* plugin);
 static bool CLAP_ABI editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window);
 static bool CLAP_ABI editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating);
 static bool CLAP_ABI editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_floating); 
+static bool CLAP_ABI editor_get_preferred_api(clap_plugin_t const* plugin, char const** api, bool* is_floating);
 
 static void CLAP_ABI editor_suggest_title(clap_plugin_t const* plugin, char const* title) {}
-static bool CLAP_ABI editor_show(clap_plugin_t const* plugin) { return false; }
-static bool CLAP_ABI editor_hide(clap_plugin_t const* plugin) { return false; }
 static bool CLAP_ABI editor_can_resize(clap_plugin_t const* plugin) { return false; }
 static bool CLAP_ABI editor_set_scale(clap_plugin_t const* plugin, double scale) { return false; }
 static bool CLAP_ABI editor_set_size(clap_plugin_t const* plugin, uint32_t width, uint32_t height) { return false; }
@@ -26,7 +32,6 @@ static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_wind
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
 static bool CLAP_ABI editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t* height) { return false; }
-static bool CLAP_ABI editor_get_preferred_api(clap_plugin_t const* plugin, char const** api, bool* is_floating) { return false; }
 
 void
 plugin_init_editor_api(inf_clap_plugin* plugin)
@@ -55,23 +60,50 @@ editor_is_api_supported(clap_plugin_t const* plugin, char const* api, bool is_fl
   return !strcmp(api, CLAP_WINDOW_API_WIN32);
 }
 
+static bool CLAP_ABI
+editor_get_preferred_api(clap_plugin_t const* plugin, char const** api, bool* is_floating)
+{
+  *is_floating = false;
+  *api = CLAP_WINDOW_API_WIN32;
+  return true;
+}
+
+static bool CLAP_ABI
+editor_show(clap_plugin_t const* plugin)
+{
+  plugin_ui(plugin)->component()->setVisible(true);
+  return true;
+}
+
+static bool CLAP_ABI
+editor_hide(clap_plugin_t const* plugin)
+{
+  plugin_ui(plugin)->component()->setVisible(false);
+  return true;
+}
+
+static void CLAP_ABI
+editor_destroy(clap_plugin_t const* plugin)
+{
+  plugin_ui(plugin)->component()->removeFromDesktop();
+  plugin_cast(plugin)->controller->plugin_ui.reset();
+}
+
 static bool CLAP_ABI 
 editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 {
-  auto inf_plugin = plugin_cast(plugin);
-  inf_plugin->controller->plugin_ui = inf_plugin->controller->create_ui();
-  inf_plugin->controller->plugin_ui->build();
-  inf_plugin->controller->plugin_ui->layout();
-  inf_plugin->controller->plugin_ui->component()->setOpaque(true);
+  plugin_controller(plugin)->plugin_ui = plugin_controller(plugin)->create_ui();
+  plugin_ui(plugin)->build();
+  plugin_ui(plugin)->layout();
+  plugin_ui(plugin)->component()->setOpaque(true);
   return true;
 }
 
 static bool CLAP_ABI 
 editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 {
-  auto inf_plugin = plugin_cast(plugin);
-  inf_plugin->controller->plugin_ui->component()->addToDesktop(0, window->ptr);
-  inf_plugin->controller->plugin_ui->component()->setVisible(true);
+  plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
+  plugin_ui(plugin)->component()->setVisible(true);
   return true;
 }
 

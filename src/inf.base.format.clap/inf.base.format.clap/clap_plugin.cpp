@@ -101,7 +101,7 @@ plugin_get_extension(clap_plugin const* plugin, char const* id)
 {
   if (!strcmp(id, CLAP_EXT_NOTE_PORTS)) return &extension_note_ports;
   if (!strcmp(id, CLAP_EXT_AUDIO_PORTS)) return &extension_audio_ports;
-  if (!strcmp(id, CLAP_EXT_GUI)) &static_cast<inf_clap_plugin*>(plugin->plugin_data)->editor;
+  if (!strcmp(id, CLAP_EXT_GUI)) return &static_cast<inf_clap_plugin*>(plugin->plugin_data)->editor;
   if (!strcmp(id, CLAP_EXT_PARAMS)) return &static_cast<inf_clap_plugin*>(plugin->plugin_data)->params;
   return nullptr;
 }
