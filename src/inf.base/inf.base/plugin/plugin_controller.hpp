@@ -91,8 +91,8 @@ protected:
   void reloaded();
 
 public:
-  // Cant be const because clap needs to fiddle in it.
   inf::base::param_value* state() { return _state.data(); }
+  inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
   std::map<std::string, std::string>& patch_meta_data();
 
