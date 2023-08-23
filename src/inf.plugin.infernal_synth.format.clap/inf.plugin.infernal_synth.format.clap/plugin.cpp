@@ -13,17 +13,30 @@ using namespace inf::base::format::clap;
 using namespace inf::plugin::infernal_synth;
 using namespace inf::plugin::infernal_synth::ui;
 
-static const char* features[] = { 
-  CLAP_PLUGIN_FEATURE_INSTRUMENT, 
-  CLAP_PLUGIN_FEATURE_SYNTHESIZER, 
-  CLAP_PLUGIN_FEATURE_STEREO, nullptr };
+#if IPISFCLAP_FX
+#define IPISFCLAP_NAME IPIS_FX_NAME
+#define IPISFCLAP_UNIQUE_ID_TEXT IPIS_FX_UNIQUE_ID_TEXT
+#define IPISFCLAP_FEATURE CLAP_PLUGIN_FEATURE_AUDIO_EFFECT
+#elif (!IPISFCLAP_FX)
+#define IPISFCLAP_NAME IPIS_INST_NAME
+#define IPISFCLAP_UNIQUE_ID_TEXT IPIS_INST_UNIQUE_ID_TEXT
+#define IPISFCLAP_FEATURE CLAP_PLUGIN_FEATURE_INSTRUMENT
+#else
+#error
+#endif
+
+// Select fx/instrument.
+static const char* 
+features[] = { IPISFCLAP_FEATURE, CLAP_PLUGIN_FEATURE_STEREO, nullptr };
 
 class synth_clap_controller :
 public inf::base::format::clap::clap_controller
 {
 public:
-  std::unique_ptr<root_element> create_ui() override { return create_synth_ui(this); }
-  inf::base::editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
+  std::unique_ptr<root_element> create_ui() override 
+  { return create_synth_ui(this); }
+  inf::base::editor_properties get_editor_properties() const override 
+  { return get_synth_editor_properties(); }
 };
 
 namespace inf::base::format::clap
@@ -32,14 +45,14 @@ namespace inf::base::format::clap
 clap_plugin_descriptor_t const inf_plugin_descriptor = 
 {
   .clap_version = CLAP_VERSION_INIT,
-  .id = "io.github.sjoerdvankreel.infernal_synth" IPIS_INST_UNIQUE_ID_TEXT,
-  .name = IPIS_INST_NAME,
+  .id = "io.github.sjoerdvankreel.infernal_synth" IPISFCLAP_UNIQUE_ID_TEXT,
+  .name = IPISFCLAP_NAME,
   .vendor = IPIS_VENDOR_NAME,
   .url = IPIS_VENDOR_URL,
   .manual_url = IPIS_VENDOR_URL,
   .support_url = IPIS_VENDOR_URL,
   .version = IPIS_VERSION,
-  .description = IPIS_INST_NAME,
+  .description = IPISFCLAP_NAME,
   .features = features
 };
 
