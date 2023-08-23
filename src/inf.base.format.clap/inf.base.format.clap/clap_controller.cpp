@@ -166,14 +166,14 @@ std::string
 clap_controller::themes_folder(std::string const& plugin_file) const
 {
   auto path = std::filesystem::path(plugin_file);
-  return (path / "Themes").string();
+  return (path.parent_path() / "Themes").string();
 }
 
 std::string
 clap_controller::factory_presets_folder(std::string const& plugin_file) const
 {
   auto path = std::filesystem::path(plugin_file);
-  return (path / "Presets").string();
+  return (path.parent_path() / "Presets").string();
 }
 
 std::unique_ptr<host_context_menu> 
