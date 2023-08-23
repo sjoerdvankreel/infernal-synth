@@ -120,4 +120,61 @@ clap_controller::
 clap_controller():
 plugin_controller(create_topology()) {}
 
+void 
+clap_controller::restart()
+{
+}
+
+void 
+clap_controller::save_preset(std::string const& path)
+{
+}
+
+bool 
+clap_controller::load_preset(std::string const& path)
+{
+}
+
+void
+clap_controller::load_component_state(inf::base::param_value* state)
+{
+}
+
+void
+clap_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
+{
+}
+
+void
+clap_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
+{
+}
+
+std::string 
+clap_controller::preset_file_extension()
+{
+  return "isp";
+}
+
+std::string 
+clap_controller::default_theme_path(std::string const& plugin_file) const
+{
+}
+
+std::vector<inf::base::external_resource> 
+clap_controller::themes(std::string const& plugin_file) const
+{
+}
+
+std::unique_ptr<host_context_menu> 
+clap_controller::host_menu_for_param_index(std::int32_t param_index) const
+{
+  return {};
+}
+
+std::vector<inf::base::external_resource> 
+clap_controller::factory_presets(std::string const& plugin_file) const
+{  
+}
+
 } // inf::base::format::clap
