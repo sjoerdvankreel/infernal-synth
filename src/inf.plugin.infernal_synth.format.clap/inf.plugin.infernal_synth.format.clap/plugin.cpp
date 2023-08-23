@@ -8,6 +8,7 @@
 #include <inf.base.format.clap/clap_controller.hpp>
 
 using namespace inf::base;
+using namespace inf::base::ui;
 using namespace inf::base::format::clap;
 using namespace inf::plugin::infernal_synth;
 using namespace inf::plugin::infernal_synth::ui;
@@ -21,6 +22,7 @@ class synth_clap_controller :
 public inf::base::format::clap::clap_controller
 {
 public:
+  std::unique_ptr<root_element> create_ui() override { return create_synth_ui(this); }
   inf::base::editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
 };
 

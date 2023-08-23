@@ -18,6 +18,7 @@ protected:
 public:
   // Allow access by clap_plugin_gui_t.
   std::unique_ptr<inf::base::ui::root_element> plugin_ui = {};
+  virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;
 
   void restart() override {}
   void save_preset(std::string const& path) override {}
