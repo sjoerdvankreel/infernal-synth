@@ -9,6 +9,7 @@ clap_io_stream::write_string(std::string const& val)
   write_int32(static_cast<std::int32_t>(val.size()));
   for (std::size_t i = 0; i < val.size(); i++)
     write(val[i]);
+  return true;
 }
 
 bool 
