@@ -36,6 +36,7 @@
 * somehow fix all the preset files
 * check refreshUIValues
 * re-check both from/to queues
+* do something with max queue size
 
 * bugs
 - PRNG draw relative to sample rate
