@@ -35,6 +35,7 @@
 * re-check both from/to queues
 * do something with max queue size
 * allow vst3 preset loading from the clap plug? - other way around - allow vst3 to save as ISP
+===> make .ispreset file the default, use host wrapper interface to still provide .vstpreset (breaking change)
 
 * bugs
 - PRNG draw relative to sample rate
