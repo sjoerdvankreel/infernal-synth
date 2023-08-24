@@ -153,7 +153,7 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
 {
   juce::File last_directory;
   auto state = new file_box_state;
-  auto filter_match = std::string("*.") + controller->preset_file_extension();
+  auto filter_match = std::string("*.") + controller->plugin_preset_file_extension();
   flags |= FileBrowserComponent::canSelectFiles;
   state->controller = controller;
   state->lnf = lnf_factory(controller);
@@ -884,7 +884,7 @@ create_factory_preset_ui(
       std::int32_t selected_index = dropdown->getSelectedItemIndex();
       if (0 <= selected_index && selected_index < static_cast<std::int32_t>(presets.size()))
       {
-        controller->load_preset(presets[selected_index].path);
+        controller->load_plugin_preset(presets[selected_index].path);
         controller->set_factory_preset(presets[selected_index].name);
       } },  
     [controller, presets](juce::ComboBox* combo) {
@@ -994,10 +994,10 @@ save_preset_file(
   {
     if (result != 0)
     {
-      std::string dot_extension = std::string(".") + state->controller->preset_file_extension();
+      std::string dot_extension = std::string(".") + state->controller->plugin_preset_file_extension();
       auto selected = state->browser->getSelectedFile(0).getFullPathName().toStdString();
       if (!selected.ends_with(dot_extension)) selected += dot_extension;
-      state->controller->save_preset(selected);
+      state->controller->save_plugin_preset(selected);
       show_ok_box(state->controller, "Preset file saved.", lnf_factory(state->controller));
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
@@ -1025,7 +1025,7 @@ load_preset_file(
     if (result != 0)
     {
       auto selected = state->browser->getSelectedFile(0); 
-      if (!state->controller->load_preset(selected.getFullPathName().toStdString()))
+      if (!state->controller->load_plugin_preset(selected.getFullPathName().toStdString()))
         show_ok_box(state->controller, "Could not load preset file.", lnf_factory(state->controller));        
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
