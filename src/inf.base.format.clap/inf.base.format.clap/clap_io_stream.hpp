@@ -41,6 +41,7 @@ public:
   clap_io_stream(std::uint8_t const* data, std::size_t size)
   { _data.insert(_data.begin(), data, data + size); }
 
+  void reset() { _pos = 0; }
   std::size_t size() const { return _data.size(); }
   std::uint8_t const* data() const { return _data.data(); }
 

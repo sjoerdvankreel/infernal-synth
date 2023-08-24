@@ -49,7 +49,7 @@ public:
 
   virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;
 
-  void restart() override;
+  void restart() override {}
   void save_preset(std::string const& path) override;
   bool load_preset(std::string const& path) override;
   void load_component_state(inf::base::param_value* state) override;
