@@ -34,6 +34,8 @@ public inf::base::plugin_controller
 {
   clap_host_t const* _host;
 
+  void do_edit(std::int32_t index, double normalized);
+
 protected:
   clap_controller();
 

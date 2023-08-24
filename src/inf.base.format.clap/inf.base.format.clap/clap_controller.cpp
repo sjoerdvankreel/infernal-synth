@@ -228,17 +228,30 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 void
 clap_controller::editor_param_changed(std::int32_t index, param_value ui_value)
 {
+  auto base_value = topology()->ui_to_base_value(index, ui_value);
+  do_edit(index, base_to_format_normalized(topology(), false, index, base_value));
+}
+
+void 
+clap_controller::do_edit(std::int32_t index, double normalized)
+{
   // TODO gesture stuff
   main_to_audio_msg msg;
   msg.index = index;
-  msg.value = base_to_format_normalized(topology(), false, index, topology()->ui_to_base_value(index, ui_value));
+  msg.value = normalized;
   msg.type = main_to_audio_msg::begin_edit;
   main_to_audio_queue->try_enqueue(msg);
+
+  auto base_value = format_normalized_to_base(_topology.get(), true, index, normalized);
+  _state[index] = base_value;
+  std::int32_t tag = topology()->param_index_to_id[index];
+  controller_param_changed(tag, base_value);
+
   msg.type = main_to_audio_msg::adjust_value;
   main_to_audio_queue->try_enqueue(msg);
   msg.type = main_to_audio_msg::end_edit;
   main_to_audio_queue->try_enqueue(msg);
-  
+
   auto host_params = static_cast<clap_host_params const*>(_host->get_extension(_host, CLAP_EXT_PARAMS));
   host_params->request_flush(_host);
 }
