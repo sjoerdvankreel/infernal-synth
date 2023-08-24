@@ -34,6 +34,7 @@
 * check refreshUIValues
 * re-check both from/to queues
 * do something with max queue size
+* allow vst3 preset loading from the clap plug?
 
 * bugs
 - PRNG draw relative to sample rate
