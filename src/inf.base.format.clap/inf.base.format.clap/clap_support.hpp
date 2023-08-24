@@ -6,8 +6,10 @@
 namespace inf::base::format::clap
 {
 
-// Will this be enough ?
-inline std::int32_t constexpr queue_size = 4096;
+// This is enough to push all of infernal synths parameters
+// around about 10 times for now. But prefer some way to make
+// this dynamic dependent on topology_info.
+inline std::int32_t constexpr queue_size = 16384;
 
 struct audio_to_main_msg
 {
