@@ -102,8 +102,11 @@ public vst_controller
 protected:
   bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
 public:
+  std::string plugin_unique_id() const { return IPISFV3_UNIQUE_ID_TEXT; }
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
+  std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
   editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
+
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };

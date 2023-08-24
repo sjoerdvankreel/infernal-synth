@@ -6,6 +6,7 @@
 #define IPIS_VERSION_MAJOR 1
 #define IPIS_VERSION_MINOR 4
 #define IPIS_VERSION_REVISION 0
+#define IPIS_PRESET_EXTENSION "ispreset"
 #define IPIS_VENDOR_NAME "Sjoerd van Kreel"
 #define IPIS_VENDOR_MAIL "sjoerdvankreel@gmail.com"
 #define IPIS_VENDOR_URL "https://sjoerdvankreel.github.io/infernal-synth"
