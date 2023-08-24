@@ -26,14 +26,13 @@
 * sync on load ui
 * midi
 * choke/end
-* do load/save state
+* do load/save state extension
 * do the gesture thing?
 * do the polyphonic mod stuff
 * host menu
 * somehow fix all the preset files
 * check refreshUIValues
 * re-check both from/to queues
-* do something with max queue size
 * allow vst3 preset loading from the clap plug? - other way around - allow vst3 to save as ISP
 ===> make .ispreset file the default, use host wrapper interface to still provide .vstpreset (breaking change)
 
