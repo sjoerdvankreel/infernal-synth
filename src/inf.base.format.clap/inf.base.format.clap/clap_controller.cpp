@@ -16,8 +16,6 @@ using namespace inf::base::ui;
 namespace inf::base::format::clap
 {
 
-static char clap_file_magic[] = "{CEAE4474-EABA-46C2-B0AF-B44D8F0DC634}";
-
 static clap_controller*
 plugin_controller(clap_plugin_t const* plugin)
 { return plugin_cast(plugin)->controller.get(); }
@@ -233,56 +231,6 @@ clap_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
   double target_norm = base_to_format_normalized(topology(), false, target_index, _state[target_index]);
   do_edit(source_index, target_norm);
   do_edit(target_index, source_norm);
-}
-
-// Preset handling:
-// 1) Clap file magic.
-// 2) Plugin unique id.
-// 3) Processor (plugin) state.
-// 4) Controller (metadata) state.
-// Sort of same as vst3 but without whatever vst's PresetFile class is doing on top of it.
-// TODO work out a way to load .vstpresets without touching the vst sdk.
-
-void
-clap_controller::save_preset(std::string const& path)
-{
-  clap_io_stream stream;
-  if (!stream.write_string(std::string(clap_file_magic))) return;
-  if (!stream.write_string(std::string(inf_plugin_descriptor.id))) return;
-  // This better be in sync with audio thread.
-  if (!stream.save_processor(*topology(), _state.data())) return; 
-  if (!stream.save_controller(*topology(), patch_meta_data())) return;
-
-  // Write preset format to disk.
-  stream.reset();
-  std::ofstream file(path, std::ios::out | std::ios::binary);
-  if (file.bad()) return;
-  file.write(reinterpret_cast<char const*>(stream.data()), stream.size());
-  file.close();
-}
-
-bool
-clap_controller::load_preset(std::string const& path)
-{
-  // Load preset format from disk and parse.
-  std::ifstream file(path, std::ios::binary | std::ios::ate);
-  std::streamsize size = file.tellg();
-  file.seekg(0, std::ios::beg);
-  std::vector<char> buffer = std::vector<char>(size);
-  if (!file.read(buffer.data(), size)) return false;
-
-  std::string val;
-  std::map<std::string, std::string> meta_data;
-  std::vector<base::param_value> audio_state(static_cast<std::size_t>(topology()->input_param_count));
-  clap_io_stream stream(reinterpret_cast<std::uint8_t const*>(buffer.data()), buffer.size());
-  if(!stream.read_string(val) || val != std::string(clap_file_magic)) return false;
-  if(!stream.read_string(val) || val != std::string(inf_plugin_descriptor.id)) return false;
-  if(!stream.load_processor(*topology(), audio_state.data())) return false;
-  if(!stream.load_controller(*topology(), patch_meta_data())) return false;
-
-  // We have everything, start pushing the values.
-  load_component_state(audio_state.data());
-  return true;
 }
 
 void 

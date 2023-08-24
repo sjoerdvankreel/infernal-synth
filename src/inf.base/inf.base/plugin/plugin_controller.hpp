@@ -104,16 +104,24 @@ public:
   // Needs to be public for clap controller.
   void controller_param_changed(std::int32_t tag, param_value base_value);
 
-  virtual void load_component_state(param_value* state) = 0;
-  virtual void save_preset(std::string const& path) = 0;
-  virtual bool load_preset(std::string const& path) = 0;
+  // All plug incarnations with same unique_id can load/save the same files.
+  // Host wrapper plugin format is format dependent (VST3).
+  void save_plugin_preset(std::string const& path);
+  bool load_plugin_preset(std::string const& path);
+  void save_wrapper_preset(std::string const& path);
+  bool load_wrapper_preset(std::string const& path);
+  virtual std::string plugin_unique_id() const = 0;
+  virtual std::string plugin_preset_file_extension() const = 0;
+  virtual std::string wrapper_preset_file_extension() const = 0;
+  virtual std::vector<std::uint8_t> save_wrapper_preset() = 0;
+  virtual bool load_wrapper_preset(std::vector<std::uint8_t> const& data) = 0;
 
+  virtual void load_component_state(param_value* state) = 0;
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
 
   virtual std::string default_theme_name() const = 0;
-  virtual std::string preset_file_extension() const = 0;
   virtual std::string themes_folder(std::string const& plugin_file) const = 0;
   virtual std::string factory_presets_folder(std::string const& plugin_file) const = 0;
 

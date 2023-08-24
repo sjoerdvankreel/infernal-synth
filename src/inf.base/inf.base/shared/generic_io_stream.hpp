@@ -1,5 +1,5 @@
-#ifndef INF_BASE_FORMAT_CLAP_CLAP_IO_STREAM_HPP
-#define INF_BASE_FORMAT_CLAP_CLAP_IO_STREAM_HPP
+#ifndef INF_BASE_GENERIC_IO_STREAM_HPP
+#define INF_BASE_GENERIC_IO_STREAM_HPP
 
 #include <inf.base/shared/io_stream.hpp>
 
@@ -7,12 +7,9 @@
 #include <string>
 #include <cstdint>
 
-namespace inf::base::format::clap {
+namespace inf::base {
 
-// CLAP doesnt have a common/wrapper format like
-// vst3. So we basically dump the raw processor/controller
-// values and tuck them together in controller::load/save_preset.
-class clap_io_stream:
+class generic_io_stream:
 public inf::base::io_stream
 {
 private:
@@ -37,8 +34,8 @@ private:
   }
 
 public:
-  clap_io_stream() {}
-  clap_io_stream(std::uint8_t const* data, std::size_t size)
+  generic_io_stream() {}
+  generic_io_stream(std::uint8_t const* data, std::size_t size)
   { _data.insert(_data.begin(), data, data + size); }
 
   void reset() { _pos = 0; }
@@ -56,5 +53,5 @@ public:
   bool write_uint32(std::uint32_t val) override { return write(val); }
 };
 
-} // namespace inf::base::format::clap
-#endif // INF_BASE_FORMAT_CLAP_CLAP_IO_STREAM_HPP
+} // namespace inf::base
+#endif // INF_BASE_GENERIC_IO_STREAM_HPP
