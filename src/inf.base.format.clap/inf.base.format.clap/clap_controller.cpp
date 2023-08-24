@@ -195,14 +195,10 @@ clap_controller::load_component_state(inf::base::param_value* state)
 {
 }
 
-void
-clap_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
+std::unique_ptr<host_context_menu>
+clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 {
-}
-
-void
-clap_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
-{
+  return {};
 }
 
 std::string
@@ -219,17 +215,31 @@ clap_controller::factory_presets_folder(std::string const& plugin_file) const
   return (path.parent_path() / "Presets").string();
 }
 
-std::unique_ptr<host_context_menu> 
-clap_controller::host_menu_for_param_index(std::int32_t param_index) const
-{
-  return {};
-}
-
 void
 clap_controller::editor_param_changed(std::int32_t index, param_value ui_value)
 {
   auto base_value = topology()->ui_to_base_value(index, ui_value);
   do_edit(index, base_to_format_normalized(topology(), false, index, base_value));
+}
+
+void
+clap_controller::copy_param(std::int32_t source_tag, std::int32_t target_tag)
+{
+  std::int32_t source_index = topology()->param_id_to_index.at(source_tag);
+  std::int32_t target_index = topology()->param_id_to_index.at(target_tag);
+  double source_norm = base_to_format_normalized(topology(), false, source_index, _state[source_index]);
+  do_edit(target_index, source_norm);
+}
+
+void
+clap_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
+{
+  std::int32_t source_index = topology()->param_id_to_index.at(source_tag);
+  std::int32_t target_index = topology()->param_id_to_index.at(target_tag);
+  double source_norm = base_to_format_normalized(topology(), false, source_index, _state[source_index]);
+  double target_norm = base_to_format_normalized(topology(), false, target_index, _state[target_index]);
+  do_edit(source_index, target_norm);
+  do_edit(target_index, source_norm);
 }
 
 void 
