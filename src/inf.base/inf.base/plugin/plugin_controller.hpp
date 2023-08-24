@@ -108,6 +108,8 @@ public:
   // Host wrapper plugin format is format dependent (VST3).
   bool save_plugin_preset(std::string const& path);
   bool load_plugin_preset(std::string const& path);
+  bool save_plugin_preset(std::vector<std::uint8_t>& data);
+  bool load_plugin_preset(std::vector<std::uint8_t> const& data);
   virtual std::string plugin_unique_id() const = 0;
   virtual std::string plugin_preset_file_extension() const = 0;
 

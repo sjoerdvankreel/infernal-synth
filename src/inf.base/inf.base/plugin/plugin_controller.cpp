@@ -200,18 +200,11 @@ plugin_controller::get_editor_wanted_size()
 bool
 plugin_controller::save_plugin_preset(std::string const& path)
 {
-  generic_io_stream stream;
-  if (!stream.write_string(std::string(inf_file_magic))) return false;
-  if (!stream.write_string(std::string(plugin_unique_id()))) return false;
-  // This better be in sync with audio thread.
-  if (!stream.save_processor(*topology(), _state.data())) return false;
-  if (!stream.save_controller(*topology(), patch_meta_data())) return false;
-
-  // Write preset format to disk.
-  stream.reset();
+  std::vector<std::uint8_t> data;
+  if (!save_plugin_preset(data)) return false;
   std::ofstream file(path, std::ios::out | std::ios::binary);
   if (file.bad()) return false;
-  file.write(reinterpret_cast<char const*>(stream.data()), stream.size());
+  file.write(reinterpret_cast<char const*>(data.data()), data.size());
   file.close();
   return true;
 }
@@ -223,21 +216,39 @@ plugin_controller::load_plugin_preset(std::string const& path)
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   std::streamsize size = file.tellg();
   file.seekg(0, std::ios::beg);
-  std::vector<char> buffer = std::vector<char>(size);
-  if (!file.read(buffer.data(), size)) return false;
+  std::vector<std::uint8_t> buffer = std::vector<std::uint8_t>(size);
+  if (!file.read(reinterpret_cast<char*>(buffer.data()), size)) return false;
+  if (!load_plugin_preset(buffer)) return false;
+  return true;
+}
 
+bool 
+plugin_controller::save_plugin_preset(std::vector<std::uint8_t>& data)
+{
+  generic_io_stream stream;
+  if (!stream.write_string(std::string(inf_file_magic))) return false;
+  if (!stream.write_string(std::string(plugin_unique_id()))) return false;
+  // This better be in sync with audio thread.
+  if (!stream.save_processor(*topology(), _state.data())) return false;
+  if (!stream.save_controller(*topology(), patch_meta_data())) return false;
+  stream.reset();
+  data.clear();
+  data.insert(data.begin(), stream.data(), stream.data() + stream.size());
+  return true;
+}
+
+bool 
+plugin_controller::load_plugin_preset(std::vector<std::uint8_t> const& data)
+{
   std::string val;
   std::map<std::string, std::string> meta_data;
   std::vector<base::param_value> audio_state(static_cast<std::size_t>(topology()->input_param_count));
-  generic_io_stream stream(reinterpret_cast<std::uint8_t const*>(buffer.data()), buffer.size());
+  generic_io_stream stream(data.data(), data.size());
   if (!stream.read_string(val) || val != std::string(inf_file_magic)) return false;
   if (!stream.read_string(val) || val != std::string(plugin_unique_id())) return false;
   if (!stream.load_processor(*topology(), audio_state.data())) return false;
   if (!stream.load_controller(*topology(), patch_meta_data())) return false;
-
-  // We have everything, start pushing the values.
   load_component_state(audio_state.data());
-  return true;
 }
 
 } // namespace inf::base
