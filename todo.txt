@@ -24,12 +24,10 @@
 
 - clap 
 * sync on load ui
-* do ui to audio
 * midi
-* do ui extension
 * choke/end
 * do load/save state
-* do the gesture thing
+* do the gesture thing?
 * do the polyphonic mod stuff
 * host menu
 * figure out threading requirements
