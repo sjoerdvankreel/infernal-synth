@@ -30,7 +30,6 @@
 * do the gesture thing?
 * do the polyphonic mod stuff
 * host menu
-* figure out threading requirements
 * somehow fix all the preset files
 * check refreshUIValues
 * re-check both from/to queues
