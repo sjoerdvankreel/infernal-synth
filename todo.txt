@@ -25,6 +25,7 @@
 - please fix the *** flush bug already and/or check bitwig clap version
 
 - clap 
+* fix reaper ispreset load (by drag file)
 * sync on load ui
 * midi
 * output params
