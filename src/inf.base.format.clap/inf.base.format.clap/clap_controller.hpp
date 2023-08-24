@@ -53,8 +53,6 @@ public:
   void load_component_state(inf::base::param_value* state) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
-
-  std::string default_theme_name() const override { return "3D Default"; }
   std::string themes_folder(std::string const& plugin_file) const override;
   std::string factory_presets_folder(std::string const& plugin_file) const override;
 

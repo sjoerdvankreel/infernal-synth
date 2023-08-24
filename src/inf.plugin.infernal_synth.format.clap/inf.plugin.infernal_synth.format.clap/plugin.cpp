@@ -36,6 +36,7 @@ public inf::base::format::clap::clap_controller
 {
   std::string plugin_unique_id() const { return IPISFCLAP_UNIQUE_ID_TEXT; }
   std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
+  std::string default_theme_name() const override { return IPIS_DEFAULT_THEME_NAME; }
   std::unique_ptr<root_element> create_ui() override { return create_synth_ui(this); }
   inf::base::editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
 };

@@ -16,6 +16,7 @@
 - NEEDS PLUG RESCAN!
 - made cakewalk demo
 - drop generic build (=breaking change!)
+- changed preset format (=breaking change!)
 
 * todo this version
 - check the linux dist output
@@ -30,7 +31,6 @@
 * do the gesture thing?
 * do the polyphonic mod stuff
 * host menu
-* somehow fix all the preset files
 * check refreshUIValues
 * re-check both from/to queues
 * allow vst3 preset loading from the clap plug? - other way around - allow vst3 to save as ISP
