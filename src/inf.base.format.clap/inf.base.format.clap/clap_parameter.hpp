@@ -5,6 +5,7 @@ namespace inf::base::format::clap
 {
 
 struct inf_clap_plugin;
+void plugin_init_state_api(inf_clap_plugin* plugin);
 void plugin_init_params_api(inf_clap_plugin* plugin);
 
 } // inf::base::format::clap

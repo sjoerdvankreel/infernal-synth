@@ -11,6 +11,9 @@
 namespace inf::base::format::clap
 {
 
+static bool CLAP_ABI state_save(clap_plugin_t const* plugin, clap_ostream_t const* stream);
+static bool CLAP_ABI state_load(clap_plugin_t const* plugin, clap_istream_t const* stream);
+
 static std::uint32_t CLAP_ABI param_count(clap_plugin_t const* plugin);
 static bool CLAP_ABI param_get_value(clap_plugin_t const* plugin, clap_id param_id, double* out_value);
 static bool CLAP_ABI param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_param_info_t* param_info);
@@ -18,7 +21,14 @@ static void CLAP_ABI param_flush(clap_plugin_t const* plugin, clap_input_events_
 static bool CLAP_ABI param_text_to_value(clap_plugin_t const* plugin, clap_id param_id, char const* param_value_text, double* out_value);
 static bool CLAP_ABI param_value_to_text(clap_plugin_t const* plugin, clap_id param_id, double value, char* out_buffer, std::uint32_t out_buffer_capacity);
 
-void 
+void
+plugin_init_state_api(inf_clap_plugin* plugin)
+{
+  plugin->state.load = state_load;
+  plugin->state.save = state_save;
+}
+
+void
 plugin_init_params_api(inf_clap_plugin* plugin)
 {
   plugin->params.count = param_count;
@@ -27,6 +37,18 @@ plugin_init_params_api(inf_clap_plugin* plugin)
   plugin->params.get_value = param_get_value;
   plugin->params.text_to_value = param_text_to_value;
   plugin->params.value_to_text = param_value_to_text;
+}
+
+static bool CLAP_ABI 
+state_save(clap_plugin_t const* plugin, clap_ostream_t const* stream)
+{
+
+}
+
+static bool CLAP_ABI 
+state_load(clap_plugin_t const* plugin, clap_istream_t const* stream)
+{
+
 }
 
 static clap_param_info_flags

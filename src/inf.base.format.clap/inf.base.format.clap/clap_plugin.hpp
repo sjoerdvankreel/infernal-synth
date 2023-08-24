@@ -26,10 +26,14 @@ namespace inf::base::format::clap
 
 struct inf_clap_plugin 
 {
+  // do the manual vtable stuff
 	clap_plugin_t klass = {};
 	clap_host_t const* host = {};
   clap_plugin_gui_t editor = {};
+  clap_plugin_state_t state = {};
   clap_plugin_params_t params = {};
+
+  // binding to inf::base
 	float sample_rate = {};
   std::int32_t max_sample_count = {};
   std::unique_ptr<topology_info> topology = {};
@@ -38,7 +42,7 @@ struct inf_clap_plugin
   std::vector<inf::base::param_value> audio_state = {};
   std::vector<std::int32_t> changed = {};
 
-  // For async main<>audio messaging.
+  // For async main <-> audio messaging.
   moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size> audio_to_main_queue;
   moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size> main_to_audio_queue;
   inf_clap_plugin(): audio_to_main_queue(queue_size), main_to_audio_queue(queue_size) {}
