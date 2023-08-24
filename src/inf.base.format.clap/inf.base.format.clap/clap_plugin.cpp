@@ -125,6 +125,9 @@ plugin_process_events(
   inf_clap_plugin* plugin, clap_process_t const* process, 
   block_input& input, std::int32_t max_note_events)
 {
+  bool ok;
+  (void)ok;
+
   // Note events.
   for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
   {
@@ -159,7 +162,8 @@ plugin_process_events(
     audio_to_main_msg msg;
     msg.index = index;
     msg.value = event->value;
-    plugin->audio_to_main_queue.try_enqueue(msg);
+    ok = plugin->audio_to_main_queue.try_enqueue(msg);
+    assert(ok);
 
     // Discrete automation events - effectively we only pick up the last value.
     if(plugin->topology->params[index].descriptor->data.is_continuous()) continue;
