@@ -135,7 +135,7 @@ param_flush(
   clap_output_events_t const* out)
 {
   auto inf_plugin = plugin_cast(plugin);
-  for (auto i = 0; i < in->size(in); i++)
+  for (std::uint32_t i = 0; i < in->size(in); i++)
   {    
     auto header = in->get(in, i);
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;

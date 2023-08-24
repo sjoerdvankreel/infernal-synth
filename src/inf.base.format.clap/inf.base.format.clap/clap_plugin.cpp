@@ -221,7 +221,10 @@ inf_clap_plugin::process_ui_queue(clap_output_events_t const* ov)
       evt.header.space_id = CLAP_CORE_EVENT_SPACE_ID;
       evt.header.size = sizeof(clap_event_param_gesture);
       evt.param_id = topology->param_index_to_id[msg.index];
-      evt.header.type = (msg.type == main_to_audio_msg::begin_edit ? CLAP_EVENT_PARAM_GESTURE_BEGIN : CLAP_EVENT_PARAM_GESTURE_END);
+      evt.header.type = static_cast<std::uint16_t>(
+        msg.type == main_to_audio_msg::begin_edit 
+        ? CLAP_EVENT_PARAM_GESTURE_BEGIN 
+        : CLAP_EVENT_PARAM_GESTURE_END);
       ov->try_push(ov, &evt.header);
       break;
     }
