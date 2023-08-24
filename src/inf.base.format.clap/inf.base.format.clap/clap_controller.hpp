@@ -51,15 +51,12 @@ public:
 
   void restart() override {}
   void load_component_state(inf::base::param_value* state) override;
-  bool save_wrapper_preset(std::vector<std::uint8_t>& data) override;
-  bool load_wrapper_preset(std::vector<std::uint8_t> const& data) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override;
 
   std::string default_theme_name() const override { return "3D Default"; }
   std::string themes_folder(std::string const& plugin_file) const override;
   std::string factory_presets_folder(std::string const& plugin_file) const override;
-  std::string wrapper_preset_file_extension() const override { return plugin_preset_file_extension(); }
 
   void reload_editor(std::int32_t width) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;

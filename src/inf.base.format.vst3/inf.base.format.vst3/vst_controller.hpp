@@ -52,10 +52,6 @@ public:
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
 
   void restart() override;
-  bool save_wrapper_preset(std::vector<std::uint8_t>& data) override;
-  bool load_wrapper_preset(std::vector<std::uint8_t> const& data) override;
-  std::string wrapper_preset_file_extension() const override { return "vstpreset"; }
-
   void load_component_state(inf::base::param_value* state) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;
   void copy_param(std::int32_t source_tag, std::int32_t target_tag) override 

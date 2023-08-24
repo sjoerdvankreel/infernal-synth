@@ -197,29 +197,6 @@ plugin_controller::get_editor_wanted_size()
   return std::make_pair(w, h);
 }
 
-bool 
-plugin_controller::save_wrapper_preset(std::string const& path)
-{
-  std::vector<std::uint8_t> data;
-  if(!save_wrapper_preset(data)) return false;
-  std::ofstream file(path, std::ios::out | std::ios::binary);
-  if (file.bad()) return false;
-  file.write(reinterpret_cast<char const*>(data.data()), data.size());
-  file.close();
-  return true;
-}
-
-bool 
-plugin_controller::load_wrapper_preset(std::string const& path)
-{
-  std::ifstream file(path, std::ios::binary | std::ios::ate);
-  std::streamsize size = file.tellg();
-  file.seekg(0, std::ios::beg);
-  std::vector<std::uint8_t> buffer(size);
-  if (!file.read(reinterpret_cast<char*>(buffer.data()), size)) return false;
-  return load_wrapper_preset(buffer);
-}
-
 bool
 plugin_controller::save_plugin_preset(std::string const& path)
 {

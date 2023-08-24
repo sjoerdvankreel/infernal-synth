@@ -245,54 +245,6 @@ vst_controller::initialize(FUnknown* context)
   return kResultTrue;
 }
 
-// See PresetFile::loadPreset. We load processor (component) state
-// from stream into controller, then flush params to processor.
-bool
-vst_controller::load_wrapper_preset(std::vector<std::uint8_t> const& data)
-{
-  // Load preset format from disk and parse.
-  MemoryStream memory(const_cast<std::uint8_t*>(data.data()), data.size());
-  PresetFile preset(&memory);  
-  if (!preset.readChunkList()) return false;
-  if (preset.getClassID() != _processor_id) return false;
-
-  // Load controller and processor state. 
-  // Controller state is optional, older file format versions dont have it.
-  if(preset.seekToControllerState())
-    if(setState(&memory) != kResultOk) return false;
-  if (!preset.seekToComponentState()) return false;
-  return set_component_state(&memory) == kResultOk;
-}
-
-// Save using full vstpreset headers. See PresetFile::savePreset. 
-// Treat controller state as processor state.
-bool
-vst_controller::save_wrapper_preset(std::vector<std::uint8_t>& data)
-{
-  // Dump processor state.
-  MemoryStream processor_state;
-  IBStreamer processor_streamer(&processor_state, kLittleEndian);
-  vst_io_stream processor_stream(&processor_streamer);
-  if (!processor_stream.save_processor(*_topology, _state.data())) return false;
-  if (processor_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return false;
-
-  // Dump controller state.
-  MemoryStream controller_state;
-  IBStreamer controller_streamer(&controller_state, kLittleEndian);
-  vst_io_stream controller_stream(&controller_streamer);
-  if (!controller_stream.save_controller(*_topology, patch_meta_data())) return false;
-  if (controller_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return false;
-
-  // Dump both plus metadata to preset format.
-  MemoryStream preset_state;
-  if (!PresetFile::savePreset(&preset_state, _processor_id, &processor_state, &controller_state)) return false;
-  if (preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return false;
-
-  // Write preset format to memory.
-  if (preset_state.read(data.data(), preset_state.getSize(), nullptr) != kResultTrue) return false;
-  return true;
-}
-
 std::unique_ptr<host_context_menu>
 vst_controller::host_menu_for_param_index(std::int32_t param_index) const
 {
