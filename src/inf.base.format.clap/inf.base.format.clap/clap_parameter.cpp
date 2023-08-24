@@ -52,7 +52,7 @@ static bool CLAP_ABI
 state_load(clap_plugin_t const* plugin, clap_istream_t const* stream)
 {
   std::vector<std::uint8_t> data;
-  if(stream->read(stream, data.data(), data.size() == -1)) return false;
+  if(stream->read(stream, data.data(), data.size()) == -1) return false;
   if(!plugin_cast(plugin)->controller->load_plugin_preset(data)) return false;
   return true;
 }
