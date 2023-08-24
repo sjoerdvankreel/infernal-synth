@@ -134,6 +134,9 @@ param_flush(
   clap_input_events_t const* in,
   clap_output_events_t const* out)
 {
+  bool ok;
+  (void)ok;
+
   auto inf_plugin = plugin_cast(plugin);
   for (std::uint32_t i = 0; i < in->size(in); i++)
   {    
@@ -149,7 +152,8 @@ param_flush(
     audio_to_main_msg msg;
     msg.index = index;
     msg.value = event->value;
-    inf_plugin->audio_to_main_queue.try_enqueue(msg);
+    ok = inf_plugin->audio_to_main_queue.try_enqueue(msg);
+    assert(ok);
   }
 
   inf_plugin->process_ui_queue(out);
