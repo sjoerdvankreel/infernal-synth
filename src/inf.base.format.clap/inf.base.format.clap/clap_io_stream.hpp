@@ -21,7 +21,7 @@ private:
   
   template <class T> bool read(T& val)
   {
-    if(_pos + sizeof(T) >= _data.size()) return false;
+    if(_pos + sizeof(T) > _data.size()) return false;
     val = *reinterpret_cast<T*>(_data.data() + _pos);
     _pos += sizeof(T);
     return true;
