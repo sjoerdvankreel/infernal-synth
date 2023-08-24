@@ -44,15 +44,23 @@ state_save(clap_plugin_t const* plugin, clap_ostream_t const* stream)
 {
   std::vector<std::uint8_t> data;
   if(!plugin_cast(plugin)->controller->save_plugin_preset(data)) return false;
-  if(stream->write(stream, data.data(), data.size()) == -1) return false;
+  for(std::size_t i = 0; i < data.size(); i++)
+    if(stream->write(stream, &data[i], 1) != 1) return false;
   return true;
 }
 
 static bool CLAP_ABI 
 state_load(clap_plugin_t const* plugin, clap_istream_t const* stream)
 {
+  std::uint8_t byte;
   std::vector<std::uint8_t> data;
-  if(stream->read(stream, data.data(), data.size()) == -1) return false;
+  while (true)
+  {
+    auto result = stream->read(stream, &byte, 1);
+    if(result == 0) break;
+    if(result < 0) return false;
+    data.push_back(byte);
+  }
   if(!plugin_cast(plugin)->controller->load_plugin_preset(data)) return false;
   return true;
 }
