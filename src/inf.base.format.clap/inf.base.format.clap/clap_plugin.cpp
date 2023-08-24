@@ -192,6 +192,7 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
 
   auto inf_plugin = plugin_cast(plugin);
+  inf_plugin->process_ui_queue(process->out_events);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
   plugin_process_events(inf_plugin, process, input, inf_plugin->topology->max_note_events);
 
@@ -202,6 +203,42 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 
   inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
   return CLAP_PROCESS_CONTINUE;
+}
+
+void
+inf_clap_plugin::process_ui_queue(clap_output_events_t const* ov)
+{
+  main_to_audio_msg msg;
+  while (main_to_audio_queue.try_dequeue(msg))
+    switch (msg.type)
+    {
+    case main_to_audio_msg::begin_edit:
+    case main_to_audio_msg::end_edit:
+    {
+      auto evt = clap_event_param_gesture();
+      evt.header.time = 0;
+      evt.header.flags = 0;
+      evt.header.space_id = CLAP_CORE_EVENT_SPACE_ID;
+      evt.header.size = sizeof(clap_event_param_gesture);
+      evt.param_id = topology->param_index_to_id[msg.index];
+      evt.header.type = (msg.type == main_to_audio_msg::begin_edit ? CLAP_EVENT_PARAM_GESTURE_BEGIN : CLAP_EVENT_PARAM_GESTURE_END);
+      ov->try_push(ov, &evt.header);
+      break;
+    }
+    case main_to_audio_msg::adjust_value:
+    {
+      audio_state[msg.index] = format_normalized_to_base(topology.get(), false, msg.index, msg.value);
+      auto evt = clap_event_param_value();
+      evt.header.time = 0;
+      evt.header.flags = 0;
+      evt.value = msg.value;
+      evt.header.type = CLAP_EVENT_PARAM_VALUE;
+      evt.header.space_id = CLAP_CORE_EVENT_SPACE_ID;
+      evt.header.size = sizeof(clap_event_param_value);
+      evt.param_id = topology->param_index_to_id[msg.index];
+      ov->try_push(ov, &(evt.header));
+    }
+    }
 }
 
 } // inf::base::format::clap

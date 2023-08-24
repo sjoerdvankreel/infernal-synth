@@ -134,7 +134,25 @@ param_flush(
   clap_input_events_t const* in,
   clap_output_events_t const* out)
 {
-  // TODO limited version of same stuff as process() call
+  auto inf_plugin = plugin_cast(plugin);
+  for (auto i = 0; i < in->size(in); i++)
+  {    
+    auto header = in->get(in, i);
+    if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
+    if (header->type != CLAP_EVENT_PARAM_VALUE) continue;
+
+    // Same as in the process() call, but without the discrete/continuous distinction.
+    auto event = reinterpret_cast<clap_event_param_value const*>(header);
+    auto index = inf_plugin->topology->param_id_to_index[event->param_id];
+    inf_plugin->audio_state[index] = format_normalized_to_base(inf_plugin->topology.get(), false, index, event->value);
+
+    audio_to_main_msg msg;
+    msg.index = index;
+    msg.value = event->value;
+    inf_plugin->audio_to_main_queue.try_enqueue(msg);
+  }
+
+  inf_plugin->process_ui_queue(out);
 }
 
 } // inf::base::format::clap

@@ -15,5 +15,12 @@ struct audio_to_main_msg
   double value;
 };
 
+struct main_to_audio_msg
+{
+  std::int32_t index;
+  enum { begin_edit, end_edit, adjust_value } type;
+  double value;
+};
+
 } // inf::base::format::clap
 #endif // INF_BASE_FORMAT_CLAP_CLAP_SUPPORT_HPP

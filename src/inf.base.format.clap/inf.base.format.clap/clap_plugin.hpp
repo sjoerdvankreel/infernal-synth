@@ -40,7 +40,10 @@ struct inf_clap_plugin
 
   // For async main<>audio messaging.
   moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size> audio_to_main_queue;
-  inf_clap_plugin(): audio_to_main_queue() {}
+  moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size> main_to_audio_queue;
+  inf_clap_plugin(): audio_to_main_queue(), main_to_audio_queue() {}
+
+  void process_ui_queue(clap_output_events_t const* ov);
 };
 
 extern clap_plugin_t const plugin_class;

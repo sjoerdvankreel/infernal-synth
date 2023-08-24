@@ -88,7 +88,7 @@ editor_hide(clap_plugin_t const* plugin)
 static void CLAP_ABI
 editor_destroy(clap_plugin_t const* plugin)
 {
-  plugin_cast(plugin)->controller->_timer.stopTimer();
+  plugin_cast(plugin)->controller->timer.stopTimer();
   plugin_ui(plugin)->component()->removeFromDesktop();
   plugin_cast(plugin)->controller->plugin_ui.reset();
 }
@@ -110,11 +110,11 @@ editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 static bool CLAP_ABI 
 editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
 {
-  plugin_controller(plugin)->_parent_window = window->ptr;
+  plugin_controller(plugin)->parent_window = window->ptr;
   plugin_ui(plugin)->component()->setTopLeftPosition(0, 0);
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
   plugin_ui(plugin)->component()->setVisible(true);
-  plugin_controller(plugin)->_timer.startTimer(1000 / 30);
+  plugin_controller(plugin)->timer.startTimer(1000 / 30);
   return true;
 }
 
@@ -131,10 +131,10 @@ void
 clap_timer::timerCallback()
 {
   audio_to_main_msg msg;
-  while (_controller->_audio_to_main_queue->try_dequeue(msg))
+  while (_controller->audio_to_main_queue->try_dequeue(msg))
   {
     std::int32_t id = _controller->topology()->param_index_to_id[msg.index];
-    _controller->state()[msg.index] = format_normalized_to_base(_controller->topology(), true, msg.index, msg.value);
+    _controller->state()[msg.index] = format_normalized_to_base(_controller->topology(), false, msg.index, msg.value);
     _controller->controller_param_changed(id, _controller->state()[msg.index]);
   }
 }
@@ -142,15 +142,17 @@ clap_timer::timerCallback()
 clap_controller::
 clap_controller() : 
 plugin_controller(create_topology()), 
-_timer(this) {}
+timer(this) {}
 
 void 
 clap_controller::init(
   clap_host_t const* host,
-  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue)
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue,
+  moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size>* main_to_audio_queue)
 {
   _host = host;
-  _audio_to_main_queue = audio_to_main_queue;
+  this->audio_to_main_queue = audio_to_main_queue;
+  this->main_to_audio_queue = main_to_audio_queue;
 }
 
 void 
@@ -168,13 +170,8 @@ clap_controller::reload_editor(std::int32_t width)
   plugin_ui->component()->setVisible(false);
   plugin_ui->component()->setOpaque(true);
   plugin_ui->component()->setTopLeftPosition(0, 0);
-  plugin_ui->component()->addToDesktop(0, _parent_window);
+  plugin_ui->component()->addToDesktop(0, parent_window);
   plugin_ui->component()->setVisible(true);
-}
-
-void 
-clap_controller::editor_param_changed(std::int32_t index, param_value ui_value)
-{
 }
 
 void 
@@ -226,6 +223,24 @@ std::unique_ptr<host_context_menu>
 clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 {
   return {};
+}
+
+void
+clap_controller::editor_param_changed(std::int32_t index, param_value ui_value)
+{
+  // TODO gesture stuff
+  main_to_audio_msg msg;
+  msg.index = index;
+  msg.value = base_to_format_normalized(topology(), false, index, topology()->ui_to_base_value(index, ui_value));
+  msg.type = main_to_audio_msg::begin_edit;
+  main_to_audio_queue->try_enqueue(msg);
+  msg.type = main_to_audio_msg::adjust_value;
+  main_to_audio_queue->try_enqueue(msg);
+  msg.type = main_to_audio_msg::end_edit;
+  main_to_audio_queue->try_enqueue(msg);
+  
+  auto host_params = static_cast<clap_host_params const*>(_host->get_extension(_host, CLAP_EXT_PARAMS));
+  host_params->request_flush(_host);
 }
 
 } // inf::base::format::clap

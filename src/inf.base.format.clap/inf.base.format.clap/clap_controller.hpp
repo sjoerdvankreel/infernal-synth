@@ -39,10 +39,11 @@ protected:
 
 public:
   // Allow access by clap_plugin_gui_t.
-  clap_timer _timer;
-  void* _parent_window = {};
+  clap_timer timer;
+  void* parent_window = {};
   std::unique_ptr<inf::base::ui::root_element> plugin_ui = {};
-  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* _audio_to_main_queue;
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue = {};
+  moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size>* main_to_audio_queue = {};
 
   virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;
 
@@ -61,9 +62,12 @@ public:
   void reload_editor(std::int32_t width) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
   std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const override;
-
   void* current_editor_window() const override { return plugin_ui.get() ? plugin_ui->component() : nullptr; }
-  void init(clap_host_t const* host, moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue);
+
+  void init(
+    clap_host_t const* host, 
+    moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue,
+    moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size>* main_to_audio_queue);
 };
 
 void

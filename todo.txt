@@ -34,6 +34,8 @@
 * host menu
 * figure out threading requirements
 * somehow fix all the preset files
+* check refreshUIValues
+* re-check both from/to queues
 
 * bugs
 - PRNG draw relative to sample rate
