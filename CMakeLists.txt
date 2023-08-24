@@ -184,7 +184,7 @@ source_group(TREE "../../${INF_PLUGIN_INFERNAL_SYNTH_UI_SRC_DIR}" FILES ${INF_PL
 endif()
 
 # Inf plugin infernal synth format vst3fx and vst3i.
-function(declare_inf_plugin_infernal_synth_format_vst3 target_name target_type preset_type is_fx target_suffix preset_suffix)
+function(declare_inf_plugin_infernal_synth_format_vst3 target_name target_type is_fx target_suffix preset_suffix)
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR "src/inf.plugin.infernal_synth.format.vst3")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC_DIR}/*.*")
 add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_VST3_SRC})
@@ -197,7 +197,7 @@ target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plu
   infernal.base.ui infernal.base lib.vst3sdk lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
 add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
   "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Themes")
-add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_type}/${preset_suffix}
+add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_suffix}
   "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}${INFERNAL_VERSION}.vst3/Contents/Resources/Presets")
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".vst3")
@@ -211,15 +211,15 @@ set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
 endif()
 endfunction()
 if (MSVC)
-declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i win-vst3 vst3 0 "" "Instrument")
-declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx win-vst3 vst3 1 "FX" "FX")
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i win-vst3 0 "" "Instrument")
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx win-vst3 1 "FX" "FX")
 else ()
-declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i linux-vst3 vst3 0 "" "Instrument")
-declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx linux-vst3 vst3 1 "FX" "FX")
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3i linux-vst3 0 "" "Instrument")
+declare_inf_plugin_infernal_synth_format_vst3(infernal.plugin.infernal_synth.format.vst3fx linux-vst3 1 "FX" "FX")
 endif ()
 
 # Inf plugin infernal synth format clapfx and clapi.
-function(declare_inf_plugin_infernal_synth_format_clap target_name target_type preset_type is_fx target_suffix preset_suffix)
+function(declare_inf_plugin_infernal_synth_format_clap target_name target_type is_fx target_suffix preset_suffix)
 set(INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR "src/inf.plugin.infernal_synth.format.clap")
 file(GLOB_RECURSE INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC "${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC_DIR}/*.*")
 add_library(${target_name} SHARED ${INF_PLUGIN_INFERNAL_SYNTH_FORMAT_CLAP_SRC})
@@ -232,7 +232,7 @@ target_link_libraries(${target_name} infernal.plugin.infernal_synth infernal.plu
   infernal.base.ui infernal.base lib.juce.gui_basics lib.juce.graphics lib.juce.events lib.juce.data_structures lib.juce.core)
 add_custom_target(${target_name}-copy-themes ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/themes
   "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}${INFERNAL_VERSION}/Themes")
-add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_type}/${preset_suffix}
+add_custom_target(${target_name}-copy-presets ALL DEPENDS ${target_name} COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/presets/${preset_suffix}
   "${PROJECT_SOURCE_DIR}/dist/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target_type}/InfernalSynth/InfernalSynth${target_suffix}${INFERNAL_VERSION}/Presets")
 if (MSVC)
 set_target_properties(${target_name} PROPERTIES SUFFIX ".clap")
@@ -246,9 +246,9 @@ set_target_properties(${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
 endif()
 endfunction()
 if (MSVC)
-declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapi win-clap clap 0 "" "Instrument")
-declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapfx win-clap clap 1 "FX" "FX")
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapi win-clap 0 "" "Instrument")
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapfx win-clap 1 "FX" "FX")
 else ()
-declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapi linux-clap clap 0 "" "Instrument")
-declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapfx linux-clap clap 1 "FX" "FX")
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapi linux-clap 0 "" "Instrument")
+declare_inf_plugin_infernal_synth_format_clap(infernal.plugin.infernal_synth.format.clapfx linux-clap 1 "FX" "FX")
 endif ()
