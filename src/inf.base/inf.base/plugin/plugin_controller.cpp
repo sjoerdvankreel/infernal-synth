@@ -197,14 +197,16 @@ plugin_controller::get_editor_wanted_size()
   return std::make_pair(w, h);
 }
 
-void 
+bool 
 plugin_controller::save_wrapper_preset(std::string const& path)
 {
-  std::vector<std::uint8_t> data(save_wrapper_preset());
+  std::vector<std::uint8_t> data;
+  if(!save_wrapper_preset(data)) return false;
   std::ofstream file(path, std::ios::out | std::ios::binary);
-  if (file.bad()) return;
+  if (file.bad()) return false;
   file.write(reinterpret_cast<char const*>(data.data()), data.size());
   file.close();
+  return true;
 }
 
 bool 
@@ -218,22 +220,23 @@ plugin_controller::load_wrapper_preset(std::string const& path)
   return load_wrapper_preset(buffer);
 }
 
-void
+bool
 plugin_controller::save_plugin_preset(std::string const& path)
 {
   generic_io_stream stream;
-  if (!stream.write_string(std::string(inf_file_magic))) return;
-  if (!stream.write_string(std::string(plugin_unique_id()))) return;
+  if (!stream.write_string(std::string(inf_file_magic))) return false;
+  if (!stream.write_string(std::string(plugin_unique_id()))) return false;
   // This better be in sync with audio thread.
-  if (!stream.save_processor(*topology(), _state.data())) return;
-  if (!stream.save_controller(*topology(), patch_meta_data())) return;
+  if (!stream.save_processor(*topology(), _state.data())) return false;
+  if (!stream.save_controller(*topology(), patch_meta_data())) return false;
 
   // Write preset format to disk.
   stream.reset();
   std::ofstream file(path, std::ios::out | std::ios::binary);
-  if (file.bad()) return;
+  if (file.bad()) return false;
   file.write(reinterpret_cast<char const*>(stream.data()), stream.size());
   file.close();
+  return true;
 }
 
 bool

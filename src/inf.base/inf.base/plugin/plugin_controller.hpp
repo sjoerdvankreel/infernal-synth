@@ -106,14 +106,14 @@ public:
 
   // All plug incarnations with same unique_id can load/save the same files.
   // Host wrapper plugin format is format dependent (VST3).
-  void save_plugin_preset(std::string const& path);
+  bool save_plugin_preset(std::string const& path);
   bool load_plugin_preset(std::string const& path);
-  void save_wrapper_preset(std::string const& path);
+  bool save_wrapper_preset(std::string const& path);
   bool load_wrapper_preset(std::string const& path);
   virtual std::string plugin_unique_id() const = 0;
   virtual std::string plugin_preset_file_extension() const = 0;
   virtual std::string wrapper_preset_file_extension() const = 0;
-  virtual std::vector<std::uint8_t> save_wrapper_preset() = 0;
+  virtual bool save_wrapper_preset(std::vector<std::uint8_t>& data) = 0;
   virtual bool load_wrapper_preset(std::vector<std::uint8_t> const& data) = 0;
 
   virtual void load_component_state(param_value* state) = 0;

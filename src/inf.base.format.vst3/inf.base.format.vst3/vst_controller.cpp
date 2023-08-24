@@ -249,15 +249,10 @@ vst_controller::initialize(FUnknown* context)
 // See PresetFile::loadPreset. We load processor (component) state
 // from stream into controller, then flush params to processor.
 bool
-vst_controller::load_preset(std::string const& path)
+vst_controller::load_wrapper_preset(std::vector<std::uint8_t> const& data)
 {
   // Load preset format from disk and parse.
-  std::ifstream file(path, std::ios::binary | std::ios::ate);
-  std::streamsize size = file.tellg();
-  file.seekg(0, std::ios::beg);
-  std::vector<char> buffer = std::vector<char>(size);
-  if (!file.read(buffer.data(), size)) return false;
-  MemoryStream memory(buffer.data(), buffer.size());
+  MemoryStream memory(const_cast<std::uint8_t*>(data.data()), data.size());
   PresetFile preset(&memory);  
   if (!preset.readChunkList()) return false;
   if (preset.getClassID() != _processor_id) return false;
@@ -272,8 +267,8 @@ vst_controller::load_preset(std::string const& path)
 
 // Save using full vstpreset headers. See PresetFile::savePreset. 
 // Treat controller state as processor state.
-void
-vst_controller::save_preset(std::string const& path)
+std::vector<std::uint8_t>
+vst_controller::save_wrapper_preset()
 {
   // Dump processor state.
   MemoryStream processor_state;
@@ -295,7 +290,7 @@ vst_controller::save_preset(std::string const& path)
   if (preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
 
   // Write preset format to disk.
-  std::vector<char> contents(static_cast<std::size_t>(preset_state.getSize()), '0');
+  std::vector<std::uint8_t> contents(static_cast<std::size_t>(preset_state.getSize()), 0);
   if (preset_state.read(contents.data(), preset_state.getSize(), nullptr) != kResultTrue) return;
   std::ofstream file(path, std::ios::out | std::ios::binary);
   if (file.bad()) return;
