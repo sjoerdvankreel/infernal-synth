@@ -22,6 +22,7 @@
 - check the linux dist output
 - check the links for demo project
 - document new dependencies
+- please fix the *** flush bug already
 
 - clap 
 * sync on load ui
