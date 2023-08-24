@@ -42,13 +42,19 @@ plugin_init_params_api(inf_clap_plugin* plugin)
 static bool CLAP_ABI 
 state_save(clap_plugin_t const* plugin, clap_ostream_t const* stream)
 {
-  return false;
+  std::vector<std::uint8_t> data;
+  if(!plugin_cast(plugin)->controller->save_plugin_preset(data)) return false;
+  if(stream->write(stream, data.data(), data.size()) == -1) return false;
+  return true;
 }
 
 static bool CLAP_ABI 
 state_load(clap_plugin_t const* plugin, clap_istream_t const* stream)
 {
-  return false;
+  std::vector<std::uint8_t> data;
+  if(stream->read(stream, data.data(), data.size() == -1)) return false;
+  if(!plugin_cast(plugin)->controller->load_plugin_preset(data)) return false;
+  return true;
 }
 
 static clap_param_info_flags
