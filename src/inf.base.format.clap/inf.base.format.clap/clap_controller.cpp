@@ -242,7 +242,7 @@ clap_controller::do_edit(std::int32_t index, double normalized)
   msg.type = main_to_audio_msg::begin_edit;
   main_to_audio_queue->try_enqueue(msg);
 
-  auto base_value = format_normalized_to_base(_topology.get(), true, index, normalized);
+  auto base_value = format_normalized_to_base(_topology.get(), false, index, normalized);
   _state[index] = base_value;
   std::int32_t tag = topology()->param_index_to_id[index];
   controller_param_changed(tag, base_value);
