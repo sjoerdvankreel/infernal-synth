@@ -147,12 +147,12 @@ timer(this) {}
 void 
 clap_controller::init(
   clap_host_t const* host,
-  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue,
-  moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size>* main_to_audio_queue)
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue_,
+  moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size>* main_to_audio_queue_)
 {
   _host = host;
-  this->audio_to_main_queue = audio_to_main_queue;
-  this->main_to_audio_queue = main_to_audio_queue;
+  audio_to_main_queue = audio_to_main_queue_;
+  main_to_audio_queue = main_to_audio_queue_;
 }
 
 void 
