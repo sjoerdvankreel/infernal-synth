@@ -22,7 +22,6 @@
 #include <vector>
 #include <cstring>
 #include <cstdint>
-#include <fstream>
 #include <filesystem>
 
 using namespace inf::base;
@@ -267,35 +266,31 @@ vst_controller::load_wrapper_preset(std::vector<std::uint8_t> const& data)
 
 // Save using full vstpreset headers. See PresetFile::savePreset. 
 // Treat controller state as processor state.
-std::vector<std::uint8_t>
-vst_controller::save_wrapper_preset()
+bool
+vst_controller::save_wrapper_preset(std::vector<std::uint8_t>& data)
 {
   // Dump processor state.
   MemoryStream processor_state;
   IBStreamer processor_streamer(&processor_state, kLittleEndian);
   vst_io_stream processor_stream(&processor_streamer);
-  if (!processor_stream.save_processor(*_topology, _state.data())) return;
-  if (processor_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+  if (!processor_stream.save_processor(*_topology, _state.data())) return false;
+  if (processor_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return false;
 
   // Dump controller state.
   MemoryStream controller_state;
   IBStreamer controller_streamer(&controller_state, kLittleEndian);
   vst_io_stream controller_stream(&controller_streamer);
-  if (!controller_stream.save_controller(*_topology, patch_meta_data())) return;
-  if (controller_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+  if (!controller_stream.save_controller(*_topology, patch_meta_data())) return false;
+  if (controller_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return false;
 
   // Dump both plus metadata to preset format.
   MemoryStream preset_state;
-  if (!PresetFile::savePreset(&preset_state, _processor_id, &processor_state, &controller_state)) return;
-  if (preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return;
+  if (!PresetFile::savePreset(&preset_state, _processor_id, &processor_state, &controller_state)) return false;
+  if (preset_state.seek(0, IBStream::kIBSeekSet, nullptr) != kResultTrue) return false;
 
-  // Write preset format to disk.
-  std::vector<std::uint8_t> contents(static_cast<std::size_t>(preset_state.getSize()), 0);
-  if (preset_state.read(contents.data(), preset_state.getSize(), nullptr) != kResultTrue) return;
-  std::ofstream file(path, std::ios::out | std::ios::binary);
-  if (file.bad()) return;
-  file.write(contents.data(), preset_state.getSize());
-  file.close();
+  // Write preset format to memory.
+  if (preset_state.read(data.data(), preset_state.getSize(), nullptr) != kResultTrue) return false;
+  return true;
 }
 
 std::unique_ptr<host_context_menu>

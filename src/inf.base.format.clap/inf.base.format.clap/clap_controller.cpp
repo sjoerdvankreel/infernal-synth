@@ -1,7 +1,6 @@
 #include <inf.base/shared/support.hpp>
 #include <inf.base.format.clap/clap_entry.hpp>
 #include <inf.base.format.clap/clap_plugin.hpp>
-#include <inf.base.format.clap/clap_io_stream.hpp>
 #include <inf.base.format.clap/clap_controller.hpp>
 
 #include <clap/clap.h>
