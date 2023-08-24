@@ -42,13 +42,13 @@ plugin_init_params_api(inf_clap_plugin* plugin)
 static bool CLAP_ABI 
 state_save(clap_plugin_t const* plugin, clap_ostream_t const* stream)
 {
-
+  return false;
 }
 
 static bool CLAP_ABI 
 state_load(clap_plugin_t const* plugin, clap_istream_t const* stream)
 {
-
+  return false;
 }
 
 static clap_param_info_flags
