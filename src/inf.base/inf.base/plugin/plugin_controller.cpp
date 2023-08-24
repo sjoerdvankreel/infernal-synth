@@ -249,6 +249,7 @@ plugin_controller::load_plugin_preset(std::vector<std::uint8_t> const& data)
   if (!stream.load_processor(*topology(), audio_state.data())) return false;
   if (!stream.load_controller(*topology(), patch_meta_data())) return false;
   load_component_state(audio_state.data());
+  return true;
 }
 
 } // namespace inf::base
