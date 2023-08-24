@@ -42,7 +42,6 @@ plugin_init_params_api(inf_clap_plugin* plugin)
 static bool CLAP_ABI 
 state_save(clap_plugin_t const* plugin, clap_ostream_t const* stream)
 {
-  plugin_cast
   return false;
 }
 
