@@ -22,11 +22,12 @@
 - check the linux dist output
 - check the links for demo project
 - document new dependencies
-- please fix the *** flush bug already
+- please fix the *** flush bug already and/or check bitwig clap version
 
 - clap 
 * sync on load ui
 * midi
+* output params
 * choke/end
 * do the gesture thing?
 * do the polyphonic mod stuff
