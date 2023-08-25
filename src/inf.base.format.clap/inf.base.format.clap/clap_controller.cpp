@@ -20,12 +20,17 @@ namespace inf::base::format::clap
 class clap_host_context_menu_bridge:
 public host_context_menu
 {
+  clap_host_context_menu const* const _host_menu;
   std::vector<host_context_menu_item> const _items;
 public:
   void item_clicked(std::int32_t index) override;
   host_context_menu_item get_item(std::int32_t index) const override { return _items[index]; }
   std::int32_t item_count() const override { return static_cast<std::int32_t>(_items.size()); }
-  clap_host_context_menu_bridge(std::vector<host_context_menu_item> const& items) : _items(items) {}
+  
+  clap_host_context_menu_bridge(
+    clap_host_context_menu const* host_menu, 
+    std::vector<host_context_menu_item> const& items) : 
+    _host_menu(host_menu), _items(items) {}
 };
 
 static clap_controller*
@@ -258,7 +263,7 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
   builder.add_item = menu_builder_add_item;
   builder.supports = menu_builder_supports;
   host_menu->populate(_host, &target, &builder);
-  return std::make_unique<clap_host_context_menu_bridge>(items);
+  return std::make_unique<clap_host_context_menu_bridge>(host_menu, items);
 }
 
 void 
