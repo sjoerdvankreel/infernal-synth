@@ -217,7 +217,7 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   {
     audio_to_main_msg msg;
     msg.index = inf_plugin->topology->input_param_count + i;
-    msg.value = base_to_format_normalized(inf_plugin->topology.get(), false, msg.index, inf_plugin->audio_state[msg.index]);
+    msg.value = base_to_format_normalized(inf_plugin->topology.get(), false, msg.index, output.block_automation_raw[msg.index]);
     ok = inf_plugin->audio_to_main_queue.try_enqueue(msg);
     assert(ok);
   }
