@@ -9,6 +9,8 @@
 #include <clap/clap.h>
 #include <readerwriterqueue.h>
 
+#include <set>
+#include <map>
 #include <vector>
 #include <chrono>
 #include <cstdint>
@@ -44,6 +46,7 @@ struct inf_clap_plugin
   std::vector<std::int32_t> changed = {};
 
   // cache midi mappings
+  std::set<std::int32_t> midi_coarse = {};
   std::map<std::int32_t, std::int32_t> midi_map = {};
 
   // Allow implementation to accurately measure total cpu.

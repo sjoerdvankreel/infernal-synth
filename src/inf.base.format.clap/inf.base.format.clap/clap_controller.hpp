@@ -47,6 +47,9 @@ public:
   moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue = {};
   moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size>* main_to_audio_queue = {};
 
+  // Need to know which are 7 bit (coarse) or 14 bit (fine).
+  virtual std::set<std::int32_t> midi_is_coarse() const = 0;
+  // Defer to plugin.
   virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;
 
   void restart() override {}
