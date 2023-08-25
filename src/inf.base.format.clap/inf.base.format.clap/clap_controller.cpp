@@ -327,8 +327,8 @@ menu_builder_add_item(
   case CLAP_CONTEXT_MENU_ITEM_BEGIN_SUBMENU:
     sub_menu = static_cast<clap_context_menu_submenu const*>(item_data);
     item.name = sub_menu->label;
+    item.flags |= host_context_menu_item::enabled;
     item.flags |= host_context_menu_item::group_start;
-    item.flags |= sub_menu->is_enabled ? host_context_menu_item::enabled : 0;
     break;
   case CLAP_CONTEXT_MENU_ITEM_END_SUBMENU:
     item.flags |= host_context_menu_item::group_end;

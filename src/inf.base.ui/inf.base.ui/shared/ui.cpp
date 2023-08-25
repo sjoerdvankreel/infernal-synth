@@ -303,7 +303,9 @@ show_context_menu_for_param(
     }
   }
 
-  menu.addSubMenu("Host", host_menu_stack.top(), true);
+  if(host_menu_count != 0)
+    menu.addSubMenu("Host", host_menu_stack.top(), true);
+
   menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu_count, host_menu = host_menu.release()](int option) {
     if(option == 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
     else if(option > 1 && option <= host_menu_count + 1) host_menu->item_clicked(option - 2);
