@@ -239,7 +239,7 @@ plugin_process_events(
                 float normalized;
                 auto coarse_iter = plugin->midi_coarse.find(msg);
                 if(coarse_iter != plugin->midi_coarse.end())
-                  normalized = event->data[1] / 128.0;
+                  normalized = event->data[1] / 128.0f;
                 else
                 {
                   // Mapping to 0..1, plug implementation should scale back.
