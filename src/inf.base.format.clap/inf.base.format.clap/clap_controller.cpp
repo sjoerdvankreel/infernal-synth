@@ -257,7 +257,7 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
   builder.ctx = &items;
   builder.add_item = menu_builder_add_item;
   builder.supports = menu_builder_supports;
-  if(!host_menu->populate(_host, &target, &builder)) return {};
+  host_menu->populate(_host, &target, &builder);
   return std::make_unique<clap_host_context_menu_bridge>(items);
 }
 
