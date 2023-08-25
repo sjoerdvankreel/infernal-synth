@@ -10,6 +10,7 @@
 #include <readerwriterqueue.h>
 
 #include <vector>
+#include <chrono>
 #include <cstdint>
 
 #ifdef _MSC_VER
@@ -41,6 +42,11 @@ struct inf_clap_plugin
   std::unique_ptr<clap_controller> controller = {};
   std::vector<inf::base::param_value> audio_state = {};
   std::vector<std::int32_t> changed = {};
+
+  // Allow implementation to accurately measure total cpu.
+  std::int64_t prev_end_perf_count = 0;
+  // Don't update output too often.
+  std::chrono::system_clock::time_point output_updated;
 
   // For async main <-> audio messaging.
   moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size> audio_to_main_queue;

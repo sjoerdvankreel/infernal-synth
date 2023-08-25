@@ -195,9 +195,11 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
   bool ok;
   (void)ok;
-
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
+
+  // For timing.
+  std::int64_t new_start_perf_count = performance_counter();
 
   // Process incoming events.
   auto inf_plugin = plugin_cast(plugin);
@@ -210,18 +212,28 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   input.data.stream_position = process->steady_time;
   input.data.sample_count = static_cast<std::int32_t>(process->frames_count);
   if(process->transport != nullptr) input.data.bpm = static_cast<float>(process->transport->tempo);
-  auto const& output = inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
+  auto const& output = inf_plugin->processor->process(
+    nullptr, process->audio_outputs[0].data32, false, 
+    inf_plugin->prev_end_perf_count, new_start_perf_count);
 
   // Push output params to the ui.
-  for (std::int32_t i = 0; i < inf_plugin->topology->output_param_count; i++)
+  auto now = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - inf_plugin->output_updated);
+  if (duration.count() >= output_param_update_msec)
   {
-    audio_to_main_msg msg;
-    msg.index = inf_plugin->topology->input_param_count + i;
-    msg.value = base_to_format_normalized(inf_plugin->topology.get(), false, msg.index, output.block_automation_raw[msg.index]);
-    ok = inf_plugin->audio_to_main_queue.try_enqueue(msg);
-    assert(ok);
+    inf_plugin->output_updated = now;
+    for (std::int32_t i = 0; i < inf_plugin->topology->output_param_count; i++)
+    {
+      audio_to_main_msg msg;
+      msg.index = inf_plugin->topology->input_param_count + i;
+      msg.value = base_to_format_normalized(inf_plugin->topology.get(), false, msg.index, output.block_automation_raw[msg.index]);
+      ok = inf_plugin->audio_to_main_queue.try_enqueue(msg);
+      assert(ok);
+    }
   }
 
+  // For timing.
+  inf_plugin->prev_end_perf_count = performance_counter();
   return CLAP_PROCESS_CONTINUE;
 }
 

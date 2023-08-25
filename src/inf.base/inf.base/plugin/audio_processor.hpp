@@ -10,6 +10,10 @@
 
 namespace inf::base {
 
+// Don't update output too often.
+std::int32_t const 
+output_param_update_msec = 200;
+
 class audio_processor
 {
 private:

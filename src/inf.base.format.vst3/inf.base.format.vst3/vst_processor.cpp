@@ -21,10 +21,6 @@ using namespace Steinberg;
 using namespace Steinberg::Vst; 
   
 namespace inf::base::format::vst3 {
-
-// Don't update output too often.
-std::int32_t const 
-output_param_update_msec = 200;
  
 vst_processor::
 vst_processor(std::unique_ptr<inf::base::topology_info>&& topology, FUID controller_id):
