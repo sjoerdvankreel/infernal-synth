@@ -59,15 +59,15 @@ vst_host_context_menu::get_item(std::int32_t index) const
   host_context_menu_item result = {};
   _menu->getItem(index, item, &target);
   result.name = from_vst_string(item.name);
-  if ((item.flags & IContextMenuItem::kIsChecked) != 0) 
-    result.flags |= host_context_menu_item::checked;
   if ((item.flags & IContextMenuItem::kIsDisabled) == 0)
     result.flags |= host_context_menu_item::enabled;
-  if ((item.flags & IContextMenuItem::kIsSeparator) != 0) 
+  if ((item.flags & IContextMenuItem::kIsChecked) == IContextMenuItem::kIsChecked)
+    result.flags |= host_context_menu_item::checked;
+  if ((item.flags & IContextMenuItem::kIsSeparator) == IContextMenuItem::kIsSeparator)
     result.flags |= host_context_menu_item::separator;
-  if ((item.flags & IContextMenuItem::kIsGroupEnd) != 0) 
+  if ((item.flags & IContextMenuItem::kIsGroupEnd) == IContextMenuItem::kIsGroupEnd)
     result.flags |= host_context_menu_item::group_end;
-  if ((item.flags & IContextMenuItem::kIsGroupStart) != 0)
+  if ((item.flags & IContextMenuItem::kIsGroupStart) == IContextMenuItem::kIsGroupStart)
     result.flags |= host_context_menu_item::group_start;
   return result;
 }
