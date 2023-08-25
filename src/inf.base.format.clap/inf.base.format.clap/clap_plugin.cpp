@@ -84,8 +84,8 @@ extension_note_ports_get(
 
 static bool CLAP_ABI
 extension_audio_ports_get(
-  clap_plugin_t const* plugin, std::uint32_t index,
-  bool is_input, clap_audio_port_info_t* info)
+clap_plugin_t const* plugin, std::uint32_t index,
+bool is_input, clap_audio_port_info_t* info)
 {
   if (is_input || index != 0) return false;
   info->id = 0;
@@ -109,7 +109,7 @@ plugin_get_extension(clap_plugin const* plugin, char const* id)
 
 static bool CLAP_ABI
 plugin_activate(
-  clap_plugin const* plugin, double sample_rate, 
+  clap_plugin const* plugin, double sample_rate,
   std::uint32_t min_frames_count, std::uint32_t max_frames_count)
 {
   auto inf_plugin = plugin_cast(plugin);
@@ -123,82 +123,83 @@ plugin_activate(
 // Translate from clap events.
 static void
 plugin_process_events(
-  inf_clap_plugin* plugin, clap_process_t const* process, 
+  inf_clap_plugin* plugin, clap_process_t const* process,
   block_input& input, std::int32_t max_note_events)
 {
   bool ok;
   (void)ok;
   std::uint32_t event_count = process->in_events->size(process->in_events);
 
-  // Note events.
+  // Point-in-time events.
   for (std::uint32_t e = 0; e < event_count; e++)
   {
     clap_event_header_t const* header = process->in_events->get(process->in_events, e);
-    if (input.note_count == max_note_events) return;
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
+
+    // CLAP notes. TODO: midi notes.
     if (header->type == CLAP_EVENT_NOTE_ON || header->type == CLAP_EVENT_NOTE_OFF)
     {
-      auto& note = input.notes[input.note_count++];
-      auto event = reinterpret_cast<clap_event_note_t const*>(header);
-      note.midi = event->key;
-      note.note_on = header->type == CLAP_EVENT_NOTE_ON;
-      note.velocity = static_cast<float>(event->velocity);
-      note.sample_index = static_cast<std::int32_t>(header->time);
+      if (input.note_count < max_note_events)
+      {
+        auto& note = input.notes[input.note_count++];
+        auto event = reinterpret_cast<clap_event_note_t const*>(header);
+        note.midi = event->key;
+        note.note_on = header->type == CLAP_EVENT_NOTE_ON;
+        note.velocity = static_cast<float>(event->velocity);
+        note.sample_index = static_cast<std::int32_t>(header->time);
+      }
     }
-  }  
 
-  // TODO handle _changed
-  for (std::uint32_t e = 0; e < event_count; e++)
-  {
-    clap_event_header_t const* header = process->in_events->get(process->in_events, e);
-    if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
-    if (header->type != CLAP_EVENT_PARAM_VALUE) continue; 
-    auto event = reinterpret_cast<clap_event_param_value const*>(header);
-    auto index = plugin->topology->param_id_to_index[event->param_id];
+    // Regular automation.
+    else if (header->type == CLAP_EVENT_PARAM_VALUE)
+    {
+      // Push stuff to the ui.
+      // Note that we push stuff "ahead of time" but i really
+      // dont want to break into the internal audio loop for this.
+      // Continuous-valued automation streams will still work as expected
+      // (parameters change at exact sample position) just the ui runs a bit ahead.
+      audio_to_main_msg msg;
+      auto event = reinterpret_cast<clap_event_param_value const*>(header);
+      auto index = plugin->topology->param_id_to_index[event->param_id];
+      msg.index = index;
+      msg.value = event->value;
+      ok = plugin->audio_to_main_queue.try_enqueue(msg);
+      assert(ok);
 
-    // Push stuff to the ui.
-    // Note that we push stuff "ahead of time" but i really
-    // dont want to break into the internal audio loop for this.
-    // Continuous-valued automation streams will still work as expected
-    // (parameters change at exact sample position) just the ui runs a bit ahead.
-    audio_to_main_msg msg;
-    msg.index = index;
-    msg.value = event->value;
-    ok = plugin->audio_to_main_queue.try_enqueue(msg);
-    assert(ok);
-
-    // Discrete automation events - effectively we only pick up the last value.
-    if(plugin->topology->params[index].descriptor->data.is_continuous()) continue;
-    plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+      // For discrete automation events effectively we only pick up the last value.
+      if (!plugin->topology->params[index].descriptor->data.is_continuous())
+        plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+    }
   }
 
   // TODO handle _changed + broadcast ui changes
   // Continuous automation events - build up the curve. TODO interpolation.
-  for(std::int32_t s = 0; s < input.data.sample_count; s++)
-    for (std::uint32_t e = 0; e < event_count; e++)
-    {
-      clap_event_header_t const* header = process->in_events->get(process->in_events, e);
-      if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
-      if (header->type != CLAP_EVENT_PARAM_VALUE) continue;
-      auto event = reinterpret_cast<clap_event_param_value const*>(header);
-      auto index = plugin->topology->param_id_to_index[event->param_id];
-      if (!plugin->topology->params[index].descriptor->data.is_continuous()) continue;
-
-      // Just make a "bumpy" curve for now.
-      if(header->time == static_cast<std::uint32_t>(s))
-        plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
-      input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
-    }
-
-  // Raw MIDI events - build up the curve. TODO interpolation.
   for (std::int32_t s = 0; s < input.data.sample_count; s++)
     for (std::uint32_t e = 0; e < event_count; e++)
     {
       clap_event_header_t const* header = process->in_events->get(process->in_events, e);
       if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
-      if (header->type != CLAP_EVENT_MIDI) continue;
-      auto event = reinterpret_cast<clap_event_midi const*>(header);
-      (void)event;
+
+      // Regular automation.
+      if (header->type == CLAP_EVENT_PARAM_VALUE)
+      {
+        auto event = reinterpret_cast<clap_event_param_value const*>(header);
+        auto index = plugin->topology->param_id_to_index[event->param_id];
+        if(plugin->topology->params[index].descriptor->data.is_continuous())
+        {
+          // Just make a "bumpy" curve for now.
+          if (header->time == static_cast<std::uint32_t>(s))
+            plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+          input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
+        }
+      }
+
+      // Raw midi cc messages.
+      else if (header->type == CLAP_EVENT_MIDI)
+      {
+        auto event = reinterpret_cast<clap_event_midi const*>(header);
+        (void)event;
+      }
     }
 }
 
