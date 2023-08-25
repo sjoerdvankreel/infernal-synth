@@ -26,9 +26,8 @@
 
 - clap 
 * midi
-* choke/end ?
+* choke
 * sync on load ui
-* do the gesture thing?
 * check refreshUIValues
 * do the interpolation stuff
 * re-check both from/to queues

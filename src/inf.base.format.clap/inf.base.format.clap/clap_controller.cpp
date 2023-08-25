@@ -273,7 +273,6 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 void 
 clap_controller::do_edit(std::int32_t index, double normalized)
 {
-  // TODO gesture stuff
   bool ok;
   (void)ok;
 

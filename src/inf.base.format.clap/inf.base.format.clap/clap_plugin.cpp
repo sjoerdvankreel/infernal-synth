@@ -77,10 +77,8 @@ extension_note_ports_get(
 {
   if (!is_input || index != 0) return false;
   info->id = 0;
-  //info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
-  //info->supported_dialects = CLAP_NOTE_DIALECT_CLAP | CLAP_NOTE_DIALECT_MIDI;
-  info->preferred_dialect = CLAP_NOTE_DIALECT_MIDI;
-  info->supported_dialects = CLAP_NOTE_DIALECT_MIDI | CLAP_NOTE_DIALECT_MIDI;
+  info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
+  info->supported_dialects = CLAP_NOTE_DIALECT_CLAP | CLAP_NOTE_DIALECT_MIDI;
   return true;
 }
 
@@ -129,8 +127,8 @@ plugin_process_events(
   block_input& input, std::int32_t max_note_events)
 {
   bool ok;
-  std::uint8_t midi_note_on = 0x80;
-  std::uint8_t midi_note_off = 0x90;
+  std::uint8_t midi_note_on = 0x90;
+  std::uint8_t midi_note_off = 0x80;
   std::uint32_t event_count = process->in_events->size(process->in_events);
   (void)ok;
 
@@ -199,7 +197,7 @@ plugin_process_events(
     }
   }
 
-  // TODO handle _changed + broadcast ui changes
+  // TODO handle _changed
   // Continuous automation events - build up the curve. TODO interpolation.
   for (std::int32_t s = 0; s < input.data.sample_count; s++)
     for (std::uint32_t e = 0; e < event_count; e++)
