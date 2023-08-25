@@ -83,12 +83,7 @@ public:
 
   // Virtual so we can apply some sensible defaults for instrument/fx.
   virtual void init_clear_patch(param_value* state) const { init_all_param_defaults(state); }
-  virtual void init_factory_preset(param_value* state) const { init_all_param_defaults(state); }
-
-  // VST3 needs an additional param to map a midi stream onto so we just do it the same way for CLAP.
-  // Note: it is expected that the target parameter is a continuous-valued parameter!
-  // Maps midi cc nr to param tag.
-  virtual std::map<std::int32_t, std::int32_t> map_midi_controls() const = 0;
+  virtual void init_factory_preset(param_value* state) const { init_all_param_defaults(state); }  
 
   // Metadata and conversions (backwards compat).
   virtual char const* vendor_name() const = 0;

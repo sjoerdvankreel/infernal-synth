@@ -128,8 +128,10 @@ plugin_process_events(
   block_input& input, std::int32_t max_note_events)
 {
   bool ok;
-  (void)ok;
+  std::uint8_t midi_note_on = 0x80;
+  std::uint8_t midi_note_off = 0x90;
   std::uint32_t event_count = process->in_events->size(process->in_events);
+  (void)ok;
 
   // Point-in-time events.
   for (std::uint32_t e = 0; e < event_count; e++)

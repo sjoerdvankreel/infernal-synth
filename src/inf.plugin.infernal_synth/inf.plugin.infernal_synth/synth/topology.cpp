@@ -508,19 +508,6 @@ synth_topology::try_move_stored_param(
   return -1;
 }
 
-// Midi mapping.
-
-std::map<std::int32_t, std::int32_t>
-synth_topology::map_midi_controls() const
-{
-  std::map<std::int32_t, std::int32_t> result = {};
-  result[midi_cc_mod_wheel] = param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
-  result[midi_cc_volume] = param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
-  result[midi_cc_channel_pressure] = param_id({ part_type::master, 0 }, master_param::midi_ch_press);
-  result[midi_cc_pitch_wheel] = param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
-  return result;
-}
-
 // ---- clear / init patch ----
 
 void 

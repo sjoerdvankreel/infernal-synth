@@ -100,6 +100,7 @@ class synth_vst_controller :
 public vst_controller
 {  
 public:
+  std::map<std::int32_t, std::int32_t> map_midi_controls() const override;
   std::string plugin_unique_id() const { return IPISFV3_UNIQUE_ID_TEXT; }
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
@@ -109,6 +110,17 @@ public:
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
+
+std::map<std::int32_t, std::int32_t>
+synth_vst_controller::map_midi_controls() const
+{
+  std::map<std::int32_t, std::int32_t> result = {};
+  result[Steinberg::Vst::ControllerNumbers::kCtrlModWheel] = topology()->param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
+  result[Steinberg::Vst::ControllerNumbers::kCtrlVolume] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
+  result[Steinberg::Vst::ControllerNumbers::kAfterTouch] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_press);
+  result[Steinberg::Vst::ControllerNumbers::kPitchBend] = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
+  return result;
+}
 
 static FUnknown*
 create_controller(void* context)

@@ -86,15 +86,13 @@ protected:
   std::vector<inf::base::param_value> _state;
   std::map<std::string, std::string> _patch_meta_data;
   std::unique_ptr<inf::base::topology_info> _topology;
-  std::map<std::int32_t, std::int32_t> const _midi_cc_map;
   std::set<reload_listener*> _reload_listeners = {};
   std::set<any_param_listener*> _any_param_listeners = {};
   std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
 
   plugin_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
   _global_meta_lock(juce::String(topology->plugin_name())),
-  _state(topology->params.size()), _topology(std::move(topology)),
-  _midi_cc_map(_topology->map_midi_controls())
+  _state(topology->params.size()), _topology(std::move(topology))
   { _topology->init_factory_preset(_state.data()); }
 
   void reloaded();
@@ -112,6 +110,11 @@ public:
 
   // Needs to be public for clap controller.
   void controller_param_changed(std::int32_t tag, param_value base_value);
+
+  // VST3 needs an additional param to map a midi stream onto so we just do it the same way for CLAP.
+  // Note: it is expected that the target parameter is a continuous-valued parameter!
+  // Maps midi cc nr to param tag.
+  virtual std::map<std::int32_t, std::int32_t> map_midi_controls() const = 0;
 
   // All plug incarnations with same unique_id can load/save the same files.
   // Host wrapper plugin format is format dependent (VST3).
