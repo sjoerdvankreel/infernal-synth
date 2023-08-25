@@ -35,11 +35,10 @@ public host_context_menu
 {
   Steinberg::IPtr<Steinberg::Vst::IContextMenu> _menu;
 public:
+  void item_clicked(std::int32_t index) override;
+  host_context_menu_item get_item(std::int32_t index) const override;
   std::int32_t item_count() const override { return _menu->getItemCount(); }
   vst_host_context_menu(Steinberg::IPtr<Steinberg::Vst::IContextMenu> menu) : _menu(menu) {}
-
-  void item_clicked(std::int32_t index) override;
-  void get_item(std::int32_t index, std::string& name, bool& enabled, bool& checked) const override;
 };
 
 void 
@@ -52,15 +51,17 @@ vst_host_context_menu::item_clicked(std::int32_t index)
   target->executeMenuItem(item.tag);
 }
 
-void
-vst_host_context_menu::get_item(std::int32_t index, std::string& name, bool& enabled, bool& checked) const
+host_context_menu_item
+vst_host_context_menu::get_item(std::int32_t index) const
 {
   IContextMenu::Item item;
   IContextMenuTarget* target;
+  host_context_menu_item result;
   _menu->getItem(index, item, &target);
-  name = from_vst_string(item.name);
-  checked = (item.flags & IContextMenuItem::kIsChecked) != 0;
-  enabled = (item.flags & IContextMenuItem::kIsDisabled) == 0;
+  result.name = from_vst_string(item.name);
+  result.checked = (item.flags & IContextMenuItem::kIsChecked) != 0;
+  result.enabled = (item.flags & IContextMenuItem::kIsDisabled) == 0;
+  return result;
 }
 
 vst_controller::

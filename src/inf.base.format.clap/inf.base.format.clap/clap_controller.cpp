@@ -52,8 +52,8 @@ static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_wind
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
 
-static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind);
-static bool CLAP_ABI menu_builder_add_item(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind, void const* item_data);
+//static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind);
+//static bool CLAP_ABI menu_builder_add_item(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind, void const* item_data);
 
 void
 plugin_init_editor_api(inf_clap_plugin* plugin)
@@ -158,7 +158,7 @@ clap_timer::timerCallback()
   }
 }
 
-static bool CLAP_ABI 
+/*static*/ bool CLAP_ABI
 menu_builder_supports(
   clap_context_menu_builder const* builder, 
   clap_context_menu_item_kind_t item_kind)
@@ -166,7 +166,7 @@ menu_builder_supports(
   return true;
 }
 
-static bool CLAP_ABI 
+/*static*/ bool CLAP_ABI
 menu_builder_add_item(
   clap_context_menu_builder const* builder, 
   clap_context_menu_item_kind_t item_kind, void const* item_data)

@@ -264,11 +264,8 @@ show_context_menu_for_param(
   std::int32_t host_menu_count = host_menu? host_menu->item_count(): 0;
   for (std::int32_t i = 0; i < host_menu_count; i++)
   {
-    bool enabled;
-    bool checked;
-    std::string name;
-    host_menu->get_item(i, name, enabled, checked);
-    menu.addItem(i + 1, name, enabled, checked);
+    host_context_menu_item item = host_menu->get_item(i);
+    menu.addItem(i + 1, item.name, item.enabled, item.checked);
   }
   if(exact_edit)
     menu.addItem(host_menu_count + 1, "Edit...");
