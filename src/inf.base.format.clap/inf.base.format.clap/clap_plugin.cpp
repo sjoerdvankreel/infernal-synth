@@ -78,6 +78,7 @@ extension_note_ports_get(
   if (!is_input || index != 0) return false;
   info->id = 0;
   info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
+  // TODO can we drop this or do we need to handle midi on/off?
   info->supported_dialects = CLAP_NOTE_DIALECT_CLAP | CLAP_NOTE_DIALECT_MIDI;
   return true;
 }
@@ -136,7 +137,7 @@ plugin_process_events(
     clap_event_header_t const* header = process->in_events->get(process->in_events, e);
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
 
-    // CLAP notes. TODO: midi notes.
+    // CLAP notes. TODO: midi notes?.
     if (header->type == CLAP_EVENT_NOTE_ON || header->type == CLAP_EVENT_NOTE_OFF)
     {
       if (input.note_count < max_note_events)
