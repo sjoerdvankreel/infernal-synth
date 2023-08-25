@@ -23,7 +23,7 @@ public host_context_menu
   std::vector<host_context_menu_item> const _items;
 public:
   void item_clicked(std::int32_t index) override;
-  host_context_menu_item get_item(std::int32_t index) const override;
+  host_context_menu_item get_item(std::int32_t index) const override { return _items[index]; }
   std::int32_t item_count() const override { return static_cast<std::int32_t>(_items.size()); }
   clap_host_context_menu_bridge(std::vector<host_context_menu_item> const& items) : _items(items) {}
 };
@@ -52,8 +52,8 @@ static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_wind
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
 
-//static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind);
-//static bool CLAP_ABI menu_builder_add_item(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind, void const* item_data);
+static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind);
+static bool CLAP_ABI menu_builder_add_item(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind, void const* item_data);
 
 void
 plugin_init_editor_api(inf_clap_plugin* plugin)
@@ -158,7 +158,7 @@ clap_timer::timerCallback()
   }
 }
 
-/*static*/ bool CLAP_ABI
+bool CLAP_ABI
 menu_builder_supports(
   clap_context_menu_builder const* builder, 
   clap_context_menu_item_kind_t item_kind)
@@ -166,14 +166,17 @@ menu_builder_supports(
   return true;
 }
 
-/*static*/ bool CLAP_ABI
+bool CLAP_ABI
 menu_builder_add_item(
   clap_context_menu_builder const* builder, 
   clap_context_menu_item_kind_t item_kind, void const* item_data)
 {
-  auto x = (char*)item_data;
-  (void)x;
   return true;
+}
+
+void
+clap_host_context_menu_bridge::item_clicked(std::int32_t index)
+{
 }
 
 clap_controller::
@@ -265,7 +268,18 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
 {
   auto host_menu = static_cast<clap_host_context_menu const*>(_host->get_extension(_host, CLAP_EXT_CONTEXT_MENU));
   if(!host_menu) return {};
-  return {};
+  
+  clap_context_menu_target target;
+  target.kind = CLAP_CONTEXT_MENU_TARGET_KIND_PARAM;
+  target.id = topology()->param_index_to_id[param_index];
+  
+  clap_context_menu_builder builder;
+  std::vector<host_context_menu_item> items;
+  builder.ctx = &items;
+  builder.add_item = menu_builder_add_item;
+  builder.supports = menu_builder_supports;
+  if(!host_menu->populate(_host, &target, &builder)) return {};
+  return std::make_unique<clap_host_context_menu_bridge>(items);
 }
 
 void 
