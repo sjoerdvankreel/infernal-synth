@@ -52,7 +52,7 @@ static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_wind
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
 
-static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind);
+static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind) { return true; }
 static bool CLAP_ABI menu_builder_add_item(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind, void const* item_data);
 
 void
@@ -156,27 +156,6 @@ clap_timer::timerCallback()
     _controller->state()[msg.index] = format_normalized_to_base(_controller->topology(), false, msg.index, msg.value);
     _controller->controller_param_changed(id, _controller->state()[msg.index]);
   }
-}
-
-bool CLAP_ABI
-menu_builder_supports(
-  clap_context_menu_builder const* builder, 
-  clap_context_menu_item_kind_t item_kind)
-{
-  return true;
-}
-
-bool CLAP_ABI
-menu_builder_add_item(
-  clap_context_menu_builder const* builder, 
-  clap_context_menu_item_kind_t item_kind, void const* item_data)
-{
-  return true;
-}
-
-void
-clap_host_context_menu_bridge::item_clicked(std::int32_t index)
-{
 }
 
 clap_controller::
@@ -310,6 +289,62 @@ clap_controller::do_edit(std::int32_t index, double normalized)
 
   auto host_params = static_cast<clap_host_params const*>(_host->get_extension(_host, CLAP_EXT_PARAMS));
   if(host_params) host_params->request_flush(_host);
+}
+
+bool CLAP_ABI
+menu_builder_add_item(
+  clap_context_menu_builder const* builder,
+  clap_context_menu_item_kind_t item_kind, void const* item_data)
+{
+  host_context_menu_item item = {};
+  clap_context_menu_entry const* entry;
+  clap_context_menu_item_title const* title;
+  clap_context_menu_submenu const* sub_menu;
+  clap_context_menu_check_entry const* check_entry;
+  auto items = static_cast<std::vector<host_context_menu_item>*>(builder->ctx);
+
+  switch (item_kind)
+  {
+  case CLAP_CONTEXT_MENU_ITEM_SEPARATOR:
+    item.flags = host_context_menu_item::separator;
+    break;
+  case CLAP_CONTEXT_MENU_ITEM_TITLE:
+    title = static_cast<clap_context_menu_item_title const*>(item_data);
+    item.name = title->title;
+    item.flags |= title->is_enabled ? host_context_menu_item::enabled : 0;
+    break;
+  case CLAP_CONTEXT_MENU_ITEM_ENTRY:
+    entry = static_cast<clap_context_menu_entry const*>(item_data);
+    item.name = entry->label;
+    item.flags |= entry->is_enabled ? host_context_menu_item::enabled : 0;
+    break;
+  case CLAP_CONTEXT_MENU_ITEM_CHECK_ENTRY:
+    check_entry = static_cast<clap_context_menu_check_entry const*>(item_data);
+    item.name = check_entry->label;
+    item.flags |= check_entry->is_enabled ? host_context_menu_item::enabled : 0;
+    item.flags |= check_entry->is_checked ? host_context_menu_item::checked : 0;
+    break;
+  case CLAP_CONTEXT_MENU_ITEM_BEGIN_SUBMENU:
+    sub_menu = static_cast<clap_context_menu_submenu const*>(item_data);
+    item.name = sub_menu->label;
+    item.flags |= host_context_menu_item::group_start;
+    item.flags |= sub_menu->is_enabled ? host_context_menu_item::enabled : 0;
+    break;
+  case CLAP_CONTEXT_MENU_ITEM_END_SUBMENU:
+    item.flags |= host_context_menu_item::group_end;
+    break;
+  default:
+    assert(false);
+    return false;
+  }
+
+  items->push_back(item);
+  return true;
+}
+
+void
+clap_host_context_menu_bridge::item_clicked(std::int32_t index)
+{
 }
 
 } // inf::base::format::clap
