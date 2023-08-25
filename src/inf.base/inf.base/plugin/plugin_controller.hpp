@@ -43,9 +43,9 @@ struct external_resource
 
 struct host_context_menu_item
 {
-  bool enabled;
-  bool checked;
   std::string name;
+  std::uint32_t flags;
+  enum flags_t { checked, enabled, separator, group_start, group_end };
 };
 
 // VST3 context menu feature.

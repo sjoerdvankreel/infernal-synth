@@ -8,6 +8,8 @@
 #include <inf.base.ui/controls/file_chooser_dialog.hpp>
 #include <inf.base/shared/support.hpp>
 
+#include <stack>
+
 using namespace juce;
 using namespace inf::base;
 
@@ -260,18 +262,52 @@ show_context_menu_for_param(
 {
   PopupMenu menu;
   menu.setLookAndFeel(lnf);
+
+  if (exact_edit)
+    menu.addItem(1, "Edit...");
+
   auto host_menu = controller->host_menu_for_param_index(param_index);
   std::int32_t host_menu_count = host_menu? host_menu->item_count(): 0;
+  if (!exact_edit && host_menu_count == 0) return;
+
+  std::stack<PopupMenu> host_menu_stack;
+  host_menu_stack.push(PopupMenu());
+  std::stack<host_context_menu_item> host_context_menu_item_stack;
+  host_context_menu_item host_item = {};
+  host_item.name = "Host";
+  host_context_menu_item_stack.push(host_item);
+
   for (std::int32_t i = 0; i < host_menu_count; i++)
   {
     host_context_menu_item item = host_menu->get_item(i);
-    menu.addItem(i + 1, item.name, item.enabled, item.checked);
+    if((item.flags & host_context_menu_item::separator) != 0)
+      host_menu_stack.top().addSeparator();
+    else if ((item.flags & host_context_menu_item::group_start) != 0)
+    {
+      host_menu_stack.push(PopupMenu());
+      host_context_menu_item_stack.push(item);
+    }
+    else if ((item.flags & host_context_menu_item::group_end) != 0)
+    {
+      auto sub_menu = host_menu_stack.top();
+      auto sub_menu_item = host_context_menu_item_stack.top();
+      host_menu_stack.pop();
+      host_context_menu_item_stack.pop();
+      bool enabled = (sub_menu_item.flags & host_context_menu_item::enabled) != 0;
+      host_menu_stack.top().addSubMenu(sub_menu_item.name, sub_menu, enabled);
+    }
+    else
+    {
+      bool checked = (item.flags & host_context_menu_item::checked) != 0;
+      bool enabled = (item.flags & host_context_menu_item::enabled) != 0;
+      host_menu_stack.top().addItem(i + 2, item.name, enabled, checked);
+    }
   }
-  if(exact_edit)
-    menu.addItem(host_menu_count + 1, "Edit...");
+
+  menu.addSubMenu("Host", host_menu_stack.top(), true);
   menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu_count, host_menu = host_menu.release()](int option) {
-    if (option > 0 && option <= host_menu_count) host_menu->item_clicked(option - 1);
-    else if (option == host_menu_count + 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    if(option == 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    else if(option > 1 && option <= host_menu_count + 1) host_menu->item_clicked(option - 2);
     delete host_menu;
   });
 }
