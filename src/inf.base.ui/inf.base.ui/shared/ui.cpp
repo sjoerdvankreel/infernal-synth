@@ -291,8 +291,7 @@ show_context_menu_for_param(
       auto sub_menu_item = host_context_menu_item_stack.top();
       host_menu_stack.pop();
       host_context_menu_item_stack.pop();
-      bool enabled = (sub_menu_item.flags & host_context_menu_item::enabled) != 0;
-      host_menu_stack.top().addSubMenu(sub_menu_item.name, sub_menu, enabled);
+      host_menu_stack.top().addSubMenu(sub_menu_item.name, sub_menu, true);
     }
     else if ((item.flags & host_context_menu_item::separator) != 0)
       host_menu_stack.top().addSeparator();
