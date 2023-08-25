@@ -78,7 +78,7 @@ extension_note_ports_get(
   if (!is_input || index != 0) return false;
   info->id = 0;
   info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
-  info->supported_dialects = CLAP_NOTE_DIALECT_CLAP;
+  info->supported_dialects = CLAP_NOTE_DIALECT_CLAP | CLAP_NOTE_DIALECT_MIDI;
   return true;
 }
 
@@ -128,9 +128,10 @@ plugin_process_events(
 {
   bool ok;
   (void)ok;
+  std::uint32_t event_count = process->in_events->size(process->in_events);
 
   // Note events.
-  for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
+  for (std::uint32_t e = 0; e < event_count; e++)
   {
     clap_event_header_t const* header = process->in_events->get(process->in_events, e);
     if (input.note_count == max_note_events) return;
@@ -147,7 +148,7 @@ plugin_process_events(
   }  
 
   // TODO handle _changed
-  for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
+  for (std::uint32_t e = 0; e < event_count; e++)
   {
     clap_event_header_t const* header = process->in_events->get(process->in_events, e);
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
@@ -174,7 +175,7 @@ plugin_process_events(
   // TODO handle _changed + broadcast ui changes
   // Continuous automation events - build up the curve. TODO interpolation.
   for(std::int32_t s = 0; s < input.data.sample_count; s++)
-    for (std::uint32_t e = 0; e < process->in_events->size(process->in_events); e++)
+    for (std::uint32_t e = 0; e < event_count; e++)
     {
       clap_event_header_t const* header = process->in_events->get(process->in_events, e);
       if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
@@ -187,6 +188,17 @@ plugin_process_events(
       if(header->time == static_cast<std::uint32_t>(s))
         plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
       input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
+    }
+
+  // Raw MIDI events - build up the curve. TODO interpolation.
+  for (std::int32_t s = 0; s < input.data.sample_count; s++)
+    for (std::uint32_t e = 0; e < event_count; e++)
+    {
+      clap_event_header_t const* header = process->in_events->get(process->in_events, e);
+      if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
+      if (header->type != CLAP_EVENT_MIDI) continue;
+      auto event = reinterpret_cast<clap_event_midi const*>(header);
+      (void)event;
     }
 }
 
