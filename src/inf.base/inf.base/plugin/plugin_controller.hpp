@@ -45,7 +45,7 @@ struct host_context_menu_item
 {
   std::string name;
   std::uint32_t flags;
-  enum flags_t { checked, enabled, separator, group_start, group_end };
+  enum flags_t { checked = 0x1, enabled = 0x2, separator = 0x4, group_start = 0x8, group_end = 0x10 };
 };
 
 // VST3 context menu feature.
