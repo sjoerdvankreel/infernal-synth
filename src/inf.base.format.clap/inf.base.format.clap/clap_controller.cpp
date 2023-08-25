@@ -4,8 +4,10 @@
 #include <inf.base.format.clap/clap_controller.hpp>
 
 #include <clap/clap.h>
+#include <clap/ext/draft/context-menu.h>
 
 #include <string>
+#include <vector>
 #include <fstream>
 #include <filesystem>
 
@@ -14,6 +16,17 @@ using namespace inf::base::ui;
 
 namespace inf::base::format::clap
 {
+
+class clap_host_context_menu_bridge:
+public host_context_menu
+{
+  std::vector<host_context_menu_item> const _items;
+public:
+  void item_clicked(std::int32_t index) override;
+  host_context_menu_item get_item(std::int32_t index) const override;
+  std::int32_t item_count() const override { return static_cast<std::int32_t>(_items.size()); }
+  clap_host_context_menu_bridge(std::vector<host_context_menu_item> const& items) : _items(items) {}
+};
 
 static clap_controller*
 plugin_controller(clap_plugin_t const* plugin)
@@ -38,6 +51,9 @@ static bool CLAP_ABI editor_set_size(clap_plugin_t const* plugin, uint32_t width
 static bool CLAP_ABI editor_set_transient(clap_plugin_t const* plugin, clap_window_t const* window) { return false; }
 static bool CLAP_ABI editor_adjust_size(clap_plugin_t const* plugin, uint32_t* width, uint32_t* height) { return false; }
 static bool CLAP_ABI editor_get_resize_hints(clap_plugin_t const* plugin, clap_gui_resize_hints_t* hints) { return false; }
+
+static bool CLAP_ABI menu_builder_supports(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind);
+static bool CLAP_ABI menu_builder_add_item(clap_context_menu_builder const* builder, clap_context_menu_item_kind_t item_kind, void const* item_data);
 
 void
 plugin_init_editor_api(inf_clap_plugin* plugin)
@@ -142,6 +158,24 @@ clap_timer::timerCallback()
   }
 }
 
+static bool CLAP_ABI 
+menu_builder_supports(
+  clap_context_menu_builder const* builder, 
+  clap_context_menu_item_kind_t item_kind)
+{
+  return true;
+}
+
+static bool CLAP_ABI 
+menu_builder_add_item(
+  clap_context_menu_builder const* builder, 
+  clap_context_menu_item_kind_t item_kind, void const* item_data)
+{
+  auto x = (char*)item_data;
+  (void)x;
+  return true;
+}
+
 clap_controller::
 clap_controller() : 
 plugin_controller(create_topology()), 
@@ -166,7 +200,7 @@ clap_controller::reload_editor(std::int32_t width)
   editor_current_width(width);
   auto new_bounds = get_editor_wanted_size();
   auto host_gui = static_cast<clap_host_gui_t const*>(_host->get_extension(_host, CLAP_EXT_GUI));
-  host_gui->request_resize(_host, new_bounds.first, new_bounds.second);
+  if(host_gui) host_gui->request_resize(_host, new_bounds.first, new_bounds.second);
   plugin_ui = create_ui();
   plugin_ui->build();
   plugin_ui->layout();
@@ -175,12 +209,6 @@ clap_controller::reload_editor(std::int32_t width)
   plugin_ui->component()->setTopLeftPosition(0, 0);
   plugin_ui->component()->addToDesktop(0, parent_window);
   plugin_ui->component()->setVisible(true);
-}
-
-std::unique_ptr<host_context_menu>
-clap_controller::host_menu_for_param_index(std::int32_t param_index) const
-{
-  return {};
 }
 
 std::string
@@ -232,6 +260,14 @@ clap_controller::swap_param(std::int32_t source_tag, std::int32_t target_tag)
   do_edit(target_index, source_norm);
 }
 
+std::unique_ptr<host_context_menu>
+clap_controller::host_menu_for_param_index(std::int32_t param_index) const
+{
+  auto host_menu = static_cast<clap_host_context_menu const*>(_host->get_extension(_host, CLAP_EXT_CONTEXT_MENU));
+  if(!host_menu) return {};
+  return {};
+}
+
 void 
 clap_controller::do_edit(std::int32_t index, double normalized)
 {
@@ -259,7 +295,7 @@ clap_controller::do_edit(std::int32_t index, double normalized)
   assert(ok);
 
   auto host_params = static_cast<clap_host_params const*>(_host->get_extension(_host, CLAP_EXT_PARAMS));
-  host_params->request_flush(_host);
+  if(host_params) host_params->request_flush(_host);
 }
 
 } // inf::base::format::clap
