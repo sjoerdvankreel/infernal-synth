@@ -137,7 +137,7 @@ plugin_process_events(
     clap_event_header_t const* header = process->in_events->get(process->in_events, e);
     if (header->space_id != CLAP_CORE_EVENT_SPACE_ID) continue;
 
-    // CLAP notes. TODO: midi notes?.
+    // CLAP notes.
     if (header->type == CLAP_EVENT_NOTE_ON || header->type == CLAP_EVENT_NOTE_OFF)
     {
       if (input.note_count < max_note_events)
@@ -148,6 +148,27 @@ plugin_process_events(
         note.note_on = header->type == CLAP_EVENT_NOTE_ON;
         note.velocity = static_cast<float>(event->velocity);
         note.sample_index = static_cast<std::int32_t>(header->time);
+      }
+    } 
+
+    // MIDI notes.
+    else if (header->type == CLAP_EVENT_MIDI)
+    {
+      auto event = reinterpret_cast<clap_event_midi const*>(header);
+      if (event->port_index == 0)
+      {
+        std::uint8_t msg = event->data[0] & 0xF0;
+        if(msg == midi_note_on || msg == midi_note_off)
+        {
+          if (input.note_count < max_note_events)
+          {
+            auto& note = input.notes[input.note_count++];
+            note.midi = event->data[1];
+            note.note_on = msg == midi_note_on;
+            note.velocity = event->data[2] / 127.0f;
+            note.sample_index = static_cast<std::int32_t>(header->time);
+          }
+        }
       }
     }
 
@@ -199,6 +220,8 @@ plugin_process_events(
       else if (header->type == CLAP_EVENT_MIDI)
       {
         auto event = reinterpret_cast<clap_event_midi const*>(header);
+        auto x = event->port_index;
+        x++;
         (void)event;
       }
     }

@@ -26,13 +26,13 @@
 
 - clap 
 * midi
-* choke/end
+* choke/end ?
 * sync on load ui
 * do the gesture thing?
 * check refreshUIValues
 * do the interpolation stuff
-* do the polyphonic mod stuff
 * re-check both from/to queues
+* do the polyphonic mod stuff - with pck for midi
 
 * bugs
 - PRNG draw relative to sample rate
