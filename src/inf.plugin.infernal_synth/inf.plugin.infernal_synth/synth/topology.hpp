@@ -58,7 +58,7 @@ public:
 
   void init_clear_patch(base::param_value* state) const override;
   void init_factory_preset(base::param_value* state) const override;
-  bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
+  std::map<std::int32_t, std::int32_t> map_midi_controls() const override;
 
   bool is_instrument() const override { return _is_instrument; }
   char const* vendor_name() const override { return IPIS_VENDOR_NAME; }

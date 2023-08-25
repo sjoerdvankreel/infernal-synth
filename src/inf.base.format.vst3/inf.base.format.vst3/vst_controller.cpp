@@ -105,10 +105,10 @@ vst_controller::getMidiControllerAssignment(int32 bus_index, int16 channel, Ctrl
 {
   // VST3PluginTestHost crashes if we map any midi controller.
   if(std::u16string(u"VST3PluginTestHost Standalone") == host_name()) return kResultFalse;
-  std::int32_t target_tag;
   if(bus_index != 0) return kResultFalse;
-  if(!topology()->map_midi_control(midi_ctrl_nr, target_tag)) return kResultFalse;
-  id = static_cast<ParamID>(target_tag);
+  auto iter = _midi_cc_map.find(midi_ctrl_nr);
+  if(iter == _midi_cc_map.end()) return kResultFalse;
+  id = static_cast<ParamID>(iter->second);
   return kResultTrue;
 }
 

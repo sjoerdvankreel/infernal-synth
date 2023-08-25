@@ -510,20 +510,15 @@ synth_topology::try_move_stored_param(
 
 // Midi mapping.
 
-bool
-synth_topology::map_midi_control(std::int32_t number, std::int32_t& target_tag) const
+std::map<std::int32_t, std::int32_t>
+synth_topology::map_midi_controls() const
 {
-  if (number == midi_cc_mod_wheel)
-    target_tag = param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
-  else if (number == midi_cc_volume)
-    target_tag = param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
-  else if (number == midi_cc_channel_pressure)
-    target_tag = param_id({ part_type::master, 0 }, master_param::midi_ch_press);
-  else if (number == midi_cc_pitch_wheel)
-    target_tag = param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
-  else
-    return false;
-  return true;
+  std::map<std::int32_t, std::int32_t> result = {};
+  result[midi_cc_mod_wheel] = param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
+  result[midi_cc_volume] = param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
+  result[midi_cc_channel_pressure] = param_id({ part_type::master, 0 }, master_param::midi_ch_press);
+  result[midi_cc_pitch_wheel] = param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
+  return result;
 }
 
 // ---- clear / init patch ----

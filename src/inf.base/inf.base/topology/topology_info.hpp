@@ -87,7 +87,8 @@ public:
 
   // VST3 needs an additional param to map a midi stream onto so we just do it the same way for CLAP.
   // Note: it is expected that the target parameter is a continuous-valued parameter!
-  virtual bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const = 0;
+  // Maps midi cc nr to param tag.
+  virtual std::map<std::int32_t, std::int32_t> map_midi_controls() const = 0;
 
   // Metadata and conversions (backwards compat).
   virtual char const* vendor_name() const = 0;

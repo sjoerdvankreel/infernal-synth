@@ -86,13 +86,15 @@ protected:
   std::vector<inf::base::param_value> _state;
   std::map<std::string, std::string> _patch_meta_data;
   std::unique_ptr<inf::base::topology_info> _topology;
+  std::map<std::int32_t, std::int32_t> const _midi_cc_map;
   std::set<reload_listener*> _reload_listeners = {};
   std::set<any_param_listener*> _any_param_listeners = {};
   std::map<std::int32_t, std::set<param_listener*>> _param_listeners = {};
 
   plugin_controller(std::unique_ptr<inf::base::topology_info>&& topology) :
   _global_meta_lock(juce::String(topology->plugin_name())),
-  _state(topology->params.size()), _topology(std::move(topology))
+  _state(topology->params.size()), _topology(std::move(topology)),
+  _midi_cc_map(_topology->map_midi_controls())
   { _topology->init_factory_preset(_state.data()); }
 
   void reloaded();
