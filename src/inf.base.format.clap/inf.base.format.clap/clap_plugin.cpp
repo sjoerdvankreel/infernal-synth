@@ -77,9 +77,10 @@ extension_note_ports_get(
 {
   if (!is_input || index != 0) return false;
   info->id = 0;
-  info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
-  // TODO can we drop this or do we need to handle midi on/off?
-  info->supported_dialects = CLAP_NOTE_DIALECT_CLAP | CLAP_NOTE_DIALECT_MIDI;
+  //info->preferred_dialect = CLAP_NOTE_DIALECT_CLAP;
+  //info->supported_dialects = CLAP_NOTE_DIALECT_CLAP | CLAP_NOTE_DIALECT_MIDI;
+  info->preferred_dialect = CLAP_NOTE_DIALECT_MIDI;
+  info->supported_dialects = CLAP_NOTE_DIALECT_MIDI | CLAP_NOTE_DIALECT_MIDI;
   return true;
 }
 
@@ -154,6 +155,8 @@ plugin_process_events(
     } 
 
     // MIDI notes.
+    // Note: need to disable DIALECT_CLAP and recompile to actually test this 
+    // (f.e. using reaper virtual midi keyboard). Otherwise they get translated to CLAP_EVENT_NOTE_*.
     else if (header->type == CLAP_EVENT_MIDI)
     {
       auto event = reinterpret_cast<clap_event_midi const*>(header);
