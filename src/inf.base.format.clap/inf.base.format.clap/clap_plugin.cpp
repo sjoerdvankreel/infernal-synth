@@ -193,20 +193,35 @@ plugin_process_events(
 static clap_process_status CLAP_ABI
 plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
+  bool ok;
+  (void)ok;
+
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
 
+  // Process incoming events.
   auto inf_plugin = plugin_cast(plugin);
   inf_plugin->process_ui_queue(process->out_events);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
   plugin_process_events(inf_plugin, process, input, inf_plugin->topology->max_note_events);
 
+  // Run the main loop.
   input.data.bpm = 0.0f;
   input.data.stream_position = process->steady_time;
   input.data.sample_count = static_cast<std::int32_t>(process->frames_count);
   if(process->transport != nullptr) input.data.bpm = static_cast<float>(process->transport->tempo);
+  auto const& output = inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
 
-  inf_plugin->processor->process(nullptr, process->audio_outputs[0].data32, false, 0, 0);
+  // Push output params to the ui.
+  for (std::int32_t i = 0; i < inf_plugin->topology->output_param_count; i++)
+  {
+    audio_to_main_msg msg;
+    msg.index = inf_plugin->topology->input_param_count + i;
+    msg.value = base_to_format_normalized(inf_plugin->topology.get(), false, msg.index, inf_plugin->audio_state[msg.index]);
+    ok = inf_plugin->audio_to_main_queue.try_enqueue(msg);
+    assert(ok);
+  }
+
   return CLAP_PROCESS_CONTINUE;
 }
 
