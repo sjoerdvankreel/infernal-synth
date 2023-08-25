@@ -30,6 +30,7 @@
 * sync on load ui
 * do the gesture thing?
 * check refreshUIValues
+* do the interpolation stuff
 * do the polyphonic mod stuff
 * re-check both from/to queues
 
