@@ -27,7 +27,6 @@
 - clap 
 * midi
 * choke/end
-* output params
 * sync on load ui
 * do the gesture thing?
 * check refreshUIValues
