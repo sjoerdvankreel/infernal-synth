@@ -15,6 +15,11 @@ namespace inf::base {
 inline std::int32_t constexpr midi_note_c4 = 60;
 inline std::int32_t constexpr stereo_channels = 2;
 
+inline std::int32_t constexpr midi_cc_mod_wheel = 1;
+inline std::int32_t constexpr midi_cc_volume = 7;
+inline std::int32_t constexpr midi_cc_channel_pressure = 128;
+inline std::int32_t constexpr midi_cc_pitch_wheel = 129;
+
 inline float constexpr sanity_epsilon = 1.0e-4f;
 inline float constexpr pi32 = 3.14159265358979323846264338327950288f;
 inline double constexpr pi64 = 3.14159265358979323846264338327950288f;

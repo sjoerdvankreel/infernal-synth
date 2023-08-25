@@ -85,6 +85,9 @@ public:
   virtual void init_clear_patch(param_value* state) const { init_all_param_defaults(state); }
   virtual void init_factory_preset(param_value* state) const { init_all_param_defaults(state); }
 
+  // VST3 needs an additional param to map a midi stream onto so we just do it the same way for CLAP.
+  virtual bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const = 0;
+
   // Metadata and conversions (backwards compat).
   virtual char const* vendor_name() const = 0;
   virtual char const* plugin_name() const = 0;

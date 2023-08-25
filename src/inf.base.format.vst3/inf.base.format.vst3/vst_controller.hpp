@@ -43,7 +43,6 @@ protected:
   virtual vst_editor* create_editor() = 0;
   tresult set_component_state(IBStream* state);
 
-  virtual bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const = 0;
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:

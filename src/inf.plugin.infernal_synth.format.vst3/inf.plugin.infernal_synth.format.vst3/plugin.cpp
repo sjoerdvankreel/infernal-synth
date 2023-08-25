@@ -98,11 +98,8 @@ public:
 
 class synth_vst_controller :
 public vst_controller
-{
-protected:
-  bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const override;
+{  
 public:
-
   std::string plugin_unique_id() const { return IPISFV3_UNIQUE_ID_TEXT; }
   vst_editor* create_editor() override { return new synth_vst_editor(this); }
   std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
@@ -112,22 +109,6 @@ public:
   synth_vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id):
   vst_controller(std::move(topology), processor_id) {}
 };
-
-bool 
-synth_vst_controller::map_midi_control(std::int32_t number, std::int32_t& target_tag) const
-{
-  if (number == Steinberg::Vst::ControllerNumbers::kCtrlModWheel)
-    target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
-  else if (number == Steinberg::Vst::ControllerNumbers::kCtrlVolume)
-    target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
-  else if (number == Steinberg::Vst::ControllerNumbers::kAfterTouch)
-    target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_press);
-  else if(number == Steinberg::Vst::ControllerNumbers::kPitchBend)
-    target_tag = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
-  else 
-    return false;
-  return true;
-}
 
 static FUnknown*
 create_controller(void* context)
