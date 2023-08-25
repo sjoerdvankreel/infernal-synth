@@ -25,14 +25,13 @@
 - please fix the *** flush bug already and/or check bitwig clap version
 
 - clap 
-* sync on load ui
 * midi
-* output params
 * choke/end
+* output params
+* sync on load ui
 * do the gesture thing?
-* do the polyphonic mod stuff
-* host menu
 * check refreshUIValues
+* do the polyphonic mod stuff
 * re-check both from/to queues
 
 * bugs
