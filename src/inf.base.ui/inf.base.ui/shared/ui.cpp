@@ -280,9 +280,7 @@ show_context_menu_for_param(
   for (std::int32_t i = 0; i < host_menu_count; i++)
   {
     host_context_menu_item item = host_menu->get_item(i);
-    if((item.flags & host_context_menu_item::separator) != 0)
-      host_menu_stack.top().addSeparator();
-    else if ((item.flags & host_context_menu_item::group_start) != 0)
+    if ((item.flags & host_context_menu_item::group_start) != 0)
     {
       host_menu_stack.push(PopupMenu());
       host_context_menu_item_stack.push(item);
@@ -296,6 +294,8 @@ show_context_menu_for_param(
       bool enabled = (sub_menu_item.flags & host_context_menu_item::enabled) != 0;
       host_menu_stack.top().addSubMenu(sub_menu_item.name, sub_menu, enabled);
     }
+    else if ((item.flags & host_context_menu_item::separator) != 0)
+      host_menu_stack.top().addSeparator();
     else
     {
       bool checked = (item.flags & host_context_menu_item::checked) != 0;
