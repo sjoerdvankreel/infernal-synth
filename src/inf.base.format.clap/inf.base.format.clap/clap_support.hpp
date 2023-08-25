@@ -11,6 +11,11 @@ namespace inf::base::format::clap
 // this dynamic dependent on topology_info.
 inline std::int32_t constexpr queue_size = 16384;
 
+inline std::uint32_t constexpr midi_cc_mod_wheel = 1;
+inline std::uint32_t constexpr midi_cc_channel_volume = 7;
+inline std::uint32_t constexpr midi_cc_channel_pressure = 0xD0;
+inline std::uint32_t constexpr midi_cc_pitch_bend = 0xE0;
+
 struct audio_to_main_msg
 {
   std::int32_t index;

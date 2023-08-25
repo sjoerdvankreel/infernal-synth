@@ -43,6 +43,9 @@ struct inf_clap_plugin
   std::vector<inf::base::param_value> audio_state = {};
   std::vector<std::int32_t> changed = {};
 
+  // cache midi mappings
+  std::map<std::int32_t, std::int32_t> midi_map = {};
+
   // Allow implementation to accurately measure total cpu.
   std::int64_t prev_end_perf_count = 0;
   // Don't update output too often.

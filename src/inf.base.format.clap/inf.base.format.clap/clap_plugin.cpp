@@ -219,13 +219,31 @@ plugin_process_events(
         }
       }
 
-      // Raw midi cc messages.
+      // Raw midi cc messages (14 bit values).
       else if (header->type == CLAP_EVENT_MIDI)
       {
         auto event = reinterpret_cast<clap_event_midi const*>(header);
-        auto x = event->port_index;
-        x++;
-        (void)event;
+        if (event->port_index == 0)
+        {
+          std::uint8_t msg = event->data[0] & 0xF0;
+          auto iter = plugin->midi_map.find(msg);
+          if (iter != plugin->midi_map.end())
+          {
+            auto param_index = plugin->topology->param_id_to_index[iter->second];
+            if (plugin->topology->params[param_index].descriptor->data.is_continuous())
+            {
+              // Just make a "bumpy" curve for now.
+              if (header->time == static_cast<std::uint32_t>(s))
+              {
+                // Mapping to 0..1, plug implementation should scale back.
+                std::uint16_t val = (event->data[2] << 7) | event->data[1];
+                float normalized = static_cast<float>(val) / static_cast<float>(1U << 14);
+                plugin->audio_state[param_index] = format_normalized_to_base(plugin->topology.get(), false, param_index, normalized);
+              }
+              input.continuous_automation_raw[param_index][s] = plugin->audio_state[param_index].real;
+            }
+          }
+        }
       }
     }
 }

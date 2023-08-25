@@ -4,6 +4,7 @@
 #include <inf.plugin.infernal_synth.ui/ui.hpp>
 
 #include <inf.base.format.clap/clap_entry.hpp>
+#include <inf.base.format.clap/clap_support.hpp>
 #include <inf.base.format.clap/clap_factory.hpp>
 #include <inf.base.format.clap/clap_controller.hpp>
 
@@ -34,13 +35,24 @@ features[] = { IPISFCLAP_FEATURE, CLAP_PLUGIN_FEATURE_STEREO, nullptr };
 class synth_clap_controller :
 public inf::base::format::clap::clap_controller
 {
+  std::map<std::int32_t, std::int32_t> map_midi_controls() const override;
   std::string plugin_unique_id() const { return IPISFCLAP_UNIQUE_ID_TEXT; }
   std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
   std::string default_theme_name() const override { return IPIS_DEFAULT_THEME_NAME; }
   std::unique_ptr<root_element> create_ui() override { return create_synth_ui(this); }
-  std::map<std::int32_t, std::int32_t> map_midi_controls() const override { return {}; }
   inf::base::editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
 };
+
+std::map<std::int32_t, std::int32_t> 
+synth_clap_controller::map_midi_controls() const
+{
+  std::map<std::int32_t, std::int32_t> result = {};
+  result[midi_cc_mod_wheel] = topology()->param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
+  result[midi_cc_channel_volume] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
+  result[midi_cc_channel_pressure] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_press);
+  result[midi_cc_pitch_bend] = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
+  return result;
+}
 
 namespace inf::base::format::clap
 {
