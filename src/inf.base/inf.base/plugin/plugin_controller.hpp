@@ -113,7 +113,8 @@ public:
 
   // VST3 needs an additional param to map a midi stream onto so we just do it the same way for CLAP.
   // Note: it is expected that the target parameter is a continuous-valued parameter!
-  // Maps midi cc nr to param tag.
+  // Note2!: it seems VST3's ControllerNumbers are not *actual* midi cc numbers for anything above 127.
+  // So, needs to be implemented for each plug format individually.
   virtual std::map<std::int32_t, std::int32_t> map_midi_controls() const = 0;
 
   // All plug incarnations with same unique_id can load/save the same files.
