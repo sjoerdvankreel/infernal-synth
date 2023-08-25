@@ -20,17 +20,21 @@ namespace inf::base::format::clap
 class clap_host_context_menu_bridge:
 public host_context_menu
 {
+  clap_host const* const _host;
+  clap_context_menu_target const _target;
   clap_host_context_menu const* const _host_menu;
   std::vector<host_context_menu_item> const _items;
 public:
-  void item_clicked(std::int32_t index) override;
   host_context_menu_item get_item(std::int32_t index) const override { return _items[index]; }
   std::int32_t item_count() const override { return static_cast<std::int32_t>(_items.size()); }
-  
+  void item_clicked(std::int32_t index) override { _host_menu->perform(_host, &_target, static_cast<clap_id>(index)); }
+
   clap_host_context_menu_bridge(
+    clap_host const* host,
     clap_host_context_menu const* host_menu, 
+    clap_context_menu_target const& target,
     std::vector<host_context_menu_item> const& items) : 
-    _host_menu(host_menu), _items(items) {}
+    _host(host), _host_menu(host_menu), _target(target), _items(items) {}
 };
 
 static clap_controller*
@@ -263,7 +267,7 @@ clap_controller::host_menu_for_param_index(std::int32_t param_index) const
   builder.add_item = menu_builder_add_item;
   builder.supports = menu_builder_supports;
   host_menu->populate(_host, &target, &builder);
-  return std::make_unique<clap_host_context_menu_bridge>(host_menu, items);
+  return std::make_unique<clap_host_context_menu_bridge>(_host, host_menu, target, items);
 }
 
 void 
@@ -345,11 +349,6 @@ menu_builder_add_item(
 
   items->push_back(item);
   return true;
-}
-
-void
-clap_host_context_menu_bridge::item_clicked(std::int32_t index)
-{
 }
 
 } // inf::base::format::clap
