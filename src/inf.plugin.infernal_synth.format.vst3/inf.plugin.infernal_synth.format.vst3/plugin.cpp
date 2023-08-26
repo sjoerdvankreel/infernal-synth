@@ -127,7 +127,7 @@ create_controller(void* context)
 {
   FUID fuid;
   fuid.fromString(IPISFV3_UNIQUE_ID_TEXT);
-  auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, IPISFV3_FX == 0);
+  auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
   auto controller = new synth_vst_controller(std::move(topology), fuid);
   return static_cast<IEditController*>(controller);
 }
@@ -135,7 +135,7 @@ create_controller(void* context)
 static FUnknown* 
 create_processor(void* context)
 {
-  auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, IPISFV3_FX == 0);
+  auto topology = std::make_unique<synth_topology>(part_descriptors, part_type::count, synth_polyphony, IPISFV3_FX == 0);
   auto processor = new vst_processor(std::move(topology), FUID::fromTUID(vst_controller_id));
   return static_cast<IAudioProcessor*>(processor);
 }
