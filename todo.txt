@@ -22,7 +22,7 @@
 - check the linux dist output
 - check the links for demo project
 - document new dependencies
-- please fix the *** flush bug already and/or check bitwig clap version
+- please fix the *** flush bug already and/or check bitwig clap version ==> IS IT THE EVENT INPUT COUNT ?
 
 - clap 
 * choke

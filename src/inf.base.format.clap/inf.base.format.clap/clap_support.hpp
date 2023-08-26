@@ -7,11 +7,6 @@
 namespace inf::base::format::clap
 {
 
-// This is enough to push all of infernal synths parameters
-// around about 10 times for now. But prefer some way to make
-// this dynamic dependent on topology_info.
-inline std::int32_t constexpr queue_size = 16384;
-
 inline std::uint32_t constexpr midi_cc = 176;
 inline std::uint32_t constexpr midi_cc_mod_wheel = 1;
 inline std::uint32_t constexpr midi_cc_channel_volume = 7;

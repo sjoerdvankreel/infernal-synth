@@ -107,7 +107,7 @@ vst_processor::initialize(FUnknown* context)
   tresult result = AudioEffect::initialize(context);
   if (result != kResultTrue) return kResultFalse;
   addAudioOutput(STR16("Stereo Out"), SpeakerArr::kStereo);
-  addEventInput(STR16("Event In"), _topology->max_note_events);
+  addEventInput(STR16("Event In"), max_input_event_count);
   if (!_topology->is_instrument()) addAudioInput(STR16("Stereo Out"), SpeakerArr::kStereo);
   return kResultTrue;
 }
@@ -181,30 +181,31 @@ vst_processor::process_notes(block_input& input, ProcessData const& data)
   Event event;
   if (data.inputEvents == nullptr) return;
   int32 count = data.inputEvents->getEventCount();
-  std::int32_t capacity = _processor->topology()->max_note_events;
   for (std::int32_t i = 0; i < count; i++)
   {
     if (data.inputEvents->getEvent(i, event) == kResultOk)
     {
       if (event.type == Event::kNoteOnEvent || event.type == Event::kNoteOffEvent)
       { 
-        if (input.note_count == capacity) break;
+        if (input.input_event_count == max_input_event_count) break;
         else
         {
-          auto& note = input.notes[input.note_count++];
+          auto& note = input.input_events[input.input_event_count++];
           switch (event.type)
           {
           case Event::kNoteOnEvent:
-            note.note_on = true;
-            note.midi = event.noteOn.pitch;
-            note.velocity = event.noteOn.velocity;
+            note.type = input_event_type::note;
             note.sample_index = event.sampleOffset;
+            note.data.note.note_on = true;
+            note.data.note.midi = event.noteOn.pitch;
+            note.data.note.velocity = event.noteOn.velocity;
             break;
           case Event::kNoteOffEvent:
-            note.note_on = false;
-            note.velocity = 0.0f;
-            note.midi = event.noteOff.pitch;
+            note.type = input_event_type::note;
             note.sample_index = event.sampleOffset;
+            note.data.note.note_on = false;
+            note.data.note.velocity = 0.0f;
+            note.data.note.midi = event.noteOff.pitch;
             break;
           default:
             assert(false);
