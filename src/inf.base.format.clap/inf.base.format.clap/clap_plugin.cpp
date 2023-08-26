@@ -230,7 +230,7 @@ plugin_process_events(
           std::uint8_t msg = event->data[0] & 0xF0;
           if (msg == midi_cc)
           {
-            auto cc_mapping_iter = plugin->midi_cc_map.find(msg);
+            auto cc_mapping_iter = plugin->midi_cc_map.find(event->data[1]);
             if (cc_mapping_iter != plugin->midi_cc_map.end())
               target_id = cc_mapping_iter->second;
           }
