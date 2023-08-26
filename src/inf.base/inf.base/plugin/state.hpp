@@ -2,12 +2,18 @@
 #define INF_BASE_PLUGIN_STATE_HPP
 
 #include <inf.base/plugin/automation_view.hpp>
+
+#include <array>
 #include <cstdint>
 
 namespace inf::base {
 
 // Just pick some speed for rendering.
 inline float constexpr graph_bpm = 120.0f;
+
+// Event queue size.
+inline std::int32_t constexpr max_note_input_event_count = 1024;
+inline std::int32_t constexpr max_automation_input_event_count = 16384;
 
 // Graph output.
 struct graph_point 
@@ -31,7 +37,7 @@ struct block_output
   param_value* block_automation_raw;
 };
 
-struct note_event
+struct note_input_event
 {
   // Note on/off.
   bool note_on = false;
@@ -40,6 +46,13 @@ struct note_event
   // Midi note index for both on and off events.
   std::int32_t midi = -1;
   // Index in current buffer.
+  std::int32_t sample_index = -1;
+};
+
+struct automation_input_event
+{
+  param_value value;
+  std::int32_t param_index = -1;
   std::int32_t sample_index = -1;
 };
 
@@ -61,19 +74,15 @@ struct block_input_data
 struct block_input
 {
   // Clear voices, delay lines etc.
-  bool hard_reset;
-
-  // Midi note events.
-  note_event* notes;
-  std::int32_t note_count;
+  bool hard_reset = false;
 
   // Generic block input.
-  block_input_data data;
-  std::int32_t channel_count;
+  block_input_data data = {};
+  std::int32_t channel_count = 0;
 
   // Timing data.
-  std::int64_t prev_perf_count;
-  std::int32_t prev_sample_count;
+  std::int64_t prev_perf_count = 0;
+  std::int32_t prev_sample_count = 0;
 
   // Automation matrix for the entire processor.
   // Components may create views into this, limiting to specific parameters or sample ranges,
@@ -81,11 +90,17 @@ struct block_input
   // Continuous is per-sample, block covers block, voice, fixed, and output.
   // Continuous has gaps in it since block and continuous automation parameters
   // are declared interleaved but we want both block[p] and continuous[p] to refer to parameter number p.
-  param_value* block_automation_raw;
-  float* const* continuous_automation_raw;
+  param_value* block_automation_raw = {};
+  float* const* continuous_automation_raw = {};
 
   // Per-parameter indication (0/1) if the parameter of this index changed.
-  std::int32_t* changed_automation_raw;
+  std::int32_t* changed_automation_raw = {};
+
+  // Event queues.
+  std::int32_t note_input_event_count = 0;
+  std::int32_t automation_input_event_count = 0;
+  std::array<note_input_event, max_note_input_event_count> note_input_events = {};
+  std::array<automation_input_event, max_automation_input_event_count> automation_input_events = {};
 };
 
 } // namespace inf::base

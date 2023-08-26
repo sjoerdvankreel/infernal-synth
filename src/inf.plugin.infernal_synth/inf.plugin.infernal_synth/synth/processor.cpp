@@ -117,7 +117,7 @@ synth_processor::return_voice(std::int32_t index)
 }
 
 void 
-synth_processor::setup_voice_release(note_event const& note)
+synth_processor::setup_voice_release(note_input_event const& note)
 {
   for (std::int32_t v = 0; v < synth_polyphony; v++)
     if (_voice_states[v].in_use && 
@@ -153,8 +153,10 @@ synth_processor::find_voice_slot()
 }
 
 void 
-synth_processor::setup_voice(voice_setup_input const& input, base::note_event const& note)
+synth_processor::setup_voice(voice_setup_input const& input, base::note_input_event const& note)
 {
+  // TODO here goes PCK and note id !
+
   // Bookkeeping.
   std::int32_t slot = find_voice_slot();
   bool new_voice_section = _active_voice_count == 0;
@@ -196,7 +198,7 @@ synth_processor::setup_voice(voice_setup_input const& input, base::note_event co
 } 
 
 void 
-synth_processor::process_note_on(voice_setup_input const& input, base::note_event const& note)
+synth_processor::process_note_on(voice_setup_input const& input, base::note_input_event const& note)
 {
   // For mono and release, we need to reinitialize portamento settings at the exact sample position. 
   // Regular polyphonic mode: activate new voice for each note.
@@ -217,7 +219,7 @@ synth_processor::process_note_on(voice_setup_input const& input, base::note_even
 }
 
 void 
-synth_processor::process_note_off(voice_setup_input const& input, base::note_event const& note)
+synth_processor::process_note_off(voice_setup_input const& input, base::note_input_event const& note)
 {
   // For mono and legato, we don't want to release the
   // voice if the note-off event is implicit (i.e.,
@@ -232,8 +234,8 @@ synth_processor::process_note_off(voice_setup_input const& input, base::note_eve
   // always holds the initial pitch that activated the voice.
   // Also for poly mode, we need this value for release-reset portamento.
   bool implicit_release = false;
-  for (std::int32_t i = 0; i < input.block->note_count; i++)
-    if (input.block->notes[i].note_on && input.block->notes[i].sample_index == note.sample_index)
+  for (std::int32_t i = 0; i < input.block->note_input_event_count; i++)
+    if (input.block->note_input_events[i].note_on && input.block->note_input_events[i].sample_index == note.sample_index)
     {
       implicit_release = true;
       break;
@@ -244,7 +246,7 @@ synth_processor::process_note_off(voice_setup_input const& input, base::note_eve
 
   // Regular polyphonic mode: release note by pitch.
   // Monophonic modes: release on explicit note-off only.
-  note_event event = note;
+  note_input_event event = note;
   if(input.voice_mode == voice_mode::poly)
     setup_voice_release(event);
   else if(_last_voice_activated != -1 && !implicit_release)
@@ -292,19 +294,19 @@ synth_processor::process_notes_current_block(voice_setup_input const& input)
   result.buffer_final_midi_pos = -1;
   if (should_release_all)
     release_all_voices();
-  else for (std::int32_t n = 0; n < input.block->note_count; n++)
-    if (input.block->notes[n].note_on)
+  else for (std::int32_t n = 0; n < input.block->note_input_event_count; n++)
+    if (input.block->note_input_events[n].note_on)
     {
       // Need to remember these for mono/legato mode.
       if (input.voice_mode != voice_mode::poly)
       {
-        result.buffer_final_midi = input.block->notes[n].midi;
-        result.buffer_final_midi_pos = input.block->notes[n].sample_index;
+        result.buffer_final_midi = input.block->note_input_events[n].midi;
+        result.buffer_final_midi_pos = input.block->note_input_events[n].sample_index;
       }
-      process_note_on(input, input.block->notes[n]);
+      process_note_on(input, input.block->note_input_events[n]);
     }
     else
-      process_note_off(input, input.block->notes[n]);
+      process_note_off(input, input.block->note_input_events[n]);
   return result;
 }
 

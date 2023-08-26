@@ -52,13 +52,11 @@ struct topology_info
 protected:  
   // Output params must follow input params.
   topology_info(
-    part_descriptor const* static_parts,
-    std::int32_t part_count, std::int32_t max_notes);
+    part_descriptor const* static_parts, std::int32_t part_count);
 
 public:
   part_descriptor const* static_parts = {}; // Static description of audio processor.
   std::int32_t static_part_count = 0; // Part count in static description.
-  std::int32_t max_note_events = 0; // Not necessarily the same as polyphony.
   std::int32_t input_param_count = 0; // Runtime input params.
   std::int32_t output_param_count = 0; // Runtime output params.  
   std::int32_t continuous_param_count = 0; // Runtime sample-accurate automation parameter count.

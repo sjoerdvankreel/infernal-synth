@@ -92,14 +92,14 @@ private:
   void release_all_voices();
   std::int32_t find_voice_slot();
   void return_voice(std::int32_t voice);
-  void setup_voice_release(base::note_event const& note);
-  void setup_voice(voice_setup_input const& input, base::note_event const& note);
+  void setup_voice_release(base::note_input_event const& note);
+  void setup_voice(voice_setup_input const& input, base::note_input_event const& note);
 
   // Handle note on/off events. This will create and release
   // voices as required by poly/mono mode.
   voice_setup_output process_notes_current_block(voice_setup_input const& input);
-  void process_note_on(voice_setup_input const& input, base::note_event const& note);
-  void process_note_off(voice_setup_input const& input, base::note_event const& note);
+  void process_note_on(voice_setup_input const& input, base::note_input_event const& note);
+  void process_note_off(voice_setup_input const& input, base::note_input_event const& note);
 };
 
 } // namespace inf::plugin::infernal_synth
