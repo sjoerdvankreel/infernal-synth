@@ -20,6 +20,7 @@ private:
   block_input _input;
   block_output _output;
   cont_storage<float> _silence;
+  std::vector<note_event> _notes;
 
   float const _sample_rate;
   // Of size parameter count (so unused indices at continuous parameters).

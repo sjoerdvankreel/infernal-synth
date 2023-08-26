@@ -123,7 +123,8 @@ plugin_activate(
 // Translate from clap events.
 static void
 plugin_process_events(
-  inf_clap_plugin* plugin, clap_process_t const* process, block_input& input)
+  inf_clap_plugin* plugin, clap_process_t const* process,
+  block_input& input, std::int32_t max_note_events)
 {
   bool ok;
   std::uint8_t midi_note_on = 0x90;
@@ -140,14 +141,14 @@ plugin_process_events(
     // CLAP notes.
     if (header->type == CLAP_EVENT_NOTE_ON || header->type == CLAP_EVENT_NOTE_OFF)
     {
-      // TODO if (input.note_count < max_note_events)
+      if (input.note_count < max_note_events)
       {
-        //auto& note = input.notes[input.note_count++];
-        //auto event = reinterpret_cast<clap_event_note_t const*>(header);
-        //note.midi = event->key;
-        //note.note_on = header->type == CLAP_EVENT_NOTE_ON;
-        //note.velocity = static_cast<float>(event->velocity);
-        //note.sample_index = static_cast<std::int32_t>(header->time);
+        auto& note = input.notes[input.note_count++];
+        auto event = reinterpret_cast<clap_event_note_t const*>(header);
+        note.midi = event->key;
+        note.note_on = header->type == CLAP_EVENT_NOTE_ON;
+        note.velocity = static_cast<float>(event->velocity);
+        note.sample_index = static_cast<std::int32_t>(header->time);
       }
     } 
 
@@ -162,13 +163,13 @@ plugin_process_events(
         std::uint8_t msg = event->data[0] & 0xF0;
         if(msg == midi_note_on || msg == midi_note_off)
         {
-          // TODO if (input.note_count < max_note_events)
+          if (input.note_count < max_note_events)
           {
-            //auto& note = input.notes[input.note_count++];
-            //note.midi = event->data[1];
-            //note.note_on = msg == midi_note_on;
-            //note.velocity = event->data[2] / 127.0f;
-            //note.sample_index = static_cast<std::int32_t>(header->time);
+            auto& note = input.notes[input.note_count++];
+            note.midi = event->data[1];
+            note.note_on = msg == midi_note_on;
+            note.velocity = event->data[2] / 127.0f;
+            note.sample_index = static_cast<std::int32_t>(header->time);
           }
         }
       }
@@ -272,7 +273,7 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   auto inf_plugin = plugin_cast(plugin);
   inf_plugin->process_ui_queue(process->out_events);
   auto& input = inf_plugin->processor->prepare_block(static_cast<std::int32_t>(process->frames_count));
-  plugin_process_events(inf_plugin, process, input);
+  plugin_process_events(inf_plugin, process, input, inf_plugin->topology->max_note_events);
 
   // Run the main loop.
   input.data.bpm = 0.0f;

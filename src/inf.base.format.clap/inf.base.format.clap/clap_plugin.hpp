@@ -55,9 +55,9 @@ struct inf_clap_plugin
   std::chrono::system_clock::time_point output_updated;
 
   // For async main <-> audio messaging.
-  moodycamel::ReaderWriterQueue<audio_to_main_msg, max_input_event_count> audio_to_main_queue;
-  moodycamel::ReaderWriterQueue<main_to_audio_msg, max_input_event_count> main_to_audio_queue;
-  inf_clap_plugin(): audio_to_main_queue(max_input_event_count), main_to_audio_queue(max_input_event_count) {}
+  moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size> audio_to_main_queue;
+  moodycamel::ReaderWriterQueue<main_to_audio_msg, queue_size> main_to_audio_queue;
+  inf_clap_plugin(): audio_to_main_queue(queue_size), main_to_audio_queue(queue_size) {}
 
   void process_ui_queue(clap_output_events_t const* ov);
 };
