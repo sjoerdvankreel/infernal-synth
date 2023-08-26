@@ -35,7 +35,6 @@ features[] = { IPISFCLAP_FEATURE, CLAP_PLUGIN_FEATURE_STEREO, nullptr };
 class synth_clap_controller :
 public inf::base::format::clap::clap_controller
 {
-  std::set<std::int32_t> midi_is_coarse() const override;
   std::map<std::int32_t, std::int32_t> map_midi_controls() const override;
   std::string plugin_unique_id() const { return IPISFCLAP_UNIQUE_ID_TEXT; }
   std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
@@ -43,14 +42,6 @@ public inf::base::format::clap::clap_controller
   std::unique_ptr<root_element> create_ui() override { return create_synth_ui(this); }
   inf::base::editor_properties get_editor_properties() const override { return get_synth_editor_properties(); }
 };
-
-std::set<std::int32_t>
-synth_clap_controller::midi_is_coarse() const
-{
-  std::set<std::int32_t> result;
-  result.insert(midi_cc_channel_pressure);
-  return result;
-}
 
 std::map<std::int32_t, std::int32_t> 
 synth_clap_controller::map_midi_controls() const
