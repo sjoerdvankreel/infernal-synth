@@ -25,7 +25,7 @@
 - please fix the *** flush bug already and/or check bitwig clap version
 
 - clap 
-* midi
+* midi 
 * choke
 * sync on load ui
 * check refreshUIValues
@@ -41,7 +41,6 @@
 
 - Midi MPE
 - global envs
-- CLAP support
 - Linux support
 - more fm control (+mix?)
 - per-voice delay/reverb
@@ -53,7 +52,6 @@
 - make it more cpu efficient
 - scale CV amount by global CV param
 - make more presets + group by folder
-- incorporate chris airwindows filters
 - add new noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)
