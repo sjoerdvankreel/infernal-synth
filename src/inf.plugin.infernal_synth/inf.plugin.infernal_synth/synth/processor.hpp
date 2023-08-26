@@ -92,8 +92,8 @@ private:
   void release_all_voices();
   std::int32_t find_voice_slot();
   void return_voice(std::int32_t voice);
+  void setup_voice_release(base::note_event const& note);
   void setup_voice(voice_setup_input const& input, base::note_event const& note);
-  void setup_voice_release(std::int32_t sample_index, note_event_data const& note);
 
   // Handle note on/off events. This will create and release
   // voices as required by poly/mono mode.
