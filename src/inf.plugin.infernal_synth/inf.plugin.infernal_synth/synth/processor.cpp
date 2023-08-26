@@ -117,15 +117,17 @@ synth_processor::return_voice(std::int32_t index)
 }
 
 void 
-synth_processor::setup_voice_release(note_event const& note)
+synth_processor::setup_voice_release(
+  std::int32_t sample_index, note_event_data const& note)
 {
+  // TODO this needs note_id and PCK
   for (std::int32_t v = 0; v < synth_polyphony; v++)
     if (_voice_states[v].in_use && 
       _voice_states[v].midi == note.midi &&
       !_voice_states[v].released_previous_buffer)
     {
       _voice_states[v].release_this_buffer = true;
-      _voice_states[v].release_position_buffer = note.sample_index;
+      _voice_states[v].release_position_buffer = sample_index;
     }
 }
 
