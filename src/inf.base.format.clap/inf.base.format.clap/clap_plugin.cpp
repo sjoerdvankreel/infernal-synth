@@ -219,17 +219,31 @@ plugin_process_events(
         }
       }
 
-      // Raw midi cc messages (7/14 bit values).
+      // Raw midi messages (7/14 bit values).
       else if (header->type == CLAP_EVENT_MIDI)
       {
         auto event = reinterpret_cast<clap_event_midi const*>(header);
         if (event->port_index == 0)
         {
+          // Find out if this message is routed anywhere.
+          std::int32_t target_id = -1;
           std::uint8_t msg = event->data[0] & 0xF0;
-          auto mapping_iter = plugin->midi_map.find(msg);
-          if (mapping_iter != plugin->midi_map.end())
+          if (msg == midi_cc)
           {
-            auto param_index = plugin->topology->param_id_to_index[mapping_iter->second];
+            auto cc_mapping_iter = plugin->midi_cc_map.find(msg);
+            if (cc_mapping_iter != plugin->midi_cc_map.end())
+              target_id = cc_mapping_iter->second;
+          }
+          else
+          {
+            auto mapping_iter = plugin->midi_map.find(msg);
+            if (mapping_iter != plugin->midi_map.end())
+              target_id = mapping_iter->second;
+          }
+          
+          if (target_id != -1)
+          {
+            auto param_index = plugin->topology->param_id_to_index[target_id];
             if (plugin->topology->params[param_index].descriptor->data.is_continuous())
             {
               // Just make a "bumpy" curve for now.

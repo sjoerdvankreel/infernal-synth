@@ -36,6 +36,7 @@ class synth_clap_controller :
 public inf::base::format::clap::clap_controller
 {
   std::map<std::int32_t, std::int32_t> map_midi_controls() const override;
+  std::map<std::int32_t, std::int32_t> map_midi_cc_controls() const override;
   std::string plugin_unique_id() const { return IPISFCLAP_UNIQUE_ID_TEXT; }
   std::string plugin_preset_file_extension() const { return IPIS_PRESET_EXTENSION; }
   std::string default_theme_name() const override { return IPIS_DEFAULT_THEME_NAME; }
@@ -47,10 +48,17 @@ std::map<std::int32_t, std::int32_t>
 synth_clap_controller::map_midi_controls() const
 {
   std::map<std::int32_t, std::int32_t> result = {};
+  result[midi_channel_pressure] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_press);
+  result[midi_pitch_bend] = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
+  return result;
+}
+
+std::map<std::int32_t, std::int32_t>
+synth_clap_controller::map_midi_cc_controls() const
+{
+  std::map<std::int32_t, std::int32_t> result = {};
   result[midi_cc_mod_wheel] = topology()->param_id({ part_type::master, 0 }, master_param::midi_mod_wheel);
   result[midi_cc_channel_volume] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_vol);
-  result[midi_cc_channel_pressure] = topology()->param_id({ part_type::master, 0 }, master_param::midi_ch_press);
-  result[midi_cc_pitch_bend] = topology()->param_id({ part_type::master, 0 }, master_param::midi_pitch_bend);
   return result;
 }
 

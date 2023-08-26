@@ -13,6 +13,8 @@ namespace inf::base::format::clap
 inline std::int32_t constexpr queue_size = 16384;
 
 inline std::uint32_t constexpr midi_cc = 176;
+inline std::uint32_t constexpr midi_cc_mod_wheel = 1;
+inline std::uint32_t constexpr midi_cc_channel_volume = 7;
 inline std::uint32_t constexpr midi_channel_pressure = 0xD0;
 inline std::uint32_t constexpr midi_pitch_bend = 0xE0;
 

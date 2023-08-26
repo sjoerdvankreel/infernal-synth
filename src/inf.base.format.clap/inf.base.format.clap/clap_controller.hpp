@@ -50,6 +50,10 @@ public:
   // Defer to plugin.
   virtual std::unique_ptr<inf::base::ui::root_element> create_ui() = 0;
 
+  // Matching to vst3 - plugin needs to tell which messages map to which parameters.  
+  virtual std::map<std::int32_t, std::int32_t> map_midi_controls() const = 0;
+  virtual std::map<std::int32_t, std::int32_t> map_midi_cc_controls() const = 0;
+
   void restart() override {}
   void load_component_state(inf::base::param_value* state) override;
   void swap_param(std::int32_t source_tag, std::int32_t target_tag) override;

@@ -47,6 +47,7 @@ struct inf_clap_plugin
 
   // cache midi mappings
   std::map<std::int32_t, std::int32_t> midi_map = {};
+  std::map<std::int32_t, std::int32_t> midi_cc_map = {};
 
   // Allow implementation to accurately measure total cpu.
   std::int64_t prev_end_perf_count = 0;
