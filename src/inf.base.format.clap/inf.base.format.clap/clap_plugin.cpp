@@ -219,7 +219,7 @@ plugin_process_events(
         }
       }
 
-      // Raw midi cc messages (14 bit values).
+      // Raw midi cc messages (7/14 bit values).
       else if (header->type == CLAP_EVENT_MIDI)
       {
         auto event = reinterpret_cast<clap_event_midi const*>(header);
@@ -234,21 +234,8 @@ plugin_process_events(
             {
               // Just make a "bumpy" curve for now.
               if (header->time == static_cast<std::uint32_t>(s))
-              {
-                // Do we deal with 7 or 14 bit messages?
-                float normalized;
-                auto coarse_iter = plugin->midi_coarse.find(msg);
-                if(coarse_iter != plugin->midi_coarse.end())
-                  normalized = event->data[1] / 128.0f;
-                else
-                {
-                  // Mapping to 0..1, plug implementation should scale back.
-                  std::uint16_t val = (event->data[2] << 7) | event->data[1];
-                  normalized = static_cast<float>(val) / static_cast<float>(1U << 14);
-                }
-
-                plugin->audio_state[param_index] = format_normalized_to_base(plugin->topology.get(), false, param_index, normalized);
-              }
+                plugin->audio_state[param_index] = format_normalized_to_base(plugin->topology.get(), 
+                  false, param_index, midi_to_normalized(msg, event->data[1], event->data[2]));
               input.continuous_automation_raw[param_index][s] = plugin->audio_state[param_index].real;
             }
           }

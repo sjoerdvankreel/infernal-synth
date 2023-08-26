@@ -46,6 +46,9 @@ protected:
   vst_controller(std::unique_ptr<inf::base::topology_info>&& topology, FUID const& processor_id);
 
 public:
+  // Note! it seems VST3's ControllerNumbers are not *actual* midi cc numbers for anything above 127.
+  virtual std::map<std::int32_t, std::int32_t> map_midi_controls() const = 0;
+
   void* current_editor_window() const override;
   void reload_editor(std::int32_t width) override;
   void editor_param_changed(std::int32_t index, param_value ui_value) override;
