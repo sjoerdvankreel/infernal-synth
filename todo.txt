@@ -25,7 +25,6 @@
 - please fix the *** flush bug already and/or check bitwig clap version
 
 - clap 
-* midi 
 * choke
 * sync on load ui
 * check refreshUIValues
