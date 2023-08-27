@@ -1,3 +1,26 @@
+August 27, 2023 - V1.4 preview.
+
+* Notes:
+
+- Probably needs a plugin rescan because the folder structure changed (again).
+
+* New stuff:
+
+- Made a Cakewalk demo.
+- Added CLAP support. Feature parity with VST3, but, no polyphonic modulation yet.
+
+* Breaking changes:
+
+- Dropped support for the "generic" version. 
+-- 1.4 replaces 1.3-versioned.
+-- "Generic" build will no longer be updated.
+-- 1.4 can still run side by side with 1.3-generic.
+-- From now on versioned/generic distinction will be gone.
+
+- Changed the preset file format.
+-- Load/save works with .ispreset files. Ispreset files can be shared between vst3/clap.
+-- .Vstpreset files are still supported but you have to use the host wrapper interface.
+
 August 27, 2023 - V1.3.
 
 * No changes.

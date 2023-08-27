@@ -20,8 +20,6 @@ std::string
 format_label_short(plugin_controller const* controller, std::int32_t param_index);
 float
 get_scaled_size(plugin_controller const* controller, float min_size, float max_size);
-std::int32_t
-plugin_editor_width(plugin_controller const* controller, std::int32_t selected_size_index);
 std::string
 get_label_text(base::param_descriptor const* descriptor, label_type type, base::param_value value);
 

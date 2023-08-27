@@ -1,24 +1,37 @@
 * for each release 
-- x create version branch
-- x update version number in code
-- x update version number in cmake unless only bugfix release
-- x consider updating versioned guid
-- x gcc build
-- x update history
-- x keep manual up to date
+- v create version branch
+- v update version number in code
+- v update version number in cmake unless only bugfix release
+- v consider updating versioned guid
+- v gcc build
+- v update history
+- v keep manual up to date
 - x run host demos
 - x debug run demos
 - x run pluginval
 - x run the vst validator
 - x don't forget to tag
 
+* done this version
+- NEEDS PLUG RESCAN!
+- made cakewalk demo
+- drop generic build (=breaking change!)
+- changed preset format (=breaking change!)
+
+* todo this version
+- check the links for demo project
+
 * bugs
+- PRNG draw relative to sample rate
 - parameter flush bug when playing bitwig
+- vst3 parameter flush bug in bitwig (clap seems ok though)
+
+* wishlist small
+- CLAP polyphonic modulation
 
 * wishlist big
 - Midi MPE
 - global envs
-- CLAP support
 - Linux support
 - more fm control (+mix?)
 - per-voice delay/reverb
@@ -27,9 +40,9 @@
 - slope controls for cvu/b
 - slope controls for cv matrix
 - noise types: fractal, perlin
+- make it more cpu efficient
 - scale CV amount by global CV param
 - make more presets + group by folder
-- incorporate chris airwindows filters
 - add new noise generator (1/fs)
 - fx types: compressor, phaser/flanger/chorus
 - improve k+s generator (allow more stretching)

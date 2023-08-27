@@ -129,5 +129,109 @@ note_to_frequency_table(float midi)
   return (1.0f - mix) * freq_low + mix * freq_high;
 }
 
+// These are helper functions to go from base (which is either discrete or 0..1)
+// to both VST3 and CLAP normalized values (always 0..1 for vst3, 0..1 for clap real or
+// min-max for clap discrete) to display values (e.g. -6..+6) to text values (e.g. "-6dB""). 
+// CLAP doesnt really need this 0-1 normalization but its easier to keep parity with vst3.
+
+inline double 
+discrete_to_format_normalized(
+  inf::base::param_info const& info, bool discrete_is_normalized, std::int32_t val)
+{ 
+  assert(info.descriptor->data.type != inf::base::param_type::real);
+  if(!discrete_is_normalized) return val;
+  std::int32_t min = info.descriptor->data.discrete.min;
+  std::int32_t max = info.descriptor->data.discrete.effective_max(info.part_index);
+  return static_cast<double>(val - min) / (max - min); 
+}
+
+inline std::int32_t 
+format_normalized_to_discrete(
+  inf::base::param_info const& info, bool discrete_is_normalized, double val)
+{ 
+  assert(info.descriptor->data.type != inf::base::param_type::real);
+  if (!discrete_is_normalized) return static_cast<std::int32_t>(val);
+  std::int32_t min = info.descriptor->data.discrete.min;
+  std::int32_t max = info.descriptor->data.discrete.effective_max(info.part_index);
+  return min + std::clamp(static_cast<std::int32_t>(val * (max - min + 1)), 0, max - min);
+}
+
+inline double
+format_normalized_to_display(
+  inf::base::param_info const& info, bool discrete_is_normalized, double val)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.display.to_range(static_cast<float>(val));
+  default: return format_normalized_to_discrete(info, discrete_is_normalized, val);
+  }
+}
+
+inline double
+display_to_format_normalized(
+  inf::base::param_info const& info, bool discrete_is_normalized, double val)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.display.from_range(static_cast<float>(val));
+  default: return discrete_to_format_normalized(info, discrete_is_normalized, static_cast<std::int32_t>(val));
+  }
+}
+
+inline double 
+base_to_format_normalized(
+  inf::base::topology_info const* topology, bool discrete_is_normalized, std::int32_t param, inf::base::param_value val)
+{
+  auto const& info = topology->params[param];
+  if (info.descriptor->data.type == inf::base::param_type::real) return val.real;
+  return discrete_to_format_normalized(info, discrete_is_normalized, val.discrete);
+}
+
+inline inf::base::param_value
+format_normalized_to_base(
+  inf::base::topology_info const* topology, bool discrete_is_normalized, std::int32_t param, double val)
+{ 
+  auto const& info = topology->params[param];
+  if(info.descriptor->data.type == inf::base::param_type::real) return inf::base::param_value(static_cast<float>(val));
+  return inf::base::param_value(format_normalized_to_discrete(info, discrete_is_normalized, val));
+}
+
+inline std::string
+format_normalized_to_text(
+  inf::base::param_info const& info, bool discrete_is_normalized, double val)
+{
+  param_value value;
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: value.real = static_cast<float>(format_normalized_to_display(info, discrete_is_normalized, val)); break;
+  default: value.discrete = format_normalized_to_discrete(info, discrete_is_normalized, val); break;
+  }
+  return info.descriptor->data.format(false, value);
+}
+
+inline bool
+text_to_format_normalized(
+  inf::base::param_info const& info, bool discrete_is_normalized, char const* text, double& result)
+{
+  param_value value;
+  if (!info.descriptor->data.parse(false, info.part_index, text, value)) return false;
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: result = display_to_format_normalized(info, discrete_is_normalized, value.real); break;
+  default: result = discrete_to_format_normalized(info, discrete_is_normalized, value.discrete); break;
+  }
+  return true;
+}
+
+inline double
+param_default_to_format_normalized(param_info const& info, bool discrete_is_normalized)
+{
+  switch (info.descriptor->data.type)
+  {
+  case param_type::real: return info.descriptor->data.real.default_;
+  default: return discrete_to_format_normalized(info, discrete_is_normalized, info.descriptor->data.discrete.default_);
+  }
+}
+
 } // namespace inf::base
 #endif // INF_BASE_SHARED_SUPPORT_HPP

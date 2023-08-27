@@ -8,6 +8,8 @@
 #include <inf.base.ui/controls/file_chooser_dialog.hpp>
 #include <inf.base/shared/support.hpp>
 
+#include <stack>
+
 using namespace juce;
 using namespace inf::base;
 
@@ -153,7 +155,7 @@ create_preset_file_box_state(inf::base::plugin_controller* controller,
 {
   juce::File last_directory;
   auto state = new file_box_state;
-  auto filter_match = std::string("*.") + controller->preset_file_extension();
+  auto filter_match = std::string("*.") + controller->plugin_preset_file_extension();
   flags |= FileBrowserComponent::canSelectFiles;
   state->controller = controller;
   state->lnf = lnf_factory(controller);
@@ -260,21 +262,53 @@ show_context_menu_for_param(
 {
   PopupMenu menu;
   menu.setLookAndFeel(lnf);
+
+  if (exact_edit)
+    menu.addItem(1, "Edit...");
+
   auto host_menu = controller->host_menu_for_param_index(param_index);
   std::int32_t host_menu_count = host_menu? host_menu->item_count(): 0;
+  if (!exact_edit && host_menu_count == 0) return;
+
+  std::stack<PopupMenu> host_menu_stack;
+  host_menu_stack.push(PopupMenu());
+  std::stack<host_context_menu_item> host_context_menu_item_stack;
+  host_context_menu_item host_item = {};
+  host_item.name = "Host";
+  host_context_menu_item_stack.push(host_item);
+
   for (std::int32_t i = 0; i < host_menu_count; i++)
   {
-    bool enabled;
-    bool checked;
-    std::string name;
-    host_menu->get_item(i, name, enabled, checked);
-    menu.addItem(i + 1, name, enabled, checked);
+    host_context_menu_item item = host_menu->get_item(i);
+    if ((item.flags & host_context_menu_item::group_start) != 0)
+    {
+      host_menu_stack.push(PopupMenu());
+      host_context_menu_item_stack.push(item);
+    }
+    else if ((item.flags & host_context_menu_item::group_end) != 0)
+    {
+      auto sub_menu = host_menu_stack.top();
+      auto sub_menu_item = host_context_menu_item_stack.top();
+      host_menu_stack.pop();
+      host_context_menu_item_stack.pop();
+      host_menu_stack.top().addSubMenu(sub_menu_item.name, sub_menu, true);
+    }
+    else if ((item.flags & host_context_menu_item::separator) != 0)
+      host_menu_stack.top().addSeparator();
+    else
+    {
+      bool checked = (item.flags & host_context_menu_item::checked) != 0;
+      bool enabled = (item.flags & host_context_menu_item::enabled) != 0;
+      host_menu_stack.top().addItem(i + 2, item.name, enabled, checked);
+    }
   }
-  if(exact_edit)
-    menu.addItem(host_menu_count + 1, "Edit...");
+
+  if(host_menu_count != 0)
+    menu.addSubMenu("Host", host_menu_stack.top(), true);
+
   menu.showMenuAsync(PopupMenu::Options(), [controller, param_index, lnf_factory, host_menu_count, host_menu = host_menu.release()](int option) {
-    if (option > 0 && option <= host_menu_count) host_menu->item_clicked(option - 1);
-    else if (option == host_menu_count + 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    if(option == 1) show_exact_edit_dialog(controller, param_index, lnf_factory);
+    else if(option > 1 && option <= host_menu_count + 1) host_menu->item_clicked(option - 2);
     delete host_menu;
   });
 }
@@ -396,7 +430,7 @@ void
 root_element::layout()
 {
   std::int32_t w = _width;
-  std::int32_t h = static_cast<std::int32_t>(std::ceil(1.0f / controller()->editor_aspect_ratio() * w));
+  std::int32_t h = static_cast<std::int32_t>(std::ceil(1.0f / controller()->get_editor_properties().aspect_ratio * w));
   component()->setBounds(0, 0, w, h);
   _content->component()->setBounds(0, 0, w, h);
   _content->layout();
@@ -884,9 +918,9 @@ create_factory_preset_ui(
       std::int32_t selected_index = dropdown->getSelectedItemIndex();
       if (0 <= selected_index && selected_index < static_cast<std::int32_t>(presets.size()))
       {
-        controller->load_preset(presets[selected_index].path, true);
+        controller->load_plugin_preset(presets[selected_index].path);
         controller->set_factory_preset(presets[selected_index].name);
-      } }, 
+      } },  
     [controller, presets](juce::ComboBox* combo) {
       for (std::size_t i = 0; i < presets.size(); i++)
         if (presets[i].name == controller->get_factory_preset())
@@ -940,9 +974,10 @@ create_ui_size_ui(
   std::int32_t initial_index = -1;
   std::vector<std::string> size_names;
   std::string ui_size = controller->get_ui_size();
-  for(std::size_t i = 0; i < controller->ui_size_names().size(); i++)
+  auto props = controller->get_editor_properties();
+  for(std::size_t i = 0; i < props.ui_size_names.size(); i++)
   {
-    size_names.push_back(controller->ui_size_names()[i]);
+    size_names.push_back(props.ui_size_names[i]);
     if (size_names[i] == ui_size)
       initial_index = static_cast<std::int32_t>(i);
   }
@@ -952,7 +987,7 @@ create_ui_size_ui(
       if (0 <= selected_index && selected_index < static_cast<std::int32_t>(size_names.size()))
       {
         controller->set_ui_size(size_names[selected_index]);
-        controller->reload_editor(plugin_editor_width(controller, selected_index));
+        controller->reload_editor(controller->ui_size_to_editor_width(selected_index));
       }
     }, 
     [size_names, controller](juce::ComboBox* combo){
@@ -993,10 +1028,10 @@ save_preset_file(
   {
     if (result != 0)
     {
-      std::string dot_extension = std::string(".") + state->controller->preset_file_extension();
+      std::string dot_extension = std::string(".") + state->controller->plugin_preset_file_extension();
       auto selected = state->browser->getSelectedFile(0).getFullPathName().toStdString();
       if (!selected.ends_with(dot_extension)) selected += dot_extension;
-      state->controller->save_preset(selected);
+      state->controller->save_plugin_preset(selected);
       show_ok_box(state->controller, "Preset file saved.", lnf_factory(state->controller));
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
@@ -1014,16 +1049,17 @@ void
 load_preset_file(
   inf::base::plugin_controller* controller, lnf_factory lnf_factory)
 {  
+  auto props = controller->get_editor_properties();
   auto flags = FileBrowserComponent::openMode | FileBrowserComponent::filenameBoxIsReadOnly;
   auto state = create_preset_file_box_state(controller, lnf_factory, "Load preset", flags);
-  auto selected = [state, controller, lnf_factory](int result)
+  auto selected = [state, controller, lnf_factory, props](int result)
   {
     std::string old_theme = state->controller->get_theme();
     std::string old_size = state->controller->get_ui_size();
     if (result != 0)
     {
-      auto selected = state->browser->getSelectedFile(0);
-      if (!state->controller->load_preset(selected.getFullPathName().toStdString(), false))
+      auto selected = state->browser->getSelectedFile(0); 
+      if (!state->controller->load_plugin_preset(selected.getFullPathName().toStdString()))
         show_ok_box(state->controller, "Could not load preset file.", lnf_factory(state->controller));        
       state->controller->set_last_directory(state->browser->getSelectedFile(0).getParentDirectory().getFullPathName().toStdString());
     }
@@ -1032,11 +1068,11 @@ load_preset_file(
     if (result != 0 && (controller->get_theme() != old_theme || controller->get_ui_size() != old_size))
     {
       std::size_t size_index = 0;
-      auto size_names = controller->ui_size_names();
+      auto size_names = props.ui_size_names;
       for(std::size_t i = 0; i < size_names.size(); i++)
         if(size_names[i] == controller->get_ui_size())
           size_index = i;
-      controller->reload_editor(plugin_editor_width(controller, static_cast<std::int32_t>(size_index)));
+      controller->reload_editor(controller->ui_size_to_editor_width(static_cast<std::int32_t>(size_index)));
     }
   };
   auto current_window = static_cast<juce::Component*>(controller->current_editor_window());

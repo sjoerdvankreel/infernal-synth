@@ -1,28 +1,19 @@
 # InfernalSynth
 
 InfernalSynth is a free, open-source, semi-modular software synthesizer and audio effect plugin.\
-It is currently available as a VST3 plugin only, and ships as different binaries for instrument mode and effect mode.\
+It is currently available as a VST3 and CLAP plugin, and ships as different binaries for instrument mode and effect mode.\
 In instrument mode, InfernalSynth is a polyphonic synthesizer where the combined output of all voices is routed through a global effect bank.\
 In effect mode, the voice generators are not used, and instead an external audio source is routed through the same global effect bank.\
 \
 ![Screenshot](static/screenshot_1.png)
 
-## Versioned builds
-
-InfernalSynth ships as different binaries for Generic and Versioned releases. All Generic builds have the same
-VST3 plugin ID. Versioned builds all have different VST3 plugin ID's (so they are essentially different plugins
-from the host's point of view).
-
-- Use the Generic build if you want to be able to load old projects using a new plugin version, get bugfixes automatically, and don't mind breaking changes.
-- Use the Versioned build (preferred) if you want stuff to just keep working and be shielded from breaking changes. Newer versions of the plugin can work side-by-side with older versions.
-
 ## Theming
 
-Due to VST3's bundle format, InfernalSynth can easily be themed if you're comfortable editing json files.\
-See /Contents/Resources/Themes/(theme name)/themefile.json. It contains a root section definining all colors \
-on a global level, an audio section containing overrides for the oscillator, fx and audio matrix, and a cv \
-section containing overrides for the lfo, envelope and cv matrix. The background images live in the same folder, \
-they can be swapped for anything else as long as the other image has the same dimensions.
+Due to the bundle format, InfernalSynth can easily be themed if you're comfortable editing json files.\
+See /Contents/Resources/Themes/(theme name)/themefile.json (VST3) or /Themes/(theme name)/themefile.json (CLAP). \
+It contains a root section definining all colors on a global level, an audio section containing overrides for the oscillator, \
+fx and audio matrix, and a cv section containing overrides for the lfo, envelope and cv matrix. \
+The background images live in the same folder, they can be swapped for anything else as long as the other image has the same dimensions.
 
 ## Architecture
 
@@ -415,6 +406,6 @@ Contains voice/global selection, UI settings and exact-editing.
 Patch/preset control.
 
 - Init: reset to factory default.
-- Clear: reset to the very minimum that produces sound.
-- Load, save: read/write vst3 preset files from/to disk.
 - Factory preset: reset to built-in patch.
+- Clear: reset to the very minimum that produces sound.
+- Load, save: read/write .ispreset files from/to disk. For VST3, you can also use the host wrapper to load/save .vstpreset files.

@@ -41,6 +41,13 @@ struct external_resource
   std::string path;
 };
 
+struct host_context_menu_item
+{
+  std::string name;
+  std::uint32_t flags;
+  enum flags_t { checked = 0x1, enabled = 0x2, separator = 0x4, group_start = 0x8, group_end = 0x10 };
+};
+
 // VST3 context menu feature.
 class host_context_menu
 {
@@ -48,7 +55,17 @@ public:
   virtual ~host_context_menu() {};
   virtual std::int32_t item_count() const = 0;
   virtual void item_clicked(std::int32_t index) = 0;
-  virtual void get_item(std::int32_t index, std::string& name, bool& enabled, bool& checked) const = 0;
+  virtual host_context_menu_item get_item(std::int32_t index) const = 0;
+};
+
+struct editor_properties
+{
+  float aspect_ratio;
+  std::int32_t min_width;
+  std::int32_t max_width;
+  std::int32_t font_scaling_min_width;
+  std::int32_t font_scaling_max_width;
+  std::vector<std::string> ui_size_names;
 };
 
 // Controller base interface.
@@ -59,6 +76,7 @@ class plugin_controller
   static inline std::string const global_meta_last_directory_key = "last_directory";
   static inline std::string const patch_meta_factory_preset_key = "factory_preset";
 
+  std::int32_t _editor_width = 0;
   juce::InterProcessLock _global_meta_lock;
   juce::PropertiesFile::Options global_meta_options();
   std::string get_global_meta(std::string const& key);
@@ -78,43 +96,44 @@ protected:
   { _topology->init_factory_preset(_state.data()); }
 
   void reloaded();
-  void controller_param_changed(std::int32_t tag, param_value base_value);
 
 public:
-  std::map<std::string, std::string>& patch_meta_data();
+  inf::base::param_value* state() { return _state.data(); }
   inf::base::param_value const* state() const { return _state.data(); }
   inf::base::topology_info const* topology() const { return _topology.get(); }
+  std::map<std::string, std::string>& patch_meta_data();
 
   void init_patch();
   void clear_patch();
   void clear_part(part_id id);
   void copy_or_swap_part(part_id source, std::int32_t target, bool swap);
 
-  virtual void restart() = 0;
-  virtual std::string preset_file_extension() = 0;
-  virtual void reload_editor(std::int32_t width) = 0;
+  // Needs to be public for clap controller.
+  void controller_param_changed(std::int32_t tag, param_value base_value);
+
+  // All plug incarnations with same unique_id can load/save the same files.
+  // Host wrapper plugin format is format dependent (VST3).
+  bool save_plugin_preset(std::string const& path);
+  bool load_plugin_preset(std::string const& path);
+  bool save_plugin_preset(std::vector<std::uint8_t>& data);
+  bool load_plugin_preset(std::vector<std::uint8_t> const& data);
+  virtual std::string plugin_unique_id() const = 0;
+  virtual std::string plugin_preset_file_extension() const = 0;
+
   virtual void load_component_state(param_value* state) = 0;
-  virtual void save_preset(std::string const& path) = 0;
-  virtual bool load_preset(std::string const& path, bool factory) = 0;
-
-  virtual float editor_aspect_ratio() const = 0;
-  virtual void* current_editor_window() const = 0;
-  virtual std::int32_t editor_min_width() const = 0;
-  virtual std::int32_t editor_max_width() const = 0;
-  virtual std::int32_t editor_current_width() const = 0;
-  virtual std::int32_t editor_font_scaling_min_width() const = 0;
-  virtual std::int32_t editor_font_scaling_max_width() const = 0;
-  virtual bool map_midi_control(std::int32_t number, std::int32_t& target_tag) const = 0;
-
   virtual void copy_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void swap_param(std::int32_t source_tag, std::int32_t target_tag) = 0;
   virtual void editor_param_changed(std::int32_t index, param_value ui_value) = 0;
 
-  virtual std::vector<char const*> ui_size_names() const = 0;
-  virtual std::string default_theme_path(std::string const& plugin_file) const = 0;
-  virtual std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const = 0;
+  virtual std::string default_theme_name() const = 0;
+  virtual std::string themes_folder(std::string const& plugin_file) const = 0;
+  virtual std::string factory_presets_folder(std::string const& plugin_file) const = 0;
+
+  virtual void restart() = 0;
+  virtual void* current_editor_window() const = 0;
+  virtual void reload_editor(std::int32_t width) = 0;
+  virtual editor_properties get_editor_properties() const = 0;
   virtual std::unique_ptr<host_context_menu> host_menu_for_param_index(std::int32_t param_index) const = 0;
-  virtual std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const = 0;
 
   void add_reload_listener(reload_listener* listener)
   { _reload_listeners.insert(listener); }
@@ -126,6 +145,15 @@ public:
   { _any_param_listeners.erase(listener); }
   void add_param_listener(std::int32_t param_index, param_listener* listener);
   void remove_param_listener(std::int32_t param_index, param_listener* listener);
+
+  std::pair<std::int32_t, std::int32_t> get_editor_wanted_size();
+  std::int32_t ui_size_to_editor_width(std::int32_t selected_size_index);
+  std::int32_t editor_current_width() const { return _editor_width; }
+  void editor_current_width(std::int32_t editor_width) { _editor_width = editor_width; }
+  
+  std::string default_theme_path(std::string const& plugin_file) const;
+  std::vector<inf::base::external_resource> themes(std::string const& plugin_file) const;
+  std::vector<inf::base::external_resource> factory_presets(std::string const& plugin_file) const;
 
   param_value base_value_at_index(std::int32_t param_index) const
   { return state()[param_index]; }

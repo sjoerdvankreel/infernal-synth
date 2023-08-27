@@ -1,11 +1,17 @@
 #include <inf.base/plugin/plugin_controller.hpp>
+#include <inf.base/shared/generic_io_stream.hpp>
+
 #include <vector>
+#include <fstream>
+#include <filesystem>
 
 using namespace juce;
 
 namespace inf::base {
 
-std::map<std::string, std::string>& 
+static char inf_file_magic[] = "{CEAE4474-EABA-46C2-B0AF-B44D8F0DC634}"; 
+  
+std::map<std::string, std::string>&
 plugin_controller::patch_meta_data()
 {
   std::vector<std::string> unknown_keys;
@@ -126,6 +132,124 @@ plugin_controller::copy_or_swap_part(part_id source, std::int32_t target, bool s
     else copy_param(source_tag, target_tag);
   }
   restart();
+}
+
+std::string 
+plugin_controller::default_theme_path(std::string const& plugin_file) const
+{ 
+  auto folder = std::filesystem::path(themes_folder(plugin_file));
+  return (folder / default_theme_name()).string(); 
+}
+
+std::vector<inf::base::external_resource>
+plugin_controller::themes(std::string const& plugin_file) const
+{
+  std::vector<inf::base::external_resource> result;
+  auto folder = std::filesystem::path(themes_folder(plugin_file));
+  for (auto const& entry : std::filesystem::directory_iterator(folder))
+  {
+    if (!entry.is_directory()) continue;
+    external_resource theme;
+    theme.path = entry.path().string();
+    theme.name = entry.path().filename().string();
+    result.push_back(theme);
+  }
+  return result;
+}
+
+std::vector<inf::base::external_resource>
+plugin_controller::factory_presets(std::string const& plugin_file) const
+{
+  std::vector<inf::base::external_resource> result;
+  std::string dot_extension = std::string(".") + plugin_preset_file_extension();
+  auto folder = std::filesystem::path(factory_presets_folder(plugin_file));
+  for (auto const& entry : std::filesystem::directory_iterator(folder))
+  {
+    if (entry.path().extension().string() != dot_extension) continue;
+    external_resource preset;
+    preset.path = entry.path().string();
+    preset.name = entry.path().stem().string();
+    result.push_back(preset);
+  }
+  return result;
+}
+
+std::int32_t 
+plugin_controller::ui_size_to_editor_width(std::int32_t selected_size_index)
+{
+  auto props = get_editor_properties();
+  selected_size_index = std::clamp(selected_size_index, 0, static_cast<std::int32_t>(props.ui_size_names.size() - 1));
+  float min_width = static_cast<float>(props.min_width);
+  float max_width = static_cast<float>(props.max_width);
+  float factor = static_cast<float>(selected_size_index) / static_cast<float>(props.ui_size_names.size() - 1);
+  return static_cast<std::int32_t>(min_width + factor * (max_width - min_width));
+}
+
+std::pair<std::int32_t, std::int32_t>
+plugin_controller::get_editor_wanted_size()
+{
+  std::int32_t w = 0;
+  auto props = get_editor_properties();
+  auto found = std::find(props.ui_size_names.begin(), props.ui_size_names.end(), get_ui_size());
+  if (found == props.ui_size_names.end()) w = props.min_width;
+  else w = ui_size_to_editor_width(static_cast<std::int32_t>(found - props.ui_size_names.begin()));
+  std::int32_t h = static_cast<std::int32_t>(std::ceil(w / props.aspect_ratio));
+  return std::make_pair(w, h);
+}
+
+bool
+plugin_controller::save_plugin_preset(std::string const& path)
+{
+  std::vector<std::uint8_t> data;
+  if (!save_plugin_preset(data)) return false;
+  std::ofstream file(path, std::ios::out | std::ios::binary);
+  if (file.bad()) return false;
+  file.write(reinterpret_cast<char const*>(data.data()), data.size());
+  file.close();
+  return true;
+}
+
+bool
+plugin_controller::load_plugin_preset(std::string const& path)
+{
+  // Load preset format from disk and parse.
+  std::ifstream file(path, std::ios::binary | std::ios::ate);
+  std::streamsize size = file.tellg();
+  file.seekg(0, std::ios::beg);
+  std::vector<std::uint8_t> buffer = std::vector<std::uint8_t>(size);
+  if (!file.read(reinterpret_cast<char*>(buffer.data()), size)) return false;
+  if (!load_plugin_preset(buffer)) return false;
+  return true;
+}
+
+bool 
+plugin_controller::save_plugin_preset(std::vector<std::uint8_t>& data)
+{
+  generic_io_stream stream;
+  if (!stream.write_string(std::string(inf_file_magic))) return false;
+  if (!stream.write_string(std::string(plugin_unique_id()))) return false;
+  // This better be in sync with audio thread.
+  if (!stream.save_processor(*topology(), _state.data())) return false;
+  if (!stream.save_controller(*topology(), patch_meta_data())) return false;
+  stream.reset();
+  data.clear();
+  data.insert(data.begin(), stream.data(), stream.data() + stream.size());
+  return true;
+}
+
+bool 
+plugin_controller::load_plugin_preset(std::vector<std::uint8_t> const& data)
+{
+  std::string val;
+  std::map<std::string, std::string> meta_data;
+  std::vector<base::param_value> audio_state(static_cast<std::size_t>(topology()->input_param_count));
+  generic_io_stream stream(data.data(), data.size());
+  if (!stream.read_string(val) || val != std::string(inf_file_magic)) return false;
+  if (!stream.read_string(val) || val != std::string(plugin_unique_id())) return false;
+  if (!stream.load_processor(*topology(), audio_state.data())) return false;
+  if (!stream.load_controller(*topology(), patch_meta_data())) return false;
+  load_component_state(audio_state.data());
+  return true;
 }
 
 } // namespace inf::base

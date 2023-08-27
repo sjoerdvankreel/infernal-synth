@@ -5,9 +5,7 @@
 #include <inf.base/plugin/plugin_controller.hpp>
 #include <inf.base/topology/part_descriptor.hpp>
 
-#include <juce_events/juce_events.h>
 #include <juce_gui_basics/juce_gui_basics.h>
-
 #include <cstdint>
 #include <atomic>
 
