@@ -60,10 +60,10 @@ graph_processor::process_dsp(param_value const* state, float sample_rate)
       continuous_automation[p] = continuous_automation_buffer.data() + continuous++ * samples;
 
   block_input input;
-  input.note_count = 0;
-  input.notes = nullptr;
   input.data.bpm = graph_bpm;
   input.data.stream_position = 0;
+  input.note_input_event_count = 0;
+  input.automation_event_count = 0;
   input.data.sample_count = samples;
   input.block_automation_raw = _state_copy.data();
   input.continuous_automation_raw = continuous_automation.data();

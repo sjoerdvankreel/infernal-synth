@@ -10,7 +10,6 @@ audio_processor(
 topology_info const* topology, float sample_rate,
 std::int32_t max_sample_count, param_value* state, std::int32_t* changed):
 _input(), _output(), _silence(stereo_channels, max_sample_count),
-_notes(static_cast<std::size_t>(topology->max_note_events)),
 _sample_rate(sample_rate), _state(state), _changed(changed), _topology(topology),
 _continuous_automation(topology->params.size()),
 _continuous_automation_buffer(static_cast<std::size_t>(topology->continuous_param_count * max_sample_count))
@@ -20,10 +19,10 @@ _continuous_automation_buffer(static_cast<std::size_t>(topology->continuous_para
   assert(topology != nullptr);
   assert(max_sample_count > 0);
 
-  _input.note_count = 0;
+  _input.note_input_event_count = 0;
+  _input.automation_event_count = 0;
   _input.block_automation_raw = _state;
   _input.changed_automation_raw = _changed;
-  _input.notes = topology->max_note_events == 0? nullptr: _notes.data();
   _output.block_automation_raw = _state;
 
   std::int32_t continuous = 0;
@@ -67,7 +66,8 @@ audio_processor::automation_check()
 block_input&
 audio_processor::prepare_block(std::int32_t sample_count)
 {
-  _input.note_count = 0;
+  _input.note_input_event_count = 0;
+  _input.automation_event_count = 0;
   for (std::int32_t p = _topology->input_param_count; p < _topology->params.size(); p++)
     _output.block_automation_raw[p] = _topology->params[p].descriptor->data.default_value();
   for (std::int32_t p = 0; p < _topology->input_param_count; p++)
