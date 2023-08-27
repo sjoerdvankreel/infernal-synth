@@ -1,3 +1,7 @@
+August 27, 2023 - V1.3.
+
+* No changes.
+
 August 12, 2023 - V1.3 preview.
 
 Implemented some feedback from KVR OSC #174.
