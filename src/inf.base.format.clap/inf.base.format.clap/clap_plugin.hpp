@@ -8,6 +8,7 @@
 
 #include <clap/clap.h>
 #include <readerwriterqueue.h>
+#include <juce_events/juce_events.h>
 
 #include <set>
 #include <map>
@@ -27,6 +28,14 @@
 namespace inf::base::format::clap
 {
 
+class clap_timer:
+public juce::Timer
+{
+public:
+  clap_controller* controller = {};
+  void timerCallback() override;
+};
+
 struct inf_clap_plugin 
 {
   // do the manual vtable stuff
@@ -35,6 +44,9 @@ struct inf_clap_plugin
   clap_plugin_gui_t editor = {};
   clap_plugin_state_t state = {};
   clap_plugin_params_t params = {};
+
+  // Pull events from audio->main.
+  clap_timer timer = {};
 
   // binding to inf::base
 	float sample_rate = {};

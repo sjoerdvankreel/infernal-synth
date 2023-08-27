@@ -11,11 +11,12 @@ using namespace inf::base;
 namespace inf::base::format::clap
 {
 
+static bool CLAP_ABI plugin_init(clap_plugin const* plugin);
+static void CLAP_ABI plugin_destroy(clap_plugin const* plugin);
+
 static void CLAP_ABI plugin_reset(clap_plugin const* plugin) {}
-static void CLAP_ABI plugin_destroy(clap_plugin const* plugin) {}
 static void CLAP_ABI plugin_on_main_thread(clap_plugin const* plugin) {}
 static void CLAP_ABI plugin_stop_processing(clap_plugin const* plugin) {}
-static bool CLAP_ABI plugin_init(clap_plugin const* plugin) { return true; }
 static bool CLAP_ABI plugin_start_processing(clap_plugin const* plugin) { return true; }
 static void CLAP_ABI plugin_deactivate(clap_plugin const* plugin)
 { plugin_cast(plugin)->processor.reset(); }
@@ -57,6 +58,18 @@ const clap_plugin_t plugin_class =
   .get_extension = plugin_get_extension,
   .on_main_thread = plugin_on_main_thread
 };
+
+void
+clap_timer::timerCallback()
+{
+  audio_to_main_msg msg;
+  while (controller && controller->audio_to_main_queue->try_dequeue(msg))
+  {
+    std::int32_t id = controller->topology()->param_index_to_id[msg.index];
+    controller->state()[msg.index] = format_normalized_to_base(controller->topology(), false, msg.index, msg.value);
+    controller->controller_param_changed(id, controller->state()[msg.index]);
+  }
+}
 
 static const clap_plugin_note_ports_t extension_note_ports = 
 {
@@ -105,6 +118,22 @@ plugin_get_extension(clap_plugin const* plugin, char const* id)
   if (!strcmp(id, CLAP_EXT_STATE)) return &static_cast<inf_clap_plugin*>(plugin->plugin_data)->state;
   if (!strcmp(id, CLAP_EXT_PARAMS)) return &static_cast<inf_clap_plugin*>(plugin->plugin_data)->params;
   return nullptr;
+}
+
+static void CLAP_ABI 
+plugin_destroy(clap_plugin const* plugin) 
+{ 
+  plugin_cast(plugin)->timer.stopTimer(); 
+  plugin_cast(plugin)->timer.controller = nullptr;
+}
+
+static bool CLAP_ABI 
+plugin_init(clap_plugin const* plugin)
+{
+  juce::MessageManager::getInstance();
+  plugin_cast(plugin)->timer.controller = plugin_cast(plugin)->controller.get();
+  plugin_cast(plugin)->timer.startTimer(1000 / 30);
+  return true; 
 }
 
 static bool CLAP_ABI

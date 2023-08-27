@@ -116,7 +116,6 @@ editor_hide(clap_plugin_t const* plugin)
 static void CLAP_ABI
 editor_destroy(clap_plugin_t const* plugin)
 {
-  plugin_cast(plugin)->controller->timer.stopTimer();
   plugin_ui(plugin)->component()->removeFromDesktop();
   plugin_cast(plugin)->controller->plugin_ui.reset();
 }
@@ -124,7 +123,6 @@ editor_destroy(clap_plugin_t const* plugin)
 static bool CLAP_ABI 
 editor_create(clap_plugin_t const* plugin, char const* api, bool is_floating)
 {
-  juce::MessageManager::getInstance();
   auto w = plugin_controller(plugin)->get_editor_wanted_size().first;
   plugin_controller(plugin)->editor_current_width(w);
   plugin_controller(plugin)->plugin_ui = plugin_controller(plugin)->create_ui();
@@ -142,7 +140,6 @@ editor_set_parent(clap_plugin_t const* plugin, clap_window_t const* window)
   plugin_ui(plugin)->component()->setTopLeftPosition(0, 0);
   plugin_ui(plugin)->component()->addToDesktop(0, window->ptr);
   plugin_ui(plugin)->component()->setVisible(true);
-  plugin_controller(plugin)->timer.startTimer(1000 / 30);
   return true;
 }
 
@@ -155,22 +152,9 @@ editor_get_size(clap_plugin_t const* plugin, std::uint32_t* width, std::uint32_t
   return true;
 }
 
-void 
-clap_timer::timerCallback()
-{
-  audio_to_main_msg msg;
-  while (_controller->audio_to_main_queue->try_dequeue(msg))
-  {
-    std::int32_t id = _controller->topology()->param_index_to_id[msg.index];
-    _controller->state()[msg.index] = format_normalized_to_base(_controller->topology(), false, msg.index, msg.value);
-    _controller->controller_param_changed(id, _controller->state()[msg.index]);
-  }
-}
-
 clap_controller::
 clap_controller() : 
-plugin_controller(create_topology()), 
-timer(this) {}
+plugin_controller(create_topology()) {}
 
 void 
 clap_controller::init(

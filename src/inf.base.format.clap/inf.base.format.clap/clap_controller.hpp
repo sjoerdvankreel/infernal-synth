@@ -7,7 +7,6 @@
 
 #include <clap/clap.h>
 #include <readerwriterqueue.h>
-#include <juce_events/juce_events.h>
 
 // https://nakst.gitlab.io/tutorial/clap-part-1.html
 // https://github.com/surge-synthesizer/clap-saw-demo
@@ -16,24 +15,12 @@
 namespace inf::base::format::clap 
 {
 
-class clap_controller;
-
-class clap_timer:
-public juce::Timer
-{
-  clap_controller* const _controller;
-public:
-  void timerCallback() override;
-  clap_timer(clap_controller* controller): _controller(controller) {}
-};
-
 struct inf_clap_plugin;
 
 class clap_controller:
 public inf::base::plugin_controller
 {
   clap_host_t const* _host;
-
   void do_edit(std::int32_t index, double normalized);
 
 protected:
@@ -41,7 +28,6 @@ protected:
 
 public:
   // Allow access by clap_plugin_gui_t.
-  clap_timer timer;
   void* parent_window = {};
   std::unique_ptr<inf::base::ui::root_element> plugin_ui = {};
   moodycamel::ReaderWriterQueue<audio_to_main_msg, queue_size>* audio_to_main_queue = {};
