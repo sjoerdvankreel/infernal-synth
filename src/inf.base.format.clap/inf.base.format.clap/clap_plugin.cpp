@@ -38,7 +38,11 @@ static bool CLAP_ABI extension_note_ports_get(
 
 static std::uint32_t CLAP_ABI
 extension_audio_ports_count(clap_plugin_t const* plugin, bool is_input) 
-{ return is_input ? 0 : 1; }
+{ 
+  if(!is_input) return 1;
+  return plugin_cast(plugin)->topology->is_instrument()? 0: 1;
+}
+
 static bool CLAP_ABI extension_audio_ports_get(
   clap_plugin_t const* plugin, std::uint32_t index, 
   bool is_input, clap_audio_port_info_t* info);
