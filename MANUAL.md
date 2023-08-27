@@ -408,4 +408,4 @@ Patch/preset control.
 - Init: reset to factory default.
 - Factory preset: reset to built-in patch.
 - Clear: reset to the very minimum that produces sound.
-- Load, save: read/write .isppreset files from/to disk. For VST3, you can also use the host wrapper to load/save .vstpreset files.
+- Load, save: read/write .ispreset files from/to disk. For VST3, you can also use the host wrapper to load/save .vstpreset files.
