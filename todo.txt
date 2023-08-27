@@ -1,25 +1,16 @@
 * for each release 
-- v create version branch
-- v update version number in code
-- v update version number in cmake unless only bugfix release
-- v consider updating versioned guid
-- v gcc build
-- v update history
-- v keep manual up to date
+- x create version branch
+- x update version number in code
+- x update version number in cmake unless only bugfix release
+- x consider updating versioned guid
+- x gcc build
+- x update history
+- x keep manual up to date
 - x run host demos
 - x debug run demos
 - x run pluginval
 - x run the vst validator
 - x don't forget to tag
-
-* done this version
-- NEEDS PLUG RESCAN!
-- made cakewalk demo
-- drop generic build (=breaking change!)
-- changed preset format (=breaking change!)
-
-* todo this version
-- check the links for demo project
 
 * bugs
 - PRNG draw relative to sample rate
