@@ -104,7 +104,7 @@ extension_audio_ports_get(
 clap_plugin_t const* plugin, std::uint32_t index,
 bool is_input, clap_audio_port_info_t* info)
 {
-  if (is_input || index != 0) return false;
+  if (index != 0) return false;
   info->id = 0;
   info->channel_count = 2;
   info->port_type = CLAP_PORT_STEREO;
