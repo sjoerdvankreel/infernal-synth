@@ -87,7 +87,7 @@ audio_processor::process(
   _topology->state_check(_state);
   _output.audio = output;
   _input.data.audio = _silence.buffers();
-  if(!_topology->is_instrument()) _input.data.audio = input;
+  if(!_topology->is_instrument() && input != nullptr) _input.data.audio = input;
   _input.data.automation = automation_view(
     topology(), _input.block_automation_raw, _input.continuous_automation_raw, nullptr,
     topology()->input_param_count, topology()->input_param_count, 0, 
