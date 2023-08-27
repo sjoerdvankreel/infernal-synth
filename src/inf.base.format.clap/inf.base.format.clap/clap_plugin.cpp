@@ -337,7 +337,8 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   input.data.sample_count = static_cast<std::int32_t>(process->frames_count);
 
   float const* const* audio_in = nullptr;
-  if (!inf_plugin->topology->is_instrument()) audio_in = process->audio_inputs[0].data32;
+  if (!inf_plugin->topology->is_instrument() && process->audio_inputs != nullptr) 
+    audio_in = process->audio_inputs[0].data32;
   if(process->transport != nullptr) input.data.bpm = static_cast<float>(process->transport->tempo);
   auto const& output = inf_plugin->processor->process(
     audio_in, process->audio_outputs[0].data32, false,
