@@ -132,6 +132,8 @@ plugin_process_events(
   std::uint32_t event_count = process->in_events->size(process->in_events);
   (void)ok;
 
+  std::fill(plugin->changed.begin(), plugin->changed.end(), 0);
+
   // Point-in-time events.
   for (std::uint32_t e = 0; e < event_count; e++)
   {
@@ -193,11 +195,13 @@ plugin_process_events(
 
       // For discrete automation events effectively we only pick up the last value.
       if (!plugin->topology->params[index].descriptor->data.is_continuous())
+      {
+        plugin->changed[index] = 1;
         plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+      }
     }
   }
 
-  // TODO handle _changed
   // Continuous automation events - build up the curve. TODO interpolation.
   for (std::int32_t s = 0; s < input.data.sample_count; s++)
     for (std::uint32_t e = 0; e < event_count; e++)
@@ -213,6 +217,7 @@ plugin_process_events(
         if(plugin->topology->params[index].descriptor->data.is_continuous())
         {
           // Just make a "bumpy" curve for now.
+          plugin->changed[index] = 1;
           if (header->time == static_cast<std::uint32_t>(s))
             plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
           input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
