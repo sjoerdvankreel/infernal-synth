@@ -9,8 +9,8 @@ registered in Europe and other countries.
 <br clear="left"/>
 
 # Dependencies
-- CLAP SDK: [https://github.com/free-audio/clap]
-- Readerwriterqueue: [https://github.com/cameron314/readerwriterqueue]
+- CLAP SDK: [https://github.com/free-audio/clap](https://github.com/free-audio/clap)
+- Readerwriterqueue: [https://github.com/cameron314/readerwriterqueue](https://github.com/cameron314/readerwriterqueue)
 - JUCE: [https://github.com/juce-framework/JUCE](https://github.com/juce-framework/JUCE).
 - Laurent de Soras' HIIR library: [http://ldesoras.free.fr/](http://ldesoras.free.fr/).
 - Steinberg VST3 SDK: [https://github.com/steinbergmedia/vst3sdk](https://github.com/steinbergmedia/vst3sdk).
