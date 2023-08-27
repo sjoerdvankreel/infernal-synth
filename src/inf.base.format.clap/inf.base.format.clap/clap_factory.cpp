@@ -34,6 +34,7 @@ factory_create_plugin(clap_plugin_factory const* factory, clap_host_t const* hos
   plugin->midi_cc_map = plugin->controller->map_midi_cc_controls();
   plugin->audio_state.resize(plugin->topology->params.size());
   plugin->topology->init_factory_preset(plugin->audio_state.data());
+  plugin->prev_continuous_automation_index.resize(plugin->topology->params.size());
   plugin->controller->init(plugin->host, &plugin->audio_to_main_queue, &plugin->main_to_audio_queue);
   plugin_init_state_api(plugin);
   plugin_init_params_api(plugin);

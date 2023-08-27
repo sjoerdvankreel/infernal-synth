@@ -44,6 +44,7 @@ struct inf_clap_plugin
   std::unique_ptr<clap_controller> controller = {};
   std::vector<inf::base::param_value> audio_state = {};
   std::vector<std::int32_t> changed = {};
+  std::vector<std::int32_t> prev_continuous_automation_index = {};
 
   // cache midi mappings
   std::map<std::int32_t, std::int32_t> midi_map = {};

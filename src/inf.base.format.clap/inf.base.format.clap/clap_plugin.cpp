@@ -120,6 +120,18 @@ plugin_activate(
   return true;
 };
 
+static inline void
+interpolate_continuous_automation(float* curve, std::int32_t from, std::int32_t to)
+{
+  float last = curve[to];
+  float first = curve[from];
+  float range = last - first;
+  std::int32_t count = to - from;
+  float fcount = static_cast<float>(count);
+  for(std::int32_t i = 1; i < count; i++)
+    curve[from + i] = first + i / fcount * range;
+}
+
 // Translate from clap events.
 static void
 plugin_process_events(
@@ -133,6 +145,7 @@ plugin_process_events(
   (void)ok;
 
   std::fill(plugin->changed.begin(), plugin->changed.end(), 0);
+  std::fill(plugin->prev_continuous_automation_index.begin(), plugin->prev_continuous_automation_index.end(), 0);
 
   // Point-in-time events.
   for (std::uint32_t e = 0; e < event_count; e++)
@@ -202,7 +215,7 @@ plugin_process_events(
     }
   }
 
-  // Continuous automation events - build up the curve. TODO interpolation.
+  // Continuous automation events - build up the curve.
   for (std::int32_t s = 0; s < input.data.sample_count; s++)
     for (std::uint32_t e = 0; e < event_count; e++)
     {
@@ -216,11 +229,15 @@ plugin_process_events(
         auto index = plugin->topology->param_id_to_index[event->param_id];
         if(plugin->topology->params[index].descriptor->data.is_continuous())
         {
-          // Just make a "bumpy" curve for now.
           plugin->changed[index] = 1;
-          if (header->time == static_cast<std::uint32_t>(s))
-            plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
           input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
+          if (header->time == static_cast<std::uint32_t>(s))
+          {
+            plugin->audio_state[index] = format_normalized_to_base(plugin->topology.get(), false, index, event->value);
+            input.continuous_automation_raw[index][s] = plugin->audio_state[index].real;
+            interpolate_continuous_automation(input.continuous_automation_raw[index], plugin->prev_continuous_automation_index[index], s);
+            plugin->prev_continuous_automation_index[index] = s;
+          }
         }
       }
 
@@ -251,11 +268,16 @@ plugin_process_events(
             auto param_index = plugin->topology->param_id_to_index[target_id];
             if (plugin->topology->params[param_index].descriptor->data.is_continuous())
             {
-              // Just make a "bumpy" curve for now.
-              if (header->time == static_cast<std::uint32_t>(s))
-                plugin->audio_state[param_index] = format_normalized_to_base(plugin->topology.get(), 
-                  false, param_index, midi_to_normalized(msg, event->data[1], event->data[2]));
+              plugin->changed[param_index] = 1;
               input.continuous_automation_raw[param_index][s] = plugin->audio_state[param_index].real;
+              if (header->time == static_cast<std::uint32_t>(s))
+              {
+                plugin->audio_state[param_index] = format_normalized_to_base(plugin->topology.get(),
+                  false, param_index, midi_to_normalized(msg, event->data[1], event->data[2]));
+                input.continuous_automation_raw[param_index][s] = plugin->audio_state[param_index].real;
+                interpolate_continuous_automation(input.continuous_automation_raw[param_index], plugin->prev_continuous_automation_index[param_index], s);
+                plugin->prev_continuous_automation_index[param_index] = s;
+              }
             }
           }
         }
