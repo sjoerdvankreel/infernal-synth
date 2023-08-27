@@ -25,10 +25,8 @@
 - please fix the *** flush bug already and/or check bitwig clap version
 
 - clap 
-* choke
 * sync on load ui
 * check refreshUIValues
-* do the interpolation stuff
 * re-check both from/to queues
 * do the polyphonic mod stuff - with pck for midi
 
