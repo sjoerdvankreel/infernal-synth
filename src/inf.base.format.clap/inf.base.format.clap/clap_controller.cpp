@@ -34,7 +34,7 @@ public:
     clap_host_context_menu const* host_menu, 
     clap_context_menu_target const& target,
     std::vector<host_context_menu_item> const& items) : 
-    _host(host), _host_menu(host_menu), _target(target), _items(items) {}
+    _host(host), _target(target), _host_menu(host_menu), _items(items) {}
 };
 
 static clap_controller*
