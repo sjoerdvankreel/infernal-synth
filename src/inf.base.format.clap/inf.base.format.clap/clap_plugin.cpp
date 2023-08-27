@@ -146,6 +146,10 @@ plugin_activate(
   std::uint32_t min_frames_count, std::uint32_t max_frames_count)
 {
   auto inf_plugin = plugin_cast(plugin);
+  inf_plugin->input32fix[0].resize(max_frames_count);
+  inf_plugin->input32fix[1].resize(max_frames_count);
+  inf_plugin->output32fix[0].resize(max_frames_count);
+  inf_plugin->output32fix[1].resize(max_frames_count);
   inf_plugin->sample_rate = static_cast<float>(sample_rate);
   inf_plugin->max_sample_count = static_cast<std::int32_t>(max_frames_count);
   inf_plugin->processor = inf_plugin->topology->create_audio_processor(
@@ -323,6 +327,9 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
 {
   bool ok;
   (void)ok;
+  float* output_fix[stereo_channels] = {};
+  float const* input_fix[stereo_channels] = {};
+
   if(process->audio_outputs_count != 1) return CLAP_PROCESS_CONTINUE;
   if(process->audio_outputs[0].channel_count != 2) return CLAP_PROCESS_CONTINUE;  
 
@@ -340,13 +347,48 @@ plugin_process(clap_plugin const* plugin, clap_process_t const* process)
   input.data.stream_position = process->steady_time;
   input.data.sample_count = static_cast<std::int32_t>(process->frames_count);
 
+  // Reaper fix (sometimes hands out 64 bit buffers unrequested).
   float const* const* audio_in = nullptr;
-  if (!inf_plugin->topology->is_instrument() && process->audio_inputs != nullptr) 
-    audio_in = process->audio_inputs[0].data32;
+  if (!inf_plugin->topology->is_instrument() && process->audio_inputs != nullptr)
+  {
+    if(process->audio_inputs[0].data32 != nullptr)
+      audio_in = process->audio_inputs[0].data32;
+    else if (process->audio_inputs[0].data64 != nullptr)
+    {
+      audio_in = input_fix;
+      for(std::int32_t c = 0; c < stereo_channels; c++)
+      {
+        for(std::int32_t s = 0; s < input.data.sample_count; s++)
+          inf_plugin->input32fix[c][s] = static_cast<float>(process->audio_inputs[0].data64[c][s]);
+        input_fix[c] = inf_plugin->input32fix[c].data();
+      }
+    }
+  }
+
+  // Reaper fix (sometimes hands out 64 bit buffers unrequested).
+  float* const* audio_out = nullptr;
+  if (process->audio_outputs != nullptr)
+  {
+    if(process->audio_outputs[0].data32 != nullptr)
+      audio_out = process->audio_outputs[0].data32;
+    else if (process->audio_outputs[0].data64 != nullptr)
+    {
+      audio_out = output_fix;
+      output_fix[0] = inf_plugin->output32fix[0].data();
+      output_fix[1] = inf_plugin->output32fix[1].data();
+    }      
+  }
+
   if(process->transport != nullptr) input.data.bpm = static_cast<float>(process->transport->tempo);
   auto const& output = inf_plugin->processor->process(
-    audio_in, process->audio_outputs[0].data32, false,
+    audio_in, audio_out, false,
     inf_plugin->prev_end_perf_count, new_start_perf_count);
+
+  // Reaper fix (sometimes hands out 64 bit buffers unrequested).
+  if(output_fix[0] == inf_plugin->output32fix[0].data())
+    for (std::int32_t c = 0; c < stereo_channels; c++)
+      for (std::int32_t s = 0; s < input.data.sample_count; s++)
+        process->audio_outputs[0].data64[c][s] = output_fix[c][s];
 
   // Push output params to the ui.
   auto now = std::chrono::system_clock::now();

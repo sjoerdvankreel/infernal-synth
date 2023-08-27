@@ -2,6 +2,7 @@
 #define INF_BASE_FORMAT_CLAP_CLAP_PLUGIN_HPP
 
 #include <inf.base/plugin/audio_processor.hpp>
+#include <inf.base/shared/support.hpp>
 #include <inf.base/topology/topology_info.hpp>
 #include <inf.base.format.clap/clap_support.hpp>
 #include <inf.base.format.clap/clap_controller.hpp>
@@ -12,6 +13,7 @@
 
 #include <set>
 #include <map>
+#include <array>
 #include <vector>
 #include <chrono>
 #include <cstdint>
@@ -57,6 +59,10 @@ struct inf_clap_plugin
   std::vector<inf::base::param_value> audio_state = {};
   std::vector<std::int32_t> changed = {};
   std::vector<std::int32_t> prev_continuous_automation_index = {};
+
+  // reaper workaround
+  std::array<std::vector<float>, base::stereo_channels> input32fix = {};
+  std::array<std::vector<float>, base::stereo_channels> output32fix = {};
 
   // cache midi mappings
   std::map<std::int32_t, std::int32_t> midi_map = {};
