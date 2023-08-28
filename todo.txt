@@ -18,7 +18,9 @@
 - vst3 parameter flush bug in bitwig (clap seems ok though)
 
 * wishlist small
+- Rename "hold"->"on note"
 - CLAP polyphonic modulation
+- Rename FM->Frequency, PM->Phase
 
 * wishlist big
 - Midi MPE
