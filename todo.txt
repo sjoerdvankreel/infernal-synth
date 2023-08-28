@@ -23,6 +23,7 @@
 - Rename FM->Frequency, PM->Phase
 
 * wishlist big
+- FM
 - Midi MPE
 - global envs
 - Linux support
