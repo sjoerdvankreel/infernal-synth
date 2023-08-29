@@ -18,12 +18,14 @@
 - vst3 parameter flush bug in bitwig (clap seems ok though)
 
 * wishlist small
+- log scale for freq knobs
 - Rename "hold"->"on note"
 - CLAP polyphonic modulation
 - Rename FM->Frequency, PM->Phase
 
 * wishlist big
 - FM
+- MSEG envs
 - Midi MPE
 - global envs
 - Linux support
