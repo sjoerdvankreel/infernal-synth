@@ -16,7 +16,7 @@
 - PRNG draw relative to sample rate
 - parameter flush bug when playing bitwig
 - vst3 parameter flush bug in bitwig (clap seems ok though)
-- tempo syncing against variable bpm
+- tempo syncing against variable bpm (including delay)
 
 * wishlist small
 - log scale for freq knobs
