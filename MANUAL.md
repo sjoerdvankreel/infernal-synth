@@ -11,7 +11,7 @@ In effect mode, the voice generators are not used, and instead an external audio
 
 Due to the bundle format, InfernalSynth can easily be themed if you're comfortable editing json files.\
 See /Contents/Resources/Themes/(theme name)/themefile.json (VST3) or /Themes/(theme name)/themefile.json (CLAP). \
-It contains a root section definining all colors on a global level, an audio section containing overrides for the oscillator, \
+It contains a root section defining all colors on a global level, an audio section containing overrides for the oscillator, \
 fx and audio matrix, and a cv section containing overrides for the lfo, envelope and cv matrix. \
 The background images live in the same folder, they can be swapped for anything else as long as the other image has the same dimensions.
 
@@ -58,11 +58,11 @@ However, individual components are either bandlimited or have options to reduce 
     - Use the slope parameters to smooth out rough edges as needed.
 - Effects
     - Filter, Delay and Reverb do not introduce new harmonics.
-    - Waveshaper has an oversampling parameter to cut down aliasing to an acceptible level.
+    - Waveshaper has an oversampling parameter to cut down aliasing to an acceptable level.
 - Oscillators
     - DSF is bandlimited by definition.
     - Mix is a sum of bandlimited basic oscillators, see below.
-    - Noise is NOT bandlimited, use filters to get an acceptible audio signal.
+    - Noise is NOT bandlimited, use filters to get an acceptable audio signal.
     - Karplus-Strong has non-bandlimited transients, then quickly decays to sine.
     - Basic
         - Sine is bandlimited by definition.
@@ -226,7 +226,7 @@ Provides pitch translators affecting all oscillators, portamento settings and po
 - Mode: select polyphonic/monophonic mode.
     - Poly: regular polyphonic mode.
     - Mono: true monophonic mode (voice count will never exceed 1).
-    - Release: notes play in a single voice untill an explicit note-off is received. \
+    - Release: notes play in a single voice until an explicit note-off is received. \
     Then, a new monophonic section is started, while the release section of the previous one continues, so voice count may exceed 1.
 - Portamento
     - Time/tempo: glide time.
@@ -270,11 +270,11 @@ Please note: if release length is zero, envelope sustains at it's final pre-rele
 
 - Graphs: Envelope.
 - Type
-    - Sustain: regular sustain mode, holds at sustain level untill note off.
+    - Sustain: regular sustain mode, holds at sustain level until note off.
     - Follow: exactly follows the envelope, completely ignoring note-off (so, does NOT hold at sustain).
     - Release: follows the envelope, but enters release section as soon as note off is encountered (so, does NOT hold at sustain).
 - Mode: only pertains to non-polyphonic voice modes, i.e., only take effect within a monophonic section.
-    - Legato: envelope is not retriggered untill the next monophonic voice section.
+    - Legato: envelope is not retriggered until the next monophonic voice section.
     - Retrig: envelope is reset to zero and starts over at Attack when a new note is received.
     - Multi: envelope is reset to current level and starts over at Attack when a new note is received.
 - Bipolar: switch unipolar/bipolar mode.
@@ -286,7 +286,7 @@ Please note: if release length is zero, envelope sustains at it's final pre-rele
 - A1/D1/R1: duration of the first part of the attack, decay and release sections.
 - A2/D2/R2: duration of the second part of the attack, decay and release sections.
 - Slope1/2: slope of the first/second part of the attack, decay and release sections.
-- Sustain: sustain at this level after the decay section, and before the release section, untill a note-off event is received.
+- Sustain: sustain at this level after the decay section, and before the release section, until a note-off event is received.
 
 ## LFO section
 
