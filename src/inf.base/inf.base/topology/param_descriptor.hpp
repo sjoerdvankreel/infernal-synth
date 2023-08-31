@@ -73,7 +73,7 @@ struct discrete_descriptor
   std::vector<std::string> const* const names = {}; // Names for a knob-list parameter.
   list_item_enabled_selector enabled_selector = {}; // Optional.
   
-  // IO: false parses for UI (display name), true parses for persistance (guids).
+  // IO: false parses for UI (display name), true parses for persistence (guids).
   std::int32_t parse_ui(param_type type, std::int32_t part_index, char const* buffer) const;
   bool parse(param_type type, bool io, std::int32_t part_index, char const* buffer, std::int32_t& val) const;
 
@@ -199,7 +199,7 @@ struct param_descriptor_data
     discrete_descriptor const discrete; // Discrete valued specific data.
   };
 
-  // IO: false parses/formats for UI (display name), true parses/formats for persistance (guids).
+  // IO: false parses/formats for UI (display name), true parses/formats for persistence (guids).
   std::string format(bool io, param_value val) const;
   std::size_t format(bool io, param_value val, char* buffer, std::size_t size) const;
   param_value parse_ui(std::int32_t part_index, char const* buffer) const;

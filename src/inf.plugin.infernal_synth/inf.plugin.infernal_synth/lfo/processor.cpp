@@ -134,7 +134,7 @@ lfo_processor::update_block_free(automation_view const& automation)
 template <class processor_type> void
 lfo_processor::process(float* rate, float* out, std::int32_t sample_count, processor_type processor)
 {
-  // Fill buffer untill we hit end of one-shot.
+  // Fill buffer until we hit end of one-shot.
   // Keep track of highest frequency for filter.
   _max_freq = 0.0f;
   _end_index = sample_count;

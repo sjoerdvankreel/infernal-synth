@@ -46,7 +46,7 @@ struct note_event
 // Shared input data in case of polyphonic synth.
 struct block_input_data
 {
-  // Block tempo. Vst3 doesnt handle this per-sample.
+  // Block tempo. Vst3 doesn't handle this per-sample.
   float bpm;
   // Audio input for effect.
   float const* const* audio;

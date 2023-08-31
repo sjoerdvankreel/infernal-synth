@@ -34,7 +34,7 @@ public base::audio_processor
   // If a voice is activated within the current buffer,
   // it is considered taken from the beginning of the buffer.
   // Similarly, if a voice is finished within the current buffer,
-  // it is considered taken untill the end of the buffer.
+  // it is considered taken until the end of the buffer.
   // Keep track of last activated voice, seems the safer
   // way to do it when user is switching poly/mono modes on the fly.
   bool _voices_drained;

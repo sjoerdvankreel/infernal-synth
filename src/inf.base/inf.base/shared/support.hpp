@@ -132,7 +132,7 @@ note_to_frequency_table(float midi)
 // These are helper functions to go from base (which is either discrete or 0..1)
 // to both VST3 and CLAP normalized values (always 0..1 for vst3, 0..1 for clap real or
 // min-max for clap discrete) to display values (e.g. -6..+6) to text values (e.g. "-6dB""). 
-// CLAP doesnt really need this 0-1 normalization but its easier to keep parity with vst3.
+// CLAP doesn't really need this 0-1 normalization but its easier to keep parity with vst3.
 
 inline double 
 discrete_to_format_normalized(

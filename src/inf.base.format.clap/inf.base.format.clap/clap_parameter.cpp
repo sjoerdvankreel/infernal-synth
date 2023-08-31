@@ -124,7 +124,7 @@ param_get_info(clap_plugin_t const* plugin, std::uint32_t param_index, clap_para
   param_info->id = inf_plugin->topology->param_index_to_id[param_index];
 
   // Just go with 0/1 to be the same as vst3 for real-valued, seems easier to do it like this.
-  // We still need to supply the full range for discrete values as clap doesnt do normalization for stepped params.
+  // We still need to supply the full range for discrete values as clap doesn't do normalization for stepped params.
   bool is_real = inf_info.descriptor->data.type == param_type::real;
   param_info->min_value = is_real ? 0.0f: inf_info.descriptor->data.discrete.min;
   param_info->max_value = is_real ? 1.0f : inf_info.descriptor->data.discrete.max;
