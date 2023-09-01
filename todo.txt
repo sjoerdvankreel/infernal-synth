@@ -24,6 +24,9 @@
 - CLAP polyphonic modulation
 - Rename FM->Frequency, PM->Phase
 - Remap the routings on copy/swap.
+- automatically update routing on copy/swap module
+- "insert" routing option e.g. when you have osc->fx1, fx1->voice.out allow to insert an empty slot between the 2 (same for cv) by context menu
+- "move up/down" a single route in the matrix by context menu
 
 * wishlist big
 - FM
