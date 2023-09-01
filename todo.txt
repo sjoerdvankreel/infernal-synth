@@ -23,6 +23,7 @@
 - Rename "hold"->"on note"
 - CLAP polyphonic modulation
 - Rename FM->Frequency, PM->Phase
+- Remap the routings on copy/swap.
 
 * wishlist big
 - FM
