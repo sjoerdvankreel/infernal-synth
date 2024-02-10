@@ -2,6 +2,8 @@
 InfernalSynth is a semi-modular software synthesizer and effect plugin.\
 For system requirements, download and installation, see the [project website](https://sjoerdvankreel.github.io/infernal-synth).
 
+NOTE: project superseded by [Firefly Synth](https://sjoerdvankreel.github.io/firefly-synth).
+
 # Legal
 <img align="left" alt="VST logo" src="static/vst_logo.png">
 VST is a trademark of Steinberg Media Technologies GmbH,<br/>
